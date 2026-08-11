@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu - Media Gallery &amp; Security Audit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> .data-wash { background-color: #EAF2F8; } .blueprint-border { border: 1px solid #E0E0E0; } /* Specific animations */ @keyframes scan-line { 0% { transform: translateY(-100%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100%); opacity: 0; } } .animate-scan { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(31, 78, 121, 0.8); box-shadow: 0 0 8px rgba(31, 78, 121, 0.5); animation: scan-line 2s infinite linear; z-index: 10; } .quarantine-stripes { background-image: repeating-linear-gradient( 45deg, transparent, transparent 10px, rgba(139, 26, 26, 0.05) 10px, rgba(139, 26, 26, 0.05) 20px ); } </style>
+<script src="components.js"></script></head>
+<body class="bg-background text-on-surface font-body-md antialiased flex h-screen overflow-hidden pt-[64px]">
+<!-- Desktop Sidebar (Component 2) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<div class="px-unit mt-auto border-t border-primary-container pt-4">
+<ul class="space-y-unit">
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-primary-fixed-dim opacity-80 hover:bg-primary-container/50 transition-colors" href="help_center.html">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 text-primary-fixed-dim opacity-80 hover:bg-primary-container/50 transition-colors" href="login.html">
+<span class="material-symbols-outlined">logout</span>
+<span>Sign Out</span>
+</a>
+</li>
+</ul>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-sidebar-width flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar (Component 1) -->
+<setuu-header></setuu-header>
+<!-- Canvas -->
+<div class="flex-1 overflow-y-auto bg-surface-container-lowest relative flex">
+<div class="flex-1 p-margin-mobile md:p-margin-desktop flex flex-col gap-6">
+<!-- Security Summary Header -->
+<div class="bg-surface blueprint-border p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-1">Security Audit: Media &amp; Documents</h2>
+<p class="font-label-md text-on-surface-variant">Real-time threat analysis for PRJ-2024-04A artifacts.</p>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col blueprint-border p-3 min-w-[120px] bg-surface-container-lowest">
+<span class="font-label-sm text-on-surface-variant uppercase mb-1">Total Scanned</span>
+<span class="font-headline-md text-headline-md text-primary">128</span>
+</div>
+<div class="flex flex-col blueprint-border border-verify-green/30 p-3 min-w-[120px] bg-verify-green/5">
+<span class="font-label-sm text-verify-green uppercase mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">verified</span> Clean</span>
+<span class="font-headline-md text-headline-md text-verify-green">126</span>
+</div>
+<div class="flex flex-col blueprint-border border-quarantine-red/30 p-3 min-w-[120px] bg-quarantine-red/5">
+<span class="font-label-sm text-quarantine-red uppercase mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">gpp_bad</span> Flagged</span>
+<span class="font-headline-md text-headline-md text-quarantine-red">2</span>
+</div>
+</div>
+</div>
+<!-- Media Gallery Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+<!-- File 1: Verified (PDF) -->
+<div class="bg-surface blueprint-border flex flex-col cursor-pointer hover:bg-surface-container-low transition-colors group relative" onclick="openPanel('panel-1')">
+<div class="h-40 bg-surface-container-low flex items-center justify-center relative overflow-hidden border-b border-outline-variant p-4">
+<!-- Standardized Iconography integration attempt, fallback to material if placeholder fails visually in this structural shell -->
+<img alt="Standardized Iconography" class="w-full h-full object-cover opacity-80 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiQqQtXdlow6DA0yjHpjtlWAKAJcO8p2Kdov5UC9MmEJTe1oWpFL4iV8aj8VmldP3khSePGzLMGW0ZSrTQR9bZbw65kPQJuJcxiQQfzh5YuKdxNmKo4Pas5jtTpguH3GeNua5RxyALXZUT_DHNgeEr7nsYzPsmKK_RwDCrwDXxPke8_qZzUou0OYQr68pgs3VS2tyWFlcCCmUiE_StfdJ241__7QWmUsD0_FN7Ph_lkyWwofexJaoordwXBQ2WHFtXRew"/>
+<div class="absolute bottom-2 right-2 bg-surface/90 px-2 py-1 blueprint-border font-label-sm flex items-center gap-1 text-verify-green">
+<span class="material-symbols-outlined text-[14px]">verified_user</span> Verified </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="font-body-md font-semibold text-primary truncate" title="PROC-2024-Q2-Specs.pdf">PROC-2024-Q2-Specs.pdf</h3>
+<span class="font-label-sm text-on-surface-variant bg-surface-variant px-1">PDF</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">2.4 MB</span>
+<span class="font-label-sm">10:42 AM</span>
+</div>
+</div>
+<!-- 4px Progress Bar - Static Success -->
+<div class="h-unit w-full bg-verify-green"></div>
+</div>
+<!-- File 2: Scanning (DWG) -->
+<div class="bg-surface blueprint-border flex flex-col cursor-pointer transition-colors relative" onclick="openPanel('panel-2')">
+<div class="h-40 bg-surface-container-low flex items-center justify-center relative overflow-hidden border-b border-outline-variant">
+<div class="animate-scan"></div>
+<span class="material-symbols-outlined text-[48px] text-brand-blue opacity-50">architecture</span>
+<div class="absolute bottom-2 right-2 bg-surface/90 px-2 py-1 blueprint-border font-label-sm flex items-center gap-1 text-scan-amber">
+<span class="material-symbols-outlined text-[14px] animate-spin" style="animation: spin 2s linear infinite;">sync</span> Scanning... </div>
+<!-- Watermark -->
+<div class="absolute top-2 left-2 font-label-sm text-on-surface-variant opacity-50"> LOC: 34.0522° N, 118.2437° W<br/> T: 168429304 </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="font-body-md font-semibold text-primary truncate" title="SITE-PLAN-L2-REV4.dwg">SITE-PLAN-L2-REV4.dwg</h3>
+<span class="font-label-sm text-on-surface-variant bg-surface-variant px-1">DWG</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">18.1 MB</span>
+<span class="font-label-sm">Just now</span>
+</div>
+</div>
+<!-- 4px Progress Bar - Scanning -->
+<div class="h-unit w-full bg-surface-variant overflow-hidden relative">
+<div class="h-full bg-scan-amber w-1/2 absolute top-0 left-0 animate-[pulse_1s_ease-in-out_infinite] blur-[1px]"></div>
+</div>
+</div>
+<!-- File 3: Quarantined (JPG) -->
+<div class="bg-surface blueprint-border border-quarantine-red flex flex-col cursor-pointer transition-colors relative quarantine-stripes" onclick="openPanel('panel-3')">
+<div class="h-40 bg-surface-container-lowest flex items-center justify-center relative overflow-hidden border-b border-quarantine-red/30">
+<div class="absolute inset-0 bg-quarantine-red/10 mix-blend-multiply"></div>
+<img alt="Infected file preview" class="w-full h-full object-cover blur-sm opacity-60 grayscale" data-alt="A heavily blurred, low contrast construction site photo, indicating an inaccessible or corrupted file state, clinical industrial setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQUMi6ZeBL-uC9TdHjjzEfEdQVjLEy1NqeQHTrFROGDPlH2DMtgp3BD2O_i7X2TGfgYTmnZtt2NVy4nWEnklumb2mdufl20aGeZEcaXe-0GCDvSDt9gLtVI_FdFSCr1t35z4fkC8Pd8dLvhaLIn8a1OGGqjG3QXqFZ9m7LkLfRMCzOyP1Mx2u2lrqj-sjxdE2hFDAP7vmj_uFTuFspaKzT0_Eb6cFDE3Xn7qBXb9M-nu-XsOjOssGjYQ"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[64px] text-quarantine-red drop-shadow-md">lock</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-quarantine-red text-on-primary px-2 py-1 font-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">warning</span> Quarantined </div>
+</div>
+<div class="p-4 flex flex-col gap-2 relative z-10 bg-surface/90">
+<div class="flex justify-between items-start">
+<h3 class="font-body-md font-semibold text-quarantine-red truncate line-through opacity-80" title="IMG_8842_SUSPICIOUS.jpg">IMG_8842_SUSPICIOUS.jpg</h3>
+<span class="font-label-sm text-on-surface-variant bg-surface-variant px-1">JPG</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">4.2 MB</span>
+<span class="font-label-sm">09:15 AM</span>
+</div>
+</div>
+<!-- 4px Progress Bar - Critical -->
+<div class="h-unit w-full bg-quarantine-red"></div>
+</div>
+<!-- File 4: Verified (JPG) -->
+<div class="bg-surface blueprint-border flex flex-col cursor-pointer hover:bg-surface-container-low transition-colors group relative" onclick="openPanel('panel-1')">
+<div class="h-40 bg-surface-container-low flex items-center justify-center relative overflow-hidden border-b border-outline-variant">
+<img alt="Site Photo" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all" data-alt="A sharp, well-lit photo of exposed HVAC ductwork and steel beams in a commercial building under construction. High contrast, technical engineering aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABnhfXEXzkoG9-kGEwtAGvx-2BY1s8kpCDvmcdtw8g-WASJ9vtkoawOdH7JOfVW62FrJOIqYIeVxRE6i4B3CefcNv2Stz12Fv4YRJvYPTlL8gyoKVEB2FrQsP5amQTS-sVYhcZW9kPvusCw2tt2CvIdYKC3l9CcPQiyh5ysqyddzEjrSuUzgflvRW6tHl-7QK5Qk0k472cFvXoDOBWdZZk3ItdSqvcFnauYkToeehTuskoHQHYJkFVOA"/>
+<div class="absolute bottom-2 right-2 bg-surface/90 px-2 py-1 blueprint-border font-label-sm flex items-center gap-1 text-verify-green">
+<span class="material-symbols-outlined text-[14px]">verified_user</span> Verified </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="font-body-md font-semibold text-primary truncate" title="HVAC-L2-INSPECT.jpg">HVAC-L2-INSPECT.jpg</h3>
+<span class="font-label-sm text-on-surface-variant bg-surface-variant px-1">JPG</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">5.1 MB</span>
+<span class="font-label-sm">Yesterday</span>
+</div>
+</div>
+<div class="h-unit w-full bg-verify-green"></div>
+</div>
+</div>
+</div>
+<!-- Security Detail Side Panel (Initially Hidden, visually represented as a 400px fixed column) -->
+<aside class="w-[400px] border-l border-outline-variant bg-surface flex flex-col h-full shrink-0 hidden lg:flex relative z-10 transform translate-x-full transition-transform duration-300" id="security-panel">
+<!-- Panel content will be injected/toggled via JS, showing a mock state here for design purposes -->
+<!-- Panel Header -->
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-headline-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">policy</span> Security Report </h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="closePanel()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Panel Content Area -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-6" id="panel-content-area">
+<!-- Default empty state -->
+<div class="flex flex-col items-center justify-center h-full text-center opacity-50">
+<span class="material-symbols-outlined text-[48px] mb-4">analytics</span>
+<p class="font-body-md">Select a file to view detailed security audit logs.</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Component 3) -->
+<setuu-bottom-nav></setuu-bottom-nav>
+<!-- Mock Data & Interactions -->
+<script> const panelData = { 'panel-1': ` <div class="flex flex-col gap-4"> <div class="bg-verify-green/10 p-4 border border-verify-green/30 flex items-start gap-3"> <span class="material-symbols-outlined text-verify-green">verified</span> <div> <h4 class="font-body-md font-bold text-verify-green uppercase">File Verified</h4> <p class="font-label-sm mt-1 text-on-surface-variant">No malicious signatures detected.</p> </div> </div> <div class="blueprint-border"> <div class="bg-data-wash p-2 border-b border-outline-variant font-label-sm font-bold text-primary">Scan Details</div> <ul class="font-label-md text-on-surface-variant divide-y divide-outline-variant"> <li class="p-3 flex justify-between"><span>Engine</span> <span class="font-bold text-primary">Setuu Core v4.2</span></li> <li class="p-3 flex justify-between"><span>Timestamp</span> <span>2024-10-24 10:42:11Z</span></li> <li class="p-3 flex justify-between"><span>Definitions</span> <span>Rev. 88921</span></li> <li class="p-3 flex justify-between"><span>Hash (SHA-256)</span> <span class="truncate w-32" title="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855">e3b0c442...</span></li> </ul> </div> <button class="w-full bg-brand-blue text-on-primary py-2 font-label-md hover:bg-tertiary transition-colors mt-4"> Download Artifact </button> </div> `, 'panel-2': ` <div class="flex flex-col gap-4"> <div class="bg-scan-amber/10 p-4 border border-scan-amber/30 flex items-start gap-3"> <span class="material-symbols-outlined text-scan-amber animate-spin" style="animation: spin 2s linear infinite;">sync</span> <div> <h4 class="font-body-md font-bold text-scan-amber uppercase">Security Check in Progress</h4> <p class="font-label-sm mt-1 text-on-surface-variant">Scanning DWG layers for embedded threats.</p> </div> </div> <div class="blueprint-border opacity-70"> <div class="bg-data-wash p-2 border-b border-outline-variant font-label-sm font-bold text-primary">Scan Details</div> <ul class="font-label-md text-on-surface-variant divide-y divide-outline-variant"> <li class="p-3 flex justify-between"><span>Engine</span> <span class="font-bold text-primary">Setuu DeepScan v1.1</span></li> <li class="p-3 flex justify-between"><span>Timestamp</span> <span>Pending...</span></li> <li class="p-3 flex justify-between"><span>Heuristics</span> <span class="text-scan-amber">Active</span></li> </ul> </div> </div> `, 'panel-3': ` <div class="flex flex-col gap-4"> <div class="bg-quarantine-red p-4 border border-quarantine-red text-on-primary flex items-start gap-3 shadow-sm"> <span class="material-symbols-outlined text-[24px]">gpp_bad</span> <div> <h4 class="font-body-md font-bold uppercase">Threat Detected</h4> <p class="font-label-sm mt-1 opacity-90">File isolated due to malicious payload signature.</p> </div> </div> <div class="bg-surface-variant p-4 text-quarantine-red text-sm border-l-4 border-quarantine-red font-body-md"> <strong>Safety Alert:</strong> This file has been isolated to prevent system contamination. Access is restricted to Admins. </div> <div class="blueprint-border border-quarantine-red/50"> <div class="bg-quarantine-red/10 p-2 border-b border-quarantine-red/30 font-label-sm font-bold text-quarantine-red">Incident Report</div> <ul class="font-label-md text-on-surface-variant divide-y divide-outline-variant"> <li class="p-3 flex justify-between"><span>Threat ID</span> <span class="font-bold text-quarantine-red">TRJ.Macro.Gen3</span></li> <li class="p-3 flex justify-between"><span>Action Taken</span> <span class="font-bold">Quarantined</span></li> <li class="p-3 flex justify-between"><span>Timestamp</span> <span>2024-10-24 09:15:02Z</span></li> <li class="p-3 flex justify-between items-center"> <span>Risk Level</span> <span class="bg-quarantine-red text-on-primary px-2 py-0.5">CRITICAL</span> </li> </ul> </div> <div class="flex gap-2 mt-4"> <button class="flex-1 bg-surface border border-outline-variant text-on-surface-variant py-2 font-label-md hover:bg-surface-container-low transition-colors cursor-not-allowed opacity-50" disabled> Request Access </button> <button class="flex-1 bg-surface border border-quarantine-red text-quarantine-red py-2 font-label-md hover:bg-quarantine-red/10 transition-colors"> View Audit Log </button> </div> </div> ` }; const panel = document.getElementById('security-panel'); const contentArea = document.getElementById('panel-content-area'); function openPanel(id) { // Remove hidden class if present, though it's managed via translate panel.classList.remove('hidden'); // Allow DOM to update before transforming setTimeout(() => { panel.classList.remove('translate-x-full'); }, 10); contentArea.innerHTML = panelData[id]; } function closePanel() { panel.classList.add('translate-x-full'); } </script>
+<script src="setuu.js"></script>
+</body></html>

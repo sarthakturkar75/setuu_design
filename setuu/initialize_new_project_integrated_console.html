@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+ <html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Initialize New Project - Setuu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> .blueprint-grid { background-size: 20px 20px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px); } .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; } .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #c2c7d0; border-radius: 4px; } /* Specific borders to override default ring focus on forms plugin */ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, textarea:focus, select:focus { outline: none; box-shadow: none; border-color: #00375e; /* Primary color */ } </style>
+<script src="components.js"></script></head>
+<body class="bg-surface text-on-surface font-body-md text-body-md h-screen overflow-hidden flex selection:bg-primary-container selection:text-on-primary-container pt-[64px]">
+<!-- Desktop Sidebar (Hidden on Mobile/Tablet) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<div class="mt-auto px-3 border-t border-primary-container pt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-primary-fixed-dim hover:text-on-primary hover:bg-primary-container/20 hover:bg-primary-container/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span>Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-primary-fixed-dim hover:text-on-primary hover:bg-primary-container/20 hover:bg-primary-container/30 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">developer_board</span>
+<span>System Status</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 md:ml-[280px] flex flex-col h-screen blueprint-grid">
+<!-- Top Navigation -->
+<setuu-header></setuu-header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop custom-scrollbar relative">
+<div class="max-w-5xl mx-auto space-y-gutter md:space-y-margin-tablet">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-4 border-b border-outline-variant">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Initialize New Project</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl"> Configure baseline parameters, stakeholder access, and technical specifications. </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="px-4 py-2 border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors"> Cancel </button>
+<button class="px-6 py-2 bg-[#1F4E79] text-white font-label-md text-label-md hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span> Initialize Project </button>
+</div>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter md:gap-margin-tablet items-start">
+<!-- Left Column (Wider) -->
+<div class="lg:col-span-2 space-y-gutter md:space-y-margin-tablet">
+<!-- Core Identification Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-[20px]">badge</span> Core Identification </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Project Nomenclature</label>
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface placeholder:text-outline text-sm" placeholder="e.g. Alpha-7 Structural Overhaul" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Project ID (Auto-generated)</label>
+<div class="w-full bg-surface-container border border-outline-variant px-3 py-2 font-label-md text-label-md text-outline flex items-center justify-between"> PRJ-2024-88A9 <span class="material-symbols-outlined text-[16px]">lock</span>
+</div>
+</div>
+<div class="space-y-1 md:col-span-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Primary Discipline</label>
+<select class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm">
+<option>Mechanical</option>
+<option>Electrical</option>
+<option>Software</option>
+<option>Combined / Multi-disciplinary</option>
+</select>
+</div>
+<div class="space-y-1 md:col-span-2">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Technical Summary / Scope</label>
+<textarea class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface placeholder:text-outline text-sm resize-none" placeholder="Brief technical description of project scope..." rows="4"></textarea>
+</div>
+</div>
+</div>
+<!-- Milestone Configuration Card -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2 mb-4">
+<h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">flag</span> Milestone Configuration </h3>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 text-on-surface-variant">Total: 100%</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Define baseline project weighting. Total must equal 100%.</p>
+<!-- Progress Bar -->
+<div class="w-full h-unit bg-surface-container mb-6 overflow-hidden flex">
+<div class="h-full bg-tertiary w-[30%] border-r border-surface-container-lowest"></div>
+<div class="h-full bg-secondary w-[20%] border-r border-surface-container-lowest"></div>
+<div class="h-full bg-primary-container w-[40%] border-r border-surface-container-lowest"></div>
+<div class="h-full bg-outline-variant w-[10%]"></div>
+</div>
+<div class="space-y-3">
+<!-- Milestone Row -->
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-12 sm:col-span-5">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm" type="text" value="Design &amp; Engineering"/>
+</div>
+<div class="col-span-6 sm:col-span-3">
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface pr-8" type="number" value="30"/>
+<span class="absolute right-3 top-2 font-label-md text-outline">%</span>
+</div>
+</div>
+<div class="col-span-6 sm:col-span-4">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface" type="date"/>
+</div>
+</div>
+<!-- Milestone Row -->
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-12 sm:col-span-5">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm" type="text" value="Procurement"/>
+</div>
+<div class="col-span-6 sm:col-span-3">
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface pr-8" type="number" value="20"/>
+<span class="absolute right-3 top-2 font-label-md text-outline">%</span>
+</div>
+</div>
+<div class="col-span-6 sm:col-span-4">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface" type="date"/>
+</div>
+</div>
+<!-- Milestone Row -->
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-12 sm:col-span-5">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm" type="text" value="Fabrication / Assembly"/>
+</div>
+<div class="col-span-6 sm:col-span-3">
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface pr-8" type="number" value="40"/>
+<span class="absolute right-3 top-2 font-label-md text-outline">%</span>
+</div>
+</div>
+<div class="col-span-6 sm:col-span-4">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface" type="date"/>
+</div>
+</div>
+<!-- Milestone Row -->
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-12 sm:col-span-5">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm" type="text" value="Testing &amp; Commissioning"/>
+</div>
+<div class="col-span-6 sm:col-span-3">
+<div class="relative">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface pr-8" type="number" value="10"/>
+<span class="absolute right-3 top-2 font-label-md text-outline">%</span>
+</div>
+</div>
+<div class="col-span-6 sm:col-span-4">
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface" type="date"/>
+</div>
+</div>
+</div>
+<button class="mt-4 text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[16px]">add</span> Add Phase </button>
+</div>
+</div>
+<!-- Right Column (Narrower) -->
+<div class="space-y-gutter md:space-y-margin-tablet">
+<!-- Client & Access Control -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-[20px]">security</span> Access Control </h3>
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Client Organization</label>
+<select class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm">
+<option>Select Client...</option>
+<option>OmniCorp Industries</option>
+<option>Stark Engineering</option>
+<option>Wayne Enterprises</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Assigned Project Manager</label>
+<select class="w-full bg-surface border border-outline-variant px-3 py-2 font-body-md text-on-surface text-sm">
+<option>Select PM...</option>
+<option>Sarah Jenkins</option>
+<option>Michael Chang</option>
+<option>Elena Rossi</option>
+</select>
+</div>
+<div class="space-y-2 pt-2 border-t border-outline-variant">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Client Visibility</label>
+<label class="flex items-start gap-2 p-2 hover:bg-surface-container cursor-pointer border border-transparent hover:border-outline-variant transition-colors">
+<input class="mt-1 text-primary focus:ring-primary" name="visibility" type="radio"/>
+<div>
+<span class="block font-label-md text-label-md text-on-surface">Restricted</span>
+<span class="block font-label-sm text-label-sm text-outline">Internal eyes only. Client has zero access.</span>
+</div>
+</label>
+<label class="flex items-start gap-2 p-2 bg-[#EAF2F8] border border-primary-fixed-dim cursor-pointer">
+<input checked="" class="mt-1 text-primary focus:ring-primary" name="visibility" type="radio"/>
+<div>
+<span class="block font-label-md text-label-md text-primary-fixed-variant">Milestone-Only</span>
+<span class="block font-label-sm text-label-sm text-primary-fixed-variant opacity-80">Client sees top-level progress but no raw data.</span>
+</div>
+</label>
+<label class="flex items-start gap-2 p-2 hover:bg-surface-container cursor-pointer border border-transparent hover:border-outline-variant transition-colors">
+<input class="mt-1 text-primary focus:ring-primary" name="visibility" type="radio"/>
+<div>
+<span class="block font-label-md text-label-md text-on-surface">Full Transparency</span>
+<span class="block font-label-sm text-label-sm text-outline">Client sees all logs, documents, and granular updates.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Governance & Metadata -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-[20px]">gavel</span> Governance </h3>
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">PO Reference Number</label>
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface" placeholder="PO-..." type="text"/>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Contract Value (USD)</label>
+<span class="material-symbols-outlined text-[14px] text-error" title="Admin Only Field">admin_panel_settings</span>
+</div>
+<input class="w-full bg-surface border border-outline-variant px-3 py-2 font-label-md text-label-md text-on-surface" placeholder="0.00" type="number"/>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-2">
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Start Date</label>
+<input class="w-full bg-surface border border-outline-variant px-2 py-2 font-label-md text-label-md text-on-surface text-xs" type="date"/>
+</div>
+<div class="space-y-1">
+<label class="block font-label-sm text-label-sm text-on-surface-variant">Target Comp.</label>
+<input class="w-full bg-surface border border-outline-variant px-2 py-2 font-label-md text-label-md text-on-surface text-xs" type="date"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom padding for scrolling -->
+<div class="h-8"></div>
+</div>
+</main>
+</div>
+<script src="setuu.js"></script>
+</body></html>

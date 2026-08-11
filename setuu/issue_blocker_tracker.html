@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+ <html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu - Issue &amp; Blocker Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> body { font-family: 'Inter', sans-serif; background-color: #F7F6F1; color: #1b1c19; } .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; font-feature-settings: 'liga'; -webkit-font-feature-settings: 'liga'; -webkit-font-smoothing: antialiased; } .sharp-border { border: 1px solid #E0E0E0; } .data-wash-row:nth-child(even) { background-color: #EAF2F8; } .custom-scrollbar::-webkit-scrollbar { width: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: #F7F6F1; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #c2c7d0; border-radius: 3px; } </style>
+<script src="components.js"></script></head>
+<body class="bg-background text-on-background h-screen overflow-hidden flex flex-col pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- Mobile Top Nav -->
+<setuu-header></setuu-header>
+<!-- SideNavBar (Desktop) -->
+<setuu-sidebar role="pm"></setuu-sidebar>
+<!-- Main Content Area -->
+<main class="lg:ml-sidebar-width flex-1 h-screen overflow-hidden flex flex-col relative bg-background">
+<!-- Header -->
+<header class="px-margin-desktop py-6 border-b border-[#E0E0E0] bg-surface-container-lowest flex justify-between items-center z-10 shrink-0 shadow-none">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary m-0">Issue &amp; Blocker Tracker</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Manage, diagnose, and resolve project impediments.</p>
+</div>
+<button class="bg-[#1F4E79] text-on-primary px-6 py-2.5 text-label-md font-label-md font-bold hover:bg-primary transition-colors flex items-center gap-2 border border-[#1F4E79] shadow-none">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span> LOG NEW ISSUE </button>
+</header>
+<!-- Metrics Row -->
+<div class="px-margin-desktop py-4 bg-[#EAF2F8] border-b border-[#E0E0E0] flex gap-gutter overflow-x-auto shrink-0 shadow-none">
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-4 flex-1 min-w-[200px] shadow-none">
+<div class="text-label-sm font-label-sm text-on-surface-variant uppercase mb-1">Total Open Issues</div>
+<div class="text-headline-md font-headline-md text-primary">24</div>
+</div>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-4 flex-1 min-w-[200px] shadow-none">
+<div class="text-label-sm font-label-sm text-[#8B1A1A] uppercase mb-1">Critical Blockers</div>
+<div class="text-headline-md font-headline-md text-[#8B1A1A] flex items-center gap-2"> 3 <span class="material-symbols-outlined text-[#8B1A1A] text-[20px]" data-icon="warning">warning</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-4 flex-1 min-w-[200px] shadow-none">
+<div class="text-label-sm font-label-sm text-on-surface-variant uppercase mb-1">Avg. Resolution Time</div>
+<div class="text-headline-md font-headline-md text-primary">48h</div>
+</div>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-4 flex-1 min-w-[200px] shadow-none">
+<div class="text-label-sm font-label-sm text-[#2E7D32] uppercase mb-1">Resolved this Week</div>
+<div class="text-headline-md font-headline-md text-[#2E7D32] flex items-center gap-2"> 12 <span class="material-symbols-outlined text-[#2E7D32] text-[20px]" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Layout Splitter -->
+<div class="flex-1 overflow-hidden flex flex-col lg:flex-row relative">
+<!-- Issue List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar lg:border-r border-[#E0E0E0] bg-surface-container-lowest shadow-none" id="issue-list-container">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-lowest border-b border-[#E0E0E0] z-10 shadow-none">
+<tr>
+<th class="py-3 px-4 text-label-md font-label-md text-on-surface-variant uppercase font-medium">ID</th>
+<th class="py-3 px-4 text-label-md font-label-md text-on-surface-variant uppercase font-medium">Title</th>
+<th class="py-3 px-4 text-label-md font-label-md text-on-surface-variant uppercase font-medium">Severity</th>
+<th class="py-3 px-4 text-label-md font-label-md text-on-surface-variant uppercase font-medium">Assigned To</th>
+<th class="py-3 px-4 text-label-md font-label-md text-on-surface-variant uppercase font-medium">Status</th>
+<th class="py-3 px-4 text-label-md font-label-md text-on-surface-variant uppercase font-medium">Date Logged</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<!-- Issue Row 1 (Active) -->
+<tr class="border-b border-[#E0E0E0] cursor-pointer bg-secondary-fixed-dim/20 hover:bg-secondary-fixed-dim/30 transition-colors" onclick="document.getElementById('detail-pane').classList.remove('hidden')">
+<td class="py-4 px-4 font-label-md text-primary">ISS-4091</td>
+<td class="py-4 px-4 font-semibold font-headline-sm text-[14px]">Foundation Concrete Curing Delay</td>
+<td class="py-4 px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 border border-[#8B1A1A] bg-red-50">
+<span class="w-2 h-2 bg-[#8B1A1A]"></span>
+<span class="text-label-md font-label-md text-[#8B1A1A]">Critical</span>
+</div>
+</td>
+<td class="py-4 px-4">J. Henderson</td>
+<td class="py-4 px-4">
+<span class="text-label-md font-label-md px-2 py-1 bg-[#EAF2F8] text-primary border border-primary/20">In Progress</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">2023-10-24</td>
+</tr>
+<!-- Issue Row 2 -->
+<tr class="data-wash-row border-b border-[#E0E0E0] cursor-pointer hover:bg-[#EAF2F8] transition-colors">
+<td class="py-4 px-4 font-label-md text-primary">ISS-4092</td>
+<td class="py-4 px-4 font-semibold font-headline-sm text-[14px]">HVAC Ducting Interference - Level 3</td>
+<td class="py-4 px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 border border-amber-500 bg-amber-50">
+<span class="w-2 h-2 bg-amber-500"></span>
+<span class="text-label-md font-label-md text-amber-700">High</span>
+</div>
+</td>
+<td class="py-4 px-4">A. Patel</td>
+<td class="py-4 px-4">
+<span class="text-label-md font-label-md px-2 py-1 bg-surface-variant text-on-surface-variant border border-outline/20">Open</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">2023-10-25</td>
+</tr>
+<!-- Issue Row 3 -->
+<tr class="border-b border-[#E0E0E0] cursor-pointer hover:bg-[#EAF2F8] transition-colors">
+<td class="py-4 px-4 font-label-md text-primary">ISS-4088</td>
+<td class="py-4 px-4 font-semibold font-headline-sm text-[14px]">Late Delivery of Steel Girders</td>
+<td class="py-4 px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 border border-[#1F4E79] bg-blue-50">
+<span class="w-2 h-2 bg-[#1F4E79]"></span>
+<span class="text-label-md font-label-md text-[#1F4E79]">Medium</span>
+</div>
+</td>
+<td class="py-4 px-4">R. Garcia</td>
+<td class="py-4 px-4">
+<span class="text-label-md font-label-md px-2 py-1 bg-[#EAF2F8] text-primary border border-primary/20">In Progress</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">2023-10-22</td>
+</tr>
+<!-- Issue Row 4 -->
+<tr class="data-wash-row border-b border-[#E0E0E0] cursor-pointer hover:bg-[#EAF2F8] transition-colors">
+<td class="py-4 px-4 font-label-md text-primary">ISS-4085</td>
+<td class="py-4 px-4 font-semibold font-headline-sm text-[14px]">Missing Inspection Sign-off - Sector 4</td>
+<td class="py-4 px-4">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 border border-[#0D253F] bg-slate-50">
+<span class="w-2 h-2 bg-tertiary"></span>
+<span class="text-label-md font-label-md text-tertiary">Low</span>
+</div>
+</td>
+<td class="py-4 px-4">M. Chen</td>
+<td class="py-4 px-4">
+<span class="text-label-md font-label-md px-2 py-1 bg-green-50 text-[#2E7D32] border border-[#2E7D32]/20">Resolved</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant">2023-10-20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Selected Issue Detail Pane -->
+<div class="w-full lg:w-[450px] xl:w-[550px] bg-background flex flex-col shrink-0 overflow-hidden lg:border-l border-[#E0E0E0] absolute lg:relative top-0 right-0 h-full z-20 hidden lg:flex shadow-none transition-transform" id="detail-pane">
+<!-- Pane Header -->
+<div class="px-6 py-4 bg-surface-container-lowest border-b border-[#E0E0E0] flex justify-between items-start shrink-0 shadow-none">
+<div>
+<div class="text-label-md font-label-md text-primary mb-1">ISS-4091</div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface m-0 leading-tight">Foundation Concrete Curing Delay</h2>
+</div>
+<button class="lg:hidden text-on-surface-variant p-2" onclick="document.getElementById('detail-pane').classList.add('hidden')">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Pane Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 flex flex-col gap-6">
+<!-- Meta info -->
+<div class="flex gap-4 p-4 bg-surface-container-lowest border border-[#E0E0E0] shadow-none">
+<div class="flex-1">
+<div class="text-label-sm font-label-sm text-on-surface-variant uppercase mb-1">Logged By</div>
+<div class="text-body-md font-body-md font-medium">S. Miller (QA)</div>
+</div>
+<div class="flex-1">
+<div class="text-label-sm font-label-sm text-on-surface-variant uppercase mb-1">Date</div>
+<div class="text-body-md font-body-md font-medium">Oct 24, 2023</div>
+</div>
+</div>
+<!-- Root Cause -->
+<div>
+<h3 class="text-label-md font-label-md font-bold uppercase text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="troubleshoot">troubleshoot</span> Root Cause Analysis </h3>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-4 text-body-md font-body-md text-on-surface shadow-none font-body-md"> Unexpected drop in ambient temperature during the night shift compromised the initial curing phase of the pour in Sector A. Compressive strength tests indicate current PSI is 15% below the required threshold for proceeding with structural steel erection. </div>
+</div>
+<!-- Impact -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-red-50 border border-red-200 p-4 shadow-none">
+<div class="text-label-sm font-label-sm text-[#8B1A1A] uppercase mb-1">Timeline Impact</div>
+<div class="text-headline-sm font-headline-sm text-[#8B1A1A]">+4 Days Delay</div>
+</div>
+<div class="bg-amber-50 border border-amber-200 p-4 shadow-none">
+<div class="text-label-sm font-label-sm text-amber-700 uppercase mb-1">Cost Impact</div>
+<div class="text-headline-sm font-headline-sm text-amber-700">Est. $12,500</div>
+</div>
+</div>
+<!-- Resolution Plan -->
+<div>
+<h3 class="text-label-md font-label-md font-bold uppercase text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="architecture">architecture</span> Resolution Plan </h3>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] overflow-hidden shadow-none">
+<div class="p-3 border-b border-[#E0E0E0] flex items-start gap-3">
+<span class="material-symbols-outlined text-[#2E7D32] mt-0.5" data-icon="check_box">check_box</span>
+<div>
+<div class="text-body-md font-body-md font-medium">Deploy thermal blankets to Sector A</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-1">Completed: Oct 25, 08:00 AM</div>
+</div>
+</div>
+<div class="p-3 border-b border-[#E0E0E0] flex items-start gap-3 bg-[#EAF2F8]">
+<span class="material-symbols-outlined text-[#1F4E79] mt-0.5" data-icon="pending">pending</span>
+<div class="w-full">
+<div class="text-body-md font-body-md font-medium">Conduct secondary core strength test</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-1 mb-2">Pending Engineering Sign-off</div>
+<div class="w-full bg-[#E0E0E0] h-1 overflow-hidden">
+<div class="bg-[#1F4E79] h-full w-[40%]"></div>
+</div>
+</div>
+</div>
+<div class="p-3 flex items-start gap-3 opacity-50">
+<span class="material-symbols-outlined mt-0.5" data-icon="check_box_outline_blank">check_box_outline_blank</span>
+<div>
+<div class="text-body-md font-body-md font-medium">Reschedule crane mobilization</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-1">Blocked by previous step</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Linked Milestones -->
+<div>
+<h3 class="text-label-md font-label-md font-bold uppercase text-on-surface mb-2">Linked Milestones</h3>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-label-md font-label-md border border-tertiary-container shadow-none">M2: Foundation Complete</span>
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant text-label-md font-label-md border border-surface-variant shadow-none">M3: Steel Erection</span>
+</div>
+</div>
+<!-- Activity Feed -->
+<div>
+<h3 class="text-label-md font-label-md font-bold uppercase text-on-surface mb-2 border-b border-[#E0E0E0] pb-2">Activity Feed</h3>
+<div class="flex flex-col gap-4 mt-4 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-[2px] before:bg-[#E0E0E0]">
+<div class="flex gap-4 relative z-10">
+<div class="w-8 h-8 bg-primary flex items-center justify-center text-surface-container-lowest font-bold text-label-sm shrink-0 border-2 border-background">JH</div>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-3 flex-1 relative before:absolute before:-left-[5px] before:top-3 before:w-2 before:h-2 before:bg-surface-container-lowest before:border-l before:border-b before:border-[#E0E0E0] before:rotate-45 shadow-none">
+<div class="flex justify-between items-center mb-1">
+<span class="font-bold text-label-md text-on-surface">J. Henderson</span>
+<span class="text-label-sm text-on-surface-variant">2 hrs ago</span>
+</div>
+<p class="text-body-md m-0">Thermal blankets have stabilized the temperature. Core samples have been sent to the lab.</p>
+</div>
+</div>
+<div class="flex gap-4 relative z-10">
+<div class="w-8 h-8 bg-secondary flex items-center justify-center text-surface-container-lowest font-bold text-label-sm shrink-0 border-2 border-background">SM</div>
+<div class="bg-surface-container-lowest border border-[#E0E0E0] p-3 flex-1 relative before:absolute before:-left-[5px] before:top-3 before:w-2 before:h-2 before:bg-surface-container-lowest before:border-l before:border-b before:border-[#E0E0E0] before:rotate-45 shadow-none">
+<div class="flex justify-between items-center mb-1">
+<span class="font-bold text-label-md text-on-surface">S. Miller (QA)</span>
+<span class="text-label-sm text-on-surface-variant">4 hrs ago</span>
+</div>
+<p class="text-body-md m-0">Initial readings showed 2800 PSI, need 3500 PSI to proceed. Halting structural work in Sector A.</p>
+</div>
+</div>
+</div>
+<div class="mt-4 flex gap-2">
+<input class="flex-1 bg-surface-container-lowest border border-[#E0E0E0] px-3 py-2 text-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-none" placeholder="Add a comment..." type="text"/>
+<button class="bg-secondary text-surface-container-lowest px-4 py-2 text-label-md font-bold hover:bg-secondary-fixed-variant transition-colors border border-secondary shadow-none">POST</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<setuu-bottom-nav></setuu-bottom-nav> </div>
+</body>
+</html>

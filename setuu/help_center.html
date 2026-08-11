@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Help Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<script src="components.js"></script></head>
+<body class="bg-background text-on-background antialiased flex pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- SideNavBar (Shared Component) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<div class="mt-auto flex flex-col gap-2 border-t border-white/20 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-white/70 hover:bg-white/10 hover:text-white transition-colors duration-200" href="admin_audit_logs.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white font-bold border-l-4 border-white bg-white/10 transition-colors duration-200" href="help_center.html">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-sidebar-width flex-1 min-h-screen flex flex-col relative h-screen overflow-hidden">
+<!-- TopNavBar (Persistent Top Bar) -->
+<setuu-header></setuu-header>
+<div class="flex-1 overflow-y-auto">
+<div class="p-margin-mobile md:p-margin-desktop space-y-12 max-w-6xl mx-auto w-full">
+<!-- Search Header -->
+<div class="bg-surface-container p-8 md:p-12 text-center border border-outline-variant shadow-sm">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-6">How can we help?</h1>
+<div class="w-full max-w-2xl mx-auto relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-3 border border-outline-variant bg-surface-container-lowest focus:outline-none focus:border-primary font-body-md text-body-md placeholder-outline transition-colors shadow-sm" placeholder="Search documentation, manuals, or FAQs..." type="text"/>
+</div>
+</div>
+<!-- Documentation Section -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 border-b border-outline-variant pb-2">User Manuals &amp; Documentation</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Doc Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col h-full hover:border-primary hover:shadow-md transition-all cursor-pointer group">
+<div class="flex items-start justify-between mb-4">
+<div class="bg-secondary-container p-3 text-on-secondary-container">
+<span class="material-symbols-outlined text-[32px]">menu_book</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">PDF (4.2 MB)</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Software Requirements Specification</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-1">Complete technical blueprint of the Setuu platform architecture and dependencies.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4 mt-auto">
+<span class="font-label-sm text-label-sm text-outline">Updated: Oct 12, 2023</span>
+<span class="material-symbols-outlined text-primary">download</span>
+</div>
+</div>
+<!-- Doc Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col h-full hover:border-primary hover:shadow-md transition-all cursor-pointer group">
+<div class="flex items-start justify-between mb-4">
+<div class="bg-secondary-container p-3 text-on-secondary-container">
+<span class="material-symbols-outlined text-[32px]">smartphone</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">PDF (2.8 MB)</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Flutter Core Implementation Guide</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-1">Guidelines for field capture app usage, offline sync protocols, and troubleshooting.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4 mt-auto">
+<span class="font-label-sm text-label-sm text-outline">Updated: Nov 05, 2023</span>
+<span class="material-symbols-outlined text-primary">download</span>
+</div>
+</div>
+<!-- Doc Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-6 flex flex-col h-full hover:border-primary hover:shadow-md transition-all cursor-pointer group">
+<div class="flex items-start justify-between mb-4">
+<div class="bg-secondary-container p-3 text-on-secondary-container">
+<span class="material-symbols-outlined text-[32px]">admin_panel_settings</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline group-hover:text-primary transition-colors">PDF (1.5 MB)</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">User Role &amp; Permissions Manual</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-1">Detailed breakdown of access levels for PMs, Field Engineers, and Clients.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4 mt-auto">
+<span class="font-label-sm text-label-sm text-outline">Updated: Sep 28, 2023</span>
+<span class="material-symbols-outlined text-primary">download</span>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-4">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4 border-b border-outline-variant pb-2">Frequently Asked Questions</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Quick answers to common operational and technical queries across the Setuu ecosystem.</p>
+<div class="flex flex-col gap-2">
+<button class="text-left font-label-md text-label-md py-3 px-4 bg-primary-container text-on-primary-container font-bold border-l-4 border-primary shadow-sm">Security &amp; Access</button>
+<button class="text-left font-label-md text-label-md py-3 px-4 text-on-surface-variant hover:bg-surface-variant transition-colors">Field Data Capture</button>
+<button class="text-left font-label-md text-label-md py-3 px-4 text-on-surface-variant hover:bg-surface-variant transition-colors">Client Approvals</button>
+</div>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-4">
+<!-- Accordion Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant shadow-sm">
+<button class="w-full flex items-center justify-between p-5 focus:outline-none hover:bg-surface-container-low transition-colors" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.icon').classList.toggle('rotate-180')">
+<span class="font-body-lg text-body-lg font-bold text-on-surface">How is offline field data synced securely?</span>
+<span class="material-symbols-outlined text-outline transition-transform icon">expand_more</span>
+</button>
+<div class="hidden p-5 pt-0 border-t border-outline-variant mt-2 font-body-md text-body-md text-on-surface-variant bg-surface-container-lowest"> Data captured offline in the Flutter app is encrypted locally. Upon re-establishing a network connection, the system utilizes a secure token exchange via our REST API to push the backlog. Conflict resolution favors the latest timestamp unless manual review is flagged. </div>
+</div>
+<!-- Accordion Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant shadow-sm">
+<button class="w-full flex items-center justify-between p-5 focus:outline-none hover:bg-surface-container-low transition-colors" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.icon').classList.toggle('rotate-180')">
+<span class="font-body-lg text-body-lg font-bold text-on-surface">What constitutes a 'Critical' audit log entry?</span>
+<span class="material-symbols-outlined text-outline transition-transform icon">expand_more</span>
+</button>
+<div class="hidden p-5 pt-0 border-t border-outline-variant mt-2 font-body-md text-body-md text-on-surface-variant bg-surface-container-lowest"> Critical entries involve modifications to finalized blueprints, changes in user permission tiers, or failed authentication attempts exceeding standard thresholds. These are immutable and immediately flagged to Project Managers. </div>
+</div>
+<!-- Accordion Item 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant shadow-sm">
+<button class="w-full flex items-center justify-between p-5 focus:outline-none hover:bg-surface-container-low transition-colors" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('.icon').classList.toggle('rotate-180')">
+<span class="font-body-lg text-body-lg font-bold text-on-surface">How do Clients approve material variations?</span>
+<span class="material-symbols-outlined text-outline transition-transform icon">expand_more</span>
+</button>
+<div class="hidden p-5 pt-0 border-t border-outline-variant mt-2 font-body-md text-body-md text-on-surface-variant bg-surface-container-lowest"> Clients receive a standardized notification detailing the proposed material change alongside cost and timeline impacts. Approval requires multi-factor authentication and generates a permanent sign-off record linked to the specific blueprint node. </div>
+</div>
+</div>
+</section>
+<!-- Contact Support Section -->
+<section class="bg-surface-container p-8 md:p-12 border border-outline-variant mt-12 mb-12 shadow-sm">
+<div class="text-center mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Still need assistance?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Direct your inquiry to the appropriate specialist team.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Tech Support -->
+<div class="bg-surface-container-lowest p-8 border border-outline-variant flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-[48px] mb-4">engineering</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Technical Support</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 flex-1">For PMs and Field Engineers encountering system errors or sync issues.</p>
+<button class="w-full bg-primary text-on-primary py-3 px-6 font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-sm">Open Tech Ticket</button>
+</div>
+<!-- Client Success -->
+<div class="bg-surface-container-lowest p-8 border border-outline-variant flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary text-[48px] mb-4">support_agent</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Client Success</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 flex-1">For external stakeholders requiring onboarding or report configuration.</p>
+<button class="w-full border-2 border-primary text-primary py-3 px-6 font-label-md text-label-md hover:bg-primary/5 transition-colors">Contact Success</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

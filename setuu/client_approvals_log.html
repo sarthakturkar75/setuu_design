@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Approvals Log - SETUU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="tailwind.config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<style> .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; } </style>
+<script src="components.js"></script></head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen antialiased selection:bg-secondary-container selection:text-on-secondary-container flex flex-col h-screen overflow-hidden pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- Mobile Top App Bar -->
+<setuu-header></setuu-header>
+<!-- Desktop Side Nav -->
+<setuu-sidebar role="client"></setuu-sidebar>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-sidebar-width min-h-screen flex flex-col bg-background h-screen">
+<!-- Desktop Top Nav Bar -->
+<header class="hidden md:flex h-16 bg-surface-white border-b border-border-standard px-6 items-center justify-between shrink-0">
+<div class="flex-1"></div>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-low border border-border-standard text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder-outline transition-colors" placeholder="Global search..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 transition-colors">
+<span class="material-symbols-outlined">sync</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error"></span>
+</button>
+<div class="w-8 h-8 bg-secondary-container flex items-center justify-center text-on-secondary-container overflow-hidden border border-border-standard">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+</div>
+</header>
+<main class="lg:ml-sidebar-width flex-1 flex flex-col overflow-hidden relative">
+<!-- Page Header -->
+<div class="px-margin-mobile md:px-margin-desktop py-6 border-b border-border-standard bg-surface-white flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0 z-30">
+<div>
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-primary m-0">Client Approvals Log</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Review and manage formal client sign-offs.</p>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<div class="relative flex-1 md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full pl-9 pr-3 py-2 bg-surface-container border border-border-standard text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder-outline transition-colors" placeholder="Search approvals..." type="text"/>
+</div>
+<button class="bg-status-live text-white px-4 py-2 text-label-md font-label-md font-medium uppercase tracking-wider flex items-center gap-2 hover:bg-primary-container transition-colors whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">upload</span> Upload New </button>
+</div>
+</div>
+<!-- Summary Bar -->
+<div class="px-margin-mobile md:px-margin-desktop py-6 bg-surface grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-border-standard shrink-0">
+<div class="bg-surface-white p-4 border border-border-standard flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase">Total Approvals</span>
+<span class="text-headline-md font-headline-md text-primary">142</span>
+</div>
+<div class="bg-surface-white p-4 border border-border-standard flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-status-hold uppercase">Pending Review</span>
+<span class="text-headline-md font-headline-md text-status-hold">18</span>
+</div>
+<div class="bg-surface-white p-4 border border-border-standard flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-status-complete uppercase">Approved Items</span>
+<span class="text-headline-md font-headline-md text-status-complete">115</span>
+</div>
+<div class="bg-surface-white p-4 border border-border-standard flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase">Approval Rate %</span>
+<div class="flex items-end justify-between">
+<span class="text-headline-md font-headline-md text-primary">80.9%</span>
+<span class="text-label-md text-status-complete flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_upward</span> 2.4%</span>
+</div>
+<div class="w-full bg-border-standard h-unit mt-1 overflow-hidden">
+<div class="bg-primary h-full" style="width: 80.9%;"></div>
+</div>
+</div>
+</div>
+<!-- Master-Detail Layout -->
+<div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative" style="scrollbar-width: thin; scrollbar-color: #1F4E79 transparent;">
+<!-- Master List (Left) -->
+<div class="w-full lg:w-3/5 border-r border-border-standard bg-surface overflow-y-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container border-b border-border-standard sticky top-0 z-10">
+<tr>
+<th class="py-3 px-4 text-label-sm font-label-sm text-on-surface-variant font-medium uppercase tracking-wider w-20">ID</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-on-surface-variant font-medium uppercase tracking-wider">Approval Title</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-on-surface-variant font-medium uppercase tracking-wider hidden sm:table-cell">Milestone</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-on-surface-variant font-medium uppercase tracking-wider hidden md:table-cell">Date Req.</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-on-surface-variant font-medium uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-standard bg-surface-white text-body-sm">
+<!-- Active Row -->
+<tr class="hover:bg-data-wash cursor-pointer transition-colors bg-data-wash">
+<td class="py-3 px-4 text-label-md font-label-md text-primary">APV-402</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Structural Steel Sign-off - Sector A</div>
+<div class="text-label-sm text-on-surface-variant sm:hidden mt-1">Foundations • Oct 24</div>
+</td>
+<td class="py-3 px-4 text-on-surface-variant hidden sm:table-cell">Foundations Phase 2</td>
+<td class="py-3 px-4 text-on-surface-variant font-label-md hidden md:table-cell">2023-10-24</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 bg-status-complete/10 border border-status-complete/20 text-status-complete text-label-md font-label-md uppercase">Approved</span>
+</td>
+</tr>
+<!-- Inactive Rows -->
+<tr class="hover:bg-data-wash cursor-pointer transition-colors">
+<td class="py-3 px-4 text-label-md font-label-md text-outline">APV-401</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">HVAC Ducting Layout - Floor 3</div>
+</td>
+<td class="py-3 px-4 text-on-surface-variant hidden sm:table-cell">MEP Rough-in</td>
+<td class="py-3 px-4 text-on-surface-variant font-label-md hidden md:table-cell">2023-10-22</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 bg-status-hold/10 border border-status-hold/20 text-status-hold text-label-md font-label-md uppercase">Pending</span>
+</td>
+</tr>
+<tr class="hover:bg-data-wash cursor-pointer transition-colors">
+<td class="py-3 px-4 text-label-md font-label-md text-outline">APV-400</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Elevator Shaft Alignment Validation</div>
+</td>
+<td class="py-3 px-4 text-on-surface-variant hidden sm:table-cell">Core Structure</td>
+<td class="py-3 px-4 text-on-surface-variant font-label-md hidden md:table-cell">2023-10-20</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 bg-status-critical/10 border border-status-critical/20 text-status-critical text-label-md font-label-md uppercase">Revise</span>
+</td>
+</tr>
+<tr class="hover:bg-data-wash cursor-pointer transition-colors">
+<td class="py-3 px-4 text-label-md font-label-md text-outline">APV-399</td>
+<td class="py-3 px-4">
+<div class="font-medium text-on-surface">Façade Mockup Panel B</div>
+</td>
+<td class="py-3 px-4 text-on-surface-variant hidden sm:table-cell">Exterior Envelope</td>
+<td class="py-3 px-4 text-on-surface-variant font-label-md hidden md:table-cell">2023-10-18</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-1 bg-status-complete/10 border border-status-complete/20 text-status-complete text-label-md font-label-md uppercase">Approved</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Detail Pane (Right) -->
+<div class="w-full lg:w-2/5 bg-surface-white overflow-y-auto hidden lg:block border-l border-border-standard shadow-[-4px_0_15px_rgba(0,0,0,0.03)] z-20 flex flex-col">
+<div class="p-6 flex-1">
+<!-- Detail Header -->
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="text-label-md font-label-md text-outline font-medium">APV-402</span>
+<span class="inline-flex items-center px-2.5 py-1 bg-status-complete/10 border border-status-complete/20 text-status-complete text-label-md font-label-md uppercase">Approved</span>
+</div>
+<h2 class="text-headline-md font-headline-md text-on-surface mb-1 leading-tight">Structural Steel Sign-off - Sector A</h2>
+<p class="text-label-md font-label-md text-on-surface-variant">Linked to: Foundations Phase 2</p>
+</div>
+<button class="text-outline hover:text-primary transition-colors p-2 hover:bg-surface-container">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="h-px w-full bg-border-standard my-6"></div>
+<!-- Approver Details -->
+<div class="mb-8">
+<h3 class="text-label-sm font-label-sm text-outline uppercase mb-4 tracking-wider">Final Authority</h3>
+<div class="flex items-center gap-4 bg-surface-container-low p-4 border border-border-standard">
+<div class="w-12 h-12 bg-secondary-container flex items-center justify-center text-on-secondary-container text-headline-sm font-headline-sm overflow-hidden">
+<img alt="Approver Portrait" class="w-full h-full object-cover" data-alt="A professional headshot of a stern senior structural engineer wearing a white hardhat and safety glasses, against an out-of-focus background of a large construction site in daylight, high realism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy9tTQdc_8a_Cl0yvThUz_CCnCKduelwvxa_e0oENu0vumtIIJtyq8TvrcjtXv-Or_iIQXKlH3wM_gxyuhA86q5pixZkkiHusFvb6Rpvcpna8PO8nSGDNIRCQCmXxMklfcpYbQiO9DVzsdc_7GdsPz9o3JD316uzvnMCqcoe-ofQN_XmUl8DbmqAKiIzLssp7PoqzjcUE5iMurShyMDlYTjO0l5sWc7803C8VKl4gcZCXYlc1Hx6rw2g"/>
+</div>
+<div>
+<div class="font-medium text-body-lg text-on-surface">Sarah Jenkins, PE</div>
+<div class="text-body-md text-on-surface-variant">Chief Structural Inspector • City Planning Dept.</div>
+<div class="text-label-md font-label-md text-outline mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Signed Oct 26, 2023 - 14:32 EST </div>
+</div>
+</div>
+</div>
+<!-- Attached Documents -->
+<div class="mb-8">
+<h3 class="text-label-sm font-label-sm text-outline uppercase mb-4 tracking-wider">Attached Documentation</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 border border-border-standard hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-status-live text-[28px]">picture_as_pdf</span>
+<div>
+<div class="text-body-md font-medium text-on-surface">Form_34B_SectorA_Final.pdf</div>
+<div class="text-label-md font-label-md text-outline mt-0.5">2.4 MB • Signed Original</div>
+</div>
+</div>
+<button class="text-outline group-hover:text-status-live transition-colors p-2">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="flex items-center justify-between p-3 border border-border-standard hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline text-[28px]">description</span>
+<div>
+<div class="text-body-md font-medium text-on-surface">Weld_Inspection_Logs_Oct.xlsx</div>
+<div class="text-label-md font-label-md text-outline mt-0.5">842 KB • Supporting Data</div>
+</div>
+</div>
+<button class="text-outline group-hover:text-status-live transition-colors p-2">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Timeline -->
+<div>
+<h3 class="text-label-sm font-label-sm text-outline uppercase mb-4 tracking-wider">Approval Timeline</h3>
+<div class="relative pl-6 border-l-2 border-border-standard ml-3 space-y-6">
+<div class="relative">
+<div class="absolute w-3 h-3 bg-status-complete -left-[31px] top-1.5 border-2 border-surface-white"></div>
+<div class="text-label-md font-label-md text-outline mb-1">Oct 26, 14:32</div>
+<div class="text-body-md font-medium text-on-surface">Approval Granted</div>
+<div class="text-body-md text-on-surface-variant mt-1">Digital signature verified. Client noted minor cosmetic defects on column 4B, acceptable within spec.</div>
+</div>
+<div class="relative">
+<div class="absolute w-3 h-3 bg-status-hold -left-[31px] top-1.5 border-2 border-surface-white"></div>
+<div class="text-label-md font-label-md text-outline mb-1">Oct 25, 09:15</div>
+<div class="text-body-md font-medium text-on-surface">Review Initiated</div>
+<div class="text-body-md text-on-surface-variant mt-1">Package opened by Sarah Jenkins.</div>
+</div>
+<div class="relative">
+<div class="absolute w-3 h-3 bg-outline -left-[31px] top-1.5 border-2 border-surface-white"></div>
+<div class="text-label-md font-label-md text-outline mb-1">Oct 24, 16:45</div>
+<div class="text-body-md font-medium text-on-surface">Request Submitted</div>
+<div class="text-body-md text-on-surface-variant mt-1">Submitted by Marcus Cole (Setuu Site Manager) with 2 attachments.</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fixed Action Footer for Detail Pane -->
+<div class="sticky bottom-0 bg-surface-white border-t border-border-standard p-4 flex gap-3 justify-end shrink-0">
+<button class="px-4 py-2 border border-primary text-primary text-label-md font-label-md font-medium uppercase tracking-wider hover:bg-surface-container transition-colors">Revoke</button>
+<button class="px-4 py-2 bg-status-live text-white text-label-md font-label-md font-medium uppercase tracking-wider flex items-center gap-2 hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-sm">print</span> Print Record </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Nav -->
+<setuu-bottom-nav></setuu-bottom-nav> </div>
+</body>
+</html>

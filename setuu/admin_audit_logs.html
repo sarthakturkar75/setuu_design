@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Audit Logs - SETUU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> body { background-color: #faf9f4; /* Using 'surface'/'background' color from config */ } /* Ensuring precise 1px borders as per style guidelines */ .card-border { border: 1px solid theme('colors.border-standard'); } /* Hide scrollbar for a cleaner look in the detail pane if needed */ .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } </style>
+<script src="components.js"></script></head>
+<body class="text-on-surface antialiased font-body-md overflow-x-hidden pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- SIDE NAVIGATION BAR (Desktop) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<!-- MAIN CONTENT WRAPPER -->
+<div class="lg:ml-sidebar-width min-h-screen flex flex-col">
+<!-- TOP APP BAR -->
+<setuu-header></setuu-header>
+<!-- PAGE CONTENT CANVAS -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop flex flex-col gap-6">
+<!-- Page Header -->
+<div class="flex flex-col gap-1">
+<h1 class="text-headline-lg font-headline-lg md:text-headline-lg font-headline-lg-mobile text-on-surface tracking-tight">Admin Audit Logs</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-3xl">Review and export system-wide activity records for compliance and security.</p>
+</div>
+<!-- Metrics Row (Bento/Card Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric 1 -->
+<div class="bg-surface-white card-border p-4 -DEFAULT flex flex-col justify-between h-28">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-outline uppercase">Total Events (30D)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">data_usage</span>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface">142,854</div>
+<div class="h-1 w-full bg-border-standard mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-primary" style="width: 75%;"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-white card-border p-4 -DEFAULT flex flex-col justify-between h-28">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-status-critical uppercase font-bold">Security Alerts</span>
+<span class="material-symbols-outlined text-status-critical text-[18px]">warning</span>
+</div>
+<div class="text-headline-lg font-headline-lg text-status-critical">12</div>
+<div class="h-1 w-full bg-border-standard mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-status-critical" style="width: 15%;"></div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-white card-border p-4 -DEFAULT flex flex-col justify-between h-28">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-outline uppercase">Most Active User</span>
+<span class="material-symbols-outlined text-outline text-[18px]">person</span>
+</div>
+<div class="flex items-center gap-2 mt-auto">
+<div class="w-8 h-8 bg-data-wash flex items-center justify-center text-primary text-label-md font-label-md font-bold">J.D</div>
+<div>
+<div class="text-body-md font-body-md font-bold text-on-surface leading-tight">J. Doe</div>
+<div class="text-label-sm font-label-sm text-outline">ENG-402</div>
+</div>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-white card-border p-4 -DEFAULT flex flex-col justify-between h-28">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-outline uppercase">Active Sessions</span>
+<span class="material-symbols-outlined text-status-live text-[18px]">online_prediction</span>
+</div>
+<div class="text-headline-lg font-headline-lg text-status-live">89</div>
+<div class="h-1 w-full bg-border-standard mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-status-live" style="width: 45%;"></div>
+</div>
+</div>
+</div>
+<!-- Controls & Table Area -->
+<div class="flex flex-col lg:flex-row gap-6 flex-1 min-h-[600px]">
+<!-- Main Table Section -->
+<div class="flex-1 bg-surface-white card-border -DEFAULT flex flex-col overflow-hidden">
+<!-- Search & Filter Bar -->
+<div class="p-4 border-b border-border-standard bg-data-wash flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<!-- Search -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="pl-8 pr-3 py-1.5 text-body-md font-body-md border border-border-standard -DEFAULT focus:ring-1 focus:ring-primary focus:border-primary w-48 bg-surface-white" placeholder="User ID / Name..." type="text"/>
+</div>
+<!-- Filter: Event Type -->
+<select class="py-1.5 pl-3 pr-8 text-body-md font-body-md border border-border-standard -DEFAULT focus:ring-1 focus:ring-primary focus:border-primary bg-surface-white">
+<option>All Event Types</option>
+<option>Login</option>
+<option>Project Update</option>
+<option>File Download</option>
+<option>User Deactivation</option>
+</select>
+<!-- Date Range -->
+<div class="flex items-center gap-2 border border-border-standard -DEFAULT bg-surface-white px-3 py-1.5">
+<span class="material-symbols-outlined text-outline text-[18px]">calendar_month</span>
+<span class="text-body-md font-body-md">Last 7 Days</span>
+<span class="material-symbols-outlined text-outline text-[16px] ml-1">arrow_drop_down</span>
+</div>
+</div>
+<!-- Export Action -->
+<button class="flex items-center gap-2 px-4 py-1.5 bg-primary text-on-primary -DEFAULT hover:bg-tertiary transition-colors text-label-md font-label-md font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">download</span> Export CSV </button>
+</div>
+<!-- Data Grid (Table) -->
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-border-standard bg-surface text-label-md font-label-md text-outline uppercase">
+<th class="p-3 font-normal w-40">Timestamp (UTC)</th>
+<th class="p-3 font-normal">User</th>
+<th class="p-3 font-normal">Event Type</th>
+<th class="p-3 font-normal">Resource Affected</th>
+<th class="p-3 font-normal hidden md:table-cell">IP Address</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<!-- Row 1: Selected State Example -->
+<tr class="border-b border-border-standard bg-data-wash cursor-pointer hover:bg-surface-container-high transition-colors">
+<td class="p-3 text-label-md font-label-md text-on-surface-variant">2023-10-27 14:32:01</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-primary-fixed flex items-center justify-center text-primary text-[10px] font-bold">AK</div>
+<div>
+<div class="font-medium text-on-surface">Alex Kim</div>
+<div class="text-label-sm font-label-sm text-outline">Lead Engineer</div>
+</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm uppercase font-bold border border-secondary-fixed-dim">Project Update</span>
+</td>
+<td class="p-3">
+<span class="font-medium">Project Alpha</span>
+<span class="text-outline mx-1">/</span>
+<span class="text-on-surface-variant">Update #402</span>
+</td>
+<td class="p-3 hidden md:table-cell text-label-md font-label-md text-outline">192.168.1.105</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-border-standard hover:bg-data-wash cursor-pointer transition-colors">
+<td class="p-3 text-label-md font-label-md text-on-surface-variant">2023-10-27 14:15:22</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-surface-dim flex items-center justify-center text-on-surface text-[10px] font-bold">JD</div>
+<div>
+<div class="font-medium text-on-surface">J. Doe</div>
+<div class="text-label-sm font-label-sm text-outline">SysAdmin</div>
+</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-status-complete/20 text-status-complete text-label-sm font-label-sm uppercase font-bold border border-status-complete/30">Login</span>
+</td>
+<td class="p-3">
+<span class="text-on-surface-variant">System Auth</span>
+</td>
+<td class="p-3 hidden md:table-cell text-label-md font-label-md text-outline">203.0.113.42</td>
+</tr>
+<!-- Row 3: Alert -->
+<tr class="border-b border-border-standard hover:bg-data-wash cursor-pointer transition-colors">
+<td class="p-3 text-label-md font-label-md text-on-surface-variant">2023-10-27 13:05:11</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-error-container flex items-center justify-center text-error text-[10px] font-bold">??</div>
+<div>
+<div class="font-medium text-error">Unknown User</div>
+<div class="text-label-sm font-label-sm text-outline">Unauthenticated</div>
+</div>
+</div>
+</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-error-container text-error text-label-sm font-label-sm uppercase font-bold border border-error/30">Failed Login</span>
+</td>
+<td class="p-3">
+<span class="text-on-surface-variant">Admin Portal</span>
+</td>
+<td class="p-3 hidden md:table-cell text-label-md font-label-md text-outline">185.199.108.153</td>
+</tr>
+<!-- Empty states to fill table visually -->
+<tr class="border-b border-border-standard">
+<td class="p-3 h-12" colspan="5"></td>
+</tr>
+<tr class="border-b border-border-standard">
+<td class="p-3 h-12" colspan="5"></td>
+</tr>
+<tr class="border-b border-border-standard">
+<td class="p-3 h-12" colspan="5"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination (Simple) -->
+<div class="p-3 border-t border-border-standard bg-surface flex items-center justify-between text-label-md font-label-md text-outline">
+<span>Showing 1-3 of 142,854</span>
+<div class="flex items-center gap-2">
+<button class="p-1 hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<span>Page 1</span>
+<button class="p-1 hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Detail Sidebar (Deep Dive Pane) -->
+<div class="w-full lg:w-96 bg-surface-white card-border -DEFAULT flex flex-col shrink-0">
+<!-- Detail Header -->
+<div class="p-4 border-b border-border-standard flex items-center justify-between bg-surface">
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Event Details</h3>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">close</span></button>
+</div>
+<div class="p-4 flex-1 overflow-y-auto no-scrollbar flex flex-col gap-6">
+<!-- Core Info -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<div class="text-label-sm font-label-sm text-outline uppercase mb-1">Event ID</div>
+<div class="text-label-md font-label-md text-on-surface">evt_8x92jfkL01m</div>
+</div>
+<span class="inline-flex items-center px-2 py-1 bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm uppercase font-bold border border-secondary-fixed-dim">Project Update</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<div class="text-label-sm font-label-sm text-outline uppercase mb-1">Timestamp</div>
+<div class="text-label-md font-label-md text-on-surface">Oct 27, 2023 14:32:01 UTC</div>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-outline uppercase mb-1">Device / OS</div>
+<div class="text-label-md font-label-md text-on-surface">Chrome 118 / macOS</div>
+</div>
+</div>
+</div>
+<!-- Network Metadata -->
+<div class="border-t border-border-standard pt-4">
+<div class="text-label-md font-label-md font-bold text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">public</span> Network Metadata </div>
+<div class="bg-data-wash p-3 border border-border-standard font-label-sm text-label-sm text-on-surface-variant flex flex-col gap-1">
+<div class="flex justify-between"><span>IP Address:</span> <span class="text-on-surface">192.168.1.105</span></div>
+<div class="flex justify-between"><span>Location:</span> <span class="text-on-surface">Seattle, WA, US</span></div>
+<div class="flex justify-between"><span>ISP:</span> <span class="text-on-surface">Comcast Cable</span></div>
+<div class="flex justify-between"><span>VPN/Proxy:</span> <span class="text-status-complete">False</span></div>
+</div>
+</div>
+<!-- Data Comparison -->
+<div class="border-t border-border-standard pt-4 flex-1 flex flex-col">
+<div class="text-label-md font-label-md font-bold text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">compare_arrows</span> Payload Diff </div>
+<!-- JSON Diff view -->
+<div class="bg-[#1e1e1e] border border-outline-variant p-3 overflow-x-auto flex-1 font-label-md text-label-md leading-relaxed">
+<pre class="text-[#d4d4d4]"><code>{"resource":"Project Alpha","status": {
+<span class="text-[#f14c4c] bg-[#f14c4c]/10 inline-block w-full">-"current":"IN_PROGRESS",</span>
+<span class="text-[#73c991] bg-[#73c991]/10 inline-block w-full">+"current":"COMPLETED",</span> },"milestone_completion": {
+<span class="text-[#f14c4c] bg-[#f14c4c]/10 inline-block w-full">-"percentage": 85</span>
+<span class="text-[#73c991] bg-[#73c991]/10 inline-block w-full">+"percentage": 100</span> }
+}</code></pre>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-4 border-t border-border-standard bg-surface">
+<button class="w-full py-2 border border-primary text-primary hover:bg-primary hover:text-on-primary transition-colors -DEFAULT text-label-md font-label-md font-bold uppercase tracking-wider flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span> View Full Trace </button>
+</div>
+</div>
+</div>
+</main>
+</div>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu - Change Request Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> body { background-color: #F7F6F1; } .data-wash-row:nth-child(even) { background-color: #EAF2F8; } .data-wash-row:nth-child(odd) { background-color: #ffffff; } </style>
+<script src="components.js"></script></head>
+<body class="text-on-background font-body-md antialiased h-screen overflow-hidden flex flex-col pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- SideNavBar -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<!-- Main Workspace Area -->
+<div class="flex-1 flex flex-col lg:ml-sidebar-width w-full relative">
+<!-- TopAppBar -->
+<setuu-header></setuu-header>
+<!-- Content Canvas -->
+<main class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop flex gap-6">
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col gap-6">
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary m-0 p-0">Change Request Manager</h1>
+</div>
+<button class="bg-primary text-on-primary h-10 px-6 text-label-md font-label-md uppercase tracking-wider hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span> Create Change Request </button>
+</div>
+<!-- Summary Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-white border border-border-standard p-4 flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Total CRs</span>
+<span class="text-headline-sm font-headline-sm text-primary">142</span>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Pending Approval</span>
+<span class="text-headline-sm font-headline-sm text-status-hold">12</span>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Estimated Cost Impact</span>
+<span class="text-headline-sm font-headline-sm text-error">+$450,200</span>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 flex flex-col gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Total Schedule Impact (Days)</span>
+<span class="text-headline-sm font-headline-sm text-error">+45</span>
+</div>
+</div>
+<!-- Main Data Table -->
+<div class="bg-surface-white border border-border-standard flex flex-col overflow-hidden flex-1 min-h-[400px]">
+<div class="overflow-x-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-border-standard text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">
+<th class="p-4 w-24">CR ID</th>
+<th class="p-4">Title</th>
+<th class="p-4">Project</th>
+<th class="p-4 text-right">Cost Impact</th>
+<th class="p-4 text-right">Time Impact</th>
+<th class="p-4 text-center">Status</th>
+<th class="p-4 text-right">Date</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md text-on-surface">
+<!-- Row 1 - Selected State -->
+<tr class="border-b border-border-standard cursor-pointer bg-secondary-container/20 hover:bg-surface-container transition-colors">
+<td class="p-4 font-label-md text-primary font-bold">CR-402</td>
+<td class="p-4 font-medium">Structural Re-reinforcement at Sector 7</td>
+<td class="p-4 text-on-surface-variant">Project Alpha</td>
+<td class="p-4 text-right text-error font-label-md">+$14,500</td>
+<td class="p-4 text-right text-error font-label-md">+12 Days</td>
+<td class="p-4">
+<div class="flex justify-center">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-label-sm font-label-sm uppercase flex items-center justify-center w-24 h-6">Pending</span>
+</div>
+</td>
+<td class="p-4 text-right text-on-surface-variant font-label-md">2023-10-24</td>
+</tr>
+<!-- Row 2 -->
+<tr class="data-wash-row border-b border-border-standard cursor-pointer hover:bg-surface-container transition-colors">
+<td class="p-4 font-label-md text-primary">CR-401</td>
+<td class="p-4">HVAC Duct Rerouting</td>
+<td class="p-4 text-on-surface-variant">Project Alpha</td>
+<td class="p-4 text-right text-error font-label-md">+$8,200</td>
+<td class="p-4 text-right text-error font-label-md">+4 Days</td>
+<td class="p-4">
+<div class="flex justify-center">
+<span class="px-2 py-1 bg-status-complete/20 text-status-complete text-label-sm font-label-sm uppercase flex items-center justify-center w-24 h-6">Approved</span>
+</div>
+</td>
+<td class="p-4 text-right text-on-surface-variant font-label-md">2023-10-22</td>
+</tr>
+<!-- Row 3 -->
+<tr class="data-wash-row border-b border-border-standard cursor-pointer hover:bg-surface-container transition-colors">
+<td class="p-4 font-label-md text-primary">CR-400</td>
+<td class="p-4">Substitute Material for Flooring</td>
+<td class="p-4 text-on-surface-variant">Project Beta</td>
+<td class="p-4 text-right text-status-complete font-label-md">-$2,000</td>
+<td class="p-4 text-right text-on-surface-variant font-label-md">0 Days</td>
+<td class="p-4">
+<div class="flex justify-center">
+<span class="px-2 py-1 bg-status-critical/20 text-status-critical text-label-sm font-label-sm uppercase flex items-center justify-center w-24 h-6">Rejected</span>
+</div>
+</td>
+<td class="p-4 text-right text-on-surface-variant font-label-md">2023-10-20</td>
+</tr>
+<!-- Row 4 -->
+<tr class="data-wash-row border-b border-border-standard cursor-pointer hover:bg-surface-container transition-colors">
+<td class="p-4 font-label-md text-primary">CR-399</td>
+<td class="p-4">Additional Power Outlets in Lab 3</td>
+<td class="p-4 text-on-surface-variant">Project Alpha</td>
+<td class="p-4 text-right text-error font-label-md">+$1,500</td>
+<td class="p-4 text-right text-error font-label-md">+1 Days</td>
+<td class="p-4">
+<div class="flex justify-center">
+<span class="px-2 py-1 bg-status-complete/20 text-status-complete text-label-sm font-label-sm uppercase flex items-center justify-center w-24 h-6">Approved</span>
+</div>
+</td>
+<td class="p-4 text-right text-on-surface-variant font-label-md">2023-10-18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Detail Side Pane -->
+<aside class="hidden xl:flex w-[400px] flex-shrink-0 bg-surface-white border border-border-standard flex-col overflow-hidden h-full">
+<!-- Pane Header -->
+<div class="p-4 border-b border-border-standard bg-surface-container-low flex justify-between items-start gap-4">
+<div>
+<div class="text-label-md font-label-md text-primary mb-1">CR-402</div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Structural Re-reinforcement at Sector 7</h2>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<div class="p-4 flex-1 overflow-y-auto flex flex-col gap-6">
+<!-- Description -->
+<div class="flex flex-col gap-2">
+<h3 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider border-b border-border-standard pb-1">Description</h3>
+<p class="text-body-md font-body-md text-on-surface leading-relaxed"> Subsurface soil analysis revealed lower than expected load-bearing capacity at Sector 7 foundation footings. Requires additional structural steel reinforcement (spec #A-449) before pouring concrete. </p>
+</div>
+<!-- Impact Section -->
+<div class="flex flex-col gap-2">
+<h3 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider border-b border-border-standard pb-1">Impact Analysis</h3>
+<div class="flex gap-4">
+<div class="flex-1 bg-surface p-3 border border-border-standard flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Cost Impact</span>
+<span class="text-headline-sm font-headline-sm text-error">+$14,500</span>
+</div>
+<div class="flex-1 bg-surface p-3 border border-border-standard flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Timeline Impact</span>
+<span class="text-headline-sm font-headline-sm text-error">+12 Days</span>
+</div>
+</div>
+</div>
+<!-- Workflow -->
+<div class="flex flex-col gap-2">
+<h3 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider border-b border-border-standard pb-1">Approval Workflow</h3>
+<div class="flex flex-col gap-0 border border-border-standard overflow-hidden">
+<!-- Step 1 -->
+<div class="p-3 bg-surface-white border-b border-border-standard flex items-center gap-3">
+<span class="material-symbols-outlined text-status-complete" data-icon="check_circle">check_circle</span>
+<div class="flex-1">
+<div class="text-body-md font-body-md font-medium text-on-surface">Requested</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Sarah Jenkins (PM) - Oct 24</div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="p-3 bg-surface-white border-b border-border-standard flex items-center gap-3">
+<span class="material-symbols-outlined text-status-complete" data-icon="check_circle">check_circle</span>
+<div class="flex-1">
+<div class="text-body-md font-body-md font-medium text-on-surface">Technical Review</div>
+<div class="text-label-md font-label-md text-on-surface-variant">David Cho (Admin) - Oct 25</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="p-3 bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-status-hold animate-pulse" data-icon="pending">pending</span>
+<div class="flex-1">
+<div class="text-body-md font-body-md font-medium text-on-surface">Final Decision</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Client Rep (Pending)</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Attachments -->
+<div class="flex flex-col gap-2">
+<h3 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider border-b border-border-standard pb-1">Attachments</h3>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 p-2 border border-border-standard bg-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-body-md font-body-md text-primary flex-1 truncate">Soil_Analysis_Report_Sec7.pdf</span>
+<span class="text-label-md font-label-md text-on-surface-variant">2.4 MB</span>
+</a>
+<a class="flex items-center gap-3 p-2 border border-border-standard bg-surface hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="design_services">design_services</span>
+<span class="text-body-md font-body-md text-primary flex-1 truncate">Revised_Drawings_S7_v2.dwg</span>
+<span class="text-label-md font-label-md text-on-surface-variant">15 MB</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-4 border-t border-border-standard bg-surface-container-lowest flex gap-3">
+<button class="flex-1 h-10 border border-primary text-primary text-label-md font-label-md uppercase tracking-wider hover:bg-surface-container transition-colors"> Add Comment </button>
+<button class="flex-1 h-10 bg-primary text-on-primary text-label-md font-label-md uppercase tracking-wider hover:bg-primary-container hover:text-on-primary-container transition-colors"> Expedite </button>
+</div>
+</aside>
+</main>
+</div>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu | Expanded Project Settings (FR-115)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;family=Merriweather:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; } .precision-input { border: 1px solid #c2c7d0; border-radius: 2px; background-color: #ffffff; transition: border-color 0.2s ease; } .precision-input:focus { outline: none; border-color: #00375e; box-shadow: 0 0 0 1px #00375e; } .toggle-switch { width: 36px; height: 20px; position: relative; cursor: pointer; } .toggle-switch input { opacity: 0; width: 0; height: 0; } .toggle-slider { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #e3e3de; transition: .3s; border-radius: 20px; } .toggle-slider:before { position: absolute; content:""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; } input:checked + .toggle-slider { background-color: #00375e; } input:checked + .toggle-slider:before { transform: translateX(16px); } .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; } .bento-item { background: #ffffff; border: 1px solid #e3e3de; padding: 24px; } </style>
+<script src="components.js"></script></head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- SideNavBar (Authority: JSON) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<div class="mt-auto pt-6 border-t border-on-primary/10">
+<div class="flex items-center gap-3 px-2">
+<div class="w-8 h-8 bg-secondary-container flex items-center justify-center text-on-secondary-container text-xs font-bold">JD</div>
+<div class="overflow-hidden">
+<p class="text-on-primary text-sm font-bold truncate">John Doe</p>
+<p class="text-on-primary/60 text-xs truncate">Admin Access</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="lg:ml-sidebar-width ml-sidebar-width min-h-screen">
+<!-- TopNavBar (Authority: JSON) -->
+<setuu-header></setuu-header>
+<!-- Content Area -->
+<div class="p-margin-desktop space-y-gutter">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="text-headline-lg font-headline-lg text-on-surface">Expanded Project Settings</h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-1">Ref ID: FR-115 | Managing Lifecycle and Governance for <span class="font-bold text-primary">Industrial Expansion II</span></p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-outline text-label-md font-label-md text-primary hover:bg-surface-container transition-colors uppercase tracking-wider">Discard Changes</button>
+<button class="px-6 py-2 bg-primary text-on-primary text-label-md font-label-md hover:bg-opacity-90 transition-all uppercase tracking-wider">Save Configuration</button>
+</div>
+</div>
+<!-- Settings Bento Grid -->
+<div class="bento-grid">
+<!-- Section 1: General Settings -->
+<section class="bento-item col-span-12 lg:col-span-7">
+<div class="flex items-center gap-2 mb-6 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary">info</span>
+<h4 class="text-headline-sm font-headline-sm uppercase tracking-tight">General Project Parameters</h4>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2 col-span-2 md:col-span-1">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Project Name</label>
+<input class="precision-input w-full p-3 text-body-md" type="text" value="Industrial Expansion II"/>
+</div>
+<div class="space-y-2 col-span-2 md:col-span-1">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Project UID</label>
+<input class="precision-input w-full p-3 bg-surface-container text-on-surface-variant/50 cursor-not-allowed" disabled="" type="text" value="STU-2024-089-ME"/>
+</div>
+<div class="space-y-2 col-span-2 md:col-span-1">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Client Entity</label>
+<select class="precision-input w-full p-3 text-body-md">
+<option>Apex Manufacturing Group</option>
+<option>Global Logistics Corp</option>
+<option>Precision Engineering Ltd</option>
+</select>
+</div>
+<div class="space-y-2 col-span-2 md:col-span-1">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Project Discipline</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 text-label-sm font-label-sm border border-primary bg-primary text-on-primary">Mechanical</button>
+<button class="flex-1 py-2 text-label-sm font-label-sm border border-outline hover:bg-surface-container">Electrical</button>
+<button class="flex-1 py-2 text-label-sm font-label-sm border border-outline hover:bg-surface-container">Structural</button>
+</div>
+</div>
+<div class="space-y-2 col-span-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Brief / Project Scope</label>
+<textarea class="precision-input w-full p-3 text-body-md" rows="3">Expansion of the secondary cooling unit and structural reinforcement of the HVAC platform for Site B. Priority level: High. Precision tolerance: +/- 2mm.</textarea>
+</div>
+</div>
+</section>
+<!-- Section 5: Security (High Side Item) -->
+<section class="bento-item col-span-12 lg:col-span-5 bg-surface-container-low border-primary/20">
+<div class="flex items-center gap-2 mb-6 border-b border-primary/10 pb-2">
+<span class="material-symbols-outlined text-primary">security</span>
+<h4 class="text-headline-sm font-headline-sm uppercase tracking-tight">Security &amp; Encryption</h4>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-white border border-outline-variant">
+<div>
+<p class="text-label-md font-label-md font-bold uppercase">Biometric Enforcement</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Require TouchID/FaceID for field data capture</p>
+</div>
+<label class="toggle-switch">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase">Privacy Classification</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 bg-white border border-outline-variant cursor-pointer hover:border-primary transition-colors">
+<input checked="" class="text-primary focus:ring-primary" name="privacy" type="radio"/>
+<div>
+<p class="text-label-md font-label-md">Confidential (L3)</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Only assigned members can view and export project telemetry.</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 bg-white border border-outline-variant cursor-pointer hover:border-primary transition-colors">
+<input class="text-primary focus:ring-primary" name="privacy" type="radio"/>
+<div>
+<p class="text-label-md font-label-md">Strictly Private (L4)</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Admin approval required for all document downloads.</p>
+</div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Notification Governance -->
+<section class="bento-item col-span-12 lg:col-span-4">
+<div class="flex items-center gap-2 mb-6 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+<h4 class="text-headline-sm font-headline-sm uppercase tracking-tight">Notification Governance</h4>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+<span class="text-body-md">Critical Field Updates</span>
+<label class="toggle-switch">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+<span class="text-body-md">Comments &amp; RFIs</span>
+<label class="toggle-switch">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+<span class="text-body-md">Milestone Completion</span>
+<label class="toggle-switch">
+<input type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-body-md text-error">Delay Alerts</span>
+<label class="toggle-switch">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</section>
+<!-- Section 3: Access Control -->
+<section class="bento-item col-span-12 lg:col-span-8">
+<div class="flex items-center justify-between mb-6 border-b border-outline-variant pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">group</span>
+<h4 class="text-headline-sm font-headline-sm uppercase tracking-tight">Access Control &amp; Members</h4>
+</div>
+<button class="text-label-md font-label-md text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-base">person_add</span> Add Member </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-label-sm font-label-sm uppercase text-on-surface-variant">
+<tr>
+<th class="p-3 border-b border-outline-variant">Member Name</th>
+<th class="p-3 border-b border-outline-variant">Role</th>
+<th class="p-3 border-b border-outline-variant">Organization</th>
+<th class="p-3 border-b border-outline-variant text-right">Action</th>
+</tr>
+</thead>
+<tbody class="text-body-md">
+<tr class="hover:bg-surface-container-lowest border-b border-surface-variant">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary-container text-on-primary-container flex items-center justify-center text-xs">MA</div>
+<span>Mark Anthony</span>
+</td>
+<td class="p-3"><span class="bg-primary/10 text-primary px-2 py-0.5 text-label-sm font-bold uppercase">Lead PM</span></td>
+<td class="p-3">Setuu Industrial</td>
+<td class="p-3 text-right"><span class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">delete</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest border-b border-surface-variant">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 bg-secondary-container text-on-secondary-container flex items-center justify-center text-xs">SK</div>
+<span>Sarah Koenig</span>
+</td>
+<td class="p-3"><span class="bg-on-tertiary-container/20 text-tertiary px-2 py-0.5 text-label-sm font-bold uppercase">Client User</span></td>
+<td class="p-3">Apex Manufacturing</td>
+<td class="p-3 text-right"><span class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">delete</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest">
+<td class="p-3 flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container-high text-on-surface flex items-center justify-center text-xs">RV</div>
+<span>Rajiv Verma</span>
+</td>
+<td class="p-3"><span class="bg-outline/10 text-on-surface-variant px-2 py-0.5 text-label-sm font-bold uppercase">Field Tech</span></td>
+<td class="p-3">Verma Engineering</td>
+<td class="p-3 text-right"><span class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">delete</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Section 4: Data & Lifecycle Management -->
+<section class="bento-item col-span-12 bg-surface-variant/30 border-dashed">
+<div class="flex items-center gap-2 mb-6 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary">data_usage</span>
+<h4 class="text-headline-sm font-headline-sm uppercase tracking-tight">Data &amp; Lifecycle Management</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex gap-4">
+<div class="w-12 h-12 shrink-0 bg-white border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">archive</span>
+</div>
+<div>
+<h5 class="text-label-md font-bold uppercase mb-1">Archive Project</h5>
+<p class="text-body-md text-on-surface-variant mb-4">Soft-deletes the project from the active dashboard. All data is preserved for audit trails but remains read-only. This action is reversible by Master Admins.</p>
+<button class="px-4 py-1.5 border border-primary text-label-md font-label-md hover:bg-primary hover:text-on-primary transition-all">Execute Archival</button>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 shrink-0 bg-white border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">move_down</span>
+</div>
+<div>
+<h5 class="text-label-md font-bold uppercase mb-1">Transfer Ownership</h5>
+<p class="text-body-md text-on-surface-variant mb-4">Relinquish Primary Admin rights to another user. This will grant them full billing and governance permissions for the project's data lifecycle.</p>
+<button class="px-4 py-1.5 border border-primary text-label-md font-label-md hover:bg-primary hover:text-on-primary transition-all">Start Transfer</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Visual Context Indicator (using IMAGE_3) -->
+<div class="mt-8 relative h-64 overflow-hidden border border-outline-variant">
+<div class="absolute inset-0 z-0">
+<img alt="Industrial environment background" class="w-full h-full object-cover grayscale opacity-20 filter contrast-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrAnvWpAtD_ZSimHauZmi_ECkmn1MYjvQutHPm8jvAwDNZxgLTzXQOrjLpPitSDcGOLAlJ2UdF1ZIbItBcywn5m3etXExJbxerUS5pusfoK3sLc2M1phinDdwsCtp3SUTZ_Fvyg16qrEquOxMyKL01csEY12BvcZ0ZY3h-emCnRcRh7xHuVVCFy-OfM0IodZQ9a7C5Z0g44X-WhNY0XahhMRYAiCw9oWyJl2an75iAeybvcyCsrjpUbvqUVEo7CPZJQIw"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-10"></div>
+<div class="relative z-20 h-full flex flex-col justify-center px-10">
+<div class="max-w-xl">
+<span class="bg-primary text-on-primary px-3 py-1 text-label-sm font-label-sm uppercase tracking-widest inline-block mb-4">Governance Snapshot</span>
+<h4 class="text-headline-md font-headline-md text-primary mb-2">High-Precision Field Coordination</h4>
+<p class="text-body-lg text-on-surface-variant">The settings configured on this page directly impact how field engineers interact with the Setuu mobile client. Ensure notification thresholds and security levels align with site-specific safety protocols.</p>
+</div>
+</div>
+<!-- Technical Watermark Logic -->
+<div class="absolute bottom-4 right-4 z-20 text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-50">LAT: 40.7128° N | LON: 74.0060° W</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-50">TIMESTAMP: 2026-08-03T16:16:48Z</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Notification FAB (Contextual) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-primary text-on-primary flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl">help</span>
+</button>
+</div>
+<script> // Micro-interactions for form field focus document.querySelectorAll('.precision-input').forEach(input => { input.addEventListener('focus', () => { input.parentElement.querySelector('label')?.classList.add('text-primary'); }); input.addEventListener('blur', () => { input.parentElement.querySelector('label')?.classList.remove('text-primary'); }); }); // Simple toggle state management const switches = document.querySelectorAll('.toggle-switch input'); switches.forEach(sw => { sw.addEventListener('change', (e) => { const parent = sw.closest('div'); if (e.target.checked) { console.log('Governance active for segment'); } }); }); </script>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

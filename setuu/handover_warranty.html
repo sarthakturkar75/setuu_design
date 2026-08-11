@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Handover &amp; Warranty Package - SETUU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> body { background-color: #faf9f4; } .master-grid { display: grid; grid-template-columns: 1fr; gap: 24px; } @media (min-width: 1024px) { .master-grid { grid-template-columns: 320px 1fr; } } </style>
+<script src="components.js"></script></head>
+<body class="font-body-md text-on-surface antialiased bg-background pb-20 md:pb-0 pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- TopAppBar (from JSON) -->
+<setuu-header></setuu-header>
+<!-- SideNavBar (from JSON) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<!-- Main Canvas -->
+<main class="lg:ml-sidebar-width min-h-screen">
+<div class="p-margin-mobile md:p-margin-desktop max-w-[1600px] mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-on-surface mb-2">Handover &amp; Warranty</h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-2xl">Manage final documentation, as-built records, and warranty tracking for Project Alpha handovers.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-surface-white border border-border-standard text-primary text-label-md font-label-md uppercase tracking-wider hover:bg-data-wash transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span> Filter </button>
+<button class="px-4 py-2 bg-primary-container text-surface-white text-label-md font-label-md uppercase tracking-wider hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span> New Package </button>
+</div>
+</div>
+<!-- Metrics Top Bar -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-white border border-border-standard p-4">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Total Items</p>
+<p class="text-headline-md font-headline-md text-primary">124</p>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 border-t-4 border-t-status-complete">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Handed Over</p>
+<p class="text-headline-md font-headline-md text-status-complete">86</p>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 border-t-4 border-t-status-hold">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">In Review</p>
+<p class="text-headline-md font-headline-md text-status-hold">22</p>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 border-t-4 border-t-status-live">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Warranty Active</p>
+<p class="text-headline-md font-headline-md text-status-live">74</p>
+</div>
+</div>
+<!-- Master-Detail Layout -->
+<div class="master-grid">
+<!-- Left: Handover Registry List -->
+<div class="bg-surface-white border border-border-standard flex flex-col h-[600px]">
+<div class="p-4 border-b border-border-standard bg-surface-container-low">
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Handover Registry</h2>
+</div>
+<div class="overflow-y-auto flex-1">
+<!-- List Item Active -->
+<button class="w-full text-left p-4 border-b border-border-standard bg-data-wash border-l-4 border-l-primary hover:bg-data-wash transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-widest">HVAC-01</span>
+<span class="px-2 py-1 bg-surface-container text-on-surface-variant text-[10px] font-label-sm uppercase tracking-widest">Submitted</span>
+</div>
+<h3 class="text-body-md font-body-md font-semibold text-on-surface mb-1">Phase 1: Mechanical Assembly</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 12, 2023 </p>
+</button>
+<!-- List Item Inactive -->
+<button class="w-full text-left p-4 border-b border-border-standard bg-surface-white hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">ELEC-04</span>
+<span class="px-2 py-1 bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-label-sm uppercase tracking-widest border border-[#2E7D32]/20">Accepted</span>
+</div>
+<h3 class="text-body-md font-body-md font-semibold text-on-surface mb-1">Electrical Infrastructure</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 05, 2023 </p>
+</button>
+<!-- List Item Inactive -->
+<button class="w-full text-left p-4 border-b border-border-standard bg-surface-white hover:bg-surface-container-low transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">STRC-12</span>
+<span class="px-2 py-1 bg-surface-container text-on-surface-variant text-[10px] font-label-sm uppercase tracking-widest border border-border-standard">Draft</span>
+</div>
+<h3 class="text-body-md font-body-md font-semibold text-on-surface mb-1">Steel Framework Sector B</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 15, 2023 </p>
+</button>
+</div>
+</div>
+<!-- Right: Package Inspector -->
+<div class="bg-surface-white border border-border-standard h-[600px] flex flex-col">
+<!-- Inspector Header -->
+<div class="p-6 border-b border-border-standard bg-surface-container-low flex justify-between items-start">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-3 py-1 bg-[#FFF8E1] text-[#BA7517] border border-[#BA7517]/30 text-label-md font-label-md uppercase tracking-widest shadow-sm">Submitted</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">ID: HVAC-01</span>
+</div>
+<h2 class="text-headline-md font-headline-md text-on-surface">Phase 1: Mechanical Assembly</h2>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant border border-border-standard bg-surface-white hover:bg-data-wash transition-colors" title="Download Full Package">
+<span class="material-symbols-outlined">download</span>
+</button><button class="px-4 py-2 bg-surface-white border border-border-standard text-primary text-label-md font-label-md uppercase tracking-wider hover:bg-data-wash transition-colors flex items-center gap-2"> <span class="material-symbols-outlined text-[18px]">visibility</span> PREVIEW PACKAGE </button>
+<button class="px-4 py-2 bg-[#1F4E79] text-surface-white text-label-md font-label-md uppercase tracking-wider hover:opacity-90 transition-colors flex items-center gap-2 shadow-sm"> DIRECT SEND TO CLIENT </button>
+</div>
+</div>
+<!-- Inspector Content Scrollable -->
+<div class="p-6 overflow-y-auto flex-1 space-y-8 bg-background">
+<!-- Client Signature Status -->
+<div class="bg-surface-white border border-border-standard p-4 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-label-md font-label-md uppercase tracking-widest text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-status-hold">pending_actions</span> Formal Client Signature </h3>
+<span class="text-label-sm font-label-sm text-status-hold font-bold">Awaiting Sign-off</span>
+</div>
+<div class="w-full bg-surface-container h-unit overflow-hidden">
+<div class="bg-status-hold h-full w-[70%]"></div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mt-3 text-sm">Package submitted for final review to Client Rep (John Doe). Anticipated sign-off within 48 hours.</p><div class="mt-2 flex items-start gap-2 text-label-sm text-on-surface-variant opacity-80"> <span class="material-symbols-outlined text-[14px]">info</span> <span class="">Direct Send triggers an immediate notification to the client portal and email.</span> </div>
+</div>
+<!-- Package Contents List -->
+<div>
+<h3 class="text-label-md font-label-md uppercase tracking-widest text-on-surface mb-4 border-b border-border-standard pb-2">Package Contents</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 border border-border-standard bg-surface-white hover:bg-data-wash transition-colors group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container text-primary group-hover:bg-primary group-hover:text-surface-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-semibold text-on-surface">O&amp;M Manuals</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">PDF • 12.4 MB • 3 Files</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-3 border border-border-standard bg-surface-white hover:bg-data-wash transition-colors group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container text-primary group-hover:bg-primary group-hover:text-surface-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-semibold text-on-surface">Test &amp; Commissioning Certificates</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">PDF • 4.1 MB • 12 Files</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chevron_right</span>
+</div>
+<div class="flex items-center justify-between p-3 border border-border-standard bg-surface-white hover:bg-data-wash transition-colors group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container text-primary group-hover:bg-primary group-hover:text-surface-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-semibold text-on-surface">As-Built Drawings</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">DWG/PDF • 45.2 MB • 8 Files</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Warranty Tracking Section -->
+<div>
+<h3 class="text-label-md font-label-md uppercase tracking-widest text-on-surface mb-4 border-b border-border-standard pb-2">Warranty Details</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-white border border-border-standard p-4">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Start Date</p>
+<p class="text-body-md font-body-md font-semibold text-on-surface">Pending Sign-off</p>
+</div>
+<div class="bg-surface-white border border-border-standard p-4">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Expiry Date</p>
+<p class="text-body-md font-body-md font-semibold text-on-surface">--</p>
+</div>
+<div class="bg-surface-white border border-border-standard p-4 col-span-2 flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest mb-1">Support Contact</p>
+<p class="text-body-md font-body-md font-semibold text-on-surface">TechMech Vendor Services</p>
+<p class="text-body-md font-body-md text-on-surface-variant">support@techmech.example.com</p>
+</div>
+<button class="p-2 border border-border-standard text-primary hover:bg-data-wash transition-colors">
+<span class="material-symbols-outlined">mail</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (from JSON) -->
+<setuu-bottom-nav></setuu-bottom-nav>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

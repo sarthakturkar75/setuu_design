@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Reporting &amp; CSV Export - Setuu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> body { background-color: #faf9f4; color: #1b1c19; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; } .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; } .material-symbols-outlined.filled { font-variation-settings: 'FILL' 1; } /* Progress bar utility */ .progress-bar-container { height: 4px; background-color: #E0E0E0; border-radius: 0; overflow: hidden; } .progress-bar-fill { height: 100%; background-color: #1F4E79; } /* Custom scrollbar for data tables */ .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; } .custom-scrollbar::-webkit-scrollbar-track { background: #EAF2F8; border-radius: 4px; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #c2c7d0; border-radius: 4px; } .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #72777f; } </style>
+<script src="components.js"></script></head>
+<body class="flex h-screen overflow-hidden bg-background pt-[64px]">
+<!-- SideNavBar (Desktop only, responsive handling implied though requested strictly B2B/Admin context here) -->
+<setuu-sidebar role="pm"></setuu-sidebar>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-sidebar-width min-w-0 bg-background h-screen">
+<!-- TopNavBar -->
+<setuu-header></setuu-header>
+<!-- Canvas -->
+<main class="lg:ml-sidebar-width flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop custom-scrollbar pb-24">
+<!-- Page Header -->
+<div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface m-0 mb-2">Executive Reporting &amp; Data Export</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant m-0">Generate custom reports and export auditable project data.</p>
+</div>
+</div>
+<!-- Bento Layout for Reporting -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter md:gap-margin-tablet">
+<!-- Left Column: Configuration & Charts -->
+<div class="lg:col-span-4 flex flex-col gap-gutter md:gap-margin-tablet">
+<!-- Report Configuration Panel -->
+<section class="bg-white border border-outline-variant p-4 flex flex-col gap-6">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-3">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface m-0">Report Configuration</h3>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Date Range -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Date Range</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface border border-outline-variant p-2.5 text-body-md font-body-md text-on-surface pr-8 focus:ring-1 focus:ring-primary focus:border-primary outline-none cursor-pointer">
+<option>Last 30 Days</option>
+<option selected="">Last 90 Days</option>
+<option>Year to Date</option>
+<option>Custom Range...</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<!-- Client Filter -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Client (Multi-Select)</label>
+<div class="border border-outline-variant bg-surface p-2 max-h-32 overflow-y-auto custom-scrollbar flex flex-col gap-1">
+<label class="flex items-center gap-2 p-1 hover:bg-surface-container-low cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary border-outline-variant bg-white w-4 h-4" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-surface">Apex Engineering</span>
+</label>
+<label class="flex items-center gap-2 p-1 hover:bg-surface-container-low cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary border-outline-variant bg-white w-4 h-4" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-surface">Global Dynamics Corp</span>
+</label>
+<label class="flex items-center gap-2 p-1 hover:bg-surface-container-low cursor-pointer">
+<input class="text-primary focus:ring-primary border-outline-variant bg-white w-4 h-4" type="checkbox"/>
+<span class="text-body-md font-body-md text-on-surface">Stark Industries</span>
+</label>
+</div>
+</div>
+<!-- Department Filter -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Department Focus</label>
+<div class="flex flex-wrap gap-2">
+<label class="flex-1 min-w-[30%]">
+<input checked="" class="peer sr-only" name="dept" type="radio"/>
+<div class="text-center px-2 py-1.5 border border-outline-variant text-label-md font-label-md uppercase tracking-wider text-on-surface-variant peer-checked:bg-praimo-blue peer-checked:text-white peer-checked:border-praimo-blue cursor-pointer transition-colors">All</div>
+</label>
+<label class="flex-1 min-w-[30%]">
+<input class="peer sr-only" name="dept" type="radio"/>
+<div class="text-center px-2 py-1.5 border border-outline-variant text-label-md font-label-md uppercase tracking-wider text-on-surface-variant peer-checked:bg-praimo-blue peer-checked:text-white peer-checked:border-praimo-blue cursor-pointer transition-colors">Mech</div>
+</label>
+<label class="flex-1 min-w-[30%]">
+<input class="peer sr-only" name="dept" type="radio"/>
+<div class="text-center px-2 py-1.5 border border-outline-variant text-label-md font-label-md uppercase tracking-wider text-on-surface-variant peer-checked:bg-praimo-blue peer-checked:text-white peer-checked:border-praimo-blue cursor-pointer transition-colors">Elec</div>
+</label>
+<label class="flex-1 min-w-[30%]">
+<input class="peer sr-only" name="dept" type="radio"/>
+<div class="text-center px-2 py-1.5 border border-outline-variant text-label-md font-label-md uppercase tracking-wider text-on-surface-variant peer-checked:bg-praimo-blue peer-checked:text-white peer-checked:border-praimo-blue cursor-pointer transition-colors">Soft</div>
+</label>
+</div>
+</div>
+<!-- Project Status -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Project Status</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface border border-outline-variant p-2.5 text-body-md font-body-md text-on-surface pr-8 focus:ring-1 focus:ring-primary focus:border-primary outline-none cursor-pointer">
+<option>All Active</option>
+<option>Completed</option>
+<option>At Risk</option>
+<option>Delayed</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-surface text-on-surface border border-outline-variant py-2 text-label-md font-label-md uppercase tracking-wider hover:bg-surface-container-low transition-colors mt-2"> Apply Filters </button>
+</section>
+<!-- Export Actions (Sidebar positioning) -->
+<section class="bg-praimo-blue p-4 flex flex-col gap-4 text-white border border-[#11314d] shadow-sm">
+<div class="flex items-center gap-2 border-b border-white/20 pb-3">
+<span class="material-symbols-outlined text-[20px]">publish</span>
+<h3 class="text-headline-sm font-headline-sm m-0">Export Options</h3>
+</div>
+<p class="text-body-md font-body-md text-white/80 m-0">Generate auditable documents based on the current configuration.</p>
+<div class="flex flex-col gap-3 mt-2">
+<button class="w-full bg-white text-praimo-blue border border-white py-3 text-label-md font-label-md uppercase tracking-wider hover:bg-surface-container-lowest transition-colors flex items-center justify-center gap-2 shadow-sm font-bold">
+<span class="material-symbols-outlined">csv</span> Export CSV Data </button>
+<button class="w-full bg-transparent text-white border border-white/50 py-3 text-label-md font-label-md uppercase tracking-wider hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">picture_as_pdf</span> Download PDF Summary </button>
+</div>
+</section>
+</div>
+<!-- Right Column: Data & Charts -->
+<div class="lg:col-span-8 flex flex-col gap-gutter md:gap-margin-tablet">
+<!-- Charts Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter md:gap-margin-tablet">
+<!-- Chart 1: Reporting Volume -->
+<div class="bg-white border border-outline-variant p-4 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider m-0">Reporting Volume</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant m-0 mt-1">Updates per week (90d)</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">show_chart</span>
+</div>
+<div class="flex-1 min-h-[120px] relative mt-2 flex items-end justify-between gap-1 px-1">
+<!-- Abstracting a trend line with a simple bar chart for HTML pure implementation -->
+<div class="w-full bg-data-wash/50 h-full absolute top-0 left-0 border-b border-outline-variant">
+<!-- Grid lines -->
+<div class="absolute w-full h-[1px] bg-outline-variant/30 top-1/4"></div>
+<div class="absolute w-full h-[1px] bg-outline-variant/30 top-2/4"></div>
+<div class="absolute w-full h-[1px] bg-outline-variant/30 top-3/4"></div>
+</div>
+<div class="relative w-1/12 bg-praimo-blue h-[30%] opacity-60"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[45%] opacity-70"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[35%] opacity-60"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[60%] opacity-80"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[85%] opacity-90"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[70%] opacity-80"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[90%] opacity-100"></div>
+<div class="relative w-1/12 bg-praimo-blue h-[65%] opacity-80"></div>
+</div>
+</div>
+<!-- Chart 2: Departmental Progress -->
+<div class="bg-white border border-outline-variant p-4 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider m-0">Dept. Progress</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant m-0 mt-1">Avg Completion %</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">bar_chart</span>
+</div>
+<div class="flex-1 flex flex-col gap-3 justify-center mt-2">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-label-sm font-label-sm text-on-surface uppercase">Mechanical</span>
+<span class="text-label-sm font-label-sm font-bold">78%</span>
+</div>
+<div class="progress-bar-container"><div class="progress-bar-fill w-[78%]"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-label-sm font-label-sm text-on-surface uppercase">Electrical</span>
+<span class="text-label-sm font-label-sm font-bold text-amber-600">42%</span>
+</div>
+<div class="progress-bar-container"><div class="progress-bar-fill w-[42%] bg-amber-600"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-label-sm font-label-sm text-on-surface uppercase">Software</span>
+<span class="text-label-sm font-label-sm font-bold text-emerald-600">91%</span>
+</div>
+<div class="progress-bar-container"><div class="progress-bar-fill w-[91%] bg-emerald-600"></div></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Report Preview Table (High Density) -->
+<div class="bg-white border border-outline-variant flex flex-col flex-1">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">table_chart</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface m-0">Data Preview</h3>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container py-1 px-2 border border-outline-variant">Showing 4 of 24 results</span>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-outline-variant">
+<th class="p-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Project Code</th>
+<th class="p-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Client</th>
+<th class="p-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Status</th>
+<th class="p-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Comp %</th>
+<th class="p-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-right">Updates</th>
+<th class="p-3 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-right bg-data-wash/30">Contract Val</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-label-md font-label-md text-primary font-bold">PRJ-24-001</td>
+<td class="p-3 text-body-md font-body-md text-on-surface truncate max-w-[120px]">Apex Engineering</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-sm font-label-sm uppercase h-6">Active</span>
+</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md w-8">65%</span>
+<div class="progress-bar-container w-16"><div class="progress-bar-fill w-[65%]"></div></div>
+</div>
+</td>
+<td class="p-3 text-label-md font-label-md text-right">124</td>
+<td class="p-3 text-label-md font-label-md text-right bg-data-wash/30 font-bold">$1.2M</td>
+</tr>
+<tr class="border-b border-outline-variant bg-data-wash hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-label-md font-label-md text-primary font-bold">PRJ-24-042</td>
+<td class="p-3 text-body-md font-body-md text-on-surface truncate max-w-[120px]">Global Dynamics</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-amber-50 text-amber-700 border border-amber-200 text-label-sm font-label-sm uppercase h-6">At Risk</span>
+</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md w-8 text-amber-700">32%</span>
+<div class="progress-bar-container w-16"><div class="progress-bar-fill w-[32%] bg-amber-600"></div></div>
+</div>
+</td>
+<td class="p-3 text-label-md font-label-md text-right">89</td>
+<td class="p-3 text-label-md font-label-md text-right bg-data-wash/60 font-bold">$450K</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-label-md font-label-md text-primary font-bold">PRJ-23-118</td>
+<td class="p-3 text-body-md font-body-md text-on-surface truncate max-w-[120px]">Stark Industries</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-label-sm font-label-sm uppercase h-6">Review</span>
+</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md w-8">98%</span>
+<div class="progress-bar-container w-16"><div class="progress-bar-fill w-[98%]"></div></div>
+</div>
+</td>
+<td class="p-3 text-label-md font-label-md text-right">312</td>
+<td class="p-3 text-label-md font-label-md text-right bg-data-wash/30 font-bold">$2.8M</td>
+</tr>
+<tr class="border-b border-outline-variant bg-data-wash hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-label-md font-label-md text-primary font-bold">PRJ-24-005</td>
+<td class="p-3 text-body-md font-body-md text-on-surface truncate max-w-[120px]">Apex Engineering</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-sm font-label-sm uppercase h-6">Active</span>
+</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md w-8">12%</span>
+<div class="progress-bar-container w-16"><div class="progress-bar-fill w-[12%]"></div></div>
+</div>
+</td>
+<td class="p-3 text-label-md font-label-md text-right">14</td>
+<td class="p-3 text-label-md font-label-md text-right bg-data-wash/60 font-bold">$890K</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 bg-surface border-t border-outline-variant flex justify-center">
+<button class="text-label-md font-label-md text-primary uppercase tracking-wider hover:underline flex items-center gap-1"> View Full Table <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="setuu.js"></script>
+</body></html>

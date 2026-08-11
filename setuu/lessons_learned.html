@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lessons Learned Repository | SETUU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="tailwind.config.js"></script>
+<style> body { background-color: #faf9f4; } .tech-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.05); } </style>
+<script src="components.js"></script></head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- TopAppBar (Mobile & Shared Shell) -->
+<setuu-header></setuu-header>
+<!-- SideNavBar (Desktop) -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full lg:ml-sidebar-width min-h-screen flex flex-col">
+<!-- Desktop Top App Bar -->
+<header class="hidden lg:flex fixed top-0 right-0 w-[calc(100%-280px)] z-30 h-16 bg-surface border-b border-border-standard items-center justify-between px-margin-desktop">
+<div class="flex items-center">
+<h1 class="text-headline-sm font-headline-sm text-primary">Lessons Learned Repository</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container p-2 transition-colors">sync</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container p-2 transition-colors">notifications</span>
+<div class="w-8 h-8 bg-tertiary text-on-tertiary flex items-center justify-center font-bold text-sm ml-2 cursor-pointer">JS</div>
+</div>
+</header>
+<!-- Canvas Body -->
+<div class="flex-1 p-margin-mobile md:p-margin-desktop flex flex-col lg:flex-row gap-gutter">
+<!-- Left Column: Search & List (65%) -->
+<div class="w-full lg:w-[65%] flex flex-col gap-gutter">
+<!-- Search & Filter Bar -->
+<div class="bg-surface-white border border-border-standard p-4 tech-shadow flex flex-col md:flex-row gap-4 items-center">
+<div class="relative w-full md:flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-background border border-border-standard text-body-md font-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Search lessons..." type="text"/>
+</div>
+<div class="flex gap-2 w-full md:w-auto">
+<select class="flex-1 md:w-32 bg-background border border-border-standard px-3 py-2 text-body-md font-body-md focus:outline-none focus:border-primary">
+<option value="">Category</option>
+<option value="safety">Safety</option>
+<option value="quality">Quality</option>
+</select>
+<select class="flex-1 md:w-32 bg-background border border-border-standard px-3 py-2 text-body-md font-body-md focus:outline-none focus:border-primary">
+<option value="">Project</option>
+<option value="p1">Alpha</option>
+<option value="p2">Beta</option>
+</select>
+<button class="bg-primary text-on-primary px-4 py-2 text-label-md font-label-md hover:bg-tertiary transition-colors flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">add</span> Add Lesson </button>
+</div>
+</div>
+<!-- Lessons List -->
+<div class="flex flex-col gap-4 overflow-y-auto" style="max-height: calc(100vh - 200px);">
+<!-- Card 1 (Active) -->
+<div class="bg-data-wash border border-primary p-4 cursor-pointer transition-colors relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-2 items-center">
+<span class="bg-status-hold/10 text-status-hold px-2 py-1 text-label-sm font-label-sm border border-status-hold/20 uppercase">Quality</span>
+<span class="text-label-sm font-label-sm text-outline font-bold">PRJ-ALPHA-104</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Oct 12, 2023</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-primary mb-2">Concrete Curing Delays in Sub-Zero Temps</h3>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-2">Ensure thermal blankets are deployed immediately post-pour when ambient temperature drops below 5°C to prevent micro-fracturing in foundation walls.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-white border border-border-standard p-4 cursor-pointer hover:bg-data-wash transition-colors">
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-2 items-center">
+<span class="bg-status-critical/10 text-status-critical px-2 py-1 text-label-sm font-label-sm border border-status-critical/20 uppercase">Safety</span>
+<span class="text-label-sm font-label-sm text-outline font-bold">PRJ-BETA-089</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline">Sep 28, 2023</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-primary mb-2">Crane Setup Proximity to Overhead Lines</h3>
+<p class="text-body-md font-body-md text-on-surface-variant line-clamp-2">Mandatory secondary spotter required when setting up mobile cranes within 30m of active powerlines. Spotter must have direct radio contact with operator.</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Detail View (35%) -->
+<div class="w-full lg:w-[35%] bg-surface-white border border-border-standard tech-shadow flex flex-col h-[calc(100vh-140px)] sticky top-24">
+<div class="p-4 border-b border-border-standard bg-surface-container-low flex justify-between items-center">
+<h2 class="text-headline-sm font-headline-sm text-primary">Lesson Detail</h2>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">print</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto flex-1 flex flex-col gap-6">
+<div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">Concrete Curing Delays in Sub-Zero Temps</h3>
+<div class="flex gap-2 mb-4">
+<span class="bg-status-hold/10 text-status-hold px-2 py-1 text-label-sm font-label-sm border border-status-hold/20 uppercase">Quality</span>
+<span class="bg-surface-container text-on-surface-variant px-2 py-1 text-label-sm font-label-sm uppercase">Foundation</span>
+</div>
+</div>
+<div>
+<h4 class="text-label-md font-label-md text-outline uppercase tracking-wider mb-2">Description of Observation</h4>
+<p class="text-body-md font-body-md text-on-surface bg-background p-3 border border-border-standard leading-relaxed"> During the pouring of section 4B foundation walls, unexpected temperature drops (reaching -2°C overnight) resulted in delayed curing times. Initial slump tests were nominal, but 7-day strength tests showed a 15% reduction in expected PSI. </p>
+</div>
+<div>
+<h4 class="text-label-md font-label-md text-outline uppercase tracking-wider mb-2">Root Cause Analysis</h4>
+<p class="text-body-md font-body-md text-on-surface bg-background p-3 border border-border-standard leading-relaxed"> Weather forecasting failure. Site manager relied on a 48-hour generic forecast rather than the localized micro-climate engineering weather service. Thermal blanketing was not staged on-site prior to pour. </p>
+</div>
+<div>
+<h4 class="text-label-md font-label-md text-primary uppercase tracking-wider mb-2 border-l-2 border-primary pl-2">Mitigation / Recommendation</h4>
+<div class="bg-primary-fixed/20 p-4 border border-primary-fixed-dim">
+<p class="text-body-md font-body-md text-on-primary-fixed leading-relaxed font-medium"> 1. Implement mandatory check of localized specialized weather service (e.g., ClearPath) 12 hours prior to any major pour during shoulder seasons. <br/><br/> 2. Thermal blankets must be physically staged on the pouring deck, not in the central laydown yard, before the first truck arrives if overnight temps are forecast below 5°C. </p>
+</div>
+</div>
+<div>
+<h4 class="text-label-md font-label-md text-outline uppercase tracking-wider mb-3">Related Media</h4>
+<div class="grid grid-cols-2 gap-3">
+<div class="relative border border-border-standard overflow-hidden group cursor-pointer h-24">
+<img class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A close-up industrial photograph of freshly poured concrete foundation walls partially covered by heavy insulated thermal blankets. The lighting is overcast, typical of a winter construction site. Frost is visible on the surrounding scaffolding. The mood is raw, technical, and grounded in engineering reality, emphasizing the clinical aesthetic of the platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGpw37J0uDmGTM_uyoPVTCp4hJyaX1oJcN2PXDnZHei8V_1dSh1p6Qs2MtYrh9CxQDeLoxRXkXEPiQVg2H_oXEu7pEfMwK9O3YuBu01nF9Gx56rYxXuM9L7ZwCNJz-XGWFhvNyWTWtI0IGRtMy96UIuoW96vnWYH3XSjkLx_OKipk40lT6MfgQ2kkWuf-t3_Vs2lmjLqVgDSlvScokxWx24jZaJs5uRswfRNJvcRSmhfRXbnJSPHU0gQ"/>
+<div class="absolute bottom-1 right-1 bg-black/70 text-white text-[8px] font-mono px-1">PHOTO_01_SITE_B</div>
+</div>
+<div class="border border-border-standard p-2 flex flex-col items-center justify-center bg-background hover:bg-data-wash cursor-pointer transition-colors h-24">
+<span class="material-symbols-outlined text-outline text-2xl mb-1">description</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant text-center">7-Day Strength Report.pdf</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<setuu-bottom-nav></setuu-bottom-nav>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html> <html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu - Secure Login</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script src="tailwind.config.js"></script>
+<style> @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:wght@400;700&display=swap'); body { background-color: #FAF9F4; margin: 0; padding: 0; height: 100vh; display: flex; align-items: center; justify-content: center; } </style>
+<link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/></head>
+<body class="font-body-md text-on-surface antialiased bg-[#FAF9F4]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<div class="w-full max-w-md px-margin-mobile md:px-0 relative z-10 flex flex-col items-center">
+<!-- Branding Area -->
+<div class="mb-gutter text-center w-full flex flex-col items-center">
+<img alt="SETUU Logo" class="h-12 w-auto mb-6 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLvngC-2KdJVUEfG3jjTPiuFk0rRuE2K_bnyVmVcbY9gBYnKMTKIezXRWNFWZf6X3O7vikFryVIyFSibOkO1fTl_HoM6RXvZIKJopNWlqNKA5OQf6EsrnZwhkxqEyZGE8YaFUjC54Z4pIwFnyYBqquDZmgK26EewQSamzwNF51lAUnkIFug3gDTZ7i6O4DLhvHeQ3F3usK323R7MpNq2IPkRs4BIYcLKQI_vYn6D-CeO30Z9zOmyXMv2SXDj"/>
+<h1 class="font-headline-md text-headline-md text-[#1F4E79] mb-2 font-bold">SETUU</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest text-center max-w-[280px]">Seamless Engineering Tracking &amp; User Updates</p>
+</div>
+<!-- Login Card -->
+<div class="bg-surface-container-lowest border border-[#e0e0e0] -[4px] shadow-none w-full p-6 md:p-8 relative">
+<div class="absolute top-0 left-0 w-full h-[4px] bg-[#1F4E79] -[4px]"></div>
+<div class="mb-8 border-b border-outline-variant pb-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold font-['Merriweather']">Secure Access Portal</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 font-['Inter']">Authenticate to proceed with system tracking.</p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<!-- Email Field -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2 uppercase font-['Inter']" for="email">Operator ID / Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" style="font-size: 20px;">badge</span>
+<input class="w-full bg-background border border-outline-variant text-on-surface font-body-md text-body-md pl-10 pr-3 py-2 focus:outline-none focus:border-[#1F4E79] focus:ring-1 focus:ring-[#1F4E79] transition-colors font-['Inter']" id="email" name="email" placeholder="e.g. j.doe@precision.corp" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase font-['Inter']" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-[#1F4E79] hover:underline uppercase font-['Inter']" href="password_recovery.html">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" style="font-size: 20px;">key</span>
+<input class="w-full bg-background border border-outline-variant text-on-surface font-body-md text-body-md pl-10 pr-3 py-2 focus:outline-none focus:border-[#1F4E79] focus:ring-1 focus:ring-[#1F4E79] transition-colors font-['Inter']" id="password" name="password" placeholder="Password" required="" type="password"/>
+</div>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full bg-[#1F4E79] hover:bg-[#153a5c] text-on-primary font-label-md text-label-md uppercase tracking-wider py-3 flex justify-center items-center gap-2 transition-colors border border-[#1F4E79] -[4px] font-['Inter']" type="submit">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span> Sign In </button>
+</div>
+</form>
+</div>
+<!-- Footer / Compliance -->
+<div class="mt-8 flex flex-col items-center justify-center gap-2 text-center w-full">
+<div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant uppercase font-['Inter']">
+<span class="material-symbols-outlined text-[#1F4E79]" style="font-size: 16px;">verified_user</span> Secure Login | DPDPA Compliant </div>
+<div class="text-[10px] text-outline font-label-sm tracking-widest uppercase font-['Inter']"> Sys. V. 4.2.1 • Engineering Precision &amp; Security </div>
+</div>
+</div>
+     <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

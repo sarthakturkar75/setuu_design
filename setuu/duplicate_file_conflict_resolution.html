@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Engineering - Duplicate File Detection</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style> .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; } .icon-fill { font-variation-settings: 'FILL' 1; } </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="tailwind.config.js"></script>
+<script src="components.js"></script></head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden selection:bg-secondary-container selection:text-on-secondary-container pt-[64px]">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- Blurred Background Shell (SideNav & Main Content Area) -->
+<div class="flex w-full h-screen filter blur-[2px] pointer-events-none opacity-40">
+<!-- SideNavBar -->
+<setuu-sidebar role="admin"></setuu-sidebar>
+<div class="mt-auto px-3 flex flex-col gap-1 border-t border-outline-variant/30 pt-gutter">
+<a class="flex items-center gap-3 px-3 py-2 text-primary-fixed-dim opacity-80 hover:bg-primary-container/50 font-label-md text-label-md" href="help_center.html">
+<span class="material-symbols-outlined">contact_support</span> Support </a>
+<a class="flex items-center gap-3 px-3 py-2 text-primary-fixed-dim opacity-80 hover:bg-primary-container/50 font-label-md text-label-md" href="login.html">
+<span class="material-symbols-outlined">logout</span> Sign Out </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-sidebar-width flex-1 flex flex-col h-full bg-surface">
+<!-- TopAppBar -->
+<setuu-header></setuu-header>
+<div class="p-margin-desktop w-full max-w-7xl mx-auto flex flex-col gap-gutter">
+<!-- Fake background content for Documents -->
+<div class="h-10 border border-outline-variant bg-surface-container flex items-center px-4 w-1/3"></div>
+<div class="h-64 border border-outline-variant bg-surface w-full"></div>
+<div class="h-64 border border-outline-variant bg-surface w-full"></div>
+</div>
+</main>
+</div>
+<!-- Active Modal Overlay -->
+<div aria-modal="true" class="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/30 backdrop-blur-[1px] p-margin-mobile md:p-margin-desktop" role="dialog">
+<!-- Conflict Resolution Modal -->
+<div class="bg-surface border border-outline-variant w-full max-w-4xl shadow-none flex flex-col animate-[fadeIn_0.2s_ease-out]">
+<!-- Precision Indicator (4px) -->
+<div class="h-unit w-full bg-error shrink-0"></div>
+<!-- Header -->
+<div class="px-gutter py-4 border-b border-outline-variant flex items-start justify-between bg-surface">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 flex items-center justify-center border border-error bg-error-container shrink-0 text-on-error-container">
+<span class="material-symbols-outlined">difference</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Duplicate File Detected</h2>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">A file with the same name or hash already exists in the repository.</p>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Body: Comparison Grids -->
+<div class="p-gutter grid grid-cols-1 md:grid-cols-2 gap-gutter bg-background">
+<!-- Existing Record -->
+<div class="border border-outline-variant bg-surface flex flex-col">
+<div class="bg-surface-container px-3 py-2 border-b border-outline-variant flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Existing Record in Repository</span>
+<span class="px-2 py-0.5 border border-outline-variant text-[10px] font-label-sm text-on-surface bg-surface">v2.1</span>
+</div>
+<div class="p-gutter flex flex-col gap-4">
+<div class="w-full aspect-video border border-outline-variant bg-surface-container-low relative overflow-hidden group">
+<img alt="A highly detailed architectural blueprint schematic showing cross-sections of a steel frame building structure. Technical lines, precise measurements in millimeters, printed on stark white paper. The image is rendered with clinical precision, sharp contrast, and an industrial aesthetic typical of high-end engineering documentation software. Monochromatic with subtle blue grid lines." class="w-full h-full object-cover mix-blend-multiply opacity-70 group-hover:opacity-100 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJZOj2WzCoA_wK552wKOQoaym-gqrweIcjFJLRAVXSC8H5NZyRsKcZqBGciSCTu4t3P3zkCB1aaALgE6Fk-zJH02dm-V7LghZUWPu1-LUzl_MzbQUIt8AA8YLZflJeMQfDP_xC_sBQ2DOlrbViJQNCGU7JsrVm1uOJsKGerjh5bRFHhqYDLW9ICudOLEvdxLpG-AYzK4lL3y1K5VQ36gUXyxALqc1TwSOHkrCIE14JUQ2TOBcZn8TngQ"/>
+<div class="absolute bottom-2 right-2 bg-surface/90 border border-outline-variant px-1.5 py-0.5">
+<span class="font-label-sm text-label-sm text-on-surface font-mono">ID: REF-0992</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between border-b border-outline-variant/50 pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Filename</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">STRUCT-ELEV-A.dwg</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/50 pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Size</span>
+<span class="font-body-md text-body-md text-on-surface">14.2 MB</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/50 pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Date Modified</span>
+<span class="font-body-md text-body-md text-on-surface">Oct 24, 2023 - 14:32 UTC</span>
+</div>
+<div class="flex justify-between pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Uploaded By</span>
+<span class="font-body-md text-body-md text-on-surface">J. Miller (Structural)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Incoming Upload -->
+<div class="border border-primary bg-surface flex flex-col relative shadow-[0_0_0_1px_rgba(0,55,94,1)]">
+<!-- Absolute active indicator tag -->
+<div class="absolute -top-2 -right-2 bg-primary text-on-primary px-2 py-0.5 font-label-sm text-label-sm border border-primary z-10 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">upload</span> INCOMING </div>
+<div class="bg-primary-container px-3 py-2 border-b border-primary/30 flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-primary-container font-bold uppercase tracking-wider">New File Upload</span>
+</div>
+<div class="p-gutter flex flex-col gap-4">
+<div class="w-full aspect-video border border-outline-variant bg-surface-container-low relative overflow-hidden">
+<img alt="A revised architectural blueprint schematic highlighting structural modifications in red and bold black ink. Features detailed annotations, exact dimensional tolerances, and mechanical fasteners. The visual style is strictly clinical, resembling a physical paper document scanned into a rigorous document management system. Sharp edges, high contrast, industrial B2B aesthetic." class="w-full h-full object-cover mix-blend-multiply opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtOOqZKiDOwVtvKo1gNs062ymkYKEoJ0xdF_1-tEQL3ntvRW1PhEHC8zO4KWULJZmGfaz52jU-gQYdG7drvUYfUAM3Crm4LVqb_IAUnxB6Itb3eZqe_KV9XJQN-IDyma6Rhvc1bS-QhK4PP77GnM8ep1muEtAAgplg3lbTEoSuzDX1_oO5qw7skoPV5cq820Vx4C9yGQ1XcWcMzqb_efDtk7ufIGS1vCEoZT9x-3eKkH3xprN3hdVuow"/>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between border-b border-outline-variant/50 pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Filename</span>
+<span class="font-label-md text-label-md text-primary font-bold">STRUCT-ELEV-A.dwg</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/50 pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Size</span>
+<span class="font-body-md text-body-md text-on-surface flex items-center gap-1">15.8 MB <span class="text-error text-xs">(+1.6 MB)</span></span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/50 pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Date Modified</span>
+<span class="font-body-md text-body-md text-on-surface">Oct 26, 2023 - 09:15 UTC</span>
+</div>
+<div class="flex justify-between pb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Uploaded By</span>
+<span class="font-body-md text-body-md text-on-surface">Current User Session</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Security & Integrity Note (FR-707) -->
+<div class="mx-gutter mb-gutter bg-surface-container-low border border-outline-variant p-3 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary text-base mt-0.5">verified_user</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-1">Security &amp; Integrity (FR-707)</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">To maintain strict auditability, duplicate file hashes or nominal collisions are flagged to prevent redundancy and versioning corruption in the master engineering repository. Please designate the authoritative record.</p>
+</div>
+</div>
+<!-- Actions Footer -->
+<div class="bg-surface-container px-gutter py-4 border-t border-outline-variant flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
+<button class="w-full sm:w-auto px-4 py-2 border border-outline-variant bg-surface text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors"> Skip Upload </button>
+<div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+<button class="w-full sm:w-auto px-4 py-2 border border-primary text-primary font-label-md text-label-md hover:bg-primary-container/20 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">drive_file_rename_outline</span> Keep Both (Rename) </button>
+<button class="w-full sm:w-auto px-4 py-2 bg-primary text-on-primary font-label-md text-label-md hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">save_as</span> Overwrite Existing </button>
+</div>
+</div>
+</div>
+</div>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>

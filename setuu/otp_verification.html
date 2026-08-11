@@ -1,0 +1,43 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Security Verification - SETUU</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="tailwind.config.js"></script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen flex flex-col justify-center items-center p-margin-mobile md:p-margin-desktop">
+<!-- UNIFIED RESPONSIVE VIEW -->
+<!-- Nav shell is suppressed due to Transactional Intent (Linear login flow) -->
+<main class="w-full max-w-[440px] bg-surface-container-lowest border border-outline-variant p-margin-tablet shadow-none">
+<div class="mb-gutter flex justify-center">
+<span class="material-symbols-outlined text-primary-container text-4xl" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">security</span>
+</div>
+<div class="text-center mb-8">
+<h1 class="text-headline-md font-headline-md text-primary mb-2 tracking-tight">Security Verification</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">A 6-digit code has been sent to your registered email address. This code is valid for 10 minutes.</p>
+</div>
+<form class="space-y-8" id="otp-form">
+<div class="flex justify-between gap-2" id="otp-inputs">
+<input aria-label="Digit 1" autofocus="" class="w-12 h-14 text-center text-headline-sm font-headline-sm border border-outline-variant bg-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors" inputmode="numeric" maxlength="1" pattern="[0-9]" type="text">
+<input aria-label="Digit 2" class="w-12 h-14 text-center text-headline-sm font-headline-sm border border-outline-variant bg-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors" inputmode="numeric" maxlength="1" pattern="[0-9]" type="text">
+<input aria-label="Digit 3" class="w-12 h-14 text-center text-headline-sm font-headline-sm border border-outline-variant bg-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors" inputmode="numeric" maxlength="1" pattern="[0-9]" type="text">
+<input aria-label="Digit 4" class="w-12 h-14 text-center text-headline-sm font-headline-sm border border-outline-variant bg-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors" inputmode="numeric" maxlength="1" pattern="[0-9]" type="text">
+<input aria-label="Digit 5" class="w-12 h-14 text-center text-headline-sm font-headline-sm border border-outline-variant bg-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors" inputmode="numeric" maxlength="1" pattern="[0-9]" type="text">
+<input aria-label="Digit 6" class="w-12 h-14 text-center text-headline-sm font-headline-sm border border-outline-variant bg-surface focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors" inputmode="numeric" maxlength="1" pattern="[0-9]" type="text">
+</div>
+<div class="flex flex-col gap-unit">
+<button class="w-full h-12 bg-primary-container text-on-primary font-label-md text-label-md tracking-wider uppercase hover:bg-primary transition-colors" type="button">Verify Identity</button>
+<button class="w-full h-12 border border-outline text-secondary font-label-md text-label-md tracking-wider uppercase hover:bg-surface-container transition-colors disabled:opacity-50 disabled:cursor-not-allowed" id="resend-btn" type="button">Resend Code</button>
+</div>
+</form>
+<div class="mt-8 pt-4 border-t border-surface-variant flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-base">devices</span>
+<p class="text-label-sm font-label-sm">New device detected: Chrome 118 / Seattle, WA</p>
+</div>
+</main>
+<script> document.addEventListener('DOMContentLoaded', () => { const inputs = document.querySelectorAll('#otp-inputs input'); const resendBtn = document.getElementById('resend-btn'); let timeLeft = 59; inputs.forEach((input, index) => { input.addEventListener('input', (e) => { if (e.target.value.length === 1 && index < inputs.length - 1) { inputs[index + 1].focus(); } }); input.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !e.target.value && index > 0) { inputs[index - 1].focus(); } }); // Allow pasting 6 digits input.addEventListener('paste', (e) => { e.preventDefault(); const pastedData = e.clipboardData.getData('text').slice(0, 6).replace(/[^0-9]/g, ''); for(let i=0; i<pastedData.length; i++) { if(inputs[i]) { inputs[i].value = pastedData[i]; if(i < inputs.length -1) inputs[i+1].focus(); } } }); }); const timer = setInterval(() => { timeLeft--; if (timeLeft > 0) { resendBtn.innerText = `Resend Code (${timeLeft}s)`; } else { clearInterval(timer); resendBtn.innerText = 'Resend Code'; resendBtn.disabled = false; } }, 1000); }); </script>      <setuu-bottom-nav></setuu-bottom-nav>
+</body>
+</html>
