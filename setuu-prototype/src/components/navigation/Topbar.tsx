@@ -2,6 +2,7 @@ import * as React from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { LogoutButton } from "@/components/navigation/LogoutButton"
 
 export interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
@@ -33,6 +34,7 @@ export function Topbar({ title, breadcrumbs, actions, className, ...props }: Top
       
       <div className="flex items-center space-x-4">
         <ThemeToggle />
+        <LogoutButton />
         {actions && (
           <div className="flex items-center space-x-3">
             {actions}
