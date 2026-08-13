@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - PM Desktop Sidebar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "inverse-surface": "#30312e",
+                  "error-container": "#ffdad6",
+                  "on-secondary-fixed": "#001e2d",
+                  "surface-bright": "#faf9f4",
+                  "surface-container-highest": "#e3e3de",
+                  "on-surface-variant": "#43474d",
+                  "on-primary": "#ffffff",
+                  "tertiary-fixed-dim": "#82cfff",
+                  "surface": "#faf9f4",
+                  "primary": "#000815",
+                  "tertiary": "#00080f",
+                  "surface-variant": "#e3e3de",
+                  "primary-fixed-dim": "#aec9eb",
+                  "on-tertiary": "#ffffff",
+                  "outline-variant": "#c3c6ce",
+                  "primary-fixed": "#d1e4ff",
+                  "surface-container": "#efeee9",
+                  "primary-container": "#00213c",
+                  "outline": "#73777e",
+                  "surface-container-high": "#e9e8e3",
+                  "on-error-container": "#93000a",
+                  "on-secondary-fixed-variant": "#004c6b",
+                  "secondary": "#00658d",
+                  "surface-dim": "#dbdad5",
+                  "on-secondary": "#ffffff",
+                  "background": "#faf9f4",
+                  "inverse-primary": "#aec9eb",
+                  "tertiary-container": "#002233",
+                  "error": "#ba1a1a",
+                  "surface-container-lowest": "#ffffff",
+                  "inverse-on-surface": "#f2f1ec",
+                  "on-error": "#ffffff",
+                  "on-tertiary-container": "#0090c7",
+                  "secondary-container": "#8ad1ff",
+                  "on-tertiary-fixed": "#001e2d",
+                  "surface-container-low": "#f5f4ef",
+                  "on-surface": "#1b1c19",
+                  "on-primary-container": "#6f89a9",
+                  "on-primary-fixed-variant": "#2e4965",
+                  "on-primary-fixed": "#001d35",
+                  "secondary-fixed-dim": "#88cffc",
+                  "surface-tint": "#46607e",
+                  "on-secondary-container": "#005a7f",
+                  "on-tertiary-fixed-variant": "#004c6b",
+                  "tertiary-fixed": "#c6e7ff",
+                  "secondary-fixed": "#c6e7ff",
+                  "on-background": "#1b1c19"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.5rem",
+                  "sm": "0.25rem",
+                  "md": "0.75rem",
+                  "lg": "1rem",
+                  "xl": "1.5rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "unit": "4px",
+                  "gutter-md": "24px",
+                  "margin-mobile": "16px",
+                  "margin-tablet": "24px",
+                  "margin-desktop": "32px",
+                  "sidebar-width": "280px",
+                  "rail-width": "72px"
+          },
+          "fontFamily": {
+                  "headline": [
+                          "Merriweather"
+                  ],
+                  "display": [
+                          "Merriweather"
+                  ],
+                  "body": [
+                          "Inter"
+                  ],
+                  "label": [
+                          "JetBrains Mono"
+                  ]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-surface text-on-surface font-body h-screen w-full flex overflow-hidden">
+<!-- Desktop Sidebar Navigation -->
+<aside class="w-sidebar-width h-full bg-primary-container flex-shrink-0 flex flex-col border-r border-outline-variant/10 shadow-xl z-40">
+<!-- Branding Header -->
+<div class="h-20 px-6 flex items-center border-b border-on-primary-container/20">
+<div class="flex items-center gap-3">
+<img alt="Setuu Enterprise Logo" class="w-10 h-10 rounded-md object-contain bg-surface-container-lowest" src="https://lh3.googleusercontent.com/aida/AP1WRLvf2UnxQ99O3n3KzcQzx1a93WtRA-nLN209AiWzpl00FpjWloCC1aRRCUSLlFAnNTkt9xjXFFA8tKEOfaHNyxVmW4yRJwFApS3CEhoaqBWEC9upVq44WzrgAW128Duc8XtUFU-3v5B-zXAwdmbQw90acwCUC1nEJEkZBigc82M_hV-WSov8eOqN0CquoDsmN5Z7JQHQZOe1wefOGHujAvFUxzaN5u-p8rbqC8SkT-FNj--tSktX5VYZnZY">
+<span class="font-headline text-headline-sm text-on-primary tracking-tight">Setuu Enterprise</span>
+</div>
+</div>
+<!-- Navigation Menu -->
+<nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1 custom-scrollbar">
+<!-- Section: General -->
+<div class="mb-4">
+<h3 class="px-3 mb-2 font-headline text-[11px] uppercase tracking-wider text-on-primary-container/70">Overview</h3>
+<ul class="flex flex-col gap-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface/10 text-on-primary font-medium hover:bg-surface/15 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-sm">Home / Global Dashboard</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Section: Operations -->
+<div class="mb-4">
+<h3 class="px-3 mb-2 font-headline text-[11px] uppercase tracking-wider text-on-primary-container/70">Operations</h3>
+<ul class="flex flex-col gap-1">
+<!-- Accordion: Active Projects -->
+<li class="relative">
+<button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">architecture</span>
+<span class="text-sm font-medium">Active Projects</span>
+</div>
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:rotate-180">expand_more</span>
+</button>
+<!-- Submenu (Collapsed by default, shown for UI representation) -->
+<ul class="pl-11 pr-3 py-1 flex flex-col gap-1 border-l border-on-primary-container/20 ml-5 mt-1">
+<li class=""><a class="block py-1.5 text-xs text-on-primary-container hover:text-inverse-primary transition-colors" href="#">Alpha Tower Build</a></li>
+<li class=""><a class="block py-1.5 text-xs text-on-primary-container hover:text-inverse-primary transition-colors" href="#">Sector 7 Pipeline</a></li>
+<li class=""><a class="block py-1.5 text-xs text-on-primary-container hover:text-inverse-primary transition-colors" href="#">Refinery Expansion</a></li>
+</ul>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-sm font-medium">Milestones &amp; Tasks</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">perm_media</span>
+<span class="text-sm font-medium">Drawings &amp; Media Hub</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-medium">Material Tracking</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-sm font-medium">Issues &amp; Blockers</span>
+<!-- Unread badge -->
+<span class="ml-auto bg-error text-on-error text-[10px] font-label px-2 py-0.5 rounded-full">3</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Section: Client & Admin -->
+<div class="mb-4">
+<h3 class="px-3 mb-2 font-headline text-[11px] uppercase tracking-wider text-on-primary-container/70">Client &amp; Admin</h3>
+<ul class="flex flex-col gap-1">
+<!-- Disabled State -->
+<li class="">
+<div class="flex items-center justify-between px-3 py-2.5 rounded-lg opacity-40 cursor-not-allowed">
+<div class="flex items-center gap-3 text-on-primary-container">
+<span class="material-symbols-outlined">verified</span>
+<span class="text-sm font-medium">Handovers &amp; Approvals</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-primary-container">lock</span>
+</div>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-sm font-medium">Support Tickets</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- User Profile Footer -->
+<div class="p-4 border-t border-on-primary-container/20">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-tertiary-container border border-on-primary-container/10">
+<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-on-secondary font-headline text-sm font-bold flex-shrink-0">
+          PM
+        </div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-medium text-on-primary truncate">Project Manager</span>
+<span class="text-xs font-label text-on-primary-container truncate">Lead Engineer Workspace</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area (Placeholder for Context) -->
+
+<style>
+    /* Custom Scrollbar for Sidebar */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: rgba(111, 137, 169, 0.3); /* on-primary-container / 30% */
+      border-radius: 4px;
+    }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(111, 137, 169, 0.6);
+    }
+  </style>
+
+
+</body></html>

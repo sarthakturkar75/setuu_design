@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Global Storage Monitoring - SETUU Control Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;family=Merriweather:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#faf9f4",
+                        "outline-variant": "#c3c6ce",
+                        "background": "#faf9f4",
+                        "primary-container": "#00213c",
+                        "surface-container": "#efeee9",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-secondary-fixed": "#001e2d",
+                        "error": "#ba1a1a",
+                        "secondary": "#00658d",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#46607e",
+                        "on-surface": "#1b1c19",
+                        "on-background": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "primary": "#000815",
+                        "tertiary-fixed": "#c6e7ff",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-primary-container": "#6f89a9",
+                        "on-surface-variant": "#43474d",
+                        "surface-container-high": "#e9e8e3",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#dbdad5",
+                        "secondary-container": "#8ad1ff",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary-fixed": "#d1e4ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-surface": "#30312e",
+                        "outline": "#73777e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-variant": "#e3e3de",
+                        "on-primary-fixed": "#001d35",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#00080f",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-bright": "#faf9f4",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container-highest": "#e3e3de",
+                        
+                        // Semantic Colors (Simulated for this screen based on instructions)
+                        "semantic-slate": "#64748B",
+                        "semantic-skyblue": "#0284C7",
+                        "semantic-amber": "#D97706",
+                        "semantic-emerald": "#16A34A",
+                        "semantic-teal": "#0D9488",
+                        "semantic-royalblue": "#2563EB",
+                        "semantic-purple": "#9333EA",
+                        "semantic-crimson": "#DC2626"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Merriweather', serif; }
+        .font-label, .technical-value { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        
+        /* Table Styles */
+        .dense-table th { @apply px-4 py-3 text-left text-label-md font-label text-on-surface-variant border-b border-outline-variant/50; }
+        .dense-table td { @apply px-4 py-3 text-body-md border-b border-outline-variant/30; }
+        .dense-table tr:hover td { @apply bg-surface-container-low transition-colors duration-150; }
+
+        /* Progress Bar Base */
+        .progress-bar-bg { @apply w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden; }
+        .progress-bar-fill { @apply h-full rounded-full transition-all duration-500 ease-in-out; }
+    </style>
+</head>
+<body class="antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar -->
+<nav class="docked vertical left-0 w-[280px] h-full bg-primary-container text-on-primary border-r border-outline-variant/20 shadow-xl fixed z-50 flex flex-col p-4">
+<!-- Header -->
+<div class="mb-8 px-4 mt-2">
+<h1 class="text-display-lg font-headline font-bold text-white tracking-tight leading-tight">SETUU</h1>
+<p class="text-body-md text-on-primary-container mt-1">Admin Hub</p>
+</div>
+<!-- Main Navigation -->
+<div class="flex-1 overflow-y-auto space-y-1 pr-2">
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body text-body-md">Dashboard</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">corporate_fare</span>
+<span class="font-body text-body-md">Organizations</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">credit_card</span>
+<span class="font-body text-body-md">Subscriptions</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="bg-surface-container-lowest text-primary-container rounded-lg font-bold shadow-md px-4 py-3 flex items-center gap-3 transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dns</span>
+<span class="font-body text-body-md">Infrastructure</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="font-body text-body-md">User Management</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+<span class="font-body text-body-md">Audit Logs</span>
+</a>
+</div>
+<!-- Footer Navigation -->
+<div class="mt-auto border-t border-outline-variant/10 pt-4 space-y-1 pr-2">
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">sensors</span>
+<div class="flex flex-col">
+<span class="font-body text-body-md">System Health</span>
+<span class="text-[10px] text-semantic-emerald font-label mt-0.5 uppercase tracking-wider">All Systems Go</span>
+</div>
+</a>
+<a class="text-on-primary-container/70 hover:text-white px-4 py-3 flex items-center gap-3 hover:bg-primary-fixed-dim/10 rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">support_agent</span>
+<span class="font-body text-body-md">Support</span>
+</a>
+<button class="w-full mt-4 bg-secondary-fixed text-on-secondary-fixed py-2.5 px-4 rounded-lg font-body font-medium flex items-center justify-center gap-2 hover:bg-secondary-fixed-dim transition-colors shadow-sm active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                Add Organization
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-[280px] flex flex-col h-screen overflow-hidden bg-surface relative">
+<!-- TopNavBar (Embedded within main content area to avoid z-index conflicts with absolute sidebar, acting as a sticky header) -->
+<header class="bg-white/85 backdrop-blur-md text-on-surface border-b border-outline-variant shadow-sm w-full flex justify-between items-center px-6 py-3 z-40 sticky top-0 shrink-0 h-[64px] glass-panel">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline font-bold text-primary">Control Center</span>
+<span class="bg-semantic-crimson/10 text-semantic-crimson border border-semantic-crimson/30 px-2 py-0.5 rounded text-label-sm font-label uppercase flex items-center gap-1 tracking-wider">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                    SUPER ADMIN MODE
+                </span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-surface-container-low border border-outline-variant/50 rounded-full text-body-md font-body focus:outline-none focus:ring-2 focus:ring-primary-fixed w-64 transition-all" placeholder="Search infrastructure..." type="text">
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors scale-95 duration-150 ease-in-out relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-semantic-crimson rounded-full border border-white"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto p-8 z-0">
+<div class="max-w-[1600px] mx-auto space-y-8">
+<!-- Page Header -->
+<div>
+<h2 class="text-headline-lg font-headline text-primary mb-1">Global Storage Monitoring</h2>
+<p class="text-body-md text-on-surface-variant">Aggregate oversight of tenant storage consumption and infrastructure health.</p>
+</div>
+<!-- 1. Global Storage KPI Bar -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-lg p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-md font-label text-on-surface-variant uppercase tracking-wider">Platform Allocation</span>
+<span class="material-symbols-outlined text-outline">database</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-headline-lg font-headline text-primary technical-value">124.5</span>
+<span class="text-body-lg font-label text-outline">TB</span>
+</div>
+<div class="mt-2 text-body-md text-on-surface-variant flex items-center gap-1 technical-value">
+<span class="material-symbols-outlined text-[16px] text-semantic-emerald">trending_up</span>
+                                +2.4 TB this month
+                            </div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-lg p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden">
+<!-- Background pulse for high utilization context -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-semantic-skyblue/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<span class="text-label-md font-label text-on-surface-variant uppercase tracking-wider technical-value">Current Utilization</span>
+<span class="material-symbols-outlined text-semantic-skyblue">pie_chart</span>
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-baseline gap-1">
+<span class="text-headline-lg font-headline text-primary technical-value">68.2</span>
+<span class="text-body-lg font-label text-outline">%</span>
+</div>
+<span class="text-label-md font-label text-on-surface-variant technical-value">84.9 TB Used</span>
+</div>
+<div class="progress-bar-bg">
+<div class="progress-bar-fill bg-semantic-skyblue" style="width: 68.2%;"></div>
+</div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-lg p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="text-label-md font-label text-on-surface-variant uppercase tracking-wider">Projected Exhaustion</span>
+<span class="material-symbols-outlined text-semantic-amber">hourglass_empty</span>
+</div>
+<div>
+<div class="text-headline-lg font-headline text-primary technical-value">244 <span class="text-body-lg font-body text-outline font-normal">Days</span></div>
+<div class="mt-2 text-label-md font-label text-semantic-slate px-2 py-1 bg-surface-container rounded inline-block">
+                                Est. Date: 2024-11-14
+                            </div>
+</div>
+</div>
+</div>
+<!-- 2. Resource Pressure Matrix -->
+<div>
+<h3 class="text-headline-sm font-headline text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">speed</span>
+                        Resource Pressure (Top Consumers)
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Pressure Card 1 (Warning) -->
+<div class="bg-surface-container-lowest border border-semantic-crimson/30 rounded-lg p-4 shadow-sm hover:border-semantic-crimson/60 transition-colors relative">
+<div class="absolute top-0 right-0 w-1.5 h-full bg-semantic-crimson rounded-r-lg"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-body font-semibold text-primary truncate max-w-[150px]">Acme Heavy Ind.</span>
+<span class="text-label-sm font-label text-semantic-crimson bg-semantic-crimson/10 px-1.5 py-0.5 rounded">94%</span>
+</div>
+<div class="flex items-baseline gap-1 mb-3">
+<span class="technical-value text-body-lg text-primary">4.7</span>
+<span class="text-label-sm text-outline">TB</span>
+<span class="text-label-sm text-outline mx-1">/</span>
+<span class="technical-value text-label-md text-outline">5.0 TB</span>
+</div>
+<div class="progress-bar-bg h-1 mb-3">
+<div class="progress-bar-fill bg-semantic-crimson" style="width: 94%;"></div>
+</div>
+<!-- Mock Sparkline -->
+<div class="h-8 w-full border-b border-outline-variant/30 flex items-end gap-[1px]">
+<div class="w-full bg-semantic-crimson/20 h-[40%]"></div><div class="w-full bg-semantic-crimson/20 h-[45%]"></div><div class="w-full bg-semantic-crimson/20 h-[60%]"></div><div class="w-full bg-semantic-crimson/20 h-[75%]"></div><div class="w-full bg-semantic-crimson/40 h-[85%]"></div><div class="w-full bg-semantic-crimson/60 h-[90%]"></div><div class="w-full bg-semantic-crimson h-[94%]"></div>
+</div>
+<div class="text-[10px] font-label text-outline text-right mt-1">30D GROWTH</div>
+</div>
+<!-- Pressure Card 2 (Attention) -->
+<div class="bg-surface-container-lowest border border-semantic-amber/30 rounded-lg p-4 shadow-sm hover:border-semantic-amber/60 transition-colors relative">
+<div class="absolute top-0 right-0 w-1.5 h-full bg-semantic-amber rounded-r-lg"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-body font-semibold text-primary truncate max-w-[150px]">BuildCorp Global</span>
+<span class="text-label-sm font-label text-semantic-amber bg-semantic-amber/10 px-1.5 py-0.5 rounded">88%</span>
+</div>
+<div class="flex items-baseline gap-1 mb-3">
+<span class="technical-value text-body-lg text-primary">8.8</span>
+<span class="text-label-sm text-outline">TB</span>
+<span class="text-label-sm text-outline mx-1">/</span>
+<span class="technical-value text-label-md text-outline">10.0 TB</span>
+</div>
+<div class="progress-bar-bg h-1 mb-3">
+<div class="progress-bar-fill bg-semantic-amber" style="width: 88%;"></div>
+</div>
+<!-- Mock Sparkline -->
+<div class="h-8 w-full border-b border-outline-variant/30 flex items-end gap-[1px]">
+<div class="w-full bg-semantic-amber/20 h-[50%]"></div><div class="w-full bg-semantic-amber/20 h-[55%]"></div><div class="w-full bg-semantic-amber/30 h-[60%]"></div><div class="w-full bg-semantic-amber/40 h-[70%]"></div><div class="w-full bg-semantic-amber/60 h-[75%]"></div><div class="w-full bg-semantic-amber/80 h-[85%]"></div><div class="w-full bg-semantic-amber h-[88%]"></div>
+</div>
+<div class="text-[10px] font-label text-outline text-right mt-1">30D GROWTH</div>
+</div>
+<!-- Pressure Card 3 (Active) -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm hover:border-outline-variant/60 transition-colors relative">
+<div class="absolute top-0 right-0 w-1.5 h-full bg-semantic-skyblue rounded-r-lg"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-body font-semibold text-primary truncate max-w-[150px]">Nexus Engineering</span>
+<span class="text-label-sm font-label text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">65%</span>
+</div>
+<div class="flex items-baseline gap-1 mb-3">
+<span class="technical-value text-body-lg text-primary">1.3</span>
+<span class="text-label-sm text-outline">TB</span>
+<span class="text-label-sm text-outline mx-1">/</span>
+<span class="technical-value text-label-md text-outline">2.0 TB</span>
+</div>
+<div class="progress-bar-bg h-1 mb-3">
+<div class="progress-bar-fill bg-semantic-skyblue" style="width: 65%;"></div>
+</div>
+<!-- Mock Sparkline -->
+<div class="h-8 w-full border-b border-outline-variant/30 flex items-end gap-[1px]">
+<div class="w-full bg-semantic-skyblue/20 h-[40%]"></div><div class="w-full bg-semantic-skyblue/20 h-[42%]"></div><div class="w-full bg-semantic-skyblue/30 h-[45%]"></div><div class="w-full bg-semantic-skyblue/30 h-[50%]"></div><div class="w-full bg-semantic-skyblue/40 h-[55%]"></div><div class="w-full bg-semantic-skyblue/60 h-[60%]"></div><div class="w-full bg-semantic-skyblue h-[65%]"></div>
+</div>
+<div class="text-[10px] font-label text-outline text-right mt-1">30D GROWTH</div>
+</div>
+<!-- Pressure Card 4 (Active) -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm hover:border-outline-variant/60 transition-colors relative">
+<div class="absolute top-0 right-0 w-1.5 h-full bg-semantic-skyblue rounded-r-lg"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-body font-semibold text-primary truncate max-w-[150px]">Pinnacle Projects</span>
+<span class="text-label-sm font-label text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">42%</span>
+</div>
+<div class="flex items-baseline gap-1 mb-3">
+<span class="technical-value text-body-lg text-primary">0.8</span>
+<span class="text-label-sm text-outline">TB</span>
+<span class="text-label-sm text-outline mx-1">/</span>
+<span class="technical-value text-label-md text-outline">2.0 TB</span>
+</div>
+<div class="progress-bar-bg h-1 mb-3">
+<div class="progress-bar-fill bg-semantic-skyblue" style="width: 42%;"></div>
+</div>
+<!-- Mock Sparkline -->
+<div class="h-8 w-full border-b border-outline-variant/30 flex items-end gap-[1px]">
+<div class="w-full bg-semantic-skyblue/20 h-[20%]"></div><div class="w-full bg-semantic-skyblue/20 h-[22%]"></div><div class="w-full bg-semantic-skyblue/20 h-[25%]"></div><div class="w-full bg-semantic-skyblue/30 h-[28%]"></div><div class="w-full bg-semantic-skyblue/30 h-[35%]"></div><div class="w-full bg-semantic-skyblue/50 h-[38%]"></div><div class="w-full bg-semantic-skyblue h-[42%]"></div>
+</div>
+<div class="text-[10px] font-label text-outline text-right mt-1">30D GROWTH</div>
+</div>
+</div>
+</div>
+<!-- 3. Organization Storage Directory & 4. Quota Analytics (Split Layout) -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Analytics Side Panel -->
+<div class="xl:col-span-1 flex flex-col gap-6">
+<!-- Alert Panel -->
+<div class="bg-error-container/20 border border-error-container rounded-lg p-5">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-error-container">warning</span>
+<div>
+<h4 class="text-body-md font-bold text-on-error-container">Quota Alne theert (2)</h4>
+<p class="text-body-sm text-on-surface-variant mt-1 mb-3">Two organizations are exceeding 85% utilization threshold.</p>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm">
+<span class="font-body text-primary">Acme Heavy Ind.</span>
+<button class="text-label-md font-label text-semantic-royalblue hover:underline bg-transparent border-0 cursor-pointer">Request Expansion</button>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="font-body text-primary">BuildCorp Global</span>
+<button class="text-label-md font-label text-semantic-royalblue hover:underline bg-transparent border-0 cursor-pointer">Notify Admin</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Storage Distribution Chart -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-lg p-5 shadow-sm flex-1">
+<h4 class="text-headline-sm font-headline text-primary mb-4">Distribution by Tier</h4>
+<div class="relative w-48 h-48 mx-auto mb-4">
+<!-- Abstract CSS Pie Chart Representation -->
+<div class="w-full h-full rounded-full" style="background: conic-gradient(theme('colors.primary-container') 0% 45%, theme('colors.secondary-container') 45% 75%, theme('colors.surface-container-high') 75% 100%);"></div>
+<div class="absolute inset-0 m-auto w-32 h-32 bg-surface-container-lowest rounded-full flex flex-col items-center justify-center">
+<span class="text-headline-md font-headline text-primary">184</span>
+<span class="text-label-sm font-label text-outline">TOTAL ORGS</span>
+</div>
+</div>
+<div class="space-y-2 mt-6">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-sm bg-primary-container"></span>
+<span class="font-body text-on-surface">Enterprise (Unlimited)</span>
+</div>
+<span class="font-label text-outline">45%</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-sm bg-secondary-container"></span>
+<span class="font-body text-on-surface">Professional (10TB)</span>
+</div>
+<span class="font-label text-outline">30%</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-sm bg-surface-container-high"></span>
+<span class="font-body text-on-surface">Starter (2TB)</span>
+</div>
+<span class="font-label text-outline">25%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dense Data Table -->
+<div class="xl:col-span-2 bg-surface-container-lowest border border-outline-variant/40 rounded-lg shadow-sm flex flex-col overflow-hidden bg-surface">
+<div class="p-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low/50">
+<h3 class="text-headline-sm font-headline text-primary">Organization Directory</h3>
+<button class="text-label-md font-label text-primary-container flex items-center gap-1 hover:bg-surface-container px-2 py-1 rounded transition-colors">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+                                Filter
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full dense-table whitespace-nowrap technical-value">
+<thead class="bg-surface">
+<tr>
+<th class="">Org Name</th>
+<th class="">Tier</th>
+<th class="text-right">Max Quota (GB)</th>
+<th class="text-right">Used (GB)</th>
+<th class="">Utilization</th>
+<th class="">Last Sync (UTC)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="font-medium text-primary">Acme Heavy Ind.</td>
+<td class=""><span class="px-2 py-0.5 bg-surface-container-high rounded text-xs font-medium">Enterprise</span></td>
+<td class="text-right technical-value text-outline">5,000</td>
+<td class="text-right technical-value text-primary">4,700</td>
+<td class="">
+<div class="flex items-center gap-2">
+<div class="w-16 progress-bar-bg h-1.5"><div class="progress-bar-fill bg-semantic-crimson" style="width: 94%;"></div></div>
+<span class="text-label-sm font-label text-semantic-crimson">94%</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-24 14:32:01</td>
+</tr>
+<tr>
+<td class="font-medium text-primary">BuildCorp Global</td>
+<td class=""><span class="px-2 py-0.5 bg-secondary-container/30 text-on-secondary-container rounded text-xs font-medium">Professional</span></td>
+<td class="text-right technical-value text-outline">10,000</td>
+<td class="text-right technical-value text-primary">8,800</td>
+<td class="">
+<div class="flex items-center gap-2">
+<div class="w-16 progress-bar-bg h-1.5"><div class="progress-bar-fill bg-semantic-amber" style="width: 88%;"></div></div>
+<span class="text-label-sm font-label text-semantic-amber">88%</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-24 14:15:22</td>
+</tr>
+<tr>
+<td class="font-medium text-primary">Nexus Engineering</td>
+<td class=""><span class="px-2 py-0.5 bg-surface-container-high rounded text-xs font-medium">Starter</span></td>
+<td class="text-right technical-value text-outline">2,000</td>
+<td class="text-right technical-value text-primary">1,300</td>
+<td class="">
+<div class="flex items-center gap-2">
+<div class="w-16 progress-bar-bg h-1.5"><div class="progress-bar-fill bg-semantic-skyblue" style="width: 65%;"></div></div>
+<span class="text-label-sm font-label text-on-surface-variant">65%</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-24 13:45:10</td>
+</tr>
+<tr>
+<td class="font-medium text-primary">Pinnacle Projects</td>
+<td class=""><span class="px-2 py-0.5 bg-surface-container-high rounded text-xs font-medium">Starter</span></td>
+<td class="text-right technical-value text-outline">2,000</td>
+<td class="text-right technical-value text-primary">840</td>
+<td class="">
+<div class="flex items-center gap-2">
+<div class="w-16 progress-bar-bg h-1.5"><div class="progress-bar-fill bg-semantic-skyblue" style="width: 42%;"></div></div>
+<span class="text-label-sm font-label text-on-surface-variant">42%</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-24 11:20:05</td>
+</tr>
+<tr>
+<td class="font-medium text-primary">Quantum Structures</td>
+<td class=""><span class="px-2 py-0.5 bg-secondary-container/30 text-on-secondary-container rounded text-xs font-medium">Professional</span></td>
+<td class="text-right technical-value text-outline">10,000</td>
+<td class="text-right technical-value text-primary">2,100</td>
+<td class="">
+<div class="flex items-center gap-2">
+<div class="w-16 progress-bar-bg h-1.5"><div class="progress-bar-fill bg-semantic-slate" style="width: 21%;"></div></div>
+<span class="text-label-sm font-label text-on-surface-variant">21%</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-23 09:12:44</td>
+</tr>
+<tr>
+<td class="font-medium text-primary">Vertex Architecture</td>
+<td class=""><span class="px-2 py-0.5 bg-surface-container-high rounded text-xs font-medium">Enterprise</span></td>
+<td class="text-right technical-value text-outline">Unl.</td>
+<td class="text-right technical-value text-primary">15,400</td>
+<td class="">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label text-semantic-emerald">Nominal</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-24 14:40:11</td>
+</tr>
+<tr>
+<td class="font-medium text-primary">Skyline Development</td>
+<td class=""><span class="px-2 py-0.5 bg-surface-container-high rounded text-xs font-medium">Starter</span></td>
+<td class="text-right technical-value text-outline">2,000</td>
+<td class="text-right technical-value text-primary">180</td>
+<td class="">
+<div class="flex items-center gap-2">
+<div class="w-16 progress-bar-bg h-1.5"><div class="progress-bar-fill bg-semantic-slate" style="width: 9%;"></div></div>
+<span class="text-label-sm font-label text-on-surface-variant">9%</span>
+</div>
+</td>
+<td class="technical-value text-xs text-outline">2024-03-20 16:55:00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t border-outline-variant/30 bg-surface-container-low/30 text-center">
+<button class="text-label-md font-label text-primary-container hover:text-primary transition-colors">View All 184 Organizations</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

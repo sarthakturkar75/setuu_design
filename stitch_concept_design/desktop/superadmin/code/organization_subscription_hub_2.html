@@ -1,0 +1,326 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Organization Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#005a7f",
+                        "primary-container": "#00213c",
+                        "secondary-container": "#8ad1ff",
+                        "surface": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-container-high": "#e9e8e3",
+                        "inverse-surface": "#30312e",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "tertiary-container": "#002233",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container": "#efeee9",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#73777e",
+                        "surface-tint": "#46607e",
+                        "background": "#faf9f4",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-container": "#0090c7",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#faf9f4",
+                        "on-background": "#1b1c19",
+                        "on-surface-variant": "#43474d",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-low": "#f5f4ef",
+                        "primary": "#000815",
+                        "secondary": "#00658d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-variant": "#e3e3de",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary": "#00080f",
+                        "on-surface": "#1b1c19",
+                        "on-primary-container": "#6f89a9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9f4; /* surface */
+            color: #1b1c19; /* on-surface */
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Hide scrollbar for horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col pb-24 relative overflow-x-hidden pt-16">
+<!-- TopAppBar from JSON -->
+<header class="bg-surface/85 dark:bg-primary-container/85 backdrop-blur-md shadow-sm border-b border-outline-variant/30 fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16">
+<div class="flex items-center gap-3">
+<button class="p-2 text-primary dark:text-on-primary hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim/10 rounded-full transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+</button>
+<h1 class="text-headline-sm font-headline font-bold text-primary dark:text-primary-fixed-dim tracking-tight">Organizations</h1>
+</div>
+<button class="p-2 text-primary dark:text-on-primary hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim/10 rounded-full transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Content Grid -->
+<main class="flex-1 w-full max-w-4xl mx-auto px-4 py-6 flex flex-col gap-8 md:grid md:grid-cols-12 md:px-6">
+<!-- Resource Monitoring (Horizontal Scroll Bento) -->
+<section class="md:col-span-12 flex flex-col gap-3">
+<header class="flex items-center justify-between px-1">
+<h2 class="text-headline-sm font-headline font-bold text-primary">Resource Utilization</h2>
+<span class="text-label-sm font-label text-outline uppercase tracking-wider">Top 5 Consumers</span>
+</header>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 md:mx-0 md:px-0 snap-x">
+<!-- Org 1 -->
+<div class="min-w-[280px] w-[280px] bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 shadow-sm snap-start shrink-0 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-body-md font-bold text-on-surface truncate">Apex Manufacturing</h3>
+<p class="text-label-sm font-label text-on-surface-variant">ID: ORG-8821</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label px-2 py-1 rounded">ENT</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-1">
+<span class="text-label-sm font-label text-outline">Storage</span>
+<span class="text-label-sm font-label text-primary font-bold">4.2 TB / 5 TB</span>
+</div>
+<!-- Storage Bar -->
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[84%]"></div>
+</div>
+<p class="text-[10px] font-label text-right text-secondary mt-1">84% Capacity</p>
+</div>
+</div>
+<!-- Org 2 -->
+<div class="min-w-[280px] w-[280px] bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 shadow-sm snap-start shrink-0 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-body-md font-bold text-on-surface truncate">BuildLogistics Inc.</h3>
+<p class="text-label-sm font-label text-on-surface-variant">ID: ORG-9104</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label px-2 py-1 rounded">ENT</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-1">
+<span class="text-label-sm font-label text-outline">Storage</span>
+<span class="text-label-sm font-label text-error font-bold">9.1 TB / 10 TB</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-[91%]"></div>
+</div>
+<p class="text-[10px] font-label text-right text-error mt-1">91% Capacity - CRITICAL</p>
+</div>
+</div>
+<!-- Org 3 -->
+<div class="min-w-[280px] w-[280px] bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 shadow-sm snap-start shrink-0 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-body-md font-bold text-on-surface truncate">Nexus Dynamics</h3>
+<p class="text-label-sm font-label text-on-surface-variant">ID: ORG-4451</p>
+</div>
+<span class="bg-surface-variant text-on-surface-variant border border-outline-variant/50 text-label-sm font-label px-2 py-1 rounded">PRO</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-1">
+<span class="text-label-sm font-label text-outline">Storage</span>
+<span class="text-label-sm font-label text-primary font-bold">1.2 TB / 2 TB</span>
+</div>
+<div class="w-full h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[60%]"></div>
+</div>
+<p class="text-[10px] font-label text-right text-on-surface-variant mt-1">60% Capacity</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Org Directory (Vertical List) -->
+<section class="md:col-span-12 flex flex-col gap-3">
+<header class="flex items-center justify-between px-1">
+<h2 class="text-headline-sm font-headline font-bold text-primary">Directory</h2>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="filter_list">filter_list</span>
+<span class="text-label-sm font-label text-outline uppercase tracking-wider">All Orgs</span>
+</div>
+</header>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm flex flex-col divide-y divide-outline-variant/20">
+<!-- List Item 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-headline font-bold text-lg">
+                            A
+                        </div>
+<div>
+<h3 class="text-body-md font-bold text-on-surface group-hover:text-secondary transition-colors">Apex Manufacturing</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-on-surface-variant">320 Users</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-label-sm font-label text-on-surface-variant">Since 2022</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#16A34A]"></span>
+<span class="text-label-sm font-label text-on-surface uppercase">Active</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label px-2 py-0.5 rounded">ENT</span>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-headline font-bold text-lg">
+                            B
+                        </div>
+<div>
+<h3 class="text-body-md font-bold text-on-surface group-hover:text-secondary transition-colors">BuildLogistics Inc.</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-on-surface-variant">145 Users</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-label-sm font-label text-on-surface-variant">Since 2023</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#16A34A]"></span>
+<span class="text-label-sm font-label text-on-surface uppercase">Active</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label px-2 py-0.5 rounded">ENT</span>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-headline font-bold text-lg">
+                            C
+                        </div>
+<div>
+<h3 class="text-body-md font-bold text-on-surface group-hover:text-secondary transition-colors opacity-70">ConstructCore</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-on-surface-variant opacity-70">12 Users</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-label-sm font-label text-on-surface-variant opacity-70">Suspended</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#DC2626]"></span>
+<span class="text-label-sm font-label text-[#DC2626] uppercase">On Hold</span>
+</div>
+<span class="bg-surface-variant text-on-surface-variant border border-outline-variant/50 text-label-sm font-label px-2 py-0.5 rounded opacity-70">PRO</span>
+</div>
+</div>
+<!-- List Item 4 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-headline font-bold text-lg">
+                            N
+                        </div>
+<div>
+<h3 class="text-body-md font-bold text-on-surface group-hover:text-secondary transition-colors">Nexus Dynamics</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-on-surface-variant">42 Users</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-label-sm font-label text-on-surface-variant">Since 2024</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#16A34A]"></span>
+<span class="text-label-sm font-label text-on-surface uppercase">Active</span>
+</div>
+<span class="bg-surface-variant text-on-surface-variant border border-outline-variant/50 text-label-sm font-label px-2 py-0.5 rounded">PRO</span>
+</div>
+</div>
+</div>
+<button class="w-full py-3 mt-2 text-label-sm font-label text-secondary hover:bg-secondary/10 transition-colors rounded border border-secondary/20 border-dashed">
+                LOAD MORE ORGANIZATIONS
+            </button>
+</section>
+</main>
+<!-- FAB: Add Organization -->
+<button class="fixed bottom-24 right-4 md:right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:bg-primary-container transition-transform transform active:scale-95 z-40">
+<span class="material-symbols-outlined text-3xl" data-icon="add_business">add_business</span>
+</button>
+<!-- BottomNavBar from JSON -->
+<nav class="bg-surface/80 dark:bg-primary-container/90 backdrop-blur-xl shadow-lg border-t border-outline-variant/20 fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe h-20 md:hidden rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-primary-container opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-3 py-1.5 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="corporate_fare" data-weight="fill" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+<span class="text-label-sm font-label">Orgs</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-primary-container opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="dns">dns</span>
+<span class="text-label-sm font-label">Infrastructure</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-primary-container opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="security">security</span>
+<span class="text-label-sm font-label">Security</span>
+</div>
+</nav>
+<script>
+        // Simple script to handle bottom safe area for modern mobile browsers
+        if (CSS.supports('padding-bottom: env(safe-area-inset-bottom)')) {
+            document.body.style.paddingBottom = 'calc(5rem + env(safe-area-inset-bottom))';
+        }
+    </script>
+</body></html>

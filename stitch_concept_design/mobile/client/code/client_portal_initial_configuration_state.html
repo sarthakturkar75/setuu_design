@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Client Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e9e8e3",
+                        "primary-fixed-dim": "#aec9eb",
+                        "tertiary-container": "#002233",
+                        "surface-dim": "#dbdad5",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#efeee9",
+                        "outline": "#73777e",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#00658d",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary": "#000815",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-background": "#1b1c19",
+                        "primary-container": "#00213c",
+                        "on-tertiary-container": "#0090c7",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#30312e",
+                        "background": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-bright": "#faf9f4",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-highest": "#e3e3de",
+                        "on-primary-container": "#6f89a9",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "on-surface": "#1b1c19",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-tertiary-fixed": "#001e2d",
+                        "surface": "#faf9f4",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-low": "#f5f4ef",
+                        "inverse-on-surface": "#f2f1ec",
+                        "outline-variant": "#c3c6ce",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-container": "#005a7f",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "secondary-container": "#8ad1ff",
+                        "surface-variant": "#e3e3de"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; color: #1b1c19; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #00213c, #00658d);
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased selection:bg-secondary/20 selection:text-primary">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full py-6 fixed left-0 top-0 w-[280px] z-50 bg-primary-container shadow-xl transition-all duration-300">
+<div class="px-6 mb-8 flex items-center space-x-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="domain" style="font-variation-settings: 'FILL' 1;">domain</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-on-primary-container text-lg tracking-tight leading-tight">Setuu Enterprise</h1>
+<p class="font-label text-label-md text-on-primary-container/70 uppercase tracking-widest mt-0.5">Client Portal</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 space-y-1 scrollbar-hide">
+<a class="flex items-center px-4 py-3 bg-secondary text-on-secondary rounded-lg mx-2 my-1 transition-all group shadow-sm" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body font-medium text-body-md">Executive Summary</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-on-primary-container/10 rounded-lg mx-2 my-1 transition-all group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="folder_shared">folder_shared</span>
+<span class="font-body font-medium text-body-md">Project Portfolio</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-on-primary-container/10 rounded-lg mx-2 my-1 transition-all group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="payments">payments</span>
+<span class="font-body font-medium text-body-md">Financials</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-on-primary-container/10 rounded-lg mx-2 my-1 transition-all group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="architecture">architecture</span>
+<span class="font-body font-medium text-body-md">Drawing Hub</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-on-primary-container/10 rounded-lg mx-2 my-1 transition-all group" href="#">
+<span class="material-symbols-outlined mr-3 text-[20px]" data-icon="contact_support">contact_support</span>
+<span class="font-body font-medium text-body-md">Support</span>
+</a>
+</nav>
+<div class="px-6 mt-auto pt-6">
+<button class="w-full flex items-center justify-center py-3 bg-on-primary-container/10 hover:bg-on-primary-container/20 text-on-primary-container rounded-lg transition-colors font-body font-medium text-sm">
+<span class="material-symbols-outlined mr-2 text-[18px]" data-icon="download">download</span>
+                Download Report
+            </button>
+<div class="flex justify-center space-x-4 mt-6">
+<a class="text-on-primary-container/50 hover:text-on-primary-container transition-colors" href="#" title="Privacy Policy">
+<span class="material-symbols-outlined text-[18px]" data-icon="gavel">gavel</span>
+</a>
+<a class="text-on-primary-container/50 hover:text-on-primary-container transition-colors" href="#" title="Terms">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[280px] bg-background w-full relative">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-6 h-16 bg-white/85 backdrop-blur-md docked full-width top-0 sticky z-40 border-b border-outline-variant/30 shadow-sm transition-all">
+<div class="flex items-center">
+<div class="md:hidden mr-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+<h2 class="font-headline font-bold text-headline-md tracking-tight text-primary hidden md:block">Setuu Enterprise</h2>
+</div>
+<div class="flex items-center space-x-2">
+<div class="relative hidden sm:block mr-2">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm font-body focus:ring-2 focus:ring-secondary/50 w-48 lg:w-64 transition-all" placeholder="Search..." type="text"/>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200 rounded-full hover:bg-surface-container-low relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200 rounded-full hover:bg-surface-container-low hidden sm:block">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95 duration-200 rounded-full hover:bg-surface-container-low mr-2">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-9 h-9 rounded-full overflow-hidden border-2 border-surface-container-high cursor-pointer active:scale-95 duration-200 ml-2">
+<img alt="Executive User Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a modern office environment, soft natural lighting, high resolution, minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0J5mdA7dmn03qV-jts7zeu1CZsnXv9u0yfnY_q6mCtoCWXe5NK7kM-vsJb_b3JXy6AnnoAEhuciliDI-iTyNZxmboc9KMG3WQDOZF4GuIcpcyjNXH6Rqh2pdNrMeK8Eq-1StJjZ_qp3oo-vVP0-Bw6ur30yKXetMAQPxDPv0wmqtg7buPisheWALuQ3K-P3DS0vXxpjyg4KP-OcrlvqqYS61LCD19grlgo1shfzpu8iug9Hqb4YYQ"/>
+</div>
+</div>
+</header>
+<!-- Main Canvas (White Glove Empty State) -->
+<main class="flex-1 overflow-y-auto p-6 lg:p-12">
+<div class="max-w-6xl mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-12rem)]">
+<!-- Hero Section of Empty State -->
+<div class="text-center max-w-2xl mb-12 animate-fade-in-up">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-surface-container-low mb-6 shadow-sm border border-outline-variant/20 relative">
+<span class="material-symbols-outlined text-secondary text-[32px] absolute z-10" data-icon="engineering" style="font-variation-settings: 'FILL' 1;">engineering</span>
+<div class="absolute inset-0 bg-secondary/10 rounded-2xl animate-pulse"></div>
+</div>
+<h2 class="font-headline font-bold text-headline-lg text-primary mb-4 text-gradient">Baseline Configuration in Progress</h2>
+<p class="font-body text-body-lg text-on-surface-variant leading-relaxed">
+                        Your project baseline is being meticulously configured by our engineering team. We are establishing foundational parameters, relational structures, and initial schematics. Updates will appear here shortly.
+                    </p>
+</div>
+<!-- Bento Grid / Asymmetric Data Placeholders -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 w-full opacity-60 pointer-events-none filter grayscale-[30%]">
+<!-- Main Chart Placeholder -->
+<div class="md:col-span-8 glass-panel rounded-xl p-8 border border-outline-variant/30 flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div class="space-y-2">
+<div class="h-5 w-48 bg-surface-dim rounded animate-pulse"></div>
+<div class="h-3 w-32 bg-surface-dim/50 rounded animate-pulse"></div>
+</div>
+<div class="h-8 w-24 bg-surface-dim/30 rounded-full animate-pulse"></div>
+</div>
+<div class="flex-1 relative min-h-[200px] border-b border-l border-outline-variant/20 pt-4 pr-4">
+<!-- Wireframe lines -->
+<div class="absolute bottom-0 left-0 w-full h-[1px] bg-surface-dim/50"></div>
+<div class="absolute bottom-1/4 left-0 w-full h-[1px] bg-surface-dim/20 border-dashed border-t"></div>
+<div class="absolute bottom-2/4 left-0 w-full h-[1px] bg-surface-dim/20 border-dashed border-t"></div>
+<div class="absolute bottom-3/4 left-0 w-full h-[1px] bg-surface-dim/20 border-dashed border-t"></div>
+<!-- Abstract Data curve -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path class="animate-[dash_3s_linear_infinite]" d="M0,90 Q20,80 30,50 T70,40 T100,10" fill="none" stroke="#dbdad5" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- Side Stats Placeholder -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/30 flex-1 flex flex-col justify-center">
+<div class="flex items-center space-x-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim/50 animate-pulse"></div>
+<div class="h-4 w-24 bg-surface-dim rounded animate-pulse"></div>
+</div>
+<div class="h-8 w-1/2 bg-surface-dim rounded mb-2 animate-pulse"></div>
+<div class="h-3 w-3/4 bg-surface-dim/50 rounded animate-pulse"></div>
+</div>
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/30 flex-1 flex flex-col justify-center">
+<div class="flex items-center space-x-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-dim/50 animate-pulse"></div>
+<div class="h-4 w-24 bg-surface-dim rounded animate-pulse"></div>
+</div>
+<div class="h-8 w-1/2 bg-surface-dim rounded mb-2 animate-pulse"></div>
+<div class="h-3 w-3/4 bg-surface-dim/50 rounded animate-pulse"></div>
+</div>
+</div>
+</div>
+<!-- Action / Metadata -->
+<div class="mt-12 flex flex-col items-center">
+<div class="font-label text-label-sm text-outline tracking-widest uppercase mb-4 flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-2" data-icon="sync" style="animation: spin 3s linear infinite;">sync</span>
+                        System initializing...
+                    </div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Executive Dashboard Mobile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d1e4ff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#faf9f4",
+                        "secondary": "#00658d",
+                        "surface-container-low": "#f5f4ef",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#efeee9",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "outline-variant": "#c3c6ce",
+                        "on-surface-variant": "#43474d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "on-tertiary-container": "#0090c7",
+                        "secondary-container": "#8ad1ff",
+                        "inverse-surface": "#30312e",
+                        "on-background": "#1b1c19",
+                        "on-primary-container": "#6f89a9",
+                        "surface-dim": "#dbdad5",
+                        "inverse-primary": "#aec9eb",
+                        "background": "#faf9f4",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#46607e",
+                        "primary-container": "#00213c",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-container": "#002233",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "outline": "#73777e",
+                        "on-primary-fixed": "#001d35",
+                        "on-secondary-container": "#005a7f",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#00080f",
+                        "inverse-on-surface": "#f2f1ec",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface": "#faf9f4",
+                        "primary": "#000815",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-container-highest": "#e3e3de",
+                        "status-queue": "#64748b",
+                        "status-active": "#0284c7",
+                        "status-warning": "#d97706",
+                        "status-success": "#16a34a",
+                        "status-final": "#0d9488",
+                        "status-verify": "#2563eb",
+                        "status-attention": "#9333ea",
+                        "status-emergency": "#dc2626"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 1);
+        }
+        
+        /* Custom scrollbar for mobile horizontal scrolling */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased flex flex-col min-h-screen overscroll-none">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile w-full h-16 sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant flat no shadows transition-all duration-300">
+<button aria-label="Menu" class="text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center justify-center" onclick="toggleDrawer()">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="font-display-lg text-[20px] tracking-tighter text-primary font-bold">SETUU Enterprise</div>
+<button aria-label="User profile avatar" class="hover:bg-surface-container-low transition-colors rounded-full focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center justify-center w-8 h-8 bg-surface-container-high overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive. The individual is wearing a dark, tailored suit and looking confidently at the camera. The background is a slightly blurred, modern office environment with bright, natural lighting reflecting the clean, off-white and navy color palette of a modern enterprise software interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSr9CzPiX0CcPtAoXC-sKXgNfg8erVy7pyya5zCEpIV4KodH4RtNycs6VwBn-6BMjeU6PjZrF5Di6GR5JMyOBFzl1iycGyLbzrSf-A2lYesrRFbpfaFUyuyYxyIyFVG9QdlWcZZHcxwdwOrYPWizW9Jxh6W37M0iIGmRt1Gzk7yLCXZScHTFfdZFHZvbn4XPy_ZdnZVYV3-wOEwVNZ4ie9sxeOAC5K0Pf3T7D2kTJ36ocv3sDH25iG">
+</button>
+</header>
+<!-- Main Content Area - Fluid 4-column grid for mobile -->
+<main class="flex-1 w-full px-margin-mobile py-6 overflow-y-auto pb-24 grid grid-cols-4 gap-4">
+<!-- Dashboard Title -->
+<div class="col-span-4 mb-2">
+<h1 class="font-headline text-headline-lg-mobile text-primary">Executive Overview</h1>
+<p class="font-label text-label-md text-on-surface-variant mt-1">LST_SYNC: 2023-10-27T14:32:01Z</p>
+</div>
+<!-- High-Density Financial KPI Cards (Horizontal Scroll on Mobile) -->
+<section class="col-span-4 -mx-margin-mobile px-margin-mobile flex overflow-x-auto gap-4 hide-scrollbar pb-2 snap-x">
+<!-- TCV Card -->
+<div class="min-w-[280px] bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm snap-center flex-shrink-0 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-status-success/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4">
+<h2 class="font-headline text-headline-sm text-primary">Total Contract Value</h2>
+<span class="material-symbols-outlined text-status-success text-xl" data-icon="payments">payments</span>
+</div>
+<div class="text-3xl font-body font-bold text-on-surface mb-1">$1.24B</div>
+<div class="flex items-center text-status-success font-label text-label-md">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="trending_up">trending_up</span>
+                    +4.2% YTD
+                </div>
+<div class="mt-4 pt-3 border-t border-surface-variant flex justify-between">
+<span class="font-label text-label-sm text-on-surface-variant">Q3 FORECAST</span>
+<span class="font-body text-body-md font-medium text-status-success">$320M</span>
+</div>
+</div>
+<!-- Revenue Impact Card -->
+<div class="min-w-[280px] bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm snap-center flex-shrink-0 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-status-attention/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4">
+<h2 class="font-headline text-headline-sm text-primary">Pending Impact</h2>
+<span class="material-symbols-outlined text-status-attention text-xl" data-icon="pending_actions">pending_actions</span>
+</div>
+<div class="text-3xl font-body font-bold text-on-surface mb-1">$45.8M</div>
+<div class="flex items-center text-status-attention font-label text-label-md">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="assignment_late">assignment_late</span>
+                    12 Change Requests
+                </div>
+<div class="mt-4 pt-3 border-t border-surface-variant flex justify-between">
+<span class="font-label text-label-sm text-on-surface-variant">CRITICAL EXPOSURE</span>
+<span class="font-body text-body-md font-medium text-status-emergency">$12.5M</span>
+</div>
+</div>
+<!-- Capital Expenditure Card -->
+<div class="min-w-[280px] bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm snap-center flex-shrink-0 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-status-active/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4">
+<h2 class="font-headline text-headline-sm text-primary">CapEx Run Rate</h2>
+<span class="material-symbols-outlined text-status-active text-xl" data-icon="account_balance">account_balance</span>
+</div>
+<div class="text-3xl font-body font-bold text-on-surface mb-1">$8.2M/mo</div>
+<div class="flex items-center text-on-surface-variant font-label text-label-md">
+<span class="material-symbols-outlined text-[14px] mr-1" data-icon="horizontal_rule">horizontal_rule</span>
+                    On Target
+                </div>
+<div class="mt-4 pt-3 border-t border-surface-variant flex justify-between">
+<span class="font-label text-label-sm text-on-surface-variant">BUDGET VARIANCE</span>
+<span class="font-body text-body-md font-medium text-on-surface">-1.2%</span>
+</div>
+</div>
+</section>
+<!-- Critical Alerts Section (Break-glass UI style) -->
+<section class="col-span-4 mt-6">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline text-headline-sm text-primary flex items-center">
+<span class="material-symbols-outlined text-status-emergency mr-2 fill-icon" data-icon="warning">warning</span>
+                    Critical Alerts
+                </h2>
+<span class="bg-status-emergency text-on-error font-label text-label-sm px-2 py-0.5 rounded-full">3 ACTIONS REQ</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Alert 1 -->
+<div class="bg-error-container border border-status-emergency/30 rounded-lg p-3 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-emergency"></div>
+<div class="flex justify-between items-start ml-2">
+<div>
+<span class="font-label text-label-sm text-on-error-container mb-1 block">ID: CR-8992</span>
+<h3 class="font-body text-body-md font-bold text-on-error-container">Structural Revision Approval</h3>
+<p class="font-body text-body-sm text-on-error-container/80 mt-1 line-clamp-1">Project Alpha - Foundation load limits exceeded initial spec.</p>
+</div>
+<button class="bg-status-emergency text-on-error rounded px-3 py-1 font-label text-label-md hover:bg-status-emergency/90 transition-colors shrink-0 ml-2">REVIEW</button>
+</div>
+</div>
+<!-- Alert 2 -->
+<div class="bg-surface-container-lowest border border-status-attention/30 rounded-lg p-3 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-attention"></div>
+<div class="flex justify-between items-start ml-2">
+<div>
+<span class="font-label text-label-sm text-on-surface-variant mb-1 block">ID: VEND-402</span>
+<h3 class="font-body text-body-md font-bold text-on-surface">Material Delivery Delay</h3>
+<p class="font-body text-body-sm text-on-surface-variant mt-1 line-clamp-1">Steel shipment delayed by 48hrs. Critical path impact.</p>
+</div>
+<button class="bg-surface-container text-on-surface rounded px-3 py-1 font-label text-label-md border border-outline-variant hover:bg-surface-container-high transition-colors shrink-0 ml-2">VIEW</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Portfolio Health Matrix -->
+<section class="col-span-4 mt-8 mb-4">
+<h2 class="font-headline text-headline-sm text-primary mb-4">Portfolio Health</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden shadow-sm">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-2 p-3 bg-surface-container-low border-b border-outline-variant font-label text-label-sm text-on-surface-variant">
+<div class="col-span-6">PROJECT</div>
+<div class="col-span-3 text-right">STAGE</div>
+<div class="col-span-3 text-right">HEALTH</div>
+</div>
+<!-- Rows -->
+<div class="flex flex-col">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-2 p-3 border-b border-surface-variant items-center hover:bg-surface-container-low/50 transition-colors active:bg-surface-container-high">
+<div class="col-span-6 flex flex-col">
+<span class="font-body text-body-md font-medium text-on-surface truncate">Nexus Tower</span>
+<span class="font-label text-label-sm text-on-surface-variant mt-0.5">PRJ-01A</span>
+</div>
+<div class="col-span-3 text-right flex justify-end">
+<span class="bg-status-active/10 text-status-active font-label text-label-sm px-2 py-0.5 rounded border border-status-active/20 truncate max-w-full">BUILD</span>
+</div>
+<div class="col-span-3 flex justify-end items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-status-success"></div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-2 p-3 border-b border-surface-variant items-center hover:bg-surface-container-low/50 transition-colors active:bg-surface-container-high">
+<div class="col-span-6 flex flex-col">
+<span class="font-body text-body-md font-medium text-on-surface truncate">Riverfront Phase 2</span>
+<span class="font-label text-label-sm text-on-surface-variant mt-0.5">PRJ-08C</span>
+</div>
+<div class="col-span-3 text-right flex justify-end">
+<span class="bg-status-verify/10 text-status-verify font-label text-label-sm px-2 py-0.5 rounded border border-status-verify/20 truncate max-w-full">Q/A</span>
+</div>
+<div class="col-span-3 flex justify-end items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-status-warning"></div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-2 p-3 border-b border-surface-variant items-center hover:bg-surface-container-low/50 transition-colors active:bg-surface-container-high">
+<div class="col-span-6 flex flex-col">
+<span class="font-body text-body-md font-medium text-on-surface truncate">Tech Hub Campus</span>
+<span class="font-label text-label-sm text-on-surface-variant mt-0.5">PRJ-12F</span>
+</div>
+<div class="col-span-3 text-right flex justify-end">
+<span class="bg-status-queue/10 text-status-queue font-label text-label-sm px-2 py-0.5 rounded border border-status-queue/20 truncate max-w-full">PREP</span>
+</div>
+<div class="col-span-3 flex justify-end items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-status-queue"></div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 gap-2 p-3 items-center hover:bg-surface-container-low/50 transition-colors active:bg-surface-container-high">
+<div class="col-span-6 flex flex-col">
+<span class="font-body text-body-md font-medium text-on-surface truncate">Metro Line Ext</span>
+<span class="font-label text-label-sm text-on-surface-variant mt-0.5">PRJ-04B</span>
+</div>
+<div class="col-span-3 text-right flex justify-end">
+<span class="bg-status-active/10 text-status-active font-label text-label-sm px-2 py-0.5 rounded border border-status-active/20 truncate max-w-full">BUILD</span>
+</div>
+<div class="col-span-3 flex justify-end items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-status-emergency animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-3 py-2 text-center text-secondary font-label text-label-md hover:bg-secondary-container/20 rounded transition-colors uppercase">View All Projects (42)</button>
+</section>
+</main>
+<!-- BottomNavBar (Hidden on md, visible on mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-40 flex justify-around items-center px-4 pb-4 pt-2 bg-surface/80 backdrop-blur-xl shadow-md border-t border-outline-variant rounded-t-xl transition-transform duration-300">
+<!-- Dashboard (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-90 transition-transform duration-150 focus:outline-none">
+<span class="material-symbols-outlined mb-1 fill-icon" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label-sm">Projects</span>
+</button>
+<!-- Media (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg p-2 transition-colors focus:outline-none">
+<span class="material-symbols-outlined mb-1" data-icon="perm_media">perm_media</span>
+<span class="font-label text-label-sm">Media</span>
+</button>
+<!-- Upload (FAB style in nav) -->
+<button class="flex flex-col items-center justify-center -mt-6 bg-primary-container text-on-primary rounded-full p-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all focus:outline-none ring-4 ring-background">
+<span class="material-symbols-outlined text-white" data-icon="add_a_photo">add_a_photo</span>
+</button>
+<!-- Tasks (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg p-2 transition-colors focus:outline-none">
+<span class="material-symbols-outlined mb-1" data-icon="assignment">assignment</span>
+<span class="font-label text-label-sm">Tasks</span>
+</button>
+<!-- Admin (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/50 rounded-lg p-2 transition-colors focus:outline-none">
+<span class="material-symbols-outlined mb-1" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label text-label-sm">Admin</span>
+</button>
+</nav>
+<!-- NavigationDrawer Overlay (Hidden by default) -->
+<div class="fixed inset-0 bg-black/40 z-[60] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm" id="drawer-overlay" onclick="toggleDrawer()"></div>
+<!-- NavigationDrawer (Mobile Slide-out) -->
+<aside class="fixed left-0 top-0 h-full w-sidebar-width bg-primary-container shadow-lg shadow-primary-container/10 z-[70] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-gutter-md border-r border-outline dark:border-primary-container" id="nav-drawer">
+<!-- Drawer Header -->
+<div class="px-gutter-md py-4 mb-4 border-b border-primary/20">
+<div class="font-display-lg text-display-lg text-primary-fixed mb-6 tracking-tighter">SETUU</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary-fixed/20 overflow-hidden border border-primary-fixed/30">
+<img alt="Enterprise Admin" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive. The individual is wearing a dark, tailored suit and looking confidently at the camera. The background is a slightly blurred, modern office environment with bright, natural lighting reflecting the clean, off-white and navy color palette of a modern enterprise software interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPMGHPFvsZwQMrrq1CkdSQdnJL-J_sJ-kEHYprHe3ONWj4BgeACdth2HXU7wblQqbJ-h7WAgYkzBFANpvfz0KT180fOqVyL-CemL52cmfbkiW26fnLbnT4YRNh59P0Q3ocZWZ5OeZlpfJyVPVr7EEUyjvEqLRvpBjB80dO2TPLCesr5y2emM99pQx1zTepuY8-o_lcxKMcNS0Qr7WWulBRXmdXJadBGPIT5pQULPGeYWHwCAXO3WGi">
+</div>
+<div>
+<h3 class="font-body text-body-md font-bold text-white">Super Admin</h3>
+<p class="font-label text-label-sm text-primary-fixed-dim">6-Tier RBAC Active</p>
+<p class="font-label text-label-sm text-status-active flex items-center gap-1 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-active animate-pulse"></span>
+                        Syncing...
+                    </p>
+</div>
+</div>
+</div>
+<!-- Drawer Links -->
+<nav class="flex-1 overflow-y-auto px-2">
+<ul class="space-y-1">
+<!-- Executive Overview (Active) -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-primary-fixed-dim rounded-r-full font-bold translate-x-1 shadow-sm" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="analytics">analytics</span>
+<span class="font-label text-label-md">Executive Overview</span>
+</a>
+</li>
+<!-- Project Controls -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary-fixed hover:text-white hover:bg-primary/50 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-label text-label-md">Project Controls</span>
+</a>
+</li>
+<!-- Drawing Hub -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary-fixed hover:text-white hover:bg-primary/50 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="font-label text-label-md">Drawing Hub</span>
+</a>
+</li>
+<!-- Material Tracker -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary-fixed hover:text-white hover:bg-primary/50 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-label-md">Material Tracker</span>
+</a>
+</li>
+<!-- Vendor Management -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary-fixed hover:text-white hover:bg-primary/50 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="font-label text-label-md">Vendor Management</span>
+</a>
+</li>
+<!-- System Settings -->
+<li class="mt-4 border-t border-primary/20 pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary-fixed hover:text-white hover:bg-primary/50 rounded-r-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+<span class="font-label text-label-md">System Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+</aside>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('nav-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            
+            if (drawer.classList.contains('-translate-x-full')) {
+                // Open drawer
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                // slight delay to allow display:block to apply before animating opacity
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    overlay.classList.add('opacity-100');
+                }, 10);
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                // Close drawer
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300); // match transition duration
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body></html>

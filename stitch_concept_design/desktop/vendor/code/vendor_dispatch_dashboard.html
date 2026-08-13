@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vendor Dispatch Dashboard - Setuu Enterprise</title>
+<!-- Google Fonts: Merriweather (Executive), Inter (Operational), JetBrains Mono (Technical) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom overrides to ensure absolute adherence to design system */
+        body { background-color: #faf9f4; } /* surface */
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#00658d",
+                        "tertiary": "#00080f",
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-low": "#f5f4ef",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "outline-variant": "#c3c6ce",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-tertiary-container": "#0090c7",
+                        "on-secondary": "#ffffff",
+                        "surface": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "primary-fixed-dim": "#aec9eb",
+                        "outline": "#73777e",
+                        "secondary-container": "#8ad1ff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#00213c",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-primary": "#aec9eb",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container": "#efeee9",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "background": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-bright": "#faf9f4",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-surface-variant": "#43474d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-body text-on-surface bg-surface min-h-screen antialiased">
+<!-- Top App Bar (Sourced from JSON Anchors) -->
+<!-- Applying exact style_ keys from JSON -->
+<header class="fixed w-full top-0 z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex justify-between items-center px-4 h-16">
+<!-- Leading: Avatar -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden flex-shrink-0">
+<img alt="Project Manager Profile" class="w-full h-full object-cover" data-alt="A professional headshot of an industrial project manager wearing a white hardhat and high-visibility vest. The background is a slightly blurred, bright, and clean construction site in daylight. The lighting is crisp and modern, matching a corporate SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5u60QQzFaGhIZaMPK94OriVMPmJ3lZcLVkjrrf1Obfv0Po9zbflInu6M2jrQrxXb2Zc-Y1PlF3gfagNvWWzBbI1WI7YQHO94MJRUWCODW-D2N4u-KN8BPbSGQbD295u8sInJJThKjy3BhpiyEPPpeItlC-9_H7CS7vEz87EVQJ2mWh1Ovo_5XtSbVUAvjYCwBVkDgjDfqXKw6pL9EJDEPyxnJWLlQBiJhJgwm0-kaWmzHnAEdfzE9"/>
+</div>
+<!-- Brand Logo / Headline -->
+<h1 class="font-headline font-bold text-primary dark:text-primary-fixed-dim text-headline-sm dark:text-on-surface tracking-tight">Setuu Enterprise</h1>
+</div>
+<!-- Trailing: Icon -->
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors scale-95 active:opacity-80 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high transition-colors scale-95 active:opacity-80 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas (Single Pane, No Sidebar, 12-column grid max-width) -->
+<main class="pt-24 pb-16 px-6 md:px-12 max-w-[1600px] mx-auto w-full">
+<!-- Dashboard Header Area -->
+<div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<p class="font-label text-sm text-secondary tracking-widest uppercase mb-1">Vendor Portal</p>
+<h2 class="font-headline text-3xl font-bold text-primary">Active Dispatch Queue</h2>
+<p class="font-body text-on-surface-variant mt-2 max-w-2xl">Review assigned materials, confirm target delivery dates, and upload required handover documentation for site verification.</p>
+</div>
+<div class="flex gap-3">
+<div class="bg-surface-container-highest px-4 py-2 rounded-md flex items-center gap-2 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="filter_list">filter_list</span>
+<span class="font-label text-xs font-medium text-on-surface">STATUS: PENDING</span>
+</div>
+</div>
+</div>
+<!-- Level 1 Elevated Card: Data Table -->
+<!-- Design System: Level 1 elevated surfaces with an 8px radius, sharp 1px #E0E0E0 border (outline-variant). -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant text-on-surface-variant font-label text-xs uppercase tracking-wider">
+<th class="px-6 py-4 font-medium">Material / Item</th>
+<th class="px-6 py-4 font-medium">Quantity</th>
+<th class="px-6 py-4 font-medium">PO Number</th>
+<th class="px-6 py-4 font-medium">Site Location</th>
+<th class="px-6 py-4 font-medium">Target Date</th>
+<th class="px-6 py-4 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center border border-outline-variant text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+</div>
+<div>
+<p class="font-body font-semibold text-primary">Structural Steel Beams</p>
+<p class="font-body text-sm text-on-surface-variant">W12x96 - Grade A992</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-on-surface bg-surface-container-highest px-2 py-1 rounded">12 Tons</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-secondary bg-secondary-fixed px-2 py-1 rounded border border-secondary-fixed-dim">PO-8834-A</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="location_on">location_on</span>
+<span class="font-body text-sm">Site DXB-702</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-on-surface">2023-10-24</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="font-body text-sm font-medium px-4 py-2 border border-outline text-primary rounded hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="local_shipping">local_shipping</span>
+                                        Mark in Transit
+                                    </button>
+<button class="font-body text-sm font-medium px-4 py-2 bg-secondary text-on-secondary rounded hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="upload_file">upload_file</span>
+                                        Upload Proof
+                                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center border border-outline-variant text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="air">air</span>
+</div>
+<div>
+<p class="font-body font-semibold text-primary">HVAC Ducting Sections</p>
+<p class="font-body text-sm text-on-surface-variant">Galvanized Steel, 24" Dia</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-on-surface bg-surface-container-highest px-2 py-1 rounded">45 Units</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-secondary bg-secondary-fixed px-2 py-1 rounded border border-secondary-fixed-dim">PO-8835-B</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="location_on">location_on</span>
+<span class="font-body text-sm">Site DXB-702</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-on-surface">2023-10-26</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="font-body text-sm font-medium px-4 py-2 border border-outline text-primary rounded hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="local_shipping">local_shipping</span>
+                                        Mark in Transit
+                                    </button>
+<button class="font-body text-sm font-medium px-4 py-2 bg-secondary text-on-secondary rounded hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="upload_file">upload_file</span>
+                                        Upload Proof
+                                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center border border-outline-variant text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="cable">cable</span>
+</div>
+<div>
+<p class="font-body font-semibold text-primary">High-Tension Cables</p>
+<p class="font-body text-sm text-on-surface-variant">XLPE Insulated, 33kV</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-on-surface bg-surface-container-highest px-2 py-1 rounded">5000 m</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-secondary bg-secondary-fixed px-2 py-1 rounded border border-secondary-fixed-dim">PO-8840-C</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="location_on">location_on</span>
+<span class="font-body text-sm">Site DXB-705</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="font-label text-sm text-on-surface">2023-11-02</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="font-body text-sm font-medium px-4 py-2 border border-outline text-primary rounded hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="local_shipping">local_shipping</span>
+                                        Mark in Transit
+                                    </button>
+<button class="font-body text-sm font-medium px-4 py-2 bg-secondary text-on-secondary rounded hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="upload_file">upload_file</span>
+                                        Upload Proof
+                                    </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="bg-surface-container border-t border-outline-variant px-6 py-3 flex items-center justify-between">
+<p class="font-body text-sm text-on-surface-variant">Showing 1 to 3 of 12 assignments</p>
+<div class="flex gap-1">
+<button class="p-1 text-outline hover:text-primary transition-colors cursor-not-allowed opacity-50"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 text-primary hover:bg-surface-variant rounded transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Global Drag & Drop Dropzone Hint (System Integration Requirement) -->
+<div class="mt-8 border-2 border-dashed border-outline-variant rounded-lg bg-surface-container-low p-8 text-center flex flex-col items-center justify-center transition-colors hover:border-secondary hover:bg-secondary-fixed/20 cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant mb-3" data-icon="cloud_upload">cloud_upload</span>
+<h3 class="font-headline font-bold text-primary text-lg mb-1">Global File Drop</h3>
+<p class="font-body text-sm text-on-surface-variant max-w-md">Drag and drop delivery receipts or quality inspection PDFs here. The system will automatically associate them with active POs via OCR.</p>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,1 @@
+export default function VendorLayout({ children }: { children: React.ReactNode }) { return <div className="vendor-layout">{children}</div> }

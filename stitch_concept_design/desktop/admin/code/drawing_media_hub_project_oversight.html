@@ -1,0 +1,342 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Drawings &amp; Media Hub - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#00213c",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "on-secondary-container": "#005a7f",
+                      "outline": "#73777e",
+                      "on-tertiary-fixed": "#001e2d",
+                      "primary-fixed-dim": "#aec9eb",
+                      "on-primary-fixed": "#001d35",
+                      "surface-bright": "#faf9f4",
+                      "surface": "#faf9f4",
+                      "error-container": "#ffdad6",
+                      "secondary-container": "#8ad1ff",
+                      "on-error-container": "#93000a",
+                      "primary": "#000815",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-error": "#ffffff",
+                      "surface-container": "#efeee9",
+                      "on-surface": "#1b1c19",
+                      "surface-tint": "#46607e",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "tertiary-container": "#002233",
+                      "background": "#faf9f4",
+                      "outline-variant": "#c3c6ce",
+                      "on-background": "#1b1c19",
+                      "surface-container-highest": "#e3e3de",
+                      "primary-fixed": "#d1e4ff",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#c6e7ff",
+                      "on-surface-variant": "#43474d",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#e3e3de",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-tertiary-container": "#0090c7",
+                      "secondary-fixed": "#c6e7ff",
+                      "tertiary": "#00080f",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#f5f4ef",
+                      "on-primary-container": "#6f89a9",
+                      "surface-dim": "#dbdad5",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "error": "#ba1a1a",
+                      "secondary": "#00658d",
+                      "inverse-primary": "#aec9eb",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "surface-container-high": "#e9e8e3",
+                      "inverse-surface": "#30312e",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#f2f1ec"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "Jetbrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+    </script>
+<style>
+        body { background-color: #faf9f4; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="font-body text-on-surface antialiased bg-background overflow-hidden h-screen flex">
+<!-- SideNavBar (from JSON) -->
+<nav class="bg-primary-container dark:bg-tertiary-container text-primary-fixed dark:text-primary-fixed-dim w-[280px] h-screen fixed left-0 top-0 shadow-md flex flex-col h-full py-6 px-4 z-50">
+<div class="mb-8 px-4 flex flex-col">
+<span class="font-headline text-2xl font-bold text-on-primary-fixed bg-white/10 p-2 rounded inline-block w-max">
+<span class="material-symbols-outlined text-3xl align-middle mr-2">precision_manufacturing</span>
+</span>
+<div class="mt-4">
+<h1 class="font-headline font-bold text-lg text-white">Setuu Enterprise</h1>
+<p class="font-body text-xs text-on-primary-container">Industrial Reliability</p>
+</div>
+</div>
+<button class="bg-primary-fixed text-on-primary-fixed hover:bg-primary-fixed-dim transition-colors duration-200 py-3 px-4 rounded-lg font-bold flex items-center justify-center gap-2 mx-4 mb-6 shadow-sm">
+<span class="material-symbols-outlined text-lg">add</span>
+            New Project
+        </button>
+<ul class="flex flex-col gap-1 flex-1 overflow-y-auto">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body text-sm font-medium">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="engineering">engineering</span>
+<span class="font-body text-sm font-medium">Projects</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed font-bold border-l-4 border-primary-fixed bg-on-primary-fixed-variant/20 hover:bg-on-primary-fixed-variant/10 transition-colors duration-200 scale-[0.99] duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="architecture" style="font-variation-settings: 'FILL' 1;">architecture</span>
+<span class="font-body text-sm font-medium">Drawings</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body text-sm font-medium">Materials</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-body text-sm font-medium">Audit Log</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+<span class="font-body text-sm font-medium">Support</span>
+</a>
+</li>
+</ul>
+<ul class="mt-auto border-t border-on-primary-container/20 pt-4 flex flex-col gap-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-sm font-medium">Settings</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-primary-fixed hover:bg-on-primary-fixed-variant/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-body text-sm font-medium">Logout</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- TopNavBar (from JSON) -->
+<header class="bg-white/85 dark:bg-primary-container/85 backdrop-blur-md text-on-surface dark:text-on-primary-fixed fixed top-0 right-0 w-[calc(100%-280px)] h-16 z-40 border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-8">
+<div class="flex items-center w-1/3">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-transparent rounded-lg text-sm focus:bg-white focus:border-primary-fixed focus:ring-2 focus:ring-primary-fixed transition-all font-body text-on-surface placeholder:text-on-surface-variant" placeholder="Search drawings, specs..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-all p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-all p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/50 mx-2"></div>
+<button class="flex items-center gap-3 hover:bg-surface-container-low transition-all p-1 pr-3 rounded-full">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of an industrial project manager. He is wearing a yellow hardhat and a high-visibility vest over a crisp blue button-down shirt. The background is slightly blurred showing an active construction site with steel girders. Lighting is bright, natural daylight typical of a clear day on a job site. The mood is confident and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRfHt_3b3j0L4CE_S1YLAaZFIBMXzIrdKaSXH9a8zYQjiF_-I24Pg4FMjLa83JJPlVGFkQ9MElVHGnMK6B-IkfJ_O-yUZLK5w2Sr-ewQAg9KQSnNxu-lmK8lHdPIMIwD5-GRpKaFYciEM2GCj7PtkMBuEVkL43DdP2S5QQFzWZohTyJLko0CBI-asvDzl_asczpWjewWYfRKW0Fjwxb7ZMgN2tRIoHPYv16Ux4Qa7_eLuMQ9jLjxC1">
+</div>
+<span class="font-body text-sm font-medium text-on-surface">Profile</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] mt-16 p-8 w-full h-[calc(100vh-64px)] overflow-y-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<div class="flex items-center gap-2 text-sm font-body text-on-surface-variant mb-2">
+<span>Projects</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span>PRJ-9021 Alpha Refinery</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-medium text-on-surface">Drawings &amp; Media</span>
+</div>
+<h2 class="font-headline text-3xl font-bold text-primary flex items-center gap-3">
+                    Drawing &amp; Media Hub
+                    <span class="bg-surface-container-highest text-on-surface text-xs font-body px-2 py-1 rounded">24 Items</span>
+</h2>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline-variant rounded-lg font-body text-sm font-medium hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Filters
+                </button>
+<button class="px-4 py-2 bg-primary-container text-white rounded-lg font-body text-sm font-medium hover:bg-primary transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">upload</span>
+                    Upload New Version
+                </button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-container-lowest p-4 rounded-lg shadow-sm border border-outline-variant/30 mb-6 flex items-center gap-4">
+<div class="flex-1">
+<select class="w-full bg-surface-container-low border-transparent rounded font-body text-sm text-on-surface focus:ring-primary-fixed">
+<option>All Disciplines</option>
+<option>Mechanical (MECH)</option>
+<option>Electrical (ELEC)</option>
+<option>Structural (STRC)</option>
+</select>
+</div>
+<div class="flex-1">
+<select class="w-full bg-surface-container-low border-transparent rounded font-body text-sm text-on-surface focus:ring-primary-fixed">
+<option>All Statuses</option>
+<option>Approved</option>
+<option>Needs Discussion</option>
+<option>Pending Review</option>
+</select>
+</div>
+<div class="flex-1 flex justify-end gap-2 border-l border-outline-variant/30 pl-4">
+<button class="p-2 bg-primary-fixed text-on-primary-fixed rounded ring-2 ring-primary-fixed/50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded">
+<span class="material-symbols-outlined">table_rows</span>
+</button>
+</div>
+</div>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1 (Needs Discussion) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 overflow-hidden hover:shadow-sm transition-shadow group flex flex-col">
+<div class="h-48 bg-inverse-surface relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="A highly detailed architectural blueprint of a mechanical HVAC system for an industrial refinery. The drawing is intricate, featuring technical blue and white lines, spec callouts, and isometric piping diagrams. The aesthetic is clean, professional, and dense with engineering information. The image is cropped to show a complex intersection of pipes." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXaj1Xx4-hLHCzB_2YTZwSFhyd1BYEp7DUFgKcb06WCzWaRStpw5IX6ucAgojYD286xZLeW3b7XtXZcvKC69kye4tP86H9lYHGQsPqJ24H66Y8hJaTBbz_5fJyRF_gh5vecDuTAlxXJV24AXsunNsmNzyiRGOBH-Hcr_Jc23pBtj4uMvL1dtrRLwfB1_AsETg1zeR_jLlg6cSpflkiYEHf8bkBXyOGACD6c9eadNXf3SXBllepT57O')"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-purple-100 text-purple-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm flex items-center gap-1 font-body">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                            Needs Discussion
+                        </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 text-white text-xs font-label px-2 py-1 rounded backdrop-blur-sm">
+                        v2.4
+                    </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-lg text-primary truncate pr-4">HVAC Main Routing Schematic</h3>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<p class="font-label text-xs text-on-surface-variant mb-4">SPEC-MECH-492-A</p>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-tint text-white flex items-center justify-center text-[10px] font-bold">SD</div>
+<div class="flex flex-col">
+<span class="font-body text-[11px] font-medium text-on-surface">Sarah Davis</span>
+<span class="font-label text-[10px] text-on-surface-variant">2023-10-24 14:32Z</span>
+</div>
+</div>
+<span class="font-label text-xs text-on-surface-variant">14.2 MB</span>
+</div>
+</div>
+</div>
+<!-- Card 2 (Approved) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 overflow-hidden hover:shadow-sm transition-shadow group flex flex-col">
+<div class="h-48 bg-inverse-surface relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="A clean, digital CAD rendering of a structural steel framework for an industrial building. The rendering is displayed on a dark grey background with stark white and subtle cyan lines defining the beams and joints. It looks like a pristine, final approved document in a modern engineering software interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBFmmcyldXUyzTA8ztfGdNzkVw-M6I9l4o4c1y4YgH0o89xnuh0tyUdBfusTm7xso1SOSfazhsylqXvlnlTNcmAkneRF2ProyPFPE6_Y_bLLU3BlPan-O8rBqe87vj4BoX3Jsjx77SB3ZMy69p-hPJllKzc_hsKL4OB_KT44YuJfnZfDsjYlGhF3Ag6O1pfNXxqO1NGwLHtrmlts3Tk_l71U5tzAw1gY9cqBBTwh9qcGi1uUfBTbpeo')"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm flex items-center gap-1 font-body border border-blue-200">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                            Approved
+                        </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 text-white text-xs font-label px-2 py-1 rounded backdrop-blur-sm">
+                        v1.0
+                    </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-lg text-primary truncate pr-4">Primary Steel Truss Details</h3>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<p class="font-label text-xs text-on-surface-variant mb-4">SPEC-STRC-118-F</p>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center text-[10px] font-bold">MK</div>
+<div class="flex flex-col">
+<span class="font-body text-[11px] font-medium text-on-surface">Mark Klein</span>
+<span class="font-label text-[10px] text-on-surface-variant">2023-10-22 09:15Z</span>
+</div>
+</div>
+<span class="font-label text-xs text-on-surface-variant">8.7 MB</span>
+</div>
+</div>
+</div>
+<!-- Card 3 (Pending) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 overflow-hidden hover:shadow-sm transition-shadow group flex flex-col">
+<div class="h-48 bg-inverse-surface relative overflow-hidden">
+<div class="bg-cover bg-center w-full h-full opacity-90 group-hover:scale-105 transition-transform duration-500" data-alt="An electrical wiring schematic for an industrial control panel. The drawing features complex circuits, logic gates, and terminal blocks. It is heavily annotated with red markup lines and notes, indicating it is currently under review. The aesthetic is dense, technical, and slightly chaotic with the review markups overlaying the clean original drawing." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEECC-7pF-qUI6evIGzI5pb1z42ABRkbs3RKaGEK3k5Y4kSzoyVKbgJNGK-aXdxI1iFfzOWW5hAaoexBArxhsEhQVlWKXeK2xsNgkPGo0z2jhkyaQosSjEvR0LLZRh5qBJytKoToq8qOdRqXLvYDgX-_9KCADYKKYiKWJs0Aas4_PTtlOdMq2HJ_10Eb2Z3j8Lqadz9_AMiJ-GcGN3OVEUEv3l8BKjcnIXBnbzz5OyB8v4F2xgRjos')"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-slate-200 text-slate-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm flex items-center gap-1 font-body">
+<span class="material-symbols-outlined text-[14px]">pending</span>
+                            Pending Review
+                        </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 text-white text-xs font-label px-2 py-1 rounded backdrop-blur-sm">
+                        v3.1
+                    </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline font-bold text-lg text-primary truncate pr-4">Control Panel Wiring Diagram</h3>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<p class="font-label text-xs text-on-surface-variant mb-4">SPEC-ELEC-902-B</p>
+<div class="mt-auto pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-white flex items-center justify-center text-[10px] font-bold">JL</div>
+<div class="flex flex-col">
+<span class="font-body text-[11px] font-medium text-on-surface">James Lee</span>
+<span class="font-label text-[10px] text-on-surface-variant">2023-10-25 11:05Z</span>
+</div>
+</div>
+<span class="font-label text-xs text-on-surface-variant">22.1 MB</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

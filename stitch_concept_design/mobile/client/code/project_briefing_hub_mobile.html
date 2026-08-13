@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Project Briefing</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Design System -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1b1c19",
+                        "on-secondary-fixed": "#001e2d",
+                        "background": "#faf9f4",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#c6e7ff",
+                        "inverse-primary": "#aec9eb",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#0090c7",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface": "#faf9f4",
+                        "outline-variant": "#c3c6ce",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-surface-variant": "#43474d",
+                        "surface-variant": "#e3e3de",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "secondary-container": "#8ad1ff",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-container": "#efeee9",
+                        "primary-container": "#00213c",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-low": "#f5f4ef",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "primary": "#000815",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-container": "#6f89a9",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-container": "#002233",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#73777e",
+                        "on-primary-fixed": "#001d35",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dbdad5",
+                        "secondary": "#00658d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Custom Keyframes for Delay Pulse */
+        @keyframes pulse-amber {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4); border-color: rgba(217, 119, 6, 1); }
+            50% { box-shadow: 0 0 0 6px rgba(217, 119, 6, 0); border-color: rgba(217, 119, 6, 0.5); }
+        }
+        .pulse-warning { animation: pulse-amber 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm bg-surface/85 flex justify-between items-center px-4 h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label text-xs overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A highly professional corporate headshot of a female client executive in her late 30s, wearing a tailored navy blazer, standing in a brightly lit modern office building with glass walls. Soft natural daylight, shallow depth of field, premium corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeGKN3KLCrFsUCJYwlI-gi_8JvAdu96Q_bS8QS3Z1sRhlTDKmSlGBKbNMg5g67SZPDBudE1OoYLoYTBMAClLCJgSg0P4AGweTSe6r-Qyj_VahAopXfIZw7ZVDk3sKLnZBEYPe9hZR06T6snMSskOPUzk5JeiBdks4BccigegwfPn5a77VvFkIi6641mGovcJ84CrdcgRkxshDpGV1e-P1h-uXM_N_tS9jCynfTWPxCkDx3j5_S-UWr"/>
+</div>
+<span class="font-headline font-bold text-primary text-headline-sm tracking-tight">Setuu Enterprise</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-20 px-4 max-w-md mx-auto space-y-6">
+<!-- Sticky Project Header (Secondary Sticky) -->
+<div class="sticky top-16 z-40 bg-surface/95 backdrop-blur-md py-4 border-b border-outline-variant/20 -mx-4 px-4 mb-6">
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-headline text-2xl font-bold text-primary leading-tight">Project Titan</h1>
+<p class="font-label text-xs text-secondary tracking-widest uppercase mt-1">Phase 3: Structural Framework</p>
+</div>
+<div class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-xs font-label font-bold flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    ACTIVE
+                </div>
+</div>
+</div>
+<!-- 3-Pillar Health Matrix -->
+<section class="grid grid-cols-3 gap-3">
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-emerald-600 mb-1 fill">calendar_today</span>
+<span class="font-label text-[10px] text-outline uppercase tracking-wider mb-0.5">Schedule</span>
+<span class="font-body text-sm font-semibold text-on-surface">On Track</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-secondary mb-1 fill">payments</span>
+<span class="font-label text-[10px] text-outline uppercase tracking-wider mb-0.5">Budget</span>
+<span class="font-body text-sm font-semibold text-on-surface">Nominal</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-amber-500/50 shadow-sm flex flex-col items-center justify-center text-center relative overflow-hidden pulse-warning">
+<span class="material-symbols-outlined text-amber-600 mb-1 fill">verified</span>
+<span class="font-label text-[10px] text-outline uppercase tracking-wider mb-0.5">Quality</span>
+<span class="font-body text-sm font-semibold text-amber-700">Review</span>
+</div>
+</section>
+<!-- Key Contacts Bento -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-4">
+<h2 class="font-headline text-sm font-bold text-primary mb-3">Key Contacts</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shadow-sm" data-alt="A professional headshot of a male project manager in his 40s wearing a high-visibility vest and a white hard hat, standing on a construction site. Bright, sunny daylight, slight industrial background blur, serious and reliable expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfpXPB1RDKqThdvInxwf4I-Zxe1tcIxHSbsSPOud637mRsEbU8H1-gonIDXuQC_C4PgYGELvWpjW5teSeqp__eVAfDsdy8HesyjOg_WVYj-x-hpZ7XE4ncoa5Xdfcsvlk4KGrRfzboND7-5BtpiBj7XlzBw-1M--rMVphI7b5_jhSaUJgJeCMxNfb_XWCW8LjjD0holVBcyStzJBep3IRLSivUMWjNj_f0hOno8NrPxcGVEjQ3T3a6"/>
+<div>
+<p class="font-body text-sm font-medium text-on-surface">Marcus T.</p>
+<p class="font-label text-[10px] text-outline">Lead PM</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant/20 shadow-sm" data-alt="A professional headshot of a female lead engineer in her 30s holding rolled-up blueprints. She is wearing safety glasses and a collared shirt in a bright, modern architectural office. High contrast, sharp focus, professional industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPuFX0rtztzuzvU1fiCgvqRWbhXjVpvbDWx3u7H60A29o61xHJV0a6xksFUWH3HfKIFExCAfhp9rgD8t5aHDOUtCbEQY6sQEb9m8OCrmCxHMu3ZQmnnDaBrsiU2V3s4pgUhNanzkrNq90TYYESSzAd9vpHDNrIb3jJn1RnhfHeacaccD8_yZuekIsx4zQiIA7_PLAo_IwALo4gdhbsI81_wWKIRUJwp1LsygybDBtJfH-hxydGuqIu"/>
+<div>
+<p class="font-body text-sm font-medium text-on-surface">Sarah K.</p>
+<p class="font-label text-[10px] text-outline">Chief Eng.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Vertical Milestone Timeline -->
+<section>
+<h2 class="font-headline text-lg font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">timeline</span>
+                Deliverables Timeline
+            </h2>
+<div class="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-variant">
+<!-- Completed Node -->
+<div class="relative">
+<div class="absolute -left-6 top-0 w-6 h-6 rounded-full bg-surface-container-lowest border-2 border-emerald-500 flex items-center justify-center z-10 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-emerald-600 font-bold">check</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-3 shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body text-sm font-semibold text-on-surface">Foundation Pour</h3>
+<span class="font-label text-[10px] text-outline">OCT 12</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant">Client acknowledgement received.</p>
+</div>
+</div>
+<!-- Delayed Node (Warning) -->
+<div class="relative">
+<div class="absolute -left-6 top-0 w-6 h-6 rounded-full bg-surface-container-lowest border-2 border-amber-500 flex items-center justify-center z-10 shadow-sm pulse-warning">
+<span class="material-symbols-outlined text-[14px] text-amber-600">priority_high</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg border border-amber-200 p-3 shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-body text-sm font-semibold text-on-surface">Steel Framework</h3>
+<span class="font-label text-[10px] text-error font-bold">LATE</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant">Awaiting vendor material delivery. +2 days.</p>
+</div>
+</div>
+<!-- Future Node -->
+<div class="relative">
+<div class="absolute -left-[22px] top-1 w-4 h-4 rounded-full bg-surface-variant border-2 border-surface flex items-center justify-center z-10">
+</div>
+<div class="pl-2">
+<div class="flex justify-between items-start">
+<h3 class="font-body text-sm text-outline font-medium">HVAC Rough-in</h3>
+<span class="font-label text-[10px] text-outline">NOV 05</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Telemetry (Images) -->
+<section>
+<h2 class="font-headline text-lg font-bold text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">satellite_alt</span>
+                Live Telemetry
+            </h2>
+<div class="grid grid-cols-1 gap-4">
+<!-- Image Card 1 -->
+<div class="relative rounded-xl overflow-hidden border border-outline-variant/30 shadow-md group">
+<div class="h-48 w-full bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A high-resolution, wide-angle photograph of an industrial construction site showcasing structural steel beams being craned into place. Bright midday sun, clear blue sky, sharp technical focus. Premium corporate reporting aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjcpQfct2woWdMfimys_j9kBCBOBYMEgUvi5R4bms-KwzdpjaaksT4yzBgF6taVYzHWZmG1u5vqfgV4bz7Nzssg6HQ7oV75bGwRRjeOjbsAb2WhIOceYgphrEwQh6Axh9D0L4i9Mv54PKxhpY87Q2QIWbR8x-UZ8juOBCtun-7VDqBiGk98UGcgvBNYsqNuapaCWy98ZQhUP9fdc_geVdnp_muuA8bh4-_CgSY93rspWirwfB0fEWw"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end">
+<div class="flex items-center gap-1.5 text-white/90">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-label text-[10px]">34.0522° N, -118.2437° W</span>
+</div>
+<span class="font-label text-[10px] text-secondary-fixed font-bold">14:02:45 UTC</span>
+</div>
+<div class="absolute top-2 right-2 bg-black/50 backdrop-blur-md px-2 py-1 rounded text-white font-label text-[9px] border border-white/20">
+                        VERIFIED SCAN
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/30 shadow-lg bg-surface/85 flex justify-around items-center h-20 pb-safe px-2">
+<!-- Portfolio (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label text-[10px]">Portfolio</span>
+</button>
+<!-- Briefing (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined fill mb-1">description</span>
+<span class="font-label text-[10px] font-bold">Briefing</span>
+</button>
+<!-- Financials (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="font-label text-[10px]">Financials</span>
+</button>
+<!-- Progress (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16">
+<span class="material-symbols-outlined mb-1">trending_up</span>
+<span class="font-label text-[10px]">Progress</span>
+</button>
+</nav>
+</body></html>

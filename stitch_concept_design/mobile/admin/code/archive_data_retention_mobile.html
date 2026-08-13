@@ -1,0 +1,263 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Archive Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#2e4965",
+                      "secondary-fixed": "#c6e7ff",
+                      "primary-container": "#00213c",
+                      "outline-variant": "#c3c6ce",
+                      "on-surface-variant": "#43474d",
+                      "tertiary-container": "#002233",
+                      "on-primary-container": "#6f89a9",
+                      "secondary-fixed-dim": "#88cffc",
+                      "tertiary-fixed": "#c6e7ff",
+                      "surface-bright": "#faf9f4",
+                      "on-error": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-background": "#1b1c19",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#efeee9",
+                      "surface-container-highest": "#e3e3de",
+                      "primary-fixed": "#d1e4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#001e2d",
+                      "error": "#ba1a1a",
+                      "primary": "#000815",
+                      "tertiary": "#00080f",
+                      "background": "#faf9f4",
+                      "surface-container-low": "#f5f4ef",
+                      "primary-fixed-dim": "#aec9eb",
+                      "secondary": "#00658d",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-tertiary-container": "#0090c7",
+                      "surface-container-high": "#e9e8e3",
+                      "on-tertiary-fixed": "#001e2d",
+                      "surface-tint": "#46607e",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#30312e",
+                      "on-secondary-container": "#005a7f",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "inverse-primary": "#aec9eb",
+                      "surface": "#faf9f4",
+                      "surface-variant": "#e3e3de",
+                      "on-primary-fixed": "#001d35",
+                      "outline": "#73777e",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#8ad1ff",
+                      "on-surface": "#1b1c19",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "surface-dim": "#dbdad5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF9F4; /* Canvas Layer */
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .card-sheet {
+            background-color: #ffffff;
+            border: 1px solid #E0E0E0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .text-crimson { color: #DC2626; }
+        .bg-crimson-subtle { background-color: rgba(220, 38, 38, 0.1); }
+        .text-emerald { color: #16A34A; }
+        .bg-emerald-subtle { background-color: rgba(22, 163, 74, 0.1); }
+        .text-slate { color: #64748B; }
+        .bg-slate-subtle { background-color: rgba(100, 116, 139, 0.1); }
+        .text-amber { color: #D97706; }
+        .bg-amber-subtle { background-color: rgba(217, 119, 6, 0.1); }
+
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface antialiased pb-24">
+<!-- TopAppBar JSON Component -->
+<header class="fixed top-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-4 h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden flex items-center justify-center shrink-0 border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of an industrial brushed steel control knob in a factory setting. Soft natural light highlights the precise knurled texture along the edges. The focus is incredibly sharp on the metallic surface, with a shallow depth of field blurring the background machinery. Corporate clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB98Ok5uBY0H1T_2ePbL4GsUGNjgEIHSu9QfVvhVspQUoUt9xjYf-By_Vd_Kl5N7VxgTs0asI5GyfgmZML_KgGtbiEPlVR3bOnQptd_LPXkgUowtXc77euJjqhorj48XxNC54ygU9of4EfNbtfORPHAU1ZGbFmp3RalcYDqNH09RGe2FKOBlVzW15oxHgGQGczLLMDSmhF9xtXUogNevPTHoV_px7sT6nm9cw6fjPQNdYw_IR7gJQoW">
+</div>
+<h1 class="font-headline text-lg font-bold text-primary dark:text-primary-fixed tight-tracking">Archive Manager</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-4 max-w-lg mx-auto">
+<!-- Search Section -->
+<div class="mb-6 sticky top-20 z-40 bg-background pt-2 pb-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body text-sm text-on-surface placeholder-on-surface-variant focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-shadow" placeholder="Search historical records, IDs..." type="text">
+</div>
+<div class="flex gap-2 mt-3 overflow-x-auto pb-1 no-scrollbar">
+<span class="px-3 py-1 bg-surface-variant text-on-surface text-xs font-label rounded-full whitespace-nowrap border border-outline-variant">All</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-label rounded-full whitespace-nowrap border border-outline-variant/50">Projects</span>
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-label rounded-full whitespace-nowrap border border-outline-variant/50">Documents</span>
+<span class="px-3 py-1 bg-crimson-subtle text-crimson text-xs font-label rounded-full whitespace-nowrap border border-red-200">Purge Pending</span>
+</div>
+</div>
+<!-- Density List -->
+<div class="space-y-4">
+<!-- Item 1: Critical Purge Warning -->
+<article class="card-sheet rounded-lg p-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-crimson"></div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="font-headline text-base font-bold text-on-surface mb-1">Project Delta Expansion</h2>
+<span class="font-label text-[10px] text-on-surface-variant flex items-center gap-1 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">archive</span>
+                            ARC-2023-0891
+                        </span>
+</div>
+<div class="bg-crimson-subtle text-crimson font-label text-[10px] px-2 py-1 rounded border border-red-200 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">delete_sweep</span>
+                        Purge in 3 Days
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-4 border-t border-surface-variant pt-3">
+<div>
+<p class="font-label text-[9px] text-outline mb-0.5">ORIGINAL CREATION</p>
+<p class="font-label text-xs text-on-surface">2020-04-12 08:30Z</p>
+</div>
+<div>
+<p class="font-label text-[9px] text-outline mb-0.5">SIZE</p>
+<p class="font-label text-xs text-on-surface">1.2 TB</p>
+</div>
+</div>
+</article>
+<!-- Item 2: Secure Archive -->
+<article class="card-sheet rounded-lg p-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-slate"></div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="font-headline text-base font-bold text-on-surface mb-1">Q4 Structural Audit Reports</h2>
+<span class="font-label text-[10px] text-on-surface-variant flex items-center gap-1 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">folder_zip</span>
+                            DOC-2022-4412
+                        </span>
+</div>
+<div class="bg-slate-subtle text-slate font-label text-[10px] px-2 py-1 rounded border border-slate-200 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+                        Cold Storage
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-4 border-t border-surface-variant pt-3">
+<div>
+<p class="font-label text-[9px] text-outline mb-0.5">ORIGINAL CREATION</p>
+<p class="font-label text-xs text-on-surface">2022-11-05 14:15Z</p>
+</div>
+<div>
+<p class="font-label text-[9px] text-outline mb-0.5">RETENTION UNTIL</p>
+<p class="font-label text-xs text-on-surface">2029-11-05</p>
+</div>
+</div>
+</article>
+<!-- Item 3: Purge Pending -->
+<article class="card-sheet rounded-lg p-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-amber"></div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="font-headline text-base font-bold text-on-surface mb-1">Old Site Topography Scans</h2>
+<span class="font-label text-[10px] text-on-surface-variant flex items-center gap-1 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">map</span>
+                            GEO-2019-0011
+                        </span>
+</div>
+<div class="bg-amber-subtle text-amber font-label text-[10px] px-2 py-1 rounded border border-amber-200 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+                        Purge in 30 Days
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-4 border-t border-surface-variant pt-3">
+<div>
+<p class="font-label text-[9px] text-outline mb-0.5">ORIGINAL CREATION</p>
+<p class="font-label text-xs text-on-surface">2019-02-28 09:00Z</p>
+</div>
+<div>
+<p class="font-label text-[9px] text-outline mb-0.5">SIZE</p>
+<p class="font-label text-xs text-on-surface">4.8 GB</p>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar JSON Component -->
+<nav class="fixed bottom-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-lg flex justify-around items-center pt-2 pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label text-[10px]">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-[10px]">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="assignment">assignment</span>
+<span class="font-label text-[10px]">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label text-[10px]">Admin</span>
+</button>
+</nav>
+<!-- Add safe area padding for mobile -->
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+        /* Hide scrollbar for horizontal scrolling segments */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</body></html>

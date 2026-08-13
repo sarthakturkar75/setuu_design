@@ -1,0 +1,321 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Bulk Notification &amp; Broadcast Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#aec9eb",
+                        "surface": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-variant": "#e3e3de",
+                        "on-tertiary-container": "#0090c7",
+                        "background": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "primary-fixed": "#d1e4ff",
+                        "on-error": "#ffffff",
+                        "surface-container": "#efeee9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary-container": "#002233",
+                        "tertiary": "#00080f",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#00658d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#aec9eb",
+                        "outline": "#73777e",
+                        "outline-variant": "#c3c6ce",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-container": "#005a7f",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-primary-container": "#6f89a9",
+                        "on-background": "#1b1c19",
+                        "surface-tint": "#46607e",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-fixed": "#c6e7ff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary-container": "#8ad1ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-surface-variant": "#43474d",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "primary-container": "#00213c",
+                        "primary": "#000815",
+                        "surface-dim": "#dbdad5",
+                        "inverse-surface": "#30312e",
+                        
+                        // Semantic scale for alerts (Sky Blue to Crimson)
+                        "semantic-queue": "#64748B",
+                        "semantic-active": "#0284C7",
+                        "semantic-warning": "#D97706",
+                        "semantic-success": "#16A34A",
+                        "semantic-final": "#0D9488",
+                        "semantic-verify": "#2563EB",
+                        "semantic-attention": "#9333EA",
+                        "semantic-emergency": "#DC2626"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+        /* Custom scrollbar for multi-select horizontal scroll */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .pulse-emergency {
+            animation: pulseEmergency 2s infinite;
+        }
+        @keyframes pulseEmergency {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body overflow-x-hidden min-h-screen pb-24 selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 border-b border-outline-variant bg-surface text-primary font-headline text-headline-sm flat no shadows flex justify-between items-center px-4 h-16 w-full z-50 sticky">
+<button class="h-12 w-12 flex items-center justify-center rounded-full hover:bg-surface-container-high active:opacity-80 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="font-headline font-bold tracking-tight text-primary uppercase text-sm truncate">Broadcast Center</div>
+<button class="h-12 w-12 flex items-center justify-center rounded-full hover:bg-surface-container-high active:opacity-80 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<main class="w-full max-w-lg mx-auto px-4 pt-6 space-y-8 pb-8">
+<!-- Emergency Protocol Control -->
+<section class="bg-error-container rounded-lg border-2 border-semantic-emergency/30 p-4 relative overflow-hidden pulse-emergency">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-9xl text-semantic-emergency">warning</span>
+</div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="bg-semantic-emergency text-on-error rounded-full p-2 h-12 w-12 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="gavel" style="font-variation-settings: 'FILL' 1;">gavel</span>
+</div>
+<div class="flex-1">
+<h2 class="font-headline font-bold text-on-error-container text-lg mb-1">Global Maintenance Mode</h2>
+<p class="text-on-error-container/80 text-sm mb-4 leading-snug">Restricts platform access to Admin roles only. Active users will be forced offline.</p>
+<button class="w-full h-12 bg-semantic-emergency text-on-error font-bold uppercase tracking-wider rounded flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+                        Trigger Lockdown
+                    </button>
+</div>
+</div>
+</section>
+<!-- Broadcast Composer -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/50 shadow-sm p-4">
+<h2 class="font-headline font-bold text-primary text-xl mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-semantic-active" data-icon="campaign" style="font-variation-settings: 'FILL' 1;">campaign</span>
+                New Broadcast
+            </h2>
+<div class="space-y-5">
+<!-- Target Groups -->
+<div>
+<label class="block font-label text-xs uppercase tracking-wider text-on-surface-variant mb-2">Target Audience</label>
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+<button class="h-10 px-4 rounded-full border border-semantic-active bg-primary-fixed/30 text-on-primary-container font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            All Users
+                        </button>
+<button class="h-10 px-4 rounded-full border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span>
+                            Admins Only
+                        </button>
+<button class="h-10 px-4 rounded-full border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="construction">construction</span>
+                            Field Teams
+                        </button>
+<button class="h-10 px-4 rounded-full border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="handshake">handshake</span>
+                            Clients
+                        </button>
+</div>
+</div>
+<!-- Message Area -->
+<div>
+<label class="block font-label text-xs uppercase tracking-wider text-on-surface-variant mb-2">Announcement Message</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-on-surface placeholder:text-on-surface-variant/50 focus:border-semantic-active focus:ring-1 focus:ring-semantic-active resize-none min-h-[120px]" placeholder="Enter broadcast details..."></textarea>
+</div>
+<!-- Settings -->
+<div class="flex items-center justify-between py-2 border-t border-b border-outline-variant/30">
+<div>
+<div class="font-medium text-on-surface">Emergency Override</div>
+<div class="text-xs text-on-surface-variant">Bypass user notification preferences</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value="">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-semantic-emergency"></div>
+</label>
+</div>
+<!-- Actions -->
+<div class="flex gap-3 pt-2">
+<button class="flex-1 h-12 rounded border border-outline text-on-surface font-medium active:bg-surface-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="schedule">schedule</span>
+                        Schedule
+                    </button>
+<button class="flex-[2] h-12 rounded bg-primary-container text-on-primary font-bold uppercase tracking-wide active:scale-95 transition-transform flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+                        Send Now
+                    </button>
+</div>
+</div>
+</section>
+<!-- Scheduled & Recent -->
+<div class="space-y-6">
+<!-- Scheduled -->
+<section>
+<h3 class="font-headline font-bold text-on-surface-variant text-sm uppercase tracking-widest mb-3 border-b border-outline-variant pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="event">event</span>
+                    Scheduled
+                </h3>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/50 p-4 shadow-sm flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-semantic-queue"></span>
+<span class="font-label text-[10px] text-semantic-queue uppercase tracking-wider">Tomorrow, 08:00 AM</span>
+</div>
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span></button>
+<button class="text-on-surface-variant hover:text-semantic-emergency"><span class="material-symbols-outlined text-[18px]" data-icon="cancel">cancel</span></button>
+</div>
+</div>
+<p class="text-sm font-medium line-clamp-2">System Maintenance Window: The platform will be down for scheduled upgrades.</p>
+<div class="flex gap-2 mt-1">
+<span class="px-2 py-0.5 bg-surface-container text-xs rounded-full text-on-surface-variant font-medium">Field Teams</span>
+</div>
+</div>
+</section>
+<!-- Active / Recent -->
+<section>
+<h3 class="font-headline font-bold text-on-surface-variant text-sm uppercase tracking-widest mb-3 border-b border-outline-variant pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="history">history</span>
+                    Recent Broadcasts
+                </h3>
+<div class="space-y-3">
+<!-- Item 1 (Emergency) -->
+<div class="bg-surface-container-lowest rounded-lg border-l-4 border-l-semantic-emergency border-y border-r border-outline-variant/50 p-4 shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-semantic-emergency" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-label text-[10px] text-semantic-emergency uppercase tracking-wider">Emergency Override</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant">2h ago</span>
+</div>
+<p class="text-sm text-on-surface font-medium leading-snug">Site Alpha Access Restricted due to severe weather conditions. Stand down until further notice.</p>
+<div class="mt-2 pt-2 border-t border-outline-variant/30 grid grid-cols-3 gap-2">
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Sent</span>
+<span class="font-label text-sm text-on-surface">1,402</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Delivered</span>
+<span class="font-label text-sm text-semantic-active">1,398</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Read</span>
+<span class="font-label text-sm text-semantic-success">1,205</span>
+</div>
+</div>
+</div>
+<!-- Item 2 (Standard) -->
+<div class="bg-surface-container-lowest rounded-lg border-l-4 border-l-semantic-active border-y border-r border-outline-variant/50 p-4 shadow-sm flex flex-col gap-2 opacity-80">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-semantic-final"></span>
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-wider">Standard Notice</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-sm text-on-surface font-medium leading-snug line-clamp-1">New material vendor compliance forms are now available.</p>
+<div class="mt-2 pt-2 border-t border-outline-variant/30 grid grid-cols-3 gap-2">
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Sent</span>
+<span class="font-label text-sm text-on-surface">850</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Delivered</span>
+<span class="font-label text-sm text-semantic-active">850</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Read</span>
+<span class="font-label text-sm text-semantic-success">780</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 backdrop-blur-md rounded-t-xl border-t border-white/20 shadow-lg bg-white/85 flex justify-around items-center h-20 px-2 pb-safe md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-secondary active:scale-95 transition-transform duration-150 group">
+<span class="material-symbols-outlined group-hover:bg-surface-container rounded-full p-1 transition-colors" data-icon="architecture">architecture</span>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-secondary active:scale-95 transition-transform duration-150 group">
+<span class="material-symbols-outlined group-hover:bg-surface-container rounded-full p-1 transition-colors" data-icon="conveyor_belt">conveyor_belt</span>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Materials</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-secondary active:scale-95 transition-transform duration-150 group">
+<span class="material-symbols-outlined group-hover:bg-surface-container rounded-full p-1 transition-colors" data-icon="analytics">analytics</span>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Reports</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-secondary active:scale-95 transition-transform duration-150 group">
+<span class="material-symbols-outlined group-hover:bg-surface-container rounded-full p-1 transition-colors" data-icon="construction">construction</span>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Field</span>
+</button>
+<!-- Active Tab: Admin matches Broadcast Center context closely -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1.5 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1 font-bold">Admin</span>
+</button>
+</nav>
+</body></html>

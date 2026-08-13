@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financials - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "background": "#faf9f4",
+                "primary-fixed": "#d1e4ff",
+                "on-secondary": "#ffffff",
+                "tertiary-fixed-dim": "#82cfff",
+                "tertiary-container": "#002233",
+                "primary-container": "#00213c",
+                "inverse-surface": "#30312e",
+                "surface-container-high": "#e9e8e3",
+                "outline-variant": "#c3c6ce",
+                "surface-container-low": "#f5f4ef",
+                "secondary-fixed-dim": "#88cffc",
+                "surface": "#faf9f4",
+                "on-secondary-container": "#005a7f",
+                "inverse-on-surface": "#f2f1ec",
+                "on-primary-fixed": "#001d35",
+                "on-error": "#ffffff",
+                "tertiary-fixed": "#c6e7ff",
+                "secondary": "#00658d",
+                "surface-container-highest": "#e3e3de",
+                "on-secondary-fixed": "#001e2d",
+                "on-tertiary-container": "#0090c7",
+                "on-tertiary": "#ffffff",
+                "tertiary": "#00080f",
+                "surface-variant": "#e3e3de",
+                "on-primary-container": "#6f89a9",
+                "on-tertiary-fixed-variant": "#004c6b",
+                "on-primary": "#ffffff",
+                "on-primary-fixed-variant": "#2e4965",
+                "primary": "#000815",
+                "error-container": "#ffdad6",
+                "on-surface-variant": "#43474d",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed-variant": "#004c6b",
+                "error": "#ba1a1a",
+                "on-tertiary-fixed": "#001e2d",
+                "surface-bright": "#faf9f4",
+                "surface-container": "#efeee9",
+                "surface-tint": "#46607e",
+                "secondary-fixed": "#c6e7ff",
+                "on-background": "#1b1c19",
+                "on-surface": "#1b1c19",
+                "inverse-primary": "#aec9eb",
+                "secondary-container": "#8ad1ff",
+                "surface-dim": "#dbdad5",
+                "on-error-container": "#93000a",
+                "primary-fixed-dim": "#aec9eb",
+                "outline": "#73777e"
+        },
+        "borderRadius": {
+                "sm": "0.25rem",
+                "DEFAULT": "0.25rem",
+                "md": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "fontFamily": {
+                "headline": [
+                        "Merriweather"
+                ],
+                "display": [
+                        "Merriweather"
+                ],
+                "body": [
+                        "Inter"
+                ],
+                "label": [
+                        "Jetbrains Mono"
+                ]
+        },
+        boxShadow: {
+            'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+            'glass-inner': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+            'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        }
+      }
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased selection:bg-primary-container selection:text-on-primary">
+<div class="flex h-screen overflow-hidden">
+<!-- Client Sidebar Isolated Component -->
+<aside class="fixed left-0 top-0 w-[280px] h-screen bg-primary-container flex flex-col shadow-xl flex-shrink-0 z-50">
+<!-- Header / Brand Area -->
+<div class="px-6 py-8 flex items-center gap-3 border-b border-on-primary-container/20">
+<div class="flex items-center gap-3">
+<img alt="Setuu Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A"/>
+<div>
+<h1 class="text-on-primary-container font-headline font-bold text-lg leading-tight tracking-tight">Setuu Enterprise</h1>
+<p class="text-on-primary-container/70 font-label text-[10px] uppercase tracking-wider mt-0.5">Capital Project Portal</p>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 py-6 flex flex-col gap-1 px-3 overflow-y-auto">
+<!-- Inactive States -->
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">dashboard</span>Portfolio
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">analytics</span>Briefing Room
+</a>
+<!-- Active State -->
+<a class="group flex items-center gap-4 px-4 py-3 rounded text-on-primary-container bg-primary-fixed/10 font-bold border-l-4 border-secondary-fixed text-sm font-body transition-all duration-200" href="#">
+<span class="material-symbols-outlined fill" style="font-variation-settings: 'FILL' 1;">payments</span>Financials
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">inventory_2</span>Deliverables
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">timeline</span>Progress
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">groups</span>Meetings
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">lock</span>Vault
+</a>
+</nav>
+<!-- User Profile & Footer Area -->
+<div class="mt-auto px-6 py-4 border-t border-on-primary-container/20 flex flex-col gap-4">
+<!-- User Profile Snippet -->
+<button class="flex items-center gap-3 text-left group w-full p-2 -ml-2 rounded hover:bg-white/5 transition-colors">
+<div class="w-8 h-8 rounded-full bg-on-primary-container/30 border border-on-primary-container/50 overflow-hidden flex-shrink-0">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkdHJXHFKTfqOSHfWgPY6AsfuZcHqyNHslAPDjasVGUNQsiMySglP6n32sa0mBKi1gBEy1wIAzk630B6iLrt7RcwIIreYH9_tLy9UdJK3E6wVS2RRUJdAO9j0CAl1ZRPewVwElWWP_xUMpDdkegnhGsOyIiXQ0iVzpmXlxXkoyBZO4_ONZdl2Y09BBl1C716JBjylOIo0ZI9U_fDaes-UVu9nQxp43TSuyhPgPEd0WCvP6PdUcSNZO"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-on-primary-container font-headline font-bold text-sm truncate">Client Executive</p>
+<p class="text-on-primary-container/60 font-body text-xs truncate">Acme Corporation</p>
+</div>
+<span class="material-symbols-outlined text-on-primary-container/50 text-[18px] group-hover:text-on-primary-container transition-colors">unfold_more</span>
+</button>
+<!-- Version Info -->
+<div class="flex justify-between items-center text-[11px] font-label text-on-primary/40 pt-2">
+<span class="">Setuu Enterprise v2.4</span>
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[280px] flex flex-col h-screen overflow-hidden bg-background">
+<!-- TopNavBar Component -->
+<header class="bg-white/85 backdrop-blur-xl border-b border-outline-variant/40 shadow-glass-inner shadow-sm flex justify-between items-center w-full px-8 h-20 z-40 sticky top-0 transition-all duration-300">
+<!-- Left: Co-branding -->
+<div class="flex items-center gap-6">
+<!-- Setuu Logo -->
+<div class="flex items-center h-10">
+<img alt="Setuu Enterprise Logo" class="h-full w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A"/>
+</div>
+<!-- Divider -->
+<div class="h-8 w-px bg-outline-variant/50 hidden md:block"></div>
+<!-- Client Logo Placeholder -->
+<div class="hidden md:flex items-center gap-3 opacity-80">
+<img alt="Client Logo" class="w-8 h-8 rounded-sm object-contain mix-blend-multiply" data-alt="A sleek, modern corporate logo icon featuring geometric shapes in deep slate and sky blue, representing a high-end construction or engineering firm. The logo should look professional, vector-style, and clean against a light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-baD_O7KO3TX5JCVg8c39yGEl1W8IYifO-uknpgHXQBBALffu8Z48iqhVS6fxnmJ3zej75JZf8L6KhmCkbI00kdxSA1yeOnzUXF7cCNbEtmojP4FOL-Qz8hvaIFEHM3SQlcHHtdgZLoZtZ9kjG8T1GVnnL_WCZmeY8zMceGO3S_6zuoDP-XW2J2Sc3l2G_kGS60L7iSfFLIn5K9cwe9OxMvh1Nw4Te_cbunPHkLfyLgdAC8vKB-Ps"/>
+<span class="font-body font-medium text-sm text-on-surface-variant tracking-wide uppercase">Acme Corp</span>
+</div>
+</div>
+<!-- Center: Search -->
+<div class="flex-1 max-w-2xl mx-8 hidden lg:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/60 rounded-lg text-sm text-on-surface placeholder-outline focus:ring-2 focus:ring-primary focus:border-primary transition-all shadow-sm group-hover:shadow-md" placeholder="Search projects, documents, or audit logs..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<span class="font-label text-xs text-outline bg-surface-container px-2 py-1 rounded">⌘K</span>
+</div>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-5">
+<!-- Primary Action -->
+<button class="hidden md:flex items-center gap-2 bg-[#2563EB] hover:bg-[#2563EB]/90 text-white px-5 py-2.5 rounded-lg shadow-sm transition-colors active:scale-95 font-body font-medium text-sm">
+<span class="material-symbols-outlined text-lg">description</span>
+                Generate Executive Report
+            </button>
+<div class="h-8 w-px bg-outline-variant/50 hidden md:block"></div>
+<!-- Notifications -->
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="relative p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface-container-lowest"></span>
+</button>
+<!-- Profile Avatar -->
+<button class="flex items-center gap-3 pl-2 focus:outline-none">
+<div class="w-10 h-10 rounded-full border border-outline-variant/50 overflow-hidden shadow-sm hover:shadow transition-shadow">
+<img alt="Client Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a female executive in her 40s, wearing a tailored navy blazer against a neutral corporate background. She has a confident, approachable expression, suitable for a high-end SaaS dashboard avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC36L6xoJ_6oak3czavjl-Uw6Q51KJ12VaVCcuJD-xpJLigXOuNI3WPQcwzwcrG2LGaa9C2dyQrydpkGO450pVlwgOMhBtaNvuHIPMbpXHtEEzuZRpsKdyjiDa9K2GPxWdR2wdKkE8RMOIY3jgSXEQVZKMAswAFZ6PpNRQNt_J89T_6jtLzfXqgYZ1nbhbGY2IIVIlIQcmgu2zDR4LZDLiBkfjKIAWql4DXFJq7cVhlfkS4YbwtHZ6i"/>
+</div>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-[1600px] mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<p class="font-label text-label-md text-on-surface-variant mb-2 tracking-wider">Project Alpha - Comprehensive Billing Oversight</p>
+<h2 class="font-headline font-bold text-headline-lg text-primary tracking-tight">Project Financials &amp; Variations</h2>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline rounded-lg text-body-md font-medium text-primary hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                                Export PDF
+                            </button>
+</div>
+</div>
+<!-- Financial Summary Row (Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1: Total Contract Value -->
+<div class="bg-surface-container-lowest rounded-lg p-6 border border-outline-variant/50 shadow-card flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">account_balance</span>
+</div>
+<span class="font-body text-body-sm text-on-surface-variant mb-4">Total Contract Value</span>
+<span class="font-label text-3xl font-bold text-primary mb-2">$14,250,000.00</span>
+<div class="mt-auto pt-4 flex items-center gap-2 text-emerald-600 text-label-sm font-label border-t border-surface-container-highest">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                                Baseline + Approved Variations
+                            </div>
+</div>
+<!-- Card 2: Billed to Date -->
+<div class="bg-surface-container-lowest rounded-lg p-6 border border-outline-variant/50 shadow-card flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl">receipt_long</span>
+</div>
+<span class="font-body text-body-sm text-on-surface-variant mb-4">Billed to Date</span>
+<span class="font-label text-3xl font-bold text-primary mb-2">$8,500,000.00</span>
+<div class="mt-auto pt-4 flex items-center gap-2 text-on-surface-variant text-label-sm font-label border-t border-surface-container-highest">
+<span class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden flex">
+<span class="bg-primary-container w-[60%] h-full rounded-full"></span>
+</span>
+<span>60%</span>
+</div>
+</div>
+<!-- Card 3: Pending Variations -->
+<div class="bg-surface-container-lowest rounded-lg p-6 border border-outline-variant/50 shadow-card flex flex-col relative overflow-hidden group border-l-4 border-l-[#9333EA]">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-[#9333EA]">
+<span class="material-symbols-outlined text-6xl">pending_actions</span>
+</div>
+<span class="font-body text-body-sm text-on-surface-variant mb-4">Pending Variations</span>
+<span class="font-label text-3xl font-bold text-[#9333EA] mb-2">$425,000.00</span>
+<div class="mt-auto pt-4 flex items-center gap-2 text-[#9333EA] text-label-sm font-label border-t border-surface-container-highest">
+<span class="material-symbols-outlined text-[16px]">error</span>
+                                3 Requests Require Action
+                            </div>
+</div>
+</div>
+<!-- Change Request Table -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/50 shadow-card overflow-hidden">
+<div class="px-6 py-5 border-b border-surface-container-highest flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline font-bold text-headline-sm text-primary">Change Request Board</h3>
+<button class="text-secondary font-medium text-body-sm flex items-center gap-1 hover:underline">
+                                View Full History
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label text-label-md border-b border-surface-container-highest">
+<th class="px-6 py-4 font-medium w-16">ID</th>
+<th class="px-6 py-4 font-medium">Original Scope</th>
+<th class="px-6 py-4 font-medium">Variation Description</th>
+<th class="px-6 py-4 font-medium text-right">Time Impact (Days)</th>
+<th class="px-6 py-4 font-medium text-right">Cost Impact ($)</th>
+<th class="px-6 py-4 font-medium text-center">Status / Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest font-body text-body-md text-on-surface">
+<!-- Row 1: Needs Action -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors bg-white">
+<td class="px-6 py-5 font-label text-label-md text-on-surface-variant">CR-042</td>
+<td class="px-6 py-5">Foundation Phase - Sub-grade</td>
+<td class="px-6 py-5">
+<span class="block font-medium mb-1">Additional Pilings Required</span>
+<span class="text-body-sm text-on-surface-variant">Geotech report #892 identified soft soil pockets requiring 12 extra structural pilings.</span>
+</td>
+<td class="px-6 py-5 font-label text-right text-error">+ 14</td>
+<td class="px-6 py-5 font-label text-right font-medium">$ 215,000.00</td>
+<td class="px-6 py-5 text-center">
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#2563EB] text-white rounded font-medium text-body-sm hover:bg-[#1D4ED8] transition-colors shadow-sm w-full">
+                                                Review &amp; Approve
+                                            </button>
+</td>
+</tr>
+<!-- Row 2: Approved -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors bg-surface-container-lowest">
+<td class="px-6 py-5 font-label text-label-md text-on-surface-variant">CR-038</td>
+<td class="px-6 py-5">HVAC Routing - Floor 3</td>
+<td class="px-6 py-5">
+<span class="block font-medium mb-1">Ductwork Reroute (Client Req)</span>
+<span class="text-body-sm text-on-surface-variant">Reroute main supply lines to accommodate raised ceiling height in executive suite.</span>
+</td>
+<td class="px-6 py-5 font-label text-right text-on-surface-variant">+ 4</td>
+<td class="px-6 py-5 font-label text-right text-on-surface-variant">$ 45,500.00</td>
+<td class="px-6 py-5">
+<div class="flex flex-col items-center gap-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#2563EB]/10 text-[#2563EB] font-label text-label-sm border border-[#2563EB]/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                                    Acknowledged
+                                                </span>
+<div class="text-[10px] font-label text-outline text-center mt-1">
+<span class="block">2023-10-24 14:32Z</span>
+<span class="block text-outline-variant">IP: 192.168.1.44</span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

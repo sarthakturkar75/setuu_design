@@ -1,0 +1,297 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Provision Organization Admin - Setuu Control Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Material+Symbols+Outlined:wght,FILL,GRAD,opsz@100..700,0..1,-50..200,20..48&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;family=Merriweather:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#efeee9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "on-surface-variant": "#43474d",
+                        "surface-dim": "#dbdad5",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-container": "#8ad1ff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#005a7f",
+                        "surface-tint": "#46607e",
+                        "on-tertiary-container": "#0090c7",
+                        "on-tertiary-fixed": "#001e2d",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f2f1ec",
+                        "primary": "#000815",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-variant": "#e3e3de",
+                        "inverse-surface": "#30312e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#88cffc",
+                        "tertiary-container": "#002233",
+                        "tertiary": "#00080f",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#73777e",
+                        "surface": "#faf9f4",
+                        "inverse-primary": "#aec9eb",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-fixed": "#001e2d",
+                        "outline-variant": "#c3c6ce",
+                        "background": "#faf9f4",
+                        "surface-container-high": "#e9e8e3",
+                        "on-background": "#1b1c19",
+                        "primary-container": "#00213c",
+                        "secondary": "#00658d",
+                        "tertiary-fixed": "#c6e7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary-container selection:text-on-secondary-container flex">
+<!-- SideNavBar (Super Admin) -->
+<nav class="fixed left-0 top-0 w-[280px] h-screen flex flex-col bg-primary-container dark:bg-primary-container border-r border-outline-variant overflow-y-auto py-6 z-40">
+<!-- Header -->
+<div class="px-6 mb-8 flex flex-col items-center text-center">
+<h1 class="text-headline-lg font-headline font-bold text-on-primary tracking-tight">SETUU</h1>
+<span class="text-on-primary-container text-sm mt-1 font-body">Admin Hub</span>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex-1 flex flex-col gap-1 px-2">
+<!-- Inactive -->
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body font-medium">Dashboard</span>
+</a>
+<!-- Active (Semantic match for "User Management" / Provisioning) -->
+<a class="flex items-center gap-3 bg-surface-container-lowest text-primary rounded-lg px-4 py-3 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-body font-bold">User Management</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">corporate_fare</span>
+<span class="font-body font-medium">Organizations</span>
+</a>
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">credit_card</span>
+<span class="font-body font-medium">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">dns</span>
+<span class="font-body font-medium">Infrastructure</span>
+</a>
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-body font-medium">Audit Logs</span>
+</a>
+</div>
+<!-- Footer / Sub-Nav -->
+<div class="mt-auto px-2 flex flex-col gap-1 border-t border-white/10 pt-4">
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-body font-medium">System Health</span>
+</a>
+<a class="flex items-center gap-3 text-on-primary-container opacity-80 hover:opacity-100 px-4 py-3 mx-2 transition-all hover:bg-primary/10 hover:text-on-primary rounded-lg" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-body font-medium">Support</span>
+</a>
+<!-- CTA -->
+<div class="px-4 mt-4">
+<button class="w-full bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed hover:text-on-secondary-fixed font-body font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Add Organization
+                </button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-[280px] min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-[280px] z-50 flex justify-between items-center px-6 h-16 rounded-xl mx-4 mt-4 bg-white/85 dark:bg-[#121a21]/85 backdrop-blur-xl border border-white/20 dark:border-primary/20 shadow-md">
+<!-- Brand / Context -->
+<div class="flex items-center gap-6">
+<h2 class="text-headline-md font-headline font-bold text-primary dark:text-on-primary">Control Center</h2>
+<div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-error-container text-on-error-container rounded-full text-xs font-bold tracking-wider font-body">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+                    Super Admin Mode
+                </div>
+</div>
+<!-- Nav Links & Actions -->
+<div class="flex items-center gap-6">
+<!-- Inline Links -->
+<nav class="hidden xl:flex items-center gap-6 border-r border-outline-variant/30 pr-6">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="sr-only peer" type="checkbox">
+<div class="w-10 h-6 bg-surface-variant rounded-full peer peer-focus:ring-2 peer-focus:ring-primary/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-error relative"></div>
+<span class="text-sm font-body font-medium text-on-surface-variant">Maintenance Mode</span>
+</label>
+<button class="flex items-center gap-2 text-sm font-body font-medium text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high px-3 py-1.5 rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+                        Global Announcement
+                    </button>
+</nav>
+<!-- Search -->
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/70">search</span>
+<input class="bg-surface-container-low border border-outline-variant/50 text-sm rounded-full pl-10 pr-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all font-body" placeholder="Search..." type="text">
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors relative p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold font-body text-sm ml-2 shadow-sm border border-outline/20">
+                        A
+                    </div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 pt-28 px-8 pb-12 max-w-[1600px] mx-auto w-full grid grid-cols-12 gap-6">
+<!-- Header Section -->
+<div class="col-span-12 mb-4">
+<div class="flex items-center gap-2 text-sm text-on-surface-variant font-body mb-2">
+<a class="hover:text-primary transition-colors" href="#">User Management</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-medium">Provision Organization Admin</span>
+</div>
+<h1 class="text-headline-lg font-headline font-bold text-primary mb-2">Provision Organization Admin</h1>
+<p class="text-body-lg text-on-surface-variant">Formal invitation and RBAC initialization for tenant administrators.</p>
+</div>
+<!-- Form Card (Level 1 Elevation) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/40 p-8">
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Full Name -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface font-body" for="fullName">Full Name</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/60 rounded-lg px-4 py-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-body" id="fullName" placeholder="e.g. Jane Doe" type="text">
+</div>
+<!-- Email -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface font-body" for="email">Email Address</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/60 rounded-lg px-4 py-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-body" id="email" placeholder="jane.doe@organization.com" type="email">
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Organization Dropdown -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface font-body" for="orgId">Organization</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border border-outline-variant/60 rounded-lg px-4 py-2.5 pr-10 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-label text-sm" id="orgId">
+<option disabled="" selected="" value="">Select Organization ID</option>
+<option value="org_01H8G">org_01H8G (Acme Corp)</option>
+<option value="org_09F2B">org_09F2B (Stark Industries)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Mobile Number -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-on-surface font-body" for="mobile">Mobile Number (Optional)</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/60 rounded-lg px-4 py-2.5 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-body" id="mobile" placeholder="+1 (555) 000-0000" type="tel">
+</div>
+</div><div class="space-y-4 border-t border-outline-variant/30 pt-6"><h3 class="text-sm font-headline font-bold text-on-surface uppercase tracking-wider">Subscription &amp; Quota</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="space-y-2"><label class="block text-sm font-medium text-on-surface font-body" for="subTier">Subscription Tier (FR-152)</label><div class="relative"><select class="w-full appearance-none bg-surface-container-low border border-outline-variant/60 rounded-lg px-4 py-2.5 pr-10 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all font-label text-sm" id="subTier"><option value="starter">Starter</option><option value="pro">Pro</option><option value="enterprise">Enterprise</option></select><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span></div></div></div></div>
+<!-- Role Assignment (Read Only) -->
+<div class="space-y-4 border-t border-outline-variant/30 pt-6"><h3 class="text-sm font-headline font-bold text-on-surface uppercase tracking-wider">Permissions &amp; Guardrails</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"><span class="text-sm font-body text-on-surface">Manage All Projects</span></label><label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors"><input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"><span class="text-sm font-body text-on-surface">Financial Oversight</span></label><label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors"><input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"><span class="text-sm font-body text-on-surface">Security Configuration</span></label><label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors"><input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"><span class="text-sm font-body text-on-surface">Support Ticket Triage</span></label><label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"><span class="text-sm font-body text-on-surface">Audit Log Access</span></label></div></div><div class="space-y-2 border-t border-outline-variant/30 pt-6">
+<label class="block text-sm font-medium text-on-surface font-body">Role Assignment</label>
+<div class="flex items-center gap-3 bg-surface-container p-4 rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary">admin_panel_settings</span>
+<div>
+<p class="font-body font-semibold text-primary">Organization Admin</p>
+<p class="text-xs text-on-surface-variant font-body">Full administrative access restricted to the selected tenant (Organization ID).</p>
+</div>
+<span class="ml-auto bg-surface-dim text-on-surface-variant text-xs px-2 py-1 rounded font-label uppercase tracking-wider">Locked</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex justify-end gap-4 pt-4 border-t border-outline-variant/30 mt-8">
+<button class="px-6 py-2.5 rounded-lg border border-outline-variant font-body font-medium text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+                            Cancel
+                        </button>
+<button class="px-6 py-2.5 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-body font-medium shadow-sm transition-colors flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                            Send Formal Invitation
+                        </button>
+</div>
+</form>
+</div>
+<!-- Contextual Sidebar -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Security Notice -->
+<div class="bg-error-container/20 border border-error/30 rounded-xl p-5 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error mt-0.5">policy</span>
+<div>
+<h3 class="font-headline font-bold text-error-container text-on-surface mb-1">Security Protocol Active</h3>
+<p class="text-sm font-body text-on-surface-variant leading-relaxed mb-3">
+                                This action initiates an 'Invite-Only' provisioning workflow. The target user will receive an expiring, cryptographically signed token to initialize their account.
+                            </p>
+<div class="bg-surface/50 rounded p-2 border border-outline-variant/20 inline-block">
+<span class="font-label text-xs text-on-surface-variant block mb-1">Compliant with:</span>
+<div class="flex gap-2">
+<span class="bg-surface text-primary px-1.5 py-0.5 rounded border border-outline-variant/30 text-[10px] font-label font-bold">FR-101</span>
+<span class="bg-surface text-primary px-1.5 py-0.5 rounded border border-outline-variant/30 text-[10px] font-label font-bold">FR-104</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit Footer info -->
+<div class="flex items-start gap-2 text-on-surface-variant/70 p-4 bg-surface-container rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-[18px] shrink-0 mt-0.5">info</span>
+<p class="font-label text-xs leading-relaxed">
+                        All invitations are logged to the global system audit log with IP verification. <br>
+<span class="mt-2 block opacity-60">session_id: ax99_2m4z</span>
+</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Timeline - Setuu Enterprise</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@300;400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#f2f1ec",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-error-container": "#93000a",
+                    "background": "#faf9f4",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-primary-container": "#6f89a9",
+                    "surface-container-low": "#f5f4ef",
+                    "secondary-container": "#8ad1ff",
+                    "surface-variant": "#e3e3de",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#001e2d",
+                    "tertiary-container": "#002233",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-secondary-container": "#005a7f",
+                    "surface-container-high": "#e9e8e3",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "outline-variant": "#c3c6ce",
+                    "on-tertiary-container": "#0090c7",
+                    "primary": "#000815",
+                    "inverse-surface": "#30312e",
+                    "secondary": "#00658d",
+                    "on-primary-fixed": "#001d35",
+                    "primary-fixed-dim": "#aec9eb",
+                    "surface-container": "#efeee9",
+                    "surface-bright": "#faf9f4",
+                    "on-surface-variant": "#43474d",
+                    "surface-dim": "#dbdad5",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "surface-tint": "#46607e",
+                    "on-background": "#1b1c19",
+                    "tertiary-fixed": "#c6e7ff",
+                    "primary-container": "#00213c",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1b1c19",
+                    "inverse-primary": "#aec9eb",
+                    "primary-fixed": "#d1e4ff",
+                    "surface-container-highest": "#e3e3de",
+                    "tertiary": "#00080f",
+                    "outline": "#73777e",
+                    "on-primary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface": "#faf9f4",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#001e2d",
+                    
+                    // Semantic overrides explicitly requested in prompt
+                    "semantic-slate": "#64748B",
+                    "semantic-sky": "#0284C7",
+                    "semantic-amber": "#D97706",
+                    "semantic-emerald": "#16A34A",
+                    "semantic-teal": "#0D9488",
+                    "semantic-royal": "#2563EB",
+                    "semantic-purple": "#9333EA",
+                    "semantic-crimson": "#DC2626",
+                    "precision-cyan": "#41BEFD", // Required by prompt
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "8px" // Specified in Level 1 elevation
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather", "serif"],
+                    "display": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+          font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Level 1 (Card/Sheet): Elevated surfaces with an 8px radius. Light mode uses a sharp 1px #E0E0E0 border. Rest states have no shadow; interactive elements gain a diffused shadow-sm on hover. */
+        .card-level-1 {
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #E0E0E0;
+            box-shadow: none;
+            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease;
+        }
+        .card-level-1-interactive:hover {
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transform: translateY(-1px);
+        }
+
+        /* Timeline Connector */
+        .timeline-connector {
+            position: absolute;
+            left: 24px;
+            top: 48px;
+            bottom: -24px;
+            width: 2px;
+            background-color: #E0E0E0;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-background h-full font-body text-on-surface antialiased flex overflow-hidden">
+<!-- 1. SideNavBar -->
+<aside class="w-[280px] h-screen sticky left-0 top-0 bg-primary-container hidden md:flex flex-col py-6 px-4 z-40 shrink-0">
+<!-- Header -->
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container">domain</span>
+</div>
+<div>
+<h1 class="font-headline text-xl font-bold text-on-primary">Setuu Enterprise</h1>
+<p class="font-label text-on-primary-container text-xs mt-0.5 tracking-wider uppercase">Industrial Reliability</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">dashboard</span>
+<span class="font-body text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">event_available</span>
+<span class="font-body text-sm font-medium">Milestones</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">architecture</span>
+<span class="font-body text-sm font-medium">Drawings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">inventory_2</span>
+<span class="font-body text-sm font-medium">Materials</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">groups</span>
+<span class="font-body text-sm font-medium">Team</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container bg-secondary-container font-bold rounded-lg transform scale-[0.98] transition-all duration-200" href="#">
+<span class="material-symbols-outlined icon-filled text-xl text-on-secondary-container">schedule</span>
+<span class="font-body text-sm text-on-secondary-container">Timeline</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">analytics</span>
+<span class="font-body text-sm font-medium">Reporting</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">support_agent</span>
+<span class="font-body text-sm font-medium">Support</span>
+</a>
+</nav>
+<!-- User Profile (Bottom) -->
+<div class="mt-auto pt-4 border-t border-on-primary-container/20 flex items-center gap-3 px-2">
+<img class="w-10 h-10 rounded-full object-cover border border-outline/30" data-alt="A professional headshot of a female Project Manager in her 30s wearing a white hardhat and high-visibility vest. Bright, even lighting. Industrial corporate aesthetic, outdoors on a sunny day." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7D2VecTFxvKX1ooNW1_x4ZPTC1aP_ujBJAip0fWdIiw3dHjt_rIE0avqzum8Q1m6xzE1aY40Oy-_WGdbSftYaxnB3mj_hBqr9mpiGLSOCpGa7Rn7lqnr0-Sy9uZB0DSjIGih2_Wx6Km6rv0o6kPnpB9Nq2BrWHGAIkcBy-3z-42Z6DB9ab8eEfyEtB0zSL-EPp_2Szws-WaIS_lWEultVL_jGjvz-7_WWt2XmxQgzImFPUiBFcV9l"/>
+<div class="flex-1 min-w-0">
+<p class="font-body text-sm font-medium text-on-primary truncate">Sarah Jenkins</p>
+<p class="font-label text-xs text-on-primary-container truncate">Project Manager</p>
+</div>
+<button class="text-on-primary-container hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-xl">logout</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-w-0 overflow-hidden relative z-0">
+<!-- 2. TopNavBar -->
+<header class="docked full-width top-0 sticky z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center w-full h-16 px-6 max-w-full shrink-0">
+<!-- Breadcrumbs / Title -->
+<div class="flex items-center gap-2 font-headline text-lg text-primary focus:outline-none focus:ring-2 focus:ring-secondary/50 rounded px-1">
+<a class="text-on-surface-variant hover:text-secondary transition-colors text-sm font-medium" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm text-outline">chevron_right</span>
+<a class="text-on-surface-variant hover:text-secondary transition-colors text-sm font-medium" href="#">Alpha Tower</a>
+<span class="material-symbols-outlined text-sm text-outline">chevron_right</span>
+<span class="font-bold border-b-2 border-secondary pb-0.5">Timeline</span>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-secondary transition-colors relative focus:outline-none focus:ring-2 focus:ring-secondary/50 rounded-full p-1">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-semantic-crimson rounded-full border border-white"></span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/50 rounded-full p-1">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/50 rounded-full p-1">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto overflow-x-hidden p-6 lg:p-8 bg-background relative">
+<!-- Contextual Header & Filters -->
+<div class="max-w-4xl mx-auto mb-8 sticky top-0 z-30 bg-background/95 backdrop-blur py-4 border-b border-surface-dim/50">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+<div>
+<h2 class="font-headline text-2xl font-bold text-primary">Progress Feed</h2>
+<p class="font-body text-sm text-on-surface-variant mt-1">Real-time updates for Alpha Tower</p>
+</div>
+<button class="bg-primary text-on-primary font-body text-sm font-medium px-4 py-2 rounded-lg hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                        New Update
+                    </button>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-1.5 rounded-full text-sm font-medium font-body bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary/20 transition-colors flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-precision-cyan"></span>
+                        All Updates
+                    </button>
+<button class="px-4 py-1.5 rounded-full text-sm font-medium font-body bg-surface-container text-on-surface-variant border border-outline/20 hover:bg-surface-container-high transition-colors">
+                        Milestone: Structural
+                    </button>
+<button class="px-4 py-1.5 rounded-full text-sm font-medium font-body bg-surface-container text-on-surface-variant border border-outline/20 hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">photo_camera</span>
+                        Photos Only
+                    </button>
+<button class="px-4 py-1.5 rounded-full text-sm font-medium font-body bg-error/10 text-error border border-error/20 hover:bg-error/20 transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                        Critical
+                    </button>
+</div>
+</div>
+<!-- Timeline Container -->
+<div class="max-w-4xl mx-auto relative pl-4 sm:pl-0">
+<!-- Item 1: High Elevation Media Update (Structural) -->
+<article class="relative flex gap-6 mb-12 z-10 group">
+<!-- Timeline Node -->
+<div class="hidden sm:flex flex-col items-center mt-1 relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest border-2 border-background flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a male construction foreman wearing a yellow hardhat and safety glasses. Industrial corporate setting, bright daylight lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYcg8gRApgzwklI4FbcT-SUXxXCkMTlraVzP8-YsNIS1jme452UMfnqP_DYsYoxuqmQcifxkorJuzVrQbsyg2SHNWhmWCD_ceAyHGOrpwVJKEbO209NPd3ecPtu0MbUac6blLkGXbtzGfLhKnDQ_NWLut1fjAIN3RjvF1myo_WiwtLyQnSHnhZs5RKSNAfv3gbcE6wYD_QapQT1Cy8SqhxtCAMWXi3sD5RlWj4TCaIXlsp2bgr8hDU"/>
+</div>
+<!-- Connector Line -->
+<div class="timeline-connector"></div>
+</div>
+<!-- Content Card -->
+<div class="card-level-1 card-level-1-interactive flex-1 p-5 overflow-hidden relative">
+<!-- Status Bar Top (Semantic: Active) -->
+<div class="absolute top-0 left-0 w-full h-1 bg-semantic-sky"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-body font-semibold text-primary">Marcus Vance</h3>
+<p class="font-body text-sm text-on-surface-variant">Site Foreman • Structural Team</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="font-label text-xs text-outline tracking-wide">3 HOURS AGO</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-label font-medium bg-semantic-sky/10 text-semantic-sky">
+<span class="w-1.5 h-1.5 rounded-full bg-semantic-sky"></span>
+                                    IN PROGRESS
+                                </span>
+</div>
+</div>
+<p class="font-body text-sm text-on-surface mb-4 leading-relaxed">
+                            Completed formwork for Level 4 North Wing elevator core. Rebar inspection scheduled for 14:00. Concrete pour confirmed for tomorrow morning pending final sign-off.
+                        </p>
+<!-- Media Preview with Watermark -->
+<div class="relative w-full h-64 sm:h-80 rounded border border-outline/20 overflow-hidden mb-4 bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="A high-angle view of a bustling construction site focusing on the intricate rebar and wooden formwork of an elevator core. A bright, sunny day with clear blue skies. Industrial aesthetic, highly detailed structural elements, workers in high-visibility gear visible in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMo-zERiRpg4M3uR9ojbWPq13xboTIL0Soq-d79r2nyvY5yJTJmaXdk7OW0nvS_qodNTZLK_f_pG5aKC_FeUOSbVOyVcGAgPnv4qNtxxaKEi7XwmtQK7FRHH4CwNTTmsaHo2rgVwfJx4DfIVyoB1stbF5hthXVac1MFANFXWxA4_QNu4vghnr8G1q9FvM4EATE3BnKjRj3kFpFxZy4vN8D_wryS-R_yx4m-d824WhUhYjxup6fVbaF"/>
+<!-- Mandatory Technical Watermark -->
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-white/90 font-label text-[10px] tracking-wider border border-white/10 flex flex-col items-end shadow-sm">
+<span>LAT: 29.7604 N | LON: 95.3698 W</span>
+<span>2024-10-25 14:32Z</span>
+</div>
+</div>
+<!-- Card Footer / Actions -->
+<div class="flex items-center justify-between pt-3 border-t border-surface-container-high">
+<div class="flex gap-4">
+<button class="flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-secondary transition-colors font-body">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+<span>2</span>
+</button>
+<button class="flex items-center gap-1.5 text-sm text-on-surface-variant hover:text-secondary transition-colors font-body">
+<span class="material-symbols-outlined text-[18px]">chat_bubble_outline</span>
+<span>Add Note</span>
+</button>
+</div>
+<button class="text-sm font-medium text-secondary hover:text-primary transition-colors font-body">View Details</button>
+</div>
+</div>
+</article>
+</div>
+</main>
+</div>
+</body></html>

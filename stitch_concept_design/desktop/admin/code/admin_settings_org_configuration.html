@@ -1,0 +1,391 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Settings - Setuu Enterprise</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#faf9f4",
+                        "surface-dim": "#dbdad5",
+                        "surface-bright": "#faf9f4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-container-highest": "#e3e3de",
+                        "on-surface": "#1b1c19",
+                        "on-surface-variant": "#43474d",
+                        "inverse-surface": "#30312e",
+                        "inverse-on-surface": "#f2f1ec",
+                        "outline": "#73777e",
+                        "outline-variant": "#c3c6ce",
+                        "surface-tint": "#46607e",
+                        "primary": "#000815",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#00213c",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-primary": "#aec9eb",
+                        "secondary": "#00658d",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#8ad1ff",
+                        "on-secondary-container": "#005a7f",
+                        "tertiary": "#00080f",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "on-tertiary-container": "#0090c7",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d1e4ff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-primary-fixed": "#001d35",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary-fixed": "#c6e7ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-fixed": "#c6e7ff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "background": "#faf9f4",
+                        "on-background": "#1b1c19",
+                        "surface-variant": "#e3e3de"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Merriweather:wght@700;900&display=swap');
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.85);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+        
+        /* Custom scrollbar for data density areas */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f4ef;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3c6ce;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #73777e;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary selection:text-on-secondary h-screen overflow-hidden flex">
+<!-- SideNavBar (Shared Component) -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 z-50 bg-primary dark:bg-surface-container-lowest shadow-xl flex flex-col py-6">
+<!-- Header -->
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-lowest flex items-center justify-center">
+<img alt="Setuu Enterprise Logo" class="w-6 h-6 object-contain" data-alt="A minimalist, industrial logo icon for Setuu Enterprise. The icon features interlocking geometric shapes in deep navy blue on a crisp white background. The aesthetic is modern, professional, and corporate, emphasizing structural stability and high-tech software." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIGLWrPJT1RGzSQjTPHUDx1C0_uX7HsKeHFKgB_6O6JvWLEl3U8AxwqphJprNPzi958LahSa_7IEhIfwGWhQIXSCM5jgePFS-Sm-xrdmyVoU29QmOMp1EIoQl0EyrBAZ1jWRtbAKFaFjVtX7Jt6QMJCw-5ZZwUbreRSInkhD2fXZ5Aa7gJwhF8zyJTIF7tImJHioan8ft57HpoRWupsbsThgEO2-sLI1NJhW4Hn8Vv9bsToUCHkm30">
+</div>
+<div>
+<h1 class="font-headline text-xl font-black text-on-primary dark:text-on-surface leading-none">Setuu Admin</h1>
+<p class="font-label text-label-sm text-on-primary/70 dark:text-on-surface-variant/70 mt-1">Enterprise Tier</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex-1 overflow-y-auto space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+<span class="font-body text-body-md font-medium">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+<span class="font-body text-body-md font-medium">Drawings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="font-body text-body-md font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">handshake</span>
+<span class="font-body text-body-md font-medium">Vendors</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-4 py-3 mx-2 my-1 bg-primary-container text-on-primary-container rounded-lg transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-body text-body-md font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">confirmation_number</span>
+<span class="font-body text-body-md font-medium">Support</span>
+</a>
+</div>
+<!-- Footer Links & CTA -->
+<div class="px-4 pt-4 border-t border-on-primary/10">
+<div class="space-y-1 mb-4">
+<a class="flex items-center gap-3 px-4 py-2 text-on-primary/70 hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+<span class="font-body text-sm font-medium">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-primary/70 hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="font-body text-sm font-medium">System Status</span>
+</a>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-secondary text-on-secondary py-2.5 rounded-md font-body font-medium text-sm hover:bg-secondary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+                Raise Ticket
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-[280px] flex-1 flex flex-col h-full bg-surface relative">
+<!-- TopAppBar (Shared Component - Contextually adjusted for Settings) -->
+<header class="glass-nav full-width sticky top-0 z-40 border-b border-outline-variant/20 shadow-sm flex justify-between items-center w-full px-8 h-16">
+<div class="flex items-center gap-4">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm font-body text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Admin</a>
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+<span class="font-medium text-primary">System Settings</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-64 pl-9 pr-4 py-1.5 bg-surface-container rounded-md border-transparent focus:border-secondary focus:ring-1 focus:ring-secondary text-sm font-body text-on-surface placeholder:text-outline-variant transition-all" placeholder="Search settings..." type="text">
+</div>
+<div class="flex items-center gap-1 border-l border-outline-variant/30 pl-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant/50 overflow-hidden cursor-pointer">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate software administrator, shot against a neutral grey background with soft studio lighting. They are wearing smart-casual business attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6vPb875BwUGAeTFEUV5VsoFFGUntUpbm0Uu1OsZV9I_DEC9vxkejDF04ZUtkoBjt51FvaCpNilDdMgOa1dbdJIq9S3FYXVaGaqwrP8riDAF7EsXyBNAm2X1f-pboXtI2m8Q9Ygepz7-y4XRsZUV18YbQS1HL6xfoZ9IaV-eZoL2KVMhV29e2l6mBz2O2Cj5fHUhqNEQlHX6lbHwUCmMZcxzhHQ-dHSaY-7I3w9mRmAo0GaLg1VZKR">
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<div class="flex-1 overflow-y-auto p-8 pb-24">
+<div class="max-w-[1200px] mx-auto grid grid-cols-12 gap-6">
+<!-- Page Header -->
+<div class="col-span-12 mb-2 flex justify-between items-end">
+<div>
+<h2 class="font-headline text-3xl font-bold text-primary tracking-tight">Organization Configuration</h2>
+<p class="font-body text-on-surface-variant mt-2">Manage overarching tenant preferences, security policies, and subscription quotas.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline-variant rounded-md text-on-surface hover:bg-surface-container transition-colors font-body text-sm font-medium">Discard Changes</button>
+<button class="px-4 py-2 bg-primary-container text-white rounded-md hover:bg-primary-container/90 transition-colors font-body text-sm font-medium shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                            Save Configuration
+                        </button>
+</div>
+</div>
+<!-- Left Column: Core Settings (8 cols) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<!-- Organization Profile Card -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden relative group">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-surface-container-low opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<div class="p-6 border-b border-outline-variant/20 bg-surface-bright/50">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/5 rounded-md text-primary">
+<span class="material-symbols-outlined">domain</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-primary">Organization Profile</h3>
+</div>
+</div>
+<div class="p-6 space-y-5">
+<div class="flex items-start gap-6">
+<div class="w-24 h-24 rounded-lg bg-surface-container flex flex-col items-center justify-center border border-dashed border-outline hover:border-secondary cursor-pointer transition-colors group/upload relative overflow-hidden">
+<img alt="Current Logo" class="absolute inset-0 w-full h-full object-cover opacity-20" data-alt="A generic placeholder image showing a subtle architectural blueprint pattern in light grey on a white background, indicating where an organization's logo would be uploaded." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChs3CztW3HIozhnXJv5OMcrVZ761mMe-HAZuGDOGq9zZcjjSI-MSbaKX6MzqWzWsGLZShvbqTKi9Le9Q6VjsgPrV1C1hXmHipe_5QflFPZ03IvUCRpRZr2Mf38JVgAGiUfU8xYYUWoZcUG39s0lGnSguDOt-l0HsNXp04ztt9mv1KYsH_t68tVg9CRYA9sPhZlvRDT6gFXHELGbYJ-EerAc4Comlxki1vitBP4r1Xvm8G3oB9KnU5s">
+<span class="material-symbols-outlined text-outline group-hover/upload:text-secondary mb-1 z-10">upload</span>
+<span class="text-[10px] font-body text-outline group-hover/upload:text-secondary z-10">Update Logo</span>
+</div>
+<div class="flex-1 space-y-4">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1">Tenant Name</label>
+<input class="w-full px-3 py-2 bg-surface rounded-md border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary text-sm font-body" type="text" value="Apex Infrastructure Partners">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1">Tenant ID</label>
+<div class="relative">
+<input class="w-full px-3 py-2 bg-surface-container-low rounded-md border border-outline-variant/50 text-sm font-label text-outline cursor-not-allowed" disabled="" type="text" value="apx-infra-992a">
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+</div>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1">Primary Industry</label>
+<select class="w-full px-3 py-2 bg-surface rounded-md border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary text-sm font-body appearance-none">
+<option>Commercial Construction</option>
+<option selected="">Civil Engineering</option>
+<option>Architectural Design</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- System-Wide Preferences -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 bg-surface-bright/50">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/5 rounded-md text-primary">
+<span class="material-symbols-outlined">tune</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-primary">System-Wide Preferences</h3>
+</div>
+</div>
+<div class="p-0">
+<!-- Toggle Item 1 -->
+<div class="flex items-center justify-between p-5 border-b border-outline-variant/10 hover:bg-surface-container-lowest/50 transition-colors">
+<div>
+<h4 class="font-body text-sm font-semibold text-on-surface">Global Maintenance Mode</h4>
+<p class="font-body text-xs text-on-surface-variant mt-1">Suspends all non-admin access and displays a maintenance banner.</p>
+</div>
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-surface-container-highest border border-outline-variant focus:outline-none transition-colors duration-200 ease-in-out">
+<span class="inline-block h-4 w-4 translate-x-1 rounded-full bg-outline transition duration-200 ease-in-out"></span>
+</button>
+</div>
+<!-- Toggle Item 2 -->
+<div class="flex items-center justify-between p-5 border-b border-outline-variant/10 hover:bg-surface-container-lowest/50 transition-colors">
+<div>
+<h4 class="font-body text-sm font-semibold text-on-surface">Strict Media Watermarking</h4>
+<p class="font-body text-xs text-on-surface-variant mt-1">Enforce embedded EXIF timestamps and GPS coordinates on all field uploads.</p>
+</div>
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary-container focus:outline-none transition-colors duration-200 ease-in-out">
+<span class="inline-block h-4 w-4 translate-x-6 rounded-full bg-white transition duration-200 ease-in-out shadow-sm"></span>
+</button>
+</div>
+<!-- Select Item -->
+<div class="flex items-center justify-between p-5 hover:bg-surface-container-lowest/50 transition-colors">
+<div class="w-2/3">
+<h4 class="font-body text-sm font-semibold text-on-surface">Default Project Visibility</h4>
+<p class="font-body text-xs text-on-surface-variant mt-1">Determine baseline access for newly instantiated architectural hubs.</p>
+</div>
+<div class="w-1/3">
+<select class="w-full px-3 py-1.5 bg-surface rounded-md border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary text-sm font-body">
+<option>Restricted (Invite Only)</option>
+<option selected="">Internal (Tenant Wide)</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Meta & Security (4 cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Subscription & Quotas -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-outline-variant/20 flex justify-between items-center">
+<h3 class="font-headline text-md font-bold text-primary">Subscription Oversight</h3>
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-label font-bold rounded uppercase tracking-wider">Enterprise</span>
+</div>
+<div class="p-5 space-y-6">
+<!-- Gauge 1: Storage -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body text-xs font-semibold text-on-surface-variant uppercase tracking-wide">Storage Volume</span>
+<span class="font-label text-xs font-medium text-primary">4.2 TB / 5 TB</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<!-- Using sky blue for nominal, transitioning to amber/crimson logic hypothetically, here hardcoded to a high percentage -->
+<div class="h-full bg-secondary-container" style="width: 84%;"></div>
+</div>
+<p class="font-label text-[10px] text-outline mt-1 text-right">84% Capacity</p>
+</div>
+<!-- Gauge 2: Seats -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body text-xs font-semibold text-on-surface-variant uppercase tracking-wide">Active Seats</span>
+<span class="font-label text-xs font-medium text-primary">142 / 150</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 94%;"></div>
+</div>
+<p class="font-label text-[10px] text-error mt-1 text-right">Approaching Limit</p>
+</div>
+<div class="pt-4 border-t border-outline-variant/10 text-center">
+<a class="text-xs font-body font-medium text-secondary hover:text-primary transition-colors" href="#">Manage Billing &amp; Quotas →</a>
+</div>
+</div>
+</section>
+<!-- Security Defaults -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-outline-variant/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">security</span>
+<h3 class="font-headline text-md font-bold text-primary">Security Policy</h3>
+</div>
+<div class="p-5 space-y-4">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1">MFA Enforcement</label>
+<select class="w-full px-3 py-2 bg-surface rounded-md border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary text-sm font-body">
+<option>Optional</option>
+<option>Admins Only</option>
+<option selected="">All Tenant Users (Strict)</option>
+</select>
+</div>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1">Idle Session Timeout</label>
+<select class="w-full px-3 py-2 bg-surface rounded-md border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary text-sm font-body">
+<option>15 Minutes</option>
+<option>30 Minutes</option>
+<option selected="">1 Hour</option>
+<option>4 Hours</option>
+</select>
+</div>
+<div class="pt-4 mt-2 border-t border-outline-variant/10">
+<label class="block font-body text-sm font-medium text-on-surface mb-1">Data Residency Region</label>
+<div class="flex items-center gap-2 px-3 py-2 bg-surface-container-low rounded-md border border-outline-variant/50">
+<span class="material-symbols-outlined text-outline text-[16px]">public</span>
+<span class="font-label text-xs text-primary flex-1">US East (Main)</span>
+<span class="text-[10px] font-body bg-surface-variant px-1.5 py-0.5 rounded text-on-surface-variant">Locked</span>
+</div>
+<p class="text-[10px] font-body text-outline mt-1 leading-tight">Region migrations require a support ticket due to compliance constraints.</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</body></html>

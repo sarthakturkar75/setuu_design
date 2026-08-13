@@ -1,0 +1,257 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Audit Log Explorer</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#aec9eb",
+                      "surface-dim": "#dbdad5",
+                      "surface-container-low": "#f5f4ef",
+                      "surface-container-high": "#e9e8e3",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#001e2d",
+                      "surface-container": "#efeee9",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-secondary-container": "#005a7f",
+                      "on-primary-container": "#6f89a9",
+                      "secondary-container": "#8ad1ff",
+                      "inverse-on-surface": "#f2f1ec",
+                      "secondary": "#00658d",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#0090c7",
+                      "on-primary-fixed": "#001d35",
+                      "surface-bright": "#faf9f4",
+                      "tertiary-fixed": "#c6e7ff",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#002233",
+                      "surface-tint": "#46607e",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "primary-fixed": "#d1e4ff",
+                      "outline": "#73777e",
+                      "tertiary": "#00080f",
+                      "outline-variant": "#c3c6ce",
+                      "primary-container": "#00213c",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-primary": "#ffffff",
+                      "background": "#faf9f4",
+                      "on-secondary": "#ffffff",
+                      "primary": "#000815",
+                      "surface": "#faf9f4",
+                      "on-tertiary": "#ffffff",
+                      "surface-variant": "#e3e3de",
+                      "inverse-surface": "#30312e",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#e3e3de",
+                      "on-surface-variant": "#43474d",
+                      "primary-fixed-dim": "#aec9eb",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-background": "#1b1c19",
+                      "on-surface": "#1b1c19"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                    "safe": "env(safe-area-inset-bottom)"
+              },
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                  "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                  "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                  "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                  "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                  "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                  "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                  "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                  "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                  "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "500" }]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased pt-16 pb-24 selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-4 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A small, professional headshot portrait of a corporate administrator in a bright, modern office setting, used as a user avatar. Neutral background, high quality, realistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzN9t_a4gE5Ud1BpKlr9iAmDQhejK2Ssx2lfZSjPunvFhoyw53eKS9sc4h4H0aaUKy3kx2LuRNslvXEqewrjTiPP39cWEe8N-ThF4PQutFTY2k0CGUD3tZdcUNG5BFnyLZqQdjQp6f8Cy7l2n_Z54O1lfueQJlVYQD2OviErF4gPEsVOgSQsxCiGE4bQyKb6EnK5dV7pvBTrpx-SO3TOe5v3g5N_SLD_lqtBZ6FME5LbNWToOh51ax">
+</div>
+<span class="font-headline text-headline-sm font-bold text-primary">SETUU Enterprise</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-4 py-4 md:hidden">
+<!-- Header & Live Status -->
+<div class="flex justify-between items-end mb-4">
+<h1 class="font-headline text-headline-lg-mobile text-primary tracking-tight">Audit Explorer</h1>
+<div class="flex items-center gap-1.5 px-2 py-1 bg-surface-container rounded-full border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label text-label-sm text-on-surface-variant uppercase">Live Stream</span>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex space-x-2 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 scroll-smooth">
+<button class="flex items-center gap-1 bg-primary text-on-primary font-label text-label-md px-3 py-1.5 rounded-full whitespace-nowrap active:scale-95 transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                Event Type
+            </button>
+<button class="flex items-center gap-1 bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-label text-label-md px-3 py-1.5 rounded-full whitespace-nowrap active:scale-95 transition-transform hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                Last 24h
+            </button>
+<button class="flex items-center gap-1 bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-label text-label-md px-3 py-1.5 rounded-full whitespace-nowrap active:scale-95 transition-transform hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[14px]">person</span>
+                Actor ID
+            </button>
+<button class="flex items-center gap-1 bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-label text-label-md px-3 py-1.5 rounded-full whitespace-nowrap active:scale-95 transition-transform hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[14px]">emergency</span>
+                Critical Only
+            </button>
+</div>
+<!-- Immutable Log Feed -->
+<div class="flex flex-col gap-3 font-label">
+<!-- Standard Event -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-lg p-3 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-surface-tint opacity-50"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="text-label-sm text-outline">2023-11-08T09:14:22Z</span>
+<span class="text-label-sm text-on-surface bg-surface-container px-1.5 py-0.5 rounded border border-outline-variant/30">v1.4.2</span>
+</div>
+<div class="pl-2">
+<div class="text-label-md font-bold text-primary mb-1">PROJECT_DOCUMENT_UPLOADED</div>
+<div class="text-label-sm text-on-surface-variant mb-2">Actor: usr_892b4c | Role: Project_Manager</div>
+<div class="bg-surface-container text-on-surface-variant text-[10px] p-2 rounded-md border border-outline-variant/30 overflow-x-auto whitespace-pre">
+{
+  "project_id": "prj_9982x",
+  "doc_type": "architectural_blueprint",
+  "file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scan_status": "CLEAN"
+}</div>
+</div>
+</div>
+<!-- Success/Auth Event -->
+<div class="bg-primary-fixed/20 border border-primary-fixed-dim rounded-lg p-3 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="text-label-sm text-outline">2023-11-08T09:12:05Z</span>
+<span class="text-label-sm text-on-primary-fixed bg-primary-fixed-dim/30 px-1.5 py-0.5 rounded border border-primary-fixed-dim">sys_auth</span>
+</div>
+<div class="pl-2">
+<div class="text-label-md font-bold text-on-primary-fixed-variant mb-1">SESSION_ESTABLISHED</div>
+<div class="text-label-sm text-on-primary-fixed-variant/80">Actor: usr_892b4c | IP: 192.168.1.104 | Method: MFA_TOKEN</div>
+</div>
+</div>
+<!-- Critical/Error Event -->
+<div class="bg-error-container/20 border border-error/30 rounded-lg p-3 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="text-label-sm text-error/70">2023-11-08T08:45:11Z</span>
+<span class="flex items-center gap-1 text-error bg-error-container px-1.5 py-0.5 rounded border border-error/20 text-label-sm font-bold">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                        SEV_1
+                    </span>
+</div>
+<div class="pl-2">
+<div class="text-label-md font-bold text-on-error-container mb-1">UNAUTHORIZED_ACCESS_ATTEMPT</div>
+<div class="text-label-sm text-on-error-container/80 mb-2">Actor: anon_44x9 | Endpoint: /api/v1/billing/export</div>
+<div class="bg-surface text-on-error-container/90 text-[10px] p-2 rounded-md border border-error/20 overflow-x-auto whitespace-pre">
+{
+  "reason": "missing_bearer_token",
+  "request_origin": "unknown",
+  "blocked_by": "edge_firewall_rule_42"
+}</div>
+</div>
+</div>
+<!-- Standard Update Event -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-lg p-3 shadow-sm relative overflow-hidden opacity-80">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-outline-variant"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="text-label-sm text-outline">2023-11-08T08:30:00Z</span>
+</div>
+<div class="pl-2">
+<div class="text-label-md font-bold text-on-surface mb-1">MILESTONE_STATUS_CHANGED</div>
+<div class="text-label-sm text-on-surface-variant">Actor: sys_auto_scheduler</div>
+<div class="text-label-sm text-outline mt-1">&gt; status: IN_PROGRESS -&gt; DELAYED</div>
+</div>
+</div>
+<!-- Load More Trigger (Simulated) -->
+<div class="py-4 flex justify-center items-center">
+<div class="w-6 h-6 border-2 border-outline-variant border-t-primary rounded-full animate-spin"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-white/85 backdrop-blur-md border-t border-outline-variant shadow-lg flex justify-around items-center pt-2 pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label text-label-sm mt-1">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-label text-label-sm mt-1">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="font-label text-label-sm mt-1">Tasks</span>
+</button>
+<!-- Active Navigation -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 active:scale-90 duration-200 transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-label-sm mt-1 font-bold">Admin</span>
+</button>
+</nav>
+</body></html>

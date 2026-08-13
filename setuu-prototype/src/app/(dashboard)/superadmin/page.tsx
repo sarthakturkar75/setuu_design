@@ -1,0 +1,1 @@
+export default function SuperadminPage() { return <div className="p-4"><h1>Superadmin Dashboard</h1></div> }

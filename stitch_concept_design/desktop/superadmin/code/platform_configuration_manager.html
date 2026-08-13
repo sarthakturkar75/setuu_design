@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Platform Configuration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Merriweather:wght@300;400;700;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "secondary": "#00658d",
+                        "tertiary": "#00080f",
+                        "tertiary-container": "#002233",
+                        "surface": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-primary": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "on-background": "#1b1c19",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#005a7f",
+                        "secondary-container": "#8ad1ff",
+                        "surface-tint": "#46607e",
+                        "outline": "#73777e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-container": "#0090c7",
+                        "on-surface": "#1b1c19",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-bright": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-surface-variant": "#43474d",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "primary-container": "#00213c",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed": "#c6e7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "rail-width": "72px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #faf9f4; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #E0E0E0;
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #0284C7;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0284C7;
+        }
+        .terminal-input {
+            background-color: #0A0F14;
+            color: #41BEFD;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .terminal-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(65, 190, 253, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-primary-container h-screen w-sidebar-width fixed left-0 top-0 shadow-md flex-col h-full py-6 px-4 z-50">
+<div class="flex items-center gap-4 mb-8 px-2">
+<img alt="Organization Logo" class="w-12 h-12 rounded bg-surface-container-lowest object-contain p-1 border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida/AP1WRLvf2UnxQ99O3n3KzcQzx1a93WtRA-nLN209AiWzpl00FpjWloCC1aRRCUSLlFAnNTkt9xjXFFA8tKEOfaHNyxVmW4yRJwFApS3CEhoaqBWEC9upVq44WzrgAW128Duc8XtUFU-3v5B-zXAwdmbQw90acwCUC1nEJEkZBigc82M_hV-WSov8eOqN0CquoDsmN5Z7JQHQZOe1wefOGHujAvFUxzaN5u-p8rbqC8SkT-FNj--tSktX5VYZnZY"/>
+<div>
+<h1 class="font-headline text-xl font-bold text-on-primary">Setuu Enterprise</h1>
+<p class="font-label text-[10px] text-on-primary-container uppercase tracking-wider">Super Admin Console</p>
+</div>
+</div>
+<ul class="flex-1 space-y-2 mt-4">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body text-sm font-medium">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">engineering</span>
+<span class="font-body text-sm font-medium">Projects</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-body text-sm font-medium">Materials</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history_edu</span>
+<span class="font-body text-sm font-medium">Audit Logs</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary text-on-secondary font-bold hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dns</span>
+<span class="font-body text-sm">Infrastructure</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="font-body text-sm font-medium">Subscription</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:bg-secondary-container/20 transition-colors scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">support_agent</span>
+<span class="font-body text-sm font-medium">Support</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-4 py-3">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant/30" data-alt="A professional headshot of a corporate IT administrator, confident expression, well-lit modern office environment, corporate attire. The lighting is crisp and natural, highlighting a clean, reliable, and trustworthy persona consistent with the Setuu Enterprise industrial SaaS aesthetic. High quality, clear, and sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-g84w9yjXmCJs0K5fkmL9CjGgLT6g41FK8LzFWg4eKblgMIwU7wxF5_mheaW90Mf9upo7pXRYuB9hupd2tUFu8oABVx4n23ni8uketgttJsuZkXqokYak1Mh0LC1KJBx3aQsmWqtbiu2TFnJU_OgFbHpct1ERtOxpITfrLmyYxBKpKq-C7mJFcHpQV2aJuZFB_sDTM0A-eoQlspwK5YVkMuSBATWz7CmhMAdTxDKKlm0-lFyM7ztz"/>
+<div class="text-on-primary">
+<p class="font-body text-sm font-bold">SysAdmin 01</p>
+<p class="font-label text-xs text-on-primary-container">admin@setuu.com</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="hidden md:flex bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 right-0 w-[calc(100%-280px)] h-16 items-center justify-between px-8 z-40">
+<div class="flex items-center gap-4">
+<h2 class="font-headline font-bold text-lg text-primary">Platform Configuration Manager</h2>
+<span class="bg-error-container text-on-error-container font-label text-xs px-2 py-1 rounded border border-error/30">ELEVATED PRIVILEGES</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-all p-2 rounded-full active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-all p-2 rounded-full active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-all p-2 rounded-full active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="w-full md:ml-sidebar-width pt-16 min-h-screen">
+<div class="max-w-[1600px] mx-auto p-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Header Section -->
+<div class="lg:col-span-12 mb-4">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<h1 class="font-headline text-3xl font-bold text-primary mb-2">Platform Controls</h1>
+<p class="font-body text-on-surface-variant">Manage global settings, maintenance windows, and core infrastructure variables.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline rounded text-primary font-body font-medium hover:bg-surface-container-high transition-colors">Revert Changes</button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded font-body font-medium hover:bg-primary-container transition-colors shadow-sm">Save Configuration</button>
+</div>
+</div>
+</div>
+<!-- Left Column (Main Controls) -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Maintenance Mode Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-8 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error-container/20 rounded-bl-full -mr-4 -mt-4 z-0 pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-error">warning</span>
+                                    Global Maintenance Mode
+                                </h3>
+<p class="font-body text-sm text-on-surface-variant mt-1">Suspends all non-admin client access and halts background sync workers.</p>
+</div>
+<!-- Massive Toggle -->
+<div class="relative inline-block w-24 h-12 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-10 h-10 rounded-full bg-surface-container-lowest border-4 border-surface-dim appearance-none cursor-pointer z-20 top-1 left-1 transition-all duration-300" id="toggle-maintenance" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-12 rounded-full bg-surface-dim cursor-pointer border border-outline-variant/50" for="toggle-maintenance"></label>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded border border-outline-variant/20 flex gap-4 items-start">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5">info</span>
+<div>
+<p class="font-body text-sm font-semibold text-primary mb-1">Impact Warning</p>
+<p class="font-body text-sm text-on-surface-variant">Activating maintenance mode will immediately terminate all active vendor sessions and queue pending uploads to local storage.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Version Control Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-6 shadow-sm">
+<h4 class="font-headline font-bold text-primary mb-1">Min. App Version</h4>
+<p class="font-body text-xs text-on-surface-variant mb-4">Forces client update below this threshold.</p>
+<div class="relative">
+<span class="absolute left-3 top-3 text-secondary font-label">v</span>
+<input class="terminal-input w-full pl-8 pr-4 py-3 rounded border border-outline-variant/50 focus:border-secondary transition-all" placeholder="X.Y.Z" type="text" value="2.4.1"/>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-6 shadow-sm">
+<h4 class="font-headline font-bold text-primary mb-1">API Deprecation Date</h4>
+<p class="font-body text-xs text-on-surface-variant mb-4">Scheduled sunset for legacy endpoints (v1).</p>
+<div class="relative">
+<span class="absolute left-3 top-3 text-secondary material-symbols-outlined text-[18px]">calendar_today</span>
+<input class="terminal-input w-full pl-10 pr-4 py-3 rounded border border-outline-variant/50 focus:border-secondary transition-all" placeholder="YYYY-MM-DD" type="text" value="2024-12-31"/>
+</div>
+</div>
+</div>
+<!-- Announcements Area -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-6 shadow-sm">
+<h3 class="font-headline text-lg font-bold text-primary mb-2">Global Broadcast Banner</h3>
+<p class="font-body text-sm text-on-surface-variant mb-4">Push a high-priority message to all active dashboards.</p>
+<textarea class="w-full h-32 p-4 bg-background border border-outline-variant/50 rounded font-body text-sm focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all resize-none" placeholder="Enter broadcast message here..."></textarea>
+<div class="flex justify-between items-center mt-4">
+<div class="flex items-center gap-2">
+<input class="rounded border-outline-variant text-error focus:ring-error" id="broadcast-urgent" type="checkbox"/>
+<label class="font-body text-sm font-medium text-primary cursor-pointer" for="broadcast-urgent">Mark as Critical (Crimson Red Banner)</label>
+</div>
+<button class="text-secondary font-body font-bold text-sm hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">send</span> Push Now
+                        </button>
+</div>
+</div>
+</div>
+<!-- Right Column (Status & Logs) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- System Status -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-6 shadow-sm">
+<h3 class="font-headline text-lg font-bold text-primary mb-4 border-b border-outline-variant/20 pb-2">Infrastructure Health</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="font-body text-sm text-on-surface-variant">Database (Primary)</span>
+<span class="flex items-center gap-1 font-label text-xs text-[#16A34A] bg-[#16A34A]/10 px-2 py-1 rounded">
+<span class="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse"></span> ONLINE
+                            </span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body text-sm text-on-surface-variant">Storage Bucket</span>
+<span class="flex items-center gap-1 font-label text-xs text-[#16A34A] bg-[#16A34A]/10 px-2 py-1 rounded">
+<span class="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse"></span> ONLINE
+                            </span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body text-sm text-on-surface-variant">Edge Functions</span>
+<span class="flex items-center gap-1 font-label text-xs text-[#D97706] bg-[#D97706]/10 px-2 py-1 rounded">
+<span class="w-2 h-2 rounded-full bg-[#D97706]"></span> DEGRADED
+                            </span>
+</div>
+</div>
+</div>
+<!-- Recent Config Changes -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-6 shadow-sm h-[400px] flex flex-col">
+<h3 class="font-headline text-lg font-bold text-primary mb-4 border-b border-outline-variant/20 pb-2 flex items-center justify-between">
+                        Audit Trail
+                        <span class="material-symbols-outlined text-on-surface-variant text-sm">history</span>
+</h3>
+<div class="flex-1 overflow-y-auto pr-2 space-y-3">
+<!-- Log Item -->
+<div class="p-3 bg-surface-container rounded border border-outline-variant/20">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-secondary">UPDATE config_vars</span>
+<span class="font-label text-[10px] text-on-surface-variant">10:42:01Z</span>
+</div>
+<p class="font-body text-xs text-primary">Changed min_version from 2.4.0 to 2.4.1</p>
+<p class="font-label text-[10px] text-on-surface-variant mt-2 text-right">user: sysadmin_01</p>
+</div>
+<!-- Log Item -->
+<div class="p-3 bg-surface-container rounded border border-outline-variant/20">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-error">EXEC maintenance_toggle</span>
+<span class="font-label text-[10px] text-on-surface-variant">08:15:33Z</span>
+</div>
+<p class="font-body text-xs text-primary">Maintenance Mode DEACTIVATED</p>
+<p class="font-label text-[10px] text-on-surface-variant mt-2 text-right">user: root_system</p>
+</div>
+<!-- Log Item -->
+<div class="p-3 bg-surface-container rounded border border-outline-variant/20 opacity-70">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-secondary">UPDATE feature_flags</span>
+<span class="font-label text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<p class="font-body text-xs text-primary">Enabled new_drawing_markup_v2</p>
+<p class="font-label text-[10px] text-on-surface-variant mt-2 text-right">user: sysadmin_01</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple toggle interaction
+        const toggle = document.getElementById('toggle-maintenance');
+        toggle.addEventListener('change', (e) => {
+            if(e.target.checked) {
+                // In a real app, trigger modal confirmation
+                console.log('Maintenance mode enabled');
+            }
+        });
+    </script>
+</body></html>

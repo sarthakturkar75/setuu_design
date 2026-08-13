@@ -1,0 +1,402 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Engineer Workbench</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "on-primary-container": "#6f89a9",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#1b1c19",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "surface-dim": "#dbdad5",
+                      "outline": "#73777e",
+                      "surface-container-high": "#e9e8e3",
+                      "surface-container": "#efeee9",
+                      "primary-fixed": "#d1e4ff",
+                      "background": "#faf9f4",
+                      "error-container": "#ffdad6",
+                      "surface": "#faf9f4",
+                      "surface-container-highest": "#e3e3de",
+                      "secondary-container": "#8ad1ff",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#002233",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "surface-container-low": "#f5f4ef",
+                      "surface-bright": "#faf9f4",
+                      "primary": "#000815",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "error": "#ba1a1a",
+                      "on-secondary-container": "#005a7f",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-primary-fixed": "#001d35",
+                      "inverse-on-surface": "#f2f1ec",
+                      "primary-fixed-dim": "#aec9eb",
+                      "on-error-container": "#93000a",
+                      "surface-variant": "#e3e3de",
+                      "secondary-fixed": "#c6e7ff",
+                      "secondary": "#00658d",
+                      "inverse-primary": "#aec9eb",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#30312e",
+                      "on-surface-variant": "#43474d",
+                      "primary-container": "#00213c",
+                      "surface-tint": "#46607e",
+                      "on-surface": "#1b1c19",
+                      "on-tertiary-container": "#0090c7",
+                      "tertiary-fixed": "#c6e7ff",
+                      "tertiary": "#00080f",
+                      "on-tertiary-fixed": "#001e2d",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "outline-variant": "#c3c6ce",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-error": "#ffffff",
+                      "status-neutral": "#64748B",
+                      "status-active": "#0284C7",
+                      "status-warning": "#D97706",
+                      "status-success": "#16A34A",
+                      "status-finalization": "#0D9488",
+                      "status-verification": "#2563EB",
+                      "status-attention": "#9333EA",
+                      "status-emergency": "#DC2626",
+                      "precision-cyan": "#41BEFD"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                  "unit": "4px",
+                  "gutter-md": "24px",
+                  "margin-mobile": "16px",
+                  "margin-tablet": "24px",
+                  "margin-desktop": "32px",
+                  "sidebar-width": "280px",
+                  "rail-width": "72px"
+              },
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body h-screen w-screen overflow-hidden flex selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Sidebar -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 overflow-y-auto bg-primary-container dark:bg-tertiary-container w-[280px] shadow-xl z-20">
+<div class="p-6">
+<h1 class="text-xl font-headline font-bold text-on-primary flex items-center gap-2">
+<span class="material-symbols-outlined" data-weight="fill">settings</span>
+                Setuu Enterprise
+            </h1>
+</div>
+<div class="px-6 pb-4">
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-precision-cyan">memory</span>
+<h2 class="text-on-primary font-headline text-headline-sm">Engineer Workbench</h2>
+</div>
+<p class="text-on-primary-container text-label-md font-label">Software Engineering</p>
+</div>
+<nav class="flex-1 px-2 mt-4 space-y-1">
+<a class="bg-secondary/20 text-on-secondary-container border-l-4 border-secondary rounded-r-lg px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-precision-cyan">memory</span>
+<span class="font-medium text-body-md">My Workbench</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-r-lg border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-medium text-body-md">Assigned Tasks</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-r-lg border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">code_blocks</span>
+<span class="font-medium text-body-md">Engineering Hub</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-r-lg border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">bug_report</span>
+<span class="font-medium text-body-md">Issue Tracker</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-r-lg border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-medium text-body-md">Timesheets</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-r-lg border-l-4 border-transparent" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-medium text-body-md">Team Docs</span>
+</a>
+</nav>
+<div class="px-6 py-4 mt-auto">
+<div class="mb-4">
+<h3 class="text-on-primary font-headline text-headline-sm mb-2">System Status</h3>
+<div class="flex items-center gap-2 text-label-sm font-label text-status-success mb-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> API: Healthy
+                </div>
+<div class="flex items-center gap-2 text-label-sm font-label text-status-success">
+<span class="material-symbols-outlined text-[14px]">database</span> Database: Connected
+                </div>
+</div>
+<div class="bg-primary/50 border border-primary-fixed/20 rounded-lg p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-10 h-10 rounded-full border-2 border-precision-cyan" data-alt="A small circular avatar of an engineer, Alex Chen, smiling in a well-lit office setting. High contrast, professional corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaKeMIVK0JEcRAH6mo_Er9eF0m5QPfjzcoDLSrYhdtFCzeXCYIESQpG16-qwrh2s4cghNuIvRjGMaq3GLKfCNLGJTttxN6FeZb2326eFZiBkiMzNvxhoH_umENHnePCBn9zg1o9gQQdACRvfRGSPuNX3n_hjrokI_Dg61nGW2EoC8CpDok0ToeNQFBVVENvOszhrvCE9ArSlE0Z4wD5LuqXJATe7hasGybd4kBpbqeGbA9KL1DGt46">
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-status-success rounded-full border-2 border-primary-container"></div>
+</div>
+<div>
+<div class="text-on-primary font-medium text-body-md">Alex Chen</div>
+<div class="text-[10px] font-label text-primary-fixed-dim bg-secondary/30 px-1.5 py-0.5 rounded-full inline-block mt-0.5">Software Engineering</div>
+</div>
+</div>
+<button class="text-on-primary-container/70 hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] flex-1 flex flex-col h-screen relative bg-surface">
+<!-- Top Navbar -->
+<header class="bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 h-20 w-full flex justify-between items-center px-8 z-10 sticky top-0">
+<div class="flex items-center gap-6 flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-highest/50 border-outline-variant/50 border rounded-full py-2 pl-10 pr-4 text-body-md focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all" placeholder="Technical Specs, Git Hashes..." type="text">
+</div>
+<div class="flex items-center gap-2 text-label-md font-label bg-surface-container-high px-3 py-1.5 rounded-md border border-outline-variant/30">
+<span class="text-on-surface-variant">ENV:</span>
+<span class="text-secondary font-bold">Firmware v2.4</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer hover:text-on-surface">expand_more</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-3 py-1 bg-surface-container border border-outline-variant/30 rounded-full text-label-md font-label text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-success"></span> Mechanical Engineering
+                </span>
+<button class="bg-secondary text-on-secondary px-4 py-2 rounded-full font-medium text-body-md hover:bg-secondary/90 transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span> Log Time
+                </button>
+<div class="flex items-center gap-3 ml-4 border-l border-outline-variant/30 pl-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-status-emergency rounded-full"></span>
+</button>
+<button class="hover:text-primary transition-colors">
+<span class="material-symbols-outlined">alternate_email</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Split Pane Content -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Pane: Kanban List -->
+<div class="w-4/12 border-r border-outline-variant/30 bg-surface-container-lowest overflow-y-auto p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-headline-sm font-headline font-bold text-on-surface">Active Sprint</h2>
+<button class="text-secondary hover:bg-secondary/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<!-- Column: In Progress -->
+<div class="mb-8">
+<h3 class="text-label-md font-label text-status-active mb-3 flex items-center gap-2 uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-status-active"></span> IN PROGRESS (2)
+                    </h3>
+<div class="space-y-3">
+<!-- Active Card -->
+<div class="bg-surface border-2 border-secondary shadow-sm rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">memory</span> FIRM-492
+                                </span>
+<span class="text-label-sm font-label text-status-emergency bg-error-container/30 px-2 py-0.5 rounded">High Prio</span>
+</div>
+<h4 class="text-body-md font-bold text-on-surface mb-2">Optimize Sensor Polling Loop</h4>
+<p class="text-body-md text-on-surface-variant line-clamp-2 mb-3">Reduce I2C bus contention by implementing a backoff strategy for the thermal sensor reads.</p>
+<div class="flex justify-between items-center text-label-md font-label text-on-surface-variant">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 24
+                                </div>
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border border-surface" data-alt="Small avatar of Alex Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8jI07TcHJphjdK9k3FrpvLCTE07mfHpxAZYRMSOTSPyokqCKRyB3OlsoSS7g72o6u7tdsdRZscqa1ltOOxrblpnI7sLBC3h5XPQVmCH7pt8wDeoVQMOlzc84hgWOUjEjkT0WetV9fYZ6Rb5EkzX3KI41iaIOTDXSyr_HHCSVTyapshJf_q2RpejXDKLmoSEARQs_WEjQ4MyGfliq9E14vBeoQz4PISe1dPlIle1wYPTPf-ez9vlNY">
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface border border-outline-variant/50 rounded-lg p-4 cursor-pointer hover:shadow-sm hover:border-outline transition-all">
+<div class="flex justify-between items-start mb-2">
+<span class="bg-surface-variant text-on-surface-variant text-label-sm font-label px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">bug_report</span> BUG-118
+                                </span>
+</div>
+<h4 class="text-body-md font-medium text-on-surface mb-2">Memory leak in telemetry buffer</h4>
+<div class="flex justify-between items-center text-label-md font-label text-on-surface-variant mt-3">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Oct 25
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: To Do -->
+<div>
+<h3 class="text-label-md font-label text-status-neutral mb-3 flex items-center gap-2 uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-status-neutral"></span> TO DO (3)
+                    </h3>
+<div class="space-y-3 opacity-80">
+<div class="bg-surface border border-outline-variant/30 rounded-lg p-4 cursor-pointer hover:opacity-100 hover:border-outline-variant/80 transition-all">
+<h4 class="text-body-md text-on-surface mb-1">Update HAL documentation</h4>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Pane: Detail View -->
+<div class="w-8/12 flex flex-col bg-surface-bright relative">
+<!-- Detail Header -->
+<div class="px-8 py-6 border-b border-outline-variant/30 bg-surface-container-lowest flex justify-between items-start sticky top-0 z-10">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-secondary-container text-on-secondary-container text-label-sm font-label px-2 py-1 rounded">FIRM-492</span>
+<span class="text-status-active text-label-sm font-label flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sync</span> In Progress
+                            </span>
+</div>
+<h2 class="text-headline-md font-headline font-bold text-on-surface mb-2">Optimize Sensor Polling Loop</h2>
+<div class="text-label-md font-label text-on-surface-variant flex items-center gap-4">
+<span>Created: 2 days ago</span>
+<span>Reporter: Sarah Jenkins</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-outline-variant rounded-md text-body-md font-medium hover:bg-surface-container transition-colors">Edit</button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-md text-body-md font-medium hover:bg-primary/90 transition-colors shadow-sm">Complete Task</button>
+</div>
+</div>
+<!-- Detail Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-8 flex gap-8">
+<!-- Main Content -->
+<div class="flex-1">
+<!-- Description -->
+<div class="prose prose-sm max-w-none text-body-md text-on-surface-variant mb-8">
+<h3 class="text-headline-sm font-headline text-on-surface mb-3">Technical Specification</h3>
+<p>The current implementation of the <code>I2C_Read()</code> function in <code>thermal_sensor.c</code> is causing bus contention when multiple sensors are polled rapidly. This leads to intermittent communication failures (Error Code: 0x4F) documented in bug #112.</p>
+<pre class="bg-surface-container-high p-4 rounded-md font-label text-label-md text-on-surface overflow-x-auto my-4 border border-outline-variant/30">// Current blocking implementation
+while(I2C_Busy(I2C_PORT_1)); 
+I2C_ReadBytes(ADDR_THERMAL, buffer, 4);</pre>
+<p><strong>Requirement:</strong> Implement an exponential backoff strategy or transition to an interrupt-driven DMA approach for sensor reads.</p>
+</div>
+<!-- Sub-tasks -->
+<div class="mb-8">
+<h3 class="text-body-lg font-bold text-on-surface mb-4 border-b border-outline-variant/30 pb-2">Implementation Checklist</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-3 bg-surface border border-outline-variant/30 rounded-md hover:bg-surface-container transition-colors cursor-pointer">
+<input checked="" class="w-5 h-5 rounded-full border-outline-variant text-status-success focus:ring-status-success/50 form-checkbox" type="checkbox">
+<span class="text-body-md line-through text-on-surface-variant">Profile current bus utilization</span>
+</label>
+<label class="flex items-center gap-3 p-3 bg-surface border border-outline-variant/30 rounded-md hover:bg-surface-container transition-colors cursor-pointer shadow-sm border-l-4 border-l-secondary">
+<input class="w-5 h-5 rounded-full border-outline-variant text-secondary focus:ring-secondary/50 form-checkbox" type="checkbox">
+<span class="text-body-md text-on-surface font-medium">Implement non-blocking DMA read</span>
+</label>
+<label class="flex items-center gap-3 p-3 bg-surface border border-outline-variant/30 rounded-md hover:bg-surface-container transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded-full border-outline-variant text-secondary focus:ring-secondary/50 form-checkbox" type="checkbox">
+<span class="text-body-md text-on-surface">Update unit tests for timing constraints</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Reference -->
+<div class="w-72 flex-shrink-0 space-y-6">
+<!-- Metadata Panel -->
+<div class="bg-surface-container p-5 rounded-lg border border-outline-variant/30">
+<h4 class="text-label-md font-label text-on-surface-variant uppercase mb-4 tracking-wide">Component Metadata</h4>
+<div class="space-y-3 text-label-md font-label">
+<div>
+<span class="text-on-surface-variant block mb-1">Target Spec ID</span>
+<span class="bg-surface-container-highest px-2 py-1 rounded text-on-surface inline-block border border-outline-variant/50">HW-SPEC-2023-V4</span>
+</div>
+<div>
+<span class="text-on-surface-variant block mb-1">Git Branch</span>
+<span class="text-secondary flex items-center gap-1 cursor-pointer hover:underline">
+<span class="material-symbols-outlined text-[14px]">commit</span> feature/i2c-optimize
+                                    </span>
+</div>
+<div>
+<span class="text-on-surface-variant block mb-1">Latest Commit</span>
+<span class="font-mono text-status-neutral bg-surface px-1 py-0.5 rounded border border-outline-variant/30">a7f9b2c</span>
+</div>
+</div>
+</div>
+<!-- Attachments -->
+<div>
+<h4 class="text-label-md font-label text-on-surface-variant uppercase mb-3 tracking-wide flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">attachment</span> Schematics
+                             </h4>
+<div class="border border-outline-variant/50 rounded-lg p-3 flex items-center gap-3 hover:bg-surface-container transition-colors cursor-pointer">
+<div class="bg-error-container text-on-error-container p-2 rounded">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="text-body-md font-medium truncate">Sensor_Array_v2.pdf</div>
+<div class="text-label-sm font-label text-on-surface-variant">2.4 MB</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Diagnostic Drawer (Collapsible) -->
+<div class="bg-inverse-surface border-t border-outline/30 z-20">
+<!-- Handle -->
+<div class="h-8 flex items-center justify-between px-4 cursor-pointer hover:bg-white/5 transition-colors border-b border-white/10">
+<div class="flex items-center gap-2 text-label-md font-label text-inverse-on-surface/70">
+<span class="material-symbols-outlined text-[16px]">terminal</span> Live Diagnostic Log
+                </div>
+<div class="flex gap-2">
+<span class="w-2 h-2 rounded-full bg-status-success animate-pulse"></span>
+<span class="material-symbols-outlined text-[16px] text-inverse-on-surface/70">expand_less</span>
+</div>
+</div>
+<!-- Log Content -->
+<div class="h-48 p-4 overflow-y-auto font-label text-label-sm text-surface-dim font-mono space-y-1">
+<div><span class="text-status-neutral">[14:32:01]</span> <span class="text-secondary-container">INFO</span> Build started for target 'sensor-fw-v2'</div>
+<div><span class="text-status-neutral">[14:32:02]</span> <span class="text-secondary-container">INFO</span> Compiling thermal_sensor.c...</div>
+<div><span class="text-status-neutral">[14:32:05]</span> <span class="text-status-warning">WARN</span> implicitly declaring library function 'printf'</div>
+<div><span class="text-status-neutral">[14:32:08]</span> <span class="text-secondary-container">INFO</span> Linking objects...</div>
+<div><span class="text-status-neutral">[14:32:09]</span> <span class="text-status-success">SUCCESS</span> Build completed in 8.4s. Flash usage: 42%</div>
+<div class="pt-2 flex items-center gap-2 text-inverse-on-surface/50">
+<span>&gt;</span> <span class="animate-pulse">_</span>
+</div>
+</div>
+</div>
+</main>
+</body></html>

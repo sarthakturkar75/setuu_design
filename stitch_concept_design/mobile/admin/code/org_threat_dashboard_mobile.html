@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Threat Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#aec9eb",
+                      "tertiary-container": "#002233",
+                      "background": "#faf9f4",
+                      "outline-variant": "#c3c6ce",
+                      "surface-container-highest": "#e3e3de",
+                      "outline": "#73777e",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#dbdad5",
+                      "on-primary-container": "#6f89a9",
+                      "surface-container-high": "#e9e8e3",
+                      "surface-variant": "#e3e3de",
+                      "on-surface-variant": "#43474d",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed": "#001e2d",
+                      "secondary-container": "#8ad1ff",
+                      "primary-fixed": "#d1e4ff",
+                      "on-tertiary-container": "#0090c7",
+                      "surface-tint": "#46607e",
+                      "tertiary": "#00080f",
+                      "error": "#ba1a1a",
+                      "on-surface": "#1b1c19",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "primary": "#000815",
+                      "secondary-fixed-dim": "#88cffc",
+                      "surface-bright": "#faf9f4",
+                      "surface-container": "#efeee9",
+                      "inverse-on-surface": "#f2f1ec",
+                      "inverse-surface": "#30312e",
+                      "on-secondary-fixed": "#001e2d",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#005a7f",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#aec9eb",
+                      "secondary": "#00658d",
+                      "on-primary-fixed": "#001d35",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "surface": "#faf9f4",
+                      "surface-container-low": "#f5f4ef",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#00213c",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-background": "#1b1c19",
+                      "tertiary-fixed": "#c6e7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {}
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen">
+<!-- TopAppBar Shared Component -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden flex items-center justify-center text-primary border border-outline-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+<h1 class="font-headline text-lg font-bold text-primary">Setuu Enterprise</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors active:opacity-80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Mobile Content Area -->
+<main class="pt-20 pb-24 px-4 flex flex-col gap-6 max-w-md mx-auto">
+<!-- Dashboard Header -->
+<div class="flex flex-col gap-1">
+<h2 class="font-headline text-xl font-bold text-on-surface">Org Threat &amp; Virus Scan</h2>
+<p class="text-sm text-on-surface-variant font-body">Real-time edge telemetry and quarantine logs.</p>
+</div>
+<!-- Aggregate Metrics (Bento Grid) -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Total Scans -->
+<div class="col-span-2 bg-surface-container-low border border-outline-variant rounded-lg p-4 flex flex-col gap-2 shadow-sm">
+<div class="flex justify-between items-center w-full">
+<span class="text-xs font-label text-on-surface-variant tracking-wider uppercase">Total Scans (24h)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">radar</span>
+</div>
+<div class="font-headline text-3xl font-bold text-primary">14,289</div>
+</div>
+<!-- Active Threats -->
+<div class="bg-error-container border border-error/20 rounded-lg p-4 flex flex-col gap-2 shadow-sm relative overflow-hidden">
+<div class="absolute -right-4 -top-4 opacity-10">
+<span class="material-symbols-outlined text-6xl text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex justify-between items-center w-full relative z-10">
+<span class="text-xs font-label text-on-error-container tracking-wider uppercase">Active Threats</span>
+</div>
+<div class="font-headline text-2xl font-bold text-error relative z-10">3</div>
+</div>
+<!-- Quarantined -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-4 flex flex-col gap-2 shadow-sm">
+<div class="flex justify-between items-center w-full">
+<span class="text-xs font-label text-on-surface-variant tracking-wider uppercase">Quarantined</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">shield</span>
+</div>
+<div class="font-headline text-2xl font-bold text-on-surface">12</div>
+</div>
+</div>
+<!-- Audit Log Header -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
+<h3 class="text-sm font-bold text-on-surface font-body">Recent Scan Results</h3>
+<button class="text-xs font-label text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> FILTER
+            </button>
+</div>
+<!-- High-Density Audit Log List -->
+<div class="flex flex-col gap-3">
+<!-- Log Item 1: Infected (Crimson / Error) -->
+<div class="bg-surface border-l-4 border-l-error border-y border-r border-outline-variant rounded-r-lg p-3 shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[18px]" style="font-variation-settings: 'FILL' 1;">bug_report</span>
+<span class="font-body text-sm font-semibold text-on-surface truncate max-w-[200px]">vendor_invoice_v2.pdf.exe</span>
+</div>
+<span class="bg-error/10 text-error text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Infected</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant font-body">
+<span class="material-symbols-outlined text-[14px]">folder_open</span>
+<span>Project: Alpha Refinery Upgrade</span>
+</div>
+<div class="bg-surface-container-highest p-2 rounded flex flex-col gap-1 mt-1">
+<div class="flex justify-between text-[10px] font-label text-on-surface-variant">
+<span>SHA-256</span>
+<span>TIMESTAMP (UTC)</span>
+</div>
+<div class="flex justify-between text-[11px] font-label text-on-surface">
+<span class="truncate w-32">e3b0c44298fc1c149afbf4c8996fb924</span>
+<span>2023-10-27T08:14:02Z</span>
+</div>
+</div>
+</div>
+<!-- Log Item 2: Clean -->
+<div class="bg-surface border-l-4 border-l-secondary border-y border-r border-outline-variant rounded-r-lg p-3 shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">description</span>
+<span class="font-body text-sm font-semibold text-on-surface truncate max-w-[200px]">site_survey_q3_final.pdf</span>
+</div>
+<span class="bg-secondary/10 text-secondary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Clean</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant font-body">
+<span class="material-symbols-outlined text-[14px]">folder_open</span>
+<span>Project: Delta Pipeline Ext.</span>
+</div>
+<div class="bg-surface-container-highest p-2 rounded flex flex-col gap-1 mt-1">
+<div class="flex justify-between text-[10px] font-label text-on-surface-variant">
+<span>SHA-256</span>
+<span>TIMESTAMP (UTC)</span>
+</div>
+<div class="flex justify-between text-[11px] font-label text-on-surface">
+<span class="truncate w-32">8f434346648f6b96df89dda901c5176b</span>
+<span>2023-10-27T08:12:45Z</span>
+</div>
+</div>
+</div>
+<!-- Log Item 3: Clean -->
+<div class="bg-surface border-l-4 border-l-secondary border-y border-r border-outline-variant rounded-r-lg p-3 shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">image</span>
+<span class="font-body text-sm font-semibold text-on-surface truncate max-w-[200px]">IMG_20231027_0810.jpg</span>
+</div>
+<span class="bg-secondary/10 text-secondary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Clean</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant font-body">
+<span class="material-symbols-outlined text-[14px]">folder_open</span>
+<span>Project: Alpha Refinery Upgrade</span>
+</div>
+<div class="bg-surface-container-highest p-2 rounded flex flex-col gap-1 mt-1">
+<div class="flex justify-between text-[10px] font-label text-on-surface-variant">
+<span>SHA-256</span>
+<span>TIMESTAMP (UTC)</span>
+</div>
+<div class="flex justify-between text-[11px] font-label text-on-surface">
+<span class="truncate w-32">d41d8cd98f00b204e9800998ecf8427e</span>
+<span>2023-10-27T08:10:11Z</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shared Component -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white/85 backdrop-blur-md rounded-t-xl shadow-lg border-t border-outline-variant md:hidden">
+<!-- Inactive: Dashboard -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-[10px] font-medium mt-1">Dashboard</span>
+</a>
+<!-- Inactive: Projects -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-label text-[10px] font-medium mt-1">Projects</span>
+</a>
+<!-- Inactive: Tasks -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label text-[10px] font-medium mt-1">Tasks</span>
+</a>
+<!-- Active: Admin -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-[10px] font-medium mt-1">Admin</span>
+</a>
+</nav>
+</body></html>

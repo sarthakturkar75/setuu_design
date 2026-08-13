@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Handover &amp; Compliance Vault - Setuu Enterprise</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary": "#ffffff",
+                        "secondary": "#00658d",
+                        "outline": "#73777e",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-primary": "#aec9eb",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container-highest": "#e3e3de",
+                        "surface": "#faf9f4",
+                        "surface-container-low": "#f5f4ef",
+                        "primary": "#000815",
+                        "surface-bright": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "background": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1b1c19",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#6f89a9",
+                        "on-surface-variant": "#43474d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container": "#efeee9",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#8ad1ff",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "rail-width": "72px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[style*="FILL: 1"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pt-safe">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/85 border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-4 h-16 w-full pt-safe">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+                CE
+            </div>
+<span class="font-headline font-bold text-primary text-headline-sm tracking-tight">Setuu Enterprise</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-mobile pt-24 pb-32 max-w-lg mx-auto w-full flex flex-col gap-6">
+<!-- Header Section -->
+<section class="flex flex-col gap-2">
+<div class="inline-flex items-center gap-2 bg-[#0D9488]/10 text-[#0D9488] px-2 py-1 rounded-sm w-fit border border-[#0D9488]/20">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label text-label-md uppercase">Project Close-out</span>
+</div>
+<h1 class="font-headline text-headline-lg-mobile text-primary">Handover &amp; Compliance Vault</h1>
+<p class="font-body text-body-md text-on-surface-variant mt-1">Immutable records and active warranties for Project Alpha.</p>
+</section>
+<!-- Document Grid -->
+<section class="flex flex-col gap-4">
+<!-- Card 1: As-Builts -->
+<article class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg shadow-sm p-4 flex flex-col gap-3 hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-sm bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<div>
+<h3 class="font-body font-semibold text-body-lg text-primary">Structural As-Builts</h3>
+<p class="font-body text-body-md text-on-surface-variant">Final Rev. 4 - Signed</p>
+</div>
+</div>
+<button aria-label="Download" class="text-secondary hover:bg-secondary/10 p-1 rounded-sm transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-surface-variant">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-sm">insert_drive_file</span>
+<span class="font-label text-label-md">1.2 GB</span>
+</div>
+<span class="font-label text-label-md text-outline">2023-10-24</span>
+</div>
+</article>
+<!-- Card 2: Turbine O&M (Warranty Focus) -->
+<article class="bg-surface-container-lowest border border-[#0D9488]/30 rounded-lg shadow-sm p-4 flex flex-col gap-3 relative overflow-hidden">
+<!-- Decorative warranty accent -->
+<div class="absolute top-0 left-0 w-1 h-full bg-[#0D9488]"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-sm bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">wind_power</span>
+</div>
+<div>
+<h3 class="font-body font-semibold text-body-lg text-primary">Main Turbine O&amp;M</h3>
+<p class="font-body text-body-md text-on-surface-variant">Maintenance &amp; Warranty</p>
+</div>
+</div>
+<button aria-label="Download" class="text-secondary hover:bg-secondary/10 p-1 rounded-sm transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="pl-2 bg-[#0D9488]/5 rounded-sm p-3 mt-1 flex flex-col gap-2 border border-[#0D9488]/10">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#0D9488] animate-pulse"></span>
+<span class="font-label text-label-md text-[#0D9488] font-bold">WARRANTY ACTIVE</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-sm">timer</span>
+<span class="font-label text-label-md" id="warranty-timer">Expires in: 48m 12s</span>
+</div>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-surface-variant pl-2">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-sm">folder_zip</span>
+<span class="font-label text-label-md">245 MB</span>
+</div>
+<span class="font-label text-label-md text-outline">2023-10-24</span>
+</div>
+</article>
+<!-- Card 3: Fire Safety -->
+<article class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg shadow-sm p-4 flex flex-col gap-3 hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-sm bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div>
+<h3 class="font-body font-semibold text-body-lg text-primary">Fire Safety Certification</h3>
+<p class="font-body text-body-md text-on-surface-variant">Local Authority Approved</p>
+</div>
+</div>
+<button aria-label="Download" class="text-secondary hover:bg-secondary/10 p-1 rounded-sm transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-surface-variant">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+<span class="font-label text-label-md">12 MB</span>
+</div>
+<span class="font-label text-label-md text-outline">2023-10-25</span>
+</div>
+</article>
+</section>
+</main>
+<!-- Sticky Bottom Action -->
+<div class="fixed bottom-[80px] w-full px-margin-mobile pb-4 z-40 flex flex-col items-center max-w-lg left-1/2 -translate-x-1/2">
+<div class="bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant/30 p-4 rounded-xl shadow-lg w-full flex flex-col gap-3">
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-body font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+                 Download Complete Handover Package
+             </button>
+<div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="font-label text-label-sm">Secure link generated. Expires in 15 minutes.</span>
+</div>
+</div>
+</div>
+<!-- BottomNavBar Shell (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 backdrop-blur-xl bg-surface/85 rounded-t-xl border-t border-outline-variant/30 shadow-lg flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label-sm mt-1">Portfolio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label text-label-sm mt-1">Briefing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label text-label-sm mt-1">Financials</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 transition-transform w-20" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label text-label-sm mt-1 font-bold">Vault</span>
+</a>
+</nav>
+<script>
+        // Simple countdown logic for demonstration
+        const timerElement = document.getElementById('warranty-timer');
+        let minutes = 48;
+        let seconds = 12;
+
+        setInterval(() => {
+            seconds--;
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--;
+            }
+            if (minutes < 0) minutes = 0; // stop at 0
+            
+            const m = minutes.toString().padStart(2, '0');
+            const s = seconds.toString().padStart(2, '0');
+            timerElement.textContent = `Expires in: ${m}m ${s}s`;
+        }, 1000);
+    </script>
+</body></html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Mobile Drawing Viewer - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-low": "#f5f4ef",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-fixed": "#001e2d",
+                        "surface": "#faf9f4",
+                        "background": "#faf9f4",
+                        "tertiary": "#00080f",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d1e4ff",
+                        "inverse-primary": "#aec9eb",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "outline": "#73777e",
+                        "on-tertiary-container": "#0090c7",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary": "#000815",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container": "#efeee9",
+                        "secondary-container": "#8ad1ff",
+                        "on-error": "#ffffff",
+                        "secondary": "#00658d",
+                        "on-primary-container": "#6f89a9",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary-container": "#005a7f",
+                        "on-background": "#1b1c19",
+                        "on-surface": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "tertiary-fixed": "#c6e7ff",
+                        "tertiary-container": "#002233",
+                        "inverse-on-surface": "#f2f1ec",
+                        "inverse-surface": "#30312e",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-surface-variant": "#43474d",
+                        "precision-cyan": "#41BEFD",
+                        "dark-slate": "#0A0F14",
+                        "navy-surface": "#121A21"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .glass-panel {
+            background: rgba(18, 26, 33, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(65, 190, 253, 0.2);
+        }
+
+        .glowing-active {
+            color: #41BEFD;
+            text-shadow: 0 0 8px rgba(65, 190, 253, 0.6);
+        }
+
+        /* Blueprint grid pattern overlay */
+        .blueprint-grid {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-inverse-surface text-inverse-on-surface h-screen w-screen overflow-hidden flex flex-col font-body antialiased selection:bg-secondary selection:text-on-secondary relative">
+<!-- Top App Bar (Modified for Drawing Viewer) -->
+<header class="glass-panel z-50 flex justify-between items-center w-full px-4 h-16 absolute top-0 left-0">
+<div class="flex items-center gap-3">
+<button aria-label="Back" class="p-2 rounded-full hover:bg-white/10 transition-colors active:scale-95 text-inverse-on-surface">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline font-bold text-lg leading-tight tracking-tight text-white">Sect. 4 - HVAC Layout</h1>
+<span class="font-label text-xs text-outline-variant">v2.4 • DWG-8921-A</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Layers" class="p-2 rounded-full hover:bg-white/10 transition-colors active:scale-95 text-outline-variant">
+<span class="material-symbols-outlined text-2xl">layers</span>
+</button>
+<button aria-label="More options" class="p-2 rounded-full hover:bg-white/10 transition-colors active:scale-95 text-outline-variant">
+<span class="material-symbols-outlined text-2xl">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas Area -->
+<main class="flex-1 relative w-full h-full bg-[#1B1C19] overflow-hidden" id="canvas-container">
+<!-- Blueprint Image Wrapper (Pannable/Zoomable) -->
+<div class="absolute inset-0 blueprint-grid flex items-center justify-center cursor-move" id="blueprint-wrapper">
+<!-- Simulated Blueprint Image -->
+<img class="max-w-none w-[200%] h-auto opacity-80 pointer-events-none transform origin-center transition-transform duration-75" data-alt="A highly detailed architectural blueprint schematic of a commercial HVAC system layout. The image features crisp, high-contrast white technical lines, symbols, and measurements on a deep slate/almost black background. The style is strictly technical engineering, conveying industrial reliability and clinical precision. The lighting is non-existent as it is a 2D CAD drawing, but the white lines appear luminous against the dark inverse background." id="blueprint-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSEaKj9jIhPIKigFzwH9fRXk_Cz9VoPOrMp068k23UMVS38CD0s0-01Y7OQqL0Lgcai1pJvDI1ZBd_548UBdGfW8Xz2pRaj6TKLCL2orKN_GxEJkYAoYc3beoKuLE4K3zWTFvbkV_JQOTHkhZRB2jSSGux5HEoHo21EJJftI-khRPKVSFoEX00A3gAkCuIylU9s_RTduMwtCgU2-JsFzrTajYmkcU5xGnpDxlX6DAj8C1HJE-_urQm" style="transform: scale(1) translate(0px, 0px);">
+<!-- Simulated Active Markup / Pin -->
+<div class="absolute top-[45%] left-[52%] flex flex-col items-center animate-pulse">
+<span class="material-symbols-outlined glowing-active text-4xl drop-shadow-md" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<div class="bg-navy-surface border border-precision-cyan/40 px-2 py-1 rounded mt-1 font-label text-[10px] text-precision-cyan tracking-wider shadow-lg">
+                    RFI-402
+                </div>
+</div>
+</div>
+<!-- Technical Spec Overlay (Top Right) -->
+<div class="absolute top-20 right-4 flex flex-col items-end pointer-events-none">
+<div class="glass-panel px-3 py-2 rounded-lg flex flex-col gap-1 items-end shadow-lg">
+<span class="font-label text-xs text-outline-variant">SCALE: 1/4" = 1'-0"</span>
+<span class="font-label text-[10px] text-precision-cyan/80">LAT: 25.2048° N</span>
+<span class="font-label text-[10px] text-precision-cyan/80">LON: 55.2708° E</span>
+</div>
+</div>
+<!-- Floating Action Controls (Right Side) -->
+<div class="absolute right-4 bottom-24 flex flex-col gap-3 z-40">
+<button aria-label="Zoom In" class="w-12 h-12 bg-navy-surface border border-outline-variant/20 text-inverse-on-surface rounded-full shadow-lg flex items-center justify-center hover:bg-white/10 transition-colors active:scale-95">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button aria-label="Zoom Out" class="w-12 h-12 bg-navy-surface border border-outline-variant/20 text-inverse-on-surface rounded-full shadow-lg flex items-center justify-center hover:bg-white/10 transition-colors active:scale-95">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button aria-label="Recenter" class="w-12 h-12 bg-navy-surface border border-outline-variant/20 text-inverse-on-surface rounded-full shadow-lg flex items-center justify-center hover:bg-white/10 transition-colors active:scale-95 mt-2">
+<span class="material-symbols-outlined">filter_center_focus</span>
+</button>
+</div>
+</main>
+<!-- Bottom Markup Toolbar (Glassmorphic) -->
+<nav class="glass-panel fixed bottom-0 w-full z-50 flex justify-around items-center px-2 pb-6 pt-3 rounded-t-xl shadow-[0_-8px_30px_rgba(0,0,0,0.5)]">
+<button class="flex flex-col items-center justify-center text-outline-variant p-2 w-16 transition-all duration-200 active:scale-90 hover:text-white">
+<span class="material-symbols-outlined text-2xl mb-1">pan_tool</span>
+<span class="font-label text-[10px]">Pan</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant p-2 w-16 transition-all duration-200 active:scale-90 hover:text-white">
+<span class="material-symbols-outlined text-2xl mb-1">straighten</span>
+<span class="font-label text-[10px]">Measure</span>
+</button>
+<!-- Active State: Pin / Markup -->
+<button class="flex flex-col items-center justify-center bg-primary-container/50 border border-precision-cyan/30 rounded-xl p-2 w-20 transition-all duration-200 active:scale-90 relative overflow-hidden group">
+<!-- Active Glow Background Effect -->
+<div class="absolute inset-0 bg-precision-cyan/10 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-2xl mb-1 glowing-active z-10" style="font-variation-settings: 'FILL' 1;">push_pin</span>
+<span class="font-label text-[10px] font-bold text-precision-cyan z-10">Pin Issue</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant p-2 w-16 transition-all duration-200 active:scale-90 hover:text-white">
+<span class="material-symbols-outlined text-2xl mb-1">draw</span>
+<span class="font-label text-[10px]">Draw</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant p-2 w-16 transition-all duration-200 active:scale-90 hover:text-white">
+<span class="material-symbols-outlined text-2xl mb-1">undo</span>
+<span class="font-label text-[10px]">Undo</span>
+</button>
+</nav>
+<script>
+        // Extremely basic interaction logic for visual demonstration
+        const wrapper = document.getElementById('blueprint-wrapper');
+        const img = document.getElementById('blueprint-image');
+        let scale = 1;
+
+        // Dummy zoom controls
+        document.querySelectorAll('button[aria-label="Zoom In"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                scale = Math.min(scale + 0.2, 3);
+                img.style.transform = `scale(${scale})`;
+            });
+        });
+
+        document.querySelectorAll('button[aria-label="Zoom Out"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                scale = Math.max(scale - 0.2, 0.5);
+                img.style.transform = `scale(${scale})`;
+            });
+        });
+
+        document.querySelectorAll('button[aria-label="Recenter"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                scale = 1;
+                img.style.transform = `scale(${scale})`;
+            });
+        });
+    </script>
+</body></html>

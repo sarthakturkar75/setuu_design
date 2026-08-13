@@ -1,0 +1,373 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Team Docs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e9e8e3",
+                    "on-primary-container": "#6f89a9",
+                    "inverse-primary": "#aec9eb",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "primary-container": "#00213c",
+                    "outline-variant": "#c3c6ce",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#30312e",
+                    "secondary": "#00658d",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#88cffc",
+                    "surface-container-low": "#f5f4ef",
+                    "on-tertiary-fixed": "#001e2d",
+                    "surface-variant": "#e3e3de",
+                    "on-background": "#1b1c19",
+                    "tertiary": "#00080f",
+                    "on-secondary-fixed": "#001e2d",
+                    "primary-fixed": "#d1e4ff",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "background": "#faf9f4",
+                    "on-tertiary-container": "#0090c7",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#43474d",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "outline": "#73777e",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-surface": "#1b1c19",
+                    "tertiary-container": "#002233",
+                    "secondary-fixed": "#c6e7ff",
+                    "surface-bright": "#faf9f4",
+                    "on-secondary-container": "#005a7f",
+                    "surface-tint": "#46607e",
+                    "on-primary-fixed": "#001d35",
+                    "surface-container": "#efeee9",
+                    "surface-container-highest": "#e3e3de",
+                    "tertiary-fixed": "#c6e7ff",
+                    "secondary-container": "#8ad1ff",
+                    "primary": "#000815",
+                    "on-error-container": "#93000a",
+                    "surface": "#faf9f4",
+                    "surface-dim": "#dbdad5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+</head>
+<body class="font-body antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen fixed left-0 top-0 overflow-y-auto w-[280px] bg-primary-container shadow-md shadow-xl z-20">
+<div class="p-6 pb-2 border-b border-white/10">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0">
+<img alt="Alex Chen" class="w-full h-full object-cover rounded-lg" data-alt="A macro photography style close up of a precise, metallic gear mechanism, glowing subtly with corporate blue, set against a sterile white laboratory background. The lighting is sharp, creating crisp edges and conveying high-tech industrial reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd6lwbnYCLgUaxW-MwTPYJ_utzElhP7POZs_GqcuswF4yeyO3_rzUawNYEX6B-Wxy4PgHPx2kgbp2ASYh5B35lRPoAP-BSu7wFQDfHWBjLXbKybB62s4RD8V5sbpLQz6ms54S5QWl2WaUU_aOeBdfsxUK4pPpkG7zOIRuLM2RekN3OvtPKIZ8tRtBd3GP3JqJiXOXoNm5tP3cSdW9pVjEfGhxLVMkDyzfmYUBv7Li4m-rSAh7BTiLl">
+</div>
+<div>
+<h2 class="text-xl font-headline font-bold text-on-primary leading-tight">Engineer Workbench</h2>
+<p class="text-on-primary-container text-xs font-label mt-1 opacity-80">Software Engineering</p>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-secondary font-label text-sm py-2 px-4 rounded hover:bg-secondary/90 transition-colors mb-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">dns</span>
+                System Status
+            </button>
+</div>
+<nav class="flex-1 py-4 px-2 space-y-1">
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">memory</span>
+<span class="font-body text-sm font-medium">My Workbench</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">settings_suggest</span>
+<span class="font-body text-sm font-medium">Assigned Tasks</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">code_blocks</span>
+<span class="font-body text-sm font-medium">Engineering Hub</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">bug_report</span>
+<span class="font-body text-sm font-medium">Issue Tracker</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:translate-x-1 duration-200">schedule</span>
+<span class="font-body text-sm font-medium">Timesheets</span>
+</a>
+<a class="bg-secondary/20 text-on-secondary-container border-l-4 border-secondary rounded-r-lg px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body text-sm font-medium">Team Docs</span>
+</a>
+</nav>
+<div class="p-4 border-t border-white/10 space-y-1">
+<a class="text-on-primary-container/70 px-4 py-2 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 duration-200">settings</span>
+<span class="font-body text-xs font-medium">Settings</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-2 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 duration-200">logout</span>
+<span class="font-body text-xs font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area Wrapper -->
+<div class="flex-1 flex flex-col ml-0 md:ml-[280px] h-full overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface/85 backdrop-blur-xl docked full-width top-0 h-20 border-b border-outline-variant/30 flex justify-between items-center w-full px-8 mx-auto z-10 shrink-0 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="md:hidden">
+<button class="p-2 text-on-surface hover:bg-surface-container-high/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<h1 class="text-[24px] font-headline font-bold text-primary tracking-tight">Setuu Enterprise</h1>
+<div class="h-6 w-px bg-outline-variant/50 mx-2 hidden md:block"></div>
+<div class="hidden md:flex items-center text-on-surface-variant font-label text-sm gap-2">
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+<span>Team Docs</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-medium">Core API Standards v2.4</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="relative hidden lg:block group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[20px]">search</span>
+<input class="bg-surface-container-low border border-outline-variant/50 text-on-surface text-sm rounded-full pl-10 pr-4 py-2 w-64 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body" placeholder="Search knowledge base..." type="text">
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<span class="text-[10px] font-label text-on-surface-variant/50 bg-surface-container rounded px-1.5 py-0.5 border border-outline-variant/30">⌘</span>
+<span class="text-[10px] font-label text-on-surface-variant/50 bg-surface-container rounded px-1.5 py-0.5 border border-outline-variant/30">K</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-colors hidden md:block">
+<span class="material-symbols-outlined">alternate_email</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/30">
+<div class="hidden md:flex flex-col items-end">
+<span class="text-xs font-label text-on-surface-variant">Mechanical Engineering</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm hidden md:flex items-center gap-2 scale-95 duration-150 ease-in-out hover:scale-100">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+                        Log Time
+                    </button>
+<div class="w-9 h-9 rounded-full bg-surface-container overflow-hidden border border-outline-variant/50 cursor-pointer">
+<img alt="Alex Chen" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate engineer, wearing a neutral toned button down shirt, standing against a blurred background of a modern industrial control room. The lighting is soft and flattering, typical of a professional SaaS avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1nMXoJ33Q39rQ2E-ejuDXkfnS2KZtc6gj_BvEEB4tW_uqzwCsfl3yANwT3v3chN1YFmHf4lRMfRopSUV0EnW3XKKxpw25CkvtSNxxxIUnxfnLqGMfxb26FCMUHbD3CrZF_u5vaP2CbHCY5KTuZpSBobCyaPk1FeHVCLX7dBdPpBb5mHfjE61NZBnA5ZJ1e54ej5uWfLyMIOHOte-LBW1bl9McKEX_raxOsXj7f7ZE_Hc8Itx3lz_a">
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Rail: Document Tree -->
+<aside class="w-72 bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col h-full overflow-y-auto shrink-0 hidden lg:flex">
+<div class="p-4 border-b border-outline-variant/20 sticky top-0 bg-surface-container-lowest/90 backdrop-blur z-10">
+<h3 class="font-headline font-bold text-sm text-on-surface mb-2">Documentation Tree</h3>
+<div class="flex gap-2 text-xs font-label">
+<button class="bg-surface-container-high text-on-surface px-2 py-1 rounded hover:bg-surface-variant transition-colors flex-1 text-center">Collapse All</button>
+</div>
+</div>
+<div class="p-2 font-body text-sm space-y-1">
+<!-- Tree Node 1 -->
+<div>
+<button class="w-full flex items-center gap-2 p-2 hover:bg-surface-container-low rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+<span class="material-symbols-outlined text-[18px] text-primary">folder</span>
+<span class="font-medium">Software Standards</span>
+</button>
+<div class="pl-8 pr-2 space-y-1 mt-1 border-l border-outline-variant/30 ml-4">
+<a class="flex items-center gap-2 p-1.5 hover:bg-surface-container-low rounded-lg text-primary bg-primary/5 font-medium transition-colors group" href="#">
+<span class="material-symbols-outlined text-[16px] text-secondary">description</span>
+<span class="truncate">Core API Standards v2.4</span>
+<span class="material-symbols-outlined text-[14px] ml-auto text-on-surface-variant/50">lock</span>
+</a>
+<a class="flex items-center gap-2 p-1.5 hover:bg-surface-container-low rounded-lg text-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant/70">description</span>
+<span class="truncate">Authentication Protocols</span>
+</a>
+<a class="flex items-center gap-2 p-1.5 hover:bg-surface-container-low rounded-lg text-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant/70">description</span>
+<span class="truncate">Database Schema Guide</span>
+</a>
+</div>
+</div>
+<!-- Tree Node 2 -->
+<div>
+<button class="w-full flex items-center gap-2 p-2 hover:bg-surface-container-low rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant/70">folder</span>
+<span>Hardware SOPs</span>
+</button>
+</div>
+<!-- Tree Node 3 -->
+<div>
+<button class="w-full flex items-center gap-2 p-2 hover:bg-surface-container-low rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant/70">folder</span>
+<span>Integration Protocols</span>
+</button>
+</div>
+<!-- Tree Node 4 -->
+<div>
+<button class="w-full flex items-center gap-2 p-2 hover:bg-surface-container-low rounded-lg text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant/70">folder</span>
+<span>Onboarding Materials</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Document Viewer Canvas -->
+<section class="flex-1 bg-surface overflow-y-auto relative p-6 lg:p-12">
+<div class="max-w-4xl mx-auto bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden mb-24">
+<!-- Document Header -->
+<div class="p-8 border-b border-outline-variant/20 bg-surface-bright">
+<div class="flex items-start justify-between mb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-secondary/10 text-secondary border border-secondary/20 px-2 py-0.5 rounded text-[10px] font-label uppercase tracking-widest">Immutable Standard</span>
+<span class="text-xs font-label text-on-surface-variant/60 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                                        v2.4
+                                    </span>
+</div>
+<h1 class="text-[32px] font-headline font-bold text-on-surface leading-tight mb-2">Core API Standards &amp; Integration Protocols</h1>
+<p class="text-on-surface-variant font-body text-sm max-w-2xl">Defines the immutable architectural constraints and RESTful design patterns required for all Setuu Enterprise microservices operating within the primary infrastructure cluster.</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">lock</span>
+<span class="text-xs font-label text-on-surface-variant">Read-Only</span>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-outline-variant/20">
+<div>
+<p class="text-[10px] font-label text-on-surface-variant/70 mb-1">AUTHOR</p>
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">SA</div>
+<span class="text-sm font-body text-on-surface">SysAdmin Team</span>
+</div>
+</div>
+<div>
+<p class="text-[10px] font-label text-on-surface-variant/70 mb-1">LAST UPDATED</p>
+<p class="text-sm font-label text-on-surface">2023-10-27 14:32 UTC</p>
+</div>
+<div>
+<p class="text-[10px] font-label text-on-surface-variant/70 mb-1">REVIEW CYCLE</p>
+<p class="text-sm font-body text-on-surface">Annual (Next: Q1 2024)</p>
+</div>
+<div>
+<p class="text-[10px] font-label text-on-surface-variant/70 mb-1">COMPLIANCE</p>
+<p class="text-sm font-label text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                                    SOC2 Tier 3
+                                </p>
+</div>
+</div>
+</div>
+<!-- Document Body (Markdown Render Simulation) -->
+<div class="p-8 font-body text-on-surface/90 leading-relaxed space-y-6">
+<p class="text-base">All newly provisioned endpoints must adhere strictly to the guidelines defined in this document. Deviation requires explicit approval via the Architectural Review Board (ARB) ticketing system.</p>
+<h2 class="text-xl font-headline font-bold text-on-surface mt-8 mb-4 border-b border-outline-variant/20 pb-2">1. Authentication Payload Structure</h2>
+<p class="text-sm mb-4">Requests must include a Bearer token in the `Authorization` header. The JWT structure expects standard claims alongside custom tenant identifiers.</p>
+<!-- Code Block -->
+<div class="bg-[#1e1e1e] rounded-lg overflow-hidden border border-outline/20 mb-6">
+<div class="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-white/10">
+<span class="text-xs font-label text-[#d4d4d4]">json</span>
+<button class="text-[#858585] hover:text-white transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span class="text-[10px] font-label">Copy</span>
+</button>
+</div>
+<pre class="p-4 overflow-x-auto text-sm font-label text-[#d4d4d4]"><code>{
+  <span class="text-[#9cdcfe]">"alg"</span>: <span class="text-[#ce9178]">"RS256"</span>,
+  <span class="text-[#9cdcfe]">"typ"</span>: <span class="text-[#ce9178]">"JWT"</span>
+}
+.
+{
+  <span class="text-[#9cdcfe]">"sub"</span>: <span class="text-[#ce9178]">"usr_9f8a7b6c"</span>,
+  <span class="text-[#9cdcfe]">"tenant_id"</span>: <span class="text-[#ce9178]">"tnt_enterprise_01"</span>,
+  <span class="text-[#9cdcfe]">"role"</span>: <span class="text-[#ce9178]">"admin"</span>,
+  <span class="text-[#9cdcfe]">"exp"</span>: <span class="text-[#b5cea8]">1698420000</span>
+}</code></pre>
+</div>
+<h2 class="text-xl font-headline font-bold text-on-surface mt-8 mb-4 border-b border-outline-variant/20 pb-2">2. Standard Response Envelopes</h2>
+<p class="text-sm mb-4">To ensure predictability for consuming clients, all API responses (success and error) must be wrapped in a standard envelope. Raw arrays should never be returned at the root level.</p>
+<!-- Table -->
+<div class="overflow-x-auto border border-outline-variant/30 rounded-lg mb-6">
+<table class="w-full text-left border-collapse text-sm">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/30 text-on-surface-variant font-label text-xs">
+<th class="p-3 font-medium">Field</th>
+<th class="p-3 font-medium">Type</th>
+<th class="p-3 font-medium">Description</th>
+<th class="p-3 font-medium">Required</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<tr>
+<td class="p-3 font-label text-primary">data</td>
+<td class="p-3 font-label text-on-surface-variant/80">Object|Array</td>
+<td class="p-3">The primary resource payload. Null on errors.</td>
+<td class="p-3"><span class="text-secondary font-medium">Yes</span></td>
+</tr>
+<tr>
+<td class="p-3 font-label text-primary">meta</td>
+<td class="p-3 font-label text-on-surface-variant/80">Object</td>
+<td class="p-3">Pagination details, server timestamps, etc.</td>
+<td class="p-3 text-outline">Optional</td>
+</tr>
+<tr>
+<td class="p-3 font-label text-primary">error</td>
+<td class="p-3 font-label text-on-surface-variant/80">Object</td>
+<td class="p-3">Error code and human-readable message. Null on success.</td>
+<td class="p-3"><span class="text-secondary font-medium">Cond.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border-l-4 border-secondary mt-6 flex gap-3">
+<span class="material-symbols-outlined text-secondary shrink-0">info</span>
+<div class="text-sm">
+<strong class="font-medium text-on-surface block mb-1">Versioning Requirement</strong>
+<p class="text-on-surface-variant">API versioning is strictly managed via URI path routing (e.g., `/api/v2/resources`). Header-based versioning is deprecated for internal microservices.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

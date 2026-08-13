@@ -1,0 +1,373 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Project Configuration Hub | Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#aec9eb",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-background": "#1b1c19",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-tertiary-fixed": "#001e2d",
+                    "on-tertiary-container": "#0090c7",
+                    "primary-fixed-dim": "#aec9eb",
+                    "surface-container": "#efeee9",
+                    "on-secondary-container": "#005a7f",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#c3c6ce",
+                    "tertiary": "#00080f",
+                    "secondary-container": "#8ad1ff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "surface-container-high": "#e9e8e3",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-primary-fixed": "#001d35",
+                    "surface-tint": "#46607e",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface-container-highest": "#e3e3de",
+                    "outline": "#73777e",
+                    "primary-container": "#00213c",
+                    "secondary": "#00658d",
+                    "on-primary-container": "#6f89a9",
+                    "surface-variant": "#e3e3de",
+                    "inverse-surface": "#30312e",
+                    "tertiary-container": "#002233",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#43474d",
+                    "surface": "#faf9f4",
+                    "surface-container-low": "#f5f4ef",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#1b1c19",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#d1e4ff",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "primary": "#000815",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#c6e7ff",
+                    "background": "#faf9f4",
+                    "surface-dim": "#dbdad5",
+                    "surface-bright": "#faf9f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Merriweather"
+                    ],
+                    "display": [
+                            "Merriweather"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Jetbrains Mono"
+                    ]
+            },
+            "fontSize": {}
+    },
+        },
+      }
+    </script>
+<style>
+        /* CSS variables mapping for custom switch if needed, sticking to tailwind forms plugin primarily */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        
+        /* Custom Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #00213c; /* primary-container */
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00213c; /* primary-container */
+        }
+        
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-hidden h-screen flex">
+<!-- SideNavBar (Predicted Component) -->
+<!-- Applying Active State Logic: Context is "Settings" (Project Config) -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 z-50 bg-primary dark:bg-surface-container-lowest shadow-xl flex flex-col py-6 hidden md:flex">
+<!-- Header -->
+<div class="px-6 mb-8 flex items-center gap-4">
+<img class="w-10 h-10 rounded object-cover" data-alt="A minimalist, corporate B2B logo for Setuu Enterprise. The logo features a solid, high-contrast dark blue geometric icon next to crisp typography. The aesthetic is clean, professional, and industrial-grade SaaS." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOLYo8LPrWfbtrtRAOTMLeZvQBVh2vh6SFHq2tH3l0PX7iKxEOO3xOyn33v3uYpplxd9QUGTg2VVoQu38s7R0GidhHNgDyUDrXWa7oflSETyxs5TG9zEiIOOBQFUW8YEJpgpxO8l1ZFFGB-wU4EsqUp-dIp56joWNrZLf4jN0Boq2iyCTODkRFRLnSYJkY_1J5E508lcpluXqsDfUOaRiDklYZTMs4YYbNdfgjSkQLwaE36ELbDhUr">
+<div>
+<div class="font-headline text-xl font-black text-on-primary dark:text-on-surface tracking-tight">Setuu Admin</div>
+<div class="font-label text-label-sm text-on-primary/70 dark:text-on-surface-variant/70 mt-1 uppercase tracking-wider">Enterprise Tier</div>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<div class="flex-1 flex flex-col gap-1 px-4 overflow-y-auto">
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                Projects
+            </a>
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+                Drawings
+            </a>
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                Inventory
+            </a>
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+                Vendors
+            </a>
+<!-- Active Tab: Settings (Project Config Context) -->
+<a class="bg-primary-container text-on-primary-container rounded-lg mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 font-body text-body-md font-semibold" href="#">
+<span class="material-symbols-outlined fill" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Settings
+            </a>
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-3 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span>
+                Support
+            </a>
+</div>
+<!-- Footer Tabs & CTA -->
+<div class="px-4 mt-auto border-t border-white/10 pt-4">
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-2 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+                Audit Logs
+            </a>
+<a class="text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface mx-2 my-1 hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 flex items-center gap-3 px-4 py-2 rounded-lg font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+                System Status
+            </a>
+<button class="mt-4 w-full bg-secondary text-on-secondary py-3 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-secondary/90 transition-colors">
+                Raise Ticket
+                <span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[280px] h-screen flex flex-col bg-background relative overflow-hidden">
+<!-- TopNavBar (Predicted Component) -->
+<header class="bg-white/85 dark:bg-surface-container/85 backdrop-blur-md border-b border-outline-variant/20 shadow-sm docked full-width top-0 sticky z-40 flex justify-between items-center w-full px-6 md:px-8 h-16">
+<!-- Mobile Menu Trigger -->
+<button class="md:hidden text-primary p-2 mr-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Brand (Mobile Fallback) / Search (Left aligned as per JSON) -->
+<div class="flex items-center gap-4 flex-1">
+<div class="hidden md:flex relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-surface-container-low border-transparent focus:border-primary focus:ring-0 rounded-lg text-body-md font-body text-on-surface placeholder:text-outline transition-all" placeholder="Search" type="text">
+</div>
+</div>
+<div class="font-headline font-bold text-primary dark:text-primary-fixed md:hidden text-lg truncate">Setuu Enterprise</div>
+<!-- Trailing Icons & Actions -->
+<div class="flex items-center gap-2 md:gap-4 ml-auto">
+<button class="text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full hidden sm:block">
+<span class="material-symbols-outlined" data-icon="cloud_done">cloud_done</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full hidden sm:block">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-px h-6 bg-outline-variant/30 mx-2 hidden sm:block"></div>
+<button class="w-9 h-9 rounded-full overflow-hidden border border-outline-variant/20 ml-2">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a female administrator for a corporate SaaS platform. She is wearing a modern dark blazer, looking confident and approachable. The background is a crisp, bright, light-mode office setting, emphasizing a clean, authoritative executive aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLWfKcQBDNTOHNCeF-dAV7gJ0g-2oswuyH0n3eswL_e5nJmM6lY6ojMpuR9nrlJxgt-mmshps3J6YZqUOm5AJSwTA2vZjEIq-NuUPnG6rNRV9TAK8UKLbIBoKLNkWhvb0E6poEt7kwm1dHuS09i3VmpWInZ9j7eTwGCymzYyg4vtLmb3xJbHDs8UmQ2F6r16bQoG2oqTg8aADB1jY62OUfFbbWE1YZWCyn6wtm6-KiR6dsu8WSjr1N">
+</button>
+</div>
+</header>
+<!-- Page Content: Layout: Sidebar (Projects) + Detail (Modules) -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Projects Master List (Left Pane) -->
+<div class="w-[320px] bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col flex-shrink-0 z-10 shadow-sm relative">
+<div class="p-6 border-b border-outline-variant/20">
+<h2 class="font-headline text-headline-sm text-on-surface tracking-tight mb-4">Project Configuration</h2>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant/50 focus:border-secondary focus:ring-1 focus:ring-secondary rounded-md text-body-md font-body text-on-surface placeholder:text-outline transition-all" placeholder="Filter projects..." type="text">
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-3 flex flex-col gap-1">
+<!-- Selected Project -->
+<button class="w-full text-left p-3 rounded-lg bg-surface-container text-on-surface border border-outline-variant/40 flex flex-col gap-1 transition-colors relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-lg"></div>
+<span class="font-headline text-[15px] font-bold text-primary pl-2 truncate">P-4092: Alpha Refinery Upgrade</span>
+<span class="font-label text-label-sm text-on-surface-variant pl-2 font-medium">Status: ACTIVE</span>
+</button>
+<!-- Unselected Projects -->
+<button class="w-full text-left p-3 rounded-lg hover:bg-surface-container-low text-on-surface border border-transparent flex flex-col gap-1 transition-colors">
+<span class="font-headline text-[15px] font-bold text-on-surface-variant pl-2 truncate">P-4093: Beta Storage Tank</span>
+<span class="font-label text-label-sm text-outline pl-2 font-medium">Status: QUEUED</span>
+</button>
+<button class="w-full text-left p-3 rounded-lg hover:bg-surface-container-low text-on-surface border border-transparent flex flex-col gap-1 transition-colors">
+<span class="font-headline text-[15px] font-bold text-on-surface-variant pl-2 truncate">P-4105: Delta Pipeline Expansion</span>
+<span class="font-label text-label-sm text-outline pl-2 font-medium">Status: ON HOLD</span>
+</button>
+<button class="w-full text-left p-3 rounded-lg hover:bg-surface-container-low text-on-surface border border-transparent flex flex-col gap-1 transition-colors">
+<span class="font-headline text-[15px] font-bold text-on-surface-variant pl-2 truncate">P-4112: Omega Maintenance</span>
+<span class="font-label text-label-sm text-outline pl-2 font-medium">Status: ACTIVE</span>
+</button>
+</div>
+</div>
+<!-- Modules Detail View (Right Pane - Canvas) -->
+<div class="flex-1 overflow-y-auto bg-surface-bright relative p-6 md:p-10">
+<!-- Detail Header -->
+<div class="mb-8 flex justify-between items-end border-b border-outline-variant/20 pb-4">
+<div>
+<div class="flex items-center gap-2 text-outline mb-2">
+<span class="font-body text-body-sm font-medium">Settings</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-body text-body-sm font-medium">Projects</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-body text-body-sm font-medium text-primary">P-4092</span>
+</div>
+<h1 class="font-headline text-headline-lg text-primary tracking-tight">Project Configuration Hub</h1>
+<p class="font-body text-body-md text-on-surface-variant mt-2 max-w-2xl">Configure active functional modules for this project. Disabling a module will hide it from Field Workers and Vendor portals, but retain underlying relational data.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary text-on-primary px-5 py-2.5 rounded-md font-body font-semibold text-sm transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">save</span>
+                        Save Configuration
+                    </button>
+</div>
+<!-- Bento Grid for Modules (Glassmorphic Cards) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Project Details Section -->
+<div class="glass-panel rounded-xl p-6 border-t-4 border-t-secondary">
+<h3 class="font-headline text-headline-sm text-primary font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">info</span> Project Details
+    </h3>
+<div class="space-y-4">
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Project Name</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant/50 rounded-md text-body-md" type="text" value="Alpha Refinery Upgrade">
+</div>
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Project ID</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant/50 rounded-md text-body-md" disabled="" type="text" value="P-4092">
+</div>
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Description</label>
+<textarea class="w-full p-3 bg-surface-container-low border border-outline-variant/50 rounded-md text-body-md h-24">Major infrastructure upgrade for the Alpha Refinery sector, focusing on pipeline integrity and storage capacity expansion.</textarea>
+</div>
+</div>
+</div>
+<!-- PM Assignment & Timeline -->
+<div class="glass-panel rounded-xl p-6 border-t-4 border-t-secondary">
+<h3 class="font-headline text-headline-sm text-primary font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">assignment_ind</span> Management &amp; Timeline
+    </h3>
+<div class="space-y-4">
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Project Manager</label>
+<select class="w-full p-3 bg-surface-container-low border border-outline-variant/50 rounded-md text-body-md">
+<option selected="">Sarah Jenkins</option>
+<option>Michael Chen</option>
+<option>Elena Rodriguez</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Start Date</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant/50 rounded-md text-body-md" type="date" value="2024-01-15">
+</div>
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Target Completion</label>
+<input class="w-full p-3 bg-surface-container-low border border-outline-variant/50 rounded-md text-body-md" type="date" value="2024-12-20">
+</div>
+</div>
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">Project Status</label>
+<div class="flex gap-2 mt-2">
+<span class="px-4 py-2 rounded-full bg-secondary text-on-secondary text-xs font-bold">ACTIVE</span>
+<span class="px-4 py-2 rounded-full bg-surface-variant text-on-surface-variant text-xs font-bold cursor-pointer hover:bg-outline-variant/30">ON HOLD</span>
+<span class="px-4 py-2 rounded-full bg-surface-variant text-on-surface-variant text-xs font-bold cursor-pointer hover:bg-outline-variant/30">COMPLETED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Info Banner below -->
+</div>
+</div>
+</main>
+<script>
+        // Simple script to handle visual toggle states for demonstration
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const card = e.target.closest('.glass-panel');
+                const icon = card.querySelector('.text-9xl').parentElement;
+                const titleIcon = card.querySelector('.rounded-full');
+                const title = card.querySelector('h3');
+                const statusArea = card.querySelector('.mt-auto');
+                const statusText = statusArea.querySelector('.font-label');
+                
+                if(e.target.checked) {
+                    card.classList.replace('border-surface-variant', 'border-secondary');
+                    card.classList.replace('bg-surface-container/30', 'bg-white/85');
+                    
+                    icon.classList.replace('text-outline-variant/20', 'text-primary-fixed/20');
+                    
+                    titleIcon.parentElement.classList.remove('opacity-60');
+                    titleIcon.classList.replace('bg-surface-variant', 'bg-secondary-fixed');
+                    titleIcon.classList.replace('text-on-surface-variant', 'text-on-secondary-fixed');
+                    
+                    title.classList.replace('text-on-surface-variant', 'text-primary');
+                    
+                    statusArea.classList.remove('opacity-70');
+                    statusText.classList.replace('text-outline', 'text-secondary');
+                    statusText.innerHTML = '<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> MODULE ACTIVE';
+                } else {
+                    card.classList.replace('border-secondary', 'border-surface-variant');
+                    card.classList.add('bg-surface-container/30');
+                    
+                    icon.classList.replace('text-primary-fixed/20', 'text-outline-variant/20');
+                    
+                    titleIcon.parentElement.classList.add('opacity-60');
+                    titleIcon.classList.replace('bg-secondary-fixed', 'bg-surface-variant');
+                    titleIcon.classList.replace('text-on-secondary-fixed', 'text-on-surface-variant');
+                    
+                    title.classList.replace('text-primary', 'text-on-surface-variant');
+                    
+                    statusArea.classList.add('opacity-70');
+                    statusText.classList.replace('text-secondary', 'text-outline');
+                    statusText.innerHTML = '<span class="w-2 h-2 rounded-full border border-outline inline-block"></span> INACTIVE';
+                }
+            });
+        });
+    </script>
+</body></html>

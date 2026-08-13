@@ -1,0 +1,197 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Mobile Milestone</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "background": "#faf9f4",
+                        "secondary": "#00658d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-dim": "#dbdad5",
+                        "on-primary-fixed": "#001d35",
+                        "on-background": "#1b1c19",
+                        "surface-container-highest": "#e3e3de",
+                        "on-secondary-fixed": "#001e2d",
+                        "primary": "#000815",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c3c6ce",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "tertiary": "#00080f",
+                        "outline": "#73777e",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "surface": "#faf9f4",
+                        "inverse-surface": "#30312e",
+                        "on-secondary-container": "#005a7f",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#faf9f4",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "secondary-container": "#8ad1ff",
+                        "surface-container": "#efeee9",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "tertiary-container": "#002233",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    },
+                    "fontSize": {}
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased flex flex-col min-h-screen">
+<!-- Top App Bar (Reusing JSON anchor structure conceptually) -->
+<header class="bg-surface border-b border-outline-variant flex justify-between items-center w-full px-4 h-16 sticky top-0 z-40">
+<div class="flex items-center gap-3">
+<button class="text-primary p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="font-headline font-bold text-primary text-lg">Milestone Details</div>
+</div>
+<div>
+<button class="text-primary p-2 -mr-2 rounded-full hover:bg-surface-container-high transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-4 pb-28 md:hidden">
+<!-- Header Info -->
+<div class="mb-8">
+<h1 class="font-headline font-bold text-2xl text-primary mb-2">Foundation Pour Completion</h1>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm font-label">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span>DUE: 2024-05-15 14:00 UTC</span>
+</div>
+<div class="mt-4 inline-flex items-center gap-2 bg-[#0284C7]/10 text-[#0284C7] px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-[#0284C7] animate-pulse"></span> In Progress
+            </div>
+</div>
+<!-- Task List -->
+<div class="space-y-4">
+<!-- Item 1: Incomplete -->
+<div class="bg-surface-container-lowest rounded-lg p-4 border border-outline-variant flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-outline-variant flex items-center justify-center hover:border-primary transition-colors active:scale-95 bg-surface-container-lowest">
+<!-- Empty state -->
+</button>
+<div class="flex-grow pt-1">
+<h3 class="font-semibold text-on-surface text-base mb-1">Verify Rebar Placement</h3>
+<p class="text-sm text-on-surface-variant">Ensure minimum 2-inch clearance according to structural spec S-102.</p>
+</div>
+</div>
+<!-- Item 2: Incomplete with Attachment -->
+<div class="bg-surface-container-lowest rounded-lg p-4 border border-outline-variant flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-outline-variant flex items-center justify-center hover:border-primary transition-colors active:scale-95 bg-surface-container-lowest">
+<!-- Empty state -->
+</button>
+<div class="flex-grow pt-1">
+<h3 class="font-semibold text-on-surface text-base mb-1">Conduct Slump Test</h3>
+<p class="text-sm text-on-surface-variant mb-3">Target slump: 4-6 inches. Record exact value.</p>
+<button class="inline-flex items-center gap-2 text-secondary bg-secondary-fixed/30 hover:bg-secondary-fixed/50 px-3 py-1.5 rounded text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add_a_photo">add_a_photo</span> Add Photo Proof
+                    </button>
+</div>
+</div>
+<!-- Item 3: Completed (Dimmed & Strikethrough) -->
+<div class="bg-surface-container-low rounded-lg p-4 border border-surface-variant flex items-start gap-4 opacity-60">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#16A34A] flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="check">check</span>
+</div>
+<div class="flex-grow pt-1">
+<h3 class="font-semibold text-on-surface text-base mb-1 line-through">Site Prep Clearance</h3>
+<p class="text-sm text-on-surface-variant line-through">Debris removed and grading confirmed leveled.</p>
+<div class="mt-2 text-xs font-label text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" data-icon="history">history</span> Completed 08:30 AM
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB (Floating Action Button) - Contextual for Mobile Checklist -->
+<div class="fixed bottom-24 right-4 md:hidden z-50">
+<button class="w-14 h-14 bg-primary-container text-on-primary-container rounded-xl shadow-lg flex items-center justify-center hover:bg-primary-container/90 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="edit_note" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+</button>
+</div>
+<!-- BottomNavBar (Shared Component JSON anchor) -->
+<nav class="md:hidden bg-white/85 backdrop-blur-md text-secondary font-body text-[10px] font-medium tracking-[0.05em] docked full-width bottom-0 rounded-t-xl border-t border-white/20 shadow-lg fixed w-full z-50 flex justify-around items-center px-4 pb-4 pt-2">
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span>Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="foundation" style="font-variation-settings: 'FILL' 1;">foundation</span>
+<span>Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="photo_camera">photo_camera</span>
+<span>Media</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="assignment">assignment</span>
+<span>Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined mb-1" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Admin</span>
+</button>
+</nav>
+<!-- Desktop Warning (Since focus is mobile) -->
+<div class="hidden md:flex flex-grow items-center justify-center p-8 text-center text-on-surface-variant bg-surface-container-lowest">
+<div class="max-w-md">
+<span class="material-symbols-outlined text-4xl mb-4 text-outline" data-icon="devices">devices</span>
+<h2 class="font-headline font-bold text-xl mb-2 text-primary">Mobile View Only</h2>
+<p class="font-body text-sm">This interface is designed specifically for mobile field workers. Please resize your browser window to simulate a mobile device.</p>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Asset &amp; Deliverables Presentation Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary": "#ffffff",
+                        "secondary": "#00658d",
+                        "outline": "#73777e",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-primary": "#aec9eb",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container-highest": "#e3e3de",
+                        "surface": "#faf9f4",
+                        "surface-container-low": "#f5f4ef",
+                        "primary": "#000815",
+                        "surface-bright": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "background": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1b1c19",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#6f89a9",
+                        "on-surface-variant": "#43474d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container": "#efeee9",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#8ad1ff",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .watermark {
+            pointer-events: none;
+            opacity: 0.05;
+            transform: rotate(-30deg);
+            white-space: nowrap;
+            user-select: none;
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface dark:bg-surface-dim text-on-surface dark:text-inverse-on-surface font-body h-screen flex flex-col overflow-hidden selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/85 dark:bg-surface-container-highest/85 text-primary dark:text-primary-fixed border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-4 h-16 w-full">
+<div class="flex items-center gap-3 active:scale-95 duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+<h1 class="font-headline font-bold text-headline-sm tracking-tight text-primary dark:text-primary-fixed truncate">Deliverables</h1>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-high/50 transition-colors rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 mt-16 flex flex-col overflow-y-auto pb-24 bg-surface dark:bg-[#0A0F14]">
+<!-- Viewer Section (Dark Inverse Background) -->
+<div class="relative w-full h-[397px] bg-inverse-surface overflow-hidden shrink-0">
+<!-- Background Render -->
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="A highly detailed 3D CAD architectural render of an industrial building structural framework. The scene is illuminated by glowing blue schematic lines on a dark background, showcasing beams and joints. It evokes a precise, technical, and engineering-focused mood. The style is modern, hyper-realistic SaaS visualization with glowing accents on key structural elements." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD__PuQAqZsKykJvkBlzscGit8z58bAI4In0cm6MtOPEPI7-RpbvhgKEpJ8r7vVbmI72klOBp3AeyYYjP977N4HJ7pMdePhtDJpVLp-KFMUW7IkDqyDlxxqv4MLJ2TeKHdX7KCe38h7M5YjFg7TCRQVga4nFZcRw9W-2qQlBO9Q5GbK3bwdHJfVHvYXeBSWy9Sxa0VTj-__RS6Jh35ZuVLrXskctZ_tq9ULlmZMU3DFGT1ipiOa3SOz')"></div>
+<!-- Controls Overlay -->
+<div class="absolute inset-0 flex flex-col justify-between p-4 z-10 pointer-events-none">
+<div class="flex justify-between items-start pointer-events-auto">
+<div class="bg-inverse-surface/80 backdrop-blur-md px-3 py-1.5 rounded text-inverse-on-surface font-label text-label-md flex flex-col">
+<span class="font-body text-xs text-outline-variant">FILE</span>
+<span>STRUCT_L1_v3.4.1.dwg</span>
+</div>
+<div class="flex flex-col gap-2">
+<button class="bg-inverse-surface/80 backdrop-blur-md p-2 rounded-full text-inverse-on-surface hover:text-primary-fixed transition-colors active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">zoom_in</span>
+</button>
+<button class="bg-inverse-surface/80 backdrop-blur-md p-2 rounded-full text-inverse-on-surface hover:text-primary-fixed transition-colors active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">zoom_out</span>
+</button>
+<button class="bg-inverse-surface/80 backdrop-blur-md p-2 rounded-full text-inverse-on-surface hover:text-primary-fixed transition-colors active:scale-90 mt-2 border border-[#41BEFD]/30">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">360</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Watermark -->
+<div class="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-0">
+<div class="watermark font-headline font-bold text-9xl text-white tracking-tighter">PENDING APPROVAL</div>
+</div>
+</div>
+<!-- Details & Interactions -->
+<div class="flex-1 flex flex-col bg-surface dark:bg-[#0A0F14] z-20 -mt-4 rounded-t-xl">
+<!-- Handle -->
+<div class="w-full flex justify-center pt-3 pb-1">
+<div class="w-12 h-1 bg-outline-variant/50 rounded-full"></div>
+</div>
+<div class="px-4 pb-6 pt-2">
+<h2 class="font-headline text-headline-md text-primary dark:text-inverse-on-surface font-bold mb-1">Structural Assembly L1</h2>
+<div class="flex items-center gap-3 font-label text-label-sm text-on-surface-variant dark:text-outline mb-6">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> 2023-10-24 14:32Z</span>
+<span class="px-2 py-0.5 bg-secondary-container/20 text-secondary dark:text-secondary-fixed rounded">v3.4.1</span>
+</div>
+<!-- Action Bar -->
+<div class="flex gap-3 mb-8">
+<button class="flex-1 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed py-3 rounded-lg font-body font-semibold text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors active:scale-95 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">thumb_up</span> Approve
+                    </button>
+<button class="flex-1 bg-surface-container border border-outline-variant/30 text-on-surface dark:bg-surface-container-high dark:text-inverse-on-surface py-3 rounded-lg font-body font-semibold text-sm flex items-center justify-center gap-2 hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined">edit_note</span> Request Change
+                    </button>
+</div>
+<!-- File Selection Rail -->
+<h3 class="font-body font-semibold text-sm text-on-surface-variant dark:text-outline uppercase tracking-wider mb-3">Package Contents</h3>
+<div class="flex overflow-x-auto gap-3 pb-4 snap-x hide-scrollbar">
+<!-- Active File -->
+<div class="shrink-0 w-48 bg-primary-container/10 border border-primary/20 dark:border-primary-fixed/30 rounded-lg p-3 snap-start relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary dark:bg-[#41BEFD]"></div>
+<div class="flex items-start gap-2 mb-2">
+<span class="material-symbols-outlined text-primary dark:text-[#41BEFD]" style="font-variation-settings: 'FILL' 1;">view_in_ar</span>
+<span class="font-body font-semibold text-sm text-primary dark:text-inverse-on-surface leading-tight">Main Floor CAD</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant block mt-4">Viewing</span>
+</div>
+<!-- Inactive File -->
+<div class="shrink-0 w-48 bg-surface-container dark:bg-surface-container-low border border-outline-variant/20 rounded-lg p-3 snap-start hover:border-outline-variant/50 transition-colors cursor-pointer active:scale-[0.98]">
+<div class="flex items-start gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant">picture_as_pdf</span>
+<span class="font-body font-medium text-sm text-on-surface dark:text-inverse-on-surface leading-tight">Load Bearing Specs</span>
+</div>
+<span class="font-label text-[10px] text-outline block mt-4">12 MB</span>
+</div>
+<!-- Inactive File -->
+<div class="shrink-0 w-48 bg-surface-container dark:bg-surface-container-low border border-outline-variant/20 rounded-lg p-3 snap-start hover:border-outline-variant/50 transition-colors cursor-pointer active:scale-[0.98]">
+<div class="flex items-start gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="font-body font-medium text-sm text-on-surface dark:text-inverse-on-surface leading-tight">Foundation Schematic</span>
+</div>
+<span class="font-label text-[10px] text-outline block mt-4">8.4 MB</span>
+</div>
+</div>
+<!-- Feedback Loop -->
+<div class="mt-6 border-t border-outline-variant/20 pt-6">
+<h3 class="font-body font-semibold text-sm text-on-surface-variant dark:text-outline uppercase tracking-wider mb-4">Client Feedback</h3>
+<div class="space-y-4">
+<!-- Comment Thread Item -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 shadow-sm relative">
+<!-- Needs Discussion Pill -->
+<div class="absolute -top-3 right-4 bg-[#9333EA] text-white font-label text-[10px] font-bold px-2 py-1 rounded-full shadow-sm flex items-center gap-1 border border-[#9333EA]/50">
+<span class="material-symbols-outlined text-[12px]">priority_high</span> Needs Discussion
+                            </div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-dim overflow-hidden shrink-0 border border-outline-variant/50">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive, male, wearing a modern dark suit, neutral lighting, solid grey background, high resolution, serious expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXDIJpm_eTWP-YU7c3UqB-nGzSJcx5UhwLNoXg8RJ1CO_yeoM2sHZM7ExHW92gOmvo1PCDQMCi81dUrBZ-n0RcsHpJFOgt8ot7AQIkBfZLdN8gzy4CyhLC0yX6fJ-bX22B2nWHRv3xXUoTANBD5kIacNo7kg1AeyrgaL4_0wH7BZfUVVOYEHBEyRD8wGsl22R1WQAgJ7WBXgv5RpLs1U-tcKAEeBVdH0mu-OMqgI9Vb9cC7S9bJb9n"/>
+</div>
+<div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-body font-semibold text-sm text-on-surface dark:text-inverse-on-surface">J. Lillard</span>
+<span class="font-label text-xs text-outline">Project Sponsor</span>
+</div>
+<p class="font-body text-sm text-on-surface-variant dark:text-outline-variant leading-relaxed">
+                                        The clearance indicated on axis B-4 seems insufficient for the HVAC installation planned in phase 3. Can we verify the load bearing capacity if we shift the support column by 150mm?
+                                    </p>
+<div class="mt-3 flex items-center gap-4 font-label text-xs text-outline">
+<span>2h ago</span>
+<button class="text-primary dark:text-primary-fixed hover:underline flex items-center gap-1 font-body font-medium">
+<span class="material-symbols-outlined text-[14px]">reply</span> Reply
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Input field placeholder -->
+<div class="flex items-center gap-3 mt-4 bg-surface-container-lowest dark:bg-surface-container-low border border-outline-variant/30 rounded-full p-1 pr-2 shadow-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm shrink-0 ml-1">
+                                ME
+                            </div>
+<input class="flex-1 bg-transparent border-none text-sm focus:ring-0 text-on-surface dark:text-inverse-on-surface placeholder:text-outline font-body py-2" placeholder="Add a comment..." type="text"/>
+<button class="w-8 h-8 rounded-full bg-primary dark:bg-primary-fixed text-on-primary dark:text-on-primary-fixed flex items-center justify-center hover:opacity-90 transition-opacity shrink-0">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Setuu Client) - Active state NONE for Deliverables Sub-page -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-xl rounded-t-xl bg-surface/85 dark:bg-surface-container-highest/85 text-primary dark:text-secondary-fixed font-label text-label-sm shadow-lg border-t border-outline-variant/30 flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform w-16 group" href="#">
+<div class="px-5 py-1 rounded-full group-hover:bg-surface-container-high/50 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+</div>
+<span class="mt-1">Portfolio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform w-16 group" href="#">
+<div class="px-5 py-1 rounded-full group-hover:bg-surface-container-high/50 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">description</span>
+</div>
+<span class="mt-1">Briefing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform w-16 group" href="#">
+<div class="px-5 py-1 rounded-full group-hover:bg-surface-container-high/50 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+</div>
+<span class="mt-1">Financials</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed active:scale-90 transition-transform w-16 group" href="#">
+<div class="px-5 py-1 rounded-full group-hover:bg-surface-container-high/50 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">trending_up</span>
+</div>
+<span class="mt-1">Progress</span>
+</a>
+</nav>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

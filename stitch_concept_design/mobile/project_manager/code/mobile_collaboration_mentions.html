@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mobile Collaboration - @Mentions Bottom Sheet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#2e4965",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e3e3de",
+                      "surface-dim": "#dbdad5",
+                      "surface-container-high": "#e9e8e3",
+                      "on-primary-fixed": "#001d35",
+                      "surface-container-low": "#f5f4ef",
+                      "outline-variant": "#c3c6ce",
+                      "on-tertiary-fixed": "#001e2d",
+                      "surface": "#faf9f4",
+                      "background": "#faf9f4",
+                      "tertiary": "#00080f",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#d1e4ff",
+                      "inverse-primary": "#aec9eb",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "outline": "#73777e",
+                      "on-tertiary-container": "#0090c7",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "primary": "#000815",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed-dim": "#88cffc",
+                      "surface-container": "#efeee9",
+                      "secondary-container": "#8ad1ff",
+                      "on-error": "#ffffff",
+                      "secondary": "#00658d",
+                      "on-primary-container": "#6f89a9",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#faf9f4",
+                      "on-secondary-container": "#005a7f",
+                      "on-background": "#1b1c19",
+                      "on-surface": "#1b1c19",
+                      "on-primary": "#ffffff",
+                      "primary-fixed-dim": "#aec9eb",
+                      "primary-container": "#00213c",
+                      "tertiary-fixed": "#c6e7ff",
+                      "tertiary-container": "#002233",
+                      "inverse-on-surface": "#f2f1ec",
+                      "inverse-surface": "#30312e",
+                      "surface-variant": "#e3e3de",
+                      "surface-tint": "#46607e",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-surface-variant": "#43474d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Merriweather"],
+                      "body": ["Inter"],
+                      "label": ["JetBrains Mono"]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .sky-blue-bg { background-color: rgba(2, 132, 199, 0.15); }
+        .sky-blue-text { color: #0284C7; }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .bottom-sheet-enter {
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased h-screen w-screen overflow-hidden relative selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Background Field Image Context -->
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A close-up shot of freshly poured concrete foundation rebar structural work on an active construction site. The lighting is harsh midday sun, typical of an outdoor field environment. Industrial aesthetic, rough textures, emphasizing hard structural engineering. A bright and highly detailed industrial background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0NgcFbvPMzKi-CGFLHMu6aFlCE9zt3M-wP0FRADz0b5x7h7Gb78u3CdOqkOaBzpdC3Htl5pq52VSWiEGbqTs72q89KG1W2WgkCkBiQpUeu4q6BUsydzbs_CwtjcwyuQU174ETHDrYpnaadTnihskEMU1wXqK09bsBikGFFXi3DXD-2pY8-bERY6yWhNcPhfT46my-n4I9RQcEErUdD_rGhnf2KSVMJe5oDfWtxN64nvNH1heVa3eK')">
+<!-- 40% Black Overlay for Bottom Sheet Context -->
+<div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+</div>
+<!-- Top App Bar (Dimmed context) -->
+<header class="absolute top-0 w-full z-10 bg-transparent p-4 flex justify-between items-center text-white">
+<div class="flex items-center gap-3">
+<button class="p-2 bg-black/20 rounded-full backdrop-blur-md">
+<span class="material-symbols-outlined text-white">arrow_back</span>
+</button>
+<h1 class="font-headline text-lg font-bold">Foundation Pour</h1>
+</div>
+<button class="p-2 bg-black/20 rounded-full backdrop-blur-md">
+<span class="material-symbols-outlined text-white">more_vert</span>
+</button>
+</header>
+<!-- Bottom Sheet (Level 3) -->
+<div class="absolute inset-x-0 bottom-0 z-50 bg-surface-container-lowest rounded-t-xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] flex flex-col bottom-sheet-enter h-[707px] max-h-[800px]">
+<!-- Drag Handle Indicator -->
+<div class="w-full flex justify-center pt-3 pb-1">
+<div class="w-12 h-1.5 bg-outline-variant rounded-full"></div>
+</div>
+<!-- Sheet Header -->
+<div class="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest sticky top-0 z-10">
+<h2 class="font-headline text-headline-sm text-on-surface font-bold">Comments (14)</h2>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Thread Content -->
+<div class="flex-1 overflow-y-auto p-4 space-y-6 bg-surface">
+<!-- Comment Item 1 -->
+<div class="flex gap-3">
+<img class="w-10 h-10 rounded-full object-cover flex-shrink-0 border border-outline-variant" data-alt="A professional headshot of a female construction project manager wearing a white hardhat and safety vest, looking focused and competent in a bright sunny environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDih8RV1gv7EUT2jbxrMrZn1U4Xb5Fow3MxudlRFS1nlUUCzDd8HEJDkyAYbB_sH953FK1RIEIvu4OeGUDuyyH25v4X45uViXr6Rs-FQGUoyA3Mu5kLaSJJAokqB_5nMA_zOIhvyWV_4h0i8bBFIIDi4XACAdtJi5WKNvUdZi3SuQQ1nY_7y2rqBWjPEhEmblJmrv2v_UfZPF4fiIZbbrX1DXq3dRvLxf5cW8eoJvVtauEH8wSkKZH"/>
+<div class="flex-col w-full">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-bold text-sm text-on-surface">Sarah Jenkins <span class="font-normal text-on-surface-variant text-xs ml-1">PM</span></span>
+<span class="font-label text-xs text-on-surface-variant">10:42 AM</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                        Rebar inspection completed on Sector 7G. We're ready for the pour. Can someone confirm the concrete truck arrival time?
+                    </p>
+</div>
+</div>
+<!-- Comment Item 2 (With Mention) -->
+<div class="flex gap-3">
+<img class="w-10 h-10 rounded-full object-cover flex-shrink-0 border border-outline-variant" data-alt="A professional headshot of a male site foreman looking directly at the camera, wearing protective eyewear and a grey polo shirt. Bright lighting, modern corporate construction style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHPEXpcWJmUFQhCZzwZRzRg9IcfxtROh2LA4yAObv0TyMeJCL4YOenD7U9TINArfHCTGjSxmYdIiUH76ahmZCehrChIrpAXJjJZTyRv6ctrifz1jvQnFEhYR6FVPZykJwD7fRq8K4e_krvNosHygWWWx__SBPt2qrOJLLr3NmNH8SlOIyHiVEOyuFqC9U5R6N1-Kx5M33QPfxRi1BEH9Tj-UL6pJ5F-XNP89gNRQf2cMepHV4JY_Xj"/>
+<div class="flex-col w-full">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-bold text-sm text-on-surface">David Chen <span class="font-normal text-on-surface-variant text-xs ml-1">Foreman</span></span>
+<span class="font-label text-xs text-on-surface-variant">10:48 AM</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed bg-surface-container-low p-3 rounded-lg border border-outline-variant/50">
+<span class="sky-blue-bg sky-blue-text px-1.5 py-0.5 rounded-sm font-medium mr-1 cursor-pointer">@SarahJenkins</span>
+                        Trucks are delayed by 15 mins due to gate security. Expected at 11:15 AM.
+                    </p>
+</div>
+</div>
+<!-- Comment Item 3 (System Note / Offline Sync style) -->
+<div class="flex gap-3 items-center justify-center py-2">
+<div class="h-px bg-outline-variant flex-1 opacity-50"></div>
+<span class="font-label text-xs text-on-surface-variant uppercase tracking-widest px-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sync</span> System Sync
+                </span>
+<div class="h-px bg-outline-variant flex-1 opacity-50"></div>
+</div>
+<!-- Comment Item 4 -->
+<div class="flex gap-3">
+<img class="w-10 h-10 rounded-full object-cover flex-shrink-0 border border-outline-variant" data-alt="A close up headshot of a young male site engineer looking at a tablet. Bright daylight, construction background slightly blurred. Modern, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi5i3o44cdY0D0fsT-maSraTkzZfROFVVaO8F9AwF24KpiVHOhvyQLo1iLkgtMpsvuWbibXMLjnN1llWtLoaT772BdKIf7LnsPNHM9rgykoSg-mAhP4MXF9fk8y5MS8Ex-SuDu-j-Heil5iOeeBH8sS48fuuJnx2q6dCIzMCiyG8cxlq2hyjhSKeD8b8cAUnGBYGy4hr8qn5tggVbMWSLWcL8-BtsGSg-6neygr2PIs5X34Zom29bS"/>
+<div class="flex-col w-full">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-bold text-sm text-on-surface">Mike Ross <span class="font-normal text-on-surface-variant text-xs ml-1">Engineer</span></span>
+<span class="font-label text-xs text-on-surface-variant">11:05 AM</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                        Understood. Adjusting curing schedule accordingly. Will upload the new QC checklist momentarily.
+                    </p>
+</div>
+</div>
+<!-- Spacer for scroll -->
+<div class="h-4"></div>
+</div>
+<!-- Sticky Input Area -->
+<div class="bg-surface-container-lowest p-4 border-t border-outline-variant/30 sticky bottom-0 z-20 pb-safe">
+<div class="flex items-end gap-2 bg-surface-container-low rounded-xl border border-outline-variant focus-within:border-primary transition-colors p-1">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors flex-shrink-0 self-end mb-0.5 rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">attach_file</span>
+</button>
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-sm text-on-surface placeholder:text-on-surface-variant/70 resize-none py-3 px-1 max-h-24 min-h-[44px]" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" placeholder="Add a comment... Type @ to mention" rows="1"></textarea>
+<button class="p-2 text-secondary hover:text-secondary-container transition-colors flex-shrink-0 self-end mb-0.5 rounded-full hover:bg-secondary/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

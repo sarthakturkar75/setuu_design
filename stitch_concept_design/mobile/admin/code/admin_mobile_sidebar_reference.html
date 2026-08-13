@@ -1,0 +1,162 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Admin - Navigation Drawer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "primary-fixed": "#d1e4ff",
+                      "tertiary-fixed": "#c6e7ff",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-bright": "#faf9f4",
+                      "secondary": "#00658d",
+                      "surface-container-low": "#f5f4ef",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-secondary": "#ffffff",
+                      "surface-container": "#efeee9",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "outline-variant": "#c3c6ce",
+                      "on-surface-variant": "#43474d",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#e3e3de",
+                      "on-tertiary-container": "#0090c7",
+                      "secondary-container": "#8ad1ff",
+                      "inverse-surface": "#30312e",
+                      "on-background": "#1b1c19",
+                      "on-primary-container": "#6f89a9",
+                      "surface-dim": "#dbdad5",
+                      "inverse-primary": "#aec9eb",
+                      "background": "#faf9f4",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#46607e",
+                      "primary-container": "#00213c",
+                      "on-tertiary-fixed": "#001e2d",
+                      "tertiary-container": "#002233",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "outline": "#73777e",
+                      "on-primary-fixed": "#001d35",
+                      "on-secondary-container": "#005a7f",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-surface": "#1b1c19",
+                      "tertiary": "#00080f",
+                      "inverse-on-surface": "#f2f1ec",
+                      "primary-fixed-dim": "#aec9eb",
+                      "surface": "#faf9f4",
+                      "primary": "#000815",
+                      "surface-container-high": "#e9e8e3",
+                      "surface-container-highest": "#e3e3de",
+                      "sidebar-bg": "#00213c" // Mapped from instructions
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                  "gutter-md": "24px",
+                  "sidebar-width": "280px"
+              },
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "Jetbrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+          }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface min-h-screen flex items-center justify-center p-8">
+<!-- NavigationDrawer Component Reference -->
+<div class="relative h-[800px] w-sidebar-width border-r border-outline dark:border-primary-container shadow-lg shadow-primary-container/10 bg-sidebar-bg dark:bg-sidebar-bg flex flex-col py-gutter-md overflow-hidden rounded-r-xl">
+<!-- Brand Header -->
+<div class="px-gutter-md py-8">
+<h1 class="font-display text-[40px] font-bold leading-[48px] tracking-tight text-primary-fixed">SETUU</h1>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest text-primary-fixed-dim uppercase mt-1 block">Enterprise Admin</span>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 mt-4 flex flex-col gap-2">
+<!-- Active Item: Projects -->
+<a class="flex items-center px-gutter-md py-3 bg-primary-container text-primary-fixed-dim rounded-r-full font-bold active group translate-x-1" href="#">
+<span class="material-symbols-outlined mr-4" data-weight="fill">precision_manufacturing</span>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest">Projects</span>
+</a>
+<!-- Inactive Items -->
+<a class="flex items-center px-gutter-md py-3 text-tertiary-fixed hover:text-white hover:bg-primary-container/50 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4">group</span>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest">Users</span>
+</a>
+<a class="flex items-center px-gutter-md py-3 text-tertiary-fixed hover:text-white hover:bg-primary-container/50 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4">handshake</span>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest">Vendors</span>
+</a>
+<a class="flex items-center px-gutter-md py-3 text-tertiary-fixed hover:text-white hover:bg-primary-container/50 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4">analytics</span>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest">Audits</span>
+</a>
+<a class="flex items-center px-gutter-md py-3 text-tertiary-fixed hover:text-white hover:bg-primary-container/50 transition-all group" href="#">
+<span class="material-symbols-outlined mr-4">settings_suggest</span>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest">Settings</span>
+</a>
+<a class="flex items-center px-gutter-md py-3 text-tertiary-fixed hover:text-white hover:bg-primary-container/50 transition-all group mt-4 border-t border-primary-container/30 pt-6" href="#">
+<span class="material-symbols-outlined mr-4 text-secondary-fixed">support_agent</span>
+<span class="font-label text-[12px] font-medium leading-[16px] tracking-widest text-secondary-fixed">Raise Ticket</span>
+</a>
+</nav>
+<!-- User Profile Footer -->
+<div class="mt-auto px-gutter-md pb-6 pt-4 border-t border-primary-container/30">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-tint flex items-center justify-center overflow-hidden border border-outline/20">
+<img alt="Enterprise Admin" class="w-full h-full object-cover" data-alt="A close up, professional headshot of a corporate administrative user in a clean, brightly lit modern office setting. The individual appears focused and reliable, reflecting an industrial saas environment. The lighting is soft and neutral, enhancing a sophisticated, high-end corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqUrG5MadCRQqRpyvsb0pcIjpJ1c2CRJrKluaz-U2SXk96_woGbPSXm67HewQRlENP8yZ_qdOs8k8SGW0zyIUqVr51XUQEMVNa-VJbw9KmpIJlXr1RXI9k75cENb0B10M1VIhHJ8YHyhzFsVTW58LZvnNIGSVQgsO_kKWw_pXLOp8qvzyN4JYTT94osj-meW2QGis0Mqajhct5ppIabGtvScIq6PQfocu-obKzp1jsrFPHc63MPAgS">
+</div>
+<div>
+<h3 class="font-body text-[14px] font-medium leading-[20px] text-primary-fixed">Super Admin</h3>
+<p class="font-label text-[10px] font-medium leading-[14px] tracking-widest text-primary-fixed-dim">6-Tier RBAC Active</p>
+<div class="flex items-center mt-1 gap-1">
+<div class="w-2 h-2 rounded-full bg-[#0284C7] animate-pulse"></div>
+<span class="font-label text-[10px] text-[#0284C7]">Syncing...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

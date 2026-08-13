@@ -1,0 +1,394 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Audit Log Explorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-variant": "#e3e3de",
+                        "tertiary-container": "#002233",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "secondary-fixed": "#c6e7ff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-container-highest": "#e3e3de",
+                        "inverse-surface": "#30312e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-tint": "#46607e",
+                        "on-primary-container": "#6f89a9",
+                        "on-surface-variant": "#43474d",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#00080f",
+                        "outline-variant": "#c3c6ce",
+                        "on-surface": "#1b1c19",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-dim": "#dbdad5",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "outline": "#73777e",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "inverse-primary": "#aec9eb",
+                        "primary": "#000815",
+                        "on-background": "#1b1c19",
+                        "surface-container-low": "#f5f4ef",
+                        "secondary-container": "#8ad1ff",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "secondary": "#00658d",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#0090c7",
+                        "secondary-fixed-dim": "#88cffc",
+                        "primary-container": "#00213c",
+                        "background": "#faf9f4"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "rail-width": "72px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Scrollbar for dense tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf9f4; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3c6ce; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #73777e; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar (Predicted & Rendered) -->
+<aside class="flex flex-col py-6 w-sidebar-width shrink-0 z-50 bg-primary dark:bg-surface-container-lowest shadow-xl fixed left-0 top-0 h-screen hidden md:flex">
+<div class="px-6 mb-8 flex flex-col items-center">
+<h1 class="font-headline-sm text-headline-sm text-on-primary font-headline font-bold tracking-tight">Setuu Admin</h1>
+<p class="font-label text-xs text-primary-fixed-dim mt-1 tracking-wider uppercase">Enterprise Hub</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2 px-2 overflow-y-auto">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">domain</span>
+<span class="font-body text-sm font-medium">Organizations</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body text-sm font-medium">Subscriptions</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-body text-sm font-medium">Infrastructure</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body text-sm font-medium">User Management</span>
+</a>
+<!-- Active State: Audit Logs -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container mx-2 cursor-pointer shadow-inner" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-body text-sm font-semibold">Audit Logs</span>
+</a>
+</nav>
+<div class="px-4 mt-auto mb-6 flex flex-col gap-2 border-t border-primary-container pt-4">
+<a class="flex items-center gap-4 px-4 py-2 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[#8ad1ff]">monitor_heart</span>
+<div class="flex flex-col">
+<span class="font-body text-sm font-medium">System Health</span>
+<span class="font-label text-[10px] text-[#8ad1ff]">All Systems Go</span>
+</div>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 rounded-lg text-primary-fixed-dim hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body text-sm font-medium">Support</span>
+</a>
+</div>
+<div class="px-6">
+<button class="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-secondary text-on-secondary font-body font-medium text-sm hover:bg-secondary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+                Add Organization
+            </button>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col ml-0 md:ml-sidebar-width h-screen overflow-hidden">
+<!-- TopNavBar (Predicted & Rendered) -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 z-40 bg-surface/85 backdrop-blur-md sticky top-0 border-b border-outline-variant shadow-sm shrink-0">
+<div class="flex items-center gap-6">
+<h2 class="font-headline-md text-headline-md font-bold text-primary font-headline">Setuu Enterprise</h2>
+<!-- Super Admin Badges -->
+<div class="hidden lg:flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label text-xs font-semibold border border-[#ffb4ab]">
+<span class="material-symbols-outlined text-sm fill">lock</span>
+                        SUPER ADMIN MODE
+                    </span>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value="">
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-error"></div>
+</label>
+<span class="font-label text-xs text-on-surface-variant font-medium">MAINTENANCE MODE</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-surface-container rounded-full text-sm font-body border-none focus:ring-1 focus:ring-primary w-64 text-on-surface placeholder:text-outline" placeholder="Global search..." type="text">
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors relative cursor-pointer active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container border border-outline-variant flex items-center justify-center overflow-hidden ml-2 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all">
+<img alt="Super Admin Profile Avatar" class="w-full h-full object-cover" data-alt="A small circular avatar image of a professional woman with glasses, used as a placeholder profile picture for a Super Admin." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj0Rau14JZ2Ol17LNyXAB83X7nPX7QWDWCVE4rYhvFUVrc2zBY25AgQsF_cuLweLeEmNoh6eZRHLf7287Os5oO4xQOHgxulkXT-2WMYnQ-2bbnznMMdkhJsoz5XREI0w2xDgeb7I24_Cf2rNwDsgJ0r984vyjTGmWMabNyscbffq0SPyey8fslXfIeiwwppDt1dfpC20rDqeRNpOd6cJvI3KHnCFaQbLCOcQwjiI-xtKoQWE45MGot">
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 overflow-hidden flex flex-col p-6 gap-6 bg-surface-container-lowest">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
+<div>
+<h1 class="font-headline text-2xl font-bold text-primary">Audit Log Explorer</h1>
+<p class="font-body text-sm text-on-surface-variant mt-1">Immutable record of platform-wide administrative and system events.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-surface border border-outline-variant rounded-lg text-sm font-medium text-on-surface hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filters
+                    </button>
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export CSV
+                    </button>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="flex-1 flex gap-6 overflow-hidden">
+<!-- Data Table Panel (Left) -->
+<div class="flex-1 flex flex-col bg-surface border border-outline-variant rounded-xl shadow-sm overflow-hidden relative">
+<!-- Table Toolbar -->
+<div class="px-4 py-3 border-b border-outline-variant bg-surface flex justify-between items-center gap-4 shrink-0">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-1.5 bg-surface-container rounded-md text-sm font-body border border-outline-variant focus:ring-1 focus:ring-primary focus:border-primary text-on-surface placeholder:text-outline transition-all" placeholder="Search logs by ID, Event, or IP..." type="text">
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="font-label text-xs text-on-surface-variant">Showing 1-25 of 1,432</span>
+<div class="flex gap-1">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="flex-1 overflow-auto bg-surface-container-lowest">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead class="sticky top-0 bg-surface-container border-b border-outline-variant z-10">
+<tr>
+<th class="px-4 py-3 font-label text-xs font-semibold text-on-surface-variant uppercase tracking-wider w-48">Timestamp (UTC)</th>
+<th class="px-4 py-3 font-label text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Event Type</th>
+<th class="px-4 py-3 font-label text-xs font-semibold text-on-surface-variant uppercase tracking-wider">User ID / Actor</th>
+<th class="px-4 py-3 font-label text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Organization</th>
+<th class="px-4 py-3 font-label text-xs font-semibold text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high">
+<!-- Row 1: Normal System Event -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-4 py-3 font-label text-xs text-on-surface">2023-10-27T08:14:22Z</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#f0f9ff] text-[#0284c7] border border-[#bae6fd] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">login</span>
+                                            Auth_Login_Success
+                                        </span>
+</td>
+<td class="px-4 py-3 font-label text-xs text-on-surface-variant">usr_9x8f2a1b (Admin)</td>
+<td class="px-4 py-3 font-body text-sm text-on-surface">Acme Corp</td>
+<td class="px-4 py-3 text-right">
+<button class="text-outline hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</td>
+</tr>
+<!-- Row 2: Selected Row (Break Glass) -->
+<tr class="bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer border-l-2 border-l-primary relative">
+<td class="px-4 py-3 font-label text-xs text-primary font-medium">2023-10-27T08:10:05Z</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error-container text-on-error-container border border-[#ffb4ab] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">emergency</span>
+                                            Security_BreakGlass_Triggered
+                                        </span>
+</td>
+<td class="px-4 py-3 font-label text-xs text-on-surface-variant">sys_admin_super</td>
+<td class="px-4 py-3 font-body text-sm text-on-surface">SYSTEM WIDE</td>
+<td class="px-4 py-3 text-right">
+<button class="text-primary hover:text-primary-container transition-colors p-1"><span class="material-symbols-outlined text-sm fill">visibility</span></button>
+</td>
+</tr>
+<!-- Row 3: Config Change -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-4 py-3 font-label text-xs text-on-surface">2023-10-27T07:45:11Z</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#faf5ff] text-[#9333ea] border border-[#e9d5ff] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                                            Config_Feature_Toggle
+                                        </span>
+</td>
+<td class="px-4 py-3 font-label text-xs text-on-surface-variant">usr_2b4c6d8e (PM)</td>
+<td class="px-4 py-3 font-body text-sm text-on-surface">Global Dynamics</td>
+<td class="px-4 py-3 text-right">
+<button class="text-outline hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</td>
+</tr>
+<!-- Row 4: Quota Update -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-4 py-3 font-label text-xs text-on-surface">2023-10-27T06:30:00Z</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#fef3c7] text-[#d97706] border border-[#fde68a] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">database</span>
+                                            Storage_Quota_Updated
+                                        </span>
+</td>
+<td class="px-4 py-3 font-label text-xs text-on-surface-variant">SYSTEM_JOB</td>
+<td class="px-4 py-3 font-body text-sm text-on-surface">Stark Industries</td>
+<td class="px-4 py-3 text-right">
+<button class="text-outline hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</td>
+</tr>
+<!-- Row 5: Data Export -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-4 py-3 font-label text-xs text-on-surface">2023-10-26T22:15:44Z</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">file_download</span>
+                                            Data_Export_Generated
+                                        </span>
+</td>
+<td class="px-4 py-3 font-label text-xs text-on-surface-variant">usr_9x8f2a1b (Admin)</td>
+<td class="px-4 py-3 font-body text-sm text-on-surface">Acme Corp</td>
+<td class="px-4 py-3 text-right">
+<button class="text-outline hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-sm">visibility</span></button>
+</td>
+</tr>
+<!-- Filler rows to show scroll -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group"><td class="px-4 py-3 font-label text-xs text-outline">2023-10-26T21:05:12Z</td><td class="px-4 py-3"><span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant text-xs font-medium"><span class="material-symbols-outlined text-[14px]">info</span>System_Ping</span></td><td class="px-4 py-3 font-label text-xs text-outline">SYSTEM</td><td class="px-4 py-3 font-body text-sm text-outline">-</td><td class="px-4 py-3 text-right"><button class="text-outline hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-sm">visibility</span></button></td></tr>
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group"><td class="px-4 py-3 font-label text-xs text-outline">2023-10-26T20:11:02Z</td><td class="px-4 py-3"><span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#f0f9ff] text-[#0284c7] border border-[#bae6fd] text-xs font-medium"><span class="material-symbols-outlined text-[14px]">login</span>Auth_Login_Success</span></td><td class="px-4 py-3 font-label text-xs text-outline">usr_7v3b1n9m (Client)</td><td class="px-4 py-3 font-body text-sm text-outline">Initech</td><td class="px-4 py-3 text-right"><button class="text-outline hover:text-primary transition-colors p-1"><span class="material-symbols-outlined text-sm">visibility</span></button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- JSON Inspector Panel (Right) -->
+<div class="w-96 flex flex-col bg-[#0A0F14] border border-outline-variant rounded-xl shadow-lg overflow-hidden shrink-0">
+<!-- Inspector Header -->
+<div class="px-4 py-3 bg-[#121A21] border-b border-[#334155] flex justify-between items-center shrink-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#41BEFD] text-sm">data_object</span>
+<h3 class="font-label text-sm text-white font-medium">Event Payload</h3>
+</div>
+<span class="font-label text-[10px] text-[#64748B] uppercase tracking-widest">Read Only</span>
+</div>
+<!-- Inspector Content (Monospace) -->
+<div class="flex-1 overflow-auto p-4 bg-[#0A0F14] font-label text-xs leading-relaxed text-[#E2E8F0]">
+<div class="mb-4 text-[#64748B]">
+                            // Event ID: evt_998a7bc6-5d4e-4f3a
+                            <br>// Source IP: 192.168.1.105
+                        </div>
+<pre class="whitespace-pre-wrap break-all"><code><span class="text-[#41BEFD]">{</span>
+  <span class="text-[#86EFAC]">"event_type"</span>: <span class="text-[#FCA5A5]">"Security_BreakGlass_Triggered"</span>,
+  <span class="text-[#86EFAC]">"timestamp"</span>: <span class="text-[#FCA5A5]">"2023-10-27T08:10:05Z"</span>,
+  <span class="text-[#86EFAC]">"actor"</span>: <span class="text-[#41BEFD]">{</span>
+    <span class="text-[#86EFAC]">"id"</span>: <span class="text-[#FCA5A5]">"sys_admin_super"</span>,
+    <span class="text-[#86EFAC]">"role"</span>: <span class="text-[#FCA5A5]">"super_admin"</span>,
+    <span class="text-[#86EFAC]">"mfa_verified"</span>: <span class="text-[#FBBF24]">true</span>
+  <span class="text-[#41BEFD]">}</span>,
+  <span class="text-[#86EFAC]">"target_resource"</span>: <span class="text-[#41BEFD]">{</span>
+    <span class="text-[#86EFAC]">"type"</span>: <span class="text-[#FCA5A5]">"database_connection"</span>,
+    <span class="text-[#86EFAC]">"id"</span>: <span class="text-[#FCA5A5]">"pg_cluster_primary"</span>
+  <span class="text-[#41BEFD]">}</span>,
+  <span class="text-[#86EFAC]">"payload"</span>: <span class="text-[#41BEFD]">{</span>
+    <span class="text-[#86EFAC]">"reason_code"</span>: <span class="text-[#FCA5A5]">"EMERGENCY_PATCH_CVE_2023_9999"</span>,
+    <span class="text-[#86EFAC]">"duration_requested_minutes"</span>: <span class="text-[#C084FC]">60</span>,
+    <span class="text-[#86EFAC]">"approval_bypassed"</span>: <span class="text-[#FBBF24]">true</span>,
+    <span class="text-[#86EFAC]">"previous_state"</span>: <span class="text-[#FCA5A5]">"locked"</span>,
+    <span class="text-[#86EFAC]">"new_state"</span>: <span class="text-[#FCA5A5]">"unrestricted_access"</span>
+  <span class="text-[#41BEFD]">}</span>,
+  <span class="text-[#86EFAC]">"metadata"</span>: <span class="text-[#41BEFD]">{</span>
+    <span class="text-[#86EFAC]">"user_agent"</span>: <span class="text-[#FCA5A5]">"Setuu-CLI/v2.4.1"</span>,
+    <span class="text-[#86EFAC]">"alert_dispatched"</span>: <span class="text-[#FBBF24]">true</span>
+  <span class="text-[#41BEFD]">}</span>
+<span class="text-[#41BEFD]">}</span></code></pre>
+</div>
+<!-- Inspector Footer Actions -->
+<div class="px-4 py-3 bg-[#121A21] border-t border-[#334155] flex justify-end gap-2 shrink-0">
+<button class="px-3 py-1.5 rounded text-xs font-medium text-[#E2E8F0] hover:bg-[#334155] transition-colors">Copy JSON</button>
+<button class="px-3 py-1.5 rounded text-xs font-medium bg-[#0284c7] text-white hover:bg-[#0369a1] transition-colors shadow-sm">View Timeline</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

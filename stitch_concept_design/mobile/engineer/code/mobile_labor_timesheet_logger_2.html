@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Labor &amp; Timesheet Logger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "surface-container-low": "#f5f4ef",
+                        "on-background": "#1b1c19",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary": "#00658d",
+                        "on-secondary-container": "#005a7f",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-bright": "#faf9f4",
+                        "background": "#faf9f4",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "outline": "#73777e",
+                        "outline-variant": "#c3c6ce",
+                        "inverse-primary": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary": "#00080f",
+                        "on-surface": "#1b1c19",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-dim": "#dbdad5",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-surface": "#30312e",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "primary": "#000815",
+                        "secondary-container": "#8ad1ff",
+                        "on-primary-container": "#6f89a9",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom emerald override since the config doesn't have an emerald color explicitly defined, but prompt requested it. Falling back to a high-contrast success color. */
+        .bg-success { background-color: #16A34A; }
+        .text-on-success { color: #ffffff; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pb-24">
+<!-- Top App Bar (From JSON structure, adapted) -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant flex justify-between items-center w-full px-4 h-16 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center text-primary rounded-full hover:bg-surface-container-high active:opacity-80 transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline font-bold text-headline-sm text-primary">Setuu Enterprise</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+            PM
+        </div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-md mx-auto px-4 py-6 grid grid-cols-4 gap-4">
+<!-- Header Section -->
+<div class="col-span-4 mb-2">
+<h2 class="font-headline text-headline-lg-mobile text-primary mb-1">Labor &amp; Timesheet Logger</h2>
+<p class="font-body text-body-md text-on-surface-variant">Log end-of-shift headcount and actual hours. Costs are hidden per RLS constraints.</p>
+</div>
+<!-- Date & Shift Info -->
+<div class="col-span-4 bg-surface-container-lowest border border-outline-variant rounded-lg p-4 mb-4 flex justify-between items-center shadow-sm">
+<div>
+<p class="font-body text-body-md text-on-surface-variant mb-1">Current Shift</p>
+<p class="font-label text-label-md text-primary font-bold">2023-10-27 • Day</p>
+</div>
+<div class="text-right">
+<p class="font-body text-body-md text-on-surface-variant mb-1">Site ID</p>
+<p class="font-label text-label-md text-primary font-bold">DXB-702</p>
+</div>
+</div>
+<!-- Trade Items List -->
+<div class="col-span-4 flex flex-col gap-4">
+<!-- Electricians -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="electrical_services">electrical_services</span>
+</div>
+<h3 class="font-body font-semibold text-lg text-primary flex-1">Electricians</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Headcount Stepper -->
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-md text-on-surface-variant">Headcount</label>
+<div class="flex items-center justify-between bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button aria-label="Decrease headcount" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">remove</span>
+</button>
+<span class="font-label text-lg font-bold text-primary px-2">12</span>
+<button aria-label="Increase headcount" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+</div>
+</div>
+<!-- Hours Stepper -->
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-md text-on-surface-variant">Total Hours</label>
+<div class="flex items-center justify-between bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button aria-label="Decrease hours" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">remove</span>
+</button>
+<span class="font-label text-lg font-bold text-primary px-2">96</span>
+<button aria-label="Increase hours" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Concrete -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="foundation">foundation</span>
+</div>
+<h3 class="font-body font-semibold text-lg text-primary flex-1">Concrete</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-md text-on-surface-variant">Headcount</label>
+<div class="flex items-center justify-between bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button aria-label="Decrease headcount" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">remove</span>
+</button>
+<span class="font-label text-lg font-bold text-primary px-2">24</span>
+<button aria-label="Increase headcount" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-md text-on-surface-variant">Total Hours</label>
+<div class="flex items-center justify-between bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button aria-label="Decrease hours" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">remove</span>
+</button>
+<span class="font-label text-lg font-bold text-primary px-2">192</span>
+<button aria-label="Increase hours" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- General Labor -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="engineering">engineering</span>
+</div>
+<h3 class="font-body font-semibold text-lg text-primary flex-1">General Labor</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-md text-on-surface-variant">Headcount</label>
+<div class="flex items-center justify-between bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button aria-label="Decrease headcount" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">remove</span>
+</button>
+<span class="font-label text-lg font-bold text-primary px-2">45</span>
+<button aria-label="Increase headcount" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-md text-on-surface-variant">Total Hours</label>
+<div class="flex items-center justify-between bg-surface-container rounded-lg p-1 border border-outline-variant">
+<button aria-label="Decrease hours" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">remove</span>
+</button>
+<span class="font-label text-lg font-bold text-primary px-2">360</span>
+<button aria-label="Increase hours" class="w-12 h-12 flex items-center justify-center text-primary bg-surface-container-lowest rounded-md shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Submit Section (Sticky) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-40 max-w-md mx-auto right-0">
+<button class="w-full bg-success text-on-success h-14 rounded-lg font-body font-bold text-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-md">
+<span class="material-symbols-outlined" data-icon="cloud_sync">cloud_sync</span>
+            Submit Shift Log
+        </button>
+</div>
+</body></html>

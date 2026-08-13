@@ -1,0 +1,344 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Project Issues &amp; Blockers Console - Setuu Enterprise</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#d1e4ff",
+                      "primary": "#000815",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f5f4ef",
+                      "on-primary-container": "#6f89a9",
+                      "outline": "#73777e",
+                      "surface-container": "#efeee9",
+                      "inverse-surface": "#30312e",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "surface": "#faf9f4",
+                      "surface-bright": "#faf9f4",
+                      "on-surface": "#1b1c19",
+                      "primary-fixed-dim": "#aec9eb",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#aec9eb",
+                      "background": "#faf9f4",
+                      "tertiary-container": "#002233",
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "primary-container": "#00213c",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-highest": "#e3e3de",
+                      "on-primary-fixed": "#001d35",
+                      "surface-dim": "#dbdad5",
+                      "tertiary": "#00080f",
+                      "on-surface-variant": "#43474d",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-error-container": "#93000a",
+                      "on-secondary-container": "#005a7f",
+                      "surface-variant": "#e3e3de",
+                      "secondary": "#00658d",
+                      "error": "#ba1a1a",
+                      "secondary-container": "#8ad1ff",
+                      "secondary-fixed": "#c6e7ff",
+                      "surface-tint": "#46607e",
+                      "tertiary-fixed": "#c6e7ff",
+                      "outline-variant": "#c3c6ce",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "on-background": "#1b1c19",
+                      "surface-container-high": "#e9e8e3",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-tertiary-container": "#0090c7",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-tertiary-fixed-variant": "#004c6b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "Jetbrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+    </script>
+<style>
+        /* Touch actions for swipe */
+        .swipe-container {
+            touch-action: pan-y;
+            overflow: hidden;
+            position: relative;
+        }
+        .swipe-card {
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            z-index: 2;
+        }
+        .swipe-action {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Reveal from left when swiping right */
+            padding-left: 1.5rem;
+            z-index: 1;
+        }
+        
+        /* Hide scrollbar for horizontal chip list */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        /* Safe area padding for mobile */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col md:hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-4 h-16 z-50 sticky top-0 pt-safe bg-surface/85 backdrop-blur-md border-b border-outline-variant/30">
+<button class="text-primary hover:bg-surface-container-high transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="text-headline-md font-headline font-bold text-primary truncate">Setuu Enterprise</h1>
+<button class="hover:bg-surface-container-high transition-colors p-1 rounded-full flex items-center justify-center">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional corporate headshot of a project manager wearing a white hardhat and safety vest on an industrial construction site. The lighting is bright and clear, emphasizing a modern, reliable, and authoritative corporate saas aesthetic. The background features subtle, out-of-focus steel beams." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUWvpNyH2C3WmygMmR9fSpAKQPsmcW9UWOCplCNeEDk9zZBZKUdG5n9EdnWWodwVRaFyFK1H_oA6T3Z4_ol-SWP3hL4Gk42F7lFKvmPXx5nWn9L_DLOMr2pqdy6AnfxBIMVx0Pe_3uIKg7GEUM7kCeucZkFvw7V0AwCaCPf60wVgkB0DllmEKWacLTg-NXQGo1FFZrrvNQS-DV-cFwL1Srv_CmS83EIB0bc1ApYvoa_-hxKx5Cnlcw">
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col w-full pb-24 overflow-y-auto">
+<!-- Header Section -->
+<section class="px-4 py-6">
+<h2 class="text-headline-sm font-headline font-bold text-on-surface mb-1">Issues &amp; Blockers</h2>
+<p class="text-body-md text-on-surface-variant font-body">Project Alpha Phase 2</p>
+</section>
+<!-- Status Overview Chips (Horizontal Scroll) -->
+<section class="w-full pl-4 mb-6">
+<div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 pr-4">
+<button class="flex-shrink-0 px-4 py-2 bg-primary text-on-primary rounded-full text-label-md font-label font-medium shadow-sm transition-transform active:scale-95 flex items-center gap-2">
+                    Open
+                    <span class="bg-surface/20 text-on-primary px-2 py-0.5 rounded-full text-[10px]">8</span>
+</button>
+<button class="flex-shrink-0 px-4 py-2 bg-surface-container border border-outline-variant text-on-surface-variant rounded-full text-label-md font-label font-medium transition-colors active:scale-95 flex items-center gap-2">
+                    Resolved
+                    <span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-[10px]">42</span>
+</button>
+<button class="flex-shrink-0 px-4 py-2 bg-surface-container border border-outline-variant text-on-surface-variant rounded-full text-label-md font-label font-medium transition-colors active:scale-95">
+                    All
+                </button>
+</div>
+</section>
+<!-- Issue Feed -->
+<section class="flex-1 px-4 flex flex-col gap-4">
+<!-- Issue Card 1: Critical (Swipeable) -->
+<div class="swipe-container rounded-lg shadow-sm border border-outline-variant/30 bg-surface-container-lowest" data-swipeable="true">
+<!-- Underneath Action (Teal/Finalization) -->
+<div class="swipe-action bg-[#0D9488] text-on-primary rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label text-label-md">Resolve</span>
+</div>
+</div>
+<!-- Foreground Card -->
+<div class="swipe-card bg-surface-container-lowest p-4 rounded-lg flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<!-- Severity Badge: Crimson (#DC2626) -->
+<span class="w-2.5 h-2.5 rounded-full bg-[#DC2626] animate-pulse"></span>
+<span class="text-label-sm font-label text-on-surface-variant">ISS-992</span>
+</div>
+<span class="text-label-sm font-label text-on-surface-variant">2h ago</span>
+</div>
+<h3 class="text-body-lg font-body font-semibold text-on-surface leading-tight">HVAC Lead Time Delay</h3>
+<div class="flex justify-between items-end mt-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-label-sm font-label text-on-surface-variant border border-outline-variant/50">
+                                JD
+                            </div>
+<span class="text-body-md font-body text-on-surface-variant">John Doe (PM)</span>
+</div>
+<button class="text-primary p-1 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Issue Card 2: High/Warning (Amber) -->
+<div class="swipe-container rounded-lg shadow-sm border border-outline-variant/30 bg-surface-container-lowest" data-swipeable="true">
+<div class="swipe-action bg-[#0D9488] text-on-primary rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label text-label-md">Resolve</span>
+</div>
+</div>
+<div class="swipe-card bg-surface-container-lowest p-4 rounded-lg flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<!-- Severity Badge: Amber (#D97706) -->
+<span class="w-2.5 h-2.5 rounded-full bg-[#D97706]"></span>
+<span class="text-label-sm font-label text-on-surface-variant">ISS-991</span>
+</div>
+<span class="text-label-sm font-label text-on-surface-variant">Yesterday</span>
+</div>
+<h3 class="text-body-lg font-body font-semibold text-on-surface leading-tight">Permit Approval Blocked by City Code Inspector</h3>
+<div class="flex justify-between items-end mt-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-label-sm font-label text-on-surface-variant border border-outline-variant/50">
+                                AS
+                            </div>
+<span class="text-body-md font-body text-on-surface-variant">Alice Smith (Site Lead)</span>
+</div>
+<button class="text-primary p-1 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Issue Card 3: Neutral/Queue (Slate) -->
+<div class="swipe-container rounded-lg shadow-sm border border-outline-variant/30 bg-surface-container-lowest" data-swipeable="true">
+<div class="swipe-action bg-[#0D9488] text-on-primary rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label text-label-md">Resolve</span>
+</div>
+</div>
+<div class="swipe-card bg-surface-container-lowest p-4 rounded-lg flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<!-- Severity Badge: Slate (#64748B) -->
+<span class="w-2.5 h-2.5 rounded-full bg-[#64748B]"></span>
+<span class="text-label-sm font-label text-on-surface-variant">ISS-985</span>
+</div>
+<span class="text-label-sm font-label text-on-surface-variant">Oct 24</span>
+</div>
+<h3 class="text-body-lg font-body font-semibold text-on-surface leading-tight">Secondary Supplier Onboarding Pending</h3>
+<div class="flex justify-between items-end mt-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-label-sm font-label text-on-surface-variant border border-outline-variant/50">
+                                JD
+                            </div>
+<span class="text-body-md font-body text-on-surface-variant">John Doe (PM)</span>
+</div>
+<button class="text-primary p-1 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Floating Action Button for new Issue (Bottom Right, above nav) -->
+<div class="fixed bottom-24 right-4 z-40">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-lg flex items-center justify-center transition-transform active:scale-90 hover:bg-primary-container">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-surface-container-lowest/85 backdrop-blur-md border-t border-outline-variant/30 shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="text-label-sm font-label font-medium mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="text-label-sm font-label font-medium mt-1">Projects</span>
+</a>
+<!-- Active Tab semantic match: Tasks (closest to Issues/Blockers) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="text-label-sm font-label font-medium mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="text-label-sm font-label font-medium mt-1">Reports</span>
+</a>
+</nav>
+<script>
+        // Simple Swipe-to-Reveal Logic for Issue Cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const swipeables = document.querySelectorAll('[data-swipeable="true"]');
+            
+            swipeables.forEach(container => {
+                const card = container.querySelector('.swipe-card');
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+                const threshold = 100; // pixels to trigger action
+                
+                container.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                    card.style.transition = 'none';
+                }, {passive: true});
+                
+                container.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX - startX;
+                    // Only allow swipe right
+                    if (currentX > 0) {
+                        // Add some resistance
+                        const moveX = Math.min(currentX * 0.5, 120);
+                        card.style.transform = `translateX(${moveX}px)`;
+                    }
+                }, {passive: true});
+                
+                container.addEventListener('touchend', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    card.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                    
+                    if (currentX > threshold) {
+                        // Snap open slightly then close (mock resolve action)
+                        card.style.transform = `translateX(120px)`;
+                        setTimeout(() => {
+                            // In a real app, this would trigger an API call and remove the card
+                            card.style.transform = `translateX(0px)`;
+                        }, 500);
+                    } else {
+                        // Snap back
+                        card.style.transform = `translateX(0px)`;
+                    }
+                    currentX = 0;
+                });
+            });
+        });
+    </script>
+</body></html>

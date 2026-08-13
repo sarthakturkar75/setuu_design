@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Approvals Tracker - Setuu Enterprise</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        
+        .material-symbols-outlined.filled {
+          font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        
+        /* Swipe to action styles */
+        .swipe-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .swipe-content {
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            z-index: 10;
+        }
+        .swipe-actions {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            z-index: 1;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#aec9eb",
+                    "tertiary-container": "#002233",
+                    "background": "#faf9f4",
+                    "outline-variant": "#c3c6ce",
+                    "surface-container-highest": "#e3e3de",
+                    "outline": "#73777e",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#dbdad5",
+                    "on-primary-container": "#6f89a9",
+                    "surface-container-high": "#e9e8e3",
+                    "surface-variant": "#e3e3de",
+                    "on-surface-variant": "#43474d",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#001e2d",
+                    "secondary-container": "#8ad1ff",
+                    "primary-fixed": "#d1e4ff",
+                    "on-tertiary-container": "#0090c7",
+                    "surface-tint": "#46607e",
+                    "tertiary": "#00080f",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1b1c19",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "primary": "#000815",
+                    "secondary-fixed-dim": "#88cffc",
+                    "surface-bright": "#faf9f4",
+                    "surface-container": "#efeee9",
+                    "inverse-on-surface": "#f2f1ec",
+                    "inverse-surface": "#30312e",
+                    "on-secondary-fixed": "#001e2d",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#005a7f",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#aec9eb",
+                    "secondary": "#00658d",
+                    "on-primary-fixed": "#001d35",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "surface": "#faf9f4",
+                    "surface-container-low": "#f5f4ef",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#00213c",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-background": "#1b1c19",
+                    "tertiary-fixed": "#c6e7ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex flex-col pt-16 pb-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface dark:bg-surface-dim shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label text-sm">
+                JD
+            </div>
+<h1 class="font-headline text-lg font-bold text-primary dark:text-primary-fixed tracking-tight">Setuu Enterprise</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:opacity-80 text-on-surface-variant dark:text-outline">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Content Canvas (Mobile: 4-column fluid grid, 16px margins) -->
+<main class="flex-1 px-4 py-6 w-full max-w-[600px] mx-auto">
+<!-- Screen Title & Context -->
+<div class="mb-6">
+<h2 class="font-headline text-2xl font-bold text-primary mb-1">Client Approvals</h2>
+<p class="text-on-surface-variant font-body text-sm">Review, sign, or request changes on critical handover documents.</p>
+</div>
+<!-- Status Buckets (Scrollable Tabs) -->
+<div class="flex overflow-x-auto pb-4 mb-2 -mx-4 px-4 snap-x gap-2 hide-scrollbar">
+<!-- Pending Review (Active) -->
+<button class="snap-start flex-shrink-0 flex flex-col items-start px-4 py-3 rounded-lg border-l-4 border-l-[#9333EA] bg-surface-container shadow-sm w-36 transition-colors active:scale-95">
+<div class="flex justify-between w-full mb-1">
+<span class="font-label text-xs font-semibold text-[#9333EA]">PENDING</span>
+<span class="bg-[#9333EA]/10 text-[#9333EA] font-label text-[10px] px-1.5 py-0.5 rounded">3</span>
+</div>
+<span class="font-body text-sm font-medium text-on-surface leading-tight">Review</span>
+</button>
+<!-- Awaiting Signature -->
+<button class="snap-start flex-shrink-0 flex flex-col items-start px-4 py-3 rounded-lg border-l-4 border-l-[#0284C7] bg-surface border border-outline-variant/30 w-36 transition-colors hover:bg-surface-container-low active:scale-95">
+<div class="flex justify-between w-full mb-1">
+<span class="font-label text-xs font-semibold text-[#0284C7]">AWAITING</span>
+<span class="bg-[#0284C7]/10 text-[#0284C7] font-label text-[10px] px-1.5 py-0.5 rounded">2</span>
+</div>
+<span class="font-body text-sm font-medium text-on-surface-variant leading-tight">Signature</span>
+</button>
+<!-- Revision Requested -->
+<button class="snap-start flex-shrink-0 flex flex-col items-start px-4 py-3 rounded-lg border-l-4 border-l-[#D97706] bg-surface border border-outline-variant/30 w-36 transition-colors hover:bg-surface-container-low active:scale-95">
+<div class="flex justify-between w-full mb-1">
+<span class="font-label text-xs font-semibold text-[#D97706]">REVISION</span>
+<span class="bg-[#D97706]/10 text-[#D97706] font-label text-[10px] px-1.5 py-0.5 rounded">1</span>
+</div>
+<span class="font-body text-sm font-medium text-on-surface-variant leading-tight">Requested</span>
+</button>
+</div>
+<!-- Document List -->
+<div class="flex flex-col gap-4">
+<!-- Card 1: Pending Review -->
+<div class="swipe-container rounded-lg border border-outline-variant/50 bg-surface shadow-sm overflow-hidden">
+<!-- Swipe Actions -->
+<div class="swipe-actions flex">
+<button aria-label="Request Revision" class="w-16 bg-[#D97706] text-white flex flex-col items-center justify-center font-label text-[10px] gap-1">
+<span class="material-symbols-outlined">edit_note</span>
+                        Revise
+                    </button>
+<button aria-label="Approve Document" class="w-16 bg-[#2563EB] text-white flex flex-col items-center justify-center font-label text-[10px] gap-1">
+<span class="material-symbols-outlined">check_circle</span>
+                        Approve
+                    </button>
+</div>
+<!-- Card Content -->
+<div class="swipe-content bg-surface p-4 flex flex-col gap-3 relative" id="card-1">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#9333EA] text-lg">description</span>
+<span class="font-label text-xs font-bold text-on-surface-variant">DOC-8921</span>
+</div>
+<span class="font-label text-[10px] text-outline">14:32:05Z</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-bold text-primary mb-1 leading-snug">Phase 3 Architectural Schematics v2.4</h3>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">Updated load-bearing calculations for the north wing expansion as per client request CR-442.</p>
+</div>
+<div class="flex justify-between items-end mt-1 pt-3 border-t border-surface-container-highest">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label text-[10px] font-bold">
+                                AR
+                            </div>
+<span class="font-body text-xs text-on-surface-variant font-medium">A. Rivera</span>
+</div>
+<div class="flex items-center gap-1 text-[#9333EA] font-label text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                            Needs Review
+                        </div>
+</div>
+<!-- Drag Handle Indicator -->
+<div class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-12 flex flex-col justify-center items-center gap-1 opacity-20 pointer-events-none">
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+</div>
+</div>
+</div>
+<!-- Card 2: Pending Review -->
+<div class="swipe-container rounded-lg border border-outline-variant/50 bg-surface shadow-sm overflow-hidden">
+<div class="swipe-actions flex">
+<button class="w-16 bg-[#D97706] text-white flex flex-col items-center justify-center font-label text-[10px] gap-1">
+<span class="material-symbols-outlined">edit_note</span>
+                        Revise
+                    </button>
+<button class="w-16 bg-[#2563EB] text-white flex flex-col items-center justify-center font-label text-[10px] gap-1">
+<span class="material-symbols-outlined">check_circle</span>
+                        Approve
+                    </button>
+</div>
+<div class="swipe-content bg-surface p-4 flex flex-col gap-3 relative" id="card-2">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#9333EA] text-lg">description</span>
+<span class="font-label text-xs font-bold text-on-surface-variant">DOC-8944</span>
+</div>
+<span class="font-label text-[10px] text-outline">09:15:22Z</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-bold text-primary mb-1 leading-snug">HVAC System Routing Plan - Floor 2</h3>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">Finalized duct layouts avoiding structural clashes identified in last week's site survey.</p>
+</div>
+<div class="flex justify-between items-end mt-1 pt-3 border-t border-surface-container-highest">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label text-[10px] font-bold">
+                                MK
+                            </div>
+<span class="font-body text-xs text-on-surface-variant font-medium">M. Kovač</span>
+</div>
+<div class="flex items-center gap-1 text-[#9333EA] font-label text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                            Needs Review
+                        </div>
+</div>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-12 flex flex-col justify-center items-center gap-1 opacity-20 pointer-events-none">
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+</div>
+</div>
+</div>
+<!-- Card 3: Pending Review (High Priority) -->
+<div class="swipe-container rounded-lg border-2 border-[#DC2626] bg-error-container/10 shadow-sm overflow-hidden relative">
+<div class="absolute top-0 right-0 bg-[#DC2626] text-white font-label text-[9px] font-bold px-2 py-0.5 rounded-bl z-20">URGENT</div>
+<div class="swipe-actions flex">
+<button class="w-16 bg-[#D97706] text-white flex flex-col items-center justify-center font-label text-[10px] gap-1">
+<span class="material-symbols-outlined">edit_note</span>
+                        Revise
+                    </button>
+<button class="w-16 bg-[#2563EB] text-white flex flex-col items-center justify-center font-label text-[10px] gap-1">
+<span class="material-symbols-outlined">check_circle</span>
+                        Approve
+                    </button>
+</div>
+<div class="swipe-content bg-surface p-4 flex flex-col gap-3 relative" id="card-3">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#DC2626] text-lg">warning</span>
+<span class="font-label text-xs font-bold text-on-surface-variant">DOC-8950</span>
+</div>
+<span class="font-label text-[10px] text-outline">Yesterday</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-bold text-primary mb-1 leading-snug">Environmental Impact Addendum</h3>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">Required for immediate city permitting. Delaying this will halt ground-breaking scheduled for Monday.</p>
+</div>
+<div class="flex justify-between items-end mt-1 pt-3 border-t border-surface-container-highest">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label text-[10px] font-bold">
+                                SJ
+                            </div>
+<span class="font-body text-xs text-on-surface-variant font-medium">S. Jenkins</span>
+</div>
+<div class="flex items-center gap-1 text-[#DC2626] font-label text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                            Overdue
+                        </div>
+</div>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-12 flex flex-col justify-center items-center gap-1 opacity-20 pointer-events-none">
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+<div class="w-1 h-1 rounded-full bg-on-surface"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white/85 dark:bg-tertiary-container/85 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-lg rounded-t-xl md:hidden">
+<!-- Dashboard -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label-sm font-medium">Dashboard</span>
+</button>
+<!-- Projects -->
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-secondary-container text-on-primary-container dark:text-on-secondary-container rounded-xl px-3 py-1 scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-2xl mb-1 filled" data-icon="account_tree">account_tree</span>
+<span class="font-label text-label-sm font-medium">Projects</span>
+</button>
+<!-- Tasks -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="assignment">assignment</span>
+<span class="font-label text-label-sm font-medium">Tasks</span>
+</button>
+<!-- Admin -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-2xl mb-1" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label text-label-sm font-medium">Admin</span>
+</button>
+</nav>
+<!-- Simple Swipe Logic Simulation -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.swipe-content');
+            
+            cards.forEach(card => {
+                let startX;
+                let currentX = 0;
+                const maxSwipe = -128; // width of two 64px buttons
+                
+                card.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    card.style.transition = 'none';
+                }, {passive: true});
+                
+                card.addEventListener('touchmove', (e) => {
+                    if (!startX) return;
+                    const diff = e.touches[0].clientX - startX;
+                    
+                    // Only allow swiping left
+                    if (diff < 0) {
+                        currentX = Math.max(diff, maxSwipe);
+                        card.style.transform = `translateX(${currentX}px)`;
+                    }
+                }, {passive: true});
+                
+                card.addEventListener('touchend', () => {
+                    card.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                    if (currentX < maxSwipe / 2) {
+                        // Snap open
+                        card.style.transform = `translateX(${maxSwipe}px)`;
+                    } else {
+                        // Snap closed
+                        card.style.transform = `translateX(0px)`;
+                    }
+                    startX = null;
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Advanced Resource Allocation &amp; Analytics</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d1e4ff",
+                    "primary": "#000815",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f5f4ef",
+                    "on-primary-container": "#6f89a9",
+                    "outline": "#73777e",
+                    "surface-container": "#efeee9",
+                    "inverse-surface": "#30312e",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "surface": "#faf9f4",
+                    "surface-bright": "#faf9f4",
+                    "on-surface": "#1b1c19",
+                    "primary-fixed-dim": "#aec9eb",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#aec9eb",
+                    "background": "#faf9f4",
+                    "tertiary-container": "#002233",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-container": "#00213c",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e3e3de",
+                    "on-primary-fixed": "#001d35",
+                    "surface-dim": "#dbdad5",
+                    "tertiary": "#00080f",
+                    "on-surface-variant": "#43474d",
+                    "on-tertiary-fixed": "#001e2d",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#005a7f",
+                    "surface-variant": "#e3e3de",
+                    "secondary": "#00658d",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#8ad1ff",
+                    "secondary-fixed": "#c6e7ff",
+                    "surface-tint": "#46607e",
+                    "tertiary-fixed": "#c6e7ff",
+                    "outline-variant": "#c3c6ce",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-background": "#1b1c19",
+                    "surface-container-high": "#e9e8e3",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-tertiary-container": "#0090c7",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    
+                    // Semantic Workspace Colors for UI implementation
+                    "semantic-queue": "#64748b",
+                    "semantic-active": "#0284c7",
+                    "semantic-warning": "#d97706",
+                    "semantic-success": "#16a34a",
+                    "semantic-emergency": "#dc2626"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather", "serif"],
+                    "display": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            },
+            "boxShadow": {
+                "glass": "0 4px 30px rgba(0, 0, 0, 0.1)",
+                "card": "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Hide scrollbar for clean UI but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body h-screen flex flex-col overflow-hidden antialiased">
+<!-- TopAppBar Shared Component -->
+<header class="bg-surface/85 backdrop-blur-md border-b border-outline-variant flex justify-between items-center w-full px-4 h-16 z-50 sticky top-0 flat no shadows docked full-width top-0">
+<button class="text-primary hover:bg-surface-container-high transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="text-headline-md font-headline font-bold text-primary">Setuu Enterprise</h1>
+<button class="hover:bg-surface-container-high transition-colors p-1 rounded-full flex items-center justify-center">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label text-sm">
+                US
+            </div>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto no-scrollbar pb-24 pt-4 px-4 bg-surface-bright">
+<!-- Page Context Header -->
+<div class="mb-6">
+<h2 class="text-headline-lg-mobile font-headline font-bold text-primary tracking-tight">Resource Analytics</h2>
+<p class="text-body-md text-on-surface-variant mt-1">Live allocation metrics across active projects.</p>
+</div>
+<!-- KPI Grid -->
+<section class="grid grid-cols-2 gap-4 mb-8">
+<!-- Avg Productivity -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 shadow-card">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">speed</span>
+<span class="text-label-sm font-label text-semantic-success bg-semantic-success/10 px-2 py-0.5 rounded-full">+2.4%</span>
+</div>
+<h3 class="text-label-md font-body text-on-surface-variant uppercase tracking-wider">Avg Productivity</h3>
+<div class="text-display-lg font-headline font-bold text-primary mt-1">84<span class="text-headline-sm text-on-surface-variant">%</span></div>
+</div>
+<!-- Active Resources -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 shadow-card">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<h3 class="text-label-md font-body text-on-surface-variant uppercase tracking-wider">Active Resources</h3>
+<div class="text-display-lg font-headline font-bold text-primary mt-1 font-label">1,240</div>
+</div>
+<!-- Allocation Pressure -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 p-4 shadow-card col-span-2 relative overflow-hidden group">
+<div class="absolute right-0 top-0 w-32 h-32 bg-semantic-warning/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+<div class="flex items-start justify-between relative z-10">
+<div>
+<h3 class="text-label-md font-body text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+                            Allocation Pressure
+                            <span class="material-symbols-outlined text-semantic-warning text-[16px]">info</span>
+</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-headline-lg font-headline font-bold text-semantic-warning">High</span>
+<span class="text-body-sm font-label text-on-surface-variant">92% Capacity</span>
+</div>
+</div>
+<div class="w-12 h-12 rounded-full border-4 border-semantic-warning/20 border-t-semantic-warning flex items-center justify-center transform rotate-45">
+<span class="material-symbols-outlined text-semantic-warning rotate-[-45deg]">warning</span>
+</div>
+</div>
+<!-- Mini progress bar -->
+<div class="w-full h-1.5 bg-surface-container mt-4 rounded-full overflow-hidden relative z-10">
+<div class="h-full bg-semantic-warning w-[92%] rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Resource Heatmap -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-headline-sm font-headline font-bold text-primary">Department Heatmap</h3>
+<button class="text-label-md font-label text-secondary hover:text-secondary-container transition-colors">VIEW ALL</button>
+</div>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-card divide-y divide-outline-variant/20">
+<!-- Mechanical -->
+<div class="p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body font-medium text-on-surface">Mechanical</span>
+<span class="font-label text-label-md text-on-surface-variant">420 Active</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-semantic-success w-[65%] rounded-full"></div>
+</div>
+<span class="font-label text-label-sm text-semantic-success w-8 text-right">65%</span>
+</div>
+</div>
+<!-- Electrical -->
+<div class="p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body font-medium text-on-surface">Electrical</span>
+<span class="font-label text-label-md text-on-surface-variant">315 Active</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-semantic-active w-[82%] rounded-full"></div>
+</div>
+<span class="font-label text-label-sm text-semantic-active w-8 text-right">82%</span>
+</div>
+</div>
+<!-- Software -->
+<div class="p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body font-medium text-on-surface">Software</span>
+<span class="font-label text-label-md text-on-surface-variant">505 Active</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-semantic-warning w-[98%] rounded-full relative">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/30 animate-pulse"></div>
+</div>
+</div>
+<span class="font-label text-label-sm text-semantic-warning w-8 text-right font-bold">98%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Critical Blockers -->
+<section class="mb-6">
+<div class="flex items-center gap-2 mb-4">
+<h3 class="text-headline-sm font-headline font-bold text-primary">Critical Blockers</h3>
+<span class="bg-error-container text-on-error-container font-label text-label-sm px-2 py-0.5 rounded-sm">2 ACTIVE</span>
+</div>
+<div class="space-y-3">
+<!-- Blocker 1 -->
+<div class="bg-surface-container-lowest rounded-lg border-l-4 border-l-semantic-emergency border-y border-r border-outline-variant/30 p-4 shadow-card">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-label-md bg-surface-container px-2 py-1 rounded text-on-surface-variant">#BLK-902</span>
+<span class="font-label text-label-sm text-semantic-emergency flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                            SEV-1
+                        </span>
+</div>
+<h4 class="font-body font-medium text-on-surface mb-1 text-sm">Server Rack Delivery Delayed</h4>
+<p class="font-body text-body-md text-on-surface-variant line-clamp-2 mb-3">Awaiting customs clearance for 14 units. Holding up software deployment phase in Zone C.</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label text-[10px]">JD</div>
+<span class="font-label text-label-sm text-outline">Assigned: J. Doe</span>
+</div>
+</div>
+<!-- Blocker 2 -->
+<div class="bg-surface-container-lowest rounded-lg border-l-4 border-l-semantic-emergency border-y border-r border-outline-variant/30 p-4 shadow-card">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-label-md bg-surface-container px-2 py-1 rounded text-on-surface-variant">#BLK-881</span>
+<span class="font-label text-label-sm text-semantic-emergency flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                            SEV-1
+                        </span>
+</div>
+<h4 class="font-body font-medium text-on-surface mb-1 text-sm">HVAC System Failure</h4>
+<p class="font-body text-body-md text-on-surface-variant line-clamp-2 mb-3">Temperature threshold exceeded in Main Data Hall. Emergency cooling engaged.</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-label text-[10px]">AS</div>
+<span class="font-label text-label-sm text-outline">Assigned: A. Smith</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Shared Component -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-white/85 backdrop-blur-md border-t border-outline-variant/30 shadow-lg docked full-width bottom-0 rounded-t-xl md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-1 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="text-label-sm font-label font-medium mt-1">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-1 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="text-label-sm font-label font-medium mt-1">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-1 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="text-label-sm font-label font-medium mt-1">Tasks</span>
+</button>
+<!-- Active State mapped to 'Reports' intent for Analytics -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-label-sm font-label font-medium mt-1">Reports</span>
+</button>
+</nav>
+<!-- Spacer for safe area on mobile devices with bottom nav -->
+<div class="h-safe pb-4 md:hidden"></div>
+</body></html>

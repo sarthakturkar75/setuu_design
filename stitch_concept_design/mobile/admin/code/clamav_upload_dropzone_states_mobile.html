@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Setuu Enterprise - Upload Dropzone States</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Design System -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed-dim": "#aec9eb",
+                        "inverse-primary": "#aec9eb",
+                        "surface-bright": "#faf9f4",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#000815",
+                        "on-primary-fixed": "#001d35",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#efeee9",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#6f89a9",
+                        "tertiary": "#00080f",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-secondary-container": "#005a7f",
+                        "inverse-surface": "#30312e",
+                        "primary-fixed": "#d1e4ff",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container-high": "#e9e8e3",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#46607e",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "error": "#ba1a1a",
+                        "outline": "#73777e",
+                        "surface-container-low": "#f5f4ef",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-dim": "#dbdad5",
+                        "tertiary-container": "#002233",
+                        "secondary": "#00658d",
+                        "surface-container-highest": "#e3e3de",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-surface-variant": "#43474d",
+                        "background": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary-container": "#8ad1ff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-background": "#1b1c19",
+                        "surface-variant": "#e3e3de",
+                        "on-tertiary-container": "#0090c7"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    },
+                    keyframes: {
+                        radar: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        },
+                        flashError: {
+                            '0%, 100%': { borderColor: '#ba1a1a', backgroundColor: 'rgba(186, 26, 26, 0.05)' },
+                            '50%': { borderColor: 'transparent', backgroundColor: 'transparent' }
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'radar 3s linear infinite',
+                        'flash-error': 'flashError 1.5s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased selection:bg-secondary-container selection:text-on-secondary-container h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface/85 dark:bg-surface-dim/85 text-primary dark:text-on-primary-fixed docked full-width top-0 backdrop-blur-md border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center w-full px-4 h-16 z-50 sticky top-0">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-on-surface">menu</span>
+</button>
+<h1 class="text-headline-md font-headline font-bold text-primary dark:text-primary-fixed">Setuu Enterprise</h1>
+<button class="flex items-center justify-center p-1 rounded-full border-2 border-transparent hover:border-outline-variant transition-all">
+<img alt="User Profile" class="w-8 h-8 rounded-full object-cover" data-alt="A small, professional corporate headshot of a project manager with short dark hair, wearing a navy blue blazer, set against a bright, sterile white office background. The lighting is crisp and even, evoking a trustworthy B2B corporate environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4cc2mX1IzFXPTq1lT1gFCbPIBZUp19oUI7KO8VKcH0DmaB6NJSsSDI7QZeNhnctQiDK_bGydE7mSXxPybKKeEmjZAEOUaahZXWsI8KiAwcp0PpF1iBprW1iKMv9J2htrMRrDQ3mfwwQH9Hnqodr-YH4oWYhcSBsXrDqqvT6EnFKYoXpllbPxyLorQM9z3hpXkQQ-FjfzpsnveqTBISu702j0RLaNx2KIQGjgQldbrLbZn0gBw8Hvd"/>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-4 py-6 space-y-6 pb-28">
+<div class="mb-6">
+<h2 class="text-headline-sm font-headline font-bold text-on-surface mb-2">Secure Dropzone States</h2>
+<p class="text-body-md text-on-surface-variant">Mobile demonstration of ClamAV integration during edge-node file uploads.</p>
+</div>
+<!-- State 1: Scanning -->
+<section aria-label="Scanning State" class="relative overflow-hidden rounded-lg bg-surface-container-lowest border-2 border-dashed border-[#0284C7] p-5 shadow-sm transition-all duration-300 group">
+<div class="absolute inset-0 bg-[#0284C7]/5 pointer-events-none"></div>
+<div class="flex items-start space-x-4 relative z-10">
+<div class="flex-shrink-0 mt-1">
+<div class="relative w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center border border-outline-variant/50">
+<span class="material-symbols-outlined text-[#0284C7] text-3xl animate-spin-slow" style="font-variation-settings: 'FILL' 1;">radar</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="text-body-lg font-bold text-on-surface truncate">site_survey_q3_final.pdf</h3>
+<p class="text-label-md font-label text-on-surface-variant mt-1">Scanning for threats...</p>
+<div class="mt-3 w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-[#0284C7] h-1.5 rounded-full w-2/3 animate-pulse"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- State 2: Clean -->
+<section aria-label="Clean State" class="relative overflow-hidden rounded-lg bg-surface-container-lowest border-2 border-solid border-[#16A34A] p-5 shadow-sm transition-all duration-300">
+<div class="absolute inset-0 bg-[#16A34A]/5 pointer-events-none"></div>
+<div class="flex items-start space-x-4 relative z-10">
+<div class="flex-shrink-0 mt-1">
+<div class="w-12 h-12 bg-[#16A34A]/10 rounded-lg flex items-center justify-center border border-[#16A34A]/30">
+<span class="material-symbols-outlined text-[#16A34A] text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-body-lg font-bold text-on-surface truncate pr-2">blueprint_v4_approved.dwg</h3>
+<span class="text-label-sm font-label text-[#16A34A] bg-[#16A34A]/10 px-2 py-0.5 rounded-sm whitespace-nowrap mt-0.5">VERIFIED</span>
+</div>
+<p class="text-body-md text-on-surface-variant mt-0.5">File verified - Secure</p>
+<div class="mt-3 bg-surface-container p-2 rounded-sm border border-outline-variant/30 flex items-center space-x-2">
+<span class="material-symbols-outlined text-outline text-[16px]">fingerprint</span>
+<code class="text-label-sm font-label text-on-surface-variant truncate">SHA256: 8f4e92a...b7c1d3</code>
+</div>
+</div>
+</div>
+</section>
+<!-- State 3: Infected -->
+<section aria-label="Infected State" class="relative overflow-hidden rounded-lg bg-surface-container-lowest border-2 border-solid animate-flash-error p-5 shadow-sm transition-all duration-300">
+<div class="flex items-start space-x-4 relative z-10">
+<div class="flex-shrink-0 mt-1 relative">
+<!-- Blurred Preview -->
+<div class="w-12 h-12 bg-surface-container rounded-lg overflow-hidden border border-error/50 relative">
+<div class="absolute inset-0 bg-surface-variant backdrop-blur-md flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-error/80 text-2xl">warning</span>
+</div>
+<img alt="Blocked content" class="w-full h-full object-cover blur-sm opacity-50" data-alt="A heavily blurred, unrecognizable thumbnail image attempting to represent a corrupted or malicious document payload, featuring jagged red glitch artifacts overlaid on a generic corporate text document background, set within a sterile high-tech interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKm_szS8YqiXFXfFRf-6lSDf0Hbj778eCIh5tQHuSfg5oTSgY6uQzLq_UnPFVpLtSMkRN8WF_MUFr8nBJPK7Y8gT83MxLd1WyVssrbaaPycJRH_WKu1b6v3DE2VwBo8PlVvr_9qcouLzU6cz35oD0jD_1CSS_88W6t7nK3_qnRVGs3ametI_Pobngic7T809Dg7v1TQLZtWsEZ9jRjQhRCaCDlQImM-HMqO-uVrPnIUCKTabxhlUJb"/>
+</div>
+<!-- Warning Badge -->
+<div class="absolute -top-1 -right-1 w-4 h-4 bg-error rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-error text-[10px]" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="text-body-lg font-bold text-on-surface truncate line-through text-on-surface-variant">vendor_invoice_macro.xlsm</h3>
+<p class="text-label-md font-label text-error font-bold mt-1 uppercase flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1">gpp_bad</span>
+                        Infected File Blocked
+                    </p>
+<div class="mt-3 p-2 bg-error-container/50 border border-error/20 rounded-sm">
+<p class="text-body-md text-on-error-container text-xs">ClamAV detected malicious payload signature. Access denied.</p>
+</div>
+<button class="mt-4 w-full flex items-center justify-center space-x-2 bg-error text-on-error py-2.5 px-4 rounded-lg font-body font-semibold text-sm hover:bg-error/90 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">delete_forever</span>
+<span>Remove Payload</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Excluded here per layout logic, focusing on Canvas content, but included as per requirements if this is a main dashboard destination. We assume it's a sub-flow or demonstration canvas based on the prompt, but will include the structural skeleton suppressed as per "Automatic Suppression" rule if we consider this a focused task. However, the prompt asks for the mobile version based on a screen which might be a top level. Let's include it but styled correctly for standard top level 'Dashboard' just in case.) -->
+<!-- As this is a specific demonstration of a dropzone state (focused task/transactional component preview), I will suppress the BottomNavBar per the Semantic Shell Mandate: "Linear/Transactional: Login, Sign-up, Onboarding, Checkout, or "Success/Confirmation" splash screens. Task-Focused... suppress the navigation". -->
+</body></html>

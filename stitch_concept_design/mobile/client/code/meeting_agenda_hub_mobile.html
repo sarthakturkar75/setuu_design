@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Client Meeting Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary": "#ffffff",
+                        "secondary": "#00658d",
+                        "outline": "#73777e",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-primary": "#aec9eb",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container-highest": "#e3e3de",
+                        "surface": "#faf9f4",
+                        "surface-container-low": "#f5f4ef",
+                        "primary": "#000815",
+                        "surface-bright": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "background": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1b1c19",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#6f89a9",
+                        "on-surface-variant": "#43474d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container": "#efeee9",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#8ad1ff",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary": "#ffffff",
+                        "status-success": "#16a34a",
+                        "status-active": "#0284c7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-sm": ["10px", { lineHeight: "14px", fontWeight: "500", letterSpacing: "0.05em" }],
+                        "label-md": ["12px", { lineHeight: "16px", fontWeight: "500", letterSpacing: "0.05em" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .safe-pb { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid #ffffff; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased flex flex-col min-h-screen">
+<!-- TopAppBar (from JSON) -->
+<header class="bg-surface/85 fixed top-0 w-full z-50 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-4 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Client Executive Portfolio" class="object-cover w-full h-full" data-alt="A highly detailed professional headshot of a corporate client executive in a modern, well-lit office environment. Sharp focus, off-white and deep blue color palette, portraying industrial reliability and leadership. Clean, bright lighting, realistic textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkrWGLvLZThauaL7pH9_xZ9y2zEbvxincKNVRDmr072K-nqy_EYJzClzBaUi3JYX2Pii5unl_i0gZYqkrrSYBeydZKg8P8yyAd2jA3AJDpIti_wvWmHEq0HUfgOFPSFGaHs4F-66MVkTeS-yj61gFckGSUFpcoW7HymlDntXQ7wlfUjPtE3_a0DuOPfox2CVY0MxRGXduItNhECVvSNul9X90_fFIW4YAkL6cSDAV225xCYXGISFZk"/>
+</div>
+<h1 class="font-headline font-bold text-primary text-headline-sm tracking-tight">Setuu Enterprise</h1>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high/50 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow pt-[80px] pb-[100px] px-4 w-full max-w-md mx-auto flex flex-col gap-6">
+<!-- Header -->
+<section>
+<h2 class="font-headline text-2xl font-bold text-primary mb-1">Meeting Roster</h2>
+<p class="font-body text-sm text-on-surface-variant">Client synchronization and strategy alignments.</p>
+</section>
+<!-- Upcoming Meeting Card -->
+<div class="bg-surface-container-lowest border border-[#e0e0e0] rounded-lg shadow-sm p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-lg font-bold text-primary">Q4 Planning Session</h3>
+<p class="font-label text-label-md text-status-active mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">event</span>
+                        Upcoming
+                    </p>
+</div>
+<div class="text-right">
+<p class="font-label text-label-md text-on-surface-variant">Nov 15, 2024</p>
+<p class="font-label text-label-md text-on-surface-variant">10:00 - 11:30 EST</p>
+</div>
+</div>
+</div>
+<!-- Completed Meeting Detail Card -->
+<div class="bg-surface-container-lowest border border-[#e0e0e0] rounded-lg shadow-sm overflow-hidden">
+<!-- Card Header -->
+<div class="p-6 bg-surface-container-low border-b border-[#e0e0e0] flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline text-xl font-bold text-primary">Q3 Strategic Review</h3>
+<span class="font-label text-label-md text-status-success bg-status-success/10 px-2 py-1 rounded">Completed</span>
+</div>
+<p class="font-label text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                    Oct 02, 2024 • 14:00 - 15:30 EST
+                </p>
+</div>
+<!-- Card Body: Content -->
+<div class="p-6 flex flex-col gap-6">
+<!-- Agenda Section -->
+<div>
+<h4 class="font-headline text-md font-bold text-primary mb-3 border-b border-outline-variant/30 pb-1">Formal Agenda</h4>
+<ul class="space-y-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-[2px]">check_circle</span>
+<span class="font-body text-sm text-on-surface">Progress Review: Phase 2 Foundations</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-[2px]">check_circle</span>
+<span class="font-body text-sm text-on-surface">Change Request (CR) Evaluation</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-[2px]">check_circle</span>
+<span class="font-body text-sm text-on-surface">Quarterly Safety Audit Findings</span>
+</li>
+</ul>
+</div>
+<!-- Key Decisions Section -->
+<div>
+<h4 class="font-headline text-md font-bold text-primary mb-3 border-b border-outline-variant/30 pb-1">Key Decisions</h4>
+<div class="bg-surface-container p-3 rounded-md border border-outline-variant/30 flex gap-3 items-center">
+<span class="material-symbols-outlined text-primary text-[24px]">gavel</span>
+<div>
+<p class="font-body font-semibold text-sm text-primary">CR-402 Approved</p>
+<p class="font-body text-xs text-on-surface-variant mt-1">Additional reinforced steel allocation authorized for Zone C.</p>
+</div>
+</div>
+</div>
+<!-- Action Items Section -->
+<div>
+<h4 class="font-headline text-md font-bold text-primary mb-3 border-b border-outline-variant/30 pb-1">Action Items</h4>
+<ul class="space-y-3">
+<li class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Assignee" class="object-cover w-full h-full" data-alt="A crisp, detailed portrait of a project manager with short hair, wearing professional business attire in an industrial office setting. The palette is off-white and deep slate. Clean, natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIEeiU8pNBVY6BnBlKyglpAqcSEmZivJF23TkllKNoKiAwTX0vhi3grW4QoGS3vBLHEqY82kPASdO_LheGIExl42rl5DHYNWdDEtEe7oM5DFc28Xdze0jXPl1xc1gPRf0STKuM6y3BXk-auzoz6PStnKgL_7VU6A-0HQgsKVr2EbRHOvnZJNcX_f5tajT-gYTfYpkPNcoXIEuMeHxGXCT1pD9BJPW5OUjQyctb-o263hpeX2gIP5F_"/>
+</div>
+<div class="flex-grow">
+<p class="font-body text-sm text-on-surface">Submit revised CAD drawings for Zone C.</p>
+<p class="font-label text-label-sm text-on-surface-variant mt-1">Due: Oct 10</p>
+</div>
+</li>
+<li class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Assignee" class="object-cover w-full h-full" data-alt="A focused headshot of an engineering supervisor wearing a white hardhat and high-visibility vest. Bright outdoor lighting against a modern construction site backdrop. The image utilizes the Setuu enterprise color palette with high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs7_OlkbD5ut_hFFnmwfqxGWclfjOT-jx4NJIaywycwsdnKM60EwvLXJQ618wQ-l8hc0D39yuajuARJ2h4RhKfJy868ysiFdzEwxLKUnZhQvXdzZxXRQ4FW69g04340cAysgxNkoz6-2lqxiEgKWEjwiVNWsyYTQmQpgT0YnpjVzka4tclHtIlx3XzcG-MB6WmzDle-GhuHyrIBjOxvkDjEtsAq_NcD9b43Dox44CaDlJN-rdhptlk"/>
+</div>
+<div class="flex-grow">
+<p class="font-body text-sm text-on-surface">Procure approved steel volume for CR-402.</p>
+<p class="font-label text-label-sm text-on-surface-variant mt-1">Due: Oct 15</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (from JSON) - 'Briefing' is active as it relates to meetings -->
+<nav class="bg-surface/85 fixed bottom-0 w-full z-50 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/30 shadow-lg flex justify-around items-center h-20 pb-safe px-2 md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform h-full w-16">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label text-label-sm">Portfolio</span>
+</button>
+<!-- Active State: Briefing (Meetings) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label text-label-sm font-bold">Briefing</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform h-full w-16">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="font-label text-label-sm">Financials</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform h-full w-16">
+<span class="material-symbols-outlined mb-1">trending_up</span>
+<span class="font-label text-label-sm">Progress</span>
+</button>
+</nav>
+</body></html>

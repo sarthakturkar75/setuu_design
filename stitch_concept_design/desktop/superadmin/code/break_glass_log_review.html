@@ -1,0 +1,271 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Super Admin Break-Glass Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "secondary": "#00658d",
+                        "tertiary": "#00080f",
+                        "tertiary-container": "#002233",
+                        "surface": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-primary": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "on-background": "#1b1c19",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#005a7f",
+                        "secondary-container": "#8ad1ff",
+                        "surface-tint": "#46607e",
+                        "outline": "#73777e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-container": "#0090c7",
+                        "on-surface": "#1b1c19",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-bright": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-surface-variant": "#43474d",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "primary-container": "#00213c",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed": "#c6e7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes pulse-border {
+            0% { border-color: rgba(186, 26, 26, 1); }
+            50% { border-color: rgba(186, 26, 26, 0.4); }
+            100% { border-color: rgba(186, 26, 26, 1); }
+        }
+        .break-glass-border {
+            border: 4px solid #ba1a1a;
+            animation: pulse-border 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen antialiased flex overflow-hidden selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- SideNavBar -->
+<nav class="bg-primary-container dark:bg-tertiary-container text-on-primary-fixed h-screen w-[280px] fixed left-0 top-0 shadow-md flex flex-col py-6 px-4 z-50">
+<div class="mb-8 flex items-center space-x-3 px-2">
+<img alt="Organization Logo" class="h-10 w-10 object-contain rounded-md shrink-0" src="https://lh3.googleusercontent.com/aida/AP1WRLvf2UnxQ99O3n3KzcQzx1a93WtRA-nLN209AiWzpl00FpjWloCC1aRRCUSLlFAnNTkt9xjXFFA8tKEOfaHNyxVmW4yRJwFApS3CEhoaqBWEC9upVq44WzrgAW128Duc8XtUFU-3v5B-zXAwdmbQw90acwCUC1nEJEkZBigc82M_hV-WSov8eOqN0CquoDsmN5Z7JQHQZOe1wefOGHujAvFUxzaN5u-p8rbqC8SkT-FNj--tSktX5VYZnZY">
+<div>
+<h1 class="font-headline text-xl font-bold text-on-primary dark:text-secondary-container leading-tight">Setuu Enterprise</h1>
+<p class="text-xs text-on-primary-container font-label mt-1">Super Admin Console</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto space-y-2 pb-4">
+<!-- Dashboard -->
+<a class="flex items-center px-3 py-3 rounded-lg text-on-primary-container hover:bg-on-primary-fixed-variant/10 transition-colors duration-150 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mr-3 text-[22px] group-hover:text-secondary-container transition-colors">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<!-- Projects -->
+<a class="flex items-center px-3 py-3 rounded-lg text-on-primary-container hover:bg-on-primary-fixed-variant/10 transition-colors duration-150 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mr-3 text-[22px] group-hover:text-secondary-container transition-colors">engineering</span>
+<span class="font-medium text-sm">Projects</span>
+</a>
+<!-- Materials -->
+<a class="flex items-center px-3 py-3 rounded-lg text-on-primary-container hover:bg-on-primary-fixed-variant/10 transition-colors duration-150 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mr-3 text-[22px] group-hover:text-secondary-container transition-colors">inventory_2</span>
+<span class="font-medium text-sm">Materials</span>
+</a>
+<!-- Audit Logs (ACTIVE) -->
+<a class="flex items-center px-3 py-3 bg-secondary text-on-secondary rounded-lg font-bold duration-150 active:scale-95 shadow-sm" href="#">
+<span class="material-symbols-outlined mr-3 text-[22px]">history_edu</span>
+<span class="text-sm tracking-wide">Audit Logs</span>
+</a>
+<!-- Subscription -->
+<a class="flex items-center px-3 py-3 rounded-lg text-on-primary-container hover:bg-on-primary-fixed-variant/10 transition-colors duration-150 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mr-3 text-[22px] group-hover:text-secondary-container transition-colors">payments</span>
+<span class="font-medium text-sm">Subscription</span>
+</a>
+<!-- Support -->
+<a class="flex items-center px-3 py-3 rounded-lg text-on-primary-container hover:bg-on-primary-fixed-variant/10 transition-colors duration-150 active:scale-95 group" href="#">
+<span class="material-symbols-outlined mr-3 text-[22px] group-hover:text-secondary-container transition-colors">support_agent</span>
+<span class="font-medium text-sm">Support</span>
+</a>
+</div>
+<!-- Emergency Action Trigger (Sidebar Bottom) -->
+<div class="mt-auto pt-4 border-t border-on-primary-fixed-variant/20 px-2">
+<button class="w-full flex items-center justify-center space-x-2 py-2.5 bg-error/10 text-error-container hover:bg-error/20 rounded-lg transition-colors border border-error/30 text-sm font-label font-bold">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span>ACTIVE INCIDENT</span>
+</button>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="bg-surface/85 dark:bg-surface-container-lowest/85 backdrop-blur-md fixed top-0 right-0 w-[calc(100%-280px)] h-16 flex items-center justify-between px-8 z-40 transition-all border-b border-outline-variant/30">
+<div class="flex items-center space-x-4">
+<div class="px-3 py-1 bg-error-container text-on-error-container rounded-sm border border-error flex items-center space-x-2 animate-pulse shadow-sm">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label text-xs font-bold uppercase tracking-widest">Elevated Access</span>
+</div>
+<h2 class="font-headline font-bold text-lg text-primary">System Integrity Logs</h2>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all rounded-full active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all rounded-full active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all rounded-full active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-6 w-[1px] bg-outline-variant/40 mx-2"></div>
+<button class="flex items-center space-x-3 hover:bg-surface-container-high p-1 pr-3 rounded-full transition-colors focus:ring-2 focus:ring-secondary/50 outline-none">
+<img class="w-8 h-8 rounded-full bg-surface-dim object-cover border border-outline/20" data-alt="A macro studio shot of an abstract geometric orb rendered in frosted glass and brushed aluminum. The orb glows faintly from within with an intense crimson red light, signifying high-level administrative access. The background is a stark, absolute black void, creating extreme contrast. The lighting is sharp and directional, highlighting the precise, engineered details of the metal and glass textures. The overall mood is cold, authoritative, and technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlykVknq6oRr7JVGviJ4AULiPLCSdaP3pRfX6eQIGos0L5VOZ7NKo5N7au8ZGk33rCM9VrlV-FDKHPb13vu52318B48Bgyp0S9cH9LRoBRNuuiAWZZljGtbOl3c4MjgHrwNEI18uGM2pB7hoYH4u8RjzYOui1FIkvIJyjqae1bGpf03PNCFGp4e80kXRgZMwZp6fw9JYCzEsRLov8L9s-ukAHW6CKFKpi06aXpixMi5a4c1GGcUi86">
+<div class="flex flex-col items-start hidden lg:flex">
+<span class="text-xs font-bold text-on-surface">Admin User</span>
+<span class="text-[10px] font-label text-error">SUPER_ADMIN</span>
+</div>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[280px] mt-16 p-6 w-[calc(100%-280px)] h-[calc(100vh-64px)] overflow-hidden bg-background">
+<!-- Break Glass Container -->
+<div class="break-glass-border rounded-lg bg-surface-container-lowest h-full flex flex-col shadow-lg overflow-hidden relative">
+<!-- Context Header -->
+<div class="px-6 py-5 border-b border-surface-variant bg-surface flex justify-between items-center z-10">
+<div>
+<h3 class="font-headline text-xl font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">security</span>
+                        Break-Glass Operations
+                    </h3>
+<p class="text-sm text-on-surface-variant mt-1 max-w-2xl font-body">
+                        Immutable ledger of all elevated access events. Actions recorded in this grid bypass standard RLS policies and are securely mirrored to WORM storage.
+                    </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-medium text-sm rounded transition-colors border border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                         Export CSV
+                     </button>
+</div>
+</div>
+<!-- Terminal Grid Area -->
+<div class="flex-1 overflow-auto bg-[#0a0f14] p-4 text-[#e2e8f0] font-label text-sm">
+<!-- Terminal Header row -->
+<div class="grid grid-cols-12 gap-4 pb-3 border-b border-[#334155] text-[#94a3b8] mb-3 sticky top-0 bg-[#0a0f14] z-10 shadow-sm">
+<div class="col-span-3 flex items-center">
+<span class="material-symbols-outlined text-[16px] mr-2">lock</span>
+                        [TIMESTAMP_UTC]
+                    </div>
+<div class="col-span-2">[S_ADMIN_ID]</div>
+<div class="col-span-2">[TARGET_ORG]</div>
+<div class="col-span-4">[REASON_CODE_PAYLOAD]</div>
+<div class="col-span-1 text-right">[STATE]</div>
+</div>
+<!-- Log Row 1 (Emergency) -->
+<div class="grid grid-cols-12 gap-4 py-2 border-b border-[#1e293b] hover:bg-[#1e293b]/50 transition-colors group">
+<div class="col-span-3 text-[#41BEFD]">2023-10-27T08:14:22.091Z</div>
+<div class="col-span-2 truncate text-[#cbd5e1]">USR-SA-9014</div>
+<div class="col-span-2 text-[#cbd5e1]">ORG-44-AZURE</div>
+<div class="col-span-4 text-[#94a3b8] truncate">
+<span class="text-[#f87171] font-bold">EMERGENCY_OVERRIDE:</span> RLS Bypass triggered for db_migration_hotfix.
+                    </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-0.5 rounded text-[10px] bg-[#dc2626]/20 text-[#f87171] border border-[#dc2626]/50">COMMIT</span>
+</div>
+</div>
+<!-- Log Row 2 (Audit) -->
+<div class="grid grid-cols-12 gap-4 py-2 border-b border-[#1e293b] hover:bg-[#1e293b]/50 transition-colors group">
+<div class="col-span-3 text-[#41BEFD]">2023-10-26T22:01:05.112Z</div>
+<div class="col-span-2 truncate text-[#cbd5e1]">USR-SA-9014</div>
+<div class="col-span-2 text-[#cbd5e1]">ORG-12-DELTA</div>
+<div class="col-span-4 text-[#94a3b8] truncate">
+<span class="text-[#eab308] font-bold">AUDIT_REVIEW:</span> Manual inspection of locked billing schema per ticket #8812.
+                    </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-0.5 rounded text-[10px] bg-[#0284c7]/20 text-[#38bdf8] border border-[#0284c7]/50">VIEW</span>
+</div>
+</div>
+<!-- Log Row 3 (Malware) -->
+<div class="grid grid-cols-12 gap-4 py-2 border-b border-[#1e293b] hover:bg-[#1e293b]/50 transition-colors group">
+<div class="col-span-3 text-[#41BEFD]">2023-10-25T14:33:51.902Z</div>
+<div class="col-span-2 truncate text-[#cbd5e1]">SYS-AUTO-DEF</div>
+<div class="col-span-2 text-[#cbd5e1]">ORG-89-KAPPA</div>
+<div class="col-span-4 text-[#94a3b8] truncate">
+<span class="text-[#a855f7] font-bold">THREAT_QUARANTINE:</span> ClamAV flag positive. Blob hard-delete executed.
+                    </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-0.5 rounded text-[10px] bg-[#dc2626]/20 text-[#f87171] border border-[#dc2626]/50">PURGE</span>
+</div>
+</div>
+<!-- Log Row 4 -->
+<div class="grid grid-cols-12 gap-4 py-2 border-b border-[#1e293b] hover:bg-[#1e293b]/50 transition-colors group">
+<div class="col-span-3 text-[#41BEFD]">2023-10-24T09:10:00.000Z</div>
+<div class="col-span-2 truncate text-[#cbd5e1]">USR-SA-9088</div>
+<div class="col-span-2 text-[#cbd5e1]">ORG-01-ALPHA</div>
+<div class="col-span-4 text-[#94a3b8] truncate">
+<span class="text-[#10b981] font-bold">SYSTEM_MAINTENANCE:</span> Global index rebuild initiated.
+                    </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-0.5 rounded text-[10px] bg-[#10b981]/20 text-[#34d399] border border-[#10b981]/50">EXEC</span>
+</div>
+</div>
+<!-- Terminal Prompt -->
+<div class="mt-4 flex items-center text-[#41BEFD] animate-pulse">
+<span class="mr-2">&gt;</span>
+<span class="w-2 h-4 bg-[#41BEFD] inline-block"></span>
+</div>
+</div>
+<!-- Sticky Footer warning -->
+<div class="bg-surface-container-highest px-6 py-2 flex items-center justify-between border-t border-outline-variant z-10 text-xs">
+<div class="flex items-center gap-2 text-on-surface-variant font-label">
+<span class="material-symbols-outlined text-[14px]">shield_locked</span>
+<span>Connection Secure. Immutable WORM storage active.</span>
+</div>
+<div class="font-label text-on-surface-variant font-medium">
+                    Session expires in: <span class="text-error font-bold">14:59</span>
+</div>
+</div>
+</div>
+</main>
+</body></html>

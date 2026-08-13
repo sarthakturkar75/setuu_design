@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Global Support &amp; Ticket Triage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#2e4965",
+                      "secondary-fixed": "#c6e7ff",
+                      "primary-container": "#00213c",
+                      "outline-variant": "#c3c6ce",
+                      "on-surface-variant": "#43474d",
+                      "tertiary-container": "#002233",
+                      "on-primary-container": "#6f89a9",
+                      "secondary-fixed-dim": "#88cffc",
+                      "tertiary-fixed": "#c6e7ff",
+                      "surface-bright": "#faf9f4",
+                      "on-error": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-background": "#1b1c19",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#efeee9",
+                      "surface-container-highest": "#e3e3de",
+                      "primary-fixed": "#d1e4ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#001e2d",
+                      "error": "#ba1a1a",
+                      "primary": "#000815",
+                      "tertiary": "#00080f",
+                      "background": "#faf9f4",
+                      "surface-container-low": "#f5f4ef",
+                      "primary-fixed-dim": "#aec9eb",
+                      "secondary": "#00658d",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-tertiary-container": "#0090c7",
+                      "surface-container-high": "#e9e8e3",
+                      "on-tertiary-fixed": "#001e2d",
+                      "surface-tint": "#46607e",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#30312e",
+                      "on-secondary-container": "#005a7f",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "inverse-primary": "#aec9eb",
+                      "surface": "#faf9f4",
+                      "surface-variant": "#e3e3de",
+                      "on-primary-fixed": "#001d35",
+                      "outline": "#73777e",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#8ad1ff",
+                      "on-surface": "#1b1c19",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "surface-dim": "#dbdad5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": ["Merriweather"],
+                      "display": ["Merriweather"],
+                      "body": ["Inter"],
+                      "label": ["JetBrains Mono"]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        h1, h2, h3, h4, h5, h6, .font-headline, .font-display {
+            font-family: 'Merriweather', serif;
+        }
+        .font-label {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Hide scrollbar for clean horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 text-primary dark:text-on-primary-fixed font-headline text-headline-sm backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-4 h-16 transition-opacity active:scale-95 duration-150">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+                A
+            </div>
+<span class="font-headline text-headline-sm font-bold text-primary dark:text-primary-fixed">SETUU Enterprise</span>
+</div>
+<button class="p-2 text-on-surface-variant hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 pt-16 pb-24 md:pb-8 px-4 flex flex-col max-w-3xl mx-auto w-full">
+<!-- Header & Filters -->
+<div class="py-4 sticky top-16 bg-surface z-40 border-b border-outline-variant/30 mb-4 pb-2">
+<h1 class="font-headline text-headline-md font-bold text-primary mb-3">Support Triage</h1>
+<!-- Chip Filters -->
+<div class="flex overflow-x-auto no-scrollbar gap-2 pb-2">
+<button class="px-4 py-1.5 rounded-full bg-secondary text-on-secondary font-label text-xs font-medium whitespace-nowrap shadow-sm">
+                    Open (12)
+                </button>
+<button class="px-4 py-1.5 rounded-full border border-outline text-on-surface-variant font-label text-xs font-medium whitespace-nowrap hover:bg-surface-container-highest transition-colors">
+                    In Progress (4)
+                </button>
+<button class="px-4 py-1.5 rounded-full border border-outline text-on-surface-variant font-label text-xs font-medium whitespace-nowrap hover:bg-surface-container-highest transition-colors">
+                    Needs Discussion (2)
+                </button>
+<button class="px-4 py-1.5 rounded-full border border-outline text-on-surface-variant font-label text-xs font-medium whitespace-nowrap hover:bg-surface-container-highest transition-colors">
+                    Resolved
+                </button>
+</div>
+</div>
+<!-- Ticket Feed -->
+<div class="flex flex-col gap-4">
+<!-- Ticket Card: Critical -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm p-4 hover:shadow-md transition-shadow relative overflow-hidden group">
+<!-- Status Bar Indicator -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#DC2626]"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-on-surface-variant">#TCK-9942</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#DC2626]/10 text-[#DC2626] border border-[#DC2626]/20">Critical</span>
+</div>
+<span class="font-label text-[10px] text-outline">UPD: 10:42 AM</span>
+</div>
+<div class="pl-2 mb-3">
+<h2 class="font-headline text-sm font-bold text-on-surface mb-1 leading-snug">Database sync failure on Site B offline terminal</h2>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">Field workers reporting immediate app crash upon attempting to sync local database after 4 hours of offline markup collection.</p>
+</div>
+<div class="pl-2 flex items-center justify-between border-t border-outline-variant/30 pt-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-[10px] font-bold">JD</div>
+<span class="font-body text-xs text-on-surface-variant">John Doe (Admin)</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded border border-outline text-on-surface text-xs font-medium hover:bg-surface-variant transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="forum">forum</span>
+</button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary text-xs font-medium hover:opacity-90 transition-opacity">
+                            Resolve
+                        </button>
+</div>
+</div>
+</article>
+<!-- Ticket Card: High -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm p-4 hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#D97706]"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-on-surface-variant">#TCK-9941</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#D97706]/10 text-[#D97706] border border-[#D97706]/20">High</span>
+</div>
+<span class="font-label text-[10px] text-outline">UPD: 09:15 AM</span>
+</div>
+<div class="pl-2 mb-3">
+<h2 class="font-headline text-sm font-bold text-on-surface mb-1 leading-snug">Duplicate File Detection False Positive on Blueprints</h2>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">System is flagging version 2 of architectural schematic as duplicate despite MD5 hash mismatch. Blocking upload workflow for Vendor X.</p>
+</div>
+<div class="pl-2 flex items-center justify-between border-t border-outline-variant/30 pt-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-[10px] font-bold">VX</div>
+<span class="font-body text-xs text-on-surface-variant">Vendor X</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded border border-outline text-on-surface text-xs font-medium hover:bg-surface-variant transition-colors">
+                            Escalate
+                        </button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary text-xs font-medium hover:opacity-90 transition-opacity">
+                            Resolve
+                        </button>
+</div>
+</div>
+</article>
+<!-- Ticket Card: Medium -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm p-4 hover:shadow-md transition-shadow relative overflow-hidden opacity-90">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#9333EA]"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-on-surface-variant">#TCK-9938</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#9333EA]/10 text-[#9333EA] border border-[#9333EA]/20">Attention</span>
+</div>
+<span class="font-label text-[10px] text-outline">UPD: YESTERDAY</span>
+</div>
+<div class="pl-2 mb-3">
+<h2 class="font-headline text-sm font-bold text-on-surface mb-1 leading-snug">Client request for custom PDF export formatting</h2>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">Client 'AeroDynamics Inc' requires specific watermark placement on all exported milestone reports. Needs discussion with PM.</p>
+</div>
+<div class="pl-2 flex items-center justify-between border-t border-outline-variant/30 pt-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-[10px] font-bold">SP</div>
+<span class="font-body text-xs text-on-surface-variant">Sarah P. (PM)</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded border border-outline text-on-surface text-xs font-medium hover:bg-surface-variant transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="forum">forum</span>
+</button>
+<button class="px-3 py-1.5 rounded bg-primary text-on-primary text-xs font-medium hover:opacity-90 transition-opacity">
+                            Review
+                        </button>
+</div>
+</div>
+</article>
+<!-- Ticket Card: Low / Neutral -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm p-4 hover:shadow-md transition-shadow relative overflow-hidden opacity-75">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#64748B]"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-on-surface-variant">#TCK-9930</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#64748B]/10 text-[#64748B] border border-[#64748B]/20">Low</span>
+</div>
+<span class="font-label text-[10px] text-outline">UPD: 2 DAYS AGO</span>
+</div>
+<div class="pl-2 mb-3">
+<h2 class="font-headline text-sm font-bold text-on-surface mb-1 leading-snug">Update documentation for drawing markup tools</h2>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2">Internal request to refresh the knowledge base regarding the new glassmorphism rail tools in the drawing hub.</p>
+</div>
+<div class="pl-2 flex items-center justify-between border-t border-outline-variant/30 pt-3">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center text-[10px] font-bold">SY</div>
+<span class="font-body text-xs text-on-surface-variant">System (Auto)</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 rounded border border-outline text-on-surface text-xs font-medium hover:bg-surface-variant transition-colors">
+                            Defer
+                        </button>
+<button class="px-3 py-1.5 rounded bg-surface-container-highest text-on-surface text-xs font-medium hover:bg-surface-variant transition-colors">
+                            Resolve
+                        </button>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-lg flex justify-around items-center pt-2 pb-safe w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-label-sm">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-3 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label text-label-sm">Admin</span>
+</a>
+</nav>
+</body></html>

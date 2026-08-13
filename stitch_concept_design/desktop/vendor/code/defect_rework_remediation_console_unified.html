@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Defect &amp; Rework Remediation Console - Vendor Portal</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000815",
+                        "secondary-container": "#8ad1ff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-variant": "#e3e3de",
+                        "on-secondary-fixed": "#001e2d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-surface": "#1b1c19",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "outline": "#73777e",
+                        "on-surface-variant": "#43474d",
+                        "tertiary": "#00080f",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#001d35",
+                        "on-secondary-container": "#005a7f",
+                        "surface": "#faf9f4",
+                        "primary-container": "#00213c",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-tint": "#46607e",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#efeee9",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "secondary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "background": "#faf9f4",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary-container": "#0090c7",
+                        "tertiary-fixed": "#c6e7ff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "tertiary-container": "#002233",
+                        "primary-fixed": "#d1e4ff",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1b1c19",
+                        "surface-bright": "#faf9f4",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#00658d",
+                        "surface-container-highest": "#e3e3de",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-surface": "#30312e",
+                        "surface-container-high": "#e9e8e3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-280px)] z-40 glass-panel shadow-sm flex justify-between items-center px-6 md:px-8 h-20 transition-all">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary p-2 -ml-2 rounded hover:bg-surface-container-high/50 transition-colors min-h-[48px]">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<div class="hidden sm:flex items-center gap-3 border-r border-outline-variant/30 pr-4 mr-4">
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary flex items-center justify-center font-headline font-bold text-sm">
+                    AC
+                </div>
+<div class="flex flex-col">
+<span class="text-body-md font-body font-bold text-primary">Acme Steel</span>
+<span class="text-label-sm font-label text-outline tracking-wide">Powered by Setuu</span>
+</div>
+</div>
+<nav aria-label="Breadcrumb" class="hidden md:flex">
+<ol class="flex items-center space-x-2 text-body-md font-body" role="list">
+<li class="">
+<div class="flex items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Supply Portal</a>
+</div>
+</li>
+<li class="">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline-variant text-[18px] mx-1">chevron_right</span>
+<span aria-current="page" class="text-primary font-bold">Defects &amp; Rework</span>
+</div>
+</li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center gap-2 md:gap-4">
+<button class="hidden lg:flex items-center gap-2 text-primary font-body text-body-md font-medium px-4 py-2 rounded hover:bg-surface-container-high/50 transition-colors border border-outline-variant/30 min-h-[48px]">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+                Log Delivery
+            </button>
+<div class="w-px h-6 bg-outline-variant/30 hidden md:block mx-2"></div>
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container-high/50 transition-colors relative min-h-[48px]">
+<span class="material-symbols-outlined text-[24px]" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container-high/50 transition-colors hidden sm:block min-h-[48px]">
+<span class="material-symbols-outlined text-[24px]" data-icon="history_edu">history_edu</span>
+</button>
+<button class="md:hidden ml-2 rounded-full border-2 border-transparent hover:border-primary transition-colors focus:outline-none min-h-[48px]">
+<img alt="Circular Professional Avatar" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP-RDmvl_NoAVaQjlESnx29GOLPGxUf1aWSoQs79yL293ODjfAqAskNWx59Nt5zvfPfgDPpcK8kzWmQwqzqbeV8ODb9DDJkP2fY-YjNFSVUDRI4OI0RS3Hfoo90knE0j3i-fwv0c3ZNEGStUrgU-PdRyblFHgVnpmC3ii4Pa6ByEoZ7GoR6YEO0MoHUod5beVK9irBZth8-o1GzV3JLVX6QgdGGOW8j7P8bA2Z84m-QRhe4rtKYYCL"/>
+</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="bg-primary-container dark:bg-[#04070A] h-screen w-[280px] fixed left-0 top-0 overflow-y-auto flex flex-col py-8 px-4 z-50 border-r border-outline-variant/20 shadow-xl hidden md:flex">
+<div class="mb-10 px-2 flex flex-col">
+<h1 class="text-headline-sm font-headline font-bold text-on-primary-container dark:text-primary-fixed mb-1">Setuu Enterprise</h1>
+<p class="text-label-md font-label text-on-primary-container/80 tracking-wide uppercase">Supply Chain Portal</p>
+</div>
+<button class="bg-secondary text-on-secondary py-3 px-4 rounded font-body font-medium flex items-center justify-center gap-2 mb-8 hover:bg-secondary/90 transition-colors shadow-sm w-full min-h-[48px]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">add</span>
+            New Project
+        </button>
+<div class="flex-1 space-y-1">
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30 min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body">Dashboard</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30 min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="inventory_2">inventory_2</span>
+<span class="text-body-md font-body">Material POs &amp; Deliveries</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30 min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-body-md font-body">Tasks &amp; Inspections</span>
+</a>
+<a class="vendor-active text-on-primary-container font-bold flex items-center gap-3 px-4 py-3 rounded-r-lg transition-transform duration-150 scale-[0.98] min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="build">build</span>
+<span class="text-body-md font-body">Defects &amp; Rework</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30 min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="payments">payments</span>
+<span class="text-body-md font-body">Invoicing</span>
+</a>
+</div>
+<div class="mt-auto pt-8 space-y-1">
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/10 transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-lg min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="settings">settings</span>
+<span class="text-body-md font-body">Settings</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/10 transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-lg min-h-[48px]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="help_center">help_center</span>
+<span class="text-body-md font-body">Support</span>
+</a>
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex items-center gap-3 px-2">
+<img alt="Executive User Avatar" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP-RDmvl_NoAVaQjlESnx29GOLPGxUf1aWSoQs79yL293ODjfAqAskNWx59Nt5zvfPfgDPpcK8kzWmQwqzqbeV8ODb9DDJkP2fY-YjNFSVUDRI4OI0RS3Hfoo90knE0j3i-fwv0c3ZNEGStUrgU-PdRyblFHgVnpmC3ii4Pa6ByEoZ7GoR6YEO0MoHUod5beVK9irBZth8-o1GzV3JLVX6QgdGGOW8j7P8bA2Z84m-QRhe4rtKYYCL"/>
+<div class="flex flex-col">
+<span class="text-body-md font-body font-bold text-on-primary-container">E. Richards</span>
+<span class="text-label-sm font-label text-on-primary-container/70">Acme Steel Co.</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-20 md:pt-28 pb-20 md:pb-8 px-4 md:px-8 md:ml-[280px] min-h-screen max-w-7xl mx-auto">
+<!-- Breadcrumbs & Header -->
+<div class="mb-6">
+<div class="text-label-md font-label text-outline flex items-center gap-2 mb-2">
+<span>Projects</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span>PRJ-992-A</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-on-surface font-semibold">Defect DEF-041</span>
+</div>
+<h2 class="text-headline-lg font-headline text-on-surface">Defect &amp; Rework Remediation Console</h2>
+</div>
+<!-- Remediation Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Rejection Notice & Details -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Rejection Notice Card -->
+<div class="bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm overflow-hidden relative">
+<!-- Thick Crimson Top Border for Rejection -->
+<div class="absolute top-0 left-0 w-full h-2 bg-error"></div>
+<div class="p-6 pt-8">
+<div class="flex items-start justify-between mb-6">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-error fill">cancel</span>
+<h3 class="text-headline-sm font-headline text-on-surface">Rejection Notice: DEF-041</h3>
+</div>
+<p class="text-body-sm text-on-surface-variant font-label text-label-sm">ISSUED: 2023-10-27T14:32:00Z</p>
+</div>
+<span class="bg-error-container text-on-error-container text-label-md font-label px-3 py-1 rounded-full flex items-center gap-1 border border-error/20">
+<span class="material-symbols-outlined text-sm">priority_high</span> Critical
+                            </span>
+</div>
+<!-- PM's Rejection Reason -->
+<div class="bg-surface-container p-4 rounded-md border border-outline-variant/30 mb-6 relative">
+<span class="absolute -top-3 left-4 bg-surface-container px-2 text-label-sm font-label text-on-surface-variant">Reason for Rejection</span>
+<p class="text-body-md text-on-surface italic border-l-2 border-error pl-3">
+                                "Surface rust detected on Structural Steel Lot A (Beams 4-12) prior to primer application. Unacceptable per Specification Section 05 12 00. Requires immediate sandblasting and re-inspection before coating proceeds."
+                            </p>
+</div>
+<!-- Evidence Display -->
+<div class="mb-6">
+<h4 class="text-body-md font-semibold text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">photo_camera</span>
+                                Field Evidence
+                            </h4>
+<div class="relative rounded-md overflow-hidden border border-outline-variant bg-black group">
+<img alt="Defect Evidence Photo" class="w-full h-64 object-cover opacity-90 group-hover:opacity-100 transition-opacity" data-alt="A close up, high-resolution photograph of a massive steel I-beam in a bright outdoor industrial setting. The grey steel surface exhibits prominent patches of orange surface rust. The lighting is harsh, direct sunlight casting sharp shadows, emphasizing the rough texture of the metal and the industrial reliability aesthetic. The composition is tight on the defect." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1TguMlRVbGjpKxvaX9AsgYbJXUUbjFdwhsD7Lj1hJ7jtTEBjMXzi7odHfKgD5A5312XQKKPsWAgVRTGtZA1O-WlLd6IkayOG4VtdUKDtbHZZcEvFLuV29jqYMuiaUUKltkkg1IzQsIbQ9hhZH6VzsBkMNRUh3L4rUGA1stOh7DFQCmxdY7Lz0BPU6XkHroGOyJaaRvc1YtQ3aHLsu62MTzz6GbS5x0XGkNVIAbPxpoCAKMH5vZWIg"/>
+<!-- JetBrains Mono GPS/Timestamp Watermark overlay -->
+<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-3 pt-8">
+<div class="font-label text-label-sm text-white flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">location_on</span>
+<span>LAT: 40.7128 N, LNG: 74.0060 W</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>2023-10-27T10:15:33Z-04:00</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Threaded Communication Loop -->
+<div class="bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm p-6">
+<h4 class="text-headline-sm font-headline text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">forum</span>
+                        Resolution Thread
+                    </h4>
+<div class="space-y-6">
+<!-- PM Comment -->
+<div class="flex gap-4">
+<img alt="PM Avatar" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A small circular professional portrait of an executive project manager in a sharp blue suit, standing in a modern office with glass walls. Soft, cool lighting reflecting a clinical, high-end corporate environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLJt9cTD8Sp3GC5byQf7QwGxRSmMmYuupqH17gc8kuKvZmYOEMQPM7ntb8LcdxGuXZY8FSHcHG0dfoZc024_5TOvnyHGuS7tOVkIl_SmfS2ppMZC_DMP_C0aL-ypeAe7eCrvK-_qO3VlG-Yje9Tn0pLz5EMqOnT8rBjwfQITZ0ng-hiDTff2ZPWsLYZBXcfuxfAeeX21no9Y678-1NqeFUfWDZyzI0twO7KU_AnAmjSRIqj9sqhN9Y"/>
+<div class="flex-1 bg-surface-container-low p-4 rounded-lg rounded-tl-none border border-outline-variant/30">
+<div class="flex justify-between items-baseline mb-2">
+<span class="font-semibold text-body-md text-on-surface">Sarah Jenkins <span class="text-on-surface-variant font-normal text-sm ml-1">(Project Manager)</span></span>
+<span class="text-label-sm font-label text-on-surface-variant">Oct 27, 2:32 PM</span>
+</div>
+<p class="text-body-md text-on-surface">Please provide an updated schedule for the rework. We need to clear this before the inspector arrives on Friday.</p>
+</div>
+</div>
+<!-- Vendor Reply Input -->
+<div class="flex gap-4 items-start pt-4 border-t border-surface-variant">
+<img alt="Vendor Avatar" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A small circular professional portrait of a construction vendor representative wearing a hardhat, with a neutral expression, brightly lit against an industrial background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5yjmJnh6ZanZ1laYj3YsOupz_oHcTRMpx99gnopE2kK62DxafVV_stqrrqB8a_Y1k9o6my5LF27bKLtXLaEugvvWvUTDgef8Tf3vO_tLNH9KW3lfLD-8YZJSrWabEYX87lFcfTmVn5CXcOAH3lZdiJed0eSZmvDyEzH-kOKyKGIVH48XzxqI9NSPyyms8jjI2esAeL3rRoVu1pz5at31Vj5lQa6TWTY2JK1weU35F-mENIu0SC9ST"/>
+<div class="flex-1">
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-md p-3 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors placeholder:text-on-surface-variant/50" placeholder="Type your reply or status update..." rows="3"></textarea>
+<div class="flex justify-between items-center mt-3">
+<button class="text-primary hover:bg-primary/5 p-2 rounded flex items-center gap-1 transition-colors text-label-md font-label">
+<span class="material-symbols-outlined text-sm">attach_file</span> Add Attachment
+                                    </button>
+<button class="bg-surface-container-highest text-on-surface px-4 py-2 rounded-md font-medium text-body-md hover:bg-surface-dim transition-colors">Post Reply</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Actions & Meta -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Action Card -->
+<div class="bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm p-6 sticky top-24">
+<h3 class="text-headline-sm font-headline text-on-surface mb-2">Remediation Status</h3>
+<div class="flex items-center gap-2 text-error font-semibold text-body-md mb-6">
+<span class="material-symbols-outlined">gpp_maybe</span>
+                        Pending Vendor Action
+                    </div>
+<p class="text-body-sm text-on-surface-variant mb-6">
+                        Upload photographic evidence of the sandblasted surface before primer application to clear this defect.
+                    </p>
+<!-- Prominent Upload Remediation Primary Button -->
+<button class="w-full bg-primary text-on-primary py-3 px-4 rounded-md font-semibold text-body-lg shadow-sm hover:opacity-90 hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined group-hover:-translate-y-1 transition-transform">cloud_upload</span>
+                        Upload Remediation
+                    </button>
+<div class="mt-4 pt-4 border-t border-surface-variant">
+<div class="font-label text-label-sm text-outline flex flex-col gap-2">
+<div class="flex justify-between">
+<span>DEFECT ID:</span>
+<span class="text-on-surface">DEF-041</span>
+</div>
+<div class="flex justify-between">
+<span>LOCATION:</span>
+<span class="text-on-surface">Lot A (Grid B-4)</span>
+</div>
+<div class="flex justify-between">
+<span>DUE DATE:</span>
+<span class="text-error">2023-10-31</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Related Docs (Optional context) -->
+<div class="bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm p-5">
+<h4 class="text-body-md font-semibold text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">description</span>
+                        Reference Docs
+                    </h4>
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-2 text-body-sm text-secondary hover:underline group" href="#">
+<span class="material-symbols-outlined text-sm group-hover:text-secondary-fixed-dim transition-colors">picture_as_pdf</span>
+                                Spec_Section_05_12_00.pdf
+                            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white/85 dark:bg-[#121A21]/85 backdrop-blur-xl border-t border-white/20 dark:border-cyan-400/20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-40 pb-safe">
+<div class="flex justify-around items-center h-16 px-2">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-sm font-label mt-1">Dash</span>
+</a>
+<!-- Active State -->
+<a class="flex flex-col items-center justify-center w-full h-full text-primary relative" href="#">
+<div class="absolute top-0 w-10 h-1 bg-primary rounded-b-full"></div>
+<span class="material-symbols-outlined fill">warning</span>
+<span class="text-label-sm font-label font-bold mt-1">Defects</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-label-sm font-label mt-1">Items</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="text-label-sm font-label mt-1">More</span>
+</a>
+</div>
+</nav>
+</body></html>

@@ -1,0 +1,1 @@
+export default function VendorPage() { return <div className="p-4"><h1>Vendor Dashboard</h1></div> }

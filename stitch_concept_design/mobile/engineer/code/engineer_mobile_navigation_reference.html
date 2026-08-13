@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Engineer - Reference Screen</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#fbf9f4",
+                    "surface-container-low": "#f5f4ee",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "primary-container": "#00213c",
+                    "surface": "#fbf9f4",
+                    "on-primary-container": "#6f89a9",
+                    "inverse-on-surface": "#f2f1eb",
+                    "outline-variant": "#c3c6ce",
+                    "surface-dim": "#dbdad5",
+                    "tertiary-fixed": "#c8e6fd",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "secondary-container": "#8ad1ff",
+                    "tertiary-fixed-dim": "#adcae1",
+                    "surface-variant": "#e4e2dd",
+                    "on-background": "#1b1c19",
+                    "on-primary-fixed": "#001d35",
+                    "on-tertiary-fixed-variant": "#2d4a5c",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#c6e7ff",
+                    "tertiary": "#00080f",
+                    "surface-tint": "#46607e",
+                    "outline": "#73777e",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e4e2dd",
+                    "on-tertiary-fixed": "#001e2e",
+                    "secondary": "#00658d",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-secondary-container": "#005a7f",
+                    "secondary-fixed-dim": "#88cffc",
+                    "primary": "#000815",
+                    "inverse-primary": "#aec9eb",
+                    "on-tertiary-container": "#6e8a9f",
+                    "surface-bright": "#fbf9f4",
+                    "on-surface-variant": "#43474d",
+                    "tertiary-container": "#002233",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e9e8e3",
+                    "surface-container": "#efeee8",
+                    "on-secondary-fixed": "#001e2d",
+                    "primary-fixed": "#d1e4ff",
+                    "inverse-surface": "#30312d",
+                    "on-surface": "#1b1c19"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "grid-columns": "4",
+                    "unit-sm": "8px",
+                    "unit-xs": "4px",
+                    "gutter": "12px",
+                    "unit-lg": "24px",
+                    "margin": "16px",
+                    "unit-md": "16px"
+            },
+            "fontFamily": {
+                    "label-caps": [
+                            "JetBrains Mono"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ],
+                    "data-mono": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-md": [
+                            "Merriweather"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "headline-lg": [
+                            "Merriweather"
+                    ],
+                    "title-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "label-caps": [
+                            "10px",
+                            {
+                                    "lineHeight": "12px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "data-mono": [
+                            "13px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-md": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "title-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased overflow-hidden min-h-screen relative flex flex-col md:flex-row">
+<!-- Mobile Drawer Overlay (Simulating partial open state for reference) -->
+<div class="fixed inset-0 bg-black/40 z-40 md:hidden"></div>
+<!-- NavigationDrawer -->
+<nav class="fixed left-0 top-0 h-full w-80 z-[100] bg-surface shadow-2xl flex flex-col py-unit-lg px-unit-md translate-x-0 transition-transform duration-300 md:relative md:shadow-none md:border-r md:border-outline-variant">
+<!-- Header: Profile -->
+<div class="flex items-center gap-4 mb-8 pb-6 border-b bg-surface-container-high border-outline-variant rounded-lg p-4">
+<img alt="Engineer Profile" class="w-16 h-16 rounded-full object-cover border-2 border-primary-container" data-alt="A professional headshot of an industrial engineer wearing safety gear, shot in a well-lit, modern corporate environment. The lighting is soft and high-key, complementing the off-white and deep blue brand colors. Clean, crisp, high-resolution portrait." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrnO2HtiYdvzGD9NJ5fFHtKfkKSbBQ6BqWp5TM-ovJnUYF7OT7gSr5wZWmQkUXtMBbxYRxvJr-nSq-krw-hoIJdBIc-Dyg3jSe58ycOyceAH8xVufljiPbeMROF6w4_EZ60cy8e2vObyQc0fgzhxF_h_wtTejkuBL32ycshlvRE_98UsAFDkv6DKMgung8FU16pmNV5WZ-HoDXoKZ_xl0mecT1awbaXRzOzFKVCZluyL0XocanTBqV"/>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary">Lead Engineer</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Systems Division</span>
+<span class="font-label-caps text-label-caps text-primary-container mt-1 text-primary">Shift B</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<ul class="flex flex-col gap-2 flex-grow">
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors group min-h-[48px]" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">description</span>
+<span class="font-body-md text-body-md">Team Docs</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors group min-h-[48px]" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">schedule</span>
+<span class="font-body-md text-body-md">Timesheets</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors group min-h-[48px]" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</li>
+</ul>
+<!-- Bottom Actions -->
+<div class="mt-auto border-t border-outline-variant pt-4">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-error hover:bg-error-container transition-colors group min-h-[48px]" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md font-semibold">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col relative w-full overflow-hidden h-screen pointer-events-none opacity-50 md:pointer-events-auto md:opacity-100">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 backdrop-blur-md bg-surface/85 border-b border-outline-variant flex justify-between items-center h-16 px-margin">
+<!-- Leading Action: Version Chip -->
+<div class="flex items-center">
+<button class="flex items-center gap-1 bg-surface-container-high px-3 py-1.5 rounded-full hover:bg-surface-variant transition-colors border border-outline-variant">
+<span class="font-data-mono text-data-mono text-primary">Firmware v2.4</span>
+<span class="material-symbols-outlined text-primary text-sm">arrow_drop_down</span>
+</button>
+</div>
+<!-- Headline: Brand Logo -->
+<div class="flex-1 text-center absolute left-1/2 -translate-x-1/2">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-extrabold truncate w-48 sm:w-auto">Setuu Enterprise</h1>
+</div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant hover:opacity-80 transition-opacity hidden md:block">
+<img alt="Profile Mini" class="w-full h-full object-cover" data-alt="Small circular avatar profile picture of an industrial engineer, bright lighting, high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5ldu4FDb4IcLRw_7L8Y1RG0LBCriTMCBOoIcmC4KNcBhPlpkcM7EKQe-rneKmPdl7v8Gz87YIwWAMaiDsVwquIFm8-wyYTev3yf7C2uzeZz7M8UVESXD0JgyUR8BSVDpaImBh732G2msDcSx7og9RUezytJ2OduYhqv7CkGfElShdWkGPtb4dgXLE5yLLC7PQu2A_YdKATxdGC5cFlg0kI39G90fSD-eWeibuJIkCI5p4EyYNbYYl"/>
+</button>
+<!-- Hamburger for mobile (visible behind the overlay in this mock) -->
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Canvas Area (Simulated Content) -->
+<main class="flex-1 overflow-y-auto p-4 md:p-6 pb-[90px] md:pb-6">
+<div class="max-w-4xl mx-auto space-y-6">
+<!-- Dashboard Welcome -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Workbench Overview</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Active monitoring session started. System metrics are stable.</p>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 flex flex-col shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary">memory</span>
+<span class="bg-tertiary-fixed-dim/20 text-on-tertiary-fixed-variant font-data-mono text-data-mono px-2 py-1 rounded">SYS_OK</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Core Load</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold font-data-mono text-primary">24%</span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 flex flex-col shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary">network_check</span>
+<span class="bg-secondary-container/20 text-on-secondary-container font-data-mono text-data-mono px-2 py-1 rounded">STABLE</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Latency</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold font-data-mono text-primary">12ms</span>
+</div>
+</div>
+<!-- Empty State / Graphic Area -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 flex flex-col items-center justify-center min-h-[160px] shadow-sm md:col-span-2 lg:col-span-1" data-alt="A highly abstract, technical vector graphic showing a stylized network diagram or schematic overlay in a light mode theme, using precise blue lines against a warm off-white background. Professional, clean, and engineering-focused." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYqDF6BdVPjRoEBN5gQ5C6-CiKkFQATkyGqpICKyYGRULh5y-NrxE-rAf4MPDObQPwEF3Nzxsm3oCjCzWq5HzH1tHX791gCzWTJg26QfCE-rNOEANaGh25dXON8O6rqwyMr2wNyVnR13WKO9BHUDwUbZw_QE-1kcocsAWxMTgK_8PF9npWFgp-0ztXpJ4Cq9beyZ4cK_RcMxzeqtqpsrV2IrGM3AIk9CeizbeA9E1JSs_G2LTkfE61')">
+<!-- Placeholder for chart or graphic -->
+</div>
+</div>
+<!-- Recent Tasks List -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low">
+<h3 class="font-title-md text-title-md text-primary">Active Diagnostics</h3>
+</div>
+<ul class="divide-y divide-surface-variant">
+<li class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-fixed-dim/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">sensors</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Sensor Array Calibration</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bay 4 • Automated</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</li>
+<li class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">update</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Firmware Rollout Pending</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Requires manual authorization</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</li>
+</ul>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-md bg-surface/85 flex justify-around items-center h-[72px] px-gutter border-t border-outline-variant md:hidden">
+<!-- Tab 1: Workbench (Active) -->
+<button class="flex flex-col items-center justify-center px-3 py-1.5 min-h-[48px] opacity-80 scale-95 transition-transform duration-200 group">
+<div class="bg-primary-container text-on-primary-container rounded-xl px-4 py-1 mb-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</div>
+<span class="font-label-caps text-label-caps text-primary">Workbench</span>
+</button>
+<!-- Tab 2: Tasks (Inactive) -->
+<button class="flex flex-col items-center justify-center px-3 py-1.5 min-h-[48px] text-on-surface-variant hover:text-primary transition-colors group">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">assignment</span>
+<span class="font-label-caps text-label-caps">Tasks</span>
+</button>
+<!-- Tab 3: Hub (Inactive) -->
+<button class="flex flex-col items-center justify-center px-3 py-1.5 min-h-[48px] text-on-surface-variant hover:text-primary transition-colors group">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">layers</span>
+<span class="font-label-caps text-label-caps">Hub</span>
+</button>
+<!-- Tab 4: Issues (Inactive) -->
+<button class="flex flex-col items-center justify-center px-3 py-1.5 min-h-[48px] text-on-surface-variant hover:text-primary transition-colors group">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">bug_report</span>
+<span class="font-label-caps text-label-caps">Issues</span>
+</button>
+<!-- Tab 5: Workspace (Inactive) -->
+<button class="flex flex-col items-center justify-center px-3 py-1.5 min-h-[48px] text-on-surface-variant hover:text-primary transition-colors group">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">file_download</span>
+<span class="font-label-caps text-label-caps">Workspace</span>
+</button>
+</nav>
+</div>
+</body></html>

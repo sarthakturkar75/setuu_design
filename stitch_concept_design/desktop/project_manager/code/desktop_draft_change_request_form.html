@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Draft Change Request - Setuu Enterprise</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "surface-container": "#efeee9",
+                    "surface-container-low": "#f5f4ef",
+                    "on-background": "#1b1c19",
+                    "primary-fixed": "#d1e4ff",
+                    "on-surface-variant": "#43474d",
+                    "on-tertiary-fixed": "#001e2d",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "secondary": "#00658d",
+                    "on-secondary-container": "#005a7f",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface": "#faf9f4",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#0090c7",
+                    "surface-bright": "#faf9f4",
+                    "background": "#faf9f4",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#e9e8e3",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#aec9eb",
+                    "primary-container": "#00213c",
+                    "outline": "#73777e",
+                    "outline-variant": "#c3c6ce",
+                    "inverse-primary": "#aec9eb",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#002233",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "tertiary": "#00080f",
+                    "on-surface": "#1b1c19",
+                    "secondary-fixed": "#c6e7ff",
+                    "surface-dim": "#dbdad5",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-secondary-fixed": "#001e2d",
+                    "inverse-surface": "#30312e",
+                    "surface-container-highest": "#e3e3de",
+                    "surface-variant": "#e3e3de",
+                    "surface-tint": "#46607e",
+                    "primary": "#000815",
+                    "secondary-container": "#8ad1ff",
+                    "on-primary-container": "#6f89a9",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001d35",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "sm": "0.25rem",
+                    "md": "0.75rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter-md": "24px",
+                    "margin-mobile": "16px",
+                    "margin-tablet": "24px",
+                    "margin-desktop": "32px",
+                    "sidebar-width": "280px",
+                    "rail-width": "72px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather", "serif"],
+                    "display": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            },
+            "fontSize": {}
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background min-h-screen text-on-background font-body flex antialiased">
+<aside class="w-[280px] h-screen sticky left-0 top-0 bg-primary-container flex flex-col py-6 px-4 shrink-0 z-40">
+<div class="px-2 mb-8">
+<h1 class="font-headline text-xl font-bold text-on-primary">Setuu Enterprise</h1>
+<p class="font-label text-xs text-on-primary-container mt-1 uppercase tracking-widest opacity-80">Industrial Reliability</p>
+</div>
+<nav class="flex flex-col gap-1 flex-1 overflow-y-auto">
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-sm font-medium">Dashboard</span>
+</a>
+<a class="text-on-primary-container bg-secondary-container text-on-secondary-container font-bold rounded-lg flex items-center gap-3 px-3 py-2.5 scale-[0.98] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event_available</span>
+<span class="font-body text-sm">Milestones</span>
+</a>
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-body text-sm font-medium">Drawings</span>
+</a>
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body text-sm font-medium">Materials</span>
+</a>
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body text-sm font-medium">Team</span>
+</a>
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-body text-sm font-medium">Timeline</span>
+</a>
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body text-sm font-medium">Reporting</span>
+</a>
+<a class="text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors mt-auto" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-body text-sm font-medium">Support</span>
+</a>
+</nav>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<header class="docked full-width top-0 sticky z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center w-full h-16 px-6 max-w-full">
+<div class="flex-1 max-w-md relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-xl">search</span>
+<input class="w-full bg-surface-container-low border border-surface-variant rounded-full h-9 pl-10 pr-4 text-sm font-body focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all" placeholder="Search projects or CRs..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="w-10 h-10 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="ml-4 w-9 h-9 rounded-full bg-surface-variant overflow-hidden border border-outline-variant/50 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A macro photography shot of an industrial metal gear. The metallic surface is highly polished, reflecting soft, diffused white lighting characteristic of a modern, clean light-mode interface. The palette is dominated by crisp silver and dark charcoal greys. Focus is extremely sharp on the metal texture, creating a premium and reliable aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuMD1KBjrKReVVjYuodjdj5ELO0XbQVFxRvlZq1oa9b4H3mR09WEdABE5_aQ0v8n1QRPpZdudbvX0_z7rzG3ttWOPhL3_IRB2qH5AedvvrXH6GyPnZFW4Osiv8wrBuckdfSmJ8hhp6llPNgObPnXuKhVgj-5HRA6Uo-XCc-Mz6bE-i509GVuSajKMA0GldCFX0H2t324qFfYrB5cwS4kD_M79Log1KeXU6P0LQJPLEBnsbm_CdBaXD"/>
+</div>
+</div>
+</header>
+<main class="flex-1 p-margin-desktop overflow-y-auto">
+<div class="grid grid-cols-12 gap-gutter-md max-w-[1600px] mx-auto">
+<div class="col-span-12 xl:col-span-8 xl:col-start-3 lg:col-span-10 lg:col-start-2">
+<div class="mb-8">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="font-label text-xs tracking-wider uppercase">Project Alpha</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label text-xs tracking-wider uppercase">Milestones</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-label text-xs tracking-wider uppercase text-primary">New CR</span>
+</div>
+<h2 class="font-headline text-3xl font-bold text-primary">Draft Change Request</h2>
+<p class="font-body text-on-surface-variant mt-2 text-sm max-w-2xl">Document scope adjustments, analyze root causes, and submit for preliminary review prior to financial processing.</p>
+</div>
+<div class="bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm p-8">
+<form class="space-y-6">
+<div class="grid grid-cols-1 gap-6">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1.5" for="cr-title">Request Title</label>
+<input class="w-full bg-surface h-10 px-3 rounded-md border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-sm font-body text-on-surface placeholder-on-surface-variant/50" id="cr-title" placeholder="e.g., Foundation Re-enforcement Specification Update" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1.5" for="cr-description">Detailed Description</label>
+<textarea class="w-full bg-surface p-3 rounded-md border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-sm font-body text-on-surface placeholder-on-surface-variant/50 resize-y" id="cr-description" placeholder="Provide a comprehensive breakdown of the requested changes and technical requirements..." rows="4"></textarea>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1.5" for="cr-root-cause">Root Cause Analysis</label>
+<textarea class="w-full bg-surface p-3 rounded-md border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-sm font-body text-on-surface placeholder-on-surface-variant/50 resize-y" id="cr-root-cause" placeholder="Describe the triggering event or underlying reason necessitating this change request..." rows="3"></textarea>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1.5" for="cr-time-impact">Time Impact (Days)</label>
+<div class="relative">
+<input class="w-full bg-surface h-10 pl-3 pr-10 rounded-md border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-sm font-body text-on-surface" id="cr-time-impact" min="0" placeholder="0" type="number"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 font-label text-xs text-on-surface-variant">DAYS</span>
+</div>
+</div>
+</div>
+<div class="mt-10 pt-8 border-t border-surface-variant relative select-none bg-surface-container-low/50 rounded-lg p-6 border-dashed border-2 border-outline-variant/30">
+<div class="absolute inset-0 z-10 cursor-not-allowed bg-surface-container-lowest/40 rounded-lg"></div>
+<div class="relative z-0 opacity-60 filter grayscale-[30%]">
+<div class="bg-surface-variant border border-outline-variant rounded-md p-4 flex items-center mb-6 shadow-sm">
+<div class="bg-surface-container-highest p-2 rounded flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-outline font-bold text-[28px]">lock</span>
+</div>
+<div class="flex-1">
+<span class="font-label text-sm text-on-surface-variant font-bold tracking-tight block">
+                                                [RESTRICTED: Admin Authorization Required for Financial Inputs]
+                                            </span>
+<span class="font-body text-xs text-on-surface-variant/80 mt-1 block">Your current role permissions do not allow modifying or viewing preliminary cost estimations.</span>
+</div>
+</div>
+<h3 class="font-headline text-lg font-bold text-on-surface-variant mb-5">Financial Impact</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface-variant mb-1.5">Estimated Cost Impact</label>
+<div class="w-full h-10 bg-surface-container border border-outline-variant/40 rounded-md flex items-center px-3">
+<span class="font-label text-sm text-on-surface-variant/40">USD $ ---,---.--</span>
+</div>
+</div>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface-variant mb-1.5">Allocation Code</label>
+<div class="w-full h-10 bg-surface-container border border-outline-variant/40 rounded-md flex items-center px-3">
+<span class="font-label text-sm text-on-surface-variant/40">SYS-LOCKED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-4 mt-10 pt-6 border-t border-surface-variant">
+<button class="px-5 py-2.5 rounded-md font-body text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
+                                    Cancel
+                                </button>
+<button class="px-6 py-2.5 rounded-md font-body text-sm font-medium bg-primary text-on-primary hover:bg-primary-container shadow-sm transition-all active:scale-[0.98] flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                                    Draft Request
+                                </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Security Alert</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Design System -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#aec9eb",
+                    "inverse-primary": "#aec9eb",
+                    "surface-bright": "#faf9f4",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#000815",
+                    "on-primary-fixed": "#001d35",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#efeee9",
+                    "on-surface": "#1b1c19",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#6f89a9",
+                    "tertiary": "#00080f",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "primary-container": "#00213c",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-secondary-container": "#005a7f",
+                    "inverse-surface": "#30312e",
+                    "primary-fixed": "#d1e4ff",
+                    "outline-variant": "#c3c6ce",
+                    "surface-container-high": "#e9e8e3",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface": "#faf9f4",
+                    "on-tertiary-fixed": "#001e2d",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#46607e",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "error": "#ba1a1a",
+                    "outline": "#73777e",
+                    "surface-container-low": "#f5f4ef",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "surface-dim": "#dbdad5",
+                    "tertiary-container": "#002233",
+                    "secondary": "#00658d",
+                    "surface-container-highest": "#e3e3de",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-surface-variant": "#43474d",
+                    "background": "#faf9f4",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "secondary-container": "#8ad1ff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-background": "#1b1c19",
+                    "surface-variant": "#e3e3de",
+                    "on-tertiary-container": "#0090c7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather", "serif"],
+                    "display": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim font-body text-on-surface antialiased w-full h-screen overflow-hidden flex items-center justify-center">
+<!-- Mock Background Context (Admin Dashboard) -->
+<div class="absolute inset-0 w-full h-full p-4 flex flex-col gap-4 opacity-40 select-none pointer-events-none">
+<div class="w-full h-16 bg-surface rounded shadow-sm"></div>
+<div class="w-full flex-1 bg-surface rounded shadow-sm flex p-4 gap-4">
+<div class="w-64 h-full bg-surface-container-low rounded"></div>
+<div class="flex-1 h-full bg-surface-container-lowest rounded border border-outline-variant"></div>
+</div>
+</div>
+<!-- MODAL BACKDROP (Level 3 Overlay) -->
+<div class="fixed inset-0 bg-black/40 z-[90] flex items-center justify-center p-4 backdrop-blur-[2px]">
+<!-- MODAL CONTAINER (Level 3 Elevation) -->
+<div class="relative w-full max-w-[360px] bg-surface rounded-lg overflow-hidden flex flex-col animate-[fadeIn_0.2s_ease-out]" style="box-shadow: 0 24px 48px rgba(0, 33, 60, 0.12);">
+<!-- THICK CRIMSON WARNING BANNER -->
+<div class="bg-error px-5 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-on-error text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">
+                    warning
+                </span>
+<h2 class="font-headline font-bold text-lg text-on-error tracking-tight">Security Alert</h2>
+</div>
+<!-- BODY CONTENT -->
+<div class="p-5 flex flex-col gap-5 bg-surface-bright">
+<!-- Clinical Explanation -->
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                    You are about to force logout all active sessions for this identity. This action is instantaneous, irreversible, and will generate a permanent entry in the system <span class="font-label text-xs bg-surface-container px-1.5 py-0.5 rounded text-on-surface border border-outline-variant/50">audit_log</span>.
+                </p>
+<!-- Target Entity Box -->
+<div class="bg-surface-container-low border border-outline-variant/60 rounded-md p-3 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container flex-shrink-0">
+<span class="material-symbols-outlined text-xl">person</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="font-label text-xs text-on-surface-variant uppercase tracking-wider">Target Identity</span>
+<span class="font-label text-sm text-on-surface font-medium truncate" id="target-username">asmith_field</span>
+</div>
+</div>
+<!-- Verification Input -->
+<div class="flex flex-col gap-1.5 mt-2">
+<label class="font-label text-xs text-on-surface font-medium" for="username-confirm">
+                        Type <span class="text-error font-bold">asmith_field</span> to confirm:
+                    </label>
+<input autocomplete="off" class="w-full bg-surface-container-lowest border border-outline rounded text-sm font-label text-on-surface px-3 py-2.5 focus:border-error focus:ring-1 focus:ring-error outline-none transition-all placeholder:text-outline/50" id="username-confirm" placeholder="Enter exact username" type="text"/>
+</div>
+</div>
+<!-- ACTION FOOTER -->
+<div class="bg-surface border-t border-outline-variant/30 px-5 py-4 flex flex-col-reverse sm:flex-row justify-end gap-3">
+<button class="px-5 py-2.5 rounded font-label text-xs font-medium text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors w-full sm:w-auto text-center tracking-wide" type="button">
+                    Cancel
+                </button>
+<button class="px-5 py-2.5 rounded font-label text-xs font-medium bg-error text-on-error w-full sm:w-auto flex items-center justify-center gap-2 transition-all opacity-50 cursor-not-allowed tracking-wide shadow-sm" disabled="" id="terminate-btn" type="button">
+<span class="material-symbols-outlined text-sm">logout</span>
+                    Terminate Sessions
+                </button>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputField = document.getElementById('username-confirm');
+            const terminateBtn = document.getElementById('terminate-btn');
+            const targetUsername = document.getElementById('target-username').textContent.trim();
+
+            inputField.addEventListener('input', (e) => {
+                if (e.target.value === targetUsername) {
+                    // Enable button
+                    terminateBtn.disabled = false;
+                    terminateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    terminateBtn.classList.add('hover:bg-on-error-container', 'hover:shadow-md');
+                    inputField.classList.add('border-error', 'ring-1', 'ring-error');
+                } else {
+                    // Disable button
+                    terminateBtn.disabled = true;
+                    terminateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    terminateBtn.classList.remove('hover:bg-on-error-container', 'hover:shadow-md');
+                    inputField.classList.remove('border-error', 'ring-1', 'ring-error');
+                }
+            });
+        });
+    </script>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</body></html>

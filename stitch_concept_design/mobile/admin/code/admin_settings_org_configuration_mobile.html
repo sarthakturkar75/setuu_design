@@ -1,0 +1,317 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Org Configuration - Setuu Enterprise</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS Setup -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#efeee9",
+                        "outline-variant": "#c3c6ce",
+                        "secondary": "#00658d",
+                        "surface-container-low": "#f5f4ef",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "background": "#faf9f4",
+                        "on-primary": "#ffffff",
+                        "outline": "#73777e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e3e3de",
+                        "on-primary-container": "#6f89a9",
+                        "tertiary-container": "#002233",
+                        "primary-fixed": "#d1e4ff",
+                        "on-primary-fixed": "#001d35",
+                        "surface-bright": "#faf9f4",
+                        "surface-tint": "#46607e",
+                        "on-error": "#ffffff",
+                        "surface": "#faf9f4",
+                        "primary": "#000815",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1b1c19",
+                        "surface-variant": "#e3e3de",
+                        "inverse-on-surface": "#f2f1ec",
+                        "inverse-surface": "#30312e",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#00213c",
+                        "secondary-container": "#8ad1ff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#aec9eb",
+                        "on-surface-variant": "#43474d",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-container": "#005a7f",
+                        "primary-fixed-dim": "#aec9eb",
+                        "tertiary": "#00080f",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "rail-width": "72px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        
+        /* Toggle Switch Styling */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #0284C7; /* Active Sky Blue */
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0284C7; /* Active Sky Blue */
+        }
+        .toggle-checkbox-amber:checked {
+            border-color: #D97706; /* Warning Amber */
+        }
+        .toggle-checkbox-amber:checked + .toggle-label-amber {
+            background-color: #D97706; /* Warning Amber */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- JSON Component: TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant/20 shadow-sm transition-transform" id="top-app-bar">
+<div class="flex items-center justify-between px-margin-mobile w-full h-16">
+<!-- Leading Icon -->
+<button class="p-2 -ml-2 rounded-full text-primary hover:bg-surface-container-high/50 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<!-- Headline -->
+<h1 class="font-headline text-[24px] font-bold text-primary tracking-tight truncate px-4">
+                Org Configuration
+            </h1>
+<!-- Trailing Avatar -->
+<button class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant active:scale-95 transition-transform focus:outline-none focus:ring-2 focus:ring-primary-container shadow-sm">
+<img alt="user_profile_avatar" class="w-full h-full object-cover" data-alt="A professional corporate headshot of a female executive in her late 30s with dark hair pulled back, wearing a crisp navy blue blazer over a white blouse. The lighting is bright and evenly distributed, suggesting a modern corporate office setting. The background is slightly out of focus, featuring subtle architectural lines typical of an industrial enterprise environment. The image exudes confidence, competence, and reliability consistent with an enterprise software administrator." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYcfMV7wBoN8fpCjjbf6Ed6dOEiZGvCcy5Y5bG5ucZ2B4NEg3dsZbkHeIq4sySppyLBFiY6JfutirgJTDRreS5yO3u_ibqnbhzSwXE9WWZtRKEtIzX4i-jCb7NrX214_KRgRWQm4fUn-5g4Pb8hZlxTqqpem20N85GeXAjESSwTa-teOlETsxbTUhbOVbNXKtoltkkmm9GuGvJZeGwdENep8prfPzR_ID7xLsbKQoTMewsrDqE1DXm">
+</button>
+</div>
+</header>
+<!-- Main Scrollable Area -->
+<!-- Added padding top for header, padding bottom for nav bar -->
+<main class="pt-20 pb-28 px-margin-mobile flex flex-col gap-6 max-w-[600px] mx-auto md:hidden">
+<!-- Section 1: Platform Governance -->
+<section class="flex flex-col gap-3">
+<h2 class="font-headline text-[18px] font-bold text-primary-container">Platform Governance</h2>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden divide-y divide-outline-variant/20">
+<!-- Maintenance Mode -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col gap-1 pr-4">
+<div class="flex items-center gap-2">
+<span class="font-medium text-[16px] text-on-surface">Maintenance Mode</span>
+<!-- Status Pill (Hidden by default, shown via JS if toggled) -->
+<span class="hidden px-2 py-0.5 rounded-sm bg-[#D97706]/10 text-[#D97706] font-label text-[10px] border border-[#D97706]/20 uppercase tracking-widest" id="maintenance-badge">Active</span>
+</div>
+<p class="text-[14px] text-on-surface-variant leading-tight">Restricts access to Super Admins only. Active sessions will be warned.</p>
+</div>
+<!-- Custom Toggle -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in flex-shrink-0">
+<input class="toggle-checkbox-amber absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10 border-outline-variant/50 top-0 left-0" id="toggle-maintenance" name="toggle-maintenance" type="checkbox">
+<label class="toggle-label-amber block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-300" for="toggle-maintenance"></label>
+</div>
+</div>
+<!-- Force Global Logout -->
+<div class="p-4 flex flex-col gap-3 hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col gap-1">
+<span class="font-medium text-[16px] text-on-surface">Force Global Logout</span>
+<p class="text-[14px] text-on-surface-variant leading-tight">Immediately terminates all active sessions across all devices.</p>
+</div>
+<button class="mt-1 w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-md border border-[#DC2626] text-[#DC2626] font-medium text-[14px] hover:bg-[#DC2626]/5 active:scale-[0.98] transition-all focus:outline-none focus:ring-2 focus:ring-[#DC2626]/40 bg-white">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                        Execute Global Logout
+                    </button>
+</div>
+</div>
+</section>
+<!-- Section 2: Security Policies -->
+<section class="flex flex-col gap-3">
+<h2 class="font-headline text-[18px] font-bold text-primary-container">Security Policies</h2>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden divide-y divide-outline-variant/20">
+<!-- 2FA Enforcement -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col gap-1 pr-4">
+<span class="font-medium text-[16px] text-on-surface">2FA Enforcement</span>
+<p class="text-[14px] text-on-surface-variant leading-tight">Require Two-Factor Authentication for all Admin and PM roles.</p>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in flex-shrink-0">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10 border-[#0284C7] right-0 top-0" id="toggle-2fa" name="toggle-2fa" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-[#0284C7] cursor-pointer transition-colors duration-300" for="toggle-2fa"></label>
+</div>
+</div>
+<!-- Session Timeout -->
+<div class="p-4 flex flex-col gap-2 hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col gap-1">
+<label class="font-medium text-[16px] text-on-surface" for="session-timeout">Session Timeout</label>
+<p class="text-[14px] text-on-surface-variant leading-tight">Inactivity duration before automatic logout.</p>
+</div>
+<div class="relative mt-1">
+<select class="block w-full rounded-md border-outline-variant/50 bg-white py-2.5 pl-3 pr-10 text-on-surface focus:border-primary-container focus:outline-none focus:ring-1 focus:ring-primary-container text-[14px] font-medium appearance-none shadow-sm" id="session-timeout">
+<option value="15m">15 Minutes</option>
+<option selected="" value="30m">30 Minutes</option>
+<option value="1h">1 Hour</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined text-outline-variant">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Branding & Personalization -->
+<section class="flex flex-col gap-3">
+<h2 class="font-headline text-[18px] font-bold text-primary-container">Branding &amp; Personalization</h2>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden divide-y divide-outline-variant/20">
+<!-- Client Logo -->
+<div class="p-4 flex flex-col gap-3 hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col gap-1">
+<span class="font-medium text-[16px] text-on-surface">Client Logo</span>
+<p class="text-[14px] text-on-surface-variant leading-tight">Used on reports and client-facing dashboards.</p>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<div class="w-16 h-16 rounded-md border border-outline-variant/30 bg-surface-container flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Client Logo Preview" class="w-12 h-12 object-contain" data-alt="A clean, minimalist vector-style logo design featuring a geometric abstract shape resembling a stylized letter 'S' combined with structural beams. The logo uses a deep navy blue and crisp white color palette, indicative of a modern, professional construction or engineering enterprise firm. The background is purely white, emphasizing the stark lines and corporate reliability of the design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9uagbMVqsn9v7OFkxMPTVdxcSaHKvDW8ND7u5sWIb-F8U1qnhZvaUZMxLJPOvF-XkrxCp0bJhQMS7ykq8DAanPDG3oojInBdNIfh4ohaxdxHEqDjmDgHqyklZYzh7Ok7bitk7jqaH-q7-AYbDiHo5Ya9mzrr-IbggAa86lwx_emGZU3BCsAP2hLDfDsRel6W9vWZQyijPJfBHNpfrZE-XEYKJJbRoE_yC5YQKllplThBGpIpmrPxg">
+</div>
+<button class="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md border border-outline-variant/50 text-secondary font-medium text-[14px] hover:bg-surface-container-high/50 active:scale-[0.98] transition-all bg-white shadow-sm">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+                            Update Logo
+                        </button>
+</div>
+</div>
+<!-- Primary Color -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col gap-1 pr-4">
+<span class="font-medium text-[16px] text-on-surface">Primary Interface Color</span>
+<p class="text-[14px] text-on-surface-variant leading-tight">Global accent color for UI elements.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label text-[12px] text-outline uppercase tracking-wider">#00213C</span>
+<button aria-label="Select Primary Color" class="w-8 h-8 rounded-full bg-[#00213C] border-2 border-white shadow-sm ring-1 ring-outline-variant/30 active:scale-90 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#00213C]"></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Metadata -->
+<section class="mt-4 flex flex-col items-center justify-center text-center gap-1 opacity-70">
+<p class="font-label text-[12px] text-outline uppercase tracking-wider flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                Version: v2.4.0
+            </p>
+<p class="font-label text-[10px] text-outline-variant uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">sync</span>
+                Last Sync: Oct 25, 14:32
+            </p>
+</section>
+</main>
+<!-- JSON Component: BottomNavBar (Mobile Only) -->
+<!-- Context Logic: Suppressed because Settings is a focused task/details screen.
+         Wait, the prompt asks for "Admin Settings & Org Configuration mobile screen".
+         Rule: "You MUST suppress the FAB on Settings, Profile, Details, and Transactional screens."
+         Wait, BottomNavBar rule: "You are only permitted to render the BottomNavBar or SideNav if the current screen represents a top-level destination within the app's primary ecosystem."
+         Is "Admin Settings" a top-level destination?
+         Looking at BottomNavBar label_texts: ["Projects", "Media", "Upload", "Tasks", "Admin"]
+         "Admin" is a top-level destination in the nav!
+         Therefore, we MUST render the BottomNavBar and highlight "Admin". -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-white/85 backdrop-blur-md border-t border-outline-variant/30 shadow-lg md:hidden">
+<div class="flex justify-around items-center w-full h-20 pb-safe px-2">
+<!-- Projects -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 rounded-xl group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:text-secondary transition-colors">architecture</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Projects</span>
+</button>
+<!-- Media -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 rounded-xl group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:text-secondary transition-colors">perm_media</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Media</span>
+</button>
+<!-- Upload (Central Action - usually a FAB, but mapped to nav here per JSON) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 rounded-xl group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:text-secondary transition-colors">cloud_upload</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Upload</span>
+</button>
+<!-- Tasks -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 rounded-xl group">
+<span class="material-symbols-outlined text-[24px] mb-1 group-hover:text-secondary transition-colors">assignment</span>
+<span class="font-label text-[10px] uppercase tracking-widest">Tasks</span>
+</button>
+<!-- Admin (Active State) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 active:scale-90 transition-all duration-150">
+<span class="material-symbols-outlined text-[24px] mb-1" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold">Admin</span>
+</button>
+</div>
+</nav>
+<!-- Inline script for micro-interactions -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const maintenanceToggle = document.getElementById('toggle-maintenance');
+            const maintenanceBadge = document.getElementById('maintenance-badge');
+
+            // Handle Maintenance Toggle visual state
+            maintenanceToggle.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    maintenanceBadge.classList.remove('hidden');
+                    // Add subtle pulsating effect to the card border when enabled
+                    e.target.closest('.bg-surface-container-lowest').classList.add('ring-1', 'ring-[#D97706]/50', 'animate-pulse');
+                } else {
+                    maintenanceBadge.classList.add('hidden');
+                    e.target.closest('.bg-surface-container-lowest').classList.remove('ring-1', 'ring-[#D97706]/50', 'animate-pulse');
+                }
+            });
+            
+            // Fix initial state based on checkbox if needed
+            if(maintenanceToggle.checked) {
+                maintenanceBadge.classList.remove('hidden');
+            }
+        });
+    </script>
+</body></html>

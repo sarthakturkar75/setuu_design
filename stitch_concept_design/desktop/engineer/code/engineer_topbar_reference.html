@@ -1,0 +1,154 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Engineer Global Topbar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#2e4965",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-bright": "#faf9f4",
+                        "tertiary-container": "#002233",
+                        "primary-container": "#00213c",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "surface-container": "#efeee9",
+                        "inverse-surface": "#30312e",
+                        "surface-tint": "#46607e",
+                        "surface-container-low": "#f5f4ef",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-secondary-container": "#005a7f",
+                        "primary": "#000815",
+                        "secondary": "#00658d",
+                        "surface": "#faf9f4",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#6f89a9",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-primary-fixed": "#001d35",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "outline": "#73777e",
+                        "tertiary": "#00080f",
+                        "primary-fixed": "#d1e4ff",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#43474d",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-fixed": "#001e2d",
+                        "secondary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "background": "#faf9f4",
+                        "on-tertiary-container": "#0090c7",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e3e3de",
+                        "secondary-fixed-dim": "#88cffc",
+                        "secondary-container": "#8ad1ff",
+                        "surface-variant": "#e3e3de",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "emerald": { 600: '#16a34a' },
+                        "cyan": { 400: '#41befd' }
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-glass {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen relative flex flex-col items-center pt-24 overflow-hidden">
+<!-- Abstract Technical Background to simulate the reference image context -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" data-alt="A highly detailed blueprint schematic of industrial mechanical gears and technical drawing lines in a cool blue and slate palette, soft focus to act as a background canvas for a modern UI." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMOcU_ETznrQjLGr7wQGFrFeFgqKbTUKjbct-WaiCgco-N5N9UvZlvgliMjUpZSbd5VD2XVTAgUe8guASBUiAaVUQf7UQP3LsPfcGA-fndthp-KbUAXGQX4futLUex-QufR8KNq8SXbUfp39tEtB6vhrbIDlLWTOOuAup4_QKqs5-2GPEj5q2_Kw1JfqU8akpxJnlOq_HLLE6TQtFUyEHCbdXlMXiwSzR2IX02fpt2HkpQfUNgiDwa')">
+</div>
+<!-- Container for the TopBar Reference -->
+<div class="relative z-10 w-full max-w-7xl px-8">
+<!-- TopAppBar Component (Glassmorphic) -->
+<header class="bg-glass rounded-2xl flex justify-between items-center px-6 py-4 w-full transition-transform duration-200 hover:scale-[0.995]">
+<!-- Left: Brand -->
+<div class="flex items-center gap-4">
+<span class="text-2xl font-headline font-black text-primary tracking-tight">Setuu Enterprise</span>
+</div>
+<!-- Center: Search -->
+<div class="flex-1 max-w-2xl mx-8 relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-lowest/50 border border-outline-variant/50 rounded-full py-2 pl-10 pr-4 text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all shadow-inner" placeholder="Technical Specs, Git Hashes..." type="text">
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-4">
+<!-- Department Badge -->
+<div class="hidden lg:flex items-center px-4 py-1.5 rounded-full border border-emerald-600/30 bg-emerald-600/10">
+<span class="text-emerald-600 font-label text-sm font-semibold tracking-wide uppercase">Mechanical Engineering</span>
+</div>
+<!-- Quick Action Button -->
+<button class="flex items-center gap-2 bg-cyan-400 hover:bg-cyan-400/90 text-primary-container px-4 py-2 rounded-full font-body font-semibold text-sm transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">timer</span>
+                    Log Time
+                </button>
+<!-- Divider -->
+<div class="w-px h-8 bg-outline-variant/30 mx-2 hidden md:block"></div>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-1">
+<button class="relative p-2 rounded-full hover:bg-surface-variant/50 transition-colors text-on-surface-variant group">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">notifications</span>
+<!-- Notification Dot -->
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface-container-lowest"></span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors text-on-surface-variant group hidden sm:block">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">alternate_email</span>
+</button>
+</div>
+<!-- Profile Dropdown Trigger -->
+<button class="flex items-center gap-2 hover:bg-surface-variant/50 rounded-full p-1 pr-3 transition-colors ml-2 border border-transparent hover:border-outline-variant/30">
+<img alt="User Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant/20 shadow-sm" data-alt="A small circular avatar portrait of a professional engineer wearing safety glasses and an orange hi-vis vest, smiling confidently." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ2r5eXPlWP7V2LAJE9jhH3fBH-sFDGRyC2BLRR3Vbaf3i9X-vPLDtZOjEQf8I2-4xoiB_GkwuZIC_y6fLt6WPGcWGWFpddrXz-9s6ALsmvHgGJEgSvGddz6VJx6etC5jWmNgcyTkK_xDMlSeGaFj6vXMSsybFx3-eIQZIEGbqvuvYMCdT5SDbymKjqYYyPvD0A09vNtcyQK5-FMuPnM4pYDiAuBfotmQqtlcCwjcAOS5Rmvus9LHy">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">keyboard_arrow_down</span>
+</button>
+</div>
+</header>
+<!-- Reference Annotations (Optional, for visual context of a 'reference screen') -->
+<div class="mt-8 flex justify-center space-x-12 opacity-40 font-label text-xs">
+<div class="flex items-center gap-2">
+<span class="w-3 h-px bg-on-surface"></span>
+<span>Glassmorphic Container: rgba(255, 255, 255, 0.85), blur 12px</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-px bg-on-surface"></span>
+<span>Typography: Merriweather &amp; Inter</span>
+</div>
+</div>
+</div>
+</body></html>

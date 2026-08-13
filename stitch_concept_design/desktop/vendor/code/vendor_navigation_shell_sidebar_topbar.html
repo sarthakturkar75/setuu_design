@@ -1,0 +1,241 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Supply Chain Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "tertiary-container": "#002233",
+                      "primary-fixed": "#d1e4ff",
+                      "secondary-fixed": "#c6e7ff",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#e3e3de",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#aec9eb",
+                      "error": "#ba1a1a",
+                      "surface-dim": "#dbdad5",
+                      "tertiary": "#00080f",
+                      "secondary-container": "#8ad1ff",
+                      "surface-container": "#efeee9",
+                      "surface-bright": "#faf9f4",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-container": "#005a7f",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-background": "#1b1c19",
+                      "outline": "#73777e",
+                      "primary-fixed-dim": "#aec9eb",
+                      "surface": "#faf9f4",
+                      "on-error": "#ffffff",
+                      "on-surface-variant": "#43474d",
+                      "surface-container-high": "#e9e8e3",
+                      "background": "#faf9f4",
+                      "inverse-surface": "#30312e",
+                      "on-surface": "#1b1c19",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-container": "#0090c7",
+                      "surface-container-low": "#f5f4ef",
+                      "tertiary-fixed": "#c6e7ff",
+                      "on-primary-fixed": "#001d35",
+                      "on-primary-container": "#6f89a9",
+                      "on-tertiary-fixed": "#001e2d",
+                      "primary-container": "#00213c",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-tertiary": "#ffffff",
+                      "secondary": "#00658d",
+                      "surface-variant": "#e3e3de",
+                      "surface-tint": "#46607e",
+                      "primary": "#000815",
+                      "secondary-fixed-dim": "#88cffc",
+                      "outline-variant": "#c3c6ce"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "Jetbrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+          .glass-panel {
+              background: rgba(255, 255, 255, 0.85);
+              backdrop-filter: blur(12px);
+              -webkit-backdrop-filter: blur(12px);
+              border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+          }
+          
+          /* Custom active state for vendor sidebar per instructions */
+          .vendor-active {
+              border-left: 4px solid #41BEFD;
+              background-color: rgba(255, 255, 255, 0.15);
+              color: #ffffff;
+          }
+      </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased overflow-x-hidden min-h-screen">
+<!-- SIDEBAR NAVIGATION -->
+<!-- Applying exact structural and visual commands from JSON mapped to standard system, but tailored per prompt -->
+<nav class="bg-primary-container dark:bg-[#04070A] h-screen w-[280px] fixed left-0 top-0 overflow-y-auto flex flex-col h-full py-8 px-4 z-50 bg-primary-container dark:bg-[#04070A] border-r border-outline-variant/20 shadow-xl hidden md:flex">
+<!-- Brand Header -->
+<div class="mb-10 px-2 flex flex-col">
+<h1 class="text-headline-sm font-headline font-bold text-on-primary-container dark:text-primary-fixed mb-1">Setuu Enterprise</h1>
+<p class="text-label-md font-label text-on-primary-container/80 tracking-wide uppercase">Supply Chain Portal</p>
+</div>
+<!-- Primary Actions / CTA -->
+<button class="bg-secondary text-on-secondary py-3 px-4 rounded font-body font-medium flex items-center justify-center gap-2 mb-8 hover:bg-secondary/90 transition-colors shadow-sm w-full">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">add</span>
+            New Project
+        </button>
+<!-- Navigation Links -->
+<div class="flex-1 space-y-1">
+<!-- Active Tab: Dashboard (intent matched from prompt) -->
+<a class="vendor-active text-on-primary-container font-bold flex items-center gap-3 px-4 py-3 rounded-r-lg transition-transform duration-150 scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body">Dashboard</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="inventory_2">inventory_2</span>
+<span class="text-body-md font-body">Material POs &amp; Deliveries</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-body-md font-body">Tasks &amp; Inspections</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="build">build</span>
+<span class="text-body-md font-body">Defects &amp; Rework</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors flex items-center gap-3 px-4 py-3 rounded-lg border-l-4 border-transparent hover:border-primary-fixed/30" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="payments">payments</span>
+<span class="text-body-md font-body">Invoicing</span>
+</a>
+</div>
+<!-- Footer Navigation -->
+<div class="mt-auto pt-8 space-y-1">
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/10 transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="settings">settings</span>
+<span class="text-body-md font-body">Settings</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/10 transition-all duration-200 flex items-center gap-3 px-4 py-3 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[22px]" data-icon="help_center">help_center</span>
+<span class="text-body-md font-body">Support</span>
+</a>
+<!-- User Profile Area in Nav Footer (Desktop) -->
+<div class="mt-4 pt-4 border-t border-outline-variant/20 flex items-center gap-3 px-2">
+<img alt="Executive User Avatar" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30" data-alt="A small circular avatar showing a professional looking woman in her 30s with short dark hair, wearing a white hardhat and safety vest against a bright industrial background, conveying reliability and expertise in construction management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1nQeRUn6DXhJC9PeuCL49gq70cd5cFe5ugj-q6p6N7V3s1C4VTTxNbRLhCfOKl2WTm28STreKssJ2jEfjH51A86KCF1ycAwblIDp-ApC1FlrscK5-tcrt2Qg2_r8kFuXK2hiYjeWIqPpX79Xwpo9bGn5jvsRXzPuK0775RIRMRCZxlQuHMQtAaW_J0yuVsHfbbdGOkGoH4ndb2siIktjqW08uxlEsxqN1j3oiFsf9J3_SVXgF2ASx">
+<div class="flex flex-col">
+<span class="text-body-md font-body font-bold text-on-primary-container">E. Richards</span>
+<span class="text-label-sm font-label text-on-primary-container/70">Acme Steel Co.</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- TOP NAVIGATION BAR -->
+<!-- Glassmorphic implementation as requested -->
+<header class="fixed top-0 right-0 w-full md:w-[calc(100%-280px)] z-40 glass-panel shadow-sm flex justify-between items-center px-6 md:px-8 h-20 transition-all">
+<!-- Left Side: Mobile Menu Toggle (Hidden on Desktop) & Brand/Breadcrumbs -->
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary p-2 -ml-2 rounded hover:bg-surface-container-high/50 transition-colors">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<div class="hidden sm:flex items-center gap-3 border-r border-outline-variant/30 pr-4 mr-4">
+<!-- Vendor Logo Placeholder -->
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary flex items-center justify-center font-headline font-bold text-sm">
+                    AC
+                </div>
+<div class="flex flex-col">
+<span class="text-body-md font-body font-bold text-primary">Acme Steel</span>
+<span class="text-label-sm font-label text-outline tracking-wide">Powered by Setuu</span>
+</div>
+</div>
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="hidden md:flex">
+<ol class="flex items-center space-x-2 text-body-md font-body" role="list">
+<li class="">
+<div class="flex items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Supply Portal</a>
+</div>
+</li>
+<li class="">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-outline-variant text-[18px] mx-1">chevron_right</span>
+<span aria-current="page" class="text-primary font-bold">Dashboard</span>
+</div>
+</li>
+</ol>
+</nav>
+</div>
+<!-- Right Side: Actions -->
+<div class="flex items-center gap-2 md:gap-4">
+<!-- Quick Action -->
+<button class="hidden lg:flex items-center gap-2 text-primary font-body text-body-md font-medium px-4 py-2 rounded hover:bg-surface-container-high/50 transition-colors border border-outline-variant/30">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+                Log Delivery
+            </button>
+<div class="w-px h-6 bg-outline-variant/30 hidden md:block mx-2"></div>
+<!-- Icon Actions -->
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container-high/50 transition-colors relative">
+<span class="material-symbols-outlined text-[24px]" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full hover:bg-surface-container-high/50 transition-colors hidden sm:block">
+<span class="material-symbols-outlined text-[24px]" data-icon="history_edu">history_edu</span>
+</button>
+<!-- Mobile User Profile Avatar -->
+<button class="md:hidden ml-2 rounded-full border-2 border-transparent hover:border-primary transition-colors focus:outline-none">
+<img alt="Circular Professional Avatar" class="w-8 h-8 rounded-full object-cover" data-alt="A small circular avatar showing a professional looking woman in her 30s with short dark hair, wearing a white hardhat and safety vest against a bright industrial background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFhyRULh_KjgoKLic-rlETWoumNDUq96mWuo8NMYmzSaAQiUkQLBxNLZuWMFCdl8fk9d44KfvBRQayi-T-UX8f_jxwc72PdzcnZl5Jerp7M6jX0Qbie67n9dXu1lOCs_YG2FJB00vDj3mPPbvMDbXXCo9rmDGsA6su7hasQIqQQK4nx_JZv3Jn0tVKExiFBOjsIBdYyQt61zDSf_4sP8Gz0GUmyr8ahePArnFNYqFOWfxinJ1WT4wG">
+</button>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<!-- Minimal skeleton layout to demonstrate structural integration with the rail -->
+<main class="pt-24 pb-12 px-4 sm:px-6 md:px-8 md:ml-[280px] min-h-screen bg-surface">
+<!-- Page Header -->
+
+<!-- High-level Metric Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Metric Card 1 (Active) -->
+
+<!-- Metric Card 2 (Attention) -->
+
+<!-- Metric Card 3 (Warning) -->
+
+<!-- Metric Card 4 (Total) -->
+
+</div>
+<!-- Large empty canvas area for future content -->
+
+</main>
+
+
+</body></html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Engineer Preferences &amp; Integrations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "background": "#fbf9f4",
+                        "surface-dim": "#dbdad5",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-variant": "#e4e2dd",
+                        "outline": "#73777e",
+                        "secondary-container": "#8ad1ff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "surface-tint": "#46607e",
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "inverse-surface": "#30312d",
+                        "on-primary-container": "#6f89a9",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-container": "#6e8a9f",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "primary": "#000815",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fbf9f4",
+                        "on-tertiary-fixed": "#001e2e",
+                        "tertiary": "#00080f",
+                        "surface-container-low": "#f5f4ee",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed-variant": "#2d4a5c",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#adcae1",
+                        "surface-container-highest": "#e4e2dd",
+                        "on-primary-fixed": "#001d35",
+                        "tertiary-fixed": "#c8e6fd",
+                        "on-surface": "#1b1c19",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-secondary-container": "#005a7f",
+                        "tertiary-container": "#002233",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary": "#00658d",
+                        "inverse-on-surface": "#f2f1eb",
+                        "surface": "#fbf9f4",
+                        "primary-container": "#00213c",
+                        "surface-container": "#efeee8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit-xs": "4px",
+                        "unit-lg": "24px",
+                        "unit-md": "16px",
+                        "grid-columns": "4",
+                        "gutter": "12px",
+                        "unit-sm": "8px",
+                        "margin": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Merriweather"],
+                        "title-md": ["Inter"],
+                        "headline-lg": ["Merriweather"],
+                        "data-mono": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "16px", "letterSpacing": "-0.02em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #00213c;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00213c;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased font-body-md pb-[72px] pt-16 md:hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-md border-b border-outline-variant flex justify-between items-center h-16 px-margin transition-colors duration-200">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Field Execution Suite</h1>
+</div>
+<div>
+<span class="font-data-mono text-data-mono text-primary">v2.4</span>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="px-margin py-unit-lg space-y-unit-lg"><div class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded flex items-center gap-2 mb-unit-lg">
+<span class="material-symbols-outlined">sync_saved_locally</span>
+<span class="font-title-md text-body-md">Offline Sync Active</span>
+</div>
+<!-- Section: Tool Bindings -->
+<section class="space-y-unit-md">
+<h2 class="font-headline-md text-headline-md text-primary border-b border-outline-variant pb-2 tracking-tight">Integration Settings</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded shadow-sm divide-y divide-outline-variant space-y-0">
+<!-- Toggle Row -->
+<div class="flex justify-between items-center px-4 h-[48px]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">developer_board</span>
+<span class="font-title-md text-title-md text-on-background">Jira Sync</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant top-[-4px] transition-transform duration-200" id="jira-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-4 rounded-full bg-outline-variant cursor-pointer" for="jira-toggle"></label>
+</div>
+</div>
+<!-- Toggle Row -->
+<div class="flex justify-between items-center px-4 h-[48px]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">code</span>
+<span class="font-title-md text-title-md text-on-background">GitLab Pipeline</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant top-[-4px] transition-transform duration-200" id="gitlab-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-4 rounded-full bg-outline-variant cursor-pointer" for="gitlab-toggle"></label>
+</div>
+</div>
+<!-- Toggle Row -->
+<div class="flex justify-between items-center px-4 h-[48px]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">3d_rotation</span>
+<span class="font-title-md text-title-md text-on-background">CAD Viewer Cache</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant top-[-4px] transition-transform duration-200" id="cad-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-4 rounded-full bg-outline-variant cursor-pointer" for="cad-toggle"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Notification Protocols -->
+<section class="space-y-unit-md">
+<h2 class="font-headline-md text-headline-md text-primary border-b border-outline-variant pb-2 tracking-tight">Notification Protocols</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded shadow-sm divide-y divide-outline-variant">
+<!-- Toggle Row -->
+<div class="flex justify-between items-center px-4 h-[48px]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">warning</span>
+<span class="font-title-md text-title-md text-on-background">Critical Blockers</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant top-[-4px] transition-transform duration-200" id="critical-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-4 rounded-full bg-outline-variant cursor-pointer" for="critical-toggle"></label>
+</div>
+</div>
+<!-- Toggle Row -->
+<div class="flex justify-between items-center px-4 h-[48px]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">reviews</span>
+<span class="font-title-md text-title-md text-on-background">Review Requests</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-outline-variant top-[-4px] transition-transform duration-200" id="review-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-4 rounded-full bg-outline-variant cursor-pointer" for="review-toggle"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Version Info -->
+<div class="text-center mt-unit-lg opacity-60">
+<p class="font-data-mono text-data-mono text-on-surface-variant">Firmware v2.4.198 (Stable)</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant mt-1">Env: Production-Blue</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-white/85 backdrop-blur-md border-t border-outline-variant flex justify-around items-center h-[72px] pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:opacity-80 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">construction</span>
+<span class="font-label-caps text-label-caps mt-1">Workbench</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:opacity-80 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-caps text-label-caps mt-1">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:opacity-80 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label-caps text-label-caps mt-1">Hub</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:opacity-80 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-label-caps text-label-caps mt-1">Issues</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 hover:opacity-80 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-caps text-label-caps mt-1">Me</span>
+</button>
+</nav>
+</body></html>

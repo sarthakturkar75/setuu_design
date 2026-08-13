@@ -1,0 +1,613 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Project Module Flags &amp; Configuration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#c6e7ff",
+                    "on-primary-container": "#6f89a9",
+                    "primary-fixed": "#d1e4ff",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "secondary": "#00658d",
+                    "secondary-container": "#8ad1ff",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "surface-dim": "#dbdad5",
+                    "on-primary-fixed": "#001d35",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#43474d",
+                    "on-tertiary-fixed": "#001e2d",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c3c6ce",
+                    "secondary-fixed-dim": "#88cffc",
+                    "primary-container": "#00213c",
+                    "inverse-surface": "#30312e",
+                    "on-tertiary": "#ffffff",
+                    "tertiary": "#00080f",
+                    "on-surface": "#1b1c19",
+                    "surface-tint": "#46607e",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "primary-fixed-dim": "#aec9eb",
+                    "surface-variant": "#e3e3de",
+                    "primary": "#000815",
+                    "on-background": "#1b1c19",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#002233",
+                    "inverse-primary": "#aec9eb",
+                    "surface-container-high": "#e9e8e3",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "outline": "#73777e",
+                    "surface-container-low": "#f5f4ef",
+                    "surface-container-highest": "#e3e3de",
+                    "on-secondary-container": "#005a7f",
+                    "surface": "#faf9f4",
+                    "background": "#faf9f4",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface-container": "#efeee9",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-tertiary-container": "#0090c7",
+                    "surface-bright": "#faf9f4",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            },
+            "fontSize": {}
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; color: #1b1c19; }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Merriweather', serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #00213c;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00213c;
+        }
+        .toggle-checkbox:checked + .toggle-label::after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+        .toggle-label {
+            width: 2.5rem;
+            height: 1.25rem;
+            background-color: #c3c6ce;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .toggle-label::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 1rem;
+            height: 1rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .module-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col bg-primary-container text-on-primary-container shadow-xl w-[280px] h-screen fixed left-0 top-0 z-50 p-4 transition-all duration-300">
+<div class="flex items-center gap-3 mb-8 px-2">
+<img class="w-10 h-10 rounded-DEFAULT object-cover border border-on-primary-container/20" data-alt="A minimalist, highly detailed 3D render of a corporate logo featuring interconnected abstract geometric shapes representing construction and enterprise software, set against a pristine, well-lit studio background. The logo employs deep navy blues and subtle slate greys, embodying industrial reliability and precision engineering. The lighting is soft but directional, highlighting the clean edges and premium material finish of the logo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkHdSZO_n_2w2OQ3buwIn2k93Sy_elwmDTgyqIVRkhsPH2UVR1UbN8wEOj9X4nwQvMXvj9xJnCIHkN6mEBwexQFsCzYR2n3ZqCiyf_er1OlA3av5ornUAKbNKPQIDtuXI_KWU7933OAvyUeaWsVa0sToobbS972QucdGL88SlF7kpQ-4FigyiC7JMvg4z83aihSxgZZEXe7BNHdA2QE5M4X_B5ObkjDO1AIvK1rA3duE7XAgEctP1f">
+<div>
+<h1 class="font-headline text-xl font-bold text-on-primary">Setuu Admin</h1>
+<p class="font-body text-xs text-on-primary-container/80">Enterprise Control</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-sm font-medium" href="#"><span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-sm font-medium" href="#"><span class="material-symbols-outlined" data-icon="account_tree">account_tree</span> Projects</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-sm font-medium" href="#"><span class="material-symbols-outlined" data-icon="group">group</span> Users</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-sm font-medium" href="#"><span class="material-symbols-outlined" data-icon="architecture">architecture</span> Drawings</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-sm font-medium" href="#"><span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span> Inventory</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-sm font-medium" href="#"><span class="material-symbols-outlined" data-icon="handshake">handshake</span> Vendors</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary text-on-secondary font-bold translate-x-1 duration-200 transition-all text-sm" href="#"><span class="material-symbols-outlined" data-icon="settings">settings</span> Settings</a></li>
+</ul>
+<div class="mt-auto flex flex-col gap-4">
+<button class="bg-secondary text-on-secondary font-body font-semibold py-2.5 px-4 rounded-lg shadow-sm hover:opacity-90 transition-opacity w-full text-sm">Raise Ticket</button>
+<div class="border-t border-on-primary-container/20 pt-4">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-xs" href="#"><span class="material-symbols-outlined text-[18px]" data-icon="history_edu">history_edu</span> Audit Logs</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-primary-container/70 hover:text-on-primary hover:bg-primary/20 transition-all font-body text-xs" href="#"><span class="material-symbols-outlined text-[18px]" data-icon="dns">dns</span> System Status</a>
+</div>
+</div>
+</nav>
+<!-- TopNavBar (Mobile) -->
+<header class="md:hidden fixed top-0 right-0 left-0 z-40 flex justify-between items-center px-6 h-16 bg-surface/85 backdrop-blur-md shadow-sm border-b border-outline-variant/30 text-primary">
+<h1 class="font-headline text-headline-sm font-bold text-primary tracking-tight">Setuu Enterprise</h1>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="sync">sync</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="emergency_home">emergency_home</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 md:ml-[280px] pt-20 md:pt-8 p-4 md:p-8 max-w-[1600px] mx-auto w-full flex flex-col xl:flex-row gap-8">
+<div class="flex-1">
+<!-- Header Section -->
+<div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-sm text-outline mb-2 font-label">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">Settings</li>
+<li><span class="mx-2">/</span></li>
+<li aria-current="page" class="text-on-surface font-medium">Project Modules</li>
+</ol>
+</nav>
+<h2 class="font-headline text-headline-lg font-bold text-primary mb-1">Project Module Flags &amp; Module Controls</h2>
+<p class="font-body text-on-surface-variant">Manage feature visibility and platform-wide configurations.</p>
+</div>
+<!-- Global Platform Settings -->
+<div class="flex gap-2">
+<button class="bg-surface text-on-surface border border-outline-variant font-body font-medium py-2 px-4 rounded-lg shadow-sm hover:bg-surface-variant transition-colors text-sm flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">restart_alt</span> Reset to Org Defaults</button>
+<button class="bg-surface text-on-surface border border-outline-variant font-body font-medium py-2 px-4 rounded-lg shadow-sm hover:bg-surface-variant transition-colors text-sm flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">download</span> Export Configuration</button>
+<button class="bg-primary text-on-primary font-body font-medium py-2 px-4 rounded-lg shadow-sm hover:opacity-90 transition-opacity text-sm flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">done_all</span> Apply to Project Group</button>
+</div>
+</div>
+<!-- Project Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="module-card rounded-xl shadow-sm flex flex-col">
+<div class="p-5 border-b border-outline-variant/30 flex items-start justify-between">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined text-2xl" data-icon="inventory_2">inventory_2</span>
+</div>
+<div>
+<h4 class="font-headline text-lg font-bold text-on-surface mb-1 flex items-center gap-2">Materials Tracker <span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-2 py-0.5 rounded font-label font-medium uppercase tracking-wide">Active</span></h4>
+<p class="text-sm text-on-surface-variant font-body mb-2">Manage inventory, track supply chain logistics, and monitor material usage across project phases.</p>
+<div class="flex items-center gap-4 text-xs font-label text-outline">
+<span title="Module ID">ID: MOD-MAT-104</span>
+<span title="Module Version">v2.4.1</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 align-middle select-none mt-1">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" id="m-1" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="m-1"></label>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest flex-grow">
+<h5 class="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">Role-Based Access Control</h5>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">PM</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option selected="">Full Access</option>
+<option>View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Employee</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Vendor</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Client</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container border-t border-outline-variant/30 flex justify-between items-center rounded-b-xl">
+<span class="text-xs font-label text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync</span> Last Sync: Today, 10:45 AM</span>
+</div>
+</div>
+<div class="module-card rounded-xl shadow-sm flex flex-col">
+<div class="p-5 border-b border-outline-variant/30 flex items-start justify-between">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined text-2xl" data-icon="architecture">architecture</span>
+</div>
+<div>
+<h4 class="font-headline text-lg font-bold text-on-surface mb-1 flex items-center gap-2">Drawing Hub <span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-2 py-0.5 rounded font-label font-medium uppercase tracking-wide">Active</span></h4>
+<p class="text-sm text-on-surface-variant font-body mb-2">Centralized repository for blueprints, architectural designs, and integrated CAD viewer.</p>
+<div class="flex items-center gap-4 text-xs font-label text-outline">
+<span title="Module ID">ID: MOD-DRW-201</span>
+<span title="Module Version">v3.1.0</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 align-middle select-none mt-1">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" id="m-2" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="m-2"></label>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest flex-grow">
+<h5 class="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">Role-Based Access Control</h5>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">PM</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option selected="">Full Access</option>
+<option>View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Employee</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Vendor</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Client</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container border-t border-outline-variant/30 flex justify-between items-center rounded-b-xl">
+<span class="text-xs font-label text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync</span> Last Sync: Yesterday, 16:30 PM</span>
+</div>
+</div>
+<div class="module-card rounded-xl shadow-sm flex flex-col">
+<div class="p-5 border-b border-outline-variant/30 flex items-start justify-between">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined text-2xl" data-icon="report_problem">report_problem</span>
+</div>
+<div>
+<h4 class="font-headline text-lg font-bold text-on-surface mb-1 flex items-center gap-2">Issue Log <span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-2 py-0.5 rounded font-label font-medium uppercase tracking-wide">Active</span></h4>
+<p class="text-sm text-on-surface-variant font-body mb-2">Track site defects, safety observations, and manage resolution workflows.</p>
+<div class="flex items-center gap-4 text-xs font-label text-outline">
+<span title="Module ID">ID: MOD-ISS-092</span>
+<span title="Module Version">v1.8.5</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 align-middle select-none mt-1">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" id="m-3" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="m-3"></label>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest flex-grow">
+<h5 class="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">Role-Based Access Control</h5>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">PM</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option selected="">Full Access</option>
+<option>View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Employee</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option selected="">Full Access</option>
+<option>View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Vendor</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Client</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container border-t border-outline-variant/30 flex justify-between items-center rounded-b-xl">
+<span class="text-xs font-label text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync</span> Last Sync: Today, 08:15 AM</span>
+</div>
+</div>
+<div class="module-card rounded-xl shadow-sm flex flex-col">
+<div class="p-5 border-b border-outline-variant/30 flex items-start justify-between">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined text-2xl" data-icon="photo_camera">photo_camera</span>
+</div>
+<div>
+<h4 class="font-headline text-lg font-bold text-on-surface mb-1 flex items-center gap-2">Media Capture <span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-2 py-0.5 rounded font-label font-medium uppercase tracking-wide">Active</span></h4>
+<p class="text-sm text-on-surface-variant font-body mb-2">Capture site photos, video evidence, and attach visual context to reports.</p>
+<div class="flex items-center gap-4 text-xs font-label text-outline">
+<span title="Module ID">ID: MOD-MED-334</span>
+<span title="Module Version">v2.1.0</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 align-middle select-none mt-1">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" id="m-4" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="m-4"></label>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest flex-grow">
+<h5 class="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">Role-Based Access Control</h5>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">PM</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option selected="">Full Access</option>
+<option>View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Employee</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option selected="">Full Access</option>
+<option>View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Vendor</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Client</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container border-t border-outline-variant/30 flex justify-between items-center rounded-b-xl">
+<span class="text-xs font-label text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync</span> Last Sync: Today, 11:00 AM</span>
+<span class="text-xs font-medium text-secondary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">link</span> Requires Drawing Hub</span>
+</div>
+</div>
+<div class="module-card rounded-xl shadow-sm flex flex-col">
+<div class="p-5 border-b border-outline-variant/30 flex items-start justify-between">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined text-2xl" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<h4 class="font-headline text-lg font-bold text-on-surface mb-1 flex items-center gap-2">Audit Trail <span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-2 py-0.5 rounded font-label font-medium uppercase tracking-wide">Active</span></h4>
+<p class="text-sm text-on-surface-variant font-body mb-2">Maintain immutable logs for compliance, security reviews, and operational auditing.</p>
+<div class="flex items-center gap-4 text-xs font-label text-outline">
+<span title="Module ID">ID: MOD-AUD-505</span>
+<span title="Module Version">v4.0.0</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 align-middle select-none mt-1">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" id="m-5" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="m-5"></label>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest flex-grow">
+<h5 class="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">Role-Based Access Control</h5>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">PM</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option selected="">View Only</option>
+<option>Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Employee</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Vendor</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]" disabled="">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Client</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]" disabled="">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container border-t border-outline-variant/30 flex justify-between items-center rounded-b-xl">
+<span class="text-xs font-label text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync</span> Last Sync: Real-time</span>
+<span class="text-xs font-medium text-error flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">lock</span> Admin Override</span>
+</div>
+</div>
+<div class="module-card rounded-xl shadow-sm flex flex-col opacity-75">
+<div class="p-5 border-b border-outline-variant/30 flex items-start justify-between">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-surface-variant rounded-lg text-outline">
+<span class="material-symbols-outlined text-2xl" data-icon="handshake">handshake</span>
+</div>
+<div>
+<h4 class="font-headline text-lg font-bold text-on-surface mb-1 flex items-center gap-2">Vendor Portal <span class="bg-surface-variant text-on-surface-variant text-[10px] px-2 py-0.5 rounded font-label font-medium uppercase tracking-wide">Inactive</span></h4>
+<p class="text-sm text-on-surface-variant font-body mb-2">External interface for subcontractors and suppliers to submit invoices and updates.</p>
+<div class="flex items-center gap-4 text-xs font-label text-outline">
+<span title="Module ID">ID: MOD-VND-811</span>
+<span title="Module Version">v1.2.0</span>
+</div>
+</div>
+</div>
+<div class="relative inline-block w-10 align-middle select-none mt-1">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer" id="m-6" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer" for="m-6"></label>
+</div>
+</div>
+<div class="p-5 bg-surface-container-lowest flex-grow">
+<h5 class="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">Role-Based Access Control</h5>
+<div class="space-y-3 opacity-50 pointer-events-none">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">PM</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Employee</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Vendor</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-on-surface-variant w-24">Client</span>
+<select class="form-select text-sm rounded border-outline-variant/50 py-1 pl-2 pr-8 text-on-surface w-full max-w-[200px]">
+<option>Full Access</option>
+<option>View Only</option>
+<option selected="">Hidden</option>
+</select>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface-container border-t border-outline-variant/30 flex justify-between items-center rounded-b-xl">
+<span class="text-xs font-label text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync</span> Last Sync: N/A</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit History Sidebar -->
+<aside class="w-full xl:w-80 bg-surface-container-lowest border border-outline-variant/30 rounded-xl flex flex-col h-[calc(100vh-8rem)] sticky top-24 shadow-sm hidden md:flex">
+<div class="p-4 border-b border-outline-variant/30 bg-surface-container/50 rounded-t-xl flex justify-between items-center">
+<h3 class="font-headline font-bold text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-secondary">history</span> Audit Log</h3>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[20px]">filter_list</span></button>
+</div>
+<div class="p-4 flex-grow overflow-y-auto space-y-4 font-label text-xs">
+<div class="border-l-2 border-secondary pl-3 relative">
+<div class="absolute w-2 h-2 bg-secondary rounded-full -left-[5px] top-1"></div>
+<p class="text-on-surface mb-1">Admin updated Vendor Portal access for Client role</p>
+<div class="flex justify-between text-outline">
+<span>Admin User</span>
+<span>Oct 28, 14:20</span>
+</div>
+</div>
+<div class="border-l-2 border-outline-variant pl-3 relative">
+<div class="absolute w-2 h-2 bg-outline-variant rounded-full -left-[5px] top-1"></div>
+<p class="text-on-surface mb-1">System auto-synced Drawing Hub dependencies</p>
+<div class="flex justify-between text-outline">
+<span>System</span>
+<span>Oct 28, 10:15</span>
+</div>
+</div>
+<div class="border-l-2 border-outline-variant pl-3 relative">
+<div class="absolute w-2 h-2 bg-outline-variant rounded-full -left-[5px] top-1"></div>
+<p class="text-on-surface mb-1">PM changed Issue Log to 'View Only' for Vendor</p>
+<div class="flex justify-between text-outline">
+<span>John Doe (PM)</span>
+<span>Oct 27, 09:30</span>
+</div>
+</div>
+<div class="border-l-2 border-outline-variant pl-3 relative">
+<div class="absolute w-2 h-2 bg-outline-variant rounded-full -left-[5px] top-1"></div>
+<p class="text-on-surface mb-1">Module 'Media Capture' activated</p>
+<div class="flex justify-between text-outline">
+<span>Admin User</span>
+<span>Oct 25, 16:45</span>
+</div>
+</div>
+<div class="border-l-2 border-outline-variant pl-3 relative">
+<div class="absolute w-2 h-2 bg-outline-variant rounded-full -left-[5px] top-1"></div>
+<p class="text-on-surface mb-1">Initial configuration loaded from defaults</p>
+<div class="flex justify-between text-outline">
+<span>System</span>
+<span>Oct 01, 00:00</span>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant/30 text-center">
+<a class="text-sm font-medium text-secondary hover:underline" href="#">View Full Logs</a>
+</div>
+</aside>
+</main>
+</body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Client Sidebar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-container": "#0090c7",
+                        "secondary-container": "#8ad1ff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "primary": "#000815",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#00213c",
+                        "outline": "#73777e",
+                        "primary-fixed": "#d1e4ff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-primary-fixed": "#001d35",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-dim": "#dbdad5",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1b1c19",
+                        "surface-container-highest": "#e3e3de",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container": "#efeee9",
+                        "on-surface": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "background": "#faf9f4",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#6f89a9",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f5f4ef",
+                        "secondary-fixed": "#c6e7ff",
+                        "tertiary": "#00080f",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#30312e",
+                        "on-surface-variant": "#43474d",
+                        "outline-variant": "#c3c6ce",
+                        "tertiary-container": "#002233",
+                        "surface-variant": "#e3e3de",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-tint": "#46607e",
+                        "surface": "#faf9f4",
+                        "secondary": "#00658d",
+                        "precision-cyan": "#41BEFD",
+                        "deep-navy": "#00213C"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface dark:bg-[#04070A] min-h-screen flex items-start justify-start font-body">
+<!-- Client Sidebar Isolated Component -->
+<aside class="w-[280px] h-screen bg-deep-navy flex flex-col shadow-xl flex-shrink-0 z-50 bg-primary-container">
+<!-- Header / Brand Area -->
+<div class="px-6 py-8 flex items-center gap-3 border-b border-on-primary-container/20"><div class="flex items-center gap-3"><img src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A" alt="Setuu Logo" class="w-10 h-10 object-contain"><div><h1 class="text-on-primary-container font-headline font-bold text-lg leading-tight tracking-tight">Setuu Enterprise</h1><p class="text-on-primary-container/70 font-label text-[10px] uppercase tracking-wider mt-0.5">Capital Project Portal</p></div></div></div>
+<!-- Navigation Links -->
+<nav class="flex-1 py-6 flex flex-col gap-1 px-3 overflow-y-auto">
+<!-- Active State -->
+<a class="group flex items-center gap-4 px-4 py-3 rounded text-on-primary-container bg-primary-fixed/10 font-bold border-l-4 border-secondary-fixed text-sm font-body transition-all duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>Portfolio</a>
+<!-- Inactive States -->
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined">analytics</span>Briefing Room</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined">payments</span>Financials</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined">inventory_2</span>Deliverables</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined">timeline</span>Progress</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined">groups</span>Meetings</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined">lock</span>Vault</a>
+</nav>
+<!-- User Profile & Footer Area -->
+<div class="mt-auto px-6 py-4 border-t border-on-primary-container/20 flex flex-col gap-4">
+<!-- User Profile Snippet -->
+<button class="flex items-center gap-3 text-left group w-full p-2 -ml-2 rounded hover:bg-white/5 transition-colors"><div class="w-8 h-8 rounded-full bg-on-primary-container/30 border border-on-primary-container/50 overflow-hidden flex-shrink-0"><img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkdHJXHFKTfqOSHfWgPY6AsfuZcHqyNHslAPDjasVGUNQsiMySglP6n32sa0mBKi1gBEy1wIAzk630B6iLrt7RcwIIreYH9_tLy9UdJK3E6wVS2RRUJdAO9j0CAl1ZRPewVwElWWP_xUMpDdkegnhGsOyIiXQ0iVzpmXlxXkoyBZO4_ONZdl2Y09BBl1C716JBjylOIo0ZI9U_fDaes-UVu9nQxp43TSuyhPgPEd0WCvP6PdUcSNZO"></div><div class="flex-1 overflow-hidden"><p class="text-on-primary-container font-headline font-bold text-sm truncate">Client Executive</p><p class="text-on-primary-container/60 font-body text-xs truncate">Acme Corporation</p></div><span class="material-symbols-outlined text-on-primary-container/50 text-[18px] group-hover:text-on-primary-container transition-colors">unfold_more</span></button>
+<!-- Version Info -->
+<div class="flex justify-between items-center text-[11px] font-label text-on-primary/40 pt-2">
+<span class="">Setuu Enterprise v2.4</span>
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+</div>
+</div>
+</aside>
+
+
+</body></html>

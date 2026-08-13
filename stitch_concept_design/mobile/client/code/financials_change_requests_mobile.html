@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Financials</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1b1c19",
+                        "on-secondary-fixed": "#001e2d",
+                        "background": "#faf9f4",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#c6e7ff",
+                        "inverse-primary": "#aec9eb",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#0090c7",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface": "#faf9f4",
+                        "outline-variant": "#c3c6ce",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-surface-variant": "#43474d",
+                        "surface-variant": "#e3e3de",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "secondary-container": "#8ad1ff",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-container": "#efeee9",
+                        "primary-container": "#00213c",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-low": "#f5f4ef",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "primary": "#000815",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-container": "#6f89a9",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-container": "#002233",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#73777e",
+                        "on-primary-fixed": "#001d35",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dbdad5",
+                        "secondary": "#00658d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24 selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface/85 text-primary font-headline text-headline-sm tracking-tight font-bold fixed top-0 w-full z-50 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-200 flex justify-between items-center px-4 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label text-xs">
+                CE
+            </div>
+<h1 class="font-headline font-bold text-primary truncate">Setuu Enterprise</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container active:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-2xl">notifications</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="pt-20 px-4 md:px-6 max-w-lg mx-auto pb-6 space-y-6">
+<!-- Page Header -->
+<div class="mb-2">
+<h2 class="font-headline text-2xl font-bold text-primary">Financials</h2>
+<p class="font-body text-sm text-on-surface-variant mt-1">Project Code: <span class="font-label">PRJ-8492-X</span></p>
+</div>
+<!-- KPI Bento Grid -->
+<section class="grid grid-cols-2 gap-3">
+<!-- Total Contract Value -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm flex flex-col justify-between h-28">
+<span class="font-body text-xs font-medium text-on-surface-variant uppercase tracking-wider">Billed to Date</span>
+<div>
+<span class="font-label text-xl font-bold text-primary block">$1.24M</span>
+<span class="font-body text-[10px] text-emerald-700 font-medium flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px] fill-icon">check_circle</span>
+                        Fully Funded
+                    </span>
+</div>
+</div>
+<!-- Pending Variations -->
+<div class="bg-primary-container border border-primary-container rounded-lg p-4 shadow-sm flex flex-col justify-between h-28 text-on-primary-container relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="font-body text-xs font-medium uppercase tracking-wider text-on-primary-fixed-variant">Pending Variations</span>
+<div class="relative z-10">
+<span class="font-label text-xl font-bold text-white block">+$42.5K</span>
+<span class="font-body text-[10px] text-on-primary-fixed-variant font-medium flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[12px]">pending_actions</span>
+                        3 Requests
+                    </span>
+</div>
+</div>
+<!-- Approved Variations -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm flex flex-col justify-between h-28 col-span-2 sm:col-span-1">
+<span class="font-body text-xs font-medium text-on-surface-variant uppercase tracking-wider">Approved Variations</span>
+<div>
+<span class="font-label text-lg font-bold text-primary block">+$18.2K</span>
+<span class="font-body text-[10px] text-on-surface-variant font-medium mt-1 block">Impact: +4 Days</span>
+</div>
+</div>
+</section>
+<!-- Change Request Board -->
+<section class="mt-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline text-lg font-bold text-primary">Change Request Board</h3>
+<span class="bg-surface-container-high text-on-surface text-xs font-medium px-2 py-1 rounded-full">3 Active</span>
+</div>
+<div class="space-y-4">
+<!-- Active CR: Action Required -->
+<article class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative">
+<!-- Status Strip -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-purple-600"></div>
+<div class="p-4 pl-5">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-xs font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">Needs Discussion</span>
+<span class="font-label text-xs text-on-surface-variant">CR-042</span>
+</div>
+<h4 class="font-headline text-base font-bold text-primary mb-2 leading-tight">Structural Steel Specification Upgrade</h4>
+<p class="font-body text-sm text-on-surface-variant line-clamp-2 mb-4">Client requested upgrade from standard grade to high-tensile steel for the secondary support beams due to revised load calculations.</p>
+<div class="grid grid-cols-2 gap-2 mb-4 bg-surface/50 rounded p-2 border border-outline-variant/20">
+<div>
+<span class="block text-[10px] text-on-surface-variant uppercase tracking-wider font-medium">Cost Impact</span>
+<span class="font-label text-sm font-bold text-primary">+$28,400</span>
+</div>
+<div>
+<span class="block text-[10px] text-on-surface-variant uppercase tracking-wider font-medium">Time Impact</span>
+<span class="font-label text-sm font-bold text-primary">+12 Days</span>
+</div>
+</div>
+<button class="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-body font-medium text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-lg">fact_check</span>
+                            Review &amp; Approve
+                        </button>
+</div>
+</article>
+<!-- Active CR: Pending Vendor -->
+<article class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl overflow-hidden shadow-sm relative opacity-90">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-slate-400"></div>
+<div class="p-4 pl-5">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-xs font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">Pending Vendor Quote</span>
+<span class="font-label text-xs text-on-surface-variant">CR-043</span>
+</div>
+<h4 class="font-headline text-base font-bold text-primary mb-2 leading-tight">HVAC Rerouting - Level 2</h4>
+<div class="flex items-center gap-2 mt-3 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-base">hourglass_empty</span>
+<span class="font-body">Awaiting finalized cost estimates.</span>
+</div>
+</div>
+</article>
+<!-- Verified CR: Acknowledged -->
+<article class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm relative opacity-75">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600"></div>
+<div class="p-4 pl-5">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-xs font-bold text-blue-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm fill-icon">verified</span>
+                                Acknowledged
+                            </span>
+<span class="font-label text-xs text-on-surface-variant">CR-039</span>
+</div>
+<h4 class="font-headline text-base font-bold text-primary mb-1 line-through decoration-outline-variant">Additional Soil Testing</h4>
+<div class="flex items-center justify-between mt-3 bg-blue-50/50 p-2 rounded border border-blue-100">
+<div class="flex items-center gap-2 text-xs">
+<div class="w-5 h-5 rounded-full bg-primary-container text-white flex items-center justify-center font-label text-[8px]">CE</div>
+<span class="font-body text-on-surface-variant">Approved by Client Exec</span>
+</div>
+<span class="font-label text-[10px] text-outline">2023-10-12T14:32Z</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface/85 text-primary font-label text-label-sm font-headline text-primary fixed bottom-0 w-full z-50 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/30 shadow-lg flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform flex-1 h-full pt-2" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">dashboard</span>
+<span class="text-[10px] uppercase tracking-wider">Portfolio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform flex-1 h-full pt-2" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">description</span>
+<span class="text-[10px] uppercase tracking-wider">Briefing</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 transition-transform flex-1 h-full pt-2" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl fill-icon">payments</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Financials</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform flex-1 h-full pt-2" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">trending_up</span>
+<span class="text-[10px] uppercase tracking-wider">Progress</span>
+</a>
+</nav>
+<script>
+        // Simple script to handle safe area padding for modern mobile browsers
+        if (CSS.supports('padding-bottom: env(safe-area-inset-bottom)')) {
+            document.querySelector('.pb-safe').style.paddingBottom = 'calc(env(safe-area-inset-bottom) + 0.5rem)';
+        }
+    </script>
+</body></html>

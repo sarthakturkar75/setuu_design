@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Super Admin Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "secondary": "#00658d",
+                        "tertiary": "#00080f",
+                        "tertiary-container": "#002233",
+                        "surface": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-primary": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "on-background": "#1b1c19",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#005a7f",
+                        "secondary-container": "#8ad1ff",
+                        "surface-tint": "#46607e",
+                        "outline": "#73777e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-container": "#0090c7",
+                        "on-surface": "#1b1c19",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-bright": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-surface-variant": "#43474d",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "primary-container": "#00213c",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed": "#c6e7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9f4;
+            color: #1b1c19;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+        }
+        .tech-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="h-screen w-[280px] fixed left-0 top-0 bg-primary-container shadow-md flex flex-col py-6 px-4 z-50">
+<div class="mb-8 flex items-center gap-4 px-2">
+<img alt="Organization Logo" class="w-12 h-12 rounded-lg object-cover bg-white" src="https://lh3.googleusercontent.com/aida/AP1WRLvf2UnxQ99O3n3KzcQzx1a93WtRA-nLN209AiWzpl00FpjWloCC1aRRCUSLlFAnNTkt9xjXFFA8tKEOfaHNyxVmW4yRJwFApS3CEhoaqBWEC9upVq44WzrgAW128Duc8XtUFU-3v5B-zXAwdmbQw90acwCUC1nEJEkZBigc82M_hV-WSov8eOqN0CquoDsmN5Z7JQHQZOe1wefOGHujAvFUxzaN5u-p8rbqC8SkT-FNj--tSktX5VYZnZY">
+<div>
+<h1 class="font-headline text-xl font-bold text-on-primary">Setuu Enterprise</h1>
+<p class="text-on-primary-container text-xs tech-font mt-1">Super Admin Console</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary text-on-secondary rounded-lg font-bold scale-95 duration-150 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container hover:bg-on-primary-fixed-variant/10 rounded-lg hover:bg-secondary-container/20 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">engineering</span>
+                    Projects
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container hover:bg-on-primary-fixed-variant/10 rounded-lg hover:bg-secondary-container/20 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                    Materials
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container hover:bg-on-primary-fixed-variant/10 rounded-lg hover:bg-secondary-container/20 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+                    Audit Logs
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container hover:bg-on-primary-fixed-variant/10 rounded-lg hover:bg-secondary-container/20 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Subscription
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container hover:bg-on-primary-fixed-variant/10 rounded-lg hover:bg-secondary-container/20 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+                    Support
+                </a>
+</li>
+</ul>
+<div class="mt-auto px-4 py-4 text-on-primary-container text-xs border-t border-on-primary-container/20 tech-font">
+            SYSTEM_STATUS: NOMINAL<br>
+            v2.4.1 (STABLE)
+        </div>
+</nav>
+<!-- Main Content Area -->
+<div class="ml-[280px] flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-surface/85 backdrop-blur-md flex items-center justify-between px-8 z-40 border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<span class="font-headline font-bold text-lg text-primary">Global Security &amp; Storage Telemetry</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative text-on-surface-variant hover:bg-surface-container-high transition-all p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high transition-all p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high transition-all p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold font-headline ml-2">
+                    SA
+                </div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<main class="flex-1 mt-16 p-8 overflow-y-auto max-w-[1600px] mx-auto w-full">
+<div class="mb-8">
+<h2 class="font-headline text-3xl font-bold text-primary mb-2">Platform Telemetry Overview</h2>
+<p class="font-body text-on-surface-variant">Anonymized global infrastructure health and security metrics.</p>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Threat Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-3 bg-error-container text-on-error-container rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<span class="tech-font text-xs text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +12%
+                        </span>
+</div>
+<h3 class="font-body text-on-surface-variant text-sm mb-1 relative z-10">Total Threats Intercepted</h3>
+<div class="font-headline text-4xl font-bold text-primary relative z-10">142</div>
+<p class="tech-font text-xs text-outline mt-3 relative z-10">LAST_30_DAYS</p>
+</div>
+<!-- Storage Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-3 bg-secondary-container text-on-secondary-container rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hard_drive_2</span>
+</div>
+<span class="tech-font text-xs text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +5.2%
+                        </span>
+</div>
+<h3 class="font-body text-on-surface-variant text-sm mb-1 relative z-10">Storage Saved (Deduplication)</h3>
+<div class="font-headline text-4xl font-bold text-primary relative z-10">18<span class="text-xl text-outline ml-1">GB</span></div>
+<p class="tech-font text-xs text-outline mt-3 relative z-10">GLOBAL_CLUSTER</p>
+</div>
+<!-- Active Projects -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/30 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-3 bg-primary-fixed text-on-primary-fixed rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+</div>
+</div>
+<h3 class="font-body text-on-surface-variant text-sm mb-1 relative z-10">Active Global Projects</h3>
+<div class="font-headline text-4xl font-bold text-primary relative z-10">3,492</div>
+<p class="tech-font text-xs text-outline mt-3 relative z-10">ANONYMIZED_COUNT</p>
+</div>
+<!-- API Requests -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary-container/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-3 bg-tertiary-container text-on-tertiary-container rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">api</span>
+</div>
+</div>
+<h3 class="font-body text-on-surface-variant text-sm mb-1 relative z-10">API Requests (24h)</h3>
+<div class="font-headline text-4xl font-bold text-primary relative z-10">1.2<span class="text-xl text-outline ml-1">M</span></div>
+<p class="tech-font text-xs text-outline mt-3 relative z-10">AVG_LATENCY: 42ms</p>
+</div>
+</div>
+<!-- Deep Telemetry Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Infrastructure Health Gauges -->
+<div class="lg:col-span-1 bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/30 flex flex-col">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline text-lg font-bold text-primary">Infrastructure Health</h3>
+<span class="material-symbols-outlined text-outline">memory</span>
+</div>
+<div class="space-y-8 flex-grow">
+<!-- Storage Quota Gauge -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body text-sm font-semibold text-on-surface">Global Storage Capacity</span>
+<span class="tech-font text-xs text-secondary font-bold">64%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 64%"></div>
+</div>
+<div class="flex justify-between mt-1 tech-font text-[10px] text-outline">
+<span>3.2 PB USED</span>
+<span>5.0 PB TOTAL</span>
+</div>
+</div>
+<!-- Compute Load Gauge -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body text-sm font-semibold text-on-surface">US-East Cluster Load</span>
+<span class="tech-font text-xs text-error font-bold">92%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 92%"></div>
+</div>
+<div class="flex justify-between mt-1 tech-font text-[10px] text-outline">
+<span class="text-error">HIGH_LOAD_DETECTED</span>
+<span>SCALING_PENDING</span>
+</div>
+</div>
+<!-- Network I/O -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body text-sm font-semibold text-on-surface">Network I/O Saturation</span>
+<span class="tech-font text-xs text-secondary font-bold">41%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 41%"></div>
+</div>
+<div class="flex justify-between mt-1 tech-font text-[10px] text-outline">
+<span>NOMINAL</span>
+<span>40Gbps LINK</span>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/30">
+<button class="w-full py-2 bg-surface-container-high hover:bg-surface-container-highest text-primary font-body text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                            View Detailed Telemetry
+                        </button>
+</div>
+</div>
+<!-- Regional Distribution Map -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-0 shadow-sm border border-outline-variant/30 overflow-hidden flex flex-col relative">
+<div class="absolute top-0 left-0 w-full p-6 bg-gradient-to-b from-surface-container-lowest to-transparent z-10 flex justify-between items-start pointer-events-none">
+<div>
+<h3 class="font-headline text-lg font-bold text-primary">Regional Data Distribution</h3>
+<p class="font-body text-sm text-on-surface-variant">Active nodes and anonymized traffic heat map.</p>
+</div>
+<div class="flex gap-2 pointer-events-auto">
+<span class="px-2 py-1 bg-surface-container text-xs tech-font rounded text-on-surface-variant border border-outline-variant/50">LIVE</span>
+<span class="px-2 py-1 bg-secondary/10 text-xs tech-font rounded text-secondary font-bold border border-secondary/20">GLOBAL</span>
+</div>
+</div>
+<!-- Placeholder for Map Graphic -->
+<div class="flex-grow bg-surface-container flex items-center justify-center relative min-h-[300px]">
+<!-- Decorative Map Grid -->
+<div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+<div class="text-center relative z-10 p-6 bg-surface-container-lowest/80 backdrop-blur-sm rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2">public</span>
+<p class="tech-font text-sm text-primary font-bold">MAP_RENDER_INITIALIZING</p>
+<p class="font-body text-xs text-outline mt-1">Connecting to geolocation service...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent System Events Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden mb-8">
+<div class="px-6 py-5 border-b border-outline-variant/30 flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">history</span>
+                        Global Security Events
+                    </h3>
+<button class="text-sm font-body text-secondary hover:text-secondary-container transition-colors flex items-center gap-1">
+                        View Audit Log <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant text-xs tech-font uppercase tracking-wider">
+<th class="px-6 py-3 font-medium">Timestamp (UTC)</th>
+<th class="px-6 py-3 font-medium">Event Type</th>
+<th class="px-6 py-3 font-medium">Severity</th>
+<th class="px-6 py-3 font-medium">Region</th>
+<th class="px-6 py-3 font-medium">Status</th>
+</tr>
+</thead>
+<tbody class="text-sm font-body divide-y divide-outline-variant/20">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-4 tech-font text-xs text-outline">2023-10-27 14:32:01</td>
+<td class="px-6 py-4 font-medium text-primary">Duplicate File Signature Blocked</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container/20 text-secondary text-xs font-bold tech-font">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> LOW
+                                    </span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">EU-Central-1</td>
+<td class="px-6 py-4"><span class="text-secondary font-medium">Intercepted</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors bg-error/5">
+<td class="px-6 py-4 tech-font text-xs text-outline">2023-10-27 14:15:22</td>
+<td class="px-6 py-4 font-medium text-primary">Suspicious Login Pattern Detected</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-error/10 text-error text-xs font-bold tech-font border border-error/20">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span> HIGH
+                                    </span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">AP-South-1</td>
+<td class="px-6 py-4"><span class="text-error font-bold">Auto-Mitigated</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-4 tech-font text-xs text-outline">2023-10-27 13:45:10</td>
+<td class="px-6 py-4 font-medium text-primary">Deduplication Job Completed</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container text-on-surface-variant text-xs font-bold tech-font">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> INFO
+                                    </span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">US-East-2</td>
+<td class="px-6 py-4"><span class="text-on-surface-variant">Success (2.1GB Saved)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>

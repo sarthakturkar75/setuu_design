@@ -1,0 +1,395 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Progress Update Moderation Feed - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#efeee9",
+                        "inverse-on-surface": "#f2f1ec",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container-highest": "#e3e3de",
+                        "on-tertiary-fixed": "#001e2d",
+                        "inverse-surface": "#30312e",
+                        "tertiary": "#00080f",
+                        "surface-dim": "#dbdad5",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1b1c19",
+                        "primary-fixed-dim": "#aec9eb",
+                        "tertiary-container": "#002233",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "outline": "#73777e",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "secondary-container": "#8ad1ff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-surface": "#1b1c19",
+                        "error": "#ba1a1a",
+                        "primary": "#000815",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-variant": "#e3e3de",
+                        "surface-container-high": "#e9e8e3",
+                        "on-surface-variant": "#43474d",
+                        "secondary": "#00658d",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-low": "#f5f4ef",
+                        "background": "#faf9f4",
+                        "on-secondary-container": "#005a7f",
+                        "primary-container": "#00213c",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-primary-container": "#6f89a9",
+                        "surface-bright": "#faf9f4",
+                        "surface-tint": "#46607e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface": "#faf9f4",
+                        "on-tertiary-container": "#0090c7",
+                        "inverse-primary": "#aec9eb",
+                        "primary-fixed": "#d1e4ff",
+                        // Mapped semantic colors from instructions for ease of use in utilities if needed, 
+                        // though instructions say stick to theme config. I will use hex for strict semantic mapping where theme doesn't fit perfectly based on prompt, but prioritize theme.
+                        "semantic-active": "#0284C7",
+                        "semantic-warning": "#D97706",
+                        "semantic-success": "#16A34A",
+                        "semantic-verification": "#2563EB",
+                        "semantic-attention": "#9333EA",
+                        "semantic-emergency": "#DC2626"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {}
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Masonry Grid CSS approach */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .masonry-grid { column-count: 2; }
+        }
+        @media (min-width: 1280px) {
+            .masonry-grid { column-count: 3; }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col md:flex-row overflow-hidden">
+<!-- SideNavBar (Desktop/Tablet) -->
+<nav class="hidden md:flex flex-col p-4 z-40 fixed left-0 top-0 h-full w-[280px] bg-primary dark:bg-tertiary-container text-on-primary dark:text-on-tertiary-container shadow-xl font-body text-body-md duration-200 ease-in-out">
+<div class="mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0">
+<img alt="Setuu Logo" class="w-6 h-6 object-contain" data-alt="A minimalist, geometric logo mark representing architectural structure and digital flow, rendered in high contrast white lines against a deep primary blue background, suitable for an enterprise SaaS brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBA8AedYxqg5Arf1U3qdxbIlwPjPQEEmFvPtsogdqon1HQ4gCxCHt3ccCKsvBzozY3QapeHkqK5nxrEtFeK8JFp4TE1g15KoFfTZU-v47x7sXV42Ba0EQHWh-IjMJYpG785qve1kk3EdzgnPVFIGxdU_jRP4DTFH3xf4Qs6PSrhK3552uZmyR37C2n2selWZ7q5R4ZyAJOWJR4Y-0g-6QW2Tvc3ZZOlQgSdavxQjj4-Ci7tIEcju98n">
+</div>
+<div>
+<h1 class="font-display text-headline-md text-on-primary dark:text-secondary-fixed font-bold leading-tight">Setuu Admin</h1>
+<p class="text-on-primary/70 text-xs mt-0.5">Enterprise Control</p>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-secondary rounded-lg py-3 px-4 font-semibold mb-6 hover:bg-secondary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add_chart</span>
+            Generate Report
+        </button>
+<ul class="flex-1 space-y-1 overflow-y-auto pr-2 custom-scrollbar">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 dark:text-tertiary-fixed-dim/70 hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+                    Projects
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 dark:text-tertiary-fixed-dim/70 hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                    Users
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 dark:text-tertiary-fixed-dim/70 hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">conveyor_belt</span>
+                    Vendors
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 dark:text-tertiary-fixed-dim/70 hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                    Audit Logs
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary font-bold hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">rss_feed</span>
+                    Update Feed
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 dark:text-tertiary-fixed-dim/70 hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">gpp_maybe</span>
+                    Security Threats
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 dark:text-tertiary-fixed-dim/70 hover:bg-primary-container dark:hover:bg-tertiary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">file_open</span>
+                    File Resolution
+                </a>
+</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-on-primary/10">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                        Support
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary-fixed-dim/70 hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col min-w-0 md:ml-[280px] h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-6 py-3 bg-white/85 dark:bg-surface-container/85 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm transition-colors duration-150">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Button (visible only on small screens, functionally would toggle sidebar, but visually just a placeholder here per specs) -->
+<button class="md:hidden p-2 -ml-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-display text-headline-sm font-bold text-primary dark:text-primary-fixed hidden md:block">
+                    Setuu Enterprise
+                </div>
+</div>
+<div class="flex-1 max-w-xl mx-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-full py-2 pl-10 pr-4 text-sm font-body text-on-surface placeholder:text-on-surface-variant/70 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all" placeholder="Search projects, vendors, or IDs..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 rounded-full transition-colors relative cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white dark:border-surface-container"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high/50 dark:hover:bg-surface-container-highest/50 rounded-full transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="ml-2 w-9 h-9 rounded-full overflow-hidden border border-outline-variant/30 shrink-0 cursor-pointer hover:ring-2 hover:ring-secondary/50 transition-all">
+<img alt="Administrator profile" class="w-full h-full object-cover" data-alt="A professional headshot of a female construction project administrator in a bright, modern office setting, wearing a smart casual navy blazer, conveying competence and authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRIyOr3kqy6rsuVnkiFM-jzXGdoAlz3m4oN31KUlZ2znHwonK77XMXZMxeZ9gFPyzz3ilOpLNMbDWJHldcmiAGKfKBgqo63F6MCYJSBznuRNEt8fQq9nZ1JniHjQs6Z5FOhUgDJ-1ZJOgofj6wxlFnPv7xuQbUfhp5IEyRz0ow5pQhZj_QNoS61OqbYDcmFwNDQGM-BtCHtHGNXSILUNUVC-32qtt68s7TPw4NJxRb65MhWRomQXa8">
+</div>
+</div>
+</header>
+<!-- Main Canvas Area -->
+<main class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 bg-background custom-scrollbar">
+<!-- Page Header -->
+<div class="mb-8 max-w-[1600px] mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm font-body mb-2">
+<span>Admin Workspace</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-medium text-primary">Moderation Queue</span>
+</div>
+<h2 class="font-display text-headline-lg font-bold text-on-surface tracking-tight">Progress Update Moderation Feed</h2>
+<p class="text-on-surface-variant font-body mt-2 max-w-2xl">Review and verify field updates before committing them to the permanent project timeline. Ensure media meets quality and timestamp requirements.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-1 border border-outline-variant/40 shrink-0">
+<button class="px-4 py-1.5 rounded-md text-sm font-medium bg-white shadow-sm border border-outline-variant/20 text-primary">Pending (12)</button>
+<button class="px-4 py-1.5 rounded-md text-sm font-medium text-on-surface-variant hover:bg-surface-container-high/50 transition-colors">Processed</button>
+</div>
+</div>
+</div>
+<!-- Moderation Grid (Masonry) -->
+<div class="max-w-[1600px] mx-auto">
+<div class="masonry-grid">
+<!-- Card 1: Photo Update -->
+<div class="masonry-item bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+<div class="p-4 border-b border-outline-variant/30 flex justify-between items-start bg-surface-container-low/50">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-label bg-primary-container text-on-primary-container uppercase tracking-wider">Site Photo</span>
+<span class="text-xs text-on-surface-variant font-body">ID: #UPD-8492</span>
+</div>
+<h3 class="font-display font-bold text-on-surface text-base">Foundation Pour - Sector 4</h3>
+</div>
+<div class="flex -space-x-2">
+<img alt="Uploader avatar" class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="Headshot of a male construction worker wearing a high-visibility orange vest and hard hat, looking directly at the camera with a neutral expression in bright daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApnUMfFy2uU69I3QFIpivXDKry_i2PZfjpLt6ls-YR8QxHt3x_DNDtRKsb_iF84HvqeuTmS971c-WqiBSJnvl0pt9oTI1rvsReDbRCh43h1h2UfZ18bWxoyAkficKxqUrbe7oVBv0rivehJXuM-kpjLuAOpNXXbrLI6xUjBhkIxI6bO3rTbg6jvqqHAJAS-7TlWYDhwyim8k-0umXb6azA7KuUBox1m7Xj8hv_su3MqCDzQd18p3IK">
+</div>
+</div>
+<div class="relative w-full aspect-video bg-inverse-surface overflow-hidden group">
+<img alt="Site update media" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" data-alt="A wide-angle photograph taken on a construction site showing a large concrete foundation recently poured. Wooden forms are visible around the edges, and several workers in hard hats are spreading the concrete in the distance under a clear blue sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLwh8gFBnt234TfPoj9ub32qwK9s5GJS7ItdaSV4ELX-91PGkl4u7jPS7dUQ-zHfT7XgQw0Fu_dlXq8XSacAJ-WtTfQbDG7gN3qyiK94uJK8pXs25tnF8Q7nMVCgxpoIsAnPj2DdRkvf6yBxzqj3fbbJVln7OlxEvrGMAedPz0vL-sEuKFWhzBJQT80ge11MTngQxlj_UHVmwnyuSKzVzJqM2rlRD9pVXs0ea_FFYGyqFEYNcnUBlJ">
+<!-- GPS Watermark -->
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-white font-label text-[10px] tracking-wide flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-[#41BEFD]">location_on</span>
+                                GPS: 29.7604° N, 95.3698° W | 2023-10-27 14:32:01
+                            </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-4">
+                                Completed the initial pour for Sector 4 retaining wall. Concrete mix met specifications. Slump test recorded and attached in secondary docs.
+                            </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-sm border-2 border-error text-error hover:bg-error-container hover:text-on-error-container transition-colors focus:ring-2 focus:ring-error/50">
+<span class="material-symbols-outlined text-[18px]">close</span>
+                                    Reject
+                                </button>
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-sm bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-sm transition-colors focus:ring-2 focus:ring-[#2563EB]/50">
+<span class="material-symbols-outlined text-[18px]">check</span>
+                                    Approve
+                                </button>
+</div>
+</div>
+</div>
+<!-- Card 2: Video Update -->
+<div class="masonry-item bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+<div class="p-4 border-b border-outline-variant/30 flex justify-between items-start bg-surface-container-low/50">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-label bg-secondary-container text-on-secondary-container uppercase tracking-wider">Drone Video</span>
+<span class="text-xs text-on-surface-variant font-body">ID: #UPD-8495</span>
+</div>
+<h3 class="font-display font-bold text-on-surface text-base">Weekly Aerial Survey</h3>
+</div>
+<div class="flex -space-x-2">
+<img alt="Uploader avatar" class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="Profile picture of a female drone operator wearing safety glasses and a hi-vis vest, standing outdoors in overcast lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW3j1cumTS9QprP6qTAVAfXSP1tLyNxt0p7H-JPx6tarLa8fFT8nGojRXFWib0-CMW3nXlDF4FGw2Th8CN4B7O8Vg7w--IDdMA_FK4ipkW0TqhY9J5PP42rEOQpFWn_p1XA0bIi3wFkuq4X37TN3E9_X4n77nXQbOiBcEPkGjV_CZzbEs7AxnkX5Fxz7dTi1N9QaXexgpokr_NPtmUaaVwf-KHHMq9rpVYW-i6DErOst9o_HLXod65">
+</div>
+</div>
+<div class="relative w-full h-[250px] bg-inverse-surface overflow-hidden group flex items-center justify-center cursor-pointer">
+<img alt="Site update media" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-60 transition-opacity" data-alt="An aerial drone shot of an industrial construction site. Large steel girders are being erected for a massive warehouse structure. Yellow cranes are visible against a dusty, earth-toned background with scattered construction materials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbqGehoR0mv-RgmGIYeyqEAsqtXNalZ4GI7xQofd7sUes3Y26FqRWIb11C6hlHA9R5eeiuFCM2Dw1VryPN1xquAN-Ef-2Lpq90KT7NQGLsjq0J401zYfz419NWfI5BMTE3mCx6PQfLTvfjpmBAO7B8zmAxLIPiz0rSoqG1SY3GC3-iU9Xm93BINxciRh8qA0-93t_9fMt7QVkuEABqtJfuIpvj2JuEWJOoNWBoQwZHPuLgm0ywZQK9">
+<div class="z-10 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/40 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-[24px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<!-- GPS Watermark -->
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-white font-label text-[10px] tracking-wide flex items-center gap-1 shadow-sm z-10">
+<span class="material-symbols-outlined text-[12px] text-[#41BEFD]">location_on</span>
+                                GPS: 29.7612° N, 95.3680° W | 2023-10-27 15:05:22
+                            </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex items-center gap-3 mb-3 bg-surface-container-highest/30 p-2 rounded-lg border border-outline-variant/20">
+<span class="material-symbols-outlined text-semantic-attention text-[20px]">warning</span>
+<p class="text-xs font-body text-on-surface-variant">System flagged potential structural deviation at coordinates X:12 Y:44. Manual review advised.</p>
+</div>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-4">
+                                Full site sweep completed. No major hazards identified on ground level. Please review northern perimeter fencing.
+                            </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-sm border-2 border-error text-error hover:bg-error-container hover:text-on-error-container transition-colors focus:ring-2 focus:ring-error/50">
+<span class="material-symbols-outlined text-[18px]">close</span>
+                                    Reject
+                                </button>
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-sm bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-sm transition-colors focus:ring-2 focus:ring-[#2563EB]/50">
+<span class="material-symbols-outlined text-[18px]">check</span>
+                                    Approve
+                                </button>
+</div>
+</div>
+</div>
+<!-- Card 3: Material Delivery -->
+<div class="masonry-item bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+<div class="p-4 border-b border-outline-variant/30 flex justify-between items-start bg-surface-container-low/50">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-label bg-surface-tint text-white uppercase tracking-wider">Delivery Proof</span>
+<span class="text-xs text-on-surface-variant font-body">ID: #DLV-1102</span>
+</div>
+<h3 class="font-display font-bold text-on-surface text-base">HVAC Units Arrival</h3>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-white flex items-center justify-center text-xs font-bold text-on-surface-variant">
+                                    TS
+                                </div>
+</div>
+</div>
+<div class="relative w-full aspect-square bg-inverse-surface overflow-hidden group">
+<img alt="Site update media" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" data-alt="A close-up photo of several large, industrial HVAC units sitting on wooden pallets in a staging area. The units are partially wrapped in clear plastic, and a shipping manifest clipboard rests on top of one unit. Lighting is harsh, mid-day sun." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxJaHhojeke17UI15f5ElX3IErTy0VgHqQCFg_qvJQKdXWT9s3-s3OLxSJJLZwWCvsfyBSoW4F7zE3OcS8ts83q9bV3pjLI66K3UEdM2i-FKNcXaN37BasqBlMTOWDzJjInLMfXmrJMKUeM65ZUjJeLQJOW6jpv3F7O55CjVkAobeCTuEgEapCV_YoAJxZYyLhDFPbspwe4AFawqMh2oz2SBQ3kES3-F-P4s4w8uY5BrgN00cQATKa">
+<!-- GPS Watermark -->
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-white font-label text-[10px] tracking-wide flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-[#41BEFD]">location_on</span>
+                                GPS: 29.7598° N, 95.3705° W | 2023-10-27 16:15:44
+                            </div>
+</div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="bg-surface-container p-3 rounded-lg border border-outline-variant/30 mb-4">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-label text-on-surface-variant">Manifest Scan:</span>
+<span class="flex items-center gap-1 text-xs text-semantic-success font-medium">
+<span class="material-symbols-outlined text-[14px]">verified</span> Matched
+                                    </span>
+</div>
+<div class="font-label text-sm text-on-surface truncate">BOL-884920-TRX</div>
+</div>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-4">
+                                4 of 4 rooftop units delivered to staging area Bravo. No visible damage on crates. Awaiting crane lift scheduled for tomorrow 0800.
+                            </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-sm border-2 border-error text-error hover:bg-error-container hover:text-on-error-container transition-colors focus:ring-2 focus:ring-error/50">
+<span class="material-symbols-outlined text-[18px]">close</span>
+                                    Reject
+                                </button>
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg font-medium text-sm bg-[#2563EB] text-white hover:bg-[#1D4ED8] shadow-sm transition-colors focus:ring-2 focus:ring-[#2563EB]/50">
+<span class="material-symbols-outlined text-[18px]">check</span>
+                                    Approve
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom padding for scrolling -->
+<div class="h-24"></div>
+</main>
+</div>
+</body></html>

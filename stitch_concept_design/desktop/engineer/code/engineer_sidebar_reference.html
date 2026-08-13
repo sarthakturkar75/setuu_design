@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Engineer Workbench</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed-variant": "#2e4965",
+                      "inverse-on-surface": "#f2f1ec",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "surface-bright": "#faf9f4",
+                      "tertiary-container": "#002233",
+                      "primary-container": "#00213c",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "error": "#ba1a1a",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1b1c19",
+                      "surface-container": "#efeee9",
+                      "inverse-surface": "#30312e",
+                      "surface-tint": "#46607e",
+                      "surface-container-low": "#f5f4ef",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-secondary-container": "#005a7f",
+                      "primary": "#000815",
+                      "secondary": "#00658d",
+                      "surface": "#faf9f4",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#6f89a9",
+                      "tertiary-fixed": "#c6e7ff",
+                      "on-primary-fixed": "#001d35",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "outline": "#73777e",
+                      "tertiary": "#00080f",
+                      "primary-fixed": "#d1e4ff",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#43474d",
+                      "on-background": "#1b1c19",
+                      "surface-container-high": "#e9e8e3",
+                      "inverse-primary": "#aec9eb",
+                      "on-secondary-fixed": "#001e2d",
+                      "secondary-fixed": "#c6e7ff",
+                      "outline-variant": "#c3c6ce",
+                      "background": "#faf9f4",
+                      "on-tertiary-container": "#0090c7",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#e3e3de",
+                      "secondary-fixed-dim": "#88cffc",
+                      "secondary-container": "#8ad1ff",
+                      "surface-variant": "#e3e3de",
+                      "primary-fixed-dim": "#aec9eb",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#dbdad5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Merriweather"],
+                      "body": ["Inter"],
+                      "label": ["JetBrains Mono"]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .glass-nav-active {
+            background: linear-gradient(90deg, rgba(65, 190, 253, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            box-shadow: inset 0 0 10px rgba(65, 190, 253, 0.2);
+            border: 1px solid rgba(65, 190, 253, 0.3);
+        }
+        .nav-item-glow {
+            position: relative;
+        }
+        .nav-item-glow::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 10%;
+            height: 80%;
+            width: 4px;
+            background-color: #41befd;
+            border-radius: 4px;
+            box-shadow: 0 0 8px #41befd;
+        }
+        .glass-card {
+            background: rgba(18, 26, 33, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-primary-container min-h-screen flex items-center justify-center font-body p-8 antialiased text-on-primary">
+<!-- Reference Screen Container -->
+<div class="relative w-full max-w-[1200px] h-[900px] bg-[#0A0F14] rounded-xl overflow-hidden shadow-2xl border border-surface-tint/20 flex">
+<!-- Background Ambient Glow for presentation -->
+<div class="absolute inset-0 bg-gradient-to-br from-[#00213c] via-[#0A0F14] to-[#0A0F14] opacity-80 pointer-events-none"></div>
+<!-- Sidebar Component -->
+<aside class="relative z-10 w-[320px] h-full bg-[#04070A]/80 backdrop-blur-xl border-r border-white/10 flex flex-col py-8 px-6 shadow-[8px_0_24px_rgba(0,0,0,0.5)]">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 mb-10 pl-2">
+<span class="material-symbols-outlined text-inverse-primary text-3xl" style="font-variation-settings: 'FILL' 1;">settings_applications</span>
+<div class="flex flex-col">
+<span class="font-headline font-bold text-lg text-white leading-tight">Setuu <span class="text-on-primary-container font-normal">Enterprise</span></span>
+</div>
+</div>
+<!-- Section Title -->
+<div class="flex items-center gap-3 mb-8 pl-2">
+<span class="material-symbols-outlined text-inverse-primary/70" style="font-variation-settings: 'FILL' 1;">memory</span>
+<h2 class="font-headline font-bold text-xl text-white">Engineer Workbench</h2>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-3 flex-1 relative pl-3 pr-1">
+<!-- Active Item -->
+<a class="nav-item-glow glass-nav-active rounded-lg px-4 py-3.5 flex items-center gap-4 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[#41befd]" style="font-variation-settings: 'FILL' 1;">developer_board</span>
+<span class="text-white font-medium">My Workbench</span>
+</a>
+<!-- Inactive Items -->
+<a class="glass-card rounded-lg px-4 py-3.5 flex items-center gap-4 hover:bg-white/5 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-on-primary-container group-hover:text-inverse-primary transition-colors">task</span>
+<span class="text-on-primary-container group-hover:text-white transition-colors">Assigned Tasks</span>
+</a>
+<a class="glass-card rounded-lg px-4 py-3.5 flex items-center gap-4 hover:bg-white/5 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-on-primary-container group-hover:text-inverse-primary transition-colors">integration_instructions</span>
+<span class="text-on-primary-container group-hover:text-white transition-colors">Engineering Hub</span>
+</a>
+<a class="glass-card rounded-lg px-4 py-3.5 flex items-center gap-4 hover:bg-white/5 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-on-primary-container group-hover:text-inverse-primary transition-colors">bug_report</span>
+<span class="text-on-primary-container group-hover:text-white transition-colors">Issue Tracker</span>
+</a>
+<a class="glass-card rounded-lg px-4 py-3.5 flex items-center gap-4 hover:bg-white/5 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-on-primary-container group-hover:text-inverse-primary transition-colors">calendar_clock</span>
+<span class="text-on-primary-container group-hover:text-white transition-colors">Timesheets</span>
+</a>
+<a class="glass-card rounded-lg px-4 py-3.5 flex items-center gap-4 hover:bg-white/5 transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-on-primary-container group-hover:text-inverse-primary transition-colors">description</span>
+<span class="text-on-primary-container group-hover:text-white transition-colors">Team Docs</span>
+</a>
+</nav>
+<!-- System Status -->
+<div class="mt-auto mb-6 pl-2">
+<h3 class="font-headline font-bold text-lg text-white mb-4">System Status</h3>
+<div class="space-y-3 font-label text-sm text-on-primary-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-500 text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>API: <span class="text-white font-medium">Healthy</span></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-500 text-sm" style="font-variation-settings: 'FILL' 1;">database</span>
+<span>Database: <span class="text-white font-medium">Connected</span></span>
+</div>
+</div>
+</div>
+<!-- User Profile Footer -->
+<div class="glass-card rounded-xl p-4 flex items-center justify-between border-t-0 border border-white/10 shadow-lg relative overflow-hidden group hover:border-[#41befd]/40 transition-colors cursor-pointer">
+<!-- Subtle glow background on hover -->
+<div class="absolute inset-0 bg-gradient-to-r from-[#41befd]/0 to-[#41befd]/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex items-center gap-4 relative z-10">
+<div class="relative w-12 h-12 rounded-full border-2 border-surface-tint/30 flex items-center justify-center bg-[#0A0F14] shadow-inner overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a male software engineer with short dark hair, wearing a dark gray collared shirt, set against a dark studio background with subtle blue rim lighting reflecting a modern corporate SaaS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRJ_miqKOb61EJKGKdJEX3JsodARajSacbqIHIBFjP4P4LYiVgy72kzoSY0oY_kZvjAInkTeE14ARSCIkEazsCLOKSVEWdvt-cjeSX90h87nK9FU9ACU9z1JoBNc1dTPkrwvJHWNSrf9pnlGgOqU9iTEdbyDUbNO1-6xTcDKrOfTe0OSRxsjTSqtqL5vvr6yQoM5EeqtnzGHXO0BnY9LAwmlIsqEiFwIflDDw3L3DSM2i6b59ERVEZ"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#0A0F14]"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-white leading-none mb-1">Alex Chen</span>
+<span class="text-xs bg-[#0284c7]/20 text-[#41befd] px-2 py-0.5 rounded-full font-medium inline-block w-max border border-[#0284c7]/30">Software Engineering</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-primary-container group-hover:text-white transition-colors relative z-10">logout</span>
+</div>
+</aside>
+<!-- Dummy Content Area for Context -->
+<main class="flex-1 relative z-0 flex items-center justify-center">
+<div class="opacity-10 text-center select-none">
+<span class="material-symbols-outlined text-9xl block mb-4">architecture</span>
+<h1 class="font-headline font-bold text-4xl">Canvas Area</h1>
+</div>
+</main>
+</div>
+</body></html>

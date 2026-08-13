@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Multidisciplinary Task &amp; Kanban</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#001e2e",
+                    "surface-container": "#efeee8",
+                    "surface-dim": "#dbdad5",
+                    "primary-fixed": "#d1e4ff",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#88cffc",
+                    "inverse-surface": "#30312d",
+                    "surface-container-highest": "#e4e2dd",
+                    "surface": "#fbf9f4",
+                    "outline-variant": "#c3c6ce",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "background": "#fbf9f4",
+                    "on-surface-variant": "#43474d",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "tertiary-fixed": "#c8e6fd",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#73777e",
+                    "secondary-container": "#8ad1ff",
+                    "secondary-fixed": "#c6e7ff",
+                    "inverse-primary": "#aec9eb",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001d35",
+                    "on-tertiary-fixed-variant": "#2d4a5c",
+                    "on-surface": "#1b1c19",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-tertiary-container": "#6e8a9f",
+                    "tertiary": "#00080f",
+                    "tertiary-container": "#002233",
+                    "on-secondary-container": "#005a7f",
+                    "surface-variant": "#e4e2dd",
+                    "tertiary-fixed-dim": "#adcae1",
+                    "primary": "#000815",
+                    "primary-container": "#00213c",
+                    "on-primary-container": "#6f89a9",
+                    "secondary": "#00658d",
+                    "surface-tint": "#46607e",
+                    "surface-bright": "#fbf9f4",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f5f4ee",
+                    "inverse-on-surface": "#f2f1eb",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e9e8e3",
+                    "on-background": "#1b1c19",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit-lg": "24px",
+                    "margin": "16px",
+                    "grid-columns": "4",
+                    "unit-xs": "4px",
+                    "gutter": "12px",
+                    "unit-md": "16px",
+                    "unit-sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Merriweather"],
+                    "body-sm": ["Inter"],
+                    "data-mono": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"],
+                    "title-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Merriweather"]
+            },
+            "fontSize": {
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                    "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-body-md">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 backdrop-blur-md flex justify-between items-center h-16 px-margin bg-surface/85 border-b border-outline-variant">
+<button class="flex items-center justify-center min-h-[48px] min-w-[48px] text-primary opacity-80 duration-150 transition-opacity hover:bg-surface-container-high rounded-full">
+<span class="font-data-mono text-data-mono">Firmware v2.4</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Setuu Enterprise</h1>
+<button aria-label="Notifications" class="flex items-center justify-center min-h-[48px] min-w-[48px] text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header><div class="sticky top-16 z-40 bg-primary-container text-on-primary-container px-margin py-1.5 flex items-center justify-center gap-2 border-b border-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="sync">sync</span>
+<span class="font-label-caps text-label-caps">Offline Sync Active</span>
+</div>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-unit-md pb-[96px] px-margin flex flex-col gap-unit-lg max-w-2xl mx-auto w-full">
+<!-- Group: In Progress -->
+<section class="flex flex-col gap-unit-md">
+<h2 class="font-title-md text-title-md text-on-surface-variant border-b border-outline-variant pb-2 uppercase tracking-wider text-xs">In Progress (2)</h2>
+<!-- Task Card: Mechanical (Expanded) -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-unit-md flex flex-col gap-unit-md">
+<header class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-surface-tint" data-icon="settings">settings</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">MECH-492</span>
+</div>
+<span class="bg-secondary/20 text-secondary font-label-caps text-label-caps px-2 py-1 rounded-DEFAULT border border-secondary/30">HIGH</span>
+</header><div class="sticky top-16 z-40 bg-primary-container text-on-primary-container px-margin py-1.5 flex items-center justify-center gap-2 border-b border-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="sync">sync</span>
+<span class="font-label-caps text-label-caps">Offline Sync Active</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Thermal Enclosure Tolerances</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Recalculate gap clearance for revised heat sink module assembly.</p>
+</div>
+<!-- Expanded Technical Specs (Markdown styling) -->
+<div class="bg-surface-container p-unit-md rounded-DEFAULT overflow-x-auto border border-surface-dim">
+<pre class="font-data-mono text-data-mono text-on-surface-variant whitespace-pre-wrap"><code>## Specs: Heat Sink Rev B
+- Clearance req: 0.15mm min
+- Material coeff: 23.1 µm/(m·K)
+- Fastener torque limit: 1.2 Nm
+Check interference with sub-assembly T-45 before final commit.</code></pre>
+</div>
+<!-- Circular Sub-task Checklist -->
+<div class="flex flex-col gap-2 mt-2">
+<label class="flex items-center gap-3 min-h-[48px] cursor-pointer group">
+<span class="material-symbols-outlined text-primary group-hover:opacity-80 transition-opacity" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-variant line-through">Draft clearance model</span>
+</label>
+<label class="flex items-center gap-3 min-h-[48px] cursor-pointer group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="font-body-md text-body-md text-on-surface">Run thermal expansion simulation</span>
+</label>
+<label class="flex items-center gap-3 min-h-[48px] cursor-pointer group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="font-body-md text-body-md text-on-surface">Update CAD repository</span>
+</label>
+</div>
+</article>
+<!-- Task Card: Electrical (Collapsed) -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-unit-md flex flex-col gap-unit-md hover:bg-surface-container-low transition-colors cursor-pointer">
+<header class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-surface-tint" data-icon="memory">memory</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">ELEC-811</span>
+</div>
+<span class="bg-primary/10 text-primary font-label-caps text-label-caps px-2 py-1 rounded-DEFAULT border border-primary/20">MEDIUM</span>
+</header><div class="sticky top-16 z-40 bg-primary-container text-on-primary-container px-margin py-1.5 flex items-center justify-center gap-2 border-b border-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="sync">sync</span>
+<span class="font-label-caps text-label-caps">Offline Sync Active</span>
+</div>
+<div class="flex justify-between items-center">
+<h3 class="font-title-md text-title-md text-on-surface">Power Delivery Network Tuning</h3>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</article>
+</section>
+<!-- Group: Blocked -->
+<section class="flex flex-col gap-unit-md mt-4">
+<h2 class="font-title-md text-title-md text-on-surface-variant border-b border-outline-variant pb-2 uppercase tracking-wider text-xs">Blocked (1)</h2>
+<!-- Task Card: Software (Collapsed, Critical) -->
+<article class="bg-surface-container-lowest border border-error-container rounded-DEFAULT p-unit-md flex flex-col gap-unit-md relative overflow-hidden">
+<!-- Status Indicator Line -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<header class="flex justify-between items-center pl-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-surface-tint" data-icon="terminal">terminal</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">SOFT-204</span>
+</div>
+<span class="bg-error/20 text-error font-label-caps text-label-caps px-2 py-1 rounded-DEFAULT border border-error/30">CRITICAL</span>
+</header><div class="sticky top-16 z-40 bg-primary-container text-on-primary-container px-margin py-1.5 flex items-center justify-center gap-2 border-b border-outline-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="sync">sync</span>
+<span class="font-label-caps text-label-caps">Offline Sync Active</span>
+</div>
+<div class="flex justify-between items-center pl-2">
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">I2C Bus Conflict Resolution</h3>
+<p class="font-body-md text-body-md text-error mt-1">Waiting on sensor array shipment.</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</article>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-md bg-surface/85 border-t border-outline-variant flex justify-around items-center h-[72px] px-gutter">
+<!-- Workbench (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors min-w-[64px] min-h-[48px]">
+<span class="material-symbols-outlined mb-1" data-icon="grid_view">grid_view</span>
+<span class="font-label-caps text-label-caps">Workbench</span>
+</button>
+<!-- Tasks (Active) -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1.5 scale-95 transition-transform duration-200 min-w-[64px] min-h-[48px]">
+<span class="material-symbols-outlined mb-1 text-on-primary-container" data-icon="assignment" data-weight="fill" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label-caps text-label-caps">Tasks</span>
+</button>
+<!-- Hub (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors min-w-[64px] min-h-[48px]">
+<span class="material-symbols-outlined mb-1" data-icon="layers">layers</span>
+<span class="font-label-caps text-label-caps">Hub</span>
+</button>
+<!-- Issues (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors min-w-[64px] min-h-[48px]">
+<span class="material-symbols-outlined mb-1" data-icon="bug_report">bug_report</span>
+<span class="font-label-caps text-label-caps">Issues</span>
+</button>
+<!-- Workspace (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors min-w-[64px] min-h-[48px]">
+<span class="material-symbols-outlined mb-1" data-icon="person_work">file_download</span>
+<span class="font-label-caps text-label-caps">Workspace</span>
+</button>
+</nav>
+</body></html>

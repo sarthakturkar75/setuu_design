@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Advanced Resource Allocation &amp; Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e3e3de",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "secondary-container": "#8ad1ff",
+                        "primary": "#000815",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e9e8e3",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#00213c",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "on-surface-variant": "#43474d",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-bright": "#faf9f4",
+                        "outline": "#73777e",
+                        "inverse-primary": "#aec9eb",
+                        "surface-dim": "#dbdad5",
+                        "on-background": "#1b1c19",
+                        "surface-tint": "#46607e",
+                        "surface-variant": "#e3e3de",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#0090c7",
+                        "surface": "#faf9f4",
+                        "tertiary-container": "#002233",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#6f89a9",
+                        "primary-fixed-dim": "#aec9eb",
+                        "tertiary-fixed": "#c6e7ff",
+                        "tertiary": "#00080f",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container": "#efeee9",
+                        "on-primary-fixed": "#001d35",
+                        "background": "#faf9f4",
+                        "secondary": "#00658d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid #e3e3de;
+        }
+        
+        /* Typography System */
+        .font-headline { font-family: 'Merriweather', serif; font-weight: 700; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+        
+        .safe-area-pt { padding-top: env(safe-area-inset-top, 20px); }
+        .safe-area-pb { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        
+        /* Metric Badges */
+        .badge-warning { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; } /* Amber */
+        .badge-critical { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; } /* Crimson */
+        .badge-success { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; } /* Emerald */
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased flex flex-col h-screen overflow-hidden selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="glass-panel fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 safe-area-pt border-b border-surface-variant shadow-sm transition-all duration-200">
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:bg-surface-container-high rounded-full p-2 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline text-lg text-primary tracking-tight leading-tight">Advanced Allocation</h1>
+<div class="flex items-center gap-1 text-on-surface-variant text-xs font-label">
+<span>PRJ-982</span>
+<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<div class="flex items-center">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto mt-16 pt-4 pb-24 px-4 space-y-6">
+<!-- Analytics Overview Grid -->
+<section class="space-y-3">
+<h2 class="font-headline text-base text-primary-container px-1">Productivity Metrics</h2>
+<div class="grid grid-cols-2 gap-3">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-lg p-3 shadow-sm flex flex-col justify-between h-24">
+<div class="flex justify-between items-start">
+<span class="text-xs font-medium text-on-surface-variant">Total Capacity</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">group</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="font-label text-xl text-primary font-medium tracking-tight">8,450</span>
+<span class="text-[10px] font-label text-on-surface-variant mb-1">hrs/wk</span>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-lg p-3 shadow-sm flex flex-col justify-between h-24 relative overflow-hidden">
+<div class="absolute inset-0 bg-secondary/5 z-0"></div>
+<div class="flex justify-between items-start relative z-10">
+<span class="text-xs font-medium text-on-surface-variant">Utilization Rate</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">show_chart</span>
+</div>
+<div class="flex items-baseline gap-2 relative z-10">
+<span class="font-label text-xl text-primary font-medium tracking-tight">82.4</span>
+<span class="text-xs font-label text-secondary font-bold">%</span>
+</div>
+</div>
+<!-- Metric Card 3 - Full Width -->
+<div class="col-span-2 bg-surface-container-lowest border border-surface-variant rounded-lg p-4 shadow-sm flex items-center justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-on-surface-variant">Resource Variance (7d)</span>
+<span class="font-label text-sm text-primary">+4.2% Delta vs Projection</span>
+</div>
+<div class="h-8 w-24 bg-surface-container-high rounded flex items-center justify-center border border-outline-variant/30">
+<!-- Placeholder for a sparkline chart -->
+<span class="font-label text-[10px] text-outline">Chart_View</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Alerts Section -->
+<section class="space-y-3">
+<h2 class="font-headline text-base text-primary-container px-1 flex items-center gap-2">
+                Allocation Pressures
+                <span class="bg-error text-on-error font-label text-[10px] px-1.5 py-0.5 rounded-full">2</span>
+</h2>
+<div class="flex flex-col gap-2">
+<!-- Critical Alert -->
+<div class="bg-surface-container-lowest border-l-4 border-l-error border border-surface-variant rounded-r-lg p-3 shadow-sm flex gap-3 items-start">
+<span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-sm text-on-surface">Structural Team</h3>
+<span class="badge-critical font-label text-[10px] px-2 py-0.5 rounded">98% CAP</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-snug">Site Alpha structural crew is operating near max capacity. Risk of timeline slippage on Milestone 4.</p>
+<button class="mt-2 text-xs font-medium text-secondary flex items-center gap-1 hover:underline">
+                            Mitigate Risk <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Warning Alert -->
+<div class="bg-surface-container-lowest border-l-4 border-l-[#d97706] border border-surface-variant rounded-r-lg p-3 shadow-sm flex gap-3 items-start">
+<span class="material-symbols-outlined text-[#d97706] mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-sm text-on-surface">Heavy Machinery</h3>
+<span class="badge-warning font-label text-[10px] px-2 py-0.5 rounded">IDLE 24h</span>
+</div>
+<p class="text-xs text-on-surface-variant leading-snug">Excavator unit EX-04 unallocated at Site Beta for over 24 hours.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Reallocation Drill-Down -->
+<section class="space-y-3">
+<div class="flex justify-between items-center px-1">
+<h2 class="font-headline text-base text-primary-container">Resource Drill-Down</h2>
+<button class="text-xs font-medium text-secondary hover:underline">Expand All</button>
+</div>
+<!-- Site Accordion 1 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-lg overflow-hidden shadow-sm">
+<!-- Header -->
+<div class="p-3 bg-surface-container-low flex justify-between items-center cursor-pointer border-b border-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">foundation</span>
+<h3 class="font-medium text-sm text-on-surface">Site Alpha - Foundation</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform transform rotate-180">expand_more</span>
+</div>
+<!-- Content (Expanded) -->
+<div class="p-0">
+<!-- Resource Row -->
+<div class="p-3 border-b border-surface-variant flex justify-between items-center bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-on-surface">Concrete Pours</span>
+<span class="text-xs font-label text-on-surface-variant">T-CRW-01 • 12/15 active</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[80%] rounded-full"></div>
+</div>
+<button class="text-secondary bg-secondary-fixed/50 hover:bg-secondary-fixed-dim rounded px-2 py-1 text-[10px] font-medium font-label uppercase tracking-wider transition-colors">
+                                Reallocate
+                            </button>
+</div>
+</div>
+<!-- Resource Row -->
+<div class="p-3 flex justify-between items-center bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-on-surface">Structural Steel</span>
+<span class="text-xs font-label text-error">T-STR-04 • 24/24 active</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-full rounded-full"></div>
+</div>
+<button class="text-error bg-error-container/50 hover:bg-error-container rounded px-2 py-1 text-[10px] font-medium font-label uppercase tracking-wider transition-colors border border-error/20">
+                                Release
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Site Accordion 2 (Collapsed) -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-lg overflow-hidden shadow-sm">
+<div class="p-3 bg-surface-container-lowest flex justify-between items-center cursor-pointer hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">electrical_services</span>
+<h3 class="font-medium text-sm text-on-surface">Site Beta - MEP Fitout</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="badge-success font-label text-[10px] px-1.5 py-0.5 rounded">ON TRACK</span>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="glass-panel fixed bottom-0 w-full z-50 rounded-t-xl border-t border-surface-variant shadow-lg pb-safe px-2 h-20 flex justify-around items-center">
+<!-- Inactive Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 transition-transform duration-150 active:scale-90 hover:text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label text-[10px] mt-1">Projects</span>
+</a>
+<!-- Active Tab (Analytics/Allocation implied by Admin) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 transition-transform duration-150 active:scale-90 shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-[10px] mt-1 font-bold">Admin</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 transition-transform duration-150 active:scale-90 hover:text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="font-label text-[10px] mt-1">Tasks</span>
+</a>
+<!-- Inactive Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 transition-transform duration-150 active:scale-90 hover:text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">perm_media</span>
+<span class="font-label text-[10px] mt-1">Media</span>
+</a>
+</nav>
+</body></html>

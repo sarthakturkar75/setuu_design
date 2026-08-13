@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fullscreen Drawing &amp; Media Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface-container-highest": "#e3e3de",
+                "on-surface": "#1b1c19",
+                "on-primary": "#ffffff",
+                "on-error": "#ffffff",
+                "outline-variant": "#c3c6ce",
+                "background": "#faf9f4",
+                "primary-fixed": "#d1e4ff",
+                "surface-variant": "#e3e3de",
+                "on-tertiary": "#ffffff",
+                "primary": "#000815",
+                "tertiary-fixed-dim": "#82cfff",
+                "surface-container-high": "#e9e8e3",
+                "on-secondary-fixed": "#001e2d",
+                "on-secondary": "#ffffff",
+                "secondary-container": "#8ad1ff",
+                "on-tertiary-fixed-variant": "#004c6b",
+                "on-primary-container": "#6f89a9",
+                "on-primary-fixed-variant": "#2e4965",
+                "surface-container": "#efeee9",
+                "tertiary-fixed": "#c6e7ff",
+                "on-surface-variant": "#43474d",
+                "surface-container-lowest": "#ffffff",
+                "on-background": "#1b1c19",
+                "primary-fixed-dim": "#aec9eb",
+                "inverse-surface": "#30312e",
+                "surface-dim": "#dbdad5",
+                "error": "#ba1a1a",
+                "on-primary-fixed": "#001d35",
+                "outline": "#73777e",
+                "secondary": "#00658d",
+                "surface": "#faf9f4",
+                "surface-tint": "#46607e",
+                "surface-bright": "#faf9f4",
+                "primary-container": "#00213c",
+                "on-tertiary-fixed": "#001e2d",
+                "inverse-primary": "#aec9eb",
+                "tertiary": "#00080f",
+                "surface-container-low": "#f5f4ef",
+                "on-error-container": "#93000a",
+                "tertiary-container": "#002233",
+                "error-container": "#ffdad6",
+                "on-tertiary-container": "#0090c7",
+                "secondary-fixed-dim": "#88cffc",
+                "on-secondary-fixed-variant": "#004c6b",
+                "on-secondary-container": "#005a7f",
+                "secondary-fixed": "#c6e7ff",
+                "inverse-on-surface": "#f2f1ec"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {},
+        "fontFamily": {
+                "headline": [
+                        "Merriweather"
+                ],
+                "display": [
+                        "Merriweather"
+                ],
+                "body": [
+                        "Inter"
+                ],
+                "label": [
+                        "JetBrains Mono"
+                ]
+        },
+        "fontSize": {}
+},
+    },
+  }
+</script>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.filled {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Blueprint Pattern for visual interest */
+    .blueprint-bg {
+        background-color: #1b1c19; /* Forced dark inverse */
+        background-image: linear-gradient(rgba(65, 190, 253, 0.1) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(65, 190, 253, 0.1) 1px, transparent 1px),
+                          linear-gradient(rgba(65, 190, 253, 0.05) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(65, 190, 253, 0.05) 1px, transparent 1px);
+        background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+        background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    }
+</style>
+</head>
+<body class="h-screen w-screen flex flex-col font-body bg-surface text-on-surface overflow-hidden">
+<!-- Top App Bar (From JSON Component) -->
+<header class="bg-white/85 dark:bg-[#121a21]/85 backdrop-blur-md border-b border-outline-variant/20 dark:border-outline/20 shadow-sm fixed top-0 w-full z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop w-full h-16">
+<!-- Left Side: Breadcrumb & Switcher -->
+<div class="flex items-center gap-4 flex-1">
+<button class="text-primary dark:text-secondary-fixed hover:bg-surface-container-high/50 transition-colors p-2 rounded-full active:scale-95 transition-transform hidden lg:block">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<nav aria-label="Breadcrumb" class="hidden md:flex items-center gap-2 text-sm text-on-surface-variant font-medium">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<div class="relative group">
+<button class="flex items-center gap-1 hover:text-primary transition-colors text-primary font-semibold">
+                        Alpha Centauri Plant
+                        <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+<!-- Dropdown Content -->
+<div class="absolute left-0 mt-2 w-48 bg-surface border border-outline-variant rounded-md shadow-lg hidden group-hover:block z-50">
+<ul class="py-1">
+<li><a class="block px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high" href="#">Beta Site Construction</a></li>
+<li><a class="block px-4 py-2 text-sm text-on-surface hover:bg-surface-container-high" href="#">Gamma Facility</a></li>
+</ul>
+</div>
+</div>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold">Drawings &amp; Media Hub</span>
+</nav>
+</div>
+<!-- Center: Search -->
+<div class="flex-1 flex justify-center max-w-md hidden sm:flex">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-outline-variant rounded-full leading-5 bg-surface-container-low text-on-surface placeholder-outline focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-colors duration-200" placeholder="Search milestones, materials, or files..." type="text"/>
+</div>
+</div>
+<!-- Right Side: Utilities -->
+<div class="flex items-center gap-4 flex-1 justify-end">
+<!-- Offline Sync Indicator -->
+<div class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/50">
+<span class="material-symbols-outlined text-[18px] text-[#0284C7]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span class="font-label text-label-sm text-[#0284C7]">SYNCED</span>
+</div>
+<!-- Notifications -->
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 block h-2.5 w-2.5 rounded-full bg-error ring-2 ring-surface"></span>
+</button>
+<!-- User Profile -->
+<button class="flex items-center gap-2 hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<div class="h-8 w-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant flex items-center justify-center">
+<img alt="User Avatar" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJK2CvQjsGfqLd2ohlnOhZ9CMOcMYN-dISJmNuYrf9h4BhZCu4qPrXCKs4r5Jl0lcJte-mNKKhpontvJscW4OEpAhwX0GV86TN9BWGDDImnVLRl0eP4ECpIDbu2FAT0caObTBzoEn5Ry05Iu432oyUv6oSIz2Tp_bQcZbCu3Iz2bTr1IGDbjRQEDhGfNWqO5ULhP4_R__b0_tBvtwCNktEkJs7z7BcCvirCSVnNBdImHhr6Y6QC7aA"/>
+</div>
+</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 flex w-full h-full pt-16 relative overflow-hidden">
+<!-- Interactive Canvas Viewport (Forced Dark Inverse) -->
+<div class="flex-1 blueprint-bg relative w-full h-full cursor-crosshair overflow-hidden group">
+<!-- Blueprint Image Placeholder (Simulated pan/zoom area) -->
+<div class="absolute inset-0 flex items-center justify-center opacity-80 mix-blend-screen scale-110 origin-center transition-transform duration-1000 group-hover:scale-100">
+<img alt="Detailed architectural blueprint" class="max-w-none min-w-full min-h-full object-cover object-center opacity-70" data-alt="A highly detailed, intricate architectural CAD blueprint displayed on a stark black screen. The blueprint features razor-sharp glowing white and cyan vector lines depicting a complex structural floorplan with technical annotations, dimensions, and cross-section details. The overall mood is clinical, hyper-precise, and deeply engineering-focused, utilizing a strict palette of deep slate, stark white, and neon cyan accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmdij6dV-OI-82vO27GiW53fbszpKDs5DyTSZV632DMkPwnCQKiS6jwYmx5HaB0P7Al_XVEqRhnaw0roycVs5EXNsn8MGAqiLQ036sr0LAylVdppn5YwxS2UIV38yGbFPAp9R91F8AtVJrX3Yf4wUUlkTG1GZB5ughula0mtrW3vw16YqfxojHhCEQ0_DupJyXRtxBOqVQ9AVs9-OITm3C6yRUaHCqGdwd24R8lYwwZE3xEN7bNmnn"/>
+</div>
+<!-- Floating Markup Rail (Glassmorphic) -->
+<div class="absolute left-6 top-1/2 -translate-y-1/2 flex flex-col gap-2 p-2 bg-[#121A21]/85 backdrop-blur-md rounded-xl border border-[#41BEFD]/20 shadow-lg z-20">
+<button class="p-3 rounded-lg text-outline-variant hover:bg-surface-container-high/20 transition-colors group relative" title="Select">
+<span class="material-symbols-outlined">near_me</span>
+</button>
+<div class="w-full h-px bg-outline/20 my-1"></div>
+<!-- Active Tool (Pen) -->
+<button class="p-3 rounded-lg text-[#00E5FF] bg-[#00E5FF]/10 transition-colors group relative shadow-[0_0_8px_rgba(0,229,255,0.3)]" title="Pen Tool">
+<span class="material-symbols-outlined filled">edit</span>
+<!-- Active Indicator Dot -->
+<div class="absolute right-1 top-1 w-1.5 h-1.5 bg-[#00E5FF] rounded-full animate-pulse"></div>
+</button>
+<button class="p-3 rounded-lg text-outline-variant hover:bg-surface-container-high/20 transition-colors group relative" title="Highlighter">
+<span class="material-symbols-outlined">format_ink_highlighter</span>
+</button>
+<button class="p-3 rounded-lg text-outline-variant hover:bg-surface-container-high/20 transition-colors group relative" title="Shapes">
+<span class="material-symbols-outlined">category</span>
+</button>
+<button class="p-3 rounded-lg text-outline-variant hover:bg-surface-container-high/20 transition-colors group relative" title="Text Note">
+<span class="material-symbols-outlined">notes</span>
+</button>
+<div class="w-full h-px bg-outline/20 my-1"></div>
+<button class="p-3 rounded-lg text-outline-variant hover:bg-surface-container-high/20 transition-colors group relative" title="Undo">
+<span class="material-symbols-outlined">undo</span>
+</button>
+<button class="p-3 rounded-lg text-outline-variant hover:bg-surface-container-high/20 transition-colors group relative" title="Redo">
+<span class="material-symbols-outlined">redo</span>
+</button>
+</div>
+<!-- View Controls (Bottom Right of Canvas) -->
+<div class="absolute bottom-6 right-6 flex items-center gap-2 bg-[#121A21]/85 backdrop-blur-md rounded-lg border border-[#41BEFD]/20 shadow-lg p-1 z-20">
+<button class="p-2 rounded text-outline-variant hover:bg-surface-container-high/20 transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="font-label text-xs text-on-surface-variant min-w-[3rem] text-center">145%</span>
+<button class="p-2 rounded text-outline-variant hover:bg-surface-container-high/20 transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="w-px h-6 bg-outline/30 mx-1"></div>
+<button class="p-2 rounded text-[#00E5FF] hover:bg-surface-container-high/20 transition-colors">
+<span class="material-symbols-outlined">fit_screen</span>
+</button>
+</div>
+</div>
+<!-- Version Control Sidebar -->
+<aside class="w-[320px] bg-surface-container-lowest border-l border-outline-variant/30 shadow-lg flex flex-col z-30 shrink-0 h-full relative">
+<!-- Sidebar Header -->
+<div class="p-4 border-b border-outline-variant/20 flex items-center justify-between bg-surface">
+<div>
+<h2 class="font-headline text-headline-sm text-primary mb-1">Version History</h2>
+<p class="font-label text-xs text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span>
+                        Structural_Plan_Level4.pdf
+                    </p>
+</div>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+<!-- Version List (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+<!-- Version Item: Active (v3.2) -->
+<div class="group relative flex flex-col gap-2 p-3 rounded-lg border border-primary/20 bg-primary-fixed/30 shadow-sm cursor-pointer transition-all">
+<!-- Current badge -->
+<div class="absolute -top-2.5 -right-2.5 bg-primary text-on-primary font-label text-[10px] px-2 py-0.5 rounded shadow-sm border border-outline-variant/20 z-10 flex items-center gap-1">
+<div class="w-1.5 h-1.5 bg-[#41BEFD] rounded-full"></div>
+                        CURRENT
+                    </div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline font-bold text-primary">v3.2</span>
+<span class="font-label text-[10px] text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">Approved</span>
+</div>
+</div>
+<p class="font-body text-sm text-on-surface">Resolved structural load discrepancies in Sector 4B.</p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<img alt="Sarah Jenkins" class="w-6 h-6 rounded-full border border-outline-variant/50 object-cover" data-alt="A tight square crop avatar of a female lead structural engineer wearing safety glasses and a yellow hardhat. The background is a clean, bright, white-walled office setting. The style is professional and corporate SaaS." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLk0AEvVjsdV3PS-AJfxb-FVS9LmBfNKh6RaFgHnglttEUJwIPpYxmEeFycWjeP5F44RYi5d0qncemgh7eldx4YmTEVGtuly1VY6oaaQ7_cwFmcctgyjSQs20ehr01_ifKaLXz7wSDSPoOWU5QC_r9N_9JqarHa50IdrWu1GGFlU0oTpvqGVW6vSNrFIfBAXM8RkmlYcImtaJzcjKyCruoEbcpG7t2J7m-xRIiWGUctsNcNsoHrcZH"/>
+<span class="font-body text-xs text-on-surface-variant">S. Jenkins</span>
+</div>
+<span class="font-label text-[10px] text-outline">2023-10-27T08:14:00Z</span>
+</div>
+</div>
+<!-- Version Item: Previous (v3.1) -->
+<div class="group relative flex flex-col gap-2 p-3 rounded-lg border border-outline-variant/30 bg-surface hover:bg-surface-container-low hover:border-outline/50 shadow-sm cursor-pointer transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline font-bold text-on-surface-variant group-hover:text-primary transition-colors">v3.1</span>
+<span class="font-label text-[10px] text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">Draft</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100">restore</span>
+</div>
+<p class="font-body text-sm text-on-surface-variant">Initial adjustments for HVAC routing conflicts.</p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<img alt="Mark Thorne" class="w-6 h-6 rounded-full border border-outline-variant/50 object-cover" data-alt="A tight square crop avatar of a male CAD technician with short brown hair, wearing a dark blue polo shirt. The background is a slightly blurred office interior with soft natural lighting. Professional corporate SaaS style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGNFAYwxV-f0c-wK8RmG0zkfloeEbDVq2AYdRr0UMiWMi_TZGaReeWh4cni4G5hISHhf50PKSivFZHvcVoJcSaYrQs68ttO1azc0XG8OGqjbcR82Fz_alOHEMVV5ldYhrq7SJp8LEFPTrfJZTgrVJLcRAZd2smH3I92S4bkU0oVr1UBy7CW-xU_f-6RzDGPuiM2T9rO5_acM31skQwtvUTJTwp8hyuvV3PVrvZk-OpDdiWsgaTFKJi"/>
+<span class="font-body text-xs text-on-surface-variant">M. Thorne</span>
+</div>
+<span class="font-label text-[10px] text-outline">2023-10-26T14:32:11Z</span>
+</div>
+</div>
+<!-- Version Item: Older (v3.0) -->
+<div class="group relative flex flex-col gap-2 p-3 rounded-lg border border-outline-variant/30 bg-surface hover:bg-surface-container-low hover:border-outline/50 shadow-sm cursor-pointer transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline font-bold text-on-surface-variant group-hover:text-primary transition-colors">v3.0</span>
+<span class="font-label text-[10px] text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">Baseline</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100">restore</span>
+</div>
+<p class="font-body text-sm text-on-surface-variant">Client approved structural baseline submission.</p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<img alt="Elena Rostova" class="w-6 h-6 rounded-full border border-outline-variant/50 object-cover" data-alt="A tight square crop avatar of a female project manager with dark skin and braided hair, wearing a white blouse. The background is a crisp, bright architectural office. Professional corporate SaaS style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVMxJN-2K1fauXAoF_GrIBMQWP8MXTXwyfEU-K8bnWeSFA2zD54uprdi3Wu8q-r_Iz266c6xAsOXhRDedcEwOdJkIH4FAHCB6nSaL4d5bvGoeKImbUoJ72-xI5fCNQUy0raVhL-U5PP5iPa0hJZxqxcVtx1qo5ICv94b-Fs6sIn0Gofg7klrvWQci8xKCY_7kKbaGR07sk0zg_SeESuNgnQFYV_hIu8CsexzdUEBfWAh7WI3FJFcV2"/>
+<span class="font-body text-xs text-on-surface-variant">E. Rostova</span>
+</div>
+<span class="font-label text-[10px] text-outline">2023-10-20T09:00:00Z</span>
+</div>
+</div>
+<!-- Load More Button -->
+<button class="w-full py-2 flex items-center justify-center gap-2 text-primary font-body text-sm hover:bg-surface-container transition-colors rounded border border-transparent hover:border-outline-variant/50">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+                    Load Older Versions
+                </button>
+</div>
+<!-- Action Area Bottom -->
+<div class="p-4 border-t border-outline-variant/20 bg-surface-container-lowest">
+<button class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-body font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+                    Upload New Revision
+                </button>
+</div>
+</aside>
+</main>
+</body></html>

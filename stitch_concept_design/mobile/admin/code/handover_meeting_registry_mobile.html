@@ -1,0 +1,283 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Project Handover &amp; Meeting Registry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-primary-fixed-variant": "#2e4965",
+                "secondary-fixed": "#c6e7ff",
+                "primary-container": "#00213c",
+                "outline-variant": "#c3c6ce",
+                "on-surface-variant": "#43474d",
+                "tertiary-container": "#002233",
+                "on-primary-container": "#6f89a9",
+                "secondary-fixed-dim": "#88cffc",
+                "tertiary-fixed": "#c6e7ff",
+                "surface-bright": "#faf9f4",
+                "on-error": "#ffffff",
+                "on-secondary": "#ffffff",
+                "on-primary": "#ffffff",
+                "tertiary-fixed-dim": "#82cfff",
+                "on-background": "#1b1c19",
+                "on-error-container": "#93000a",
+                "surface-container": "#efeee9",
+                "surface-container-highest": "#e3e3de",
+                "primary-fixed": "#d1e4ff",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed": "#001e2d",
+                "error": "#ba1a1a",
+                "primary": "#000815",
+                "tertiary": "#00080f",
+                "background": "#faf9f4",
+                "surface-container-low": "#f5f4ef",
+                "primary-fixed-dim": "#aec9eb",
+                "secondary": "#00658d",
+                "inverse-on-surface": "#f2f1ec",
+                "on-tertiary-container": "#0090c7",
+                "surface-container-high": "#e9e8e3",
+                "on-tertiary-fixed": "#001e2d",
+                "surface-tint": "#46607e",
+                "error-container": "#ffdad6",
+                "inverse-surface": "#30312e",
+                "on-secondary-container": "#005a7f",
+                "on-secondary-fixed-variant": "#004c6b",
+                "inverse-primary": "#aec9eb",
+                "surface": "#faf9f4",
+                "surface-variant": "#e3e3de",
+                "on-primary-fixed": "#001d35",
+                "outline": "#73777e",
+                "on-tertiary": "#ffffff",
+                "secondary-container": "#8ad1ff",
+                "on-surface": "#1b1c19",
+                "on-tertiary-fixed-variant": "#004c6b",
+                "surface-dim": "#dbdad5"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {},
+        "fontFamily": {
+                "headline": [
+                        "Merriweather"
+                ],
+                "display": [
+                        "Merriweather"
+                ],
+                "body": [
+                        "Inter"
+                ],
+                "label": [
+                        "JetBrains Mono"
+                ]
+        },
+        "fontSize": {}
+},
+    },
+  }
+</script>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .material-symbols-outlined.fill {
+    font-variation-settings: 'FILL' 1;
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col pt-16 pb-24 relative overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-4 h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Admin User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of an administrative user in a corporate setting, well-lit, wearing business casual attire. The style is modern corporate photography, fitting for a SaaS application profile picture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKwKDz-csE-MoZLWjxQ1rmgY3KxP1pkB45sM274EISzBmBDptEnkvfgRTBk6OXPwp1VuxVYdyJgySTRUPf48BSWDanKMyCrejh7F1fcFruliWvCCi98SO-Mu45ycN-DYI0BZ4cOPPSad6YGrJd_AaUNACL74YDvzXzXjShnnhaTEon5HRtz8C0k67-abrm9RNfHivKM-VKHwamFn_YiOVLKdcWXlwgHfzHCCiasZfTW_w9UTvFKKTd">
+</div>
+<h1 class="font-headline text-[18px] font-bold text-primary leading-[24px]">SETUU Enterprise</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-150 rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="flex-1 w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 mt-4">
+<!-- Header Section -->
+<div class="mb-6 mt-2">
+<p class="font-label text-[12px] font-medium text-on-surface-variant uppercase tracking-widest mb-1">Project Delta</p>
+<h2 class="font-headline text-[24px] md:text-[32px] font-bold text-primary leading-tight">Handover &amp; Registry</h2>
+</div>
+<!-- Tabs -->
+<div class="flex border-b border-outline-variant mb-6" id="tabs">
+<button class="flex-1 py-3 text-center border-b-2 border-primary text-primary font-headline font-bold" onclick="switchTab('handovers')">Handovers</button>
+<button class="flex-1 py-3 text-center border-b-2 border-transparent text-on-surface-variant font-headline font-normal hover:text-primary transition-colors" onclick="switchTab('meetings')">Meetings</button>
+</div>
+<!-- Handovers Tab Content -->
+<div class="space-y-4" id="handovers-tab">
+<!-- Handover Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="font-headline text-[18px] font-bold text-primary">HVAC System Handover</h3>
+<p class="text-sm text-on-surface-variant mt-1">Package ID: HND-001</p>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#ecfdf5] text-[#065f46] border border-[#a7f3d0] text-xs font-semibold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+            Approved
+          </span>
+</div>
+<div class="grid grid-cols-2 gap-4 my-4">
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Signatory</p>
+<p class="text-sm font-medium text-on-surface">Alex Mercer (Client)</p>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Warranty Expiry</p>
+<p class="font-label text-[12px] text-on-surface">2026-10-15</p>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-3 flex items-center justify-between">
+<div class="flex gap-2">
+<a class="inline-flex items-center gap-1 text-secondary text-sm font-medium hover:underline" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+              Final_Specs.pdf
+            </a>
+</div>
+<button class="text-secondary p-1 rounded-full hover:bg-secondary-container/20 transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<!-- Handover Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<div>
+<h3 class="font-headline text-[18px] font-bold text-primary">Electrical Substation</h3>
+<p class="text-sm text-on-surface-variant mt-1">Package ID: HND-002</p>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#fdf4ff] text-[#701a75] border border-[#f5d0fe] text-xs font-semibold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-[#9333ea]"></span>
+            Pending Signature
+          </span>
+</div>
+<div class="grid grid-cols-2 gap-4 my-4">
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Assigned To</p>
+<p class="text-sm font-medium text-on-surface">Sarah Chen (PM)</p>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant mb-1">Target Date</p>
+<p class="font-label text-[12px] text-on-surface">2024-11-01</p>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-3 flex items-center justify-between">
+<div class="flex gap-2">
+<a class="inline-flex items-center gap-1 text-secondary text-sm font-medium hover:underline" href="#">
+<span class="material-symbols-outlined text-[18px]">draft</span>
+              Draft_O&amp;M_Manual.pdf
+            </a>
+</div>
+<button class="text-secondary p-1 rounded-full hover:bg-secondary-container/20 transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Meetings Tab Content -->
+<div class="hidden space-y-4" id="meetings-tab">
+<!-- Meeting Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="bg-surface-container w-12 h-12 rounded-lg flex flex-col items-center justify-center shrink-0 border border-outline-variant/50">
+<span class="text-xs text-on-surface-variant uppercase font-bold">Oct</span>
+<span class="text-lg font-headline font-bold text-primary">12</span>
+</div>
+<div>
+<h4 class="font-headline text-[16px] font-bold text-primary">Q3 Progress Review</h4>
+<div class="flex flex-wrap items-center gap-3 mt-1 text-xs text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 10:00 AM PST</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">group</span> 8 Attendees</span>
+</div>
+</div>
+</div>
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-secondary-container text-on-secondary-container rounded-md font-medium text-sm hover:bg-secondary/20 transition-colors self-start md:self-auto">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+          View Minutes
+        </button>
+</div>
+<!-- Meeting Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="bg-surface-container w-12 h-12 rounded-lg flex flex-col items-center justify-center shrink-0 border border-outline-variant/50">
+<span class="text-xs text-on-surface-variant uppercase font-bold">Sep</span>
+<span class="text-lg font-headline font-bold text-primary">28</span>
+</div>
+<div>
+<h4 class="font-headline text-[16px] font-bold text-primary">Risk Mitigation Sync</h4>
+<div class="flex flex-wrap items-center gap-3 mt-1 text-xs text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 1:30 PM PST</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">group</span> 4 Attendees</span>
+</div>
+</div>
+</div>
+<button class="flex items-center justify-center gap-2 px-4 py-2 bg-secondary-container text-on-secondary-container rounded-md font-medium text-sm hover:bg-secondary/20 transition-colors self-start md:self-auto">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+          View Minutes
+        </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/85 backdrop-blur-md border-t border-outline-variant shadow-lg flex justify-around items-center pt-2 pb-safe w-full md:hidden">
+<!-- Active state mapped to 'Dashboard' as no exact match exists, assuming default or overview -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label text-[10px]">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1 fill">inventory_2</span>
+<span class="font-label text-[10px] font-bold">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="font-label text-[10px]">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">admin_panel_settings</span>
+<span class="font-label text-[10px]">Admin</span>
+</a>
+</nav>
+<script>
+    function switchTab(tabName) {
+      const handoversTab = document.getElementById('handovers-tab');
+      const meetingsTab = document.getElementById('meetings-tab');
+      const buttons = document.querySelectorAll('#tabs button');
+
+      if (tabName === 'handovers') {
+        handoversTab.classList.remove('hidden');
+        meetingsTab.classList.add('hidden');
+        buttons[0].className = 'flex-1 py-3 text-center border-b-2 border-primary text-primary font-headline font-bold';
+        buttons[1].className = 'flex-1 py-3 text-center border-b-2 border-transparent text-on-surface-variant font-headline font-normal hover:text-primary transition-colors';
+      } else {
+        handoversTab.classList.add('hidden');
+        meetingsTab.classList.remove('hidden');
+        buttons[0].className = 'flex-1 py-3 text-center border-b-2 border-transparent text-on-surface-variant font-headline font-normal hover:text-primary transition-colors';
+        buttons[1].className = 'flex-1 py-3 text-center border-b-2 border-primary text-primary font-headline font-bold';
+      }
+    }
+  </script>
+</body></html>

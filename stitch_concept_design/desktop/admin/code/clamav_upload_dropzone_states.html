@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClamAV Upload Dropzone Anatomies - Setuu Enterprise</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-secondary-container": "#005a7f",
+                      "on-primary-fixed": "#001d35",
+                      "surface-container-high": "#e9e8e3",
+                      "surface-tint": "#46607e",
+                      "tertiary-fixed": "#c6e7ff",
+                      "error-container": "#ffdad6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-bright": "#faf9f4",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "primary": "#000815",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#faf9f4",
+                      "secondary": "#00658d",
+                      "surface-container-highest": "#e3e3de",
+                      "secondary-fixed-dim": "#88cffc",
+                      "error": "#ba1a1a",
+                      "background": "#faf9f4",
+                      "secondary-container": "#8ad1ff",
+                      "on-surface": "#1b1c19",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-surface-variant": "#43474d",
+                      "surface-container": "#efeee9",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "on-background": "#1b1c19",
+                      "primary-fixed-dim": "#aec9eb",
+                      "primary-fixed": "#d1e4ff",
+                      "surface-dim": "#dbdad5",
+                      "primary-container": "#00213c",
+                      "tertiary-container": "#002233",
+                      "inverse-primary": "#aec9eb",
+                      "on-primary-container": "#6f89a9",
+                      "surface-container-low": "#f5f4ef",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#e3e3de",
+                      "outline-variant": "#c3c6ce",
+                      "on-tertiary-fixed": "#001e2d",
+                      "outline": "#73777e",
+                      "tertiary": "#00080f",
+                      "on-error-container": "#93000a",
+                      "inverse-surface": "#30312e",
+                      "on-tertiary-container": "#0090c7",
+                      "sky-blue": "#0284C7",
+                      "emerald-green": "#16A34A",
+                      "crimson-red": "#DC2626"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": ["Merriweather"],
+                      "display": ["Merriweather"],
+                      "body": ["Inter"],
+                      "label": ["JetBrains Mono"]
+              },
+              "fontSize": {}
+            },
+          },
+        }
+      </script>
+<style>
+          @keyframes radar-spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+          }
+          .animate-radar {
+              animation: radar-spin 2s linear infinite;
+          }
+          @keyframes flash-border {
+              0%, 100% { border-color: #DC2626; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+              50% { border-color: rgba(220, 38, 38, 0.5); box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1); }
+          }
+          .animate-flash-border {
+              animation: flash-border 1.5s ease-in-out infinite;
+          }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen">
+<!-- Top App Bar -->
+<header class="bg-white/85 dark:bg-surface-container/85 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 shadow-sm flex items-center justify-between px-4 h-16 w-full">
+<button class="p-2 hover:bg-surface-container-high/50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline text-headline-md font-bold tracking-tight text-primary">Setuu</h1>
+<button class="p-2 hover:bg-surface-container-high/50 transition-colors rounded-full active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="search">search</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="mb-12">
+<h2 class="font-headline text-headline-lg font-bold text-primary mb-4">ClamAV Upload Dropzone Anatomies</h2>
+<p class="text-on-surface-variant max-w-3xl">Demonstration of the file uploader UI states tied directly to Deno edge function security results. The system requires strict validation before allowing any document into the main repository.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- State 1: Scanning -->
+<div class="bg-surface-container-lowest rounded-lg shadow-sm border-2 border-dashed border-sky-blue relative overflow-hidden flex flex-col items-center justify-center p-8 min-h-[280px]">
+<div class="absolute inset-0 bg-sky-blue/5 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-sky-blue/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-sky-blue text-4xl animate-radar" data-icon="radar">radar</span>
+</div>
+<h3 class="font-headline text-headline-sm text-primary mb-2">Scanning for threats...</h3>
+<p class="font-label text-label-md text-on-surface-variant font-mono">ClamAV Edge Analysis in progress</p>
+<div class="w-full max-w-[200px] h-1.5 bg-surface-variant rounded-full mt-6 overflow-hidden">
+<div class="h-full bg-sky-blue rounded-full w-1/3 animate-pulse"></div>
+</div>
+</div>
+</div>
+<!-- State 2: Clean -->
+<div class="bg-surface-container-lowest rounded-lg shadow-sm border-2 border-solid border-emerald-green relative overflow-hidden flex flex-col items-center justify-center p-8 min-h-[280px]">
+<div class="absolute inset-0 bg-emerald-green/5 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-emerald-green/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-emerald-green text-4xl" data-icon="check_circle">check_circle</span>
+</div>
+<h3 class="font-headline text-headline-sm text-primary mb-2">File verified - Secure</h3>
+<p class="font-label text-label-md text-on-surface-variant font-mono">HASH: 8f4e2...a1b9c</p>
+<div class="mt-6 px-4 py-2 bg-emerald-green/10 text-emerald-green rounded font-label text-label-sm border border-emerald-green/20">
+                        Added to repository
+                    </div>
+</div>
+</div>
+<!-- State 3: Malicious Payload Blocked -->
+<div class="bg-surface-container-lowest rounded-lg shadow-sm border-2 border-solid animate-flash-border relative overflow-hidden flex flex-col items-center justify-center p-8 min-h-[280px]">
+<!-- Obfuscated Background Preview -->
+<div class="absolute inset-0 z-0 overflow-hidden">
+<div class="bg-cover bg-center w-full h-full blur-xl opacity-40 mix-blend-multiply" data-alt="A heavily blurred, abstract representation of a complex architectural blueprint document, obscured by a dense digital static noise effect. The image features a clinical off-white canvas with dark slate geometric lines, heavily distorted to signify a corrupted or malicious file state. The lighting is harsh and digital, creating an atmosphere of technical malfunction and security intervention within a modern corporate SaaS environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0OOIQJT3LuquMYV31YHTVxcM9iOv9ZMN3MbvqrSds5Ez57HcyOgRXOb8wlv2NoHz04nMN6fPeAWYxBhqwaNcH-C1wDexxlQBl2RXE0pgpLiuoRbyNcIoFW_lHm8obSEy4YBpXRy3HC609dKL8iPICGkje5qbgHkg0UhU3q8-opoMTeXlLpdLxBshWhn_C9dHq7kozXzynLGc9q7eJ1PmHnODo4huy2oH56N0L-8jtcDvid7HVx7r2')"></div>
+</div>
+<div class="absolute inset-0 bg-error/5 z-0 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center mb-6 ring-4 ring-error/20">
+<span class="material-symbols-outlined text-error text-4xl" data-icon="gpp_bad">gpp_bad</span>
+</div>
+<h3 class="font-headline text-headline-sm text-error mb-2 font-bold">Infected File Blocked</h3>
+<p class="font-label text-label-md text-error/80 font-mono">ClamAV detected malicious payload.</p>
+<button class="mt-6 px-6 py-2 bg-error text-on-error rounded-md font-body text-body-md font-medium hover:bg-error/90 active:scale-95 transition-all shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+                        Remove Payload
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only per Shell Rules) -->
+<nav class="bg-white/85 dark:bg-surface-container/85 backdrop-blur-md fixed bottom-0 w-full z-50 pb-safe border-t border-outline-variant/30 shadow-lg flex justify-around items-center h-20 px-2 w-full md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dataset">dataset</span>
+<span class="font-label text-label-sm mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-2 transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+<span class="font-label text-label-sm mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="font-label text-label-sm mt-1">Drawing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label text-label-sm mt-1">Reports</span>
+</a>
+</nav>
+</body></html>

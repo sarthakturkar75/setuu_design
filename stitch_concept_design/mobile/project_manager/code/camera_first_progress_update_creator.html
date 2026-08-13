@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Progress Update - Camera First</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "background": "#faf9f4",
+                        "secondary": "#00658d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-dim": "#dbdad5",
+                        "on-primary-fixed": "#001d35",
+                        "on-background": "#1b1c19",
+                        "surface-container-highest": "#e3e3de",
+                        "on-secondary-fixed": "#001e2d",
+                        "primary": "#000815",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c3c6ce",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "tertiary": "#00080f",
+                        "outline": "#73777e",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "surface": "#faf9f4",
+                        "inverse-surface": "#30312e",
+                        "on-secondary-container": "#005a7f",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#faf9f4",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "secondary-container": "#8ad1ff",
+                        "surface-container": "#efeee9",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "tertiary-container": "#002233",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-black text-on-surface font-body overflow-hidden h-screen w-full relative selection:bg-secondary-container selection:text-on-secondary-container">
+<div class="absolute inset-0 w-full h-full z-0 bg-surface-dim flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="A first-person point of view looking through a camera viewfinder at an active, large-scale industrial construction site during daytime. The scene is bright and clear, bathed in natural sunlight, highlighting the immense steel framework of a high-rise commercial building under construction. High contrast shadows cast by heavy machinery and sharp structural details reflect an environment of heavy engineering and precise project management. The overall visual aesthetic is highly realistic, clean, professional, and utilitarian, perfectly fitting the context of a modern B2B SaaS application utilized by field personnel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI_mQqx6Y5WhpKXv42GSstZv7Rj-c8aSq9vBbTvY5kqs4C3M5BgdD7OfPCztMc9DevWGdTb06Xi5T08xhn_ciGh0jXPVuF9kcH9Bf1DMdpYieXmrlbQyF3mWWIYwpxYEWvIy5f75gek4cdrYWYbZcak8skJUyFN9qXfjgnBRk4VEbBixmzPbWOrXAtumZqnbyKbygVZJ9V48jCLKKmhQwD-8xQaaoVfFdnBVp4pcIMrctmVJ9RAXkt">
+</div>
+<div class="absolute top-4 left-4 z-40">
+<button class="w-12 h-12 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black/60 transition-colors active:scale-95 border border-white/20 shadow-lg focus:outline-none focus:ring-2 focus:ring-secondary-fixed">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<div class="absolute top-4 right-4 z-40 flex gap-3">
+<button class="w-12 h-12 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black/60 transition-colors active:scale-95 border border-white/20 shadow-lg focus:outline-none focus:ring-2 focus:ring-secondary-fixed">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">flash_on</span>
+</button>
+</div>
+<div class="absolute right-4 z-20 bg-black/50 backdrop-blur-md rounded-md px-3 py-2 text-white font-label text-label-sm text-right border border-white/20 shadow-xl tracking-wide flex flex-col gap-0.5" style="bottom: calc(max(360px, 35vh));">
+<span class="opacity-90">LAT: 29.7604 N | LON: 95.3698 W</span>
+<span class="text-secondary-fixed font-bold">2024-10-25 14:32Z</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full z-30 bg-surface/90 backdrop-blur-2xl rounded-t-[2.5rem] shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.4)] border-t border-white/60 px-5 pt-3 pb-safe flex flex-col gap-5 min-h-[340px]">
+<div class="w-14 h-1.5 bg-outline-variant/80 rounded-full mx-auto mb-1"></div>
+<div class="flex flex-col gap-5 max-w-2xl mx-auto w-full pb-8">
+<button class="w-full min-h-[64px] bg-surface-container-lowest/90 border border-outline-variant/60 rounded-xl flex items-center justify-between px-4 text-on-surface shadow-sm hover:bg-surface-container-lowest transition-colors focus:ring-2 focus:ring-primary focus:outline-none active:bg-surface-container-low group">
+<div class="flex flex-col text-left gap-1">
+<span class="text-[11px] text-outline-variant font-label tracking-widest uppercase">Target Milestone</span>
+<span class="font-body text-body-lg font-semibold text-primary truncate max-w-[250px]">Foundation Pour - Sector 4</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</button>
+<div class="relative w-full">
+<textarea class="w-full h-32 bg-surface-container-lowest/90 border border-outline-variant/60 rounded-xl p-4 pr-16 font-body text-body-lg text-on-surface placeholder:text-outline resize-none focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent shadow-inner leading-relaxed" placeholder="Dictate observation or type caption..."></textarea>
+<button class="absolute right-3 bottom-3 w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container hover:bg-primary hover:text-on-primary transition-all shadow-md active:scale-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-container">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+</div>
+<div class="flex justify-center items-center w-full mt-4">
+<button class="relative w-[104px] h-[104px] rounded-full flex items-center justify-center group focus:outline-none">
+<svg class="absolute inset-0 w-full h-full -rotate-90 drop-shadow-md" viewBox="0 0 100 100">
+<circle class="stroke-surface-container-highest" cx="50" cy="50" fill="none" r="48" stroke-width="4"></circle>
+<circle class="stroke-secondary" cx="50" cy="50" fill="none" r="48" stroke-dasharray="301.59" stroke-dashoffset="110" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="relative w-20 h-20 bg-surface-container-lowest rounded-full border-[6px] border-surface shadow-[0_4px_14px_rgba(0,0,0,0.15)] group-active:scale-90 transition-transform duration-200 flex items-center justify-center group-hover:border-surface-container-low">
+<div class="w-14 h-14 bg-outline-variant/10 rounded-full"></div>
+</div>
+</button>
+</div>
+</div>
+</div>
+<style>
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 2rem);
+        }
+    </style>
+</body></html>

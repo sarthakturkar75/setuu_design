@@ -1,0 +1,264 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Report Engine - Setuu Enterprise</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "primary": "#000815",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f5f4ef",
+                        "on-primary-container": "#6f89a9",
+                        "outline": "#73777e",
+                        "surface-container": "#efeee9",
+                        "inverse-surface": "#30312e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface": "#faf9f4",
+                        "surface-bright": "#faf9f4",
+                        "on-surface": "#1b1c19",
+                        "primary-fixed-dim": "#aec9eb",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "background": "#faf9f4",
+                        "tertiary-container": "#002233",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#00213c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e3e3de",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "tertiary": "#00080f",
+                        "on-surface-variant": "#43474d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#005a7f",
+                        "surface-variant": "#e3e3de",
+                        "secondary": "#00658d",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#8ad1ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-tint": "#46607e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-background": "#1b1c19",
+                        "surface-container-high": "#e9e8e3",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary-container": "#0090c7",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-tertiary-fixed-variant": "#004c6b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #000815;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #000815;
+        }
+        
+        /* Hide scrollbar for clean mobile feel */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Safe area padding for bottom nav */
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col relative pb-28">
+<!-- TopAppBar -->
+<header class="bg-surface/85 backdrop-blur-md border-b border-outline-variant flex justify-between items-center w-full px-4 h-16 z-50 sticky top-0 bg-white/85">
+<button class="text-primary hover:bg-surface-container-high transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-headline-md font-headline font-bold text-primary truncate px-2">
+            Setuu Enterprise
+        </div>
+<div class="flex-shrink-0 w-8 h-8 rounded-full overflow-hidden border border-outline-variant/50 hover:opacity-80 cursor-pointer">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate project manager wearing a hard hat, smiling confidently in bright, modern white lighting, light mode aesthetic, crisp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ7QsZat-2hvikq4bkd_PIedqFxDkFIKxqGRGHpciBS0gRNkWRRBNnxHCb1ZqpXEKtyVsr6rXamdFjq7ZyBa0irEr5cM673RK0AGpAFBjMj8LbwtDoY1wJzSfIT-ZjyXrz1tFQjofL7BhvUfBOg5in2HvAodOJiDxBt1n3x3MxH59Aa2oDQ6wgKHLi9Aucg_d6Hp6GdXFzOE_J3ztHboeZdXG3_ySr0laVLDvlxL-hDWv-V7XP46sd">
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-lg mx-auto px-4 py-6 flex flex-col gap-6">
+<!-- Page Title -->
+<div>
+<h1 class="font-headline font-bold text-headline-lg text-primary leading-tight">Report Engine</h1>
+<p class="font-body text-body-md text-on-surface-variant mt-1">Configure automated data aggregation and distribution.</p>
+</div>
+<!-- Selection Section: Data Modules -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden">
+<div class="px-4 py-3 bg-surface-container-low border-b border-outline-variant flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[18px]">database</span><h2 class="font-label font-bold text-label-sm text-primary uppercase tracking-widest">Data Modules</h2></div>
+<div class="flex flex-col">
+<!-- Module: Tasks -->
+<div class="px-4 py-3 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">assignment_turned_in</span>
+<div>
+<p class="font-body text-body-md font-medium text-on-surface">Tasks &amp; Milestones</p>
+<p class="font-label text-label-sm text-outline">project_tasks / milestone_logs</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-outline-variant appearance-none cursor-pointer transition-transform duration-200 z-10 translate-x-6" id="toggle-tasks" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer transition-colors duration-200" for="toggle-tasks"></label>
+</div>
+</div>
+<!-- Module: Financials -->
+<div class="px-4 py-3 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">account_balance_wallet</span>
+<div>
+<p class="font-body text-body-md font-medium text-on-surface">Financials &amp; Budgets</p>
+<p class="font-label text-label-sm text-outline">contract_value / change_reqs</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-outline-variant appearance-none cursor-pointer transition-transform duration-200 z-10 translate-x-6" id="toggle-fin" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer transition-colors duration-200" for="toggle-fin"></label>
+</div>
+</div>
+<!-- Module: Materials -->
+<div class="px-4 py-3 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">inventory_2</span>
+<div>
+<p class="font-body text-body-md font-medium text-on-surface">Material Deliveries</p>
+<p class="font-label text-label-sm text-outline">project_materials / manifests</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-outline-variant appearance-none cursor-pointer transition-transform duration-200 z-10" id="toggle-mat" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-200" for="toggle-mat"></label>
+</div>
+</div>
+<!-- Module: Issues -->
+<div class="px-4 py-3 flex justify-between items-center bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">report_problem</span>
+<div>
+<p class="font-body text-body-md font-medium text-on-surface">Incident Reports</p>
+<p class="font-label text-label-sm text-outline">support_tickets / offline_syncs</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-outline-variant appearance-none cursor-pointer transition-transform duration-200 z-10 translate-x-6" id="toggle-iss" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer transition-colors duration-200" for="toggle-iss"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Schedule Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm p-4">
+<h2 class="font-headline font-bold text-body-md text-primary tracking-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                Execution Schedule
+            </h2>
+<div class="flex gap-2 mb-5"><label class="flex-1 cursor-pointer"><input class="peer sr-only" name="frequency" type="radio" value="daily"><div class="w-full text-center px-2 py-1.5 border border-outline-variant rounded font-label text-[10px] font-bold text-on-surface-variant peer-checked:bg-primary peer-checked:text-on-primary transition-all">DAILY</div></label><label class="flex-1 cursor-pointer"><input checked="" class="peer sr-only" name="frequency" type="radio" value="weekly"><div class="w-full text-center px-2 py-1.5 border border-outline-variant rounded font-label text-[10px] font-bold text-on-surface-variant peer-checked:bg-primary peer-checked:text-on-primary transition-all">WEEKLY</div></label><label class="flex-1 cursor-pointer"><input class="peer sr-only" name="frequency" type="radio" value="monthly"><div class="w-full text-center px-2 py-1.5 border border-outline-variant rounded font-label text-[10px] font-bold text-on-surface-variant peer-checked:bg-primary peer-checked:text-on-primary transition-all">MONTHLY</div></label></div>
+<div class="relative">
+<label class="block font-label text-label-sm text-outline mb-1" for="time-picker">EXECUTION TIME (UTC)</label>
+<div class="flex items-center bg-surface-container border border-outline-variant rounded-lg px-3 py-2 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all"><span class="material-symbols-outlined text-primary text-sm">schedule</span><input class="bg-transparent border-none p-0 flex-1 font-label text-label-md text-on-surface focus:ring-0 outline-none w-full ml-2" id="time-picker" type="time" value="08:00"><span class="text-label-sm text-outline font-label">UTC</span></div>
+</div>
+</section>
+<!-- Recipient Section -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm p-4">
+<h2 class="font-headline font-bold text-body-md text-primary tracking-tight mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">group</span>
+                Distribution List
+            </h2>
+<div class="bg-surface-container border border-outline-variant rounded-lg p-3 min-h-[100px] flex flex-col gap-2">
+<div class="flex flex-wrap gap-2"><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/30 rounded px-2 py-1"><span class="font-label text-[11px] text-on-surface">exec.dir@setuu.com</span><button class="text-outline hover:text-error transition-colors flex items-center"><span class="material-symbols-outlined text-[14px]">close</span></button></div><div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/30 rounded px-2 py-1"><span class="font-label text-[11px] text-on-surface">client.ops@vendor.net</span><button class="text-outline hover:text-error transition-colors flex items-center"><span class="material-symbols-outlined text-[14px]">close</span></button></div></div>
+<input class="bg-transparent border-none p-1 font-body text-body-md text-on-surface focus:ring-0 outline-none w-full mt-1 placeholder:text-outline/70" placeholder="Add email and press enter..." type="email">
+</div>
+</section>
+<!-- Actions -->
+<section class="flex flex-col gap-3 mt-4 mb-6 rounded-lg">
+<button class="bg-primary text-on-primary px-4 py-3.5 rounded-lg font-label font-bold text-label-md w-full text-center hover:bg-primary/90 shadow-md active:scale-[0.98] transition-transform flex justify-center items-center gap-2" style="background-color: rgb(0, 33, 60);">
+<span class="material-symbols-outlined text-sm">save</span>
+                SAVE SCHEDULE
+            </button>
+<button class="bg-transparent border border-primary text-primary px-4 py-3.5 rounded-lg font-label font-bold text-label-md w-full text-center hover:bg-surface-container-low active:scale-[0.98] transition-transform flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+                GENERATE NOW
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white/85 backdrop-blur-md border-t border-outline-variant/30 shadow-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 rounded-t-xl">
+<!-- Tab 1: Dashboard -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-all px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="text-label-sm font-label font-medium">Dashboard</span>
+</a>
+<!-- Tab 2: Projects -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-all px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="text-label-sm font-label font-medium">Projects</span>
+</a>
+<!-- Tab 3: Tasks -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-all px-4 py-1 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="text-label-sm font-label font-medium">Tasks</span>
+</a>
+<!-- Tab 4: Reports (ACTIVE) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1 scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-label-sm font-label font-medium">Reports</span>
+</a>
+</nav>
+<!-- Micro-interaction script for toggles -->
+<script>
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                if(this.checked) {
+                    this.classList.add('translate-x-6');
+                    this.nextElementSibling.classList.remove('bg-surface-variant');
+                    this.nextElementSibling.classList.add('bg-primary');
+                } else {
+                    this.classList.remove('translate-x-6');
+                    this.nextElementSibling.classList.remove('bg-primary');
+                    this.nextElementSibling.classList.add('bg-surface-variant');
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

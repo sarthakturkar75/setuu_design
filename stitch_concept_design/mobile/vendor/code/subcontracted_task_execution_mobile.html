@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Setuu Vendor - Tasks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#005a7f",
+                        "on-error": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c3c6ce",
+                        "surface-container": "#efeee9",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-high": "#e9e8e3",
+                        "background": "#faf9f4",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "secondary": "#00658d",
+                        "primary-container": "#00213c",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-surface": "#30312e",
+                        "secondary-container": "#8ad1ff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "secondary-fixed": "#c6e7ff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "inverse-primary": "#aec9eb",
+                        "primary": "#000815",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-tertiary-fixed": "#001e2d",
+                        "surface-tint": "#46607e",
+                        "tertiary": "#00080f",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-variant": "#e3e3de",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#43474d",
+                        "on-primary-fixed": "#001d35",
+                        "on-primary-container": "#6f89a9",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "surface-dim": "#dbdad5",
+                        "on-secondary": "#ffffff",
+                        "outline": "#73777e",
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-bright": "#faf9f4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Status Colors based on guidelines */
+        .status-queue { background-color: #64748B; } /* Slate */
+        .status-active { background-color: #0284C7; } /* Sky Blue */
+        .status-success { background-color: #16A34A; } /* Emerald */
+        .status-emergency { background-color: #DC2626; } /* Crimson */
+        
+        /* Hide scrollbar for clean horizontal scrolling tabs */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen pb-[90px] pt-16">
+<!-- TopAppBar -->
+<header class="bg-surface-container/85 dark:bg-surface-container-high/85 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 dark:border-outline/20 shadow-sm flex justify-between items-center px-4 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-headline font-bold text-sm">
+                VL
+            </div>
+<h1 class="font-headline font-bold text-primary dark:text-primary-fixed text-lg">Setuu Vendor</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-variant/50 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full px-margin-mobile pt-4 max-w-md mx-auto">
+<!-- Header & Tabs -->
+<div class="mb-6">
+<h2 class="font-headline font-bold text-2xl text-primary mb-1">Task Execution</h2>
+<p class="font-body text-sm text-on-surface-variant mb-4">Project: Alpha Sector Foundation</p>
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-body text-sm font-medium whitespace-nowrap">To Do (3)</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant font-body text-sm font-medium whitespace-nowrap">In Progress (1)</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant font-body text-sm font-medium whitespace-nowrap">Submitted (5)</button>
+</div>
+</div>
+<!-- Task List -->
+<div class="flex flex-col gap-4">
+<!-- Task Card 1 (Expanded) -->
+<article class="bg-surface-container-lowest rounded border border-outline-variant shadow-sm overflow-hidden flex flex-col">
+<div class="p-4 border-b border-outline-variant/50">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-label-sm text-on-surface-variant tracking-wider">TSK-8892-A</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-error/10 text-error font-body text-xs font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Critical
+                        </span>
+</div>
+<h3 class="font-headline font-bold text-base text-primary mb-1">Install Load-Bearing Anchors</h3>
+<p class="font-body text-sm text-on-surface-variant line-clamp-2">Sector 4, Phase 2 structural reinforcement requires immediate anchor placement before cement pour.</p>
+</div>
+<!-- Expanded Detail Section -->
+<div class="p-4 bg-surface-container-low/50">
+<h4 class="font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Technical Specs</h4>
+<div class="font-label text-xs text-on-surface bg-surface-container p-3 rounded-sm border border-outline-variant/30 mb-4 whitespace-pre-wrap"># Material Req
+- 24x Hilti HST3 M16
+- Min embedment: 125mm
+- Torque spec: 80 Nm
+- Temp max: 35°C during curing</div>
+<button class="w-full h-12 bg-primary text-on-primary rounded flex justify-center items-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all font-body font-medium shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="upload_file">upload_file</span>
+                        Attach Deliverable
+                    </button>
+</div>
+</article>
+<!-- Task Card 2 (Collapsed) -->
+<article class="bg-surface-container-lowest rounded border border-outline-variant shadow-sm overflow-hidden p-4 relative hover:shadow-md transition-shadow">
+<div class="absolute left-0 top-0 bottom-0 w-1 status-queue"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="font-label text-label-sm text-on-surface-variant tracking-wider">TSK-8893-B</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface-variant text-on-surface-variant font-body text-xs font-medium">
+                        Standard
+                    </span>
+</div>
+<h3 class="font-headline font-bold text-base text-primary mb-1 pl-2">Route Secondary Conduit</h3>
+<p class="font-body text-sm text-on-surface-variant truncate pl-2">Prepare underground pathways for HVAC control wiring...</p>
+</article>
+<!-- Task Card 3 (Collapsed) -->
+<article class="bg-surface-container-lowest rounded border border-outline-variant shadow-sm overflow-hidden p-4 relative hover:shadow-md transition-shadow">
+<div class="absolute left-0 top-0 bottom-0 w-1 status-queue"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<span class="font-label text-label-sm text-on-surface-variant tracking-wider">TSK-8894-C</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-surface-variant text-on-surface-variant font-body text-xs font-medium">
+                        Standard
+                    </span>
+</div>
+<h3 class="font-headline font-bold text-base text-primary mb-1 pl-2">Site Cleanup &amp; Debris Removal</h3>
+<p class="font-body text-sm text-on-surface-variant truncate pl-2">Clear loose masonry from active zones 1 through 3.</p>
+</article>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface/90 dark:bg-surface-container-lowest/90 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-xl border-t border-outline-variant/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] flex justify-around items-center px-2 py-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant min-h-[48px] px-6 py-2 hover:bg-secondary-container/50 transition-colors rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label-sm uppercase tracking-wider">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant min-h-[48px] px-6 py-2 hover:bg-secondary-container/50 transition-colors rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="local_shipping">local_shipping</span>
+<span class="font-label text-label-sm uppercase tracking-wider">Deliveries</span>
+</a>
+<!-- Active Tab: Tasks -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl min-h-[48px] px-6 py-2 scale-95 transition-transform duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="assignment" data-weight="fill" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label text-label-sm uppercase tracking-wider font-bold">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant min-h-[48px] px-6 py-2 hover:bg-secondary-container/50 transition-colors rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-label-sm uppercase tracking-wider">Invoices</span>
+</a>
+</nav>
+</body></html>

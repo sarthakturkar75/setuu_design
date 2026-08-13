@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Setuu Enterprise - Progress Feed</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#1b1c19",
+                    "on-secondary-fixed": "#001e2d",
+                    "background": "#faf9f4",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#c6e7ff",
+                    "inverse-primary": "#aec9eb",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#0090c7",
+                    "secondary-fixed": "#c6e7ff",
+                    "primary-fixed-dim": "#aec9eb",
+                    "surface": "#faf9f4",
+                    "outline-variant": "#c3c6ce",
+                    "on-background": "#1b1c19",
+                    "surface-container-high": "#e9e8e3",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "on-surface-variant": "#43474d",
+                    "surface-variant": "#e3e3de",
+                    "on-secondary-container": "#005a7f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#001e2d",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-tint": "#46607e",
+                    "tertiary": "#00080f",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#faf9f4",
+                    "secondary-container": "#8ad1ff",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#30312e",
+                    "surface-container-highest": "#e3e3de",
+                    "surface-container": "#efeee9",
+                    "primary-container": "#00213c",
+                    "primary-fixed": "#d1e4ff",
+                    "surface-container-low": "#f5f4ef",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "primary": "#000815",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-primary-container": "#6f89a9",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "tertiary-container": "#002233",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#73777e",
+                    "on-primary-fixed": "#001d35",
+                    "error": "#ba1a1a",
+                    "surface-dim": "#dbdad5",
+                    "secondary": "#00658d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather", "serif"],
+                    "display": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Base styles */
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Mobile safe areas */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+
+        /* Typography Utilities */
+        .font-label-sm { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; line-height: 14px; letter-spacing: 0.05em; }
+        .font-label-md { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; line-height: 16px; letter-spacing: 0.05em; }
+        .font-body-md { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; line-height: 20px; }
+        .font-headline-sm { font-family: 'Merriweather', serif; font-size: 18px; font-weight: 700; line-height: 24px; }
+        
+        /* Interactive slider specific styles */
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: theme('colors.primary');
+            cursor: ew-resize;
+            z-index: 10;
+        }
+        .slider-handle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background-color: theme('colors.primary');
+            border-radius: 50%;
+            border: 2px solid theme('colors.on-primary');
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            /* Icon for handle */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8L22 12L18 16"/><path d="M6 8L2 12L6 16"/></svg>');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-surface/85 border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-4 h-16 pt-safe">
+<div class="flex items-center gap-3">
+<button aria-label="Client Executive Portfolio" class="active:scale-95 duration-200 p-2 -ml-2 rounded-full hover:bg-surface-container-high/50 transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="account_circle" style="font-variation-settings: 'FILL' 1; font-size: 28px;">account_circle</span>
+</button>
+<h1 class="font-headline font-bold text-primary tracking-tight text-lg">Setuu Enterprise</h1>
+</div>
+<button aria-label="Notifications" class="active:scale-95 duration-200 p-2 -mr-2 rounded-full hover:bg-surface-container-high/50 transition-colors text-primary">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<!-- Main Content: Vertical Narrative Feed -->
+<main class="pt-24 px-4 max-w-md mx-auto space-y-8 pb-12">
+<!-- Narrative Header -->
+<div class="mb-6">
+<h2 class="font-headline text-2xl font-bold text-on-surface mb-2">Site Update Feed</h2>
+<p class="font-body text-on-surface-variant">Verified progress logs and critical milestones for Project Alpha.</p>
+</div>
+<!-- Feed Item 1: Pending Action (Needs Review) -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col">
+<!-- Meta Header -->
+<div class="p-4 border-b border-surface-container flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="engineering" style="font-size: 18px;">engineering</span>
+<span class="font-label-md text-on-surface">STRUCTURAL_MILESTONE_04</span>
+</div>
+<div class="bg-[#9333EA]/10 text-[#9333EA] px-2 py-1 rounded font-label-sm flex items-center gap-1 border border-[#9333EA]/20">
+<span class="material-symbols-outlined" data-icon="pending" style="font-size: 12px; font-variation-settings: 'FILL' 1;">pending</span>
+                    PENDING REVIEW
+                </div>
+</div>
+<!-- Image/Slider Area -->
+<div class="relative w-full aspect-[4/3] bg-surface-container select-none group" id="slider-1">
+<!-- After Image (Base) -->
+<img alt="After Construction" class="absolute inset-0 w-full h-full object-cover" data-alt="A bright, modern construction site showing newly erected steel beams against a clear blue sky. The scene is highly detailed, representing a 'light mode' architectural aesthetic with clean lines and sharp contrasts. Scaffolding is visible in the background, signifying active progress. The lighting is harsh midday sun, casting strong shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJLJ5436s4LaeJ2bHHg1J3rZkCz1oBnzN-YmKBVbUSV3ZAzZdjY4nPfRZzcln0RuCXsI76AmC5i7uaTqXNPjqpfqnL1uoyil9w84VjExEzcjOMavaTH-PNklFVpgEFyhW-iiHNrp2AV_6y_wxyBSE2ZUO6C0p17pcp_B80x_vk5Bdw_tSp_ZjaiyJ9zFEHMYMB-heNn9IKi0GE65duoudWXC0Vh1oo3AtceD3R8kMFDUoKwr-_XAV6"/>
+<!-- Before Image (Overlay clipped) -->
+<div class="absolute inset-0 w-full h-full overflow-hidden before-image-container" style="width: 50%;">
+<img alt="Before Construction" class="absolute inset-0 w-full h-full object-cover max-w-none" data-alt="The identical construction site view prior to the steel beams being erected. Shows a flat concrete foundation with rebar sticking out, bathed in the same bright, midday sunlight. The aesthetic remains clean, precise, and industrial, adhering to a high-contrast 'light mode' architectural visualization style. Dust particles are faintly visible in the air." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8utT98dHY1ubhAhAn0Gf8c9w-QQIVVVeF5xtRv_EVTtbUZg7nPURmnMbWbKgiYm_lbq1braNdHePZkPJnR-XojjRQtq5k8EhSy1zC7XAqq35e8pGXPQAXTdeUUJV-MytCtwHZx1miNHusD_YLPxp5ZgK5At0iKc612-Q4fs2aqgL9Hovk24NnsPf7injWR2NXp95p9L7agKw0qaUBtItpaWnA5_mau84RZ3XgyeWipQTZQoOQ9Xc1" style="width: calc(100% * 2);"/>
+</div>
+<!-- Slider Handle -->
+<div class="slider-handle" style="left: 50%;"></div>
+<!-- Labels -->
+<div class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded font-label-sm pointer-events-none">BEFORE</div>
+<div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded font-label-sm pointer-events-none">AFTER</div>
+</div>
+<!-- Content Area -->
+<div class="p-5 flex flex-col gap-4">
+<div>
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">Level 4 Steel Framing Complete</h3>
+<p class="font-body-md text-on-surface-variant">Primary load-bearing structures installed according to revised CAD blueprint V2.4. Awaiting client structural acknowledgment before floor decking commences.</p>
+</div>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-2 gap-3 p-3 bg-surface-container-low rounded-lg border border-surface-variant">
+<div>
+<span class="block font-label-sm text-outline mb-1">UPLOADED_BY</span>
+<span class="block font-label-md text-on-surface">J. Chen (Site Manager)</span>
+</div>
+<div>
+<span class="block font-label-sm text-outline mb-1">TIMESTAMP_TZ</span>
+<span class="block font-label-md text-on-surface">2023-10-24T14:32:00Z</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-3 mt-2">
+<button class="flex-1 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-label-md py-3 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-size: 18px;">check_circle</span>
+                        ACKNOWLEDGE
+                    </button>
+<button class="flex-1 bg-[#9333EA] hover:bg-[#7e22ce] text-white font-label-md py-3 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="flag" style="font-size: 18px;">flag</span>
+                        FLAG DISCUSS
+                    </button>
+</div>
+</div>
+</article>
+<!-- Feed Item 2: Acknowledged State -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/50 shadow-sm overflow-hidden flex flex-col opacity-90">
+<!-- Meta Header -->
+<div class="p-4 border-b border-surface-container flex justify-between items-center bg-surface-container-low/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="foundation" style="font-size: 18px;">foundation</span>
+<span class="font-label-md text-on-surface">FOUNDATION_POUR_01</span>
+</div>
+<div class="bg-[#16A34A]/10 text-[#16A34A] px-2 py-1 rounded font-label-sm flex items-center gap-1 border border-[#16A34A]/20">
+<span class="material-symbols-outlined" data-icon="verified" style="font-size: 12px; font-variation-settings: 'FILL' 1;">verified</span>
+                    VERIFIED
+                </div>
+</div>
+<!-- Standard Image -->
+<div class="relative w-full aspect-[4/3] bg-surface-container">
+<img alt="Foundation Pour" class="absolute inset-0 w-full h-full object-cover" data-alt="A pristine, overhead drone shot of a freshly poured concrete foundation for an industrial building. The concrete is smooth and light grey, contrasting with the neatly graded earth around it. The lighting is crisp morning light, highlighting the precise geometry of the forms. Represents a clean, corporate industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7mtGAwFmFPF0EZkJKXLMuaHHOkp_5I2PNYEm0xZEBUBSJMdZUHUpLlw9JXhzNEqd5MNW-RI0fpj0JUi6jLIRBHpMV6HE2JEOM1Pg27GhFXjz3p2qQEbIwVRuq7ksoUYtstwGNPBH46Dv5s8h8G_gYNrXsoBAeg9L3jwwbvpL6bKCcLIPz4KotMK39_rmO_t5kQ6qYWqQkIIw2PWgSXZekb5NhUyYRhpyhaZtkZCKK-B3Tra3KNcd5"/>
+<!-- Watermark -->
+<div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white/80 p-2 rounded flex flex-col items-end pointer-events-none border border-white/10">
+<span class="font-label-sm text-[8px] uppercase tracking-wider">Geotag Data</span>
+<span class="font-label-md">34.0522° N, 118.2437° W</span>
+</div>
+</div>
+<!-- Content Area -->
+<div class="p-5 flex flex-col gap-4">
+<div>
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">East Wing Foundation Curing</h3>
+<p class="font-body-md text-on-surface-variant">Core sample testing completed. Concrete strength exceeds minimum threshold (35 MPa). Area cleared for framing crews.</p>
+</div>
+<!-- Audit Stamp Grid -->
+<div class="grid grid-cols-1 gap-2 p-4 bg-[#f8fafc] rounded-lg border-l-4 border-[#16A34A] border-y border-r border-surface-variant">
+<div class="flex items-center gap-2 mb-2 text-[#16A34A]">
+<span class="material-symbols-outlined" data-icon="gavel" style="font-size: 16px;">gavel</span>
+<span class="font-label-md font-bold">IMMUTABLE_AUDIT_LOG</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">ACTION:</span>
+<span class="font-label-md text-on-surface">ACKNOWLEDGED</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">ACTOR:</span>
+<span class="font-label-md text-on-surface">Client Executive</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm">TIMESTAMP:</span>
+<span class="font-label-md text-on-surface">2023-10-22T09:15:44Z</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant pt-2 border-t border-outline-variant/30 mt-1">
+<span class="font-label-sm">HASH:</span>
+<span class="font-label-sm text-outline truncate max-w-[200px]">0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08</span>
+</div>
+</div>
+</div>
+</article>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-xl bg-surface/85 border-t border-outline-variant/30 shadow-lg rounded-t-xl flex justify-around items-center h-20 pb-safe px-2">
+<a aria-label="Portfolio" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label text-[10px] uppercase font-medium">Portfolio</span>
+</a>
+<a aria-label="Briefing" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="description">description</span>
+<span class="font-label text-[10px] uppercase font-medium">Briefing</span>
+</a>
+<a aria-label="Financials" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="payments">payments</span>
+<span class="font-label text-[10px] uppercase font-medium">Financials</span>
+</a>
+<!-- Active Tab: Progress -->
+<a aria-label="Progress" class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="trending_up" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-label text-[10px] uppercase font-bold">Progress</span>
+</a>
+</nav>
+<!-- Interaction Scripts -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('slider-1');
+            if (slider) {
+                const handle = slider.querySelector('.slider-handle');
+                const beforeImage = slider.querySelector('.before-image-container');
+                const beforeImgInner = beforeImage.querySelector('img');
+                
+                let isDragging = false;
+
+                const updateSlider = (clientX) => {
+                    const rect = slider.getBoundingClientRect();
+                    let percentage = ((clientX - rect.left) / rect.width) * 100;
+                    
+                    // Constrain
+                    percentage = Math.max(0, Math.min(percentage, 100));
+                    
+                    handle.style.left = `${percentage}%`;
+                    beforeImage.style.width = `${percentage}%`;
+                    
+                    // Keep the inner image scaled relative to container width to avoid squishing
+                    const inversePercentage = 100 / (percentage || 0.1);
+                    beforeImgInner.style.width = `${inversePercentage}%`;
+                };
+
+                // Mouse Events
+                handle.addEventListener('mousedown', () => isDragging = true);
+                window.addEventListener('mouseup', () => isDragging = false);
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    updateSlider(e.clientX);
+                });
+
+                // Touch Events
+                handle.addEventListener('touchstart', () => isDragging = true, {passive: true});
+                window.addEventListener('touchend', () => isDragging = false);
+                window.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    // Prevent scrolling while dragging slider on mobile
+                    e.preventDefault(); 
+                    updateSlider(e.touches[0].clientX);
+                }, {passive: false});
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Briefing &amp; Transparency Hub | Setuu Enterprise</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#8ad1ff",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-primary-container": "#6f89a9",
+                        "surface-bright": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#00213c",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary": "#00080f",
+                        "on-primary-fixed": "#001d35",
+                        "primary": "#000815",
+                        "outline-variant": "#c3c6ce",
+                        "on-surface-variant": "#43474d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-container-low": "#f5f4ef",
+                        "on-background": "#1b1c19",
+                        "on-secondary-container": "#005a7f",
+                        "secondary": "#00658d",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-variant": "#e3e3de",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "inverse-surface": "#30312e",
+                        "inverse-primary": "#aec9eb",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-highest": "#e3e3de",
+                        "secondary-fixed": "#c6e7ff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-container": "#efeee9",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-tertiary-container": "#0090c7",
+                        "on-surface": "#1b1c19",
+                        "surface": "#faf9f4",
+                        "surface-dim": "#dbdad5",
+                        "outline": "#73777e",
+                        "surface-tint": "#46607e",
+                        "tertiary-container": "#002233",
+                        "background": "#faf9f4",
+                        // Semantic Colors
+                        "semantic-success": "#16A34A",
+                        "semantic-warning": "#D97706",
+                        "semantic-neutral": "#64748B",
+                        "semantic-active": "#0284C7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    },
+                    "boxShadow": {
+                        'glass-inner': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-primary-container dark:bg-[#04070A] h-screen w-[280px] fixed left-0 top-0 overflow-y-auto border-r border-outline-variant/20 shadow-xl flex flex-col z-50">
+<!-- Header / Brand Area -->
+<div class="px-6 py-8 flex items-center gap-3 border-b border-on-primary-container/20">
+<div class="flex items-center gap-3">
+<img alt="Setuu Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A"/>
+<div>
+<h1 class="text-on-primary-container font-headline font-bold text-lg leading-tight tracking-tight">Setuu Enterprise</h1>
+<p class="text-on-primary-container/70 font-label text-[10px] uppercase tracking-wider mt-0.5">Capital Project Portal</p>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 py-6 flex flex-col gap-1 px-3 overflow-y-auto">
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Portfolio
+                </a>
+<a class="group flex items-center gap-4 px-4 py-3 rounded text-on-primary-container bg-primary-fixed/10 font-bold border-l-4 border-secondary-fixed text-sm font-body transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                    Briefing Room
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">payments</span>
+                    Financials
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                    Deliverables
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">timeline</span>
+                    Progress
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">groups</span>
+                    Meetings
+                </a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#">
+<span class="material-symbols-outlined">lock</span>
+                    Vault
+                </a>
+</nav>
+<!-- User Profile & Footer Area -->
+<div class="mt-auto px-6 py-4 border-t border-on-primary-container/20 flex flex-col gap-4">
+<!-- User Profile Snippet -->
+<button class="flex items-center gap-3 text-left group w-full p-2 -ml-2 rounded hover:bg-white/5 transition-colors">
+<div class="w-8 h-8 rounded-full bg-on-primary-container/30 border border-on-primary-container/50 overflow-hidden flex-shrink-0">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkdHJXHFKTfqOSHfWgPY6AsfuZcHqyNHslAPDjasVGUNQsiMySglP6n32sa0mBKi1gBEy1wIAzk630B6iLrt7RcwIIreYH9_tLy9UdJK3E6wVS2RRUJdAO9j0CAl1ZRPewVwElWWP_xUMpDdkegnhGsOyIiXQ0iVzpmXlxXkoyBZO4_ONZdl2Y09BBl1C716JBjylOIo0ZI9U_fDaes-UVu9nQxp43TSuyhPgPEd0WCvP6PdUcSNZO"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-on-primary-container font-headline font-bold text-sm truncate">Client Executive</p>
+<p class="text-on-primary-container/60 font-body text-xs truncate">Acme Corporation</p>
+</div>
+<span class="material-symbols-outlined text-on-primary-container/50 text-[18px] group-hover:text-on-primary-container transition-colors">unfold_more</span>
+</button>
+<!-- Version Info -->
+<div class="flex justify-between items-center text-[11px] font-label text-on-primary/40 pt-2">
+<span>Setuu Enterprise v2.4</span>
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+</div>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="bg-white/85 backdrop-blur-xl border-b border-outline-variant/40 shadow-glass-inner shadow-sm flex justify-between items-center px-8 h-20 z-40 fixed top-0 right-0 w-[calc(100%-280px)] transition-all duration-300">
+<!-- Left: Co-branding -->
+<div class="flex items-center gap-6">
+<!-- Setuu Logo -->
+<div class="flex items-center h-10"><img alt="Setuu Enterprise Logo" class="h-full w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A"/></div>
+<!-- Divider -->
+<div class="h-8 w-px bg-outline-variant/50 hidden md:block"></div>
+<!-- Client Logo Placeholder -->
+<div class="hidden md:flex items-center gap-3 opacity-80">
+<img alt="Client Logo" class="w-8 h-8 rounded-sm object-contain mix-blend-multiply" data-alt="A sleek, modern corporate logo icon featuring geometric shapes in deep slate and sky blue, representing a high-end construction or engineering firm. The logo should look professional, vector-style, and clean against a light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-baD_O7KO3TX5JCVg8c39yGEl1W8IYifO-uknpgHXQBBALffu8Z48iqhVS6fxnmJ3zej75JZf8L6KhmCkbI00kdxSA1yeOnzUXF7cCNbEtmojP4FOL-Qz8hvaIFEHM3SQlcHHtdgZLoZtZ9kjG8T1GVnnL_WCZmeY8zMceGO3S_6zuoDP-XW2J2Sc3l2G_kGS60L7iSfFLIn5K9cwe9OxMvh1Nw4Te_cbunPHkLfyLgdAC8vKB-Ps"/>
+<span class="font-body font-medium text-sm text-on-surface-variant tracking-wide uppercase">Acme Corp</span>
+</div>
+</div>
+<!-- Center: Search -->
+<div class="flex-1 max-w-2xl mx-8 hidden lg:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/60 rounded-lg text-sm text-on-surface placeholder-outline focus:ring-2 focus:ring-primary focus:border-primary transition-all shadow-sm group-hover:shadow-md" placeholder="Search projects, documents, or audit logs..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<span class="font-label text-xs text-outline bg-surface-container px-2 py-1 rounded">⌘K</span>
+</div>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-5">
+<!-- Primary Action -->
+<button class="hidden md:flex items-center gap-2 bg-[#2563EB] hover:bg-[#2563EB]/90 text-white px-5 py-2.5 rounded-lg shadow-sm transition-colors active:scale-95 font-body font-medium text-sm">
+<span class="material-symbols-outlined text-lg">description</span>
+                Generate Executive Report
+            </button>
+<div class="h-8 w-px bg-outline-variant/50 hidden md:block"></div>
+<!-- Notifications -->
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="relative p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface-container-lowest"></span>
+</button>
+<!-- Profile Avatar -->
+<button class="flex items-center gap-3 pl-2 focus:outline-none">
+<div class="w-10 h-10 rounded-full border border-outline-variant/50 overflow-hidden shadow-sm hover:shadow transition-shadow">
+<img alt="Client Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a female executive in her 40s, wearing a tailored navy blazer against a neutral corporate background. She has a confident, approachable expression, suitable for a high-end SaaS dashboard avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC36L6xoJ_6oak3czavjl-Uw6Q51KJ12VaVCcuJD-xpJLigXOuNI3WPQcwzwcrG2LGaa9C2dyQrydpkGO450pVlwgOMhBtaNvuHIPMbpXHtEEzuZRpsKdyjiDa9K2GPxWdR2wdKkE8RMOIY3jgSXEQVZKMAswAFZ6PpNRQNt_J89T_6jtLzfXqgYZ1nbhbGY2IIVIlIQcmgu2zDR4LZDLiBkfjKIAWql4DXFJq7cVhlfkS4YbwtHZ6i"/>
+</div>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] pt-20 min-h-screen">
+<!-- Sticky Project Context Header -->
+<div class="sticky top-20 z-30 bg-white/95 backdrop-blur shadow-sm border-b border-surface-variant px-8 py-4 flex items-center justify-between">
+<div>
+<div class="flex items-center gap-3">
+<h2 class="text-headline-md font-headline font-bold text-primary">Project Alpha</h2>
+<span class="px-2 py-1 bg-primary-fixed/20 text-on-primary-fixed-variant text-label-sm font-label rounded uppercase tracking-wider">Active</span>
+</div>
+<p class="text-body-md font-body text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#0284C7]"></span>
+                    Current Phase: Phase 3 - Structural Integrity
+                </p>
+</div>
+<div class="flex items-center gap-6 border-l border-surface-variant pl-6">
+<div class="text-right">
+<p class="text-label-sm font-label text-on-surface-variant uppercase tracking-wider mb-1">Key Contacts</p>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<img alt="Lead PM" class="w-8 h-8 rounded-full object-cover" data-alt="A portrait of a male lead project manager in his 30s. He is wearing a crisp white collared shirt and standing confidently. The background is a bright construction site office with blueprints visible. Lighting is natural and crisp, fitting a professional light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApMVMI36iIQbByv_sqZo0Rc_zhzhmjKrdlyxFpU_Fz8OIjWIxdBCAHdcdoJBl1PsLU3AvlRbX00bErJU3uMYqTQX8Tvl_bKXVEEFb0smxy5cxXlaMUgwkniZsWD4d9Lg8BjJR3EE27LELJOrcJ9DRuekeG5-uMfqy-f8Y1gdqRvK4XZ-nnvdHwnwFgKSUFrHcoL_OmVLJTUc1rTgV0h5m0KE3BdUUs4p-fWMdC9--hznIPGnbWeW6l"/>
+<span class="text-body-sm font-body font-medium text-on-surface hidden xl:block">M. Vance (Lead PM)</span>
+</div>
+<div class="w-px h-6 bg-surface-variant mx-1"></div>
+<div class="flex items-center gap-2">
+<img alt="Lead Engineer" class="w-8 h-8 rounded-full object-cover" data-alt="A portrait of a female lead engineer in a hardhat and high-visibility vest. She is holding a tablet device. The background shows a large industrial steel structure in progress. Lighting is bright outdoor daylight, establishing a rigorous engineering aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxVMVLYCkYs_L2tTECmqG_3RIPJnC5nJePYRmcB6DrCE0rd2gAYggn9U5uyIrHgd3kafELng5wGbdJXu5u-yJbF2ULv0AW5R0IqLppQawxKPEgjZ9BVjq723eaPZjyUsncX7QEfXR05Ma6I8h9TDNrRrgQjXvz3fnZ94GJIPN6yjOvNOlKzn5Q_iT8NBDE8ne0anHNvIC-tHyz9kVEouMst_65Zh-YWXaKHwOrjN7yLH8uxdVZGlCK"/>
+<span class="text-body-sm font-body font-medium text-on-surface hidden xl:block">S. Chen (Lead Eng)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-8 max-w-[1600px] mx-auto">
+<!-- Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Project Health & RAG Matrix (Span 4) -->
+<section class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-lg border border-[#E0E0E0] shadow-sm p-6 flex flex-col hover:shadow-md transition-shadow duration-300">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-headline-sm font-headline font-bold text-primary">Executive Health</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<p class="text-body-md font-body text-on-surface-variant mb-6 leading-relaxed">
+                        Structural foundation completed 4 days ahead of schedule. Budget remains under slight pressure due to raw material spot price fluctuations, closely monitored by procurement. Quality standards exceeding baseline tolerances.
+                    </p>
+<div class="space-y-4 mt-auto">
+<!-- Schedule: Green -->
+<div class="flex items-center justify-between p-3 bg-surface rounded border border-surface-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#16A34A]">calendar_month</span>
+<span class="text-body-md font-body font-medium">Schedule</span>
+</div>
+<span class="px-2 py-1 bg-[#16A34A]/10 text-[#16A34A] text-label-sm font-label rounded uppercase">On Track</span>
+</div>
+<!-- Budget: Amber -->
+<div class="flex items-center justify-between p-3 bg-surface rounded border border-surface-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#D97706]">account_balance_wallet</span>
+<span class="text-body-md font-body font-medium">Budget</span>
+</div>
+<span class="px-2 py-1 bg-[#D97706]/10 text-[#D97706] text-label-sm font-label rounded uppercase">At Risk</span>
+</div>
+<!-- Quality: Green -->
+<div class="flex items-center justify-between p-3 bg-surface rounded border border-surface-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#16A34A]">verified</span>
+<span class="text-body-md font-body font-medium">Quality</span>
+</div>
+<span class="px-2 py-1 bg-[#16A34A]/10 text-[#16A34A] text-label-sm font-label rounded uppercase">Verified</span>
+</div>
+</div>
+</section>
+<!-- Milestone & Deliverable Timeline (Span 8) -->
+<section class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-lg border border-[#E0E0E0] shadow-sm p-6 overflow-hidden">
+<h3 class="text-headline-sm font-headline font-bold text-primary mb-6">Delivery Timeline</h3>
+<div class="relative mt-8 px-4">
+<!-- Connecting Line -->
+<div class="absolute top-[24px] left-8 right-8 h-px bg-surface-variant z-0"></div>
+<div class="relative z-10 flex justify-between items-start">
+<!-- Milestone 1: Completed -->
+<div class="flex flex-col items-center group w-1/4">
+<div class="w-12 h-12 rounded-full bg-[#16A34A]/10 border-2 border-[#16A34A] flex items-center justify-center mb-3 bg-white">
+<span class="material-symbols-outlined text-[#16A34A]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="text-body-md font-body font-bold text-center mb-1">Site Prep</h4>
+<span class="text-label-sm font-label text-on-surface-variant">2023-10-15</span>
+</div>
+<!-- Milestone 2: Completed -->
+<div class="flex flex-col items-center group w-1/4">
+<div class="w-12 h-12 rounded-full bg-[#16A34A]/10 border-2 border-[#16A34A] flex items-center justify-center mb-3 bg-white">
+<span class="material-symbols-outlined text-[#16A34A]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="text-body-md font-body font-bold text-center mb-1">Foundation</h4>
+<span class="text-label-sm font-label text-on-surface-variant">2023-11-20</span>
+</div>
+<!-- Milestone 3: Active (Delayed/Pulsing Amber) -->
+<div class="flex flex-col items-center group w-1/4 relative">
+<div class="absolute -inset-1 bg-[#D97706]/30 rounded-full animate-ping opacity-75"></div>
+<div class="relative w-12 h-12 rounded-full bg-white border-2 border-[#D97706] flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-[#D97706]">construction</span>
+</div>
+<h4 class="text-body-md font-body font-bold text-center mb-1 text-primary">Structural Steel</h4>
+<span class="text-label-sm font-label text-[#D97706] font-bold">2023-12-10 (REV)</span>
+</div>
+<!-- Milestone 4: Upcoming -->
+<div class="flex flex-col items-center group w-1/4">
+<div class="w-12 h-12 rounded-full bg-surface border-2 border-surface-variant flex items-center justify-center mb-3 bg-white text-on-surface-variant">
+<span class="material-symbols-outlined">roofing</span>
+</div>
+<h4 class="text-body-md font-body font-medium text-center mb-1 text-on-surface-variant">Enclosure</h4>
+<span class="text-label-sm font-label text-on-surface-variant">2024-02-01</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Telemetry Panel (Span 12) -->
+<section class="col-span-12 bg-surface-container-lowest rounded-lg border border-[#E0E0E0] shadow-sm p-6 mt-4">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-headline-sm font-headline font-bold text-primary">Live Field Telemetry</h3>
+<p class="text-body-sm font-body text-on-surface-variant mt-1">Verified source material strictly governed by access control.</p>
+</div>
+<button class="flex items-center gap-2 text-label-md font-label text-secondary hover:text-secondary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                            LIVE SYNC
+                        </button>
+</div>
+<!-- Masonry Grid for Photos -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Telemetry Item 1 -->
+<div class="relative group rounded-md overflow-hidden bg-black h-64 border border-surface-variant">
+<div class="absolute inset-0 bg-cover bg-center opacity-90 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105 transform" data-alt="A high-resolution aerial drone photograph of a large commercial construction site. Steel girders form the skeletal structure of a multi-story building. The scene is brightly lit by natural sunlight, casting sharp shadows that highlight the architectural geometry. The aesthetic is industrial, precise, and highly detailed, fitting a professional engineering portal." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_wmnFWKKosUSJzd6oziql1YC45X9sI5VlO-r-TNaAKXmEZ-JflpA4TNh36hItBvCQsBMgoSH4V4Pvo9wH9JX-mhLexKg27yn6-jcHm7TvJ5tQY_CMiMvv2DlbEPQbVENyoq6S6-SLxlY0Aj1Ax79ruyc0TvaEogZAKQD7zKeZjh5jnb8YpkoSUfFd8N6KXzSOtVTTfyZvktd5EDmvYRlcNz_dHo6HFWfuhff94oYrSQeR3BsYiWBl')"></div>
+<!-- Glassmorphic Overlay for Metadata -->
+<div class="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-3 border-t border-white/10">
+<div class="flex justify-between items-end">
+<div class="text-white">
+<p class="text-label-sm font-label text-cyan-400 mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">my_location</span>
+                                            LAT: 34.0522° N, LNG: -118.2437° W
+                                        </p>
+<p class="text-label-sm font-label opacity-80">2023-11-28T14:32:00Z</p>
+</div>
+<span class="px-2 py-0.5 bg-cyan-500/20 text-cyan-300 text-[10px] font-label rounded uppercase border border-cyan-500/30">Drone Feed</span>
+</div>
+</div>
+</div>
+<!-- Telemetry Item 2 -->
+<div class="relative group rounded-md overflow-hidden bg-black h-64 border border-surface-variant">
+<div class="absolute inset-0 bg-cover bg-center opacity-90 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105 transform" data-alt="A close-up photograph of newly poured concrete foundation footing with heavy steel rebar mesh exposed. A bright yellow surveyor's laser level is visible in the background. The lighting is crisp morning daylight. The image conveys robust industrial stability and structural integrity, aligned with a modern light-mode engineering interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDypyM67HDU8xis-0fkc28xz9C6MPzg6SMKYpSZWFLV4KiQWwSUk9IlSYHluWHMmIW3snk_oexpfNwpIhsXq14MV4trLkRvZ_zLv6BZSeNpaGRzPMnFEvQjZAM1NWnHw6O1LphvAkSPN9JnnEAzhSuzRCR9DuBOZjOPgc9JnU-jdZR_JY5P6DbIFCdeAIEWgNf-T3zZCtsNE5yhuwHafZjySm2KTr2Fn8MFiKUlFNsIRX0dsGU4hCmG')"></div>
+<div class="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-3 border-t border-white/10">
+<div class="flex justify-between items-end">
+<div class="text-white">
+<p class="text-label-sm font-label text-emerald-400 mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                                            INSPECTION PASSED
+                                        </p>
+<p class="text-label-sm font-label opacity-80">2023-11-27T09:15:22Z</p>
+</div>
+<span class="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 text-[10px] font-label rounded uppercase border border-emerald-500/30">QA Photo</span>
+</div>
+</div>
+</div>
+<!-- Telemetry Item 3 -->
+<div class="relative group rounded-md overflow-hidden bg-black h-64 border border-surface-variant md:col-span-2 lg:col-span-1">
+<div class="absolute inset-0 bg-cover bg-center opacity-90 group-hover:opacity-100 transition-opacity duration-300 group-hover:scale-105 transform" data-alt="A wide-angle photograph looking up at a massive industrial tower crane operating against a clear bright blue sky. A steel beam is suspended mid-air. The visual tone is powerful, safe, and efficient. The bright light-mode aesthetic emphasizes clean lines and rigorous project execution." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDnlueOexENhZKdanE9ksE-TemGCTPf3SrXgQNHNr_WWjAbKbJhdZPwQKFxBtuurYdHDDeQ8AS-LtbxxIkbXmA7E4TKj9pjmHls3YrcX-qqmXRtH8rf9rkGmzugp4ZssxmntsomRoDjJEtiBTy5di4nnMJ0Mk-lKhCDUJqJnVgFFwSDxCNESsJ-rT66Vr8e1fNQWwqMrtMnoH7oM_qwim1J_wD5jVjgHgzZDmoQfj9m9hdGe6sBpyii')"></div>
+<div class="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-3 border-t border-white/10">
+<div class="flex justify-between items-end">
+<div class="text-white">
+<p class="text-label-sm font-label text-white/90 mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">fingerprint</span>
+                                            HASH: 8f4e2b9a...
+                                        </p>
+<p class="text-label-sm font-label opacity-80">2023-11-26T16:45:10Z</p>
+</div>
+<span class="px-2 py-0.5 bg-white/20 text-white text-[10px] font-label rounded uppercase border border-white/30">Site Cam 04</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

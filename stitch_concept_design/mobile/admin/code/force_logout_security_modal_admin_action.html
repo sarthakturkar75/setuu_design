@@ -1,0 +1,150 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Security Alert</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-secondary-container": "#005a7f",
+                    "on-primary-fixed": "#001d35",
+                    "surface-container-high": "#e9e8e3",
+                    "surface-tint": "#46607e",
+                    "tertiary-fixed": "#c6e7ff",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#faf9f4",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "primary": "#000815",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#faf9f4",
+                    "secondary": "#00658d",
+                    "surface-container-highest": "#e3e3de",
+                    "secondary-fixed-dim": "#88cffc",
+                    "error": "#ba1a1a",
+                    "background": "#faf9f4",
+                    "secondary-container": "#8ad1ff",
+                    "on-surface": "#1b1c19",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "on-surface-variant": "#43474d",
+                    "surface-container": "#efeee9",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-background": "#1b1c19",
+                    "primary-fixed-dim": "#aec9eb",
+                    "primary-fixed": "#d1e4ff",
+                    "surface-dim": "#dbdad5",
+                    "primary-container": "#00213c",
+                    "tertiary-container": "#002233",
+                    "inverse-primary": "#aec9eb",
+                    "on-primary-container": "#6f89a9",
+                    "surface-container-low": "#f5f4ef",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e3e3de",
+                    "outline-variant": "#c3c6ce",
+                    "on-tertiary-fixed": "#001e2d",
+                    "outline": "#73777e",
+                    "tertiary": "#00080f",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#30312e",
+                    "on-tertiary-container": "#0090c7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "sm": "0.25rem",
+                    "md": "0.75rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather", "serif"],
+                    "display": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            },
+            boxShadow: {
+              'heavy-blue': '0 25px 50px -12px rgba(0, 33, 60, 0.12)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased h-screen w-full flex items-center justify-center overflow-hidden">
+<!-- Background: 40% black backdrop overlay -->
+<div class="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm transition-opacity duration-300"></div>
+<!-- Modal Container -->
+<div class="relative z-50 w-full max-w-lg bg-surface-container-lowest rounded-lg shadow-heavy-blue border border-outline-variant/30 flex flex-col overflow-hidden animate-[scale-in_0.2s_ease-out]">
+<!-- Header: Thick Crimson Red warning banner -->
+<div class="bg-error px-6 py-4 flex items-center gap-3">
+<span class="material-symbols-outlined text-on-error" data-icon="warning" data-weight="fill" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h2 class="font-display font-bold text-headline-sm text-on-error m-0">Security Alert</h2>
+</div>
+<!-- Body Content -->
+<div class="p-6 flex flex-col gap-6">
+<div class="flex flex-col gap-4">
+<h3 class="font-display font-bold text-headline-sm text-on-surface m-0">Force Logout Session</h3>
+<p class="font-body text-body-md text-on-surface-variant m-0 leading-relaxed">
+                    You are about to terminate all active sessions for the user <span class="font-label text-label-md bg-surface-variant px-1 py-0.5 rounded text-on-surface">sjenkins_admin</span>. This action is irreversible and will immediately disconnect the user from all devices.
+                </p>
+<div class="bg-error-container/30 border-l-4 border-error p-4 mt-2">
+<p class="font-body text-body-md text-on-surface-variant m-0 flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[20px] mt-0.5" data-icon="info">info</span>
+                        This event will be permanently recorded in the immutable audit log.
+                    </p>
+</div>
+</div>
+<!-- Input Field -->
+<div class="flex flex-col gap-2">
+<label class="font-body text-body-sm font-semibold text-on-surface" for="username-confirm">To confirm, type the exact username:</label>
+<input autocomplete="off" class="font-body text-body-md border border-outline-variant rounded-md px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-error focus:border-transparent transition-shadow" id="username-confirm" placeholder="sjenkins_admin" spellcheck="false" type="text">
+</div>
+</div>
+<!-- Actions -->
+<div class="bg-surface-container-low px-6 py-4 flex items-center justify-end gap-3 border-t border-outline-variant/30">
+<button class="font-body text-body-md font-semibold text-on-surface-variant hover:text-on-surface px-4 py-2 rounded-md transition-colors bg-transparent hover:bg-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-outline-variant" type="button">
+                Cancel
+            </button>
+<button class="font-body text-body-md font-semibold text-on-error bg-error/50 cursor-not-allowed px-4 py-2 rounded-md transition-all focus:outline-none flex items-center gap-2" disabled="" id="submit-btn" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+                Terminate Sessions
+            </button>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.getElementById('username-confirm');
+            const submitBtn = document.getElementById('submit-btn');
+            const expectedUsername = 'sjenkins_admin';
+
+            input.addEventListener('input', (e) => {
+                if (e.target.value === expectedUsername) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('bg-error/50', 'cursor-not-allowed');
+                    submitBtn.classList.add('bg-error', 'hover:bg-error/90', 'cursor-pointer', 'shadow-sm');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('bg-error/50', 'cursor-not-allowed');
+                    submitBtn.classList.remove('bg-error', 'hover:bg-error/90', 'cursor-pointer', 'shadow-sm');
+                }
+            });
+        });
+    </script>
+</body></html>

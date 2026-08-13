@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - System Log Peek</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for terminal feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1b1c19; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #43474d; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #73777e; 
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#001e2e",
+                      "surface-container": "#efeee8",
+                      "surface-dim": "#dbdad5",
+                      "primary-fixed": "#d1e4ff",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#aec9eb",
+                      "on-secondary": "#ffffff",
+                      "secondary-fixed-dim": "#88cffc",
+                      "inverse-surface": "#30312d",
+                      "surface-container-highest": "#e4e2dd",
+                      "surface": "#fbf9f4",
+                      "outline-variant": "#c3c6ce",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "background": "#fbf9f4",
+                      "on-surface-variant": "#43474d",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "tertiary-fixed": "#c8e6fd",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#73777e",
+                      "secondary-container": "#8ad1ff",
+                      "secondary-fixed": "#c6e7ff",
+                      "inverse-primary": "#aec9eb",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#001d35",
+                      "on-tertiary-fixed-variant": "#2d4a5c",
+                      "on-surface": "#1b1c19",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-tertiary-container": "#6e8a9f",
+                      "tertiary": "#00080f",
+                      "tertiary-container": "#002233",
+                      "on-secondary-container": "#005a7f",
+                      "surface-variant": "#e4e2dd",
+                      "tertiary-fixed-dim": "#adcae1",
+                      "primary": "#000815",
+                      "primary-container": "#00213c",
+                      "on-primary-container": "#6f89a9",
+                      "secondary": "#00658d",
+                      "surface-tint": "#46607e",
+                      "surface-bright": "#fbf9f4",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f5f4ee",
+                      "inverse-on-surface": "#f2f1eb",
+                      "on-primary": "#ffffff",
+                      "surface-container-high": "#e9e8e3",
+                      "on-background": "#1b1c19",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit-lg": "24px",
+                      "margin": "16px",
+                      "grid-columns": "4",
+                      "unit-xs": "4px",
+                      "gutter": "12px",
+                      "unit-md": "16px",
+                      "unit-sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Merriweather"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "data-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Merriweather"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "10px",
+                              {
+                                      "lineHeight": "12px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-on-surface text-surface-container-lowest antialiased h-screen w-full overflow-hidden flex flex-col">
+<!-- Top App Bar (Modal Overlay Header) -->
+<header class="flex-none flex items-center justify-between h-16 px-margin border-b border-inverse-surface w-full bg-on-surface/90 backdrop-blur-md z-10 sticky top-0">
+<div class="flex items-center">
+<button aria-label="Go back" class="text-outline-variant hover:text-surface-container-lowest transition-colors h-12 w-12 flex items-center justify-start -ml-2">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-data-mono text-surface-container-lowest ml-2 uppercase font-headline-md">SYS_LOG_PEEK</h1>
+</div>
+<div class="flex items-center">
+<span class="inline-block w-2 h-2 rounded-full bg-error animate-pulse mr-2"></span>
+<span class="font-label-caps text-label-caps text-error">LIVE</span>
+</div>
+</header>
+<!-- Log Canvas -->
+<main class="flex-1 overflow-y-auto p-margin font-data-mono text-data-mono space-y-2 bg-on-surface w-full max-w-full pb-32" id="log-container"><div class="bg-primary-container text-secondary-fixed px-margin py-2 flex items-center justify-between -mx-margin mb-4 border-b border-primary">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px]">sync_disabled</span>
+<span class="font-label-caps text-label-caps uppercase">Offline Sync Pending</span>
+</div>
+<span class="font-data-mono text-[10px]">12 ITEMS</span>
+</div>
+<!-- Log Entry: INFO -->
+<div class="flex flex-col md:flex-row md:items-start break-all">
+<span class="text-outline shrink-0 md:mr-3">[2023-10-27T14:32:01.001Z]</span>
+<span class="text-primary-fixed shrink-0 md:mr-3">[INFO]</span>
+<span class="text-surface-container-highest">Init-Sequence: Bootstrapping subsystem 'Telemetry_V2'</span>
+</div>
+<!-- Log Entry: INFO -->
+<div class="flex flex-col md:flex-row md:items-start break-all">
+<span class="text-outline shrink-0 md:mr-3">[2023-10-27T14:32:01.045Z]</span>
+<span class="text-primary-fixed shrink-0 md:mr-3">[INFO]</span>
+<span class="text-surface-container-highest">Auth-Gateway: JWT validation successful for UID: ENG-77X-B</span>
+</div>
+<!-- Log Entry: WARN with JSON -->
+<div class="flex flex-col md:flex-row md:items-start break-all bg-inverse-surface/30 -mx-2 px-2 py-1 rounded">
+<span class="text-outline shrink-0 md:mr-3">[2023-10-27T14:32:04.220Z]</span>
+<span class="text-tertiary-fixed shrink-0 md:mr-3">[WARN]</span>
+<div class="text-surface-container-highest flex-1">
+                Data-Sync: Elevated latency detected during bulk payload transfer.
+                <div class="mt-1 text-on-surface-variant break-words whitespace-pre-wrap">
+{
+  "endpoint": "/api/v2/gerber/sync",
+  "latency_ms": 1405,
+  "threshold_ms": 800,
+  "packet_size_kb": 4096,
+  "status": "degraded"
+}
+                </div>
+</div>
+</div>
+<!-- Log Entry: INFO -->
+<div class="flex flex-col md:flex-row md:items-start break-all">
+<span class="text-outline shrink-0 md:mr-3">[2023-10-27T14:32:05.100Z]</span>
+<span class="text-primary-fixed shrink-0 md:mr-3">[INFO]</span>
+<span class="text-surface-container-highest">Sensor-Array: Temp reading normalized across zone Alpha.</span>
+</div>
+<!-- Log Entry: CRIT with JSON -->
+<div class="flex flex-col md:flex-row md:items-start break-all bg-error/10 border-l-2 border-error -mx-2 px-2 py-1 bg-error/20">
+<span class="text-outline shrink-0 md:mr-3">[2023-10-27T14:32:08.991Z]</span>
+<span class="text-error shrink-0 md:mr-3">[CRIT]</span>
+<div class="text-surface-container-highest flex-1">
+                Kernel-Panic: Unhandled hardware interrupt on Bus 4. Safe mode engaged.
+                <div class="mt-1 text-error-container break-words whitespace-pre-wrap">
+{
+  "err_code": "ERR_HW_INT_0x4F",
+  "bus": 4,
+  "device": "Actuator_Arm_L",
+  "stack_trace": "at hw_interrupt_handler (sys/irq.c:142)\nat main_loop (core/run.c:89)",
+  "recovery_action": "halt_and_catch_fire"
+}
+                </div>
+</div>
+</div>
+<!-- Log Entry: INFO -->
+<div class="flex flex-col md:flex-row md:items-start break-all">
+<span class="text-outline shrink-0 md:mr-3">[2023-10-27T14:32:09.005Z]</span>
+<span class="text-primary-fixed shrink-0 md:mr-3">[INFO]</span>
+<span class="text-surface-container-highest">Sys-Monitor: Attempting graceful restart of affected services...</span>
+</div>
+<!-- Blinking cursor -->
+<div class="flex mt-2">
+<span class="inline-block w-2.5 h-4 bg-outline-variant animate-pulse"></span>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="flex-none fixed bottom-0 w-full z-50 bg-inverse-surface border-t border-outline/30 px-margin h-[72px] flex items-center justify-between shadow-2xl">
+<div class="flex items-center space-x-3 w-full">
+<button class="flex-1 flex items-center justify-center space-x-2 h-12 bg-on-surface border border-outline-variant text-surface-container-lowest rounded hover:bg-outline-variant/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_alt</span>
+<span class="font-label-caps text-label-caps uppercase">Filter</span>
+</button>
+<button class="flex-1 flex items-center justify-center space-x-2 h-12 bg-primary-container border border-primary text-secondary-fixed rounded hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span class="font-label-caps text-label-caps uppercase">Export</span>
+</button>
+</div>
+</footer>
+<script>
+        // Simple auto-scroll to bottom for terminal effect
+        const logContainer = document.getElementById('log-container');
+        if(logContainer) {
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+    </script>
+</body></html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Vendor Performance Audit - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary-container": "#00213c",
+                        "outline-variant": "#c3c6ce",
+                        "on-surface-variant": "#43474d",
+                        "tertiary-container": "#002233",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed-dim": "#88cffc",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-bright": "#faf9f4",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-background": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#efeee9",
+                        "surface-container-highest": "#e3e3de",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001e2d",
+                        "error": "#ba1a1a",
+                        "primary": "#000815",
+                        "tertiary": "#00080f",
+                        "background": "#faf9f4",
+                        "surface-container-low": "#f5f4ef",
+                        "primary-fixed-dim": "#aec9eb",
+                        "secondary": "#00658d",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed": "#001e2d",
+                        "surface-tint": "#46607e",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#30312e",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "inverse-primary": "#aec9eb",
+                        "surface": "#faf9f4",
+                        "surface-variant": "#e3e3de",
+                        "on-primary-fixed": "#001d35",
+                        "outline": "#73777e",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#8ad1ff",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-dim": "#dbdad5",
+                        
+                        // Semantic Colors derived from brief
+                        "semantic-active": "#0284C7",
+                        "semantic-success": "#16A34A",
+                        "semantic-warning": "#D97706",
+                        "semantic-error": "#DC2626",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #faf9f4; /* Canvas base */
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom Scrollbar for hidden horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Sparkline animation */
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+        .sparkline-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 1.5s ease-out forwards;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface antialiased bg-surface pb-24 md:pb-0 md:pl-72 lg:pl-sidebar-width flex flex-col min-h-screen">
+<!-- Mobile Top App Bar -->
+<header class="md:hidden fixed top-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 backdrop-blur-md border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center px-4 h-16 transition-all duration-300">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline font-bold text-sm">AU</div>
+<h1 class="font-headline text-headline-sm font-bold text-primary dark:text-primary-fixed">SETUU Enterprise</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-variant active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Desktop Side Navigation Rail / Sidebar (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col fixed top-0 left-0 h-full w-72 lg:w-sidebar-width bg-primary-container border-r border-outline-variant z-40 text-on-primary-container">
+<div class="p-6 border-b border-on-primary-container/20">
+<h1 class="font-headline text-headline-md font-bold text-white mb-2">SETUU Enterprise</h1>
+<p class="font-label text-xs text-secondary-fixed-dim">INDUSTRIAL DB :: v4.2.0</p>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-primary-container hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-primary-container hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body font-medium">Projects</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-primary-container hover:bg-white/10 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-body font-medium">Tasks</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-secondary text-white shadow-sm transition-colors border border-secondary-fixed/30" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-body font-medium">Admin</span>
+</a>
+</nav>
+<div class="p-4 border-t border-on-primary-container/20">
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="w-10 h-10 rounded-full bg-surface text-primary flex items-center justify-center font-headline font-bold">AU</div>
+<div>
+<p class="font-body text-sm font-semibold text-white">Admin User</p>
+<p class="font-label text-[10px] text-secondary-fixed-dim uppercase tracking-wider">Super Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-[1600px] mx-auto pt-20 md:pt-8 px-4 md:px-6 lg:px-8 flex flex-col gap-6">
+<!-- Header & Search -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-xs font-label text-on-surface-variant mb-2">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">Admin</li>
+<li><span class="mx-2">/</span></li>
+<li aria-current="page" class="text-primary font-medium">Vendor Audit</li>
+</ol>
+</nav>
+<h2 class="font-headline text-headline-lg-mobile md:text-headline-lg font-bold text-primary tracking-tight">Vendor Performance Audit</h2>
+<p class="font-body text-sm text-on-surface-variant mt-1 max-w-2xl">Real-time telemetry and compliance scoring for registered organizational subcontractors.</p>
+</div>
+<div class="relative w-full md:w-80 group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant group-focus-within:text-semantic-active transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</div>
+<input class="w-full pl-10 pr-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-semantic-active/50 focus:border-semantic-active shadow-sm transition-all placeholder:text-on-surface-variant/70" placeholder="Search by ID or Vendor Name..." type="text">
+</div>
+</div>
+<!-- Aggregate Metric Cards -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:border-outline transition-colors">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-semantic-success/10 rounded-full blur-xl group-hover:bg-semantic-success/20 transition-colors"></div>
+<div class="flex items-center justify-between">
+<span class="font-label text-[10px] text-on-surface-variant tracking-wider uppercase">Avg Delivery Acc</span>
+<span class="material-symbols-outlined text-semantic-success text-[18px]" data-icon="check_circle">check_circle</span>
+</div>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline text-2xl font-bold text-primary">94.2</span>
+<span class="font-body text-xs text-on-surface-variant">%</span>
+</div>
+<div class="flex items-center gap-1 mt-auto">
+<span class="material-symbols-outlined text-semantic-success text-[14px]" data-icon="trending_up">trending_up</span>
+<span class="font-label text-[10px] text-semantic-success">+1.2% YTD</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:border-outline transition-colors">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-semantic-warning/10 rounded-full blur-xl group-hover:bg-semantic-warning/20 transition-colors"></div>
+<div class="flex items-center justify-between">
+<span class="font-label text-[10px] text-on-surface-variant tracking-wider uppercase">Lead Time Var</span>
+<span class="material-symbols-outlined text-semantic-warning text-[18px]" data-icon="schedule">schedule</span>
+</div>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline text-2xl font-bold text-primary">+2.4</span>
+<span class="font-body text-xs text-on-surface-variant">days</span>
+</div>
+<div class="flex items-center gap-1 mt-auto">
+<span class="material-symbols-outlined text-semantic-error text-[14px]" data-icon="trending_down">trending_down</span>
+<span class="font-label text-[10px] text-semantic-error">-0.4d YTD</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:border-outline transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label text-[10px] text-on-surface-variant tracking-wider uppercase">Active POs</span>
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="receipt_long">receipt_long</span>
+</div>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline text-2xl font-bold text-primary">1,402</span>
+</div>
+<div class="flex items-center gap-1 mt-auto">
+<span class="font-label text-[10px] text-on-surface-variant">Across 18 projects</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:border-outline transition-colors">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-semantic-error/10 rounded-full blur-xl group-hover:bg-semantic-error/20 transition-colors"></div>
+<div class="flex items-center justify-between">
+<span class="font-label text-[10px] text-on-surface-variant tracking-wider uppercase">Safety Incidents</span>
+<span class="material-symbols-outlined text-semantic-error text-[18px]" data-icon="warning">warning</span>
+</div>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline text-2xl font-bold text-semantic-error">3</span>
+<span class="font-body text-xs text-on-surface-variant">flags</span>
+</div>
+<div class="flex items-center gap-1 mt-auto">
+<span class="font-label text-[10px] text-on-surface-variant">Requires review</span>
+</div>
+</div>
+</div>
+<!-- Filter Controls -->
+<div class="flex overflow-x-auto no-scrollbar gap-2 py-1">
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-semantic-active bg-semantic-active/10 text-semantic-active font-label text-[11px] font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="filter_list">filter_list</span> All Vendors
+            </button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label text-[11px] hover:bg-surface-variant transition-colors">
+                Tier 1 Subcontractors
+            </button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label text-[11px] hover:bg-surface-variant transition-colors flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-semantic-warning"></span> Review Required
+            </button>
+<button class="whitespace-nowrap px-4 py-1.5 rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant font-label text-[11px] hover:bg-surface-variant transition-colors">
+                Material Suppliers
+            </button>
+</div>
+<!-- Vendor List -->
+<div class="flex flex-col gap-4 mb-8">
+<!-- Vendor Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4">
+<!-- Header -->
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded bg-surface-variant border border-outline-variant flex items-center justify-center relative overflow-hidden">
+<!-- Concrete imagery for industrial context -->
+<div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-60" data-alt="A close-up view of heavy steel I-beams stacked on a construction site, lit by harsh daytime sunlight, emphasizing a rugged industrial corporate setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBU0rc2dpOEhfadDVqtG70D7-rQ_bkNprwlU0bII1O1REIndP61VQ1Awe1zUw1E-XDB7WcLJvDzf_gv9JDR5-fKujTvwg9DtqDPWXs77nR44_bBljdT7qJ_nPGI2fxwHnB-A72zS7rIDhxS7fLwAVEDNoF-POaqwwIKc6Du4R31bHHe-KaWSKVlXyUkXcp6gvpuqFNOrMDoqELg8Eap6NR7pw7YIVZ8NhQ2bEyLFTBxRualvI5R9cJF')"></div>
+</div>
+<div>
+<h3 class="font-headline text-base font-bold text-primary leading-tight">Apex Structural Steel</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label text-[10px] text-on-surface-variant bg-surface px-1.5 py-0.5 rounded border border-outline-variant">VND-4092A</span>
+<span class="font-label text-[10px] text-semantic-success bg-semantic-success/10 px-1.5 py-0.5 rounded">Tier 1</span>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- Scorecard Grid -->
+<div class="grid grid-cols-3 gap-3 border-t border-b border-surface-variant py-3">
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Deliv Acc</span>
+<div class="flex items-end gap-1">
+<span class="font-headline text-lg font-bold text-semantic-success">98.5</span><span class="font-body text-[10px] text-on-surface-variant mb-1">%</span>
+</div>
+</div>
+<div class="flex flex-col border-l border-surface-variant pl-3">
+<span class="font-label text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Lead Time</span>
+<div class="flex items-end gap-1">
+<span class="font-headline text-lg font-bold text-primary">+0.2</span><span class="font-body text-[10px] text-on-surface-variant mb-1">d</span>
+</div>
+</div>
+<div class="flex flex-col border-l border-surface-variant pl-3">
+<span class="font-label text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Safety Rat</span>
+<div class="flex items-end gap-1">
+<span class="font-headline text-lg font-bold text-semantic-success">A+</span>
+</div>
+</div>
+</div>
+<!-- Footer / Trend -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Active POs</span>
+<span class="font-label text-xs text-primary font-bold">142</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Spend YTD</span>
+<span class="font-label text-xs text-primary font-bold">$4.2M</span>
+</div>
+</div>
+<div class="w-24 h-8 flex items-center justify-end">
+<!-- Mini sparkline SVG -->
+<svg class="w-full h-full overflow-visible" viewBox="0 0 100 30">
+<path class="sparkline-path" d="M0,20 Q10,15 20,25 T40,10 T60,15 T80,5 T100,2" fill="none" stroke="#16A34A" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Vendor Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4 relative overflow-hidden">
+<!-- Warning Indicator Stripe -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-semantic-warning"></div>
+<!-- Header -->
+<div class="flex justify-between items-start pl-2">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded bg-surface-variant border border-outline-variant flex items-center justify-center relative overflow-hidden">
+<!-- Concrete imagery for industrial context -->
+<div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-60" data-alt="A wide shot of heavy earthmoving machinery sitting idle on a dusty construction site under a bleak, overcast sky, conveying a sense of delayed operational logistics." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqFm40CDi5XSEibl2I9K483qVMDY8aGUUa-CTS6oHgwywDagzv-mOTiPE1nJq3md4Lgkb_v8di0nucs1JREXlKaTTnKsBjS3XdEzl87OIdsGh4yI0WT77KGmi04Q8wLQve4jTbgt2e7ZsIhSUGc9sioxkS0a2c1MjQvVRSQMKDOXrWGyfEF4qM-uaaYJ_lZ9-XHahEuKj6T9qQZ_txg5LX0xY_Lwu5ZzsgmBIjfS_N9OueCMOEY4zr')"></div>
+</div>
+<div>
+<h3 class="font-headline text-base font-bold text-primary leading-tight">Terraform Excavation</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label text-[10px] text-on-surface-variant bg-surface px-1.5 py-0.5 rounded border border-outline-variant">VND-8813C</span>
+<span class="font-label text-[10px] text-semantic-warning bg-semantic-warning/10 px-1.5 py-0.5 rounded flex items-center gap-1"><span class="w-1.5 h-1.5 bg-semantic-warning rounded-full"></span> Review</span>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- Scorecard Grid -->
+<div class="grid grid-cols-3 gap-3 border-t border-b border-surface-variant py-3 pl-2">
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Deliv Acc</span>
+<div class="flex items-end gap-1">
+<span class="font-headline text-lg font-bold text-semantic-warning">82.4</span><span class="font-body text-[10px] text-on-surface-variant mb-1">%</span>
+</div>
+</div>
+<div class="flex flex-col border-l border-surface-variant pl-3">
+<span class="font-label text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Lead Time</span>
+<div class="flex items-end gap-1">
+<span class="font-headline text-lg font-bold text-semantic-error">+4.5</span><span class="font-body text-[10px] text-on-surface-variant mb-1">d</span>
+</div>
+</div>
+<div class="flex flex-col border-l border-surface-variant pl-3">
+<span class="font-label text-[9px] text-on-surface-variant uppercase tracking-wider mb-1">Safety Rat</span>
+<div class="flex items-end gap-1">
+<span class="font-headline text-lg font-bold text-semantic-warning">B-</span>
+</div>
+</div>
+</div>
+<!-- Footer / Trend -->
+<div class="flex items-center justify-between pl-2">
+<div class="flex items-center gap-4">
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Active POs</span>
+<span class="font-label text-xs text-primary font-bold">45</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[9px] text-on-surface-variant uppercase">Spend YTD</span>
+<span class="font-label text-xs text-primary font-bold">$1.8M</span>
+</div>
+</div>
+<div class="w-24 h-8 flex items-center justify-end">
+<!-- Mini sparkline SVG -->
+<svg class="w-full h-full overflow-visible" viewBox="0 0 100 30">
+<path class="sparkline-path" d="M0,5 Q10,10 20,5 T40,20 T60,25 T80,22 T100,28" fill="none" stroke="#D97706" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Vendor Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm flex flex-col gap-4 opacity-75">
+<!-- Header -->
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded bg-surface-variant border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">electric_bolt</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-bold text-primary leading-tight">Volt Systems Ind.</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label text-[10px] text-on-surface-variant bg-surface px-1.5 py-0.5 rounded border border-outline-variant">VND-1102X</span>
+<span class="font-label text-[10px] text-on-surface-variant bg-surface-variant px-1.5 py-0.5 rounded">Inactive</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Minimal detail for inactive -->
+<div class="flex items-center justify-between border-t border-surface-variant pt-3">
+<span class="font-label text-xs text-on-surface-variant">Last active: 2023-11-14</span>
+<button class="font-label text-xs text-semantic-active font-bold uppercase tracking-wider">Re-evaluate</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation Bar (Hidden on Web/Tablet) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-lg flex justify-around items-center pt-2 pb-safe w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label-sm font-headline text-primary mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-label-sm font-headline text-primary mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label text-label-sm font-headline text-primary mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl px-3 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label text-label-sm font-headline text-primary mt-1">Admin</span>
+</a>
+</nav>
+</body></html>

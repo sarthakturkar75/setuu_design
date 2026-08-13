@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Navigation Drawer</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#00080f",
+                    "surface-container": "#efeee9",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#d1e4ff",
+                    "on-surface": "#1b1c19",
+                    "inverse-surface": "#30312e",
+                    "on-background": "#1b1c19",
+                    "on-tertiary-fixed": "#001e2d",
+                    "primary": "#000815",
+                    "on-secondary-container": "#005a7f",
+                    "primary-container": "#00213c",
+                    "surface-container-highest": "#e3e3de",
+                    "surface-variant": "#e3e3de",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "surface-container-low": "#f5f4ef",
+                    "outline-variant": "#c3c6ce",
+                    "surface-dim": "#dbdad5",
+                    "outline": "#73777e",
+                    "on-tertiary-container": "#0090c7",
+                    "surface-bright": "#faf9f4",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-surface-variant": "#43474d",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-primary-container": "#6f89a9",
+                    "surface": "#faf9f4",
+                    "primary-fixed-dim": "#aec9eb",
+                    "secondary-container": "#8ad1ff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#001d35",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#c6e7ff",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "tertiary-container": "#002233",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#aec9eb",
+                    "on-error": "#ffffff",
+                    "background": "#faf9f4",
+                    "surface-container-high": "#e9e8e3",
+                    "secondary": "#00658d",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "surface-tint": "#46607e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .filled-icon {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface antialiased relative min-h-screen">
+<!-- Dimmed Background Overlay -->
+<div aria-hidden="true" class="fixed inset-0 bg-primary/40 backdrop-blur-[2px] z-40 transition-opacity"></div>
+<!-- Main Application Container (Dummy Content for context) -->
+<main class="pt-16 px-4 max-w-4xl mx-auto opacity-50 select-none pointer-events-none">
+<h1 class="font-headline text-3xl font-bold mb-6 text-primary">Project Overview</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant h-48 flex items-center justify-center">
+<span class="text-on-surface-variant">Data View</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant h-48 flex items-center justify-center">
+<span class="text-on-surface-variant">Data View</span>
+</div>
+</div>
+</main>
+<!-- NavigationDrawer Component (From JSON) -->
+<nav aria-label="Main Navigation" class="fixed inset-y-0 left-0 z-[60] flex flex-col h-full w-72 rounded-r-xl bg-primary-container text-primary shadow-xl transition-transform duration-300 ease-in-out border-r border-outline-variant/10 overflow-hidden">
+<!-- Header Profile Section -->
+<div class="flex flex-col items-start p-6 border-b border-primary-fixed-dim/10 bg-primary-container relative">
+<div class="flex items-center space-x-4 mb-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-secondary-fixed" data-alt="A highly detailed close-up portrait of a professional female construction project manager wearing a white hardhat and safety vest. The setting is an industrial construction site under clear bright daylight, ensuring a sharp, modern light-mode aesthetic. The color palette features deep navy blues, bright whites, and subtle amber accents. The mood is confident, focused, and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4v65FgT5lo6RZeptnz-Ejt-GV3KvQFwoxl6YDIYdesFIPLeR28Y8yqgP4om3Gqc2ZGHBCD1cXMTQIPXheCUGzw9gu14Ciq2YhmCx7XtxUM84-VzPL8Wp6vW2WVP17unXHzqoybnDtkfZcW-3b0v1q9osMqrQTe0Dmnaj9_gVuPoshZjShFQakwnP1KzptTnEMh8HtvcohsEnlAJc4kzXs5iG-UdahsPm3E40Pr055uGhidNe2Gok4"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-secondary rounded-full border-2 border-primary-container"></div>
+</div>
+<div>
+<h2 class="font-headline font-bold text-on-primary text-lg leading-tight">Lead PM</h2>
+<p class="font-label text-xs text-primary-fixed-dim mt-1">Site ID: DXB-702</p>
+</div>
+</div>
+<div class="flex items-center space-x-2 text-xs font-label text-secondary-fixed">
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+<span>Offline Mode Available</span>
+</div>
+</div>
+<!-- Navigation Items -->
+<div class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+<!-- Dashboard (Active Semantic Fallback - assuming PM dashboard context) -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container font-bold hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="material-symbols-outlined filled-icon">dashboard</span>
+<span class="font-body text-sm">Dashboard</span>
+</a>
+<!-- Milestones -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-fixed-dim hover:bg-surface-container-highest hover:text-on-surface transition-colors group" href="#">
+<span class="material-symbols-outlined">flag</span>
+<span class="font-body text-sm">Milestones</span>
+</a>
+<!-- Drawing Hub (From JSON labels) -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-fixed-dim hover:bg-surface-container-highest hover:text-on-surface transition-colors group" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-body text-sm">Drawing Hub</span>
+</a>
+<!-- Materials -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-fixed-dim hover:bg-surface-container-highest hover:text-on-surface transition-colors group" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body text-sm">Materials</span>
+</a>
+<!-- Team -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-fixed-dim hover:bg-surface-container-highest hover:text-on-surface transition-colors group" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body text-sm">Team</span>
+</a>
+<div class="my-4 border-t border-primary-fixed-dim/10"></div>
+<!-- Sync Queue (From JSON labels) -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-fixed-dim hover:bg-surface-container-highest hover:text-on-surface transition-colors group" href="#">
+<span class="material-symbols-outlined">sync</span>
+<span class="font-body text-sm">Sync Queue</span>
+</a>
+<!-- Support (From JSON labels) -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-primary-fixed-dim hover:bg-surface-container-highest hover:text-on-surface transition-colors group" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-body text-sm">Support</span>
+</a>
+</div>
+<!-- Footer / Logout -->
+<div class="p-4 border-t border-primary-fixed-dim/10 bg-primary-container">
+<!-- Log Out (From JSON labels) -->
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-error hover:bg-error-container hover:text-on-error-container transition-colors group mb-4" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body text-sm font-medium">Log Out</span>
+</a>
+<div class="text-center font-label text-[10px] text-primary-fixed-dim/60 uppercase tracking-widest">
+                Setuu Enterprise v2.4.0
+            </div>
+</div>
+</nav>
+</body></html>

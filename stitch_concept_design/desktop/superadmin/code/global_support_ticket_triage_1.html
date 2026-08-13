@@ -1,0 +1,252 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Global Support Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#005a7f",
+                        "primary-container": "#00213c",
+                        "secondary-container": "#8ad1ff",
+                        "surface": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-container-high": "#e9e8e3",
+                        "inverse-surface": "#30312e",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbdad5",
+                        "tertiary-container": "#002233",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container": "#efeee9",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#73777e",
+                        "surface-tint": "#46607e",
+                        "background": "#faf9f4",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-container": "#0090c7",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#faf9f4",
+                        "on-background": "#1b1c19",
+                        "on-surface-variant": "#43474d",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-low": "#f5f4ef",
+                        "primary": "#000815",
+                        "secondary": "#00658d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-variant": "#e3e3de",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary": "#00080f",
+                        "on-surface": "#1b1c19",
+                        "on-primary-container": "#6f89a9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "safe-top": "env(safe-area-inset-top)",
+                        "safe-bottom": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid #E0E0E0; }
+        .ticket-card { transition: all 0.2s ease-in-out; }
+        .ticket-card:active { transform: scale(0.98); }
+        .expandable-content { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .expanded .expandable-content { max-height: 300px; }
+        .expanded .chevron { transform: rotate(180deg); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased flex flex-col h-screen overflow-hidden selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface/85 backdrop-blur-md shadow-sm border-b border-outline-variant/30 pt-safe-top">
+<div class="flex items-center gap-3">
+<button aria-label="Menu" class="p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="text-headline-sm font-headline font-bold text-primary">Control Center</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-error text-on-error font-label text-label-sm px-2 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                12 ACTIVE
+            </span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto w-full pt-16 pb-[120px] px-4 space-y-4">
+<!-- Context Header -->
+<div class="py-4 flex justify-between items-end">
+<div>
+<h2 class="text-headline-md font-headline font-bold text-on-surface">Support Triage</h2>
+<p class="text-body-md text-on-surface-variant mt-1">Prioritized issue queue.</p>
+</div>
+<button class="flex items-center gap-1 text-secondary text-label-md font-label hover:underline">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> FILTER
+            </button>
+</div>
+<!-- Ticket Queue -->
+<div class="space-y-3" id="ticket-container">
+<!-- Ticket 1: Emergency -->
+<div class="ticket-card bg-surface-container-lowest border border-error/50 rounded-lg shadow-sm overflow-hidden" onclick="toggleTicket(this)">
+<div class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-label-md text-on-surface bg-surface-container py-0.5 px-1.5 rounded">TCK-9942</span>
+<span class="font-label text-label-sm text-error font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> CRITICAL</span>
+</div>
+<span class="font-label text-label-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 14m ago</span>
+</div>
+<h3 class="font-body text-body-lg font-semibold text-on-surface mb-1 line-clamp-1">Database Sync Failure - Site B</h3>
+<p class="text-body-md text-on-surface-variant">Apex Construction Grp</p>
+<button class="absolute right-4 bottom-4 text-on-surface-variant chevron transition-transform">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="expandable-content bg-surface-container-low border-t border-outline-variant/30">
+<div class="p-4 space-y-4">
+<div>
+<p class="text-label-md font-label text-on-surface-variant mb-1">LAST NOTE (SYSTEM):</p>
+<p class="text-body-md text-on-surface font-label text-sm bg-surface p-2 border border-outline-variant/30 rounded">Error 503: Service Unavailable. 14 consecutive sync failures detected on node-4.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-body text-body-md font-medium py-2 rounded shadow-sm hover:bg-primary/90 transition-colors">Acknowledge</button>
+<button class="flex-1 bg-surface-container-high border border-outline-variant/50 text-on-surface font-body text-body-md font-medium py-2 rounded hover:bg-surface-dim transition-colors">Escalate to L3</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Ticket 2: Attention -->
+<div class="ticket-card bg-surface-container-lowest border border-outline-variant/50 rounded-lg shadow-sm overflow-hidden" onclick="toggleTicket(this)">
+<div class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#9333EA]"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-label-md text-on-surface bg-surface-container py-0.5 px-1.5 rounded">TCK-9940</span>
+<span class="font-label text-label-sm text-[#9333EA] font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">priority_high</span> HIGH</span>
+</div>
+<span class="font-label text-label-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 1h 20m ago</span>
+</div>
+<h3 class="font-body text-body-lg font-semibold text-on-surface mb-1 line-clamp-1">Duplicate Blueprint Override Pending</h3>
+<p class="text-body-md text-on-surface-variant">Nexus Engineering</p>
+<button class="absolute right-4 bottom-4 text-on-surface-variant chevron transition-transform">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="expandable-content bg-surface-container-low border-t border-outline-variant/30">
+<div class="p-4 space-y-4">
+<div>
+<p class="text-label-md font-label text-on-surface-variant mb-1">USER NOTE:</p>
+<p class="text-body-md text-on-surface italic border-l-2 border-[#9333EA] pl-2">"System won't let me upload V4 of the foundation schematics. Says duplicate found. Need override."</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-body text-body-md font-medium py-2 rounded shadow-sm hover:bg-primary/90 transition-colors">Review Files</button>
+<button class="flex-1 bg-surface-container-high border border-outline-variant/50 text-on-surface font-body text-body-md font-medium py-2 rounded hover:bg-surface-dim transition-colors">Force Accept</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Ticket 3: Warning -->
+<div class="ticket-card bg-surface-container-lowest border border-outline-variant/50 rounded-lg shadow-sm overflow-hidden" onclick="toggleTicket(this)">
+<div class="p-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#D97706]"></div>
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label text-label-md text-on-surface bg-surface-container py-0.5 px-1.5 rounded">TCK-9938</span>
+<span class="font-label text-label-sm text-[#D97706] font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sync_problem</span> OFFLINE</span>
+</div>
+<span class="font-label text-label-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 3h ago</span>
+</div>
+<h3 class="font-body text-body-lg font-semibold text-on-surface mb-1 line-clamp-1">User Device Stale Data</h3>
+<p class="text-body-md text-on-surface-variant">Field Worker J. Doe</p>
+<button class="absolute right-4 bottom-4 text-on-surface-variant chevron transition-transform">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="expandable-content bg-surface-container-low border-t border-outline-variant/30">
+<div class="p-4 space-y-4">
+<div>
+<p class="text-label-md font-label text-on-surface-variant mb-1">DIAGNOSTIC:</p>
+<p class="text-body-md text-on-surface font-label text-sm bg-surface p-2 border border-outline-variant/30 rounded">Device offline &gt; 72hrs. Pending local mutations: 42. Risk of merge conflict high.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-on-primary font-body text-body-md font-medium py-2 rounded shadow-sm hover:bg-primary/90 transition-colors">Send SMS Ping</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Version Banner -->
+<div class="fixed bottom-20 left-0 w-full px-4 z-40 pb-safe-bottom">
+<div class="glass-panel rounded-lg p-3 flex justify-between items-center shadow-md border-l-4 border-l-primary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">system_update</span>
+<span class="font-label text-label-md text-on-surface font-bold">Min App Version: <span class="text-primary">2.4.1</span></span>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label text-label-sm px-3 py-1.5 rounded hover:bg-primary-fixed-dim transition-colors">FORCE UPDATE</button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-safe h-20 bg-surface/80 backdrop-blur-xl border-t border-outline-variant/20 shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity p-2 w-16" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="text-label-sm font-label mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity p-2 w-16" href="#">
+<span class="material-symbols-outlined text-[24px]">corporate_fare</span>
+<span class="text-label-sm font-label mt-1">Orgs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity p-2 w-16" href="#">
+<span class="material-symbols-outlined text-[24px]">dns</span>
+<span class="text-label-sm font-label mt-1">Infra</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1.5 w-16" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<span class="text-label-sm font-label mt-1">Support</span>
+</a>
+</nav>
+<script>
+        function toggleTicket(element) {
+            // Close others
+            document.querySelectorAll('.ticket-card').forEach(card => {
+                if(card !== element) card.classList.remove('expanded');
+            });
+            // Toggle current
+            element.classList.toggle('expanded');
+        }
+    </script>
+</body></html>

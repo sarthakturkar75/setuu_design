@@ -1,0 +1,334 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Engineer Preferences - Setuu Enterprise</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#0090c7",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e3e3de",
+                    "on-surface": "#1b1c19",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#aec9eb",
+                    "inverse-surface": "#30312e",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#faf9f4",
+                    "surface-container": "#efeee9",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-secondary-container": "#005a7f",
+                    "surface-container-highest": "#e3e3de",
+                    "secondary-container": "#8ad1ff",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#faf9f4",
+                    "surface-container-high": "#e9e8e3",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#001d35",
+                    "on-surface-variant": "#43474d",
+                    "surface-dim": "#dbdad5",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-secondary": "#ffffff",
+                    "surface": "#faf9f4",
+                    "outline": "#73777e",
+                    "primary-fixed": "#d1e4ff",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#6f89a9",
+                    "surface-tint": "#46607e",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "surface-container-low": "#f5f4ef",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1b1c19",
+                    "tertiary-container": "#002233",
+                    "secondary": "#00658d",
+                    "tertiary-fixed": "#c6e7ff",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "on-tertiary-fixed": "#001e2d",
+                    "primary-container": "#00213c",
+                    "outline-variant": "#c3c6ce",
+                    "tertiary": "#00080f",
+                    "primary": "#000815",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-primary-fixed-variant": "#2e4965"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Base styles mapped from JSON typography */
+        .text-headline-md { font-size: 24px; line-height: 32px; }
+        .text-headline-sm { font-size: 18px; line-height: 24px; }
+        .text-body-md { font-size: 14px; line-height: 20px; }
+        .text-label-md { font-size: 12px; line-height: 16px; letter-spacing: 0.05em; }
+        .text-label-sm { font-size: 10px; line-height: 14px; letter-spacing: 0.05em; }
+        
+        /* Glassmorphism Level 2 */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-0 h-full w-[280px] bg-primary-container shadow-xl z-50">
+<!-- Header -->
+<div class="p-6 border-b border-white/10">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Alex Chen" class="w-12 h-12 rounded-full object-cover border-2 border-surface-container-low shadow-sm" data-alt="A highly detailed close-up portrait of a professional software engineer, Alex Chen, in a modern, well-lit corporate tech office. The lighting is crisp, bright, and cool, reflecting a clean SaaS aesthetic. Soft depth of field blurs the background architectural elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnLFpqVLB5hfypSq0nOJ8_nax_gY_x_C7_r4MGWpsBNqeUOpxRuw-3wacQmvdMJaZO3MgGY0oc4D_UomqTuoFERHH32_yIq9Wa14Lzdx2znn3L9cGwEI0YaFPbQEqEJdye88KNBOhlC5Z7NwKu4-J-KO-wsmKNjj7ExOIrFhWjAZT-BZ7zGahEoxM2icpM5uxK9UbOsNHte1oQoqqypaLlrE7iV-LU1lrB8-xTr7vwQk2KdOfNXcos">
+<div>
+<h2 class="text-on-primary font-headline font-bold text-headline-sm">Engineer Workbench</h2>
+<p class="text-on-primary-container/80 font-body text-xs mt-1">Software Engineering</p>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-secondary text-on-secondary py-2.5 px-4 rounded hover:bg-secondary/90 transition-colors font-body text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">monitoring</span>
+                System Status
+            </button>
+</div>
+<!-- Main Tabs (Inactive) -->
+<nav class="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">memory</span>
+                My Workbench
+            </a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">settings_suggest</span>
+                Assigned Tasks
+            </a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">code_blocks</span>
+                Engineering Hub
+            </a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">bug_report</span>
+                Issue Tracker
+            </a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">schedule</span>
+                Timesheets
+            </a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">description</span>
+                Team Docs
+            </a>
+</nav>
+<!-- Footer Tabs (Settings is Active) -->
+<div class="p-3 border-t border-white/10 space-y-1">
+<a class="bg-secondary/20 text-on-secondary-container border-l-4 border-secondary rounded-r-lg px-4 py-3 flex items-center gap-3 font-body text-body-md font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">settings</span>
+                Settings
+            </a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded font-body text-body-md group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform duration-200">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="md:ml-[280px] flex flex-col min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 z-40 w-full h-20 glass-panel border-b border-outline-variant/30 flex justify-between items-center px-8">
+<!-- Left: Brand / Search -->
+<div class="flex items-center gap-8 w-1/3">
+<h1 class="text-headline-md font-headline font-bold text-primary tracking-tight">Setuu Enterprise</h1>
+<div class="relative w-full max-w-sm hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant/50 rounded-full text-body-md font-body focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all text-on-surface placeholder:text-on-surface-variant/70" placeholder="Search systems or documentation..." type="text">
+</div>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center gap-4">
+<div class="hidden xl:flex items-center gap-3 border-r border-outline-variant/40 pr-4 mr-1">
+<span class="text-label-md font-label text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">Mechanical Engineering</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-colors scale-95 hover:scale-100 duration-150 ease-in-out relative">
+<span class="material-symbols-outlined">alternate_email</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-colors scale-95 hover:scale-100 duration-150 ease-in-out relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2.5 w-2 h-2 bg-[#DC2626] rounded-full"></span>
+</button>
+<button class="ml-2 bg-primary text-on-primary px-5 py-2 rounded shadow-sm hover:bg-primary/90 transition-colors font-body text-body-md font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+                    Log Time
+                </button>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-1 p-8 max-w-[1200px] mx-auto w-full">
+<!-- Page Header -->
+<div class="mb-8">
+<h2 class="font-headline font-bold text-3xl text-primary tracking-tight">Engineer Preferences</h2>
+<p class="font-body text-on-surface-variant mt-2 text-body-md">Manage your toolset bindings, notification vectors, and deployment targets.</p>
+</div>
+<!-- Settings Layout: Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Tab Navigation (Left Column) -->
+<nav class="lg:col-span-1 flex flex-col gap-1">
+<a class="px-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant/20 shadow-sm text-primary font-body text-body-md font-medium flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">integration_instructions</span>
+                        Tool Integrations
+                    </a>
+<a class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-body text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+                        Notification Filters
+                    </a>
+<a class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-body text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">deployed_code</span>
+                        Build Targets
+                    </a>
+<a class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-body text-body-md flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">shield_person</span>
+                        Authentication
+                    </a>
+</nav>
+<!-- Configuration Canvas (Right Column) -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Section 1: External Tool Integrations -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 bg-surface-container-lowest">
+<h3 class="font-headline font-bold text-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">api</span>
+                                External Tool Integrations
+                            </h3>
+<p class="font-body text-sm text-on-surface-variant mt-1">Bind external repositories and lifecycle management tools to your workspace.</p>
+</div>
+<div class="p-6 space-y-8 bg-surface-container-lowest">
+<!-- GitHub Integration -->
+<div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+<div class="flex gap-4 items-start">
+<div class="w-10 h-10 rounded bg-[#24292F] flex items-center justify-center shrink-0 shadow-sm">
+<svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path></svg>
+</div>
+<div>
+<h4 class="font-body font-medium text-on-surface">GitHub Enterprise</h4>
+<p class="font-body text-sm text-on-surface-variant mb-3">Authorize workspace access to pull requests and commit hashes.</p>
+<div class="flex items-center gap-2 max-w-sm">
+<div class="relative w-full">
+<input class="w-full bg-surface-container-low border border-outline-variant/30 text-on-surface-variant font-label text-label-md px-3 py-2 rounded cursor-not-allowed" disabled="" type="password" value="ghp_aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890">
+<span class="absolute right-2 top-1/2 -translate-y-1/2 material-symbols-outlined text-[16px] text-[#16A34A]">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<button class="px-4 py-2 border border-outline-variant/50 rounded font-body text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors shrink-0">
+                                    Reauthorize
+                                </button>
+</div>
+<hr class="border-outline-variant/20">
+<!-- PLM Binding -->
+<div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+<div class="flex gap-4 items-start">
+<div class="w-10 h-10 rounded bg-surface-tint/10 border border-surface-tint/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-surface-tint">account_tree</span>
+</div>
+<div>
+<div class="flex items-center gap-3">
+<h4 class="font-body font-medium text-on-surface">PLM System Binding</h4>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0284C7]/10 text-[#0284C7] font-label text-[10px] uppercase font-bold tracking-wider border border-[#0284C7]/20">
+<span class="w-1.5 h-1.5 rounded-full bg-[#0284C7]"></span> Active Sync
+                                            </span>
+</div>
+<p class="font-body text-sm text-on-surface-variant mt-1">Siemens Teamcenter linked via service principal.</p>
+<p class="font-label text-label-md text-outline mt-2">Last sync: <span class="text-on-surface-variant">2023-10-24T14:32:01Z</span></p>
+</div>
+</div>
+<button class="px-4 py-2 border border-outline-variant/50 rounded font-body text-sm font-medium text-error hover:bg-error/5 transition-colors shrink-0">
+                                    Disconnect
+                                </button>
+</div>
+</div>
+</section>
+<!-- Section 2: Default Build Targets -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 bg-surface-container-lowest">
+<h3 class="font-headline font-bold text-lg text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">rocket_launch</span>
+                                Default Build Targets
+                            </h3>
+<p class="font-body text-sm text-on-surface-variant mt-1">Set your local environment variables and primary deployment nodes.</p>
+</div>
+<div class="p-6 space-y-6 bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Target Environment Select -->
+<div class="space-y-2">
+<label class="block font-body text-sm font-medium text-on-surface">Primary Target Environment</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface border border-outline-variant/50 text-on-surface font-body text-sm px-4 py-2.5 rounded focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-colors">
+<option value="local">Local Development (localhost:8080)</option>
+<option selected="" value="staging">Staging Cluster (us-east-1)</option>
+<option value="prod">Production Node (Restricted)</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<!-- Container Runtime -->
+<div class="space-y-2">
+<label class="block font-body text-sm font-medium text-on-surface">Container Runtime Engine</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface border border-outline-variant/50 text-on-surface font-body text-sm px-4 py-2.5 rounded focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-colors">
+<option selected="" value="docker">Docker Engine</option>
+<option value="containerd">containerd</option>
+<option value="podman">Podman</option>
+</select>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<!-- Diagnostic Level Toggle -->
+<div class="pt-4 border-t border-outline-variant/20">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-body font-medium text-on-surface">Verbose Build Diagnostics</h4>
+<p class="font-body text-sm text-on-surface-variant">Stream detailed stderr/stdout logs to your terminal output.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value="">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant/20 bg-surface-container flex justify-end gap-3">
+<button class="px-4 py-2 rounded font-body text-sm font-medium text-on-surface hover:bg-surface-variant transition-colors">
+                                Discard Changes
+                            </button>
+<button class="px-5 py-2 rounded bg-primary text-on-primary font-body text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm">
+                                Save Preferences
+                            </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

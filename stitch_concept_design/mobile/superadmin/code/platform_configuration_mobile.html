@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Platform Configuration Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#c3c6ce",
+                      "primary-fixed-dim": "#aec9eb",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "surface-bright": "#faf9f4",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "primary": "#000815",
+                      "background": "#faf9f4",
+                      "surface": "#faf9f4",
+                      "on-background": "#1b1c19",
+                      "primary-container": "#00213c",
+                      "surface-variant": "#e3e3de",
+                      "on-error": "#ffffff",
+                      "outline": "#73777e",
+                      "on-primary-fixed": "#001d35",
+                      "surface-tint": "#46607e",
+                      "secondary-fixed-dim": "#88cffc",
+                      "secondary-fixed": "#c6e7ff",
+                      "surface-dim": "#dbdad5",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#c6e7ff",
+                      "tertiary": "#00080f",
+                      "tertiary-container": "#002233",
+                      "error": "#ba1a1a",
+                      "on-secondary-container": "#005a7f",
+                      "on-surface": "#1b1c19",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#aec9eb",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-surface-variant": "#43474d",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "inverse-surface": "#30312e",
+                      "secondary": "#00658d",
+                      "surface-container": "#efeee9",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "surface-container-highest": "#e3e3de",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "on-primary-container": "#6f89a9",
+                      "secondary-container": "#8ad1ff",
+                      "on-secondary-fixed": "#001e2d",
+                      "surface-container-high": "#e9e8e3",
+                      "on-tertiary-container": "#0090c7",
+                      "primary-fixed": "#d1e4ff",
+                      "on-tertiary-fixed": "#001e2d",
+                      "surface-container-low": "#f5f4ef",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+          }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen pb-24 selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky flex justify-between items-center px-4 py-2 w-full z-50">
+<div class="flex items-center gap-3">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-variant/50 transition-all duration-300 ease-in-out active:scale-95 text-primary">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<h1 class="font-headline font-bold text-[18px] text-primary tracking-tight">Governance Suite</h1>
+</div>
+<div>
+<img alt="Super Admin Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-outline-variant/30" data-alt="A small, circular avatar portrait of a professional system administrator. The image features a serious, focused individual in sharp, high-contrast lighting, wearing formal business attire. The background is a clean, minimalist off-white to match the Light Mode SaaS aesthetic. Corporate, reliable, authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAdQjE0Y9ULnAAGJDNVMR5i4mjQ0ch8aohky_Ob1K607d7h6pC4nZA_0U56eBEgRRgtjlwls73eGCy1U10bI6XT7JDJicsjsZdEgHeP3OwxUD9a0QGmzutY7JpnBqLXyeazT1R5PHHfpV2QptxlRh0juKSHLBJ5WdC0jpIi2EuqvQsAM9vu1c_feAsO4G7M7QfXxGOebDZC-YsfG3yjod39Ck0npXvQT8VMmG7N8B9icwztRFO9Thl"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="p-4 grid grid-cols-4 gap-4 max-w-[600px] mx-auto w-full">
+<!-- Header Section -->
+<section class="col-span-4 mb-2 mt-4">
+<h2 class="font-headline font-bold text-[24px] text-primary leading-tight">Platform Configuration</h2>
+<p class="font-body text-[14px] text-on-surface-variant mt-1">Manage global platform settings and system state.</p>
+</section>
+<!-- Global Maintenance Mode Toggle -->
+<section class="col-span-4 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/30 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-error transition-all duration-500 ease-in-out group-hover:w-2"></div>
+<div class="flex justify-between items-start">
+<div class="pl-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+<h3 class="font-headline font-bold text-[18px] text-on-surface">Global Maintenance Mode</h3>
+</div>
+<p class="font-body text-[14px] text-on-surface-variant mt-2 max-w-[280px]">Restricts all non-admin access. Forces active sessions to terminate gracefully.</p>
+</div>
+<!-- Massive Toggle -->
+<label class="relative inline-flex items-center cursor-pointer mt-1">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-16 h-8 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-error shadow-inner border border-outline-variant/50"></div>
+</label>
+</div>
+</section>
+<!-- Settings Grid -->
+<section class="col-span-4 grid grid-cols-4 gap-4">
+<!-- Min App Version -->
+<div class="col-span-4 md:col-span-2 bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary-container text-lg" style="font-variation-settings: 'FILL' 1;">system_update</span>
+<h3 class="font-headline font-bold text-[16px] text-on-surface">Min. App Version</h3>
+</div>
+<p class="font-body text-[12px] text-on-surface-variant mb-3 leading-relaxed">Devices below this version will be forced to upgrade upon next sync.</p>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="font-label text-[14px] text-outline">v</span>
+</div>
+<input class="block w-full pl-7 pr-3 py-2 bg-surface-container border border-outline-variant/50 rounded-md font-label text-[14px] text-primary focus:ring-primary-container focus:border-primary-container transition-colors font-medium" type="text" value="2.4.11-stable"/>
+</div>
+</div>
+<!-- API Rate Limit -->
+<div class="col-span-4 md:col-span-2 bg-surface-container-lowest rounded-xl p-4 border border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary-container text-lg" style="font-variation-settings: 'FILL' 1;">speed</span>
+<h3 class="font-headline font-bold text-[16px] text-on-surface">API Rate Limiting</h3>
+</div>
+<p class="font-body text-[12px] text-on-surface-variant mb-3 leading-relaxed">Global request limit per tenant per minute. Applies to all endpoints.</p>
+<div class="relative">
+<input class="block w-full px-3 py-2 bg-surface-container border border-outline-variant/50 rounded-md font-label text-[14px] text-primary focus:ring-primary-container focus:border-primary-container transition-colors font-medium text-right pr-12" type="number" value="1500"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="font-label text-[12px] text-outline">req/m</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Announcements -->
+<section class="col-span-4 bg-surface-container-lowest rounded-xl p-5 border border-outline-variant/30 shadow-sm mt-2">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary text-xl" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<h3 class="font-headline font-bold text-[18px] text-on-surface">Global Announcements</h3>
+</div>
+<p class="font-body text-[14px] text-on-surface-variant mb-4">Broadcast an urgent message to all active users. Appears as a high-priority banner.</p>
+<textarea class="block w-full px-3 py-3 bg-surface-container border border-outline-variant/50 rounded-md font-body text-[14px] text-on-surface focus:ring-secondary focus:border-secondary transition-colors resize-none mb-4 placeholder:text-outline/70" placeholder="Enter broadcast message..." rows="3"></textarea>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 text-secondary bg-surface border-outline-variant rounded focus:ring-secondary focus:ring-2" id="push-notify" type="checkbox"/>
+<label class="font-body text-[14px] text-on-surface-variant" for="push-notify">Send Push Notification</label>
+</div>
+<button class="bg-primary-container text-on-primary-container font-label text-[12px] uppercase tracking-wider px-4 py-2 rounded-md hover:bg-primary transition-colors font-semibold shadow-sm active:scale-95">
+                    Broadcast
+                </button>
+</div>
+</section>
+<!-- Audit Trail (Scrollable List) -->
+<section class="col-span-4 mt-6">
+<div class="flex justify-between items-end mb-4 px-1">
+<div>
+<h3 class="font-headline font-bold text-[18px] text-primary">Recent Configuration Audits</h3>
+<p class="font-body text-[12px] text-on-surface-variant mt-1">Immutable log of system-level changes.</p>
+</div>
+<button class="text-secondary font-label text-[12px] uppercase tracking-wider font-semibold hover:text-primary transition-colors">View All</button>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden shadow-sm">
+<div class="max-h-[240px] overflow-y-auto divide-y divide-outline-variant/20">
+<!-- Audit Item 1 -->
+<div class="p-3 hover:bg-surface-container-low transition-colors cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center shrink-0 border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">tune</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-outline uppercase tracking-wide">CONF_UPDATED</span>
+<span class="font-label text-[10px] text-outline">10:42 AM</span>
+</div>
+<p class="font-body text-[13px] text-on-surface font-medium truncate">API Rate Limit increased</p>
+<p class="font-label text-[11px] text-on-surface-variant mt-1 truncate">actor: sysadmin_01 | 1200 -&gt; 1500</p>
+</div>
+</div>
+<!-- Audit Item 2 -->
+<div class="p-3 hover:bg-surface-container-low transition-colors cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded bg-error-container/30 flex items-center justify-center shrink-0 border border-error-container">
+<span class="material-symbols-outlined text-[16px] text-on-error-container">lock_reset</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-on-error-container font-semibold uppercase tracking-wide">MAINTENANCE_TOGGLED</span>
+<span class="font-label text-[10px] text-outline">08:15 AM</span>
+</div>
+<p class="font-body text-[13px] text-on-surface font-medium truncate">Global Maintenance Mode disabled</p>
+<p class="font-label text-[11px] text-on-surface-variant mt-1 truncate">actor: sysadmin_01 | state: false</p>
+</div>
+</div>
+<!-- Audit Item 3 -->
+<div class="p-3 hover:bg-surface-container-low transition-colors cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center shrink-0 border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">campaign</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-outline uppercase tracking-wide">BROADCAST_SENT</span>
+<span class="font-label text-[10px] text-outline">Yesterday</span>
+</div>
+<p class="font-body text-[13px] text-on-surface font-medium truncate">System Update Notification</p>
+<p class="font-label text-[11px] text-on-surface-variant mt-1 truncate">actor: auto_sys | reach: 4,291</p>
+</div>
+</div>
+<!-- Audit Item 4 -->
+<div class="p-3 hover:bg-surface-container-low transition-colors cursor-pointer flex gap-3">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center shrink-0 border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">system_update</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-[10px] text-outline uppercase tracking-wide">CONF_UPDATED</span>
+<span class="font-label text-[10px] text-outline">Oct 24</span>
+</div>
+<p class="font-body text-[13px] text-on-surface font-medium truncate">Min. App Version updated</p>
+<p class="font-label text-[11px] text-on-surface-variant mt-1 truncate">actor: sysadmin_01 | v2.4.10 -&gt; v2.4.11-stable</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-primary-container/90 backdrop-blur-md border-t border-white/5 shadow-[0_-4px_12px_rgba(0,0,0,0.15)] fixed bottom-0 w-full z-50 rounded-t-xl flex justify-around items-center h-20 px-2 md:hidden">
+<!-- Dashboard -->
+<button class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container transition-transform active:scale-90 group w-16">
+<div class="px-4 py-1.5 rounded-full transition-colors group-hover:bg-white/5">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Dashboard</span>
+</button>
+<!-- Orgs -->
+<button class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container transition-transform active:scale-90 group w-16">
+<div class="px-4 py-1.5 rounded-full transition-colors group-hover:bg-white/5">
+<span class="material-symbols-outlined text-2xl">corporate_fare</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Orgs</span>
+</button>
+<!-- Infra (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container/20 text-secondary-container rounded-full px-4 py-1.5 transition-transform active:scale-90 w-16">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">dns</span>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1 font-bold">Infra</span>
+</button>
+<!-- Audit -->
+<button class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container transition-transform active:scale-90 group w-16">
+<div class="px-4 py-1.5 rounded-full transition-colors group-hover:bg-white/5">
+<span class="material-symbols-outlined text-2xl">receipt_long</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider mt-1">Audit</span>
+</button>
+</nav>
+</body></html>

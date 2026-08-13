@@ -1,0 +1,350 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Admin - Automated Reporting Engine</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-background": "#1b1c19",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-tertiary-container": "#0090c7",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container": "#efeee9",
+                        "on-secondary-container": "#005a7f",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c3c6ce",
+                        "tertiary": "#00080f",
+                        "secondary-container": "#8ad1ff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary-fixed": "#001d35",
+                        "surface-tint": "#46607e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#73777e",
+                        "primary-container": "#00213c",
+                        "secondary": "#00658d",
+                        "on-primary-container": "#6f89a9",
+                        "surface-variant": "#e3e3de",
+                        "inverse-surface": "#30312e",
+                        "tertiary-container": "#002233",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#43474d",
+                        "surface": "#faf9f4",
+                        "surface-container-low": "#f5f4ef",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1b1c19",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d1e4ff",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "primary": "#000815",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#c6e7ff",
+                        "background": "#faf9f4",
+                        "surface-dim": "#dbdad5",
+                        "surface-bright": "#faf9f4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.surface'); color: theme('colors.on-surface'); font-family: theme('fontFamily.body'); }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid theme('colors.surface-container-highest'); }
+        .elevation-1 { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); border: 1px solid #E0E0E0; }
+        
+        /* Custom Checkbox */
+        .setuu-checkbox { appearance: none; width: 1.25rem; height: 1.25rem; border: 2px solid theme('colors.outline'); border-radius: theme('borderRadius.DEFAULT'); display: inline-grid; place-content: center; cursor: pointer; transition: all 0.2s ease-in-out; }
+        .setuu-checkbox::before { content: ""; width: 0.65em; height: 0.65em; transform: scale(0); transition: 120ms transform ease-in-out; box-shadow: inset 1em 1em theme('colors.on-primary'); background-color: transform-origin: bottom left; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
+        .setuu-checkbox:checked { background-color: theme('colors.secondary'); border-color: theme('colors.secondary'); }
+        .setuu-checkbox:checked::before { transform: scale(1); }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden antialiased">
+<!-- Desktop SideNavBar -->
+<nav class="hidden md:flex flex-col py-6 w-[280px] h-screen fixed left-0 top-0 z-50 bg-primary dark:bg-surface-container-lowest shadow-xl">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+</div>
+<div>
+<h1 class="font-headline text-xl font-black text-on-primary dark:text-on-surface tracking-tight">Setuu Admin</h1>
+<p class="font-label text-label-sm text-on-primary/70">Enterprise Tier</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 my-1 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span> Projects
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span> Drawings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span> Inventory
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span> Vendors
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 transition-all scale-100 active:scale-[0.98] duration-150 font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span> Support
+            </a>
+</div>
+<div class="px-4 mt-auto border-t border-on-primary/10 pt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="history_edu">history_edu</span> Audit Logs
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="terminal">terminal</span> System Status
+            </a>
+<button class="w-full mt-4 bg-secondary text-on-secondary px-4 py-3 rounded-lg font-medium text-sm flex items-center justify-center gap-2 hover:bg-secondary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span> Raise Ticket
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[280px] w-full min-h-screen bg-surface">
+<!-- TopNavBar -->
+<header class="bg-white/85 dark:bg-surface-container/85 backdrop-blur-md sticky top-0 z-40 border-b border-outline-variant/20 flex items-center justify-between h-16 px-6">
+  <div class="flex items-center gap-4">
+    <button class="md:hidden text-on-surface p-2 rounded-md hover:bg-surface-container-high transition-colors">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <nav class="hidden md:flex items-center gap-2 text-on-surface-variant font-body text-sm">
+      <span class="hover:text-primary cursor-pointer transition-colors">Home</span>
+      <span class="material-symbols-outlined text-sm">chevron_right</span>
+      <span class="hover:text-primary cursor-pointer transition-colors">Projects</span>
+      <span class="material-symbols-outlined text-sm">chevron_right</span>
+      <span class="font-medium text-primary">Automated Reporting Engine</span>
+    </nav>
+  </div>
+  <div class="flex-1 flex justify-center px-8">
+    <div class="relative w-full max-w-md">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+      <input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant/30 rounded-full text-sm focus:ring-2 focus:ring-secondary/50 text-on-surface placeholder-outline transition-all" placeholder="Search reports, projects, or assets..." type="text">
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1">
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-colors relative cursor-pointer active:opacity-80">
+        <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+        <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+      </button>
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80" title="Engine Status">
+        <span class="material-symbols-outlined" data-icon="cloud_upload">cloud_upload</span>
+      </button>
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80">
+        <span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+      </button>
+    </div>
+    <div class="h-8 w-px bg-outline-variant/30 mx-2"></div>
+    <div class="w-9 h-9 rounded-full bg-primary-container overflow-hidden border border-outline-variant/30 shadow-sm cursor-pointer hover:ring-2 hover:ring-secondary/50 transition-all">
+      <img alt="Administrator Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0l9nVRog822RHz1qiHBW8zTZQJizVUAXNH1cQZsKLDQjnuhSL-kVuJtvQQrsHttFnbDlBMk44zkV6m18alQkjV2PK70IMLXvEy6nVPOjTaSBkpHOeyRhyqmAf2WxH_ZV81825-rHxIgHYG53fUAW0mgHH4XJ8UqpYGJASbTGpIMzGzycr1FLbvkWi8GJtuX5cKxMM3nMwPeCxeIUJZq4Fi_7XDGF1gjvA2FCDfDY7UIFprfdT3EKX">
+    </div>
+  </div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8">
+<div class="max-w-6xl mx-auto space-y-8">
+<!-- Page Header -->
+<div>
+<h2 class="font-headline text-3xl font-bold text-primary tracking-tight">Report Configuration</h2>
+<p class="font-body text-on-surface-variant mt-2 text-sm max-w-2xl">Configure and generate detailed executive summaries and operational blueprints for stakeholders.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Configuration Card (Left/Main) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-6 elevation-1 flex flex-col space-y-8">
+<!-- Project Selection -->
+<div class="space-y-3">
+<label class="font-body font-semibold text-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">domain</span> Target Project
+                            </label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 pr-10 text-on-surface font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
+<option disabled="" selected="" value="">Select a project...</option>
+<option value="p-104">Project Titan - Substation Alpha (PRJ-104)</option>
+<option value="p-105">Site B - Foundation Works (PRJ-105)</option>
+<option value="p-106">Facility Upgrade Q3 (PRJ-106)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<hr class="border-outline-variant/20">
+<!-- Module Selection Grid -->
+<div class="space-y-4">
+<label class="font-body font-semibold text-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">view_module</span> Data Modules
+                            </label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Checkbox Item -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<input checked="" class="setuu-checkbox mt-0.5" type="checkbox">
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Task Progression</span>
+<span class="block font-body text-xs text-on-surface-variant mt-1">Milestones, completion status, and delays.</span>
+</div>
+</label>
+<!-- Checkbox Item -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<input checked="" class="setuu-checkbox mt-0.5" type="checkbox">
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Material Inventory</span>
+<span class="block font-body text-xs text-on-surface-variant mt-1">Stock levels, consumption rates, and vendor deliveries.</span>
+</div>
+</label>
+<!-- Checkbox Item -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<input class="setuu-checkbox mt-0.5" type="checkbox">
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Financial Summary</span>
+<span class="block font-body text-xs text-on-surface-variant mt-1">Budget tracking, change requests, and cost impact.</span>
+</div>
+</label>
+<!-- Checkbox Item -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-outline-variant/40 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<input class="setuu-checkbox mt-0.5" type="checkbox">
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Media &amp; Drawings</span>
+<span class="block font-body text-xs text-on-surface-variant mt-1">Latest schematics, site photos, and markups.</span>
+</div>
+</label>
+</div>
+</div>
+<hr class="border-outline-variant/20">
+<!-- Date Range -->
+<div class="space-y-3">
+<label class="font-body font-semibold text-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">date_range</span> Reporting Period
+                            </label>
+<div class="flex flex-col sm:flex-row gap-4">
+<div class="relative flex-1">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-on-surface font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" type="date">
+</div>
+<div class="hidden sm:flex items-center text-outline-variant">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+<div class="relative flex-1">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-on-surface font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" type="date">
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-4 mt-auto flex flex-col sm:flex-row gap-3 items-center justify-end">
+<button class="w-full sm:w-auto px-6 py-2.5 rounded-lg border border-outline font-body text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">event_repeat</span> Schedule Recurring
+                            </button>
+<button class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-primary text-on-primary font-body text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span> Generate Report
+                            </button>
+</div>
+</div>
+<!-- Recent Reports (Right/Side) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- System Status Widget -->
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/30 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined text-[24px]">task_alt</span>
+</div>
+<div>
+<p class="font-body text-sm font-semibold text-on-surface">Engine Status</p>
+<p class="font-label text-xs text-on-surface-variant mt-1">Operational. Queue: 0</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 elevation-1">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-body font-semibold text-sm text-on-surface">Recent Exports</h3>
+<button class="text-secondary hover:text-secondary/80 font-body text-xs font-medium transition-colors">View All</button>
+</div>
+<div class="space-y-4">
+<!-- Report Item -->
+<div class="flex items-start justify-between group p-2 -mx-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex gap-3">
+<div class="mt-1 text-error">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Weekly Status - Titan</p>
+<p class="font-label text-[10px] text-on-surface-variant mt-0.5">2023-10-27T08:30:00Z</p>
+</div>
+</div>
+<button class="text-outline hover:text-secondary transition-colors p-1 rounded-md hover:bg-secondary/10">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+<!-- Report Item -->
+<div class="flex items-start justify-between group p-2 -mx-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex gap-3">
+<div class="mt-1 text-error">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Exec Summary Q3</p>
+<p class="font-label text-[10px] text-on-surface-variant mt-0.5">2023-10-25T14:15:22Z</p>
+</div>
+</div>
+<button class="text-outline hover:text-secondary transition-colors p-1 rounded-md hover:bg-secondary/10">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+<!-- Report Item -->
+<div class="flex items-start justify-between group p-2 -mx-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex gap-3">
+<div class="mt-1 text-error">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Material Audit - Site B</p>
+<p class="font-label text-[10px] text-on-surface-variant mt-0.5">2023-10-20T09:05:11Z</p>
+</div>
+</div>
+<button class="text-outline hover:text-secondary transition-colors p-1 rounded-md hover:bg-secondary/10">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+
+</body></html>

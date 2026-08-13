@@ -1,0 +1,569 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Organizational Audit Log</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#00658d",
+                        "on-surface-variant": "#43474d",
+                        "background": "#faf9f4",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "inverse-primary": "#aec9eb",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d1e4ff",
+                        "on-background": "#1b1c19",
+                        "primary": "#000815",
+                        "surface-bright": "#faf9f4",
+                        "surface-container": "#efeee9",
+                        "secondary-container": "#8ad1ff",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-dim": "#dbdad5",
+                        "surface-tint": "#46607e",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-variant": "#e3e3de",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "inverse-surface": "#30312e",
+                        "secondary-fixed": "#c6e7ff",
+                        "outline": "#73777e",
+                        "on-secondary-container": "#005a7f",
+                        "on-primary-fixed": "#001d35",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-container": "#002233",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e3e3de",
+                        "primary-container": "#00213c",
+                        "outline-variant": "#c3c6ce",
+                        "tertiary": "#00080f",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-container-high": "#e9e8e3",
+                        "on-surface": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "surface": "#faf9f4",
+                        "on-primary-container": "#6f89a9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    },
+                    colors: {
+                        'slate-neutral': '#64748B',
+                        'sky-active': '#0284C7',
+                        'amber-warning': '#D97706',
+                        'emerald-success': '#16A34A',
+                        'teal-final': '#0D9488',
+                        'blue-verify': '#2563EB',
+                        'purple-attention': '#9333EA',
+                        'crimson-error': '#DC2626'
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Table Row Hover & Accordion */
+        .audit-row { cursor: pointer; transition: background-color 0.15s ease; }
+        .audit-row:hover { background-color: rgba(227, 227, 222, 0.5); /* surface-variant/50 */ }
+        .audit-accordion { display: none; }
+        .audit-row.active + .audit-accordion { display: table-row; }
+        .audit-row.active { background-color: rgba(239, 238, 233, 0.8); /* surface-container/80 */ border-left: 3px solid #00213c; }
+        
+        /* Glassmorphism Topbar */
+        .glass-nav {
+            background-color: rgba(250, 249, 244, 0.85); /* surface/85 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(195, 198, 206, 0.3); /* outline-variant/30 */
+        }
+        
+        /* Syntax Highlighting */
+        .code-key { color: #00213c; font-weight: 500; }
+        .code-string { color: #0D9488; }
+        .code-number { color: #2563EB; }
+        .code-boolean { color: #9333EA; }
+    </style>
+<style>
+    .glassmorphic-topbar {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .sidebar {
+      background-color: #00213c;
+      color: #8ba1b5;
+    }
+    .sidebar-logo-text {
+      color: #ffffff;
+    }
+    .sidebar-nav-item {
+      transition: all 0.2s ease-in-out;
+      border-left: 4px solid transparent;
+      color: #8ba1b5;
+    }
+    .sidebar-nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+    .sidebar-nav-item.active {
+      color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.08);
+      border-left-color: #3b82f6;
+    }
+    .btn-primary-outline {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      transition: all 0.2s;
+    }
+    .btn-primary-outline:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    .shadow-elevation-2 {
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+    }
+</style></head>
+<body class="bg-background text-on-background font-body min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<aside class="sidebar h-full flex flex-col flex-shrink-0 z-50 fixed left-0 top-0 w-[280px] shadow-md">
+  <div class="p-6 pb-8 flex items-center gap-3">
+    <div class="w-10 h-10 rounded bg-white/10 flex items-center justify-center font-serif font-bold text-white shadow-sm border border-white/5">
+      SE
+    </div>
+    <div>
+      <h1 class="font-serif font-bold sidebar-logo-text text-lg leading-tight tracking-wide">Setuu Enterprise</h1>
+      <p class="text-[10px] uppercase tracking-wider text-[#8ba1b5] mt-0.5 font-medium">Industrial Project Management</p>
+    </div>
+  </div>
+  <div class="px-6 mb-8">
+    <button class="btn-primary-outline w-full rounded-md py-2.5 px-4 flex items-center justify-center gap-2 text-sm font-medium shadow-sm">
+      <svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+      New Project
+    </button>
+  </div>
+  <nav class="flex-1 overflow-y-auto overflow-x-hidden px-3 space-y-1 py-2">
+    <a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+      <svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="14" y="14"></rect><rect height="7" width="7" x="3" y="14"></rect></svg>
+      Dashboard
+    </a>
+    <a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+      <svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      Projects
+    </a>
+    <a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+      <span class="material-symbols-outlined opacity-70 group-hover:opacity-100" style="font-size: 20px;">group</span>
+      Users
+    </a>
+    <a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+      <svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      Vendors
+    </a>
+    <a class="sidebar-nav-item active flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+      <span class="material-symbols-outlined opacity-80 group-hover:opacity-100 group-[.active]:opacity-100 group-[.active]:text-blue-400" style="font-size: 20px;">fact_check</span>
+      Audits
+    </a>
+  </nav>
+  <div class="p-4 px-3 border-t border-white/10 mt-auto">
+    <a class="sidebar-nav-item flex items-center gap-3 px-4 py-2.5 rounded-r-md text-sm font-medium group" href="#">
+      <svg class="opacity-70 group-hover:opacity-100" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+      Support
+    </a>
+    <div class="px-4 py-3 mt-4 flex items-center gap-3">
+      <img alt="Admin Avatar" class="w-8 h-8 rounded-full object-cover border border-white/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAni7AlO411I0sSQYHnn3upCHkZTKPxC2AotGZfNJ1Pcx0TRPPLo1GTIDwwZTpHr6oWeJk07-EDewogWzNXqKpfOXPJf1Sbr1mTxGKdKXIpXbTBkJqiCDNwoNSzvbN65mGdulpj6dswNaYe2K1PZ14N9kQ0GE8BsIib66S5wgoLHCmh6-yHWm_VQZjF4CTfjKxVs81uWyi_SFPk8SP6DsSRvRRlf8EW7Mp5axYO4JNr9WYCFhN-HJk">
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-medium text-white truncate">A. Reynolds</p>
+        <p class="text-[10px] text-[#8ba1b5] truncate uppercase tracking-wider">ID: USR-92A4</p>
+      </div>
+    </div>
+  </div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] flex-1 flex flex-col min-h-screen relative">
+<!-- TopNavBar -->
+<header class="glassmorphic-topbar fixed top-0 right-0 z-40 w-[calc(100%-280px)] h-16 shadow-elevation-2 border-b border-outline-variant flex items-center justify-between px-6 shrink-0 transition-all duration-300">
+  <div class="flex items-center gap-8 h-full">
+    <nav class="hidden md:flex items-center h-full gap-1">
+      <a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">Home</a>
+      <div class="relative h-full flex items-center">
+        <a class="px-3 py-2 text-sm font-semibold text-primary transition-colors" href="#">Dashboard</a>
+        <div class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-t-full"></div>
+      </div>
+      <a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">System</a>
+    </nav>
+  </div>
+  <div class="flex-1 max-w-xl px-6 hidden lg:block">
+    <div class="relative group">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" style="font-size: 18px;">search</span>
+      </div>
+      <input autocomplete="off" class="block w-full pl-10 pr-12 py-2 border border-outline-variant rounded-2xl leading-5 bg-surface-container-lowest placeholder-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-all shadow-sm" placeholder="Search logs..." type="text">
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-xs text-outline font-sans border border-outline-variant rounded px-1.5 py-0.5 bg-surface-container-low">⌘K</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-4 shrink-0">
+    <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary text-white rounded-full text-xs font-medium shadow-sm">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+      </span>
+      Live Stream
+    </div>
+    <div class="w-px h-6 bg-outline-variant hidden sm:block mx-1"></div>
+    <div class="flex items-center gap-1">
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary relative">
+        <span class="material-symbols-outlined" style="font-size: 20px;">notifications</span>
+        <span class="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-error ring-2 ring-white"></span>
+      </button>
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary">
+        <span class="material-symbols-outlined" style="font-size: 20px;">help_outline</span>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- Page Canvas -->
+<div class="pt-24 px-8 pb-12 flex-1 max-w-[1600px] mx-auto w-full">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<div class="flex items-center gap-2 text-sm text-outline mb-2 font-label">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span class="">/</span>
+<span class="">System</span>
+<span class="">/</span>
+<span class="text-primary font-medium">Audit Logs</span>
+</div>
+<h1 class="font-display text-headline-lg text-primary flex items-center gap-3">
+                        Organizational Audit Log
+                        <span class="font-label text-sm bg-surface-container-high text-on-surface-variant px-2.5 py-1 rounded-full font-medium ml-2 border border-outline-variant/50">
+                            12,408 Events
+                        </span>
+</h1>
+<p class="text-on-surface-variant mt-2 max-w-2xl">Immutable record of all database operations across the enterprise ecosystem. Records are retained per compliance policy.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-sm font-medium hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export CSV
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                        Refresh Stream
+                    </button>
+</div>
+</div>
+<!-- Toolbar & Filters -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm p-4 mb-6">
+<div class="grid grid-cols-12 gap-4 items-end">
+<!-- Search -->
+<div class="col-span-12 md:col-span-4 lg:col-span-3">
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5 uppercase tracking-wider">Search Payload</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input \"value\"="" class="w-full pl-9 pr-3 py-2 bg-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none font-label text-sm placeholder:text-outline/50 transition-shadow" key\":="" placeholder="{ \" type="text" }"="">
+</div>
+</div>
+<!-- Filters -->
+<div class="col-span-6 md:col-span-2">
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5 uppercase tracking-wider">Event Type</label>
+<select class="w-full px-3 py-2 bg-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm appearance-none">
+<option>All Events</option>
+<option>INSERT</option>
+<option>UPDATE</option>
+<option>DELETE</option>
+</select>
+</div>
+<div class="col-span-6 md:col-span-2">
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5 uppercase tracking-wider">Table</label>
+<select class="w-full px-3 py-2 bg-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm appearance-none">
+<option>All Tables</option>
+<option>projects</option>
+<option>users</option>
+<option>project_materials</option>
+<option>drawing_versions</option>
+</select>
+</div>
+<div class="col-span-6 md:col-span-2">
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5 uppercase tracking-wider">Actor</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">person</span>
+<input class="w-full pl-9 pr-3 py-2 bg-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none text-sm" placeholder="User ID / Name" type="text">
+</div>
+</div>
+<div class="col-span-6 md:col-span-3 flex justify-end">
+<button class="flex items-center gap-2 text-sm font-medium text-primary hover:bg-surface-container px-3 py-2 rounded-lg transition-colors border border-transparent">
+<span class="material-symbols-outlined text-[18px]">filter_list_off</span>
+                            Clear Filters
+                        </button>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/40 text-xs uppercase tracking-wider text-on-surface-variant font-semibold">
+<th class="px-6 py-4 font-body w-[220px]">Timestamp (UTC)</th>
+<th class="px-6 py-4 font-body">Actor</th>
+<th class="px-6 py-4 font-body">Event</th>
+<th class="px-6 py-4 font-body">Table Target</th>
+<th class="px-6 py-4 font-body text-right">Source IP</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-outline-variant/20" id="audit-table-body">
+<!-- Row 1: UPDATE -->
+<tr class="audit-row group">
+<td class="px-6 py-4 font-label text-xs text-on-surface-variant whitespace-nowrap">
+                                    2023-10-27 14:32:01.442
+                                </td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded-full bg-primary-fixed-dim/30 flex items-center justify-center text-primary text-xs font-bold font-label">AR</div>
+<div>
+<div class="font-medium text-primary">A. Reynolds</div>
+<div class="font-label text-[10px] text-outline">USR-92A4</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-label font-bold bg-sky-active/10 text-sky-active border border-sky-active/20">
+                                        UPDATE
+                                    </span>
+</td>
+<td class="px-6 py-4 font-label text-xs text-primary bg-surface-variant/20 inline-block mt-3 ml-6 rounded px-2 py-1 border border-outline-variant/30">
+                                    projects
+                                </td>
+<td class="px-6 py-4 text-right font-label text-xs text-outline">
+                                    192.168.1.104
+                                </td>
+</tr>
+<!-- Accordion 1 -->
+<tr class="audit-accordion bg-surface-container-low/50">
+<td class="p-0 border-b border-outline-variant/30" colspan="5">
+<div class="p-6 grid grid-cols-2 gap-6 border-l-4 border-sky-active">
+<!-- Old Data -->
+<div>
+<div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+                                                Previous State
+                                            </div>
+<div class="bg-inverse-surface text-inverse-on-surface p-4 rounded-lg font-label text-xs overflow-x-auto shadow-inner border border-outline/20">
+<pre><code>{
+  <span class="code-key">"id"</span>: <span class="code-string">"prj_88291a"</span>,
+  <span class="code-key">"name"</span>: <span class="code-string">"Sector 7G Cooling Tower"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"in_progress"</span>,
+  <span class="code-key">"budget_allocated"</span>: <span class="code-number">450000.00</span>,
+  <span class="code-key">"is_critical"</span>: <span class="code-boolean">false</span>
+}</code></pre>
+</div>
+</div>
+<!-- New Data -->
+<div>
+<div class="text-xs font-bold text-sky-active uppercase tracking-wider mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">update</span>
+                                                New State
+                                            </div>
+<div class="bg-inverse-surface text-inverse-on-surface p-4 rounded-lg font-label text-xs overflow-x-auto shadow-inner border border-sky-active/30">
+<pre><code>{
+  <span class="code-key">"id"</span>: <span class="code-string">"prj_88291a"</span>,
+  <span class="code-key">"name"</span>: <span class="code-string">"Sector 7G Cooling Tower"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string bg-amber-warning/30 text-white px-1 rounded">"on_hold"</span>,
+  <span class="code-key">"budget_allocated"</span>: <span class="code-number">450000.00</span>,
+  <span class="code-key">"is_critical"</span>: <span class="code-boolean bg-amber-warning/30 text-white px-1 rounded">true</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2: INSERT -->
+<tr class="audit-row group">
+<td class="px-6 py-4 font-label text-xs text-on-surface-variant whitespace-nowrap">
+                                    2023-10-27 14:15:22.001
+                                </td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded-full bg-secondary-fixed/50 flex items-center justify-center text-on-secondary-fixed text-xs font-bold font-label">JL</div>
+<div>
+<div class="font-medium text-primary">J. Lin (Vendor)</div>
+<div class="font-label text-[10px] text-outline">VND-44B1</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-label font-bold bg-emerald-success/10 text-emerald-success border border-emerald-success/20">
+                                        INSERT
+                                    </span>
+</td>
+<td class="px-6 py-4 font-label text-xs text-primary bg-surface-variant/20 inline-block mt-3 ml-6 rounded px-2 py-1 border border-outline-variant/30">
+                                    project_materials
+                                </td>
+<td class="px-6 py-4 text-right font-label text-xs text-outline">
+                                    203.0.113.45
+                                </td>
+</tr>
+<!-- Accordion 2 -->
+<tr class="audit-accordion bg-surface-container-low/50">
+<td class="p-0 border-b border-outline-variant/30" colspan="5">
+<div class="p-6 grid grid-cols-2 gap-6 border-l-4 border-emerald-success">
+<!-- Old Data (Empty for Insert) -->
+<div class="flex flex-col">
+<div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Previous State</div>
+<div class="flex-1 bg-surface-variant/30 border border-outline-variant/30 border-dashed rounded-lg flex items-center justify-center text-outline font-label text-xs italic">
+                                                null
+                                            </div>
+</div>
+<!-- New Data -->
+<div>
+<div class="text-xs font-bold text-emerald-success uppercase tracking-wider mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                                                Inserted Record
+                                            </div>
+<div class="bg-inverse-surface text-inverse-on-surface p-4 rounded-lg font-label text-xs overflow-x-auto shadow-inner border border-emerald-success/30">
+<pre><code>{
+  <span class="code-key">"id"</span>: <span class="code-string">"mat_993x"</span>,
+  <span class="code-key">"project_id"</span>: <span class="code-string">"prj_88291a"</span>,
+  <span class="code-key">"material_name"</span>: <span class="code-string">"Industrial Valve Actuator"</span>,
+  <span class="code-key">"quantity"</span>: <span class="code-number">12</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"delivered"</span>,
+  <span class="code-key">"delivery_date"</span>: <span class="code-string">"2023-10-27T00:00:00Z"</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 3: DELETE -->
+<tr class="audit-row group">
+<td class="px-6 py-4 font-label text-xs text-on-surface-variant whitespace-nowrap">
+                                    2023-10-27 11:05:41.889
+                                </td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary text-xs font-bold font-label">SA</div>
+<div>
+<div class="font-medium text-primary">System Admin</div>
+<div class="font-label text-[10px] text-outline">SYS-0001</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-label font-bold bg-crimson-error/10 text-crimson-error border border-crimson-error/20">
+                                        DELETE
+                                    </span>
+</td>
+<td class="px-6 py-4 font-label text-xs text-primary bg-surface-variant/20 inline-block mt-3 ml-6 rounded px-2 py-1 border border-outline-variant/30">
+                                    support_tickets
+                                </td>
+<td class="px-6 py-4 text-right font-label text-xs text-outline">
+                                    10.0.0.1 (Internal)
+                                </td>
+</tr>
+<!-- Accordion 3 -->
+<tr class="audit-accordion bg-surface-container-low/50">
+<td class="p-0 border-b border-outline-variant/30" colspan="5">
+<div class="p-6 grid grid-cols-2 gap-6 border-l-4 border-crimson-error">
+<!-- Old Data -->
+<div>
+<div class="text-xs font-bold text-crimson-error uppercase tracking-wider mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+                                                Deleted Record
+                                            </div>
+<div class="bg-inverse-surface text-inverse-on-surface p-4 rounded-lg font-label text-xs overflow-x-auto shadow-inner border border-crimson-error/30 opacity-80 grayscale">
+<pre><code>{
+  <span class="code-key">"id"</span>: <span class="code-string">"tkt_404"</span>,
+  <span class="code-key">"user_id"</span>: <span class="code-string">"USR-92A4"</span>,
+  <span class="code-key">"subject"</span>: <span class="code-string">"Test Ticket - Please Ignore"</span>,
+  <span class="code-key">"status"</span>: <span class="code-string">"closed"</span>
+}</code></pre>
+</div>
+</div>
+<!-- New Data (Empty for Delete) -->
+<div class="flex flex-col">
+<div class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">New State</div>
+<div class="flex-1 bg-surface-variant/30 border border-outline-variant/30 border-dashed rounded-lg flex items-center justify-center text-outline font-label text-xs italic">
+                                                null
+                                            </div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-surface-container-lowest border-t border-outline-variant/40 px-6 py-3 flex items-center justify-between">
+<span class="text-sm text-on-surface-variant font-medium">Showing 1 to 25 of 12,408 records</span>
+<div class="flex gap-1">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant disabled:opacity-50"><span class="material-symbols-outlined">first_page</span></button>
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant disabled:opacity-50"><span class="material-symbols-outlined">chevron_left</span></button>
+<span class="px-3 py-1.5 text-sm font-label text-primary font-medium">Page 1 / 497</span>
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_right</span></button>
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">last_page</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple accordion logic for demonstration
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('.audit-row');
+            rows.forEach(row => {
+                row.addEventListener('click', () => {
+                    // Toggle active class on clicked row
+                    const isActive = row.classList.contains('active');
+                    
+                    // Optional: Close others (accordion style)
+                    // rows.forEach(r => r.classList.remove('active'));
+                    
+                    if (!isActive) {
+                        row.classList.add('active');
+                    } else {
+                        row.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body></html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Driver Delivery Capture</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary": "#00658d",
+                      "tertiary": "#00080f",
+                      "on-background": "#1b1c19",
+                      "on-primary": "#ffffff",
+                      "surface-dim": "#dbdad5",
+                      "surface-container-low": "#f5f4ef",
+                      "on-primary-container": "#6f89a9",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-secondary-fixed": "#001e2d",
+                      "surface-container-highest": "#e3e3de",
+                      "primary": "#000815",
+                      "outline-variant": "#c3c6ce",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-tertiary-container": "#0090c7",
+                      "on-secondary": "#ffffff",
+                      "surface": "#faf9f4",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "primary-fixed-dim": "#aec9eb",
+                      "outline": "#73777e",
+                      "secondary-container": "#8ad1ff",
+                      "error": "#ba1a1a",
+                      "primary-container": "#00213c",
+                      "secondary-fixed-dim": "#88cffc",
+                      "inverse-primary": "#aec9eb",
+                      "on-surface": "#1b1c19",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#002233",
+                      "surface-container-high": "#e9e8e3",
+                      "on-secondary-container": "#005a7f",
+                      "surface-container": "#efeee9",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-primary-fixed": "#001d35",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#30312e",
+                      "tertiary-fixed": "#c6e7ff",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#f2f1ec",
+                      "surface-variant": "#e3e3de",
+                      "surface-tint": "#46607e",
+                      "background": "#faf9f4",
+                      "primary-fixed": "#d1e4ff",
+                      "surface-bright": "#faf9f4",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "on-surface-variant": "#43474d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                  "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline": ["Merriweather"],
+                      "display": ["Merriweather"],
+                      "body": ["Inter"],
+                      "label": ["JetBrains Mono"]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Hide scrollbars for the fullscreen camera view */
+        body { margin: 0; overflow: hidden; background-color: #000; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Screen Container: Task-Focused, Nav Shell Suppressed -->
+<main class="relative w-full h-[884px] flex flex-col justify-between">
+<!-- Live Camera Viewfinder (Simulated via background image) -->
+<div class="absolute inset-0 z-0 w-full h-full bg-cover bg-center" data-alt="A first-person point-of-view from a mobile device camera, looking at a massive stack of raw structural steel I-beams on a dusty, active construction site. The scene is illuminated by harsh, bright midday sunlight, casting sharp shadows. The visual style is high-contrast, clinical, and realistic, representing a raw delivery capture." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEIoGBx859xwcNdi-YbpCcpPIs2dpI9r_QMPxdia6fmXi4SCIZtZ1RZP3o5lt36ioJt2T7wFSYq71hx_ES3Dy7MBR_PCuJFFqJH3-lXDdiZRSP0A5UsHr2dVzhdrj5e4eF8fHngT069lR2TluwtUIH4CnyIKOoR7ctmvmo7bQEECSRv3pfqMdKExL8q_mBu8ikIxEtbiLJgWsCNnK7h7vx4qDpKkyBXQuMVw1k6lazN1Kq31YAuf1G')"></div>
+<!-- Center Focus Reticle -->
+<div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+<div class="w-[70vw] h-[70vw] max-w-sm max-h-sm relative">
+<div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-white/70"></div>
+<div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-white/70"></div>
+<div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-white/70"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-white/70"></div>
+<!-- Crosshair -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4">
+<div class="absolute top-1/2 left-0 w-full h-[1px] bg-white/50 -translate-y-1/2"></div>
+<div class="absolute top-0 left-1/2 h-full w-[1px] bg-white/50 -translate-x-1/2"></div>
+</div>
+</div>
+</div>
+<!-- Top Controls & Target Indicator -->
+<header class="relative z-20 w-full px-margin-mobile pt-12 pb-6 bg-gradient-to-b from-black/70 to-transparent flex justify-between items-start">
+<!-- Close/Abort Action (48px Min Target) -->
+<button aria-label="Cancel delivery capture" class="flex items-center justify-center min-w-[48px] min-h-[48px] rounded-full bg-inverse-surface/40 backdrop-blur-md text-on-primary border border-white/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+<!-- Target Material Indicator -->
+<div class="flex flex-col items-center pt-2">
+<span class="font-label text-[10px] text-white/80 uppercase tracking-widest mb-1.5 shadow-sm">Target Material</span>
+<div class="bg-primary/95 backdrop-blur-xl px-5 py-2.5 rounded-full border border-outline-variant/30 shadow-lg">
+<h1 class="font-body font-bold text-on-primary text-sm tracking-wide">Structural Steel - Lot B</h1>
+</div>
+</div>
+<!-- Flash Toggle (48px Min Target) -->
+<button aria-label="Toggle camera flash" class="flex items-center justify-center min-w-[48px] min-h-[48px] rounded-full bg-inverse-surface/40 backdrop-blur-md text-on-primary border border-white/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">flash_off</span>
+</button>
+</header>
+<!-- Bottom Controls & Shutter -->
+<footer class="relative z-20 w-full px-margin-mobile pb-10 pt-16 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end items-center">
+<!-- Primary Action Bar -->
+<div class="w-full flex justify-between items-center mb-6">
+<!-- Gallery Review -->
+<button aria-label="View captured images" class="w-14 h-14 rounded-lg bg-surface/10 backdrop-blur-md border-2 border-white overflow-hidden shadow-md active:scale-95 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl">photo_library</span>
+</button>
+<!-- Massive Shutter Button -->
+<button aria-label="Take photo" class="w-[88px] h-[88px] rounded-full border-[5px] border-white flex items-center justify-center bg-transparent active:scale-90 transition-transform duration-150 group">
+<div class="w-[70px] h-[70px] rounded-full bg-white flex items-center justify-center shadow-inner group-active:bg-surface-variant transition-colors">
+<!-- Inner detail -->
+</div>
+</button>
+<!-- Document Scan Mode Toggle -->
+<button aria-label="Switch to document scan mode" class="flex items-center justify-center min-w-[48px] min-h-[48px] rounded-full bg-inverse-surface/40 backdrop-blur-md text-on-primary border border-white/20 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-2xl">document_scanner</span>
+</button>
+</div>
+</footer>
+<!-- System Truth Watermark (Immutable Metadata) -->
+<!-- Placed absolute to viewport to guarantee position regardless of screen size -->
+<div class="absolute bottom-6 right-margin-mobile z-30 bg-black/60 backdrop-blur-md px-3 py-2 rounded-md border border-white/15 pointer-events-none flex flex-col items-end shadow-lg">
+<span class="font-label text-[11px] text-white font-medium tracking-tight">LAT: 25.2048° N</span>
+<span class="font-label text-[11px] text-white font-medium tracking-tight">LON: 55.2708° E</span>
+<span class="font-label text-[11px] text-primary-fixed-dim font-bold tracking-tight mt-0.5">UTC: 2023-10-27T08:14Z</span>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Executive Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#00080f",
+                        "on-background": "#1b1c19",
+                        "on-surface": "#1b1c19",
+                        "outline-variant": "#c3c6ce",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-high": "#e9e8e3",
+                        "primary-fixed": "#d1e4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "surface-container-low": "#f5f4ef",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "on-tertiary-container": "#0090c7",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-error-container": "#93000a",
+                        "secondary": "#00658d",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-variant": "#e3e3de",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container": "#efeee9",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed": "#c6e7ff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "outline": "#73777e",
+                        "tertiary-container": "#002233",
+                        "secondary-container": "#8ad1ff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface": "#faf9f4",
+                        "primary": "#000815",
+                        "inverse-surface": "#30312e",
+                        "on-surface-variant": "#43474d",
+                        "primary-container": "#00213c",
+                        "surface-dim": "#dbdad5",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "rail-width": "72px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "sidebar-width": "280px",
+                        "margin-desktop": "32px",
+                        "gutter-md": "24px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Merriweather"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Merriweather"],
+                        "headline-sm": ["Merriweather"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Merriweather"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-md": ["Merriweather"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .amber-pulse { border: 2px solid #D97706; animation: pulse-border 2s infinite; }
+        @keyframes pulse-border {
+            0% { border-color: rgba(217, 119, 6, 1); }
+            50% { border-color: rgba(217, 119, 6, 0.3); }
+            100% { border-color: rgba(217, 119, 6, 1); }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen font-body-md text-body-md">
+<!-- SideNavBar (Shared Component) -->
+<nav class="fixed left-0 top-0 h-full w-[280px] bg-tertiary-container flex flex-col py-margin-desktop shadow-md z-40">
+<div class="px-margin-desktop mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-sm">business</span>
+</div>
+<h1 class="font-headline-sm text-headline-sm text-on-tertiary-fixed font-bold tracking-tight">Setuu Enterprise</h1>
+</div>
+<p class="font-label-md text-label-md text-on-tertiary-fixed-variant opacity-80 pl-11">Industrial Project Management</p>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-secondary-container text-on-secondary-container font-label-md text-label-md py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-secondary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                New Project
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto font-body-md text-body-md">
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 py-3 text-secondary-container font-bold border-l-4 border-secondary-container pl-4 bg-tertiary/20" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 text-on-tertiary-fixed-variant pl-5 hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+                        Projects
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 text-on-tertiary-fixed-variant pl-5 hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">architecture</span>
+                        Drawings
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 text-on-tertiary-fixed-variant pl-5 hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                        Inventory
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 text-on-tertiary-fixed-variant pl-5 hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">handshake</span>
+                        Vendors
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-3 text-on-tertiary-fixed-variant pl-5 hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+</div>
+<div class="px-4 mt-auto pt-4 border-t border-tertiary/30">
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 py-2 text-on-tertiary-fixed-variant pl-5 text-sm hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                        Support
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 py-2 text-on-tertiary-fixed-variant pl-5 text-sm hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+                        System Status
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="ml-[280px] flex flex-col min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="docked full-width top-0 sticky ml-[280px] flex flex-col z-30 w-[calc(100%-280px)] -ml-0">
+<div class="bg-white/85 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-margin-desktop h-16 w-full glass-header transition-all duration-300">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded font-body-md text-sm focus:ring-1 focus:ring-primary-container text-on-surface placeholder:text-on-surface-variant" placeholder="Search across org..." type="text">
+</div>
+</div>
+<div class="flex items-center justify-center flex-1 space-x-6 font-body-md text-body-md">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Projects</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Alpha</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Materials</a>
+</div>
+<div class="flex items-center justify-end gap-4 flex-1">
+<span class="text-xs font-label-md text-secondary uppercase tracking-widest flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> Syncing
+                    </span>
+<button class="text-xs font-label-md text-error uppercase tracking-widest border border-error px-2 py-1 rounded hover:bg-error-container transition-colors">
+                        Emergency
+                    </button>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined">apps</span></button>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full bg-surface-variant object-cover border border-outline-variant" data-alt="A professional headshot of a corporate executive in a modern, brightly lit office environment. The person is wearing smart-casual business attire. The lighting is crisp and even, matching a high-end corporate identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_qtrG9C_aE4_yuOJrkr7hcol9gxUWkjyuAC74aqWUQXfNK0nN_06JH0bl4F8GpKLRVZkjI0LNAJ-0rkpactrcrwhtUuV_VWDwodeA48c0JVg5QmRlDHeRB0JjrDIoJUIA6EmYj2dRNq3Ku9pWZgWRMSVLTF5z33BlVL02-VsZz1r-lDsrQuG5tsisQEYCvaefyUwt4GFKyv5TTZ_HlZ0dqI-rrMZhUAHkuwfiFMJ0DoRu9m1u4ZVn">
+</div>
+</div>
+<!-- Global Sync Status Banner -->
+<div class="bg-[#FFFBEB] text-[#B45309] font-label-md text-label-md py-2 px-margin-desktop flex items-center justify-center gap-2 border-b border-[#FDE68A]">
+<span class="material-symbols-outlined text-[16px]">cloud_sync</span>
+                Local Changes Pending Sync to Master Database
+            </div>
+</header>
+<main class="flex-1 p-margin-desktop max-w-[1600px] mx-auto w-full">
+<div class="mb-8 flex items-end justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary-container mb-2">Executive Dashboard</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Global overview and critical metrics for Setuu operations.</p>
+</div>
+<div class="font-label-md text-label-md text-outline">
+                    Last updated: 14:02 UTC
+                </div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-gutter-md">
+<!-- Metrics (4 Cards, col-span-3 each) -->
+<div class="col-span-12 grid grid-cols-12 gap-gutter-md">
+<div class="col-span-3 bg-surface-container-lowest rounded-lg border border-surface-variant p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Total Active Projects</span>
+<span class="material-symbols-outlined text-secondary-container">account_tree</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary-container">142</div>
+<div class="font-label-sm text-label-sm text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +12% from Q3
+                        </div>
+</div>
+<div class="col-span-3 bg-surface-container-lowest rounded-lg border border-surface-variant p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Agg. Contract Value</span>
+<span class="material-symbols-outlined text-secondary-container">payments</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary-container">$4.2B</div>
+<div class="font-label-sm text-label-sm text-outline mt-2 flex items-center gap-1">
+                            Admin Restricted View
+                        </div>
+</div>
+<div class="col-span-3 bg-surface-container-lowest rounded-lg border border-surface-variant p-5 shadow-sm hover:shadow-md transition-shadow amber-pulse">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Pending Approvals</span>
+<span class="material-symbols-outlined text-[#D97706]">pending_actions</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary-container">28</div>
+<div class="font-label-sm text-label-sm text-[#D97706] mt-2 flex items-center gap-1">
+                            Requires immediate review
+                        </div>
+</div>
+<div class="col-span-3 bg-surface-container-lowest rounded-lg border border-surface-variant p-5 shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-error">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Open Issues</span>
+<span class="material-symbols-outlined text-error">report</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary-container">17</div>
+<div class="font-label-sm text-label-sm text-error mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> 3 Critical Severity
+                        </div>
+</div>
+</div>
+<!-- Regional Map & Storage -->
+<div class="col-span-8 bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm flex flex-col overflow-hidden h-[400px]">
+<div class="p-4 border-b border-surface-variant flex justify-between items-center bg-surface-bright">
+<h3 class="font-headline-sm text-headline-sm text-primary-container">Regional Project Distribution</h3>
+<div class="flex gap-4 font-label-sm text-label-sm">
+<span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-primary-fixed-dim"></div> In Progress</span>
+<span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#10B981]"></div> Completed</span>
+</div>
+</div>
+<div class="relative flex-1 bg-[#E9E8E3]">
+<img class="w-full h-full object-cover opacity-60" data-alt="A clean, minimalist grayscale map of the world, styled for a corporate data dashboard. The map uses flat vector styling with subtle shading for borders, sitting on a very light gray background. It is designed to act as a neutral canvas for data visualization overlays." data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5-f_NB3qfSo3Sz1uCn3CLJB6PCOWrMx32H_iw4xd5nBXariRDGcD0tedJjz9d5k8-4v_EmAQ-cCsa1UvD4BYxNRm5iBumoMC1waO_Xy3SqK6Wo3pb9pNs9uOl-fK4rOdalJWeBzx35psbuKZ9SjGIa3H-auzG-lI1BsWSLlkSYmRI6tUmSvwwlC7ShdXgJu-28hGaUrI3ut6-fP58miATQi16MYO3vtJexs1nfgniz2nVbEzMCRDH">
+<!-- Simulated Data Points -->
+<div class="absolute top-1/4 left-1/4 w-3 h-3 rounded-full bg-primary-fixed-dim shadow-[0_0_8px_rgba(174,201,235,0.8)] animate-pulse"></div>
+<div class="absolute top-1/3 left-1/2 w-4 h-4 rounded-full bg-primary-fixed-dim shadow-[0_0_8px_rgba(174,201,235,0.8)] animate-pulse"></div>
+<div class="absolute top-1/2 left-2/3 w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+<div class="absolute bottom-1/3 right-1/4 w-3 h-3 rounded-full bg-primary-fixed-dim shadow-[0_0_8px_rgba(174,201,235,0.8)] animate-pulse"></div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm p-5 flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-primary-container mb-6">Storage Quota Analytics</h3>
+<div class="space-y-6 flex-1 flex flex-col justify-center">
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-2">
+<span class="text-on-surface-variant">Blueprints &amp; CAD</span>
+<span class="text-primary-container">78% (3.1 TB)</span>
+</div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-primary-fixed-dim h-full rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-2">
+<span class="text-on-surface-variant">Vendor Contracts</span>
+<span class="text-primary-container">42% (1.6 TB)</span>
+</div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-secondary-fixed-dim h-full rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-2">
+<span class="text-on-surface-variant">Site Imagery (Drone)</span>
+<span class="text-error font-bold">94% (4.7 TB)</span>
+</div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 94%"></div>
+</div>
+<p class="font-label-sm text-label-sm text-error mt-1">Quota critical limit approaching.</p>
+</div>
+</div>
+</div>
+<!-- Recent Activity Stream -->
+<div class="col-span-12 bg-surface-container-lowest rounded-lg border border-surface-variant shadow-sm overflow-hidden">
+<div class="p-4 border-b border-surface-variant bg-surface-bright flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-primary-container">Recent Activity Stream</h3>
+<button class="text-secondary font-label-md text-label-md hover:underline">View Full Log</button>
+</div>
+<div class="p-0">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-surface-variant">
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase w-48">Timestamp (UTC)</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase w-48">GPS Metadata</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase">Event Details</th>
+<th class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase w-32">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-variant font-body-md text-body-md text-on-surface">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-label-md text-label-md text-outline">2023-10-27 14:01:22</td>
+<td class="py-3 px-4 font-label-md text-label-md text-outline">34.0522° N, 118.2437° W</td>
+<td class="py-3 px-4">Contractor <span class="font-bold text-primary-container">Apex Steel</span> uploaded structural revision v4.2 for Tower B.</td>
+<td class="py-3 px-4"><span class="px-2 py-1 rounded bg-[#E0F2FE] text-[#0284C7] font-label-sm text-label-sm">Synced</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-label-md text-label-md text-outline">2023-10-27 13:45:10</td>
+<td class="py-3 px-4 font-label-md text-label-md text-outline">51.5074° N, 0.1278° W</td>
+<td class="py-3 px-4">Emergency override triggered by <span class="font-bold text-primary-container">Admin_M.Davis</span> on Site Alpha gate access.</td>
+<td class="py-3 px-4"><span class="px-2 py-1 rounded bg-error-container text-on-error-container font-label-sm text-label-sm border border-error">Alert</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-label-md text-label-md text-outline">2023-10-27 13:12:05</td>
+<td class="py-3 px-4 font-label-md text-label-md text-outline">40.7128° N, 74.0060° W</td>
+<td class="py-3 px-4">Offline bulk sync initiated from field tablet #409. 14 items pending merge resolution.</td>
+<td class="py-3 px-4"><span class="px-2 py-1 rounded bg-[#FFFBEB] text-[#B45309] border border-[#FDE68A] font-label-sm text-label-sm">Pending</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

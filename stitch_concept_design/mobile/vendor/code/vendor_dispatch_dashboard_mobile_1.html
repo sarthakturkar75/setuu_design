@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vendor Dispatch Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000815",
+                        "inverse-on-surface": "#f2f1ec",
+                        "outline": "#73777e",
+                        "on-tertiary-container": "#0090c7",
+                        "on-surface-variant": "#43474d",
+                        "on-surface": "#1b1c19",
+                        "surface-container": "#efeee9",
+                        "inverse-surface": "#30312e",
+                        "on-primary-fixed": "#001d35",
+                        "primary-container": "#00213c",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#6f89a9",
+                        "primary-fixed": "#d1e4ff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface": "#faf9f4",
+                        "on-secondary-container": "#005a7f",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f5f4ef",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-background": "#1b1c19",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-primary": "#aec9eb",
+                        "tertiary-container": "#002233",
+                        "secondary": "#00658d",
+                        "surface-container-high": "#e9e8e3",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-dim": "#dbdad5",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "secondary-container": "#8ad1ff",
+                        "surface-bright": "#faf9f4",
+                        "surface-variant": "#e3e3de",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "tertiary": "#00080f",
+                        "on-tertiary-fixed": "#001e2d",
+                        // Semantic colors added manually as per specs not in config but in instructions
+                        "semantic-slate": "#64748B",
+                        "semantic-sky": "#0284C7",
+                        "semantic-amber": "#D97706",
+                        "semantic-emerald": "#16A34A",
+                        "semantic-teal": "#0D9488",
+                        "semantic-royal": "#2563EB",
+                        "semantic-purple": "#9333EA",
+                        "semantic-crimson": "#DC2626"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "rail-width": "72px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex flex-col pt-16 pb-24 md:hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/85 dark:bg-primary/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-4 h-16 transition-transform">
+<button aria-label="Menu" class="text-primary dark:text-inverse-primary hover:bg-surface-container-high/50 p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+</button>
+<div class="text-center flex-1">
+<h1 class="font-headline font-bold text-primary dark:text-secondary-fixed text-lg">Vendor Portal</h1>
+<p class="font-label text-xs text-on-surface-variant">Acme Steel × Setuu</p>
+</div>
+<button aria-label="Notifications" class="text-primary dark:text-inverse-primary hover:bg-surface-container-high/50 p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-mobile flex flex-col gap-6 w-full max-w-md mx-auto mt-4">
+<!-- KPI Stack -->
+<section class="flex flex-col gap-3">
+<h2 class="font-headline font-bold text-headline-sm text-primary mb-1">Status Overview</h2>
+<!-- Pending Deliveries Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="bg-primary/5 p-2 rounded-md text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-on-surface-variant">Pending Deliveries</p>
+<p class="font-label text-xs text-outline mt-0.5">Dispatches in queue</p>
+</div>
+</div>
+<div class="font-headline font-bold text-2xl text-primary">12</div>
+</div>
+<!-- Overdue Tasks Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="bg-semantic-slate/10 p-2 rounded-md text-semantic-slate">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment_late</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-on-surface-variant">Overdue Tasks</p>
+<p class="font-label text-xs text-outline mt-0.5">Requires immediate attention</p>
+</div>
+</div>
+<div class="font-headline font-bold text-2xl text-semantic-slate">04</div>
+</div>
+<!-- Rejected Card (Amber Highlight) -->
+<div class="bg-[#FFFBEB] border border-semantic-amber/50 rounded-lg p-4 flex items-center justify-between shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-semantic-amber"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="bg-semantic-amber/10 p-2 rounded-md text-semantic-amber">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-on-surface">Rejected</p>
+<p class="font-label text-xs text-semantic-amber font-semibold mt-0.5">Action Required</p>
+</div>
+</div>
+<div class="font-headline font-bold text-2xl text-semantic-amber">02</div>
+</div>
+</section>
+<!-- Urgent Actions Queue -->
+<section class="flex flex-col gap-4 mt-2">
+<div class="flex items-center justify-between mb-1">
+<h2 class="font-headline font-bold text-headline-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-semantic-crimson" style="font-variation-settings: 'FILL' 1;">warning</span>
+                    Urgent Actions Queue
+                </h2>
+</div>
+<!-- Action Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-5 shadow-sm flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<span class="inline-block bg-semantic-amber/10 text-semantic-amber font-label text-xs px-2 py-1 rounded-sm border border-semantic-amber/20 mb-2">REJECTED BOL</span>
+<h3 class="font-body font-medium text-on-surface">Bill of Lading Mismatch</h3>
+<p class="font-label text-sm text-outline mt-1">PO: <span class="font-bold text-on-surface-variant">#992-A</span></p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<button class="w-full h-12 bg-primary text-on-primary font-body font-medium rounded-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+                    Upload Revision
+                </button>
+</div>
+<!-- Action Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-5 shadow-sm flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div>
+<span class="inline-block bg-semantic-slate/10 text-semantic-slate font-label text-xs px-2 py-1 rounded-sm border border-semantic-slate/20 mb-2">OVERDUE</span>
+<h3 class="font-body font-medium text-on-surface">Steel Beam Delivery</h3>
+<p class="font-label text-sm text-outline mt-1">PO: <span class="font-bold text-on-surface-variant">#884-B</span></p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<button class="w-full h-12 bg-primary text-on-primary font-body font-medium rounded-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    Mark Dispatched
+                </button>
+</div>
+<!-- Quick Action FAB (Contextual for Mobile) -->
+<div class="fixed bottom-24 right-4 z-40">
+<button aria-label="Scan Document" class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-6 pt-2 h-20 bg-surface/85 dark:bg-primary/85 backdrop-blur-md rounded-t-xl border-t border-outline-variant/20 shadow-lg">
+<!-- Dashboard (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-xl h-12 w-16 touch-manipulation active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label text-[10px] mt-1 font-semibold tracking-wider">Dashboard</span>
+</button>
+<!-- Deliveries (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline h-12 w-16 hover:text-primary dark:hover:text-secondary-fixed touch-manipulation active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="font-label text-[10px] mt-1 tracking-wider">Deliveries</span>
+</button>
+<!-- Tasks (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline h-12 w-16 hover:text-primary dark:hover:text-secondary-fixed touch-manipulation active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label text-[10px] mt-1 tracking-wider">Tasks</span>
+</button>
+<!-- Invoices (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline h-12 w-16 hover:text-primary dark:hover:text-secondary-fixed touch-manipulation active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-[10px] mt-1 tracking-wider">Invoices</span>
+</button>
+</nav>
+</body></html>

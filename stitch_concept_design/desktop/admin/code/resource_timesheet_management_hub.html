@@ -1,0 +1,568 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Resource Management &amp; Productivity | Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "primary": "#000815",
+                "tertiary-fixed-dim": "#82cfff",
+                "surface": "#faf9f4",
+                "surface-variant": "#e3e3de",
+                "on-secondary": "#ffffff",
+                "surface-tint": "#46607e",
+                "inverse-surface": "#30312e",
+                "background": "#faf9f4",
+                "surface-container": "#efeee9",
+                "inverse-on-surface": "#f2f1ec",
+                "on-secondary-container": "#005a7f",
+                "on-surface-variant": "#43474d",
+                "on-primary-container": "#6f89a9",
+                "on-secondary-fixed": "#001e2d",
+                "surface-container-lowest": "#ffffff",
+                "outline-variant": "#c3c6ce",
+                "on-surface": "#1b1c19",
+                "on-primary": "#ffffff",
+                "on-tertiary-container": "#0090c7",
+                "on-background": "#1b1c19",
+                "surface-container-low": "#f5f4ef",
+                "outline": "#73777e",
+                "secondary-fixed": "#c6e7ff",
+                "on-tertiary": "#ffffff",
+                "on-primary-fixed-variant": "#2e4965",
+                "on-primary-fixed": "#001d35",
+                "surface-container-highest": "#e3e3de",
+                "secondary-container": "#8ad1ff",
+                "on-error": "#ffffff",
+                "tertiary": "#00080f",
+                "inverse-primary": "#aec9eb",
+                "error": "#ba1a1a",
+                "surface-dim": "#dbdad5",
+                "error-container": "#ffdad6",
+                "tertiary-fixed": "#c6e7ff",
+                "secondary-fixed-dim": "#88cffc",
+                "primary-fixed-dim": "#aec9eb",
+                "surface-container-high": "#e9e8e3",
+                "surface-bright": "#faf9f4",
+                "on-tertiary-fixed-variant": "#004c6b",
+                "secondary": "#00658d",
+                "on-tertiary-fixed": "#001e2d",
+                "primary-fixed": "#d1e4ff",
+                "on-error-container": "#93000a",
+                "primary-container": "#00213c",
+                "tertiary-container": "#002233",
+                "on-secondary-fixed-variant": "#004c6b",
+                "sidebar-bg": "#00213c",
+                "sidebar-text": "#8ba1b5",
+                "sidebar-text-active": "#ffffff",
+                "sidebar-accent": "#3b82f6"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {},
+        "fontFamily": {
+                "headline": [
+                        "Merriweather", "serif"
+                ],
+                "display": [
+                        "Merriweather", "serif"
+                ],
+                "body": [
+                        "Inter", "sans-serif"
+                ],
+                "label": [
+                        "Jetbrains Mono", "monospace"
+                ],
+                "serif": [
+                        "Merriweather", "serif"
+                ],
+                "sans": [
+                        "Inter", "sans-serif"
+                ]
+        },
+        "fontSize": {}
+},
+    },
+  }
+</script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid theme('colors.surface-container-highest'); }
+        
+        .sidebar {
+          background-color: theme('colors.sidebar-bg');
+          color: theme('colors.sidebar-text');
+          width: 280px;
+        }
+        
+        .sidebar-logo-text {
+          color: theme('colors.sidebar-text-active');
+        }
+
+        .sidebar-nav-item {
+          transition: all 0.2s ease-in-out;
+          border-left: 4px solid transparent;
+        }
+        
+        .sidebar-nav-item:hover {
+          background-color: rgba(255, 255, 255, 0.05);
+          color: theme('colors.sidebar-text-active');
+        }
+
+        .sidebar-nav-item.active {
+          color: theme('colors.sidebar-text-active');
+          background-color: rgba(255, 255, 255, 0.08);
+          border-left-color: theme('colors.sidebar-accent');
+        }
+        
+        .btn-primary-outline {
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: theme('colors.sidebar-text-active');
+          transition: all 0.2s;
+        }
+        
+        .btn-primary-outline:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .glassmorphic-topbar {
+          background-color: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="font-body antialiased flex h-screen overflow-hidden">
+<!-- BEGIN: Admin Sidebar Component -->
+<aside class="sidebar h-full flex flex-col flex-shrink-0 z-20 hidden md:flex bg-[#00213c] text-[#8ba1b5]">
+<!-- Sidebar Header / Logo -->
+<div class="p-6 pb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white/10 flex items-center justify-center font-serif font-bold text-white shadow-sm border border-white/5">
+        SE
+      </div>
+<div>
+<h1 class="font-serif font-bold sidebar-logo-text text-lg leading-tight tracking-wide">Setuu Enterprise</h1>
+<p class="text-[10px] uppercase tracking-wider text-[#8ba1b5] mt-0.5 font-medium">Industrial Project Management</p>
+</div>
+</div>
+<!-- New Project Action -->
+<div class="px-6 mb-8">
+<button class="btn-primary-outline w-full rounded-md py-2.5 px-4 flex items-center justify-center gap-2 text-sm font-medium shadow-sm">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+        New Project
+      </button>
+</div>
+<!-- Main Navigation -->
+<nav class="flex-1 overflow-y-auto overflow-x-hidden px-3 space-y-1 py-2">
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-80 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="14" y="14"></rect><rect height="7" width="7" x="3" y="14"></rect></svg>
+        Dashboard
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group active text-white" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        Projects
+      </a>
+<!-- Active Item: Resources -->
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group text-white/70" href="#">
+<span class="material-symbols-outlined opacity-80 group-hover:opacity-100 group-[.active]:opacity-100 group-[.active]:text-blue-400" style="font-size: 20px;">groups</span>
+        Resources
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" style="font-size: 20px;">group</span>
+        Users
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Drawings
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" x2="12" y1="22.08" y2="12"></line></svg>
+        Inventory
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Vendors
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        Settings
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" style="font-size: 20px;">confirmation_number</span>
+  Raise Ticket
+</a>
+</nav>
+<!-- Bottom Actions -->
+<div class="p-4 px-3 border-t border-white/10 mt-auto">
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-2.5 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+        Support
+      </a>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-2.5 rounded-r-md text-sm font-medium group" href="#">
+<svg class="opacity-70 group-hover:opacity-100" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="9" x2="9" y1="3" y2="21"></line></svg>
+        System Status
+      </a>
+</div>
+</aside>
+<!-- END: Admin Sidebar Component -->
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col w-full h-full relative">
+<!-- BEGIN: Admin Topbar Component -->
+<!-- The main top navigation bar with glassmorphism and elevation -->
+<header class="glassmorphic-topbar sticky top-0 z-50 w-full h-16 shadow-elevation-2 border-b border-outline-variant flex items-center justify-between px-6 shrink-0 transition-all duration-300">
+<!-- Left Section: Brand and Navigation -->
+<div class="flex items-center gap-8 h-full">
+<!-- Brand Title -->
+<a class="text-xl font-bold text-primary tracking-tight font-serif shrink-0 hover:opacity-80 transition-opacity md:hidden" href="#">
+        Setuu Enterprise
+      </a>
+<!-- Global Navigation Links -->
+<nav class="hidden md:flex items-center h-full gap-1">
+<a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">Home</a>
+<!-- Active Link Example -->
+<div class="relative h-full flex items-center">
+<a class="px-3 py-2 text-sm font-semibold text-primary transition-colors" href="#">Projects</a>
+<div class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-t-full"></div>
+</div>
+<a class="sidebar-nav-item flex items-center gap-3 px-4 py-3 rounded-r-md text-sm font-medium group text-white/70" href="#">Alpha</a>
+<a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">Materials</a>
+</nav>
+</div>
+<!-- Center Section: Search Bar -->
+<div class="flex-1 max-w-xl px-6 hidden lg:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-outline group-focus-within:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input autocomplete="off" class="block w-full pl-10 pr-12 py-2 border border-outline-variant rounded-2xl leading-5 bg-surface-container-lowest placeholder-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-all shadow-sm" placeholder="Search resources..." type="text">
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-xs text-outline font-sans border border-outline-variant rounded px-1.5 py-0.5 bg-surface-container-low">⌘K</span>
+</div>
+</div>
+</div>
+<!-- Right Section: Actions and Profile -->
+<div class="flex items-center gap-4 shrink-0">
+<!-- Status Indicator -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary text-white rounded-full text-xs font-medium shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+        Syncing
+      </div>
+<!-- Emergency Action -->
+<button class="hidden sm:inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full text-error-on-container bg-error-container hover:bg-error hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-error shadow-sm">
+        Emergency
+      </button>
+<div class="w-px h-6 bg-outline-variant hidden sm:block mx-1"></div>
+<!-- Icon Actions -->
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary relative">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<!-- Unread badge -->
+<span class="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-error ring-2 ring-white"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Profile Avatar -->
+<button class="flex items-center focus:outline-none ml-2">
+<div class="h-8 w-8 rounded-xl bg-outline-variant flex items-center justify-center text-xs font-bold text-white overflow-hidden shadow-sm border border-outline-variant hover:border-primary transition-colors">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDi-vQRXpDqtnFj-1LTbDxHX2IYf14IPQVf3QGYEYwn3oDN51tHoWWvEY4-T6wlUcH4kAklFP6ca91poQlpcYB02aO9jg9f9m8n5XagBiulT7GnwSaZsYEsqaXUoKs0rntDLJJU2Xn9-sdwGtRL_OROaYvsHqN7tqQIZDcnv3N7LwYhVYlMTh74RZLC7_wd4D6kRSItxME4C_EPWIx_q6j8yRS-EKGC5YkFFXhONmPv3gjvDk11FRP">
+</div>
+</button>
+</div>
+</header>
+<!-- END: Admin Topbar Component -->
+<!-- Scrollable Canvas -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 bg-surface">
+<div class="max-w-[1600px] mx-auto flex flex-col gap-6">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-2">
+<div>
+<h1 class="font-headline text-[32px] font-bold text-primary tracking-tight">Resource Allocation</h1>
+<p class="font-body text-[14px] text-on-surface-variant mt-1">Manage workforce distribution and productivity metrics.</p>
+</div>
+<div class="flex gap-3 items-center">
+<div class="relative hidden sm:block">
+<select class="appearance-none bg-surface-container-low border border-outline-variant rounded pl-4 pr-8 py-2 font-body text-[14px] text-primary focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all">
+<option>Organizational Overview</option>
+<option>Project A (PRJ-01)</option>
+<option>Project B (PRJ-02)</option>
+<option>Project C (PRJ-03)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-outline">
+<svg class="fill-current h-4 w-4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path></svg>
+</div>
+</div>
+<button class="px-4 py-2 border border-outline-variant rounded font-body text-[14px] font-medium text-primary hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Filter
+                        </button>
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded font-body text-[14px] font-medium hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                            Assign Resource
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Top Level Stats (Span Full) -->
+<div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest rounded-lg p-5 border border-surface-container-highest shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body text-[14px] text-on-surface-variant font-medium">Total Active Workforce</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">engineering</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-[24px] font-bold text-primary font-label">1,248</span>
+<span class="font-label text-[10px] text-emerald-600 font-medium">+12 this week</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-5 border border-surface-container-highest shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body text-[14px] text-on-surface-variant font-medium">Utilization Rate</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">pie_chart</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-[24px] font-bold text-primary font-label">87.4%</span>
+<span class="font-label text-[10px] text-emerald-600 font-medium">+2.1% MoM</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-5 border border-surface-container-highest shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body text-[14px] text-on-surface-variant font-medium">Total Logged Hours</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">schedule</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-label text-[20px] font-bold text-primary">48,291h</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-5 border border-surface-container-highest shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-2">
+<span class="font-body text-[14px] text-on-surface-variant font-medium">Efficiency Delta</span>
+<span class="material-symbols-outlined text-error text-[20px]">trending_down</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-label text-[20px] font-bold text-error">-4.2%</span>
+<span class="font-body text-[12px] text-on-surface-variant">vs allocated</span>
+</div>
+</div>
+</div>
+<!-- Project Allocation Chart (Span 8) -->
+<div class="col-span-1 md:col-span-8 bg-surface-container-lowest rounded-lg border border-surface-container-highest shadow-sm p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-[18px] font-bold text-primary">Resource Allocation by Project</h3>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 font-label text-[10px] text-on-surface-variant">
+<span class="w-3 h-3 bg-secondary rounded-sm inline-block"></span> Engineers
+    </div>
+<div class="flex items-center gap-2 font-label text-[10px] text-on-surface-variant">
+<span class="w-3 h-3 bg-surface-tint rounded-sm inline-block"></span> Field Workers
+    </div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<div class="flex-1 relative min-h-[250px] w-full bg-surface-container-low rounded flex items-end p-4 gap-4 justify-around border-b border-l border-outline-variant/30">
+<!-- Placeholder Stacked Bar Chart -->
+<div class="w-12 hover:opacity-90 transition-opacity rounded-t cursor-pointer relative group flex flex-col justify-end" style="height: 80%;">
+<div class="w-full bg-secondary" style="height: 40%;"></div>
+<div class="w-full bg-surface-tint rounded-t" style="height: 60%;"></div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] font-label px-2 py-1 rounded hidden group-hover:block whitespace-nowrap z-10">Proj A: 340 res<br>136 Eng / 204 Field</div>
+</div>
+<div class="w-12 hover:opacity-90 transition-opacity rounded-t cursor-pointer relative group flex flex-col justify-end" style="height: 60%;">
+<div class="w-full bg-secondary" style="height: 30%;"></div>
+<div class="w-full bg-surface-tint rounded-t" style="height: 70%;"></div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] font-label px-2 py-1 rounded hidden group-hover:block whitespace-nowrap z-10">Proj B: 210 res<br>63 Eng / 147 Field</div>
+</div>
+<div class="w-12 hover:opacity-90 transition-opacity rounded-t cursor-pointer relative group flex flex-col justify-end" style="height: 90%;">
+<div class="w-full bg-secondary" style="height: 50%;"></div>
+<div class="w-full bg-surface-tint rounded-t" style="height: 50%;"></div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] font-label px-2 py-1 rounded hidden group-hover:block whitespace-nowrap z-10">Proj C: 412 res<br>206 Eng / 206 Field</div>
+</div>
+<div class="w-12 hover:opacity-90 transition-opacity rounded-t cursor-pointer relative group flex flex-col justify-end" style="height: 40%;">
+<div class="w-full bg-error" style="height: 20%;"></div>
+<div class="w-full bg-error/60 rounded-t" style="height: 80%;"></div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] font-label px-2 py-1 rounded hidden group-hover:block whitespace-nowrap z-10">Proj D: 150 res<br>30 Eng / 120 Field</div>
+</div>
+<div class="w-12 hover:opacity-90 transition-opacity rounded-t cursor-pointer relative group flex flex-col justify-end" style="height: 75%;">
+<div class="w-full bg-secondary" style="height: 60%;"></div>
+<div class="w-full bg-surface-tint rounded-t" style="height: 40%;"></div>
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] font-label px-2 py-1 rounded hidden group-hover:block whitespace-nowrap z-10">Proj E: 310 res<br>186 Eng / 124 Field</div>
+</div>
+</div>
+<div class="flex justify-around mt-2">
+<span class="font-label text-[10px] text-on-surface-variant">PRJ-01</span>
+<span class="font-label text-[10px] text-on-surface-variant">PRJ-02</span>
+<span class="font-label text-[10px] text-on-surface-variant">PRJ-03</span>
+<span class="font-label text-[10px] text-on-surface-variant">PRJ-04</span>
+<span class="font-label text-[10px] text-on-surface-variant">PRJ-05</span>
+</div>
+</div>
+<!-- Productivity Score Matrix (Span 4) -->
+<div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-surface-container-highest shadow-sm p-6 flex flex-col">
+<h3 class="font-headline text-[18px] font-bold text-primary mb-4">Productivity Matrix</h3>
+<div class="flex-1 flex flex-col gap-3">
+<!-- Matrix Row -->
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-label text-[12px] font-bold">C1</div>
+<div class="flex flex-col">
+<span class="font-body text-[14px] font-medium text-primary">Concrete Crew Alpha</span>
+<span class="font-label text-[12px] text-on-surface-variant">PRJ-03</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label text-[14px] text-emerald-600 font-bold">98.2</span>
+<span class="font-label text-[10px] text-on-surface-variant">Score</span>
+</div>
+</div>
+<!-- Matrix Row -->
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center font-label text-[12px] font-bold">E2</div>
+<div class="flex flex-col">
+<span class="font-body text-[14px] font-medium text-primary">Electrical Unit 2</span>
+<span class="font-label text-[12px] text-on-surface-variant">PRJ-01</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label text-[14px] text-emerald-600 font-bold">94.5</span>
+<span class="font-label text-[10px] text-on-surface-variant">Score</span>
+</div>
+</div>
+<!-- Matrix Row Warning -->
+<div class="flex items-center justify-between p-3 bg-error-container/30 border border-error/20 rounded">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-error/10 text-error flex items-center justify-center font-label text-[12px] font-bold">S4</div>
+<div class="flex flex-col">
+<span class="font-body text-[14px] font-medium text-primary">Site Prep Delta</span>
+<span class="font-label text-[12px] text-on-surface-variant">PRJ-04</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label text-[14px] text-error font-bold">62.1</span>
+<span class="font-label text-[10px] text-error">Review</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border border-outline-variant/50 rounded font-body text-[12px] text-primary hover:bg-surface-container-low transition-colors">View Full Matrix</button>
+</div>
+<!-- Timesheet Management Table (Span 12) -->
+<div class="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-lg border border-surface-container-highest shadow-sm overflow-hidden flex flex-col">
+<div class="p-6 border-b border-surface-container-highest flex justify-between items-center bg-surface-container-lowest sticky left-0 z-10">
+<div>
+<h3 class="font-headline text-[18px] font-bold text-primary">Timesheet Management (Allocated vs Actual)</h3>
+<p class="font-body text-[12px] text-on-surface-variant mt-1"><span class="font-label font-bold text-amber-600">14</span> Pending Approvals for Admin</p>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 border border-outline-variant rounded hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[16px]">download</span></button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant/30">
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Resource Group</th>
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Project ID</th>
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Allocated Hours</th>
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Actual Logged</th>
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Variance</th>
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="p-4 font-body text-[12px] font-medium text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body text-[14px]">
+<tr class="border-b border-outline-variant/20 hover:bg-surface-container-lowest/50 transition-colors">
+<td class="p-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label text-[10px]">C1</div>
+<span class="font-medium text-primary">Concrete Crew Alpha</span>
+</td>
+<td class="p-4 text-on-surface-variant font-label text-[12px]">PRJ-03</td>
+<td class="p-4 font-label text-[13px] text-on-surface-variant">450.0h</td>
+<td class="p-4 font-label text-[13px] text-primary">445.5h</td>
+<td class="p-4 font-label text-[13px] text-emerald-600">-4.5h</td>
+<td class="p-4">
+<span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded uppercase tracking-wider border border-emerald-200">On Track</span>
+</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-[12px] text-secondary hover:underline font-medium">View Timesheet</button>
+<button class="text-[12px] text-emerald-600 hover:underline font-medium">Approve Hours</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors ml-2"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-surface-container-lowest/50 transition-colors bg-error-container/10">
+<td class="p-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-error/20 text-error flex items-center justify-center font-label text-[10px]">S4</div>
+<span class="font-medium text-primary">Site Prep Delta</span>
+</td>
+<td class="p-4 text-on-surface-variant font-label text-[12px]">PRJ-04</td>
+<td class="p-4 font-label text-[13px] text-on-surface-variant">320.0h</td>
+<td class="p-4 font-label text-[13px] text-primary font-bold">410.0h</td>
+<td class="p-4 font-label text-[13px] text-error font-bold">+90.0h</td>
+<td class="p-4">
+<span class="px-2 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded uppercase tracking-wider border border-error/20">Overburn</span>
+</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-[12px] text-secondary hover:underline font-medium">View Timesheet</button>
+<button class="text-[12px] text-emerald-600 hover:underline font-medium">Approve Hours</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors ml-2"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/20 hover:bg-surface-container-lowest/50 transition-colors">
+<td class="p-4 flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label text-[10px]">E2</div>
+<span class="font-medium text-primary">Electrical Unit 2</span>
+</td>
+<td class="p-4 text-on-surface-variant font-label text-[12px]">PRJ-01</td>
+<td class="p-4 font-label text-[13px] text-on-surface-variant">280.0h</td>
+<td class="p-4 font-label text-[13px] text-primary">282.5h</td>
+<td class="p-4 font-label text-[13px] text-amber-600">+2.5h</td>
+<td class="p-4">
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded uppercase tracking-wider border border-outline-variant/50">Nominal</span>
+</td>
+<td class="p-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="text-[12px] text-secondary hover:underline font-medium">View Timesheet</button>
+<button class="text-[12px] text-emerald-600 hover:underline font-medium">Approve Hours</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors ml-2"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

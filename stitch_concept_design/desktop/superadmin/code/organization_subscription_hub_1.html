@@ -1,0 +1,616 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Organization &amp; Subscription Hub - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-dim": "#dbdad5",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-bright": "#faf9f4",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-secondary": "#ffffff",
+                        "outline": "#73777e",
+                        "on-tertiary-container": "#0090c7",
+                        "on-surface": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "outline-variant": "#c3c6ce",
+                        "tertiary-container": "#002233",
+                        "tertiary": "#00080f",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "surface": "#faf9f4",
+                        "inverse-surface": "#30312e",
+                        "error": "#ba1a1a",
+                        "primary": "#000815",
+                        "surface-tint": "#46607e",
+                        "secondary-container": "#8ad1ff",
+                        "on-background": "#1b1c19",
+                        "secondary-fixed": "#c6e7ff",
+                        "secondary": "#00658d",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container": "#efeee9",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-high": "#e9e8e3",
+                        "on-primary-fixed": "#001d35",
+                        "on-surface-variant": "#43474d",
+                        "primary-container": "#00213c",
+                        "tertiary-fixed": "#c6e7ff",
+                        "on-secondary-container": "#005a7f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-width": "280px",
+                        "unit": "4px",
+                        "rail-width": "72px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px",
+                        "gutter-md": "24px",
+                        "margin-tablet": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Merriweather"],
+                        "headline-lg-mobile": ["Merriweather"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-sm": ["Merriweather"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Merriweather"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Merriweather"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-hidden flex h-screen w-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden md:flex flex-col py-6 w-sidebar-width shrink-0 z-50 bg-primary-container shadow-xl fixed left-0 top-0 h-screen transition-all duration-300">
+<!-- Header -->
+<div class="px-6 mb-8 flex flex-col items-center text-center">
+<h1 class="font-headline-lg text-headline-lg text-on-primary tracking-wider">SETUU</h1>
+<p class="font-label-sm text-label-sm text-on-primary-container uppercase opacity-60 mt-1">Admin Hub</p>
+</div>
+<!-- Main Navigation -->
+<nav class="flex-1 flex flex-col gap-1 px-4 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="speed">speed</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container-lowest text-primary-container mx-2 shadow-sm cursor-pointer transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="domain" style="font-variation-settings: 'FILL' 1;">domain</span>
+<span class="font-label-md text-label-md font-bold">Organizations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="credit_card">credit_card</span>
+<span class="font-label-md text-label-md">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="dns">dns</span>
+<span class="font-label-md text-label-md">Infrastructure</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label-md text-label-md">User Management</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">Audit Logs</span>
+</a>
+</nav>
+<!-- CTA & Footer Nav -->
+<div class="px-6 mt-auto flex flex-col gap-4">
+<div class="border-t border-on-primary-fixed-variant/30 pt-4 mb-2 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-2 py-2 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="vital_signs">vital_signs</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm">System Health</span>
+<span class="text-[10px] opacity-60">All Systems Go</span>
+</div>
+</a>
+<a class="flex items-center gap-3 px-2 py-2 rounded-lg text-on-primary-container hover:text-on-primary hover:bg-on-primary-fixed-variant/10 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="headset_mic">headset_mic</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+</div>
+<button class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 hover:bg-secondary hover:text-on-secondary transition-colors shadow-md active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Add Organization
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 md:ml-sidebar-width h-full relative overflow-y-auto overflow-x-hidden bg-background">
+<!-- TopNavBar (Shared Component - Web Variant) -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 z-40 bg-surface/85 backdrop-blur-md border-b border-outline-variant shadow-sm docked full-width top-0 sticky">
+  <div class="flex items-center gap-4">
+    <button class="md:hidden p-2 -ml-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors cursor-pointer active:opacity-80">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <h1 class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-3">
+      <span class="font-headline-md">Organization Hub</span>
+      <span class="bg-[#D32F2F] text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 uppercase tracking-wider">
+        <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+        Super Admin Mode
+      </span>
+    </h1>
+  </div>
+
+  <div class="hidden lg:flex items-center gap-6 bg-surface-container-low/50 px-4 py-1.5 rounded-full border border-outline-variant/30">
+    <div class="flex items-center gap-3">
+      <div class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" value="" class="sr-only peer">
+        <div class="w-10 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#D32F2F]"></div>
+      </div>
+      <span class="font-label-sm text-on-surface uppercase tracking-tight">Maintenance Mode</span>
+    </div>
+    <div class="w-px h-4 bg-outline-variant"></div>
+    <button class="flex items-center gap-2 px-3 py-1 border border-[#D32F2F] text-[#D32F2F] rounded-DEFAULT font-label-sm uppercase hover:bg-error-container/10 transition-colors">
+      <span class="material-symbols-outlined text-[16px]">campaign</span>
+      Global Announcement
+    </button>
+  </div>
+
+  <div class="flex items-center gap-2 ml-auto">
+    <div class="relative group hidden md:block mr-4">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-[18px]">search</span>
+      <input class="w-48 lg:w-64 bg-surface-container-low border-none rounded-full py-1.5 pl-9 pr-4 text-sm text-on-surface placeholder:text-outline-variant focus:ring-2 focus:ring-primary focus:bg-surface transition-all" placeholder="Search..." type="text">
+    </div>
+    <button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80 rounded-full relative">
+      <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+      <span class="absolute top-1.5 right-1.5 w-4 h-4 bg-[#D32F2F] text-white text-[9px] flex items-center justify-center rounded-full border-2 border-surface font-bold">3</span>
+    </button>
+    <button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80 rounded-full">
+      <span class="material-symbols-outlined" data-icon="settings">settings</span>
+    </button>
+    <button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80 rounded-full">
+      <span class="material-symbols-outlined" data-icon="help">help</span>
+    </button>
+    <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant shadow-sm cursor-pointer ml-2">
+      <img alt="Super Admin Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWAUFL55XMUbEyqI8BNZvLdA-0mF2M7OsMujcjPNaGS7AHnW-PeixI-_-RZMGK54r-1hGi3PdrCM5M43-GDYXnyvTJ4dtu3E1HIZRwU7g2KztfKnir-GALKi-t3cLHtABce6p18uZQ5JFla0TZpnv4z6pLqVl7p9hBEyX3C95_R9-j53xOMRPaH_Pyz3UvJT3gSAp7zGYekma7T0XOLe48kwWaLA2f87_SZVvhpGHbKof_YZ493Qep">
+    </div>
+  </div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 p-margin-mobile md:p-margin-desktop max-w-[1600px] mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Organization Hub</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 max-w-2xl">Manage multi-tenant infrastructure, monitor subscription tiers, and oversee global resource allocation across all registered entities.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline text-on-surface rounded-DEFAULT font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export CSV
+                    </button>
+<button class="px-4 py-2 bg-primary-container text-on-primary-container rounded-DEFAULT font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors shadow-sm flex items-center gap-2 font-bold">
+<span class="material-symbols-outlined text-[18px]">domain_add</span>
+                        New Organization
+                    </button>
+</div>
+</div>
+<!-- Dashboard Grid (12-col) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter-md">
+<!-- Main Data Section (8 cols on desktop) -->
+<div class="md:col-span-8 flex flex-col gap-gutter-md">
+<!-- Organization Directory Table (Sheet) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden flex flex-col">
+<!-- Table Toolbar -->
+<div class="p-4 border-b border-surface-variant flex flex-wrap items-center justify-between gap-4 bg-surface/50">
+<h3 class="font-headline-sm text-headline-sm text-primary">Directory</h3>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline-variant text-[16px]">filter_list</span>
+<select class="bg-surface border border-outline-variant text-label-md font-label-md rounded-DEFAULT py-1.5 pl-8 pr-8 text-on-surface focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>All Tiers</option>
+<option>Enterprise</option>
+<option>Pro</option>
+<option>Starter</option>
+</select>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline-variant text-[16px]">sort</span>
+<select class="bg-surface border border-outline-variant text-label-md font-label-md rounded-DEFAULT py-1.5 pl-8 pr-8 text-on-surface focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Sort by: Name A-Z</option>
+<option>Sort by: Storage Usage</option>
+<option>Sort by: Member Count</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[700px]">
+<thead>
+<tr class="border-b border-surface-variant bg-surface-container-low/50 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">
+<th class="p-4 font-medium">Organization</th>
+<th class="p-4 font-medium">Tier</th>
+<th class="p-4 font-medium text-right">Members</th>
+<th class="p-4 font-medium">Storage Usage</th>
+<th class="p-4 font-medium">Status</th>
+<th class="p-4 font-medium"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-variant text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-DEFAULT bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+                                                    AM
+                                                </div>
+<div>
+<div class="font-medium text-on-surface">Apex Manufacturing</div>
+<div class="text-xs text-outline font-label-sm mt-0.5">ID: ORG-8821</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-tertiary-container/10 text-tertiary-container border border-tertiary-container/20">
+                                                Enterprise
+                                            </span>
+</td>
+<td class="p-4 text-right font-label-md text-on-surface">1,402</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[85%]"></div>
+</div>
+<span class="font-label-md text-xs text-on-surface-variant min-w-[40px] text-right">8.5 TB</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span> Active
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-sm border border-outline-variant">
+                                                    BL
+                                                </div>
+<div>
+<div class="font-medium text-on-surface">BuildLogistics Inc.</div>
+<div class="text-xs text-outline font-label-sm mt-0.5">ID: ORG-9904</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">
+                                                Pro
+                                            </span>
+</td>
+<td class="p-4 text-right font-label-md text-on-surface">345</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[42%]"></div>
+</div>
+<span class="font-label-md text-xs text-on-surface-variant min-w-[40px] text-right">420 GB</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span> Active
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 (Warning State) -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group bg-error-container/10">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-sm border border-outline-variant">
+                                                    CO
+                                                </div>
+<div>
+<div class="font-medium text-on-surface flex items-center gap-2">
+                                                        Core Dynamics
+                                                        <span class="material-symbols-outlined text-[16px] text-error" title="Storage Critical">warning</span>
+</div>
+<div class="text-xs text-outline font-label-sm mt-0.5">ID: ORG-4451</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-surface-container-highest text-on-surface-variant border border-outline-variant">
+                                                Starter
+                                            </span>
+</td>
+<td class="p-4 text-right font-label-md text-on-surface">48</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error w-[98%]"></div>
+</div>
+<span class="font-label-md text-xs text-error font-bold min-w-[40px] text-right">98 GB</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span> Active
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 (Suspended) -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group opacity-60 grayscale-[50%]">
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-outline flex items-center justify-center font-bold text-sm border border-outline-variant border-dashed">
+                                                    VL
+                                                </div>
+<div>
+<div class="font-medium text-outline line-through decoration-outline/50">Vanguard Ltd.</div>
+<div class="text-xs text-outline font-label-sm mt-0.5">ID: ORG-1102</div>
+</div>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-surface-container-highest text-on-surface-variant border border-outline-variant">
+                                                Starter
+                                            </span>
+</td>
+<td class="p-4 text-right font-label-md text-outline">12</td>
+<td class="p-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-outline w-[15%]"></div>
+</div>
+<span class="font-label-md text-xs text-outline min-w-[40px] text-right">15 GB</span>
+</div>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 text-sm text-outline italic">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Suspended
+                                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-3 border-t border-surface-variant bg-surface-container-lowest flex items-center justify-between">
+<span class="text-sm text-on-surface-variant">Showing 1 to 4 of 128 Organizations</span>
+<div class="flex gap-1">
+<button class="p-1 rounded text-outline hover:bg-surface-container-low disabled:opacity-50"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
+<button class="px-2 py-1 rounded bg-primary-container text-on-primary-container text-sm font-medium">1</button>
+<button class="px-2 py-1 rounded hover:bg-surface-container-low text-on-surface text-sm">2</button>
+<button class="px-2 py-1 rounded hover:bg-surface-container-low text-on-surface text-sm">3</button>
+<span class="px-2 py-1 text-outline text-sm">...</span>
+<button class="p-1 rounded text-outline hover:bg-surface-container-low"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Subscription Tiers Management -->
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">tune</span>
+                            Tier Configuration
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Tier 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-surface-variant"></div>
+<h4 class="font-bold text-on-surface text-lg mb-1">Starter</h4>
+<div class="text-2xl font-headline-md text-primary mb-4">$49<span class="text-sm font-body-md text-on-surface-variant font-normal">/mo</span></div>
+<div class="space-y-3 font-label-md text-on-surface text-sm mb-6">
+<div class="flex justify-between items-center border-b border-surface-variant pb-2">
+<span class="text-on-surface-variant">Max Storage</span>
+<span class="font-bold">100 GB</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-2">
+<span class="text-on-surface-variant">Active Projects</span>
+<span class="font-bold">5</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Max Members</span>
+<span class="font-bold">25</span>
+</div>
+</div>
+<button class="w-full py-2 border border-outline text-on-surface rounded text-sm font-medium hover:bg-surface-container-low transition-colors">Edit Tier</button>
+</div>
+<!-- Tier 2 -->
+<div class="bg-surface-container-lowest border border-secondary/30 rounded-lg p-5 shadow-md relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary"></div>
+<div class="absolute top-3 right-3 bg-secondary/10 text-secondary text-xs px-2 py-0.5 rounded-full font-medium">Most Popular</div>
+<h4 class="font-bold text-on-surface text-lg mb-1">Pro</h4>
+<div class="text-2xl font-headline-md text-primary mb-4">$199<span class="text-sm font-body-md text-on-surface-variant font-normal">/mo</span></div>
+<div class="space-y-3 font-label-md text-on-surface text-sm mb-6">
+<div class="flex justify-between items-center border-b border-surface-variant pb-2">
+<span class="text-on-surface-variant">Max Storage</span>
+<span class="font-bold">1 TB</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface-variant pb-2">
+<span class="text-on-surface-variant">Active Projects</span>
+<span class="font-bold">50</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant">Max Members</span>
+<span class="font-bold">Unlimited</span>
+</div>
+</div>
+<button class="w-full py-2 border border-secondary text-secondary rounded text-sm font-medium hover:bg-secondary/5 transition-colors">Edit Tier</button>
+</div>
+<!-- Tier 3 -->
+<div class="bg-primary-container text-on-primary-container border border-primary-container rounded-lg p-5 shadow-sm relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-on-tertiary-container"></div>
+<h4 class="font-bold text-on-primary-container text-lg mb-1">Enterprise</h4>
+<div class="text-2xl font-headline-md text-on-primary-container mb-4">Custom</div>
+<div class="space-y-3 font-label-md text-sm mb-6 opacity-90">
+<div class="flex justify-between items-center border-b border-on-primary-container/20 pb-2">
+<span>Max Storage</span>
+<span class="font-bold">Unlimited</span>
+</div>
+<div class="flex justify-between items-center border-b border-on-primary-container/20 pb-2">
+<span>Active Projects</span>
+<span class="font-bold">Unlimited</span>
+</div>
+<div class="flex justify-between items-center">
+<span>Dedicated DB</span>
+<span class="font-bold">Yes</span>
+</div>
+</div>
+<button class="w-full py-2 border border-on-primary-container/30 text-on-primary-container rounded text-sm font-medium hover:bg-on-primary-container/10 transition-colors">Edit Tier</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Analytics Widget (4 cols on desktop) -->
+<div class="md:col-span-4 flex flex-col gap-4">
+<!-- Global Storage Metrics -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-5 shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-4 flex items-center justify-between">
+                            Global Resources
+                            <span class="material-symbols-outlined text-outline-variant text-[20px] cursor-help" title="Aggregated usage across all regions">info</span>
+</h3>
+<!-- Donut Chart Placeholder (CSS driven) -->
+<div class="flex justify-center mb-6 relative">
+<div class="w-32 h-32 rounded-full border-[12px] border-surface-variant relative" style="border-top-color: #0090c7; border-right-color: #0090c7; border-bottom-color: #00213c; transform: rotate(-45deg);">
+<!-- Inner circle to make it a donut -->
+</div>
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span class="font-headline-md text-primary">68%</span>
+<span class="font-label-sm text-outline uppercase tracking-wider">Allocated</span>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span> EU Region
+                                    </span>
+<span class="font-label-md text-on-surface-variant">42 TB / 100 TB</span>
+</div>
+<div class="w-full bg-surface-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-on-tertiary-container h-full w-[42%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> US East
+                                    </span>
+<span class="font-label-md text-on-surface-variant">18 TB / 50 TB</span>
+</div>
+<div class="w-full bg-surface-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full w-[36%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span> APAC
+                                    </span>
+<span class="font-label-md text-error font-bold">48 TB / 50 TB</span>
+</div>
+<div class="w-full bg-surface-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-error h-full w-[96%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Alerts / Logs Mini -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-0 shadow-sm overflow-hidden">
+<div class="p-4 border-b border-surface-variant bg-surface/50">
+<h3 class="font-headline-sm text-headline-sm text-primary">Recent Alerts</h3>
+</div>
+<ul class="divide-y divide-surface-variant text-sm">
+<li class="p-4 flex gap-3 hover:bg-surface-container-low/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-error text-[20px] shrink-0 mt-0.5">error</span>
+<div>
+<p class="text-on-surface font-medium">Storage Quota Exceeded</p>
+<p class="text-on-surface-variant text-xs mt-0.5">Core Dynamics has exceeded their 100GB Starter tier limit.</p>
+<span class="font-label-sm text-outline text-[10px] mt-1 block">10 mins ago</span>
+</div>
+</li>
+<li class="p-4 flex gap-3 hover:bg-surface-container-low/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-tertiary-container text-[20px] shrink-0 mt-0.5">info</span>
+<div>
+<p class="text-on-surface font-medium">New Organization Registered</p>
+<p class="text-on-surface-variant text-xs mt-0.5">'NexoBuild Partners' provisioned on Pro Tier.</p>
+<span class="font-label-sm text-outline text-[10px] mt-1 block">2 hours ago</span>
+</div>
+</li>
+<li class="p-4 flex gap-3 hover:bg-surface-container-low/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline text-[20px] shrink-0 mt-0.5">sync_problem</span>
+<div>
+<p class="text-on-surface font-medium">Failed Backup Sync</p>
+<p class="text-on-surface-variant text-xs mt-0.5">EU Region snapshot failed to verify checksum.</p>
+<span class="font-label-sm text-outline text-[10px] mt-1 block">5 hours ago</span>
+</div>
+</li>
+</ul>
+<div class="p-3 bg-surface-container-low text-center border-t border-surface-variant">
+<a class="text-primary font-medium text-sm hover:underline" href="#">View All Logs</a>
+</div>
+</div>
+</div>
+</div>
+<div class="h-12 w-full"></div> <!-- Bottom padding -->
+</div>
+</main>
+
+
+</body></html>

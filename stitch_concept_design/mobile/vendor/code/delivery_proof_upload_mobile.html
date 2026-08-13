@@ -1,0 +1,166 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Delivery Proof</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#46607e",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#efeee9",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#73777e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-tertiary-fixed": "#001e2d",
+                        "primary": "#000815",
+                        "surface-dim": "#dbdad5",
+                        "on-surface-variant": "#43474d",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#8ad1ff",
+                        "secondary": "#00658d",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container-low": "#f5f4ef",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary": "#00080f",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "tertiary-container": "#002233",
+                        "surface": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-on-surface": "#f2f1ec",
+                        "outline-variant": "#c3c6ce",
+                        "on-primary-container": "#6f89a9",
+                        "on-secondary-container": "#005a7f",
+                        "on-background": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#00213c",
+                        "on-primary-fixed": "#001d35",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "inverse-primary": "#aec9eb",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface-variant": "#e3e3de",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#aec9eb",
+                        "background": "#faf9f4",
+                        "on-surface": "#1b1c19"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": [
+                            "Merriweather"
+                        ],
+                        "display": [
+                            "Merriweather"
+                        ],
+                        "body": [
+                            "Inter"
+                        ],
+                        "label": [
+                            "JetBrains Mono"
+                        ]
+                    },
+                    "fontSize": {}
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 3s linear infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary text-on-surface font-body h-screen w-screen overflow-hidden flex flex-col antialiased selection:bg-secondary-fixed-dim selection:text-on-secondary-fixed">
+<!-- Top App Bar -->
+<header class="flex justify-between items-center w-full px-4 h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline docked full-width top-0 z-50">
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:bg-surface-container-high p-2 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline font-bold text-headline-sm text-primary dark:text-primary-fixed-dim">Setuu Enterprise</h1>
+</div>
+<div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-2 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area (Mobile Focused) -->
+<main class="flex-1 overflow-y-auto px-4 py-6 pb-24 flex flex-col gap-6 relative">
+<!-- Context Header -->
+<div class="flex flex-col gap-1">
+<h2 class="font-headline font-bold text-[24px] leading-[32px] text-surface-container-lowest tracking-tight">Delivery Proof</h2>
+<p class="font-label text-label-sm text-surface-variant opacity-80 uppercase tracking-widest">Project: DXB-702-ALPHA</p>
+</div>
+<!-- Massive Upload Dropzone -->
+<div class="relative w-full aspect-square max-h-[400px] border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center bg-surface/5 backdrop-blur-sm transition-colors hover:border-secondary-fixed-dim hover:bg-surface/10 cursor-pointer group active:scale-[0.98] duration-200">
+<div class="p-6 rounded-full bg-surface-container/10 mb-4 group-hover:bg-secondary-fixed-dim/20 transition-colors">
+<span class="material-symbols-outlined text-[48px] text-surface-container-lowest group-hover:text-secondary-fixed-dim transition-colors" data-icon="upload_file">upload_file</span>
+</div>
+<p class="font-headline font-bold text-headline-sm text-surface-container-lowest mb-1">Tap to Upload</p>
+<p class="font-body text-body-md text-surface-variant/80 text-center px-8">Select manifest PDF or delivery photos. Max 50MB.</p>
+</div>
+<!-- Scanning State Indicator (Simulated active file) -->
+<div class="w-full bg-surface-container-high/10 rounded-lg p-4 border border-outline/30 flex items-start gap-4">
+<div class="p-3 bg-secondary-container rounded-lg flex-shrink-0">
+<span class="material-symbols-outlined animate-spin-slow text-on-secondary-container" data-icon="radar">radar</span>
+</div>
+<div class="flex-1 flex flex-col gap-1 overflow-hidden">
+<div class="flex justify-between items-center w-full">
+<p class="font-body font-bold text-[14px] text-surface-container-lowest truncate">manifest_DXB702_v2.pdf</p>
+<span class="font-label text-[10px] text-secondary-fixed-dim uppercase tracking-wider bg-secondary-container/20 px-2 py-0.5 rounded-sm">Scanning...</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<p class="font-label text-[12px] text-surface-variant/70 truncate">Size: 4.2 MB | Hash: a7x9...f2b</p>
+<p class="font-label text-[12px] text-surface-variant/70 truncate">Time: 2023-10-27T14:32:01Z</p>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-1 bg-surface-container mt-2 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim w-3/4 rounded-full transition-all duration-1000"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full p-4 bg-primary/95 backdrop-blur-xl border-t border-surface-variant/10 z-50">
+<button class="w-full h-[56px] min-h-[48px] bg-surface-container-lowest text-primary font-headline font-bold text-[16px] rounded-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-transform shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined" data-icon="verified">verified</span>
+            Submit Proof
+        </button>
+</div>
+</body></html>

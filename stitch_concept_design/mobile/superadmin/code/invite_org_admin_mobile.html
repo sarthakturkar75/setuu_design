@@ -1,0 +1,278 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Provision Org Admin - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#faf9f4",
+                      "tertiary-fixed": "#c6e7ff",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "primary": "#000815",
+                      "on-secondary-fixed": "#001e2d",
+                      "surface": "#faf9f4",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "inverse-surface": "#30312e",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-error": "#ffffff",
+                      "on-surface": "#1b1c19",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#e3e3de",
+                      "primary-fixed": "#d1e4ff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "surface-container-high": "#e9e8e3",
+                      "on-primary-fixed": "#001d35",
+                      "on-tertiary-container": "#0090c7",
+                      "tertiary": "#00080f",
+                      "outline-variant": "#c3c6ce",
+                      "on-secondary": "#ffffff",
+                      "outline": "#73777e",
+                      "primary-fixed-dim": "#aec9eb",
+                      "on-surface-variant": "#43474d",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#1b1c19",
+                      "on-primary-container": "#6f89a9",
+                      "tertiary-container": "#002233",
+                      "surface-tint": "#46607e",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-error-container": "#93000a",
+                      "on-secondary-container": "#005a7f",
+                      "secondary": "#00658d",
+                      "secondary-container": "#8ad1ff",
+                      "surface-dim": "#dbdad5",
+                      "primary-container": "#00213c",
+                      "inverse-primary": "#aec9eb",
+                      "inverse-on-surface": "#f2f1ec",
+                      "surface-container-low": "#f5f4ef",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#efeee9",
+                      "on-tertiary-fixed": "#001e2d",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "background": "#faf9f4",
+                      "surface-container-highest": "#e3e3de",
+                      "secondary-fixed": "#c6e7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                  "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather", "serif"
+                      ],
+                      "display": [
+                              "Merriweather", "serif"
+                      ],
+                      "body": [
+                              "Inter", "sans-serif"
+                      ],
+                      "label": [
+                              "JetBrains Mono", "monospace"
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body { background-color: theme('colors.surface'); }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface bg-surface antialiased pb-24">
+<!-- Top App Bar (From JSON structure, adapted for specific intent) -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant flat no shadows transition-colors duration-200 ease-in-out z-40">
+<div class="flex items-center justify-between px-margin-mobile h-16 w-full z-40">
+<div class="flex items-center gap-3">
+<button aria-label="Back" class="p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<div>
+<h1 class="font-headline font-bold text-lg tracking-tight text-primary">Provision Org Admin</h1>
+<p class="font-body text-xs text-on-surface-variant">Formal invitation and RBAC initialization.</p>
+</div>
+</div>
+<!-- Trailing action replaced by context-specific back, but keeping visual balance -->
+<div class="w-8"></div>
+</div>
+</header>
+<main class="p-margin-mobile flex flex-col gap-4">
+<!-- Role Assignment (Locked) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-3 opacity-10">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+</div>
+<div class="flex items-start gap-3 mb-2 relative z-10">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lock</span>
+<div>
+<h2 class="font-headline text-headline-sm text-primary">Role: Organization Admin</h2>
+<p class="font-body text-sm text-on-surface-variant mt-1">This user will have elevated privileges within the assigned organization but restricted from global system settings.</p>
+</div>
+</div>
+<div class="mt-3 inline-flex items-center gap-2 bg-surface-container-low px-2 py-1 rounded-sm border border-outline-variant">
+<span class="font-label text-label-sm text-outline">RBAC_POLICY_ID:</span>
+<span class="font-label text-label-sm text-on-surface font-medium">ORG_ADM_V2</span>
+</div>
+</section>
+<!-- Identity Details Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm">
+<h2 class="font-headline text-headline-sm text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">person</span>
+                Identity Details
+            </h2>
+<div class="space-y-4">
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1" for="fullName">Full Name</label>
+<input class="w-full bg-surface border border-outline-variant rounded-md px-3 py-2 text-on-surface font-body focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors" id="fullName" placeholder="e.g. Jane Doe" type="text">
+</div>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1" for="email">Email Address</label>
+<input class="w-full bg-surface border border-outline-variant rounded-md px-3 py-2 text-on-surface font-body focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors" id="email" placeholder="jane.doe@company.com" type="email">
+</div>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1" for="organization">Organization</label>
+<select class="w-full bg-surface border border-outline-variant rounded-md px-3 py-2 text-on-surface font-body focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors appearance-none" id="organization">
+<option disabled="" selected="" value="">Select an Organization</option>
+<option value="org1">Acme Infrastructure Corp</option>
+<option value="org2">Global Build Partners</option>
+<option value="org3">Apex Engineering</option>
+</select>
+</div>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1" for="mobile">Mobile Number</label>
+<input class="w-full bg-surface border border-outline-variant rounded-md px-3 py-2 text-on-surface font-body focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors" id="mobile" placeholder="+1 (555) 000-0000" type="tel">
+</div>
+</div>
+</section>
+<!-- Subscription & Quota Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm">
+<h2 class="font-headline text-headline-sm text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">business_center</span>
+                Subscription &amp; Quota
+            </h2>
+<div>
+<label class="block font-body text-sm font-medium text-on-surface mb-1" for="subscription">Subscription Tier</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-md pl-3 pr-10 py-3 text-on-surface font-body focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-colors appearance-none" id="subscription">
+<option value="starter">Starter</option>
+<option selected="" value="pro">Pro</option>
+<option value="enterprise">Enterprise</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-outline pointer-events-none">expand_more</span>
+</div>
+<div class="mt-3 flex justify-between items-center text-xs font-label">
+<span class="text-on-surface-variant">Storage Allocation:</span>
+<span class="text-secondary font-medium">500 GB</span>
+</div>
+</div>
+</section>
+<!-- Permissions & Guardrails Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm">
+<h2 class="font-headline text-headline-sm text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">policy</span>
+                Permissions &amp; Guardrails
+            </h2>
+<div class="space-y-3">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center mt-0.5">
+<input checked="" class="peer sr-only" type="checkbox">
+<div class="w-5 h-5 border-2 border-outline rounded-sm peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Manage All Projects</span>
+<span class="block font-body text-xs text-on-surface-variant mt-0.5">Full CRUD access to all active and archived projects.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center mt-0.5">
+<input class="peer sr-only" type="checkbox">
+<div class="w-5 h-5 border-2 border-outline rounded-sm peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Financial Oversight</span>
+<span class="block font-body text-xs text-on-surface-variant mt-0.5">View and approve contract values and change requests.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center mt-0.5">
+<input checked="" class="peer sr-only" type="checkbox">
+<div class="w-5 h-5 border-2 border-outline rounded-sm peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Security Configuration</span>
+<span class="block font-body text-xs text-on-surface-variant mt-0.5">Modify authentication methods and local RLS overrides.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center mt-0.5">
+<input checked="" class="peer sr-only" type="checkbox">
+<div class="w-5 h-5 border-2 border-outline rounded-sm peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Support Ticket Triage</span>
+<span class="block font-body text-xs text-on-surface-variant mt-0.5">Escalate issues to Super Admin level.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center mt-0.5">
+<input class="peer sr-only" type="checkbox">
+<div class="w-5 h-5 border-2 border-outline rounded-sm peer-checked:bg-secondary peer-checked:border-secondary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-[16px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+<div>
+<span class="block font-body text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Audit Log Access</span>
+<span class="block font-body text-xs text-on-surface-variant mt-0.5">Read-only access to organizational action history.</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Security Protocol Info -->
+<section class="bg-primary-fixed/30 border border-primary-fixed-dim rounded-lg p-4 flex gap-3 items-start">
+<span class="material-symbols-outlined text-secondary mt-0.5" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div>
+<h3 class="font-body text-sm font-bold text-on-primary-fixed">Security Protocol</h3>
+<p class="font-body text-xs text-on-primary-fixed-variant mt-1 leading-relaxed">
+                    Invitations are secured via cryptographically signed tokens valid for 24 hours. Provisioning complies with FR-101 and FR-104 internal governance standards.
+                </p>
+</div>
+</section>
+</main>
+<!-- Fixed Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-md border-t border-outline-variant p-4 pb-safe flex gap-3 z-50">
+<button class="flex-1 bg-transparent border border-outline text-on-surface-variant font-body font-medium text-sm py-3 rounded-md hover:bg-surface-container-high transition-colors active:scale-95">
+            Cancel
+        </button>
+<button class="flex-[2] bg-primary-container text-on-primary font-body font-medium text-sm py-3 rounded-md hover:bg-primary transition-colors active:scale-95 shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">send</span>
+            Send Formal Invitation
+        </button>
+</footer>
+</body></html>

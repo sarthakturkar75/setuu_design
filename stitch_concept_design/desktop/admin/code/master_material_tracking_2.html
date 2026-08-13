@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Material Tracker</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#aec9eb",
+                    "surface-dim": "#dbdad5",
+                    "surface-container-low": "#f5f4ef",
+                    "surface-container-high": "#e9e8e3",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#001e2d",
+                    "surface-container": "#efeee9",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-secondary-container": "#005a7f",
+                    "on-primary-container": "#6f89a9",
+                    "secondary-container": "#8ad1ff",
+                    "inverse-on-surface": "#f2f1ec",
+                    "secondary": "#00658d",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#0090c7",
+                    "on-primary-fixed": "#001d35",
+                    "surface-bright": "#faf9f4",
+                    "tertiary-fixed": "#c6e7ff",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#002233",
+                    "surface-tint": "#46607e",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "primary-fixed": "#d1e4ff",
+                    "outline": "#73777e",
+                    "tertiary": "#00080f",
+                    "outline-variant": "#c3c6ce",
+                    "primary-container": "#00213c",
+                    "on-tertiary-fixed": "#001e2d",
+                    "on-primary": "#ffffff",
+                    "background": "#faf9f4",
+                    "on-secondary": "#ffffff",
+                    "primary": "#000815",
+                    "surface": "#faf9f4",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e3e3de",
+                    "inverse-surface": "#30312e",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e3e3de",
+                    "on-surface-variant": "#43474d",
+                    "primary-fixed-dim": "#aec9eb",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-background": "#1b1c19",
+                    "on-surface": "#1b1c19"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter-md": "24px",
+                    "margin-mobile": "16px",
+                    "margin-tablet": "24px",
+                    "margin-desktop": "32px",
+                    "sidebar-width": "280px",
+                    "rail-width": "72px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                    "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                    "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                    "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                    "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                    "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                    "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                    "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                    "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "500" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Mobile safe area for bottom nav */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-white/85 fixed top-0 w-full z-50 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-4 h-16 transition-all duration-300">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant shadow-sm" data-alt="A professional corporate headshot of an administrative project manager wearing a clean white hardhat and high-visibility yellow vest. The portrait is taken in bright, high-key studio lighting indicative of a modern light-mode SaaS application environment. The background is a crisp, off-white (#FAF9F4) surface, emphasizing corporate reliability, technical precision, and industrial safety standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzjL3MtoW0VhSLFu0TM6DZQY0AVZ1nlNNUYpynmDIT2hodvXvHWl4k0d8mY4ZGCUAO03yVaib_IgIpiTFXsf4w9vI7_69pUeKS1GwEYihTqEIBcc-FN_KfOG9l1jlE9BRccIX3R0ZqrOzZinRwQPJgQoJJkA9-Fi1HQu0K2GfBJxXCBEpgv2lbHqd4iMziPbqMku10LBIRY46itBdDf29VbVYKVbFtLQZRxIeU5KIgK7f70wsPCN6M">
+<h1 class="font-headline text-headline-sm font-bold text-primary">SETUU Enterprise</h1>
+</div>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-150 p-2 rounded-full hover:bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full pt-20 pb-28 px-margin-mobile flex flex-col gap-6 max-w-3xl mx-auto">
+<!-- Page Header & Global Actions -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline text-headline-lg-mobile text-primary tracking-tight">Material Tracker</h2>
+<p class="font-label text-label-md text-on-surface-variant mt-1">HUB: WEST-WING-EXPANSION</p>
+</div>
+</div>
+<!-- Main Scanner Action Area (High Priority) -->
+<button class="w-full bg-primary-container text-on-primary-container rounded-lg p-6 flex flex-col items-center justify-center gap-3 border border-outline-variant shadow-sm hover:shadow-md transition-shadow active:scale-[0.98] duration-200 relative overflow-hidden group">
+<!-- Decorative scan line -->
+<div class="absolute inset-0 w-full h-full pointer-events-none opacity-20 bg-[linear-gradient(to_bottom,transparent_0%,#8ad1ff_50%,transparent_100%)] -translate-y-full group-hover:animate-[scan_2s_ease-in-out_infinite]"></div>
+<span class="material-symbols-outlined text-4xl text-secondary-container" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+<div class="text-center">
+<span class="font-body font-bold text-body-lg block text-on-primary">Field Receipt Scan</span>
+<span class="font-label text-label-md text-on-primary-container opacity-80 block mt-1">INITIATE CAMERA VIEWFINDER</span>
+</div>
+</button>
+</section>
+<!-- Filters & Search -->
+<section class="flex gap-2">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-2 font-body text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors placeholder:text-on-surface-variant/60 shadow-sm" placeholder="Search PO or Item..." type="text">
+</div>
+<button class="bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-on-surface-variant hover:bg-surface-container-low transition-colors shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</section>
+<!-- High-Density Material List -->
+<section class="flex flex-col gap-3">
+<h3 class="font-label text-label-md text-outline tracking-wider uppercase mb-1">Incoming Manifest</h3>
+<!-- Card 1: In Progress / Active -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 flex flex-col gap-3 shadow-sm relative overflow-hidden group">
+<!-- Status Bar Indicator -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex flex-col gap-0.5">
+<span class="font-body font-bold text-body-lg text-on-surface leading-tight">Structural Steel Beams (W12x96)</span>
+<span class="font-label text-label-sm text-on-surface-variant">SUPPLIER: APEX METALS INC.</span>
+</div>
+<!-- Semantic Pill: Active -->
+<div class="bg-secondary-container text-on-secondary-container font-label text-label-sm px-2 py-1 rounded-full whitespace-nowrap flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+                        IN TRANSIT
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-1 pl-2 pb-3 border-b border-surface-variant">
+<div class="flex flex-col">
+<span class="font-label text-[10px] text-outline">PO NUMBER</span>
+<span class="font-label text-label-md text-on-surface">PO-2023-8841</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[10px] text-outline">SPEC ID</span>
+<span class="font-label text-label-md text-on-surface">STL-992-A</span>
+</div>
+</div>
+<div class="flex justify-between items-center pl-2 pt-1">
+<span class="font-label text-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        ETA: TODAY 14:00
+                    </span>
+<button class="border border-secondary text-secondary rounded flex items-center justify-center gap-2 px-3 py-1.5 font-label text-label-md hover:bg-secondary/5 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[16px]">qr_code</span>
+                        SCAN QR
+                    </button>
+</div>
+</div>
+<!-- Card 2: Warning / Issue -->
+<div class="bg-surface-container-lowest rounded-lg border border-error-container p-4 flex flex-col gap-3 shadow-sm relative overflow-hidden group">
+<!-- Status Bar Indicator -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex flex-col gap-0.5">
+<span class="font-body font-bold text-body-lg text-on-surface leading-tight">HVAC Compressor Units</span>
+<span class="font-label text-label-sm text-on-surface-variant">SUPPLIER: THERMO-TECH</span>
+</div>
+<!-- Semantic Pill: Warning/Error -->
+<div class="bg-error-container text-on-error-container font-label text-label-sm px-2 py-1 rounded-full whitespace-nowrap flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                        ON HOLD
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-1 pl-2 pb-3 border-b border-surface-variant">
+<div class="flex flex-col">
+<span class="font-label text-[10px] text-outline">PO NUMBER</span>
+<span class="font-label text-label-md text-on-surface">PO-2023-8902</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[10px] text-outline">SPEC ID</span>
+<span class="font-label text-label-md text-on-surface">HV-COM-44Z</span>
+</div>
+</div>
+<div class="flex justify-between items-center pl-2 pt-1">
+<span class="font-label text-label-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                        QUALITY CHECK FAILED
+                    </span>
+<button class="border border-outline text-on-surface-variant rounded flex items-center justify-center gap-2 px-3 py-1.5 font-label text-label-md bg-surface-container-low cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined text-[16px]">qr_code</span>
+                        LOCKED
+                    </button>
+</div>
+</div>
+<!-- Card 3: Delivered / Success (Using primary-container as proxy for verified) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 flex flex-col gap-3 shadow-sm relative overflow-hidden group opacity-80">
+<!-- Status Bar Indicator -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-container"></div>
+<div class="flex justify-between items-start pl-2">
+<div class="flex flex-col gap-0.5">
+<span class="font-body font-bold text-body-lg text-on-surface leading-tight">High-Grade Portland Cement</span>
+<span class="font-label text-label-sm text-on-surface-variant">SUPPLIER: BUILDCORE MATS</span>
+</div>
+<!-- Semantic Pill: Delivered -->
+<div class="bg-tertiary-container text-on-tertiary-container font-label text-label-sm px-2 py-1 rounded-full whitespace-nowrap flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        DELIVERED
+                    </div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-1 pl-2 pb-3 border-b border-surface-variant">
+<div class="flex flex-col">
+<span class="font-label text-[10px] text-outline">PO NUMBER</span>
+<span class="font-label text-label-md text-on-surface">PO-2023-8810</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-[10px] text-outline">SPEC ID</span>
+<span class="font-label text-label-md text-on-surface">CEM-PT-01</span>
+</div>
+</div>
+<div class="flex justify-between items-center pl-2 pt-1">
+<span class="font-label text-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                        RCVD: 10/24 08:30
+                    </span>
+<button class="bg-surface-variant text-on-surface-variant rounded flex items-center justify-center gap-2 px-3 py-1.5 font-label text-label-md border border-outline-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                        VIEW LOG
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component) - Mapped Semantic Intent to 'Projects' given Material Tracking nature -->
+<nav class="bg-white/85 fixed bottom-0 w-full z-50 backdrop-blur-md border-t border-outline-variant shadow-lg flex justify-around items-center pt-2 pb-safe md:hidden">
+<!-- Dashboard (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label text-label-sm">Dashboard</span>
+</button>
+<!-- Projects (Active - Intent match for Material Tracker) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label text-label-sm font-bold">Projects</span>
+</button>
+<!-- Tasks (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="font-label text-label-sm">Tasks</span>
+</button>
+<!-- Admin (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined mb-1">admin_panel_settings</span>
+<span class="font-label text-label-sm">Admin</span>
+</button>
+</nav>
+<style>
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</body></html>

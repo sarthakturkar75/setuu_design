@@ -1,0 +1,1 @@
+export default function ClientPage() { return <div className="p-4"><h1>Client Dashboard</h1></div> }

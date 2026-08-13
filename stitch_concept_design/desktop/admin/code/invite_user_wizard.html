@@ -1,0 +1,231 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Invite User - SETUU Enterprise</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Design System -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container-high": "#e9e8e3",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "secondary": "#00658d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "tertiary-fixed": "#c6e7ff",
+                        "background": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "surface-dim": "#dbdad5",
+                        "surface-tint": "#46607e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1b1c19",
+                        "secondary-container": "#8ad1ff",
+                        "primary-container": "#00213c",
+                        "outline": "#73777e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-highest": "#e3e3de",
+                        "surface": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-surface-variant": "#43474d",
+                        "tertiary-container": "#002233",
+                        "inverse-surface": "#30312e",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-primary": "#aec9eb",
+                        "on-surface": "#1b1c19",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#00080f",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-low": "#f5f4ef",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-error": "#ffffff",
+                        "primary": "#000815",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#0090c7",
+                        "on-primary-fixed": "#001d35"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 20px); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pt-safe">
+<!-- TopAppBar (Transactional - Hidden Nav per instructions, but keeping structure for wizard title) -->
+<header class="fixed top-0 w-full z-50 bg-white/85 dark:bg-surface-container-high/85 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-4 h-16 pt-safe">
+<button aria-label="Close wizard" class="p-2 -ml-2 text-primary hover:bg-surface-container rounded-full transition-colors" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h1 class="font-headline text-headline-sm font-bold text-primary">Invite User</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 px-4 py-6 pb-24 md:max-w-2xl md:mx-auto md:w-full space-y-8">
+<!-- Header Text -->
+<div class="space-y-2">
+<h2 class="font-headline text-xl font-bold text-primary">User Details</h2>
+<p class="text-sm text-on-surface-variant font-body">Enter the invitee's information and assign their initial platform role.</p>
+</div>
+<!-- Form Fields -->
+<form class="space-y-6">
+<!-- Basic Info Grid -->
+<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+<div class="space-y-1">
+<label class="font-label text-label-md text-on-surface-variant block" for="first_name">First Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all" id="first_name" placeholder="Jane" type="text">
+</div>
+<div class="space-y-1">
+<label class="font-label text-label-md text-on-surface-variant block" for="last_name">Last Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all" id="last_name" placeholder="Doe" type="text">
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-label text-label-md text-on-surface-variant block" for="email">Email Address (Required)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-10 pr-4 py-3 text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all" id="email" placeholder="jane.doe@example.com" required="" type="email">
+</div>
+</div>
+<hr class="border-outline-variant my-6">
+<!-- Role Selection (Bento-style radio cards) -->
+<div class="space-y-3">
+<label class="font-label text-label-md text-on-surface-variant block">Platform Role</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<!-- Role: Project Manager -->
+<label class="relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl p-4 cursor-pointer hover:bg-surface-container-low transition-colors has-[:checked]:border-primary-container has-[:checked]:bg-primary-fixed/20 has-[:checked]:shadow-sm">
+<input class="peer sr-only" name="role" type="radio" value="pm">
+<div class="flex items-start justify-between mb-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]">engineering</span>
+<span class="font-headline font-bold text-sm">Project Manager</span>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary-container peer-checked:bg-primary-container flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-white text-[14px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant font-body">Full access to assigned projects, milestones, and workforce oversight.</p>
+</label>
+<!-- Role: Employee -->
+<label class="relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl p-4 cursor-pointer hover:bg-surface-container-low transition-colors has-[:checked]:border-primary-container has-[:checked]:bg-primary-fixed/20 has-[:checked]:shadow-sm">
+<input checked="" class="peer sr-only" name="role" type="radio" value="employee">
+<div class="flex items-start justify-between mb-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]">construction</span>
+<span class="font-headline font-bold text-sm">Employee</span>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary-container peer-checked:bg-primary-container flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-white text-[14px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant font-body">Field worker access. Can view tasks, upload media, and update progress.</p>
+</label>
+<!-- Role: Vendor -->
+<label class="relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl p-4 cursor-pointer hover:bg-surface-container-low transition-colors has-[:checked]:border-primary-container has-[:checked]:bg-primary-fixed/20 has-[:checked]:shadow-sm md:col-span-2">
+<input class="peer sr-only" name="role" type="radio" value="vendor">
+<div class="flex items-start justify-between mb-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]">local_shipping</span>
+<span class="font-headline font-bold text-sm">Vendor / Subcontractor</span>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary-container peer-checked:bg-primary-container flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-white text-[14px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant font-body">Isolated dashboard. Only views assigned materials and tasks.</p>
+</label>
+<label class="relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl p-4 cursor-pointer hover:bg-surface-container-low transition-colors has-[:checked]:border-primary-container has-[:checked]:bg-primary-fixed/20 has-[:checked]:shadow-sm md:col-span-2">
+<input class="peer sr-only" name="role" type="radio" value="client">
+<div class="flex items-start justify-between mb-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[24px]">business</span>
+<span class="font-headline font-bold text-sm">Client</span>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary-container peer-checked:bg-primary-container flex items-center justify-center transition-all">
+<span class="material-symbols-outlined text-white text-[14px] opacity-0 peer-checked:opacity-100" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant font-body">Read-only access to assigned project progress, approvals, and handover documentation.</p>
+</label></div>
+</div>
+<hr class="border-outline-variant my-6">
+<!-- Organization / Project Assignment -->
+<div class="space-y-4">
+<label class="font-label text-label-md text-on-surface-variant block">Initial Assignments</label>
+<div class="space-y-1">
+<label class="text-xs text-on-surface-variant font-body block" for="org_select">Department / Organization</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary-container focus:border-primary-container appearance-none transition-all" id="org_select">
+<option>Civil Engineering Div.</option>
+<option>Electrical Contracting</option>
+<option>Site Logistics</option>
+</select>
+</div>
+<!-- Permissions Checkboxes -->
+<div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/50 space-y-3 mt-4">
+<h4 class="font-label text-label-md text-primary mb-2">Security Overrides</h4>
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container bg-surface-container-lowest" type="checkbox">
+<span class="text-sm font-body text-on-surface">Allow offline sync for sensitive documents</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container bg-surface-container-lowest" type="checkbox">
+<span class="text-sm font-body text-on-surface">Bypass initial 2FA requirement (Not recommended)</span>
+</label>
+</div>
+</div>
+</form>
+</main>
+<!-- Fixed Bottom Action Area (Transactional wizard pattern) -->
+<div class="fixed bottom-0 w-full bg-white/90 backdrop-blur-md border-t border-outline-variant p-4 pb-safe flex gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-40">
+<button class="flex-1 py-3 px-4 bg-surface-container-highest hover:bg-surface-dim text-on-surface font-body font-semibold rounded-lg transition-colors text-center" type="button">
+            Cancel
+        </button>
+<button class="flex-[2] py-3 px-4 bg-primary-container hover:bg-primary text-on-primary font-body font-semibold rounded-lg shadow-sm transition-colors text-center flex items-center justify-center gap-2" type="button">
+<span class="">Send Invitation</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+
+
+</body></html>

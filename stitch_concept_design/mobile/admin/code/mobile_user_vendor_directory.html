@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SETUU Enterprise - Mobile User &amp; Vendor Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#efeee9",
+                      "inverse-on-surface": "#f2f1ec",
+                      "outline-variant": "#c3c6ce",
+                      "surface-container-highest": "#e3e3de",
+                      "on-tertiary-fixed": "#001e2d",
+                      "inverse-surface": "#30312e",
+                      "tertiary": "#00080f",
+                      "surface-dim": "#dbdad5",
+                      "on-error": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-background": "#1b1c19",
+                      "primary-fixed-dim": "#aec9eb",
+                      "tertiary-container": "#002233",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "outline": "#73777e",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#001d35",
+                      "secondary-container": "#8ad1ff",
+                      "tertiary-fixed": "#c6e7ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-surface": "#1b1c19",
+                      "error": "#ba1a1a",
+                      "primary": "#000815",
+                      "secondary-fixed-dim": "#88cffc",
+                      "surface-variant": "#e3e3de",
+                      "surface-container-high": "#e9e8e3",
+                      "on-surface-variant": "#43474d",
+                      "secondary": "#00658d",
+                      "error-container": "#ffdad6",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "surface-container-low": "#f5f4ef",
+                      "background": "#faf9f4",
+                      "on-secondary-container": "#005a7f",
+                      "primary-container": "#00213c",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-primary-container": "#6f89a9",
+                      "surface-bright": "#faf9f4",
+                      "surface-tint": "#46607e",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "surface": "#faf9f4",
+                      "on-tertiary-container": "#0090c7",
+                      "inverse-primary": "#aec9eb",
+                      "primary-fixed": "#d1e4ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": ["Merriweather"],
+                      "display": ["Merriweather"],
+                      "body": ["Inter"],
+                      "label": ["JetBrains Mono"]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Mobile specific constraint for visual representation */
+        .mobile-container {
+            max-width: 390px;
+            margin: 0 auto;
+            position: relative;
+            background-color: #faf9f4;
+            min-height: 100vh;
+            overflow-x: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Swipe Action Animation Utility */
+        .swipe-reveal {
+            transform: translateX(-120px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Specific Semantic Colors from Prompt/Guidelines */
+        .bg-semantic-sky { background-color: #0284C7; }
+        .bg-semantic-emerald { background-color: #16A34A; }
+        .bg-semantic-crimson { background-color: #DC2626; }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim">
+<div class="mobile-container pb-24">
+<!-- TopAppBar Component -->
+<header class="fixed top-0 w-full z-50 max-w-[390px] backdrop-blur-md border-b border-outline-variant bg-white/85 shadow-sm">
+<div class="flex justify-between items-center px-4 h-16 w-full">
+<div class="flex items-center gap-3">
+<img alt="Admin User Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small, professional headshot of an administrative user, clear lighting, set against a neutral corporate background, serving as a profile avatar in a mobile application header." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUEUdexQmCmMwTH25s5iDH4AjtvxBBV1Tis2jP1nbgvwyk4e3LM3sPTNMBeb7gVrVjQ1G1TTkiFmFM6CpdoTUIfrPmJD6-lKftlF3Nn409DtC_S5Se2p1fYNWri5yNxq0Z1GGLittgoFqVgHrJKphIs1KbsCXO-zJRVJLYhzH-AXhfQIwtN7iR48r7M8JFar0AX5MgLe6xAE2A-kDqdV02IaCgCcwiXadj02xIyutDBBWw5ApayJcm"/>
+<span class="font-headline text-lg font-bold text-primary">SETUU Enterprise</span>
+</div>
+<button class="p-2 text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-150 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-4">
+<!-- Page Header & Search -->
+<div class="mb-6">
+<h1 class="font-headline text-2xl font-bold text-primary mb-1">Directory</h1>
+<p class="text-sm text-on-surface-variant font-body mb-4">Manage Users &amp; Vendors</p>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container rounded-lg border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary pl-10 pr-4 py-3 text-sm text-on-surface font-body outline-none placeholder:text-outline shadow-sm transition-all" placeholder="Search by name, role, or ID..." type="text"/>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-4 py-1.5 rounded-full bg-primary-container text-on-primary-container text-xs font-label font-medium whitespace-nowrap">All Actors</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant text-xs font-label whitespace-nowrap">PMs</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant text-xs font-label whitespace-nowrap">Employees</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant text-xs font-label whitespace-nowrap">Vendors</button>
+</div>
+<!-- Directory List -->
+<div class="space-y-3">
+<!-- Standard Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 flex items-center gap-4 shadow-sm relative overflow-hidden">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a female Project Manager in her 30s wearing a hardhat and high-visibility vest on a modern industrial construction site. Bright, clear lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfQQUd3s3nmHt_F6-0TZAdoV4X9BcJlsnEZHBwoClqOR8tq5utYcnlYsFMs4OPu74eI38jNgNC5nXGpi4eB6TUWm-KlbA4i6HOXU07SofhrmfzmR4O4owshL3mV4w6riBd7x3qMXGEh4MSAnSDXmRm9OjwJJeACKRreIrQ0MrqKXAhz3uXsevN1Jxsd2oy3VrgGeYZXwJ8LN4zEOMkYom42AWOj1qa18VJRzApHSjiAU1s-6zlIv5F"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-body font-bold text-primary truncate text-base">Sarah Jenkins</h3>
+<p class="font-label text-xs text-on-surface-variant truncate mt-0.5">PM-EAST-01</p>
+</div>
+<span class="px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-[10px] font-label uppercase tracking-wider font-bold">PM</span>
+</div>
+<!-- Swipe Revealed Item 2 -->
+<div class="relative bg-surface-container-lowest border border-outline-variant rounded-lg overflow-hidden shadow-sm h-[74px]">
+<!-- Swipe Actions Background -->
+<div class="absolute inset-0 flex justify-end">
+<button class="w-[60px] h-full bg-semantic-sky flex flex-col items-center justify-center text-white active:bg-blue-600 transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">call</span>
+<span class="text-[9px] font-label mt-0.5">Call</span>
+</button>
+<button class="w-[60px] h-full bg-semantic-emerald flex flex-col items-center justify-center text-white active:bg-green-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="text-[9px] font-label mt-0.5">Msg</span>
+</button>
+<button class="w-[60px] h-full bg-semantic-crimson flex flex-col items-center justify-center text-white active:bg-red-800 transition-colors">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">block</span>
+<span class="text-[9px] font-label mt-0.5">Suspend</span>
+</button>
+</div>
+<!-- Swipeable Content Surface -->
+<div class="absolute inset-0 bg-surface-container-lowest border-r border-outline-variant p-3 flex items-center gap-4 swipe-reveal z-10 cursor-grab">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A portrait of a male subcontractor in dirty work clothes, looking serious. Industrial warehouse setting in the background. Natural, slightly gritty lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrcOHyvHcyCey2ubQHxPBMw5gA2vFt8Bf5ZNG8uGcg911zy2R1QhGzqgZ7U8-VtyxG9vYnzYaL8YrdGnckYizOLR59RKdwMy4QDnX2DAMThNFLPiTlpM7FLjjTL_6oPJ3YNL6LSIQ__tSNpRLMU7gE4u2Gk9y7zHcdbyz0aBbj4JvCFMvhTHZg7VvxPIOzxvzGX00V-S9vBx96sT6zvLQzk_wM-sGLj2gDwUc1IgvWv7VilhQt74Cg"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-400 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-body font-bold text-primary truncate text-base">Marcus Thorne</h3>
+<p class="font-label text-xs text-on-surface-variant truncate mt-0.5">VND-STEEL-44</p>
+</div>
+<span class="px-2 py-1 rounded bg-surface-variant text-on-surface-variant text-[10px] font-label uppercase tracking-wider font-bold">Vendor</span>
+</div>
+</div>
+<!-- Standard Item 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 flex items-center gap-4 shadow-sm relative overflow-hidden opacity-75">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant grayscale" data-alt="Headshot of a male site employee in his 20s. Wearing safety glasses and a standard industrial uniform. Neutral, well-lit background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdi8h8PysnYzkqHqaV5huFtjnmZZRen2Rl1LO4ep7eQ-urduEIdSl4xIWLdsFBZXQjSuoqwSw0yYZ9RL6SrAfpEPzMYh7OaI-cU7Q9wSeN7-_FGqn5gEXSNW0p3VOi6tE6v19sQKqsrXnBq-bPWZqJR1D9gDKpydxTPsW1idJTFwWd3NcwUaz6D9Yo6cgBAFaibt1nrmOOEGecKQB9tFEbftOopY6zAvrcepQEwKbi-Qebrq04OYnB"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-body font-bold text-primary truncate text-base">David Kim</h3>
+<p class="font-label text-xs text-error truncate mt-0.5">EMP-TECH-89 (Suspended)</p>
+</div>
+<span class="px-2 py-1 rounded bg-surface-container text-on-surface text-[10px] font-label uppercase tracking-wider font-bold border border-outline-variant">Employee</span>
+</div>
+<!-- Standard Item 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 flex items-center gap-4 shadow-sm relative overflow-hidden">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a female structural engineer reviewing plans on a tablet. Modern office lighting with industrial concrete walls behind her." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDtCsoK_ff6qNybCMLEoNVGcs-LyEuxSm_cNQYKx3owxNYphGhRUncHjpqIZhGWrN9C3fWS0Lm7iLYFe90jtyKyKUYRqE5ZThaa-Sc1rUjsgNx9i2YFdo1zZcGEEr1vHGYngFa_emjxA8IB5cPYBIX_09wBLmn0awVK8Uu2CTmKBXgmsn0WoF-WZCOtdl1k2GYkny5Q9jLQgJ-vhkKsKtdQTv9KrK3gT0wS_BAA4rrSBDhQpAHpdoi"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-body font-bold text-primary truncate text-base">Elena Rostova</h3>
+<p class="font-label text-xs text-on-surface-variant truncate mt-0.5">PM-NORTH-12</p>
+</div>
+<span class="px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-[10px] font-label uppercase tracking-wider font-bold">PM</span>
+</div>
+<!-- Standard Item 5 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 flex items-center gap-4 shadow-sm relative overflow-hidden">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline font-bold text-lg border border-outline-variant">AW</div>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-amber-500 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-body font-bold text-primary truncate text-base">Atlas Welding Inc.</h3>
+<p class="font-label text-xs text-on-surface-variant truncate mt-0.5">VND-WELD-01</p>
+</div>
+<span class="px-2 py-1 rounded bg-surface-variant text-on-surface-variant text-[10px] font-label uppercase tracking-wider font-bold">Vendor</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Component -->
+<nav class="fixed bottom-0 w-full z-50 max-w-[390px] backdrop-blur-md border-t border-outline-variant bg-white/85 shadow-lg">
+<div class="flex justify-around items-center pt-2 pb-safe w-full pb-6">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label text-[10px] mt-1">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-label text-[10px] mt-1">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200 rounded-xl">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="font-label text-[10px] mt-1">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-[10px] mt-1 font-bold">Admin</span>
+</button>
+</div>
+</nav>
+<!-- Floating Action Button for adding new user (Contextual to Directory) -->
+<button class="fixed bottom-24 right-4 w-14 h-14 bg-primary text-on-primary rounded-xl shadow-lg flex items-center justify-center hover:bg-primary-container transition-colors active:scale-95 max-w-[390px] z-40">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">person_add</span>
+</button>
+</div>
+</body></html>

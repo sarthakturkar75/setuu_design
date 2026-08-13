@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Admin Topbar Reference - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Merriweather', 'serif'],
+          },
+          colors: {
+            primary: '#00213c',
+            surface: {
+              DEFAULT: '#faf9f4',
+              dim: '#dbdad5',
+              bright: '#faf9f4',
+              'container-lowest': '#ffffff',
+              'container-low': '#f5f4ef',
+              container: '#efeee9',
+              'container-high': '#e9e8e3',
+              'container-highest': '#e3e2dd',
+            },
+            'on-surface': {
+              DEFAULT: '#1c1b1a',
+              variant: '#484644',
+            },
+            outline: {
+              DEFAULT: '#797774',
+              variant: '#c9c6c3',
+            },
+            error: {
+              DEFAULT: '#ba1a1a',
+              container: '#ffdad6',
+              'on-container': '#410002',
+            }
+          },
+          borderRadius: {
+            'xl': '8px',
+            '2xl': '12px',
+          },
+          boxShadow: {
+            'elevation-1': '0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
+            'elevation-2': '0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-utilities">
+    .glassmorphic-topbar {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .grid-bg {
+      background-size: 40px 40px;
+      background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-serif h-screen flex flex-col font-sans overflow-hidden">
+<!-- BEGIN: Admin Topbar Component -->
+<!-- The main top navigation bar with glassmorphism and elevation -->
+<header class="glassmorphic-topbar sticky top-0 z-50 w-full h-16 shadow-elevation-2 border-b border-outline-variant flex items-center justify-between px-6 shrink-0 transition-all duration-300">
+<!-- Left Section: Brand and Navigation -->
+<div class="flex items-center gap-8 h-full">
+<!-- Brand Title -->
+<a class="text-xl font-bold text-primary tracking-tight font-serif shrink-0 hover:opacity-80 transition-opacity" href="#">
+        Setuu Enterprise
+      </a>
+<!-- Global Navigation Links -->
+<nav class="hidden md:flex items-center h-full gap-1">
+<a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">Home</a>
+<!-- Active Link Example -->
+<div class="relative h-full flex items-center">
+<a class="px-3 py-2 text-sm font-semibold text-primary transition-colors" href="#">Projects</a>
+<div class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-t-full"></div>
+</div>
+<a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">Alpha</a>
+<a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-xl hover:bg-surface-container" href="#">Materials</a>
+</nav>
+</div>
+<!-- Center Section: Search Bar -->
+<div class="flex-1 max-w-xl px-6 hidden lg:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-outline group-focus-within:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input autocomplete="off" class="block w-full pl-10 pr-12 py-2 border border-outline-variant rounded-2xl leading-5 bg-surface-container-lowest placeholder-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-all shadow-sm" placeholder="Search..." type="text">
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-xs text-outline font-sans border border-outline-variant rounded px-1.5 py-0.5 bg-surface-container-low">⌘K</span>
+</div>
+</div>
+</div>
+<!-- Right Section: Actions and Profile -->
+<div class="flex items-center gap-4 shrink-0">
+<!-- Status Indicator -->
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary text-white rounded-full text-xs font-medium shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+        Syncing
+      </div>
+<!-- Emergency Action -->
+<button class="hidden sm:inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full text-error-on-container bg-error-container hover:bg-error hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-error shadow-sm">
+        Emergency
+      </button>
+<div class="w-px h-6 bg-outline-variant hidden sm:block mx-1"></div>
+<!-- Icon Actions -->
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary relative">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<!-- Unread badge -->
+<span class="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-error ring-2 ring-white"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Profile Avatar -->
+<button class="flex items-center focus:outline-none ml-2">
+<div class="h-8 w-8 rounded-xl bg-outline-variant flex items-center justify-center text-xs font-bold text-white overflow-hidden shadow-sm border border-outline-variant hover:border-primary transition-colors">
+          img
+        </div>
+</button>
+</div>
+</header>
+<!-- END: Admin Topbar Component -->
+<!-- BEGIN: Placeholder Workspace Area -->
+<main class="flex-1 grid-bg overflow-auto p-8 relative">
+<div class="max-w-4xl mx-auto flex flex-col items-center justify-center h-full text-center opacity-50">
+<h2 class="text-2xl font-serif text-on-surface-variant mb-2">Workspace Canvas</h2>
+<p class="text-sm text-outline">The area below the topbar is reserved for main content.</p>
+</div>
+</main>
+<!-- END: Placeholder Workspace Area -->
+</body></html>

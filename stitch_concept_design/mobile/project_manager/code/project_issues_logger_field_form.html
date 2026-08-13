@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Project Issues Logger</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "secondary-fixed": "#c6e7ff",
+                        "background": "#faf9f4",
+                        "secondary": "#00658d",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-dim": "#dbdad5",
+                        "on-primary-fixed": "#001d35",
+                        "on-background": "#1b1c19",
+                        "surface-container-highest": "#e3e3de",
+                        "on-secondary-fixed": "#001e2d",
+                        "primary": "#000815",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c3c6ce",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "tertiary": "#00080f",
+                        "outline": "#73777e",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "on-tertiary-container": "#0090c7",
+                        "surface": "#faf9f4",
+                        "inverse-surface": "#30312e",
+                        "on-secondary-container": "#005a7f",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#faf9f4",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "secondary-container": "#8ad1ff",
+                        "surface-container": "#efeee9",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "tertiary-container": "#002233",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter-md": "24px",
+                        "margin-mobile": "16px",
+                        "margin-tablet": "24px",
+                        "margin-desktop": "32px",
+                        "sidebar-width": "280px",
+                        "rail-width": "72px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    },
+                    "fontSize": {}
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col pb-24 md:pb-0 md:flex-row antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Top AppBar for Mobile/Tablet -->
+<header class="md:hidden flex justify-between items-center w-full px-4 h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Project Manager Profile" class="object-cover w-full h-full" data-alt="A professional headshot of a construction project manager wearing a hard hat, confident expression, well-lit outdoor daylight setting, realistic photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLFEdsr1Is7W3Mz1IOeAlAZGBDeYS6qJkIG73P6b0HtDt6fhAJB_OD-ZfqllUbULCo3EPDUHwmI5etjbhEUyKLM_nev8DKfibRHAzpiJeCAaBxLEOcm32GaKaRP7m9067JphQ3DtUp4-zM_NtKw3vFMf_93-3L3kd_WCje3oBIe7HZNCYTkm0oUtvsOW43KmHMhgnnIH0XnfOeYSRWLwJoFnyjeUrqwhhwWd8ndhxEUEqM0Y05dz_O"/>
+</div>
+<span class="font-headline font-bold text-primary dark:text-primary-fixed-dim text-lg leading-tight">Setuu Enterprise</span>
+</div>
+<button class="text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high transition-colors p-2 rounded-full scale-95 active:opacity-80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- SideNav for Web -->
+<nav class="hidden md:flex fixed inset-y-0 left-0 z-[60] flex-col h-full w-72 rounded-r-xl bg-surface dark:bg-surface-container-low shadow-xl">
+<div class="p-6 border-b border-surface-container dark:border-surface-container-low">
+<div class="flex items-center gap-4 mb-4">
+<div class="h-12 w-12 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Avatar" class="object-cover w-full h-full" data-alt="A professional headshot of a construction project manager wearing a hard hat, confident expression, well-lit outdoor daylight setting, realistic photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl3Td2zJI3uNmgqiyLLkdqZiTXa6_r_mZPcT2hwcSu6Ugan95Wh--8P8zpj0QB8aOy8P5uVEvl5J4xzHRXDHRk9hQ1BGyxs7xCc1ywmQEIWJ7Z4aFdRW2ahxNUfJPF5R_d-8YmiOzec_OfnGZkWsJP8F2VLNBDrYEDQxws6uNN5ls1DWsshwYd-yv3Ox833-uFu4vKKBY1wzraAhrFjNvVaB6loYQK56tNGKGxFpMS9XlJCSJxEwJe"/>
+</div>
+<div>
+<h2 class="font-headline font-bold text-primary dark:text-primary-fixed-dim text-lg">Lead PM</h2>
+<p class="font-label text-label-sm text-on-surface-variant">Site ID: DXB-702</p>
+</div>
+</div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-[#16A34A]"></span>
+<span class="font-label text-label-sm text-on-surface-variant">Offline Mode Available</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="foundation">foundation</span>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+<span>Media</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-bold hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span>Tasks</span>
+</a>
+<div class="mt-8 mb-2 px-4 text-xs font-label text-on-surface-variant uppercase tracking-wider">System</div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+<span>Sync Queue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span>Drawing Hub</span>
+</a>
+</div>
+<div class="p-4 border-t border-surface-container dark:border-surface-container-low">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-transform duration-300 ease-in-out font-body text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-2xl mx-auto md:ml-72 p-4 md:p-8">
+<div class="mb-6">
+<div class="flex items-center gap-2 text-sm font-label text-on-surface-variant mb-2">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">DXB-702</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-medium">Log Issue</span>
+</div>
+<h1 class="font-headline text-2xl md:text-3xl font-bold text-primary leading-tight">Log Field Issue</h1>
+<p class="font-body text-sm text-on-surface-variant mt-1">Record site discrepancies immediately for PM review.</p>
+</div>
+<form class="space-y-6">
+<!-- Severity Selection -->
+<section class="bg-surface-container-lowest p-5 rounded-lg border border-[#E0E0E0] shadow-sm">
+<label class="block font-label text-sm font-semibold text-on-surface mb-3 uppercase tracking-wider">Severity Level</label>
+<div class="flex flex-col gap-3">
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="severity" type="radio" value="critical"/>
+<div class="w-full h-12 flex items-center justify-between px-4 rounded-md border-2 border-outline-variant bg-surface-container-lowest peer-checked:border-[#DC2626] peer-checked:bg-[#FEF2F2] transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#DC2626] fill-icon">warning</span>
+<span class="font-body font-semibold text-on-surface peer-checked:text-[#991B1B]">Critical</span>
+</div>
+<span class="text-xs font-label text-on-surface-variant peer-checked:text-[#DC2626]">Safety/Blocker</span>
+</div>
+</label>
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="severity" type="radio" value="high"/>
+<div class="w-full h-12 flex items-center justify-between px-4 rounded-md border-2 border-outline-variant bg-surface-container-lowest peer-checked:border-[#D97706] peer-checked:bg-[#FFFBEB] transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#D97706] fill-icon">error</span>
+<span class="font-body font-semibold text-on-surface peer-checked:text-[#92400E]">High</span>
+</div>
+<span class="text-xs font-label text-on-surface-variant peer-checked:text-[#D97706]">Major Delay</span>
+</div>
+</label>
+<label class="relative cursor-pointer group">
+<input checked="" class="peer sr-only" name="severity" type="radio" value="low"/>
+<div class="w-full h-12 flex items-center justify-between px-4 rounded-md border-2 border-outline-variant bg-surface-container-lowest peer-checked:border-[#0284C7] peer-checked:bg-[#F0F9FF] transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#0284C7] fill-icon">info</span>
+<span class="font-body font-semibold text-on-surface peer-checked:text-[#075985]">Low</span>
+</div>
+<span class="text-xs font-label text-on-surface-variant peer-checked:text-[#0284C7]">Observation</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Description -->
+<section class="bg-surface-container-lowest p-5 rounded-lg border border-[#E0E0E0] shadow-sm">
+<div class="flex justify-between items-center mb-3">
+<label class="block font-label text-sm font-semibold text-on-surface uppercase tracking-wider" for="issue_desc">Description &amp; Root Cause</label>
+<button class="text-primary-container hover:bg-surface-container p-2 rounded-full transition-colors flex items-center justify-center group" title="Voice to Text" type="button">
+<span class="material-symbols-outlined group-hover:text-secondary transition-colors">mic</span>
+</button>
+</div>
+<textarea class="w-full rounded-md border-outline-variant bg-surface-container-lowest text-on-surface font-body p-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none shadow-inner" id="issue_desc" name="issue_desc" placeholder="Describe the issue observed on site..." rows="5"></textarea>
+<p class="font-label text-xs text-on-surface-variant mt-2 text-right">0/500</p>
+</section>
+<!-- Location Meta -->
+<section class="bg-surface-container-lowest p-5 rounded-lg border border-[#E0E0E0] shadow-sm">
+<label class="block font-label text-sm font-semibold text-on-surface mb-3 uppercase tracking-wider">Location Data (Auto-captured)</label>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-3 rounded border border-outline-variant">
+<p class="font-label text-xs text-on-surface-variant mb-1">LAT / LONG</p>
+<p class="font-label text-sm text-on-surface">25.2048° N, 55.2708° E</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded border border-outline-variant">
+<p class="font-label text-xs text-on-surface-variant mb-1">TIMESTAMP (UTC)</p>
+<p class="font-label text-sm text-on-surface">2023-10-27T14:32:01Z</p>
+</div>
+</div>
+</section>
+<div class="pt-4 pb-20 md:pb-4 flex justify-end gap-4">
+<button class="px-6 py-3 rounded-lg font-body font-semibold text-primary border border-outline hover:bg-surface-container transition-colors" type="button">Cancel</button>
+<button class="px-6 py-3 rounded-lg font-body font-semibold text-on-primary bg-primary-container hover:bg-primary transition-colors shadow-sm flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-sm">send</span>
+                     Submit Issue
+                 </button>
+</div>
+</form>
+</main>
+<!-- Floating Action Button for Media -->
+<button class="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-40 bg-primary-container text-on-primary-container hover:bg-primary text-white p-4 rounded-xl shadow-lg flex items-center gap-3 transition-transform hover:-translate-y-1 active:scale-95 group">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">add_a_photo</span>
+<span class="font-body font-semibold pr-2">Attach Photo Evidence</span>
+</button>
+<!-- BottomNavBar for Mobile -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-white/85 dark:bg-surface-container-highest/85 backdrop-blur-md rounded-t-xl border-t border-white/20 dark:border-primary-fixed-dim/10 shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all duration-200 active:scale-90 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all duration-200 active:scale-90 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="foundation">foundation</span>
+<span class="font-body text-label-sm mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all duration-200 active:scale-90 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+<span class="font-body text-label-sm mt-1">Media</span>
+</a>
+<!-- Active State for Tasks (assuming Issues log falls under tasks/work) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-xl p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-body text-label-sm mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all duration-200 active:scale-90 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-body text-label-sm mt-1">Admin</span>
+</a>
+</nav>
+<script>
+        // Simple script to handle severity selection visual updates
+        document.querySelectorAll('input[name="severity"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                // The CSS peer-checked classes handle most of the styling, 
+                // but we could add more complex logic here if needed.
+            });
+        });
+    </script>
+</body></html>

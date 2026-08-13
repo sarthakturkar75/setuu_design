@@ -1,0 +1,244 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - PM Mobile Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#aec9eb",
+                      "primary-container": "#00213c",
+                      "secondary-fixed": "#c6e7ff",
+                      "background": "#faf9f4",
+                      "secondary": "#00658d",
+                      "secondary-fixed-dim": "#88cffc",
+                      "surface-container-low": "#f5f4ef",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "surface-dim": "#dbdad5",
+                      "on-primary-fixed": "#001d35",
+                      "on-background": "#1b1c19",
+                      "surface-container-highest": "#e3e3de",
+                      "on-secondary-fixed": "#001e2d",
+                      "primary": "#000815",
+                      "error": "#ba1a1a",
+                      "outline-variant": "#c3c6ce",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "tertiary": "#00080f",
+                      "outline": "#73777e",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#1b1c19",
+                      "on-tertiary-container": "#0090c7",
+                      "surface": "#faf9f4",
+                      "inverse-surface": "#30312e",
+                      "on-secondary-container": "#005a7f",
+                      "on-error": "#ffffff",
+                      "primary-fixed": "#d1e4ff",
+                      "on-surface-variant": "#43474d",
+                      "on-error-container": "#93000a",
+                      "surface-bright": "#faf9f4",
+                      "on-primary-container": "#6f89a9",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-tertiary": "#ffffff",
+                      "inverse-primary": "#aec9eb",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "surface-container-high": "#e9e8e3",
+                      "on-tertiary-fixed": "#001e2d",
+                      "tertiary-fixed": "#c6e7ff",
+                      "secondary-container": "#8ad1ff",
+                      "surface-container": "#efeee9",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "tertiary-container": "#002233",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e3e3de",
+                      "surface-tint": "#46607e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {}
+            },
+          },
+        }
+    </script>
+<style>
+        /* Specific requirement overrides avoiding generic tailwind classes as per instructions */
+        .bg-amber-offline { background-color: #D97706; }
+        .border-amber-optimistic { border-color: #D97706; }
+        .text-amber-optimistic { color: #D97706; }
+        
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 1; border-color: rgba(217, 119, 6, 1); }
+            50% { opacity: 0.9; border-color: rgba(217, 119, 6, 0.4); }
+        }
+        .animate-optimistic-pulse {
+            animation: subtle-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface docked full-width top-0 border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-4 h-16 z-40 sticky top-0">
+<div class="flex items-center gap-3">
+<button aria-label="Project Manager Profile" class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center scale-95 active:opacity-80 transition-transform overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up, highly detailed portrait of a professional project manager in a well-lit modern corporate environment. The lighting is bright and soft, adhering to a light-mode aesthetic with crisp whites and subtle blues. The subject looks confident, conveying industrial reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLXfwO1jixWAtbuSgTyFYzVr74zjQ1zQXavxt8xTHLfqOOR0xnf8ww7RiOUHXl467Wr6oPckoiH4gquhezvMaa1FmDUf-Xyg2gNVm0mGUuyakjjIQAs6dy6aljv0g5qls7S6VgTERDZ3TdBT7rKqZt5oLB7Uborci7v193sdAKcZsVAqj07XEIgb6M_Dcg8AWyypUe--SY9jDCOACbtr_E5cuyBjT2twYq69upRO6gN6GXfkyiSE-l">
+</button>
+<h1 class="font-headline font-bold text-primary text-[18px]">Setuu Enterprise</h1>
+</div>
+<button aria-label="Settings" class="w-12 h-12 flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors scale-95 active:opacity-80 rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<!-- Offline Sync Banner -->
+<div class="sticky top-16 z-30 h-9 w-full bg-amber-offline text-[#1b1c19] flex items-center justify-center shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">cloud_off</span>
+<span class="font-label text-[12px] font-bold tracking-wide">Offline - Changes Saved Locally</span>
+</div>
+</div>
+<!-- Main Scrollable Canvas -->
+<main class="flex-1 w-full max-w-lg mx-auto p-4 space-y-6">
+<!-- Project Context Header -->
+<section class="space-y-1">
+<div class="flex justify-between items-center">
+<h2 class="font-headline text-[24px] font-bold text-primary">Terminal Expansion</h2>
+<span class="font-label text-[10px] bg-surface-container-high text-on-surface-variant px-2 py-1 rounded-DEFAULT uppercase tracking-wider">Site: DXB-702</span>
+</div>
+<p class="font-body text-[14px] text-on-surface-variant">Phase 3 - Main Concourse Structural Phase</p>
+</section>
+<!-- KPI Bento Grid -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Pending Milestones -->
+<button class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex flex-col justify-between items-start text-left min-h-[100px] hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<div class="flex w-full justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+</div>
+</div>
+<div class="mt-4">
+<span class="block font-label text-[12px] text-on-surface-variant uppercase tracking-wider mb-1">Pending Milestones</span>
+<span class="block font-headline text-[24px] font-bold text-primary">12</span>
+</div>
+</button>
+<!-- Overdue Tasks -->
+<button class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 flex flex-col justify-between items-start text-left min-h-[100px] hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<div class="flex w-full justify-between items-start">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+</div>
+<div class="mt-4">
+<span class="block font-label text-[12px] text-on-surface-variant uppercase tracking-wider mb-1">Overdue Tasks</span>
+<span class="block font-headline text-[24px] font-bold text-error">5</span>
+</div>
+</button>
+</section>
+<!-- Activity Feed -->
+<section class="space-y-4">
+<h3 class="font-headline text-[18px] font-bold text-primary border-b border-outline-variant pb-2">Recent Activity</h3>
+<div class="space-y-3">
+<!-- Optimistic UI Card (Offline Queued) -->
+<div class="bg-surface-container-lowest rounded-lg p-4 border-2 border-amber-optimistic animate-optimistic-pulse flex flex-col gap-3 min-h-[48px] relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-amber-offline opacity-5 rounded-bl-full"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-amber-optimistic" style="font-variation-settings: 'FILL' 1;">cloud_sync</span>
+<span class="font-label text-[12px] font-bold text-amber-optimistic">QUEUED FOR SYNC</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant">JUST NOW</span>
+</div>
+<div>
+<h4 class="font-body text-[16px] font-semibold text-primary">Concrete Pour Verified</h4>
+<p class="font-body text-[14px] text-on-surface-variant mt-1">Section B4 footing completed. Waiting for network connection to upload photo evidence.</p>
+</div>
+</div>
+<!-- Standard Verified Card -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 flex flex-col gap-3 min-h-[48px]">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">assignment_turned_in</span>
+<span class="font-label text-[12px] font-bold text-on-surface-variant">MILESTONE APPROVED</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant">10:42 AM</span>
+</div>
+<div>
+<h4 class="font-body text-[16px] font-semibold text-primary">Steel Framework Delivery</h4>
+<p class="font-body text-[14px] text-on-surface-variant mt-1">Vendor acknowledged receipt. Delivery manifest attached to project ledger.</p>
+</div>
+</div>
+<!-- Alert Card -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 flex flex-col gap-3 min-h-[48px]">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">flag</span>
+<span class="font-label text-[12px] font-bold text-error">ISSUE REPORTED</span>
+</div>
+<span class="font-label text-[10px] text-on-surface-variant">YESTERDAY</span>
+</div>
+<div>
+<h4 class="font-body text-[16px] font-semibold text-primary">Material Shortage: Rebar</h4>
+<p class="font-body text-[14px] text-on-surface-variant mt-1">Expected 40 tons, received 35. Flagged for administrative review.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden bg-white/85 backdrop-blur-md text-secondary font-body text-label-sm docked full-width bottom-0 rounded-t-xl border-t border-white/20 shadow-lg fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 min-h-[64px]">
+<!-- Inactive: Home -->
+<button aria-label="Home" class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 min-h-[48px] hover:bg-surface-container-low transition-all duration-200 active:scale-90 rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]">home</span>
+<span class="font-label text-[10px]">Home</span>
+</button>
+<!-- Active: Projects (Semantic Match for PM Dashboard) -->
+<button aria-label="Projects" class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-2 w-16 min-h-[48px] transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 1;">foundation</span>
+<span class="font-label text-[10px] font-bold">Projects</span>
+</button>
+<!-- Inactive: Media -->
+<button aria-label="Media" class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 min-h-[48px] hover:bg-surface-container-low transition-all duration-200 active:scale-90 rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]">photo_camera</span>
+<span class="font-label text-[10px]">Media</span>
+</button>
+<!-- Inactive: Tasks -->
+<button aria-label="Tasks" class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 min-h-[48px] hover:bg-surface-container-low transition-all duration-200 active:scale-90 rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]">assignment</span>
+<span class="font-label text-[10px]">Tasks</span>
+</button>
+<!-- Inactive: Admin -->
+<button aria-label="Admin" class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 min-h-[48px] hover:bg-surface-container-low transition-all duration-200 active:scale-90 rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]">admin_panel_settings</span>
+<span class="font-label text-[10px]">Admin</span>
+</button>
+</nav>
+</body></html>

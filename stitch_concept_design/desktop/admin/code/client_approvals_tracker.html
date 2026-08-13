@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Approvals Tracker - Setuu Enterprise</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#efeee9",
+                    "inverse-on-surface": "#f2f1ec",
+                    "outline-variant": "#c3c6ce",
+                    "surface-container-highest": "#e3e3de",
+                    "on-tertiary-fixed": "#001e2d",
+                    "inverse-surface": "#30312e",
+                    "tertiary": "#00080f",
+                    "surface-dim": "#dbdad5",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-background": "#1b1c19",
+                    "primary-fixed-dim": "#aec9eb",
+                    "tertiary-container": "#002233",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "outline": "#73777e",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#001d35",
+                    "secondary-container": "#8ad1ff",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "on-surface": "#1b1c19",
+                    "error": "#ba1a1a",
+                    "primary": "#000815",
+                    "secondary-fixed-dim": "#88cffc",
+                    "surface-variant": "#e3e3de",
+                    "surface-container-high": "#e9e8e3",
+                    "on-surface-variant": "#43474d",
+                    "secondary": "#00658d",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "surface-container-low": "#f5f4ef",
+                    "background": "#faf9f4",
+                    "on-secondary-container": "#005a7f",
+                    "primary-container": "#00213c",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#c6e7ff",
+                    "on-primary-container": "#6f89a9",
+                    "surface-bright": "#faf9f4",
+                    "surface-tint": "#46607e",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "surface": "#faf9f4",
+                    "on-tertiary-container": "#0090c7",
+                    "inverse-primary": "#aec9eb",
+                    "primary-fixed": "#d1e4ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "sm": "0.25rem",
+                    "md": "0.75rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "display": ["Merriweather", "serif"],
+                    "headline": ["Merriweather", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Scrollbar for Kanban */
+        .kanban-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .kanban-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .kanban-scroll::-webkit-scrollbar-thumb {
+            background-color: #c3c6ce;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body h-screen w-screen overflow-hidden flex">
+<!-- Shared Component: SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-primary dark:bg-tertiary-container text-on-primary dark:text-on-tertiary-container shadow-xl w-[280px] duration-200 ease-in-out">
+<!-- Header -->
+<div class="flex items-center gap-4 px-2 mb-8 mt-2">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-2xl">architecture</span>
+</div>
+<div>
+<h1 class="font-display text-headline-sm text-on-primary font-bold">Setuu Admin</h1>
+<p class="font-body text-xs text-primary-fixed-dim/80">Enterprise Control</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Projects -->
+<a class="flex items-center gap-3 px-3 py-2.5 bg-secondary-container text-on-secondary-container rounded-lg font-bold hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined fill">assignment</span>
+<span class="font-body text-sm">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body text-sm">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">conveyor_belt</span>
+<span class="font-body text-sm">Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body text-sm">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">rss_feed</span>
+<span class="font-body text-sm">Update Feed</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">gpp_maybe</span>
+<span class="font-body text-sm">Security Threats</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">file_open</span>
+<span class="font-body text-sm">File Resolution</span>
+</a>
+</nav>
+<!-- CTA Button -->
+<div class="mt-6 mb-4 px-2">
+<button class="w-full py-2.5 bg-secondary hover:bg-secondary/90 text-on-secondary font-body font-semibold text-sm rounded-lg transition-colors flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">bar_chart</span>
+                Generate Report
+            </button>
+</div>
+<!-- Footer Links -->
+<div class="mt-auto pt-4 border-t border-outline/30 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-primary-fixed-dim/70 hover:bg-primary-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body text-sm">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 ml-[280px] flex flex-col min-w-0 h-full relative">
+<!-- Shared Component: TopNavBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-6 py-2 bg-white/85 dark:bg-surface-container/85 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-4">
+<!-- Breadcrumbs/Context -->
+<nav class="flex items-center gap-2 text-sm text-on-surface-variant font-body">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-semibold">Client Approvals</span>
+</nav>
+</div>
+<div class="flex items-center gap-3 text-primary">
+<button class="p-2 rounded-full hover:bg-surface-container-high/50 transition-colors cursor-pointer active:scale-95 duration-150 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high/50 transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 ml-2 rounded-full overflow-hidden border-2 border-outline-variant/30">
+<img alt="Administrator profile" class="w-full h-full object-cover" data-alt="A professional headshot of an enterprise administrator in a brightly lit modern office setting, wearing a dark blue suit jacket. Light mode aesthetic, high clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9QjyHRewM8Q9Fb5lS_84oAUF92iMiiXRzca2T8kpZR5shubwtdLyw0lCB7GxivWkh9k8sedDX-ku95vpchLqEZWh_Y3EK31VN9d3mTCZUf7olYGnqLZWsB1v55v20tNJ1t7sG84PIa0_LsDg9E1kn_FJ_MCCBjelE01w8btlIcR57mGSwaHbYoTiIdtK7Q21vxU-iPcJ7P3z2cqNcx8OV6gbCy8dmRZXnqV1_LU_dNJxei6tww5XM"/>
+</div>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<div class="flex-1 overflow-hidden flex flex-col p-6 md:p-8">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-6 shrink-0">
+<div>
+<h2 class="font-display text-headline-lg font-bold text-on-surface tracking-tight">Client Approvals Tracker</h2>
+<p class="font-body text-body-md text-on-surface-variant mt-1">Manage and track high-stakes document handovers.</p>
+</div>
+<div class="flex gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="pl-9 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-md text-sm font-body text-on-surface focus:ring-2 focus:ring-secondary focus:border-secondary transition-all w-64" placeholder="Search docs, PMs..." type="text"/>
+</div>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-md text-sm font-body font-semibold hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filter
+                    </button>
+</div>
+</div>
+<!-- Kanban Board Grid (12-column foundation, 4 visible lanes) -->
+<div class="flex-1 overflow-x-auto overflow-y-hidden pb-4">
+<div class="grid grid-cols-4 gap-6 min-w-[1200px] h-full items-start">
+<!-- Column 1: Pending Review (Neutral/Slate mapping) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col max-h-full shadow-sm">
+<div class="p-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-low rounded-t-lg border-t-4 border-t-outline">
+<h3 class="font-display font-bold text-headline-sm text-on-surface">Pending Review</h3>
+<span class="bg-surface-variant text-on-surface-variant text-xs font-label px-2 py-1 rounded-full">3</span>
+</div>
+<div class="p-3 space-y-3 overflow-y-auto kanban-scroll flex-1 bg-surface-container-lowest/50">
+<!-- Card 1 -->
+<div class="bg-surface border border-outline-variant/60 rounded-md p-4 shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-2 items-center">
+<span class="material-symbols-outlined text-outline text-sm">description</span>
+<span class="text-xs font-label text-outline uppercase tracking-wider">DOC-8921</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<h4 class="font-body font-semibold text-body-md text-on-surface mb-4 leading-tight">Site Alpha Structural Handover</h4>
+<div class="flex justify-between items-end mt-auto pt-3 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">
+                                            SJ
+                                        </div>
+<span class="font-body text-xs text-on-surface-variant">Sarah Jenkins</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label text-label-sm">14:32 UTC</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface border border-outline-variant/60 rounded-md p-4 shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-2 items-center">
+<span class="material-symbols-outlined text-outline text-sm">picture_as_pdf</span>
+<span class="text-xs font-label text-outline uppercase tracking-wider">DOC-8944</span>
+</div>
+</div>
+<h4 class="font-body font-semibold text-body-md text-on-surface mb-4 leading-tight">HVAC Schematics Phase 2</h4>
+<div class="flex justify-between items-end mt-auto pt-3 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center text-[10px] font-bold">
+                                            MV
+                                        </div>
+<span class="font-body text-xs text-on-surface-variant">Marcus Vance</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label text-label-sm">09:15 UTC</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Awaiting Signature (Active/Sky Blue mapping) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col max-h-full shadow-sm">
+<div class="p-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-low rounded-t-lg border-t-4 border-t-secondary">
+<h3 class="font-display font-bold text-headline-sm text-on-surface flex items-center gap-2">
+                                Awaiting Signature
+                            </h3>
+<span class="bg-secondary/10 text-secondary border border-secondary/20 text-xs font-label px-2 py-1 rounded-full">2</span>
+</div>
+<div class="p-3 space-y-3 overflow-y-auto kanban-scroll flex-1 bg-surface-container-lowest/50">
+<!-- Card 3 -->
+<div class="bg-surface border border-secondary/30 rounded-md p-4 shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing group relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<div class="flex gap-2 items-center">
+<span class="material-symbols-outlined text-secondary text-sm">edit_document</span>
+<span class="text-xs font-label text-secondary uppercase tracking-wider">REQ-002</span>
+</div>
+<span class="bg-secondary text-on-secondary text-[10px] font-label px-1.5 py-0.5 rounded">SENT</span>
+</div>
+<h4 class="font-body font-semibold text-body-md text-on-surface mb-4 leading-tight pl-2">Change Order #4 - Steel Procurement</h4>
+<div class="flex justify-between items-end mt-auto pt-3 border-t border-outline-variant/30 pl-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">
+                                            SJ
+                                        </div>
+<span class="font-body text-xs text-on-surface-variant">Sarah Jenkins</span>
+</div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="font-label text-label-sm">48h ETR</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Revision Requested (Warning/Emergency mapping) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col max-h-full shadow-sm">
+<div class="p-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-low rounded-t-lg border-t-4 border-t-error">
+<h3 class="font-display font-bold text-headline-sm text-on-surface flex items-center gap-2">
+                                Revision Requested
+                            </h3>
+<span class="bg-error/10 text-error border border-error/20 text-xs font-label px-2 py-1 rounded-full">1</span>
+</div>
+<div class="p-3 space-y-3 overflow-y-auto kanban-scroll flex-1 bg-surface-container-lowest/50">
+<!-- Card 4 -->
+<div class="bg-surface border border-error/40 rounded-md p-4 shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing group relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex justify-between items-start mb-2 pl-2">
+<div class="flex gap-2 items-center">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+<span class="text-xs font-label text-error uppercase tracking-wider">DOC-8910</span>
+</div>
+</div>
+<h4 class="font-body font-semibold text-body-md text-on-surface mb-2 leading-tight pl-2">Safety Compliance Audit Q3</h4>
+<p class="text-xs text-error font-body mb-3 pl-2">Client note: Missing Page 4 signatures.</p>
+<div class="flex justify-between items-end mt-auto pt-3 border-t border-outline-variant/30 pl-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center text-[10px] font-bold">
+                                            MV
+                                        </div>
+<span class="font-body text-xs text-on-surface-variant">Marcus Vance</span>
+</div>
+<div class="flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-[14px]">update</span>
+<span class="font-label text-label-sm">ACTION REQ</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 4: Signed & Closed (Success mapping) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col max-h-full shadow-sm">
+<div class="p-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-low rounded-t-lg border-t-4 border-t-primary">
+<h3 class="font-display font-bold text-headline-sm text-on-surface">Signed &amp; Closed</h3>
+<span class="bg-primary/10 text-primary border border-primary/20 text-xs font-label px-2 py-1 rounded-full">14</span>
+</div>
+<div class="p-3 space-y-3 overflow-y-auto kanban-scroll flex-1 bg-surface-container-lowest/50">
+<!-- Card 5 -->
+<div class="bg-surface border border-outline-variant/40 rounded-md p-4 shadow-sm opacity-75 hover:opacity-100 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-2 items-center">
+<span class="material-symbols-outlined text-primary text-sm">verified</span>
+<span class="text-xs font-label text-outline uppercase tracking-wider line-through">DOC-8850</span>
+</div>
+</div>
+<h4 class="font-body font-semibold text-body-md text-on-surface mb-4 leading-tight">Foundation Concrete Pour Specs</h4>
+<div class="flex justify-between items-end mt-auto pt-3 border-t border-outline-variant/30">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">
+                                            SJ
+                                        </div>
+<span class="font-body text-xs text-on-surface-variant">Sarah Jenkins</span>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="font-label text-label-sm">2023-10-22</span>
+</div>
+</div>
+</div>
+<div class="text-center py-4">
+<button class="text-xs font-body text-secondary hover:underline">View 13 more archived</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

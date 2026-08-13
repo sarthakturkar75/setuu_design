@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Project Timeline - Setuu Enterprise</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Design System -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#001d35",
+                    "on-primary-container": "#6f89a9",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#46607e",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#aec9eb",
+                    "secondary-fixed": "#c6e7ff",
+                    "surface-container-low": "#f5f4ef",
+                    "tertiary": "#00080f",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "on-background": "#1b1c19",
+                    "primary-container": "#00213c",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#d1e4ff",
+                    "surface": "#faf9f4",
+                    "tertiary-container": "#002233",
+                    "surface-container-high": "#e9e8e3",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#005a7f",
+                    "surface-variant": "#e3e3de",
+                    "background": "#faf9f4",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#88cffc",
+                    "secondary": "#00658d",
+                    "surface-dim": "#dbdad5",
+                    "surface-container-highest": "#e3e3de",
+                    "on-tertiary-fixed": "#001e2d",
+                    "tertiary-fixed": "#c6e7ff",
+                    "inverse-surface": "#30312e",
+                    "inverse-on-surface": "#f2f1ec",
+                    "outline-variant": "#c3c6ce",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#001e2d",
+                    "surface-container": "#efeee9",
+                    "on-tertiary-container": "#0090c7",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "primary": "#000815",
+                    "secondary-container": "#8ad1ff",
+                    "on-surface": "#1b1c19",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#faf9f4",
+                    "outline": "#73777e",
+                    "on-surface-variant": "#43474d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": [
+                            "Merriweather"
+                    ],
+                    "display": [
+                            "Merriweather"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Jetbrains Mono"
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-fixed selection:text-on-primary-fixed pb-24 md:pb-0">
+<!-- Mobile Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-white/85 dark:bg-[#121A21]/85 backdrop-blur-md border-b border-white/20 dark:border-cyan-400/20 shadow-sm flex justify-between items-center px-4 h-16 md:hidden">
+<button class="text-primary dark:text-secondary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-150 p-2 -ml-2 rounded-full">
+<span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline font-bold text-primary dark:text-secondary-fixed-dim tracking-tight text-xl">Setuu</h1>
+<button class="text-primary dark:text-secondary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-150 p-2 -mr-2 rounded-full relative">
+<span class="material-symbols-outlined text-2xl" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 pb-8 px-4 md:pt-8 md:max-w-2xl mx-auto flex flex-col gap-6">
+<!-- Page Header -->
+<div class="mb-4">
+<h2 class="font-headline font-bold text-2xl text-on-surface mb-1">Project Updates</h2>
+<p class="font-body text-sm text-on-surface-variant">Chronological verified progress feed.</p>
+</div>
+<!-- Update Card 1: Completed Milestone -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col">
+<!-- Header -->
+<div class="p-4 flex justify-between items-start border-b border-surface-container-high/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline">engineering</span>
+</div>
+<div>
+<h3 class="font-body font-medium text-on-surface text-base">Foundation Pour Complete</h3>
+<p class="font-body text-sm text-on-surface-variant">Site Supervisor: J. Doe</p>
+</div>
+</div>
+<!-- Status Badge -->
+<div class="flex items-center gap-1 bg-[#16A34A]/10 text-[#16A34A] px-2 py-1 rounded-md text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                    Verified
+                </div>
+</div>
+<!-- Media Content -->
+<div class="relative w-full aspect-video bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A high-quality architectural photograph of a freshly poured concrete foundation on a large industrial construction site. The scene is brightly lit by midday sun, casting sharp shadows and highlighting the clean, modern lines of the rebar and formwork. The aesthetic is industrial, reliable, and precise, fitting a professional construction management software context. The colors are dominated by cool concrete greys and earth tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAsNiAdgoWrAjqmolIPntdjkM1uv6T5Q7rAiaPqAfCG_sydIDTHseaCo-yvDiwsMN9AIsi6tYDwP2J291-xpOG5yilEaQdllpeBzJqfBgm8SekxgOv07hpnGwE_eldC2s_sLXUH1KCeQixzSKBTrhluq3D9EUQx-kz7Q1yQ8BVZ_gx0U6mppjGiYrzcuEehX53XRgDglLlzdMmGklUf-BIlWWXVBgBphCB3B2ccng2i4rxmLR8pS9b"/>
+</div>
+<!-- Content Body -->
+<div class="p-4">
+<p class="font-body text-sm text-on-surface mb-4 leading-relaxed">
+                    Primary foundation pour completed for Sector A. Concrete settling within expected parameters. Weather conditions optimal during placement. Next phase staging initiated.
+                </p>
+<!-- Audit Metadata -->
+<div class="bg-surface-container-low p-3 rounded border border-surface-dim/50 flex flex-col gap-1 mb-5">
+<div class="flex items-center gap-2 text-on-surface-variant font-label text-xs">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>TS: 2023-10-27T14:30:00Z</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label text-xs">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+<span>LOC: 34.0522° N, 118.2437° W</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-3 mt-auto">
+<button class="flex-1 h-12 bg-[#2563EB] hover:bg-[#2563EB]/90 active:bg-[#2563EB]/80 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">thumb_up</span>
+                        Acknowledge
+                    </button>
+<button class="flex-1 h-12 border-2 border-[#9333EA] text-[#9333EA] hover:bg-[#9333EA]/10 active:bg-[#9333EA]/20 font-medium rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+                        Discuss
+                    </button>
+</div>
+</div>
+</article>
+<!-- Update Card 2: In Progress -->
+<article class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col">
+<!-- Header -->
+<div class="p-4 flex justify-between items-start border-b border-surface-container-high/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-outline">precision_manufacturing</span>
+</div>
+<div>
+<h3 class="font-body font-medium text-on-surface text-base">HVAC Ducting Installation</h3>
+<p class="font-body text-sm text-on-surface-variant">Contractor: AirPro Tech</p>
+</div>
+</div>
+<!-- Status Badge -->
+<div class="flex items-center gap-1 bg-[#0284C7]/10 text-[#0284C7] px-2 py-1 rounded-md text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+                    In Progress
+                </div>
+</div>
+<!-- Content Body (No Image) -->
+<div class="p-4">
+<p class="font-body text-sm text-on-surface mb-4 leading-relaxed">
+                    Main ventilation shafts are being routed through Level 2. Experiencing minor spatial conflicts with electrical conduits, rerouting plans currently under review.
+                </p>
+<!-- Audit Metadata -->
+<div class="bg-surface-container-low p-3 rounded border border-surface-dim/50 flex flex-col gap-1 mb-5">
+<div class="flex items-center gap-2 text-on-surface-variant font-label text-xs">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>TS: 2023-10-27T09:15:22Z</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label text-xs">
+<span class="material-symbols-outlined text-[14px]">qr_code</span>
+<span>REF: HVAC-L2-004</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-3 mt-auto">
+<button class="flex-1 h-12 bg-[#2563EB] hover:bg-[#2563EB]/90 active:bg-[#2563EB]/80 text-white font-medium rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">thumb_up</span>
+                        Acknowledge
+                    </button>
+<button class="flex-1 h-12 border-2 border-[#9333EA] text-[#9333EA] hover:bg-[#9333EA]/10 active:bg-[#9333EA]/20 font-medium rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+                        Discuss
+                    </button>
+</div>
+</div>
+</article>
+</main>
+<!-- Mobile Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-white/85 dark:bg-[#121A21]/85 backdrop-blur-md shadow-lg flex justify-around items-center h-16 px-2 md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant opacity-70 hover:bg-surface-variant/50 dark:hover:bg-surface-container-highest/20 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-[10px] mt-1">Portfolio</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant opacity-70 hover:bg-surface-variant/50 dark:hover:bg-surface-container-highest/20 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label text-[10px] mt-1">Briefing</span>
+</button>
+<!-- Suppressed Financials as per instruction -->
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim font-bold bg-secondary-container/30 dark:bg-on-secondary-fixed-variant/30 rounded-xl px-4 py-2 hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined fill" data-icon="trending_up">trending_up</span>
+<span class="font-label text-[10px] mt-1">Progress</span>
+</button>
+</nav>
+</body></html>

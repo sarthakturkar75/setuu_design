@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Issue Console - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Merriweather:wght@700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-container": "#002233", "on-secondary": "#ffffff", tertiary: "#00080f", "tertiary-fixed": "#c8e6fd", "inverse-primary": "#aec9eb", surface: "#fbf9f4", background: "#fbf9f4", "surface-container-low": "#f5f4ee", "primary-fixed-dim": "#aec9eb", "tertiary-fixed-dim": "#adcae1", "on-tertiary-fixed-variant": "#2d4a5c", "on-secondary-fixed-variant": "#004c6b", "inverse-surface": "#30312d", "surface-container": "#efeee8", "outline-variant": "#c3c6ce", "on-tertiary-container": "#6e8a9f", "surface-container-high": "#e9e8e3", "on-secondary-fixed": "#001e2d", primary: "#000815", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-primary-container": "#6f89a9", "on-error": "#ffffff", secondary: "#00658d", "surface-tint": "#46607e", "on-error-container": "#93000a", "primary-fixed": "#d1e4ff", "surface-dim": "#dbdad5", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#88cffc", "on-surface-variant": "#43474d", "on-tertiary-fixed": "#001e2e", "on-primary-fixed": "#001d35", "secondary-fixed": "#c6e7ff", "on-primary": "#ffffff", "surface-bright": "#fbf9f4", "surface-container-highest": "#e4e2dd", "inverse-on-surface": "#f2f1eb", error: "#ba1a1a", outline: "#73777e", "on-secondary-container": "#005a7f", "primary-container": "#00213c", "on-background": "#1b1c19", "surface-variant": "#e4e2dd", "on-primary-fixed-variant": "#2e4965", "on-surface": "#1b1c19", "secondary-container": "#8ad1ff"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "12px", "unit-xs": "4px", "unit-sm": "8px", "grid-columns": "4", "unit-lg": "24px", "unit-md": "16px", margin: "16px"}, fontFamily: {"body-md": ["Inter"], "body-sm": ["Inter"], "title-md": ["Inter"], "headline-md": ["Merriweather"], "data-mono": ["JetBrains Mono"], "headline-lg": ["Merriweather"], "label-caps": ["JetBrains Mono"]}, fontSize: {"body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["12px", {lineHeight: "18px", fontWeight: "400"}], "title-md": ["16px", {lineHeight: "24px", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "700"}], "data-mono": ["13px", {lineHeight: "16px", letterSpacing: "-0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", fontWeight: "700"}], "label-caps": ["10px", {lineHeight: "12px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 1rem); }
+        .pt-safe { padding-top: env(safe-area-inset-top, 0); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:hidden selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 dark:bg-tertiary-container/80 backdrop-blur-md border-b border-outline-variant dark:border-outline flat no shadows transition-all duration-200 active:scale-95 flex items-center justify-between px-margin py-unit-sm">
+<div class="flex items-center gap-unit-md">
+<button class="p-unit-sm rounded hover:bg-surface-container-high dark:hover:bg-tertiary text-on-surface-variant dark:text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed font-bold">Setuu Enterprise</h1>
+</div>
+<div>
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface font-title-md border border-outline-variant overflow-hidden">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+</div>
+</header><div class="fixed top-[calc(env(safe-area-inset-top)+56px)] left-0 w-full z-40 bg-secondary-container text-on-secondary-container px-margin py-1 flex items-center justify-center gap-2 font-label-caps text-[10px] shadow-sm"><span class="material-symbols-outlined text-[14px]">sync</span>OFFLINE SYNC ACTIVE</div>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[calc(env(safe-area-inset-top)+64px)] pb-[calc(env(safe-area-inset-bottom)+80px)] px-margin overflow-y-auto" style="padding-top: calc(env(safe-area-inset-top) + 88px);">
+<!-- Triage Header -->
+<div class="mb-unit-md pt-unit-sm">
+<h2 class="font-title-md text-title-md text-on-background mb-unit-xs">Active Triage Queue</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Prioritized by severity impact.</p>
+</div>
+<!-- Filters / Quick Stats -->
+<div class="flex gap-unit-sm overflow-x-auto pb-unit-sm mb-unit-md no-scrollbar">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded bg-error-container border border-error text-on-error-container font-label-caps text-label-caps whitespace-nowrap min-h-[48px]">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                CRITICAL (2)
+            </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface border border-outline text-on-surface font-label-caps text-label-caps whitespace-nowrap min-h-[48px]">
+                HIGH (5)
+            </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface border border-outline text-on-surface font-label-caps text-label-caps whitespace-nowrap min-h-[48px]">
+                BLOCKERS (1)
+            </button>
+</div>
+<!-- Issue List -->
+<div class="flex flex-col gap-unit-sm">
+<!-- Issue Item: Critical -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-unit-md flex flex-col gap-unit-sm hover:border-primary transition-colors active:bg-surface-container-low">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">ISS-8492</span>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded font-label-caps text-label-caps border border-error">CRITICAL</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="more_vert">more_vert</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Database cluster synchronization failure in US-East region</h3>
+</div>
+<div class="flex items-center justify-between mt-unit-xs border-t border-surface-variant pt-unit-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+<span class="font-body-sm text-body-sm font-data-mono">12m ago</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+                        INVESTIGATING
+                    </div>
+</div>
+</div>
+<!-- Issue Item: Critical -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-unit-md flex flex-col gap-unit-sm hover:border-primary transition-colors active:bg-surface-container-low">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">ISS-8491</span>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded font-label-caps text-label-caps border border-error">CRITICAL</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="more_vert">more_vert</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Authentication microservice latency spike causing timeouts</h3>
+</div>
+<div class="flex items-center justify-between mt-unit-xs border-t border-surface-variant pt-unit-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+<span class="font-body-sm text-body-sm font-data-mono">45m ago</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+                        MITIGATING
+                    </div>
+</div>
+</div>
+<!-- Issue Item: Blocker -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-unit-md flex flex-col gap-unit-sm hover:border-primary transition-colors active:bg-surface-container-low">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">ISS-8488</span>
+<span class="bg-surface-tint text-on-primary px-2 py-0.5 rounded font-label-caps text-label-caps border border-surface-tint">BLOCKER</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="more_vert">more_vert</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Deployment pipeline stuck on stage 3 integration tests</h3>
+</div>
+<div class="flex items-center justify-between mt-unit-xs border-t border-surface-variant pt-unit-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+<span class="font-body-sm text-body-sm font-data-mono">2h ago</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+                        OPEN
+                    </div>
+</div>
+</div>
+<!-- Issue Item: High -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded p-unit-md flex flex-col gap-unit-sm hover:border-primary transition-colors active:bg-surface-container-low opacity-75">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">ISS-8475</span>
+<span class="bg-surface-variant text-on-surface px-2 py-0.5 rounded font-label-caps text-label-caps border border-outline">HIGH</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="more_vert">more_vert</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface line-clamp-2">Memory leak detected in report generation worker nodes</h3>
+</div>
+<div class="flex items-center justify-between mt-unit-xs border-t border-surface-variant pt-unit-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+<span class="font-body-sm text-body-sm font-data-mono">1d ago</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></div>
+                        RESOLVED
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- Persistent FAB -->
+<button class="fixed bottom-[calc(env(safe-area-inset-bottom)+80px)] right-margin w-14 h-14 bg-primary text-on-primary rounded-xl shadow-lg flex items-center justify-center z-40 active:scale-95 transition-transform border border-primary-container min-w-[48px] min-h-[48px]">
+<span class="material-symbols-outlined text-[24px]" data-icon="add">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-tertiary-container border-t border-outline-variant dark:border-outline flat no shadows transition-transform active:scale-90 flex justify-around items-center h-16 px-gutter pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary p-1 rounded min-w-[64px]">
+<span class="material-symbols-outlined mb-1" data-icon="grid_view" style="font-variation-settings: 'FILL' 0;">grid_view</span>
+<span class="font-label-caps text-label-caps">Workbench</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary p-1 rounded min-w-[64px]">
+<span class="material-symbols-outlined mb-1" data-icon="assignment" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="font-label-caps text-label-caps">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary p-1 rounded min-w-[64px]">
+<span class="material-symbols-outlined mb-1" data-icon="layers" style="font-variation-settings: 'FILL' 0;">layers</span>
+<span class="font-label-caps text-label-caps">Asset Hub</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-bold border-t-2 border-secondary hover:bg-surface-container dark:hover:bg-tertiary p-1 min-w-[64px]">
+<span class="material-symbols-outlined mb-1" data-icon="bug_report" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bug_report</span>
+<span class="font-label-caps text-label-caps">Issues</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary p-1 rounded min-w-[64px]">
+<span class="material-symbols-outlined mb-1" data-icon="settings_wrench" style="font-variation-settings: 'FILL' 0;">file_export</span>
+<span class="font-label-caps text-label-caps">Tools</span>
+</button>
+</nav>
+</body></html>

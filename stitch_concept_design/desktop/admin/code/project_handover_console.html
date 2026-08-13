@@ -1,0 +1,421 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Project Handover Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#6f89a9",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#43474d",
+                        "background": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "tertiary-container": "#002233",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container": "#efeee9",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-surface": "#30312e",
+                        "on-surface": "#1b1c19",
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary-container": "#0090c7",
+                        "on-background": "#1b1c19",
+                        "on-error": "#ffffff",
+                        "tertiary": "#00080f",
+                        "outline": "#73777e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "surface-bright": "#faf9f4",
+                        "secondary-container": "#8ad1ff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#00658d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; color: #1b1c19; }
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        
+        /* Custom Scrollbar for dense data tables */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c3c6ce; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #73777e; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row antialiased">
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav aria-label="Sidebar Navigation" class="hidden md:flex w-[280px] h-screen fixed left-0 top-0 z-50 bg-primary shadow-xl flex-col py-6">
+<!-- Brand / Header -->
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<img alt="Setuu Enterprise Logo" class="w-8 h-8 object-contain" data-alt="A stylized logo icon representing 'Setuu Enterprise', featuring a geometric, modern industrial aesthetic. The icon uses a palette of deep slate, white, and a subtle accent of cyan or deep blue, rendered in a clean, sharp vector graphic style against a light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw6UOIFlXxAd8_UAmr2zp4TQs8G5EapPCo4PO09sUMr8fF_cg7Ic8Bhp1RYb0aYgejfnUFRDE2ppWHpEBJ8v_Ifa15WHDEyo4z83awLesXT6nuCgtdXuSkqKtx6-jJ213RFmC_PEGyuQDZHxa5GWYmaVAm1I62e7PjL6hURqlu3mEpv9VWdfXVd8MV-rDGtK9j2TvVxXD2BnKYocxLbdoJqgJiQDykWceKx1YMk5mO28Fjjnso2wnu">
+</div>
+<div>
+<h1 class="font-headline text-xl font-black text-on-primary tracking-tight">Setuu Admin</h1>
+<p class="font-label text-xs text-on-primary/70">Enterprise Tier</p>
+</div>
+</div>
+<!-- Main Nav Links -->
+<div class="flex-1 overflow-y-auto overflow-x-hidden px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-body text-sm font-medium" href="#">
+<span class="material-symbols-outlined icon-fill">account_tree</span>
+                Projects
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined">architecture</span>
+                Drawings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined">handshake</span>
+                Vendors
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all font-body text-sm" href="#">
+<span class="material-symbols-outlined">confirmation_number</span>
+                Support
+            </a>
+</div>
+<!-- Footer Actions -->
+<div class="px-4 mt-auto space-y-2 border-t border-on-primary/10 pt-4">
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-secondary text-on-secondary font-body text-sm font-semibold hover:bg-secondary/90 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                Raise Ticket
+            </button>
+<div class="space-y-1 pt-2">
+<a class="flex items-center gap-3 px-2 py-2 text-on-primary/50 hover:text-on-primary/80 transition-colors font-label text-xs" href="#">
+<span class="material-symbols-outlined text-base">history_edu</span>
+                    Audit Logs
+                </a>
+<a class="flex items-center gap-3 px-2 py-2 text-on-primary/50 hover:text-on-primary/80 transition-colors font-label text-xs" href="#">
+<span class="material-symbols-outlined text-base">terminal</span>
+                    System Status
+                </a>
+</div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<main class="flex-1 md:ml-[280px] flex flex-col min-h-screen">
+<!-- TopNavBar (Responsive) -->
+<header class="bg-white/85 backdrop-blur-md border-b border-outline-variant/20 shadow-sm docked full-width top-0 sticky z-40 flex justify-between items-center w-full px-4 md:px-8 h-16">
+<div class="flex items-center gap-4">
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface p-1 rounded-md hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Breadcrumb (Desktop) -->
+<div class="hidden md:flex items-center gap-2 font-label text-xs text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-medium">PRJ-2023-890</span>
+</div>
+</div>
+<!-- Header Title (Mobile only) -->
+<div class="md:hidden font-headline font-bold text-primary text-lg truncate px-2">
+                Project Handover
+            </div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-2 md:gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container-low border border-outline-variant/30 text-body-sm rounded-full pl-9 pr-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all w-48" placeholder="Search..." type="text">
+</div>
+<button aria-label="notifications" class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full ring-2 ring-white"></span>
+</button>
+<button aria-label="cloud_done" class="hidden sm:block p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">cloud_done</span>
+</button>
+<button aria-label="help" class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30 cursor-pointer hover:opacity-80 transition-opacity ml-2 shrink-0">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a confident administrator in business casual attire, well-lit against a neutral background, suitable for a corporate SaaS user profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCerLhxY9pDfNkVKDxUBTaNPtXFEhaRkSKB7t-73EBfDt0O-l2FPb3a1w9UyYdN9eiWQP-b0j2r3-t3hCY7kxBVjvR5lEFb_rAk_-nt4kQzcsYaWosQ3XtXYB1vfD9WtBoXpGbiwVlaG0HW7NeujyIqooMna9tgI-3UGU2xGoLmN48nwRaxfkRj7c3TlooakYRIMB8GXGuaAxJc5YSLtmVhYu_XIICD9fz0nVRJawB5gZ7fL_Hky7_F">
+</div>
+</div>
+</header>
+<!-- Canvas Content -->
+<div class="flex-1 p-4 md:p-8 max-w-[1600px] mx-auto w-full space-y-6">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant/30 pb-4">
+<div>
+<h2 class="font-headline text-3xl font-bold text-primary tracking-tight">Handover Console</h2>
+<p class="font-body text-sm text-on-surface-variant mt-1">PRJ-2023-890 • Industrial Robotics Assembly Line Beta</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-container-low border border-outline-variant/50 rounded-md font-body text-sm font-medium text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Export Package
+                    </button>
+<button class="px-4 py-2 bg-[#2563EB] text-white rounded-md font-body text-sm font-medium shadow-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">draw</span> Request Signature
+                    </button>
+</div>
+</div>
+<!-- KPI Cards / Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Overall Status -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-body text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Handover Readiness</h3>
+<span class="material-symbols-outlined text-[#9333EA]">assignment_turned_in</span>
+</div>
+<div>
+<div class="flex items-end gap-2">
+<span class="font-headline text-4xl font-bold text-primary">85%</span>
+<span class="text-sm text-on-surface-variant mb-1">Complete</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full mt-3 overflow-hidden">
+<div class="bg-[#9333EA] h-full rounded-full" style="width: 85%;"></div>
+</div>
+<p class="font-label text-xs text-on-surface-variant mt-2">3 Pending Items</p>
+</div>
+</div>
+<!-- Signature Status -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex justify-between items-start mb-4 z-10">
+<h3 class="font-body text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Client Sign-off</h3>
+<span class="material-symbols-outlined text-[#D97706]">pending_actions</span>
+</div>
+<div class="z-10">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-2.5 h-2.5 rounded-full bg-[#D97706] animate-pulse"></div>
+<span class="font-body text-lg font-semibold text-primary">Awaiting Client</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant">Last sent: 2023-10-24 14:30 UTC</p>
+<button class="mt-4 text-sm font-medium text-secondary hover:underline flex items-center gap-1">
+                            View Document <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+<!-- Decorative Background -->
+<div class="absolute -bottom-6 -right-6 opacity-5 z-0 pointer-events-none">
+<span class="material-symbols-outlined" style="font-size: 120px;">draw</span>
+</div>
+</div>
+<!-- Warranty Status -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 shadow-sm flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-body text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Active Warranties</h3>
+<span class="material-symbols-outlined text-[#16A34A]">verified_user</span>
+</div>
+<div>
+<div class="flex items-end gap-2">
+<span class="font-headline text-4xl font-bold text-primary">12</span>
+<span class="text-sm text-on-surface-variant mb-1">Active</span>
+</div>
+<div class="mt-3 space-y-2">
+<div class="flex justify-between items-center text-sm font-body">
+<span class="text-on-surface-variant">Expiring soon (30d):</span>
+<span class="font-semibold text-[#D97706]">2</span>
+</div>
+<div class="flex justify-between items-center text-sm font-body">
+<span class="text-on-surface-variant">Expired:</span>
+<span class="font-semibold text-outline">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Split View -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[600px]">
+<!-- Left Pane: Checklists -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-sm flex flex-col overflow-hidden">
+<div class="px-5 py-4 border-b border-outline-variant/20 bg-surface-bright flex justify-between items-center">
+<h3 class="font-headline text-lg font-bold text-primary">Integrity Checklist</h3>
+<div class="flex items-center gap-2 text-sm">
+<span class="w-2 h-2 rounded-full bg-[#16A34A]"></span> <span class="text-on-surface-variant font-label text-xs">Passed</span>
+<span class="w-2 h-2 rounded-full bg-[#DC2626] ml-2"></span> <span class="text-on-surface-variant font-label text-xs">Failed</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+<!-- Checklist Category 1 -->
+<div class="mb-4">
+<div class="px-3 py-2 bg-surface-container-low text-xs font-semibold text-on-surface-variant uppercase tracking-wider rounded-md mb-2">Documentation Package</div>
+<ul class="space-y-1">
+<li class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-[#16A34A]/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#16A34A] text-sm font-bold">check</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-primary">As-Built Drawings Verified</p>
+<p class="font-label text-xs text-on-surface-variant">v3.2 • Hash: a8f9e2b</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors text-sm">chevron_right</span>
+</li>
+<li class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-[#16A34A]/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#16A34A] text-sm font-bold">check</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-primary">O&amp;M Manuals Compiled</p>
+<p class="font-label text-xs text-on-surface-variant">2 PDF files • Clean Scan</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors text-sm">chevron_right</span>
+</li>
+<li class="flex items-center justify-between p-3 rounded-lg bg-red-50/50 border border-[#DC2626]/30 hover:bg-red-50 transition-colors group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-[#DC2626]/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#DC2626] text-sm font-bold">close</span>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-error">Test &amp; Commissioning Reports</p>
+<p class="font-label text-xs text-error/80">Missing HVAC Zone B Report</p>
+</div>
+</div>
+<button class="px-3 py-1 bg-white border border-[#DC2626]/50 rounded text-xs font-medium text-[#DC2626] hover:bg-[#DC2626] hover:text-white transition-colors">Upload</button>
+</li>
+</ul>
+</div>
+<!-- Checklist Category 2 -->
+<div class="mb-4">
+<div class="px-3 py-2 bg-surface-container-low text-xs font-semibold text-on-surface-variant uppercase tracking-wider rounded-md mb-2">Physical Handover</div>
+<ul class="space-y-1">
+<li class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center shrink-0 border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-primary">Key Register Transfer</p>
+<p class="font-label text-xs text-on-surface-variant">Pending Site Meeting (Oct 28)</p>
+</div>
+</div>
+<span class="text-xs font-medium text-outline-variant border border-outline-variant/30 px-2 py-0.5 rounded">Pending</span>
+</li>
+<li class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container transition-colors group cursor-pointer border border-transparent hover:border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-surface-variant flex items-center justify-center shrink-0 border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div>
+<p class="font-body text-sm font-medium text-primary">Spares Inventory Sign-off</p>
+<p class="font-label text-xs text-on-surface-variant">Review required by Vendor ID: 449</p>
+</div>
+</div>
+<span class="text-xs font-medium text-outline-variant border border-outline-variant/30 px-2 py-0.5 rounded">Pending</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Right Pane: Warranty Timeline -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-sm flex flex-col overflow-hidden">
+<div class="px-5 py-4 border-b border-outline-variant/20 bg-surface-bright">
+<h3 class="font-headline text-lg font-bold text-primary">Warranty Tracker</h3>
+</div>
+<div class="flex-1 overflow-y-auto p-4 bg-background">
+<!-- Timeline -->
+<div class="relative border-l-2 border-outline-variant/30 ml-3 space-y-6 pb-4">
+<!-- Item 1 -->
+<div class="relative pl-6">
+<div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white border-2 border-[#16A34A]"></div>
+<div class="bg-white border border-outline-variant/30 p-3 rounded-lg shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body text-sm font-semibold text-primary">HVAC Compressors</h4>
+<span class="px-2 py-0.5 bg-green-50 text-[#16A34A] text-[10px] font-bold rounded border border-green-200">ACTIVE</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant mb-2">Supplier: Trane Industrial</p>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Exp: 2028-10-24</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative pl-6">
+<div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white border-2 border-[#D97706] animate-pulse"></div>
+<div class="bg-white border border-[#D97706]/30 p-3 rounded-lg shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body text-sm font-semibold text-primary">Lighting Fixtures (Zone A)</h4>
+<span class="px-2 py-0.5 bg-orange-50 text-[#D97706] text-[10px] font-bold rounded border border-orange-200">EXPIRING</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant mb-2">Supplier: Philips Pro</p>
+<div class="flex items-center gap-2 text-xs text-[#D97706] font-medium">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>Exp: 2023-11-15 (22 Days)</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative pl-6">
+<div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white border-2 border-[#16A34A]"></div>
+<div class="bg-white border border-outline-variant/30 p-3 rounded-lg shadow-sm">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body text-sm font-semibold text-primary">Robotic Arm Actuators</h4>
+<span class="px-2 py-0.5 bg-green-50 text-[#16A34A] text-[10px] font-bold rounded border border-green-200">ACTIVE</span>
+</div>
+<p class="font-label text-xs text-on-surface-variant mb-2">Supplier: KUKA Robotics</p>
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Exp: 2025-06-30</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

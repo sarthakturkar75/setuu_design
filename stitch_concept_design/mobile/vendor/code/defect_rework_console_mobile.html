@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Setuu Vendor - Defect &amp; Rework Remediation Console</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#005a7f",
+                    "on-error": "#ffffff",
+                    "on-surface": "#1b1c19",
+                    "on-tertiary-container": "#0090c7",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#c3c6ce",
+                    "surface-container": "#efeee9",
+                    "primary-fixed": "#d1e4ff",
+                    "surface-container-high": "#e9e8e3",
+                    "background": "#faf9f4",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface": "#faf9f4",
+                    "secondary": "#00658d",
+                    "primary-container": "#00213c",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "inverse-surface": "#30312e",
+                    "secondary-container": "#8ad1ff",
+                    "primary-fixed-dim": "#aec9eb",
+                    "secondary-fixed": "#c6e7ff",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "inverse-primary": "#aec9eb",
+                    "primary": "#000815",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-tertiary-fixed": "#001e2d",
+                    "surface-tint": "#46607e",
+                    "tertiary": "#00080f",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#88cffc",
+                    "surface-variant": "#e3e3de",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#43474d",
+                    "on-primary-fixed": "#001d35",
+                    "on-primary-container": "#6f89a9",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#002233",
+                    "surface-dim": "#dbdad5",
+                    "on-secondary": "#ffffff",
+                    "outline": "#73777e",
+                    "on-background": "#1b1c19",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e3e3de",
+                    "surface-container-low": "#f5f4ef",
+                    "surface-bright": "#faf9f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": [
+                            "Merriweather"
+                    ],
+                    "display": [
+                            "Merriweather"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "JetBrains Mono"
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .pt-safe { padding-top: env(safe-area-inset-top); }
+        body { -webkit-tap-highlight-color: transparent; }
+        
+        /* Material Symbols Outline Utility */
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col pt-safe pb-safe">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 w-full z-50 bg-surface-container/85 dark:bg-surface-container-high/85 backdrop-blur-md shadow-sm border-b border-outline-variant/30 dark:border-outline/20">
+<div class="flex justify-between items-center px-4 h-16 w-full pt-safe">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline font-bold text-sm">
+                    VL
+                </div>
+<div>
+<h1 class="font-headline font-bold text-primary dark:text-primary-fixed text-lg leading-tight">Setuu Vendor</h1>
+<span class="font-label text-xs text-error font-semibold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+                         REMEDIATION CONSOLE
+                     </span>
+</div>
+</div>
+<button aria-label="Sync" class="text-on-surface-variant hover:bg-surface-variant/50 transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined">sync</span>
+</button>
+</div>
+</header>
+<!-- MAIN CONTENT -->
+<main class="flex-1 mt-20 mb-24 px-4 sm:px-6 md:px-8 max-w-lg mx-auto w-full grid grid-cols-4 gap-4">
+<div class="col-span-4 mb-2">
+<h2 class="font-headline text-headline-sm font-bold text-on-surface mb-1">Critical Rework Requests</h2>
+<p class="font-body text-sm text-on-surface-variant">Immediate action required on rejected materials.</p>
+</div>
+<!-- DEFECT CARD 1 -->
+<article class="col-span-4 bg-surface-container-lowest rounded-lg border border-error/50 shadow-sm overflow-hidden flex flex-col relative">
+<!-- Alert Header -->
+<div class="bg-error/10 px-4 py-2 border-b border-error/20 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-lg fill">warning</span>
+<span class="font-label text-error font-bold text-xs uppercase tracking-wider">REJECTED - QUALITY CONTROL</span>
+</div>
+<span class="font-label text-xs text-on-surface-variant">PO-2023-441A</span>
+</div>
+<!-- Media Content -->
+<div class="relative w-full h-48 bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A close-up field photograph of a visibly damaged industrial steel beam. The beam has deep scratches and a bent flange. The lighting is harsh natural sunlight, typical of a construction site. The image has a stark, realistic, and unpolished aesthetic, highlighting the defect clearly against a busy construction background. The overall tone is clinical and documentary." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4mcUAndwCipn49Utz9m4ScLLhnc5WZy8zh8VM0sGPNUva2EGUCRoW6b_EF9hmowCKoLpbEEzuaqJzFIYya92ubBUVGv8ZdGGKqcG81HMBkt1cRIuQOb1mJKJLW-xTSqIy0OKElAHCSZVVKywEZIYMnQ5llJOaIfxZEdJde5BxxuP1oEobDNYMwA2yIjEFbwpwhZylXqro2S1sEs-eAywqUs0q4yOLjN_7yTHnOjoLDOzg6GzYHqQC"/>
+<!-- Watermark overlay -->
+<div class="absolute bottom-2 left-2 bg-inverse-surface/80 text-inverse-on-surface font-label text-[10px] px-2 py-1 rounded">
+                    LAT: 34.0522, LNG: -118.2437<br/>
+                    2023-10-27T14:32:01Z
+                </div>
+</div>
+<!-- Rationale & Actions -->
+<div class="p-4 flex flex-col gap-3">
+<div>
+<h3 class="font-headline text-base font-bold text-on-surface">Structural Beam Flange Damage</h3>
+<p class="font-body text-sm text-on-surface mt-1">
+<span class="font-semibold">PM Note:</span> Materials arrived with significant structural damage to the primary flange on beam B-42. Cannot accept delivery in current state. Requires immediate replacement or certified on-site remediation plan.
+                    </p>
+</div>
+<!-- Remediation Action Buttons -->
+<div class="flex gap-2 mt-2 border-b border-outline-variant/30 pb-4">
+<button class="flex-1 bg-primary text-on-primary font-body font-medium text-sm py-2 px-3 rounded flex items-center justify-center gap-2 hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-sm">assignment_return</span>
+                        Initiate Return
+                    </button>
+<button class="flex-1 bg-surface border border-outline text-on-surface font-body font-medium text-sm py-2 px-3 rounded flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-sm">build</span>
+                        Propose Rework
+                    </button>
+</div>
+<!-- Threaded Comments -->
+<div class="flex flex-col gap-3 mt-2">
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label font-bold text-xs shrink-0">PM</div>
+<div class="bg-surface-container rounded-lg p-3 w-full relative">
+<!-- pointer -->
+<div class="absolute -left-2 top-3 w-3 h-3 bg-surface-container rotate-45"></div>
+<p class="font-body text-sm text-on-surface">Need an ETA on replacement ASAP. This is blocking Phase 2 concrete pour.</p>
+<span class="font-label text-[10px] text-on-surface-variant mt-1 block">15 MINS AGO</span>
+</div>
+</div>
+<!-- Input -->
+<div class="flex gap-2 items-center mt-1">
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 px-4 font-body text-sm text-on-surface focus:ring-2 focus:ring-primary outline-none" placeholder="Reply to PM..." type="text"/>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- DEFECT CARD 2 -->
+<article class="col-span-4 bg-surface-container-lowest rounded-lg border border-error/50 shadow-sm overflow-hidden flex flex-col relative opacity-90">
+<!-- Alert Header -->
+<div class="bg-error/10 px-4 py-2 border-b border-error/20 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-lg fill">error</span>
+<span class="font-label text-error font-bold text-xs uppercase tracking-wider">REJECTED - WRONG SPEC</span>
+</div>
+<span class="font-label text-xs text-on-surface-variant">PO-2023-512B</span>
+</div>
+<!-- Rationale & Actions (No Image) -->
+<div class="p-4 flex flex-col gap-3">
+<div>
+<h3 class="font-headline text-base font-bold text-on-surface">Incorrect Conduit Diameter</h3>
+<p class="font-body text-sm text-on-surface mt-1">
+<span class="font-semibold">PM Note:</span> Received 2-inch PVC conduit instead of the specified 3-inch rigid steel conduit detailed in the approved submittal.
+                    </p>
+</div>
+<div class="flex gap-2 items-center mt-1">
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 px-4 font-body text-sm text-on-surface focus:ring-2 focus:ring-primary outline-none" placeholder="Acknowledge issue..." type="text"/>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</article>
+</main>
+<!-- BOTTOM NAV BAR (Shared Component) -->
+<!-- Applying Mobile layout rule (BottomNavBar visible), hiding on desktop via classes -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl border-t border-outline-variant/20 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] bg-surface/90 dark:bg-surface-container-lowest/90 backdrop-blur-xl">
+<div class="flex justify-around items-center w-full px-2 py-3 pb-safe">
+<!-- Tasks (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant min-h-[48px] px-6 py-2 hover:bg-secondary-container/50 dark:hover:bg-secondary-fixed-dim/20 transition-colors rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Dashboard</span>
+</a>
+<!-- Deliveries (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant min-h-[48px] px-6 py-2 hover:bg-secondary-container/50 dark:hover:bg-secondary-fixed-dim/20 transition-colors rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">local_shipping</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Deliveries</span>
+</a>
+<!-- Tasks (Active - representing Defect remediation/tasks) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-xl min-h-[48px] px-6 py-2 scale-95 transition-transform duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1 fill">assignment</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Tasks</span>
+</a>
+<!-- Invoices (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant min-h-[48px] px-6 py-2 hover:bg-secondary-container/50 dark:hover:bg-secondary-fixed-dim/20 transition-colors rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Invoices</span>
+</a>
+</div>
+</nav>
+</body></html>

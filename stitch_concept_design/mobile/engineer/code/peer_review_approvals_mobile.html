@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Peer Review Queue</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Merriweather:wght@700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"tertiary-container": "#002233", "on-secondary": "#ffffff", tertiary: "#00080f", "tertiary-fixed": "#c8e6fd", "inverse-primary": "#aec9eb", surface: "#fbf9f4", background: "#fbf9f4", "surface-container-low": "#f5f4ee", "primary-fixed-dim": "#aec9eb", "tertiary-fixed-dim": "#adcae1", "on-tertiary-fixed-variant": "#2d4a5c", "on-secondary-fixed-variant": "#004c6b", "inverse-surface": "#30312d", "surface-container": "#efeee8", "outline-variant": "#c3c6ce", "on-tertiary-container": "#6e8a9f", "surface-container-high": "#e9e8e3", "on-secondary-fixed": "#001e2d", primary: "#000815", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-primary-container": "#6f89a9", "on-error": "#ffffff", secondary: "#00658d", "surface-tint": "#46607e", "on-error-container": "#93000a", "primary-fixed": "#d1e4ff", "surface-dim": "#dbdad5", "on-tertiary": "#ffffff", "secondary-fixed-dim": "#88cffc", "on-surface-variant": "#43474d", "on-tertiary-fixed": "#001e2e", "on-primary-fixed": "#001d35", "secondary-fixed": "#c6e7ff", "on-primary": "#ffffff", "surface-bright": "#fbf9f4", "surface-container-highest": "#e4e2dd", "inverse-on-surface": "#f2f1eb", error: "#ba1a1a", outline: "#73777e", "on-secondary-container": "#005a7f", "primary-container": "#00213c", "on-background": "#1b1c19", "surface-variant": "#e4e2dd", "on-primary-fixed-variant": "#2e4965", "on-surface": "#1b1c19", "secondary-container": "#8ad1ff"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "12px", "unit-xs": "4px", "unit-sm": "8px", "grid-columns": "4", "unit-lg": "24px", "unit-md": "16px", margin: "16px"}, fontFamily: {"body-md": ["Inter"], "body-sm": ["Inter"], "title-md": ["Inter"], "headline-md": ["Merriweather"], "data-mono": ["JetBrains Mono"], "headline-lg": ["Merriweather"], "label-caps": ["JetBrains Mono"]}, fontSize: {"body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-sm": ["12px", {lineHeight: "18px", fontWeight: "400"}], "title-md": ["16px", {lineHeight: "24px", fontWeight: "600"}], "headline-md": ["20px", {lineHeight: "28px", fontWeight: "700"}], "data-mono": ["13px", {lineHeight: "16px", letterSpacing: "-0.02em", fontWeight: "500"}], "headline-lg": ["24px", {lineHeight: "32px", fontWeight: "700"}], "label-caps": ["10px", {lineHeight: "12px", letterSpacing: "0.05em", fontWeight: "700"}]}}}};</script>
+<style>
+        /* Swipe Action Base Styles */
+        .swipe-item {
+            position: relative;
+            overflow: hidden;
+        }
+        .swipe-content {
+            position: relative;
+            z-index: 10;
+            background: theme('colors.surface-container-lowest');
+            transition: transform 0.3s ease-out;
+            touch-action: pan-y;
+        }
+        .swipe-actions {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: theme('spacing.margin');
+            background: theme('colors.error-container');
+            color: theme('colors.on-error-container');
+            z-index: 5;
+            width: 100%;
+        }
+        /* Example JS adds class */
+        .swipe-content.swiped {
+            transform: translateX(-100px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-tertiary text-on-surface antialiased pt-20 pb-24 md:pb-0 md:pt-0 selection:bg-secondary-container selection:text-on-secondary-container h-full min-h-screen">
+<!-- TopAppBar Mobile -->
+<header class="fixed top-0 w-full z-50 md:hidden bg-surface/80 dark:bg-tertiary-container/80 backdrop-blur-md border-b border-outline-variant dark:border-outline flat no shadows flex items-center justify-between px-margin py-unit-sm transition-all duration-200 active:scale-95">
+<button class="text-primary dark:text-primary-fixed hover:bg-surface-container-high dark:hover:bg-tertiary rounded p-unit-xs">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed font-bold">Setuu Enterprise</h1>
+<div class="h-8 w-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Alex Chen" class="object-cover w-full h-full" data-alt="Close up professional headshot of a female mechanical engineer with safety glasses pushed up on her head, lit with bright neutral daylight, corporate industrial setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrf6jstk8ncQfW2JbW4G2OmyzngROpmnRL-q5rQnlSeh2SYIjj0ML3wJXBGux4b1GvQyso0ZofNbmXs_w-1C1MsNhEcBf2Wck7NYDDDz1tv9yfFBxZhb9r_cIo48gIK_sjgaMGRTzJ-_k1j1UKbpJGaGxLaFjF0d1HZSaeMUnRrYUEb4fRViBWqyBZTKJS0mnIsZwBvuHalZMnYbYEWyjnRgnEeo16sYmaq79O429tNK7CN1dWNCjf"/>
+</div>
+</header><div class="fixed top-[56px] w-full z-40 md:hidden bg-secondary text-on-secondary py-1 px-margin flex items-center justify-center gap-unit-xs font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+  OFFLINE SYNC ACTIVE
+</div>
+<!-- Main Content Canvas -->
+<main class="max-w-md mx-auto md:max-w-none md:ml-72 md:p-margin">
+<div class="px-margin md:px-0 py-unit-md flex flex-col gap-unit-md">
+<!-- Header Section -->
+<div class="flex justify-between items-end border-b border-outline-variant pb-unit-sm mb-unit-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-unit-xs">Review Queue</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3 Items pending your approval</p>
+</div>
+<div class="flex gap-unit-xs">
+<button class="p-unit-xs border border-outline-variant rounded bg-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Review Card 1 (Software PR) -->
+<article class="swipe-item border border-outline-variant rounded-DEFAULT bg-surface-container-lowest">
+<div class="swipe-actions">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<div class="swipe-content p-unit-md flex flex-col gap-unit-sm border border-transparent rounded-DEFAULT">
+<div class="flex justify-between items-start">
+<div class="flex gap-unit-sm items-center">
+<span class="px-2 py-1 bg-surface-container-high text-primary font-label-caps text-label-caps rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">code</span> SOFTWARE
+                            </span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">PR-2045</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">2h ago</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary">Implement Predictive Torque Control Algorithm</h3>
+<div class="flex items-center gap-unit-sm py-unit-xs">
+<div class="h-6 w-6 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+<img alt="Author" class="object-cover w-full h-full" data-alt="Headshot of a male software developer in a dark grey t-shirt, industrial modern office background, high contrast lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPivHhPQk8Y5P6varIcFCyqc12qpr1u6SFHp4IsFXjfDRVnbcJtAZq-xyK50tkSI1a4j6yjGrqUkUGA4qMhoTqJz7NAGMZ-_1H-bomp3Ctr5V4Ww7dDg7w55HuTceWZgWcfKb3O-JV2rGlyrcVtCJdST3njbVEQmtq19V5rgv2UevkexitlJXs2CycNBrkteI7PqcKBk5B-T8ok9j5mkCYmah9_LVMwaGGuRjMgjJHOoDlB6upcYku"/>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">David K.</span>
+<span class="text-outline-variant">•</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container px-1 rounded">feat/torque-opt</span>
+</div>
+<div class="flex gap-unit-sm mt-unit-sm pt-unit-sm border-t border-outline-variant"><button class="flex-1 bg-primary text-on-primary font-body-sm text-body-sm h-[48px] px-4 rounded transition-colors hover:bg-primary-container active:bg-primary-container">Approve</button>
+<button class="flex-1 border border-primary text-primary font-body-sm text-body-sm h-[48px] px-4 rounded transition-colors hover:bg-surface-container active:bg-surface-container">Request Changes</button>
+<button class="w-[48px] h-[48px] flex items-center justify-center border border-outline-variant text-on-surface-variant rounded hover:bg-surface-container transition-colors shrink-0">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+</button></div>
+</div>
+</article>
+<!-- Review Card 2 (CAD) -->
+<article class="swipe-item border border-outline-variant rounded-DEFAULT bg-surface-container-lowest">
+<div class="swipe-actions">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<div class="swipe-content p-unit-md flex flex-col gap-unit-sm border border-transparent rounded-DEFAULT">
+<div class="flex justify-between items-start">
+<div class="flex gap-unit-sm items-center">
+<span class="px-2 py-1 bg-surface-dim text-primary font-label-caps text-label-caps rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">architecture</span> MECHANICAL
+                            </span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">CAD-v4.2</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">5h ago</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary">Main Drive Shaft Housing Reinforcement</h3>
+<div class="flex items-center gap-unit-sm py-unit-xs">
+<div class="h-6 w-6 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+<img alt="Author" class="object-cover w-full h-full" data-alt="Headshot of a female mechanical engineer in a high-vis vest, looking thoughtful, bright industrial factory background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3sbVwpYzXSZqzEWnjRwhQiBpuQVONs1yhssFLw5GCVpoIjWo6IUSbWu_pnBeDP-0UEmhQdTmP1raakXiEKIqMJZYmS40LY3FsFGhyz8QJlS3ZhaXPOn8zStsxbVfiI7EG2pmSG2PhrX4jpgAQEWyNvT5yN0acOikoY8cue_YiYZFBhjPUFumGB3UQKf0P3FmiWBuKpLp8UXB1SFT5O8Zqp1go4zJ1hus78_3slcIaaFCK3bDinlAb"/>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface">Sarah J.</span>
+<span class="text-outline-variant">•</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container px-1 rounded">ASM-092-B</span>
+</div>
+<div class="bg-surface-container-low p-unit-sm rounded border border-outline-variant flex items-start gap-unit-sm">
+<span class="material-symbols-outlined text-secondary text-[16px] mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Added 2mm ribbing to stress points identified in thermal simulation.</p>
+</div>
+<div class="flex gap-unit-sm mt-unit-sm pt-unit-sm border-t border-outline-variant"><button class="flex-1 bg-primary text-on-primary font-body-sm text-body-sm h-[48px] px-4 rounded transition-colors hover:bg-primary-container active:bg-primary-container">Approve</button>
+<button class="flex-1 border border-primary text-primary font-body-sm text-body-sm h-[48px] px-4 rounded transition-colors hover:bg-surface-container active:bg-surface-container">Request Changes</button>
+<button class="w-[48px] h-[48px] flex items-center justify-center border border-outline-variant text-on-surface-variant rounded hover:bg-surface-container transition-colors shrink-0">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+</button></div>
+</div>
+</article>
+<!-- Review Card 3 (Schematic) -->
+<article class="swipe-item border border-outline-variant rounded-DEFAULT bg-surface-container-lowest opacity-75">
+<div class="swipe-actions">
+<span class="material-symbols-outlined">delete</span>
+</div>
+<div class="swipe-content p-unit-md flex flex-col gap-unit-sm border border-transparent rounded-DEFAULT">
+<div class="flex justify-between items-start">
+<div class="flex gap-unit-sm items-center">
+<span class="px-2 py-1 bg-surface-container-highest text-primary font-label-caps text-label-caps rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">electric_bolt</span> ELECTRICAL
+                            </span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">SCH-REV-C</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">1d ago</span>
+</div>
+<h3 class="font-title-md text-title-md text-primary text-on-surface-variant">Power Distribution Board Layout Update</h3>
+<div class="flex items-center gap-unit-sm py-unit-xs">
+<div class="h-6 w-6 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0 flex items-center justify-center bg-secondary text-on-secondary font-label-caps text-label-caps">
+                            ML
+                        </div>
+<span class="font-body-sm text-body-sm text-on-surface">Marcus L.</span>
+<span class="text-outline-variant">•</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container px-1 rounded">PCB-402</span>
+</div>
+<div class="flex gap-unit-sm mt-unit-sm pt-unit-sm border-t border-outline-variant"><button class="flex-1 bg-primary text-on-primary font-body-sm text-body-sm h-[48px] px-4 rounded transition-colors hover:bg-primary-container active:bg-primary-container opacity-50 cursor-not-allowed">Approve</button>
+<button class="flex-1 border border-primary text-primary font-body-sm text-body-sm h-[48px] px-4 rounded transition-colors hover:bg-surface-container active:bg-surface-container">Request Changes</button>
+<button class="w-[48px] h-[48px] flex items-center justify-center border border-outline-variant text-on-surface-variant rounded hover:bg-surface-container transition-colors shrink-0">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span>
+</button></div>
+</div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar Mobile -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden bg-surface dark:bg-tertiary-container border-t border-outline-variant dark:border-outline flat no shadows flex justify-around items-center h-16 px-gutter pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary transition-transform active:scale-90 w-16 h-full">
+<span class="material-symbols-outlined mb-1">grid_view</span>
+<span class="font-label-caps text-label-caps">Workbench</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-bold border-t-2 border-secondary hover:bg-surface-container dark:hover:bg-tertiary transition-transform active:scale-90 w-16 h-full pt-[2px]">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="font-label-caps text-label-caps">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary transition-transform active:scale-90 w-16 h-full">
+<span class="material-symbols-outlined mb-1">layers</span>
+<span class="font-label-caps text-label-caps">Asset Hub</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary transition-transform active:scale-90 w-16 h-full">
+<span class="material-symbols-outlined mb-1">bug_report</span>
+<span class="font-label-caps text-label-caps">Issues</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container dark:hover:bg-tertiary transition-transform active:scale-90 w-16 h-full">
+<span class="material-symbols-outlined mb-1">file_export</span>
+<span class="font-label-caps text-label-caps">Tools</span>
+</button>
+</nav>
+<!-- NavigationDrawer Desktop (Hidden on Mobile) -->
+<aside class="hidden md:flex fixed top-0 left-0 z-40 bg-surface dark:bg-tertiary-container border-r border-outline-variant dark:border-outline shadow-lg dark:shadow-none h-full w-72 rounded-r-none flex-col gap-unit-md p-margin">
+<div class="mb-unit-lg">
+<div class="flex items-center gap-unit-md mb-unit-sm">
+<div class="h-10 w-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant shrink-0">
+<img alt="Engineer Alex Chen" class="object-cover w-full h-full" data-alt="Close up professional headshot of a female mechanical engineer with safety glasses pushed up on her head, lit with bright neutral daylight, corporate industrial setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3mUSrJjCTDctT7u_iXvlXZ9D1dFQh4eUO1RupO2C-dvO8A7nshxMnRAI1WTZBgeVSJZWgLTlNrJiB0A7l8nXee2GUsqZx2M0FjDy1C0XQSb6C8Cx1O9ClpqTlthxrDSpQct_DwvSEfmqFgwAFnN1jVbCcUPZ38UKNgMDCB52259JBj4ZbTMs2F5tmAanihcWpvx6ru9OQkS3tjZ_wL-RbdgB0YT7f39kPz-S0Et1MdBgIMIrVz-vO"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Alex Chen</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mechanical Engineering</p>
+</div>
+</div>
+<p class="font-data-mono text-data-mono text-outline text-xs">Firmware v2.4</p>
+</div>
+<nav class="flex flex-col gap-unit-sm flex-1">
+<a class="flex items-center gap-unit-sm p-unit-sm text-on-surface dark:text-on-tertiary-fixed-variant hover:bg-surface-container-high dark:hover:bg-tertiary transition-colors duration-150 rounded font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">description</span> Team Docs
+            </a>
+<a class="flex items-center gap-unit-sm p-unit-sm bg-secondary-container text-on-secondary-container font-bold rounded-lg hover:bg-surface-container-high dark:hover:bg-tertiary transition-colors duration-150 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">schedule</span> Timesheets
+            </a>
+<a class="flex items-center gap-unit-sm p-unit-sm text-on-surface dark:text-on-tertiary-fixed-variant hover:bg-surface-container-high dark:hover:bg-tertiary transition-colors duration-150 rounded font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">terminal</span> Logs
+            </a>
+<a class="flex items-center gap-unit-sm p-unit-sm text-on-surface dark:text-on-tertiary-fixed-variant hover:bg-surface-container-high dark:hover:bg-tertiary transition-colors duration-150 rounded font-body-md text-body-md mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+<a class="flex items-center gap-unit-sm p-unit-sm text-on-surface dark:text-on-tertiary-fixed-variant hover:bg-surface-container-high dark:hover:bg-tertiary transition-colors duration-150 rounded font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">logout</span> Logout
+            </a>
+</nav>
+</aside>
+<script>
+        // Very basic swipe-to-reveal implementation for demonstration
+        document.querySelectorAll('.swipe-content').forEach(item => {
+            let startX;
+            item.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+            });
+            item.addEventListener('touchmove', e => {
+                if(!startX) return;
+                let currentX = e.touches[0].clientX;
+                let diff = startX - currentX;
+                if (diff > 30) {
+                     item.classList.add('swiped');
+                } else if (diff < -30) {
+                     item.classList.remove('swiped');
+                }
+            });
+             item.addEventListener('touchend', e => {
+                startX = null;
+            });
+        });
+    </script>
+</body></html>

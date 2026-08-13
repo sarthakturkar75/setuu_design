@@ -1,0 +1,442 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Project-wise Timesheet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#c3c6ce",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "inverse-primary": "#aec9eb",
+                      "tertiary-fixed": "#c6e7ff",
+                      "secondary": "#00658d",
+                      "on-surface": "#1b1c19",
+                      "error": "#ba1a1a",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#e9e8e3",
+                      "surface": "#faf9f4",
+                      "on-primary-fixed": "#001d35",
+                      "primary": "#000815",
+                      "on-background": "#1b1c19",
+                      "tertiary": "#00080f",
+                      "inverse-on-surface": "#f2f1ec",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-tertiary-fixed": "#001e2d",
+                      "on-primary-container": "#6f89a9",
+                      "surface-tint": "#46607e",
+                      "on-error": "#ffffff",
+                      "outline": "#73777e",
+                      "surface-container-lowest": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "primary-fixed-dim": "#aec9eb",
+                      "surface-container-low": "#f5f4ef",
+                      "secondary-container": "#8ad1ff",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#dbdad5",
+                      "on-secondary-container": "#005a7f",
+                      "on-tertiary-container": "#0090c7",
+                      "primary-container": "#00213c",
+                      "surface-variant": "#e3e3de",
+                      "surface-container": "#efeee9",
+                      "primary-fixed": "#d1e4ff",
+                      "secondary-fixed-dim": "#88cffc",
+                      "surface-bright": "#faf9f4",
+                      "secondary-fixed": "#c6e7ff",
+                      "tertiary-container": "#002233",
+                      "on-surface-variant": "#43474d",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "background": "#faf9f4",
+                      "surface-container-highest": "#e3e3de",
+                      "inverse-surface": "#30312e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; color: #1b1c19; }
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Timesheet Specific Styles */
+        .timesheet-grid {
+            display: grid;
+            grid-template-columns: minmax(250px, 1fr) repeat(7, minmax(80px, 100px)) 100px;
+            gap: 1px;
+            background-color: #dbdad5; /* surface-dim for borders */
+            border: 1px solid #dbdad5;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .ts-header {
+            background-color: #efeee9; /* surface-container */
+            padding: 12px 16px;
+            font-weight: 600;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #43474d; /* on-surface-variant */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .ts-header.project-col {
+            text-align: left;
+            background-color: #f5f4ef; /* surface-container-low */
+        }
+        
+        .ts-cell {
+            background-color: #ffffff; /* surface-container-lowest */
+            padding: 0;
+            position: relative;
+        }
+        
+        .ts-cell-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #1b1c19;
+            background: transparent;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        
+        .ts-cell-input:hover, .ts-cell-input:focus {
+            background-color: #e3e3de; /* surface-container-highest */
+            /* Precision Cyan Glow - Custom request #41BEFD */
+            box-shadow: inset 0 0 0 2px #41BEFD, 0 0 8px rgba(65, 190, 253, 0.4);
+            z-index: 10;
+        }
+        
+        .ts-project-row {
+            background-color: #f5f4ef; /* surface-container-low */
+            padding: 16px;
+            font-weight: bold;
+            grid-column: 1 / -1;
+            font-family: 'Merriweather', serif;
+            color: #000815;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 2px solid #dbdad5;
+        }
+        
+        .ts-task-label {
+            background-color: #ffffff;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .ts-task-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1b1c19;
+        }
+        
+        .ts-task-id {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #73777e; /* outline */
+            margin-top: 4px;
+        }
+        
+        .ts-total {
+            background-color: #e9e8e3; /* surface-container-high */
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1b1c19;
+        }
+        
+        .ts-footer {
+            background-color: #efeee9; /* surface-container */
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 16px 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000815; /* primary */
+        }
+        
+        .ts-footer.label-col {
+            text-align: right;
+            padding-right: 24px;
+            justify-content: flex-end;
+            background-color: #e3e3de; /* surface-container-highest */
+        }
+
+        /* Glassmorphic Nav Separation */
+        .nav-shell-separation {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+      </style>
+</head>
+<body class="flex h-screen overflow-hidden bg-surface text-on-surface">
+<!-- JSON Component: SideNavBar -->
+<nav class="docked left-0 h-full w-[280px] flex flex-col fixed top-0 overflow-y-auto bg-primary-container text-on-primary-container shadow-xl z-20 hidden md:flex">
+<!-- Header -->
+<div class="p-6 border-b border-white/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-tint flex items-center justify-center overflow-hidden">
+<img alt="Alex Chen" class="w-full h-full object-cover" data-alt="A highly detailed portrait of a corporate engineer in modern high-end office lighting. The aesthetic is clean, professional, and slightly industrial, fitting a light-mode corporate SaaS environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBin-tbJEwuK_iJz2CeWqL360Ev53YGFanZ5Udv65esoGK92aDpKJk6n2-F9JRS6aqS6MxgC73QjoaARuprOOpMQvq2cItCaxZU3dGVvrJ4hjYB2aq9tKvNTfAAJeotdaxCrCTYfecUovBE7bvWcBU8PHAh5NsgmaN1-4n85VCtCPjYAYtX92wAj5ySbsOiAvFoIsguZqOeWjmgw02DivDxIgHJuN1BLtYihSov1uBeP8vXXWBZoPbx">
+</div>
+<div>
+<h2 class="text-xl font-headline font-bold text-on-primary">Engineer Workbench</h2>
+<p class="text-label-sm font-label text-on-primary-container/80 uppercase tracking-widest mt-1">Software Engineering</p>
+</div>
+</div>
+<button class="w-full py-2.5 px-4 bg-white/5 hover:bg-white/10 rounded border border-white/10 text-on-primary font-label text-xs uppercase tracking-wider flex items-center justify-between transition-colors">
+<span>System Status</span>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+</button>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 py-6 flex flex-col gap-1">
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-body text-sm">My Workbench</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-body text-sm">Assigned Tasks</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">code_blocks</span>
+<span class="font-body text-sm">Engineering Hub</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">bug_report</span>
+<span class="font-body text-sm">Issue Tracker</span>
+</a>
+<!-- Active State Navigation -->
+<a class="bg-secondary/20 text-on-secondary-container border-l-4 border-secondary rounded-r-lg px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<span class="font-body text-sm font-semibold">Timesheets</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body text-sm">Team Docs</span>
+</a>
+</div>
+<!-- Footer -->
+<div class="p-4 border-t border-white/10 flex flex-col gap-1">
+<a class="text-on-primary-container/70 px-4 py-2 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="font-body text-sm">Settings</span>
+</a>
+<a class="text-on-primary-container/70 px-4 py-2 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 rounded" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span class="font-body text-sm">Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[280px] h-screen overflow-hidden bg-background">
+<!-- JSON Component: TopNavBar -->
+<header class="docked full-width top-0 h-20 bg-surface/85 backdrop-blur-xl border-b border-outline-variant/30 z-10 sticky flex items-center">
+<div class="flex justify-between items-center w-full px-8 max-w-[1600px] mx-auto">
+<!-- Brand & Search -->
+<div class="flex items-center gap-8">
+<h1 class="text-headline-md font-headline font-bold text-primary tracking-tight">Setuu Enterprise</h1>
+<div class="relative hidden lg:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded text-body-md py-1.5 pl-9 pr-3 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors" placeholder="Search resources..." type="text">
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/50 transition-colors">
+<span class="material-symbols-outlined">alternate_email</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/50 mx-2"></div>
+<span class="font-label text-label-md text-outline mr-2 hidden xl:block">Mechanical Engineering</span>
+<button class="bg-primary text-on-primary px-5 py-2 rounded font-body text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                        Log Time
+                    </button>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-4 md:p-8">
+<div class="max-w-[1600px] mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+<div>
+<h2 class="font-headline text-3xl font-bold text-primary mb-2">Weekly Timesheet</h2>
+<p class="font-body text-on-surface-variant text-sm">Week of Oct 23 - Oct 29, 2023</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-surface-container text-on-surface font-body text-sm rounded border border-outline-variant/50 hover:bg-surface-container-high transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+                            Prev Week
+                        </button>
+<button class="px-4 py-2 bg-surface-container text-on-surface font-body text-sm rounded border border-outline-variant/50 hover:bg-surface-container-high transition-colors flex items-center gap-2">
+                            Next Week
+                            <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="ml-2 px-4 py-2 bg-secondary text-on-secondary font-body text-sm font-medium rounded shadow-sm hover:bg-secondary/90 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">send</span>
+                            Submit Week
+                        </button>
+</div>
+</div>
+<!-- Timesheet Matrix -->
+<div class="bg-surface-container-lowest rounded-lg shadow-sm border border-outline-variant/50 mb-8 overflow-x-auto">
+<div class="min-w-[900px]">
+<div class="timesheet-grid">
+<!-- Header Row -->
+<div class="ts-header project-col rounded-tl-lg">Project / Task</div>
+<div class="ts-header">Mon<br><span class="text-outline font-normal text-[10px]">Oct 23</span></div>
+<div class="ts-header">Tue<br><span class="text-outline font-normal text-[10px]">Oct 24</span></div>
+<div class="ts-header">Wed<br><span class="text-outline font-normal text-[10px]">Oct 25</span></div>
+<div class="ts-header bg-surface-container-high">Thu<br><span class="text-primary font-bold text-[10px]">Oct 26</span></div> <!-- Today -->
+<div class="ts-header">Fri<br><span class="text-outline font-normal text-[10px]">Oct 27</span></div>
+<div class="ts-header">Sat<br><span class="text-outline font-normal text-[10px]">Oct 28</span></div>
+<div class="ts-header">Sun<br><span class="text-outline font-normal text-[10px]">Oct 29</span></div>
+<div class="ts-header rounded-tr-lg">Total</div>
+<!-- Project Group 1 -->
+<div class="ts-project-row">
+<span class="material-symbols-outlined text-secondary text-lg">domain</span>
+                                Alpha Tower
+                                <span class="ml-auto font-label text-xs font-normal text-outline border border-outline-variant/50 px-2 py-0.5 rounded">PRJ-2041</span>
+</div>
+<!-- Task 1 -->
+<div class="ts-task-label">
+<span class="ts-task-title">API Refactoring</span>
+<span class="ts-task-id">TSK-8832</span>
+</div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="4.0"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="2.5"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell bg-surface-container-lowest"><input class="ts-cell-input" type="text" value="3.0"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-total">9.5</div>
+<!-- Task 2 -->
+<div class="ts-task-label">
+<span class="ts-task-title">Database Migration Scripting</span>
+<span class="ts-task-id">TSK-8845</span>
+</div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="4.0"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="5.0"></div>
+<div class="ts-cell bg-surface-container-lowest"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="2.0"></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-total">11.0</div>
+<!-- Project Group 2 -->
+<div class="ts-project-row">
+<span class="material-symbols-outlined text-secondary text-lg">precision_manufacturing</span>
+                                Belta Lab
+                                <span class="ml-auto font-label text-xs font-normal text-outline border border-outline-variant/50 px-2 py-0.5 rounded">PRJ-3099</span>
+</div>
+<!-- Task 3 -->
+<div class="ts-task-label">
+<span class="ts-task-title">Sensor Calibration</span>
+<span class="ts-task-id">TSK-9012</span>
+</div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="2.5"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="3.0"></div>
+<div class="ts-cell bg-surface-container-lowest"><input class="ts-cell-input" type="text" value="4.0"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="5.5"></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-total">15.0</div>
+<!-- Task 4 -->
+<div class="ts-task-label">
+<span class="ts-task-title">Firmware Updates</span>
+<span class="ts-task-id">TSK-9018</span>
+</div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="1.5"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="1.5"></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell bg-surface-container-lowest"><input class="ts-cell-input" type="text" value=""></div>
+<div class="ts-cell"><input class="ts-cell-input" type="text" value="0.5"></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" type="text" value="2.0"></div>
+<div class="ts-cell bg-surface-variant/30"><input class="ts-cell-input text-outline" disabled="" type="text" value=""></div>
+<div class="ts-total">5.5</div>
+<!-- Footer Totals -->
+<div class="ts-footer label-col rounded-bl-lg uppercase tracking-wider text-xs">Total Hours</div>
+<div class="ts-footer">8.0</div>
+<div class="ts-footer">8.0</div>
+<div class="ts-footer">8.0</div>
+<div class="ts-footer bg-surface-container-high border-b-2 border-primary">7.0</div>
+<div class="ts-footer">8.0</div>
+<div class="ts-footer text-outline">2.0</div>
+<div class="ts-footer text-outline">0.0</div>
+<div class="ts-footer rounded-br-lg bg-surface-container-highest text-primary">41.0</div>
+</div>
+</div>
+</div>
+<!-- Helper Text -->
+<div class="flex items-center justify-between text-label-sm font-label text-outline">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span>
+<span>Ensure entries reflect exact hours worked per ISO-9001 compliance.</span>
+</div>
+<div>Last Auto-Save: 10:42 AM (JetBrains Mono)</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

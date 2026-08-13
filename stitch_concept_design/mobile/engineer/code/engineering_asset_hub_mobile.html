@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Engineering Asset Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#001e2e",
+                        "surface-container": "#efeee8",
+                        "surface-dim": "#dbdad5",
+                        "primary-fixed": "#d1e4ff",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-surface": "#30312d",
+                        "surface-container-highest": "#e4e2dd",
+                        "surface": "#fbf9f4",
+                        "outline-variant": "#c3c6ce",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "background": "#fbf9f4",
+                        "on-surface-variant": "#43474d",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary-fixed": "#c8e6fd",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#73777e",
+                        "secondary-container": "#8ad1ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "on-tertiary-fixed-variant": "#2d4a5c",
+                        "on-surface": "#1b1c19",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-tertiary-container": "#6e8a9f",
+                        "tertiary": "#00080f",
+                        "tertiary-container": "#002233",
+                        "on-secondary-container": "#005a7f",
+                        "surface-variant": "#e4e2dd",
+                        "tertiary-fixed-dim": "#adcae1",
+                        "primary": "#000815",
+                        "primary-container": "#00213c",
+                        "on-primary-container": "#6f89a9",
+                        "secondary": "#00658d",
+                        "surface-tint": "#46607e",
+                        "surface-bright": "#fbf9f4",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f5f4ee",
+                        "inverse-on-surface": "#f2f1eb",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e9e8e3",
+                        "on-background": "#1b1c19",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit-lg": "24px",
+                        "margin": "16px",
+                        "grid-columns": "4",
+                        "unit-xs": "4px",
+                        "gutter": "12px",
+                        "unit-md": "16px",
+                        "unit-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Merriweather"],
+                        "body-sm": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "title-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Merriweather"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "data-mono": ["13px", { "lineHeight": "16px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .blueprint-grid {
+            background-image: 
+                linear-gradient(rgba(65, 190, 253, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(65, 190, 253, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .crosshair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+        .crosshair::before, .crosshair::after {
+            content: '';
+            position: absolute;
+            background-color: #41BEFD;
+        }
+        .crosshair::before { top: 9px; left: 0; width: 20px; height: 2px; }
+        .crosshair::after { top: 0; left: 9px; width: 2px; height: 20px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-on-surface text-inverse-on-surface font-body-md h-screen w-screen overflow-hidden flex flex-col antialiased bg-[#1B1C19]">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 backdrop-blur-md bg-[#1B1C19]/85 border-b border-[#30312d] flex justify-between items-center h-16 px-margin">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-inverse-primary" style="font-variation-settings: 'FILL' 1;">menu</span>
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-inverse-primary tracking-tight">Setuu Enterprise</span>
+<span class="font-data-mono text-data-mono text-inverse-primary opacity-80">Firmware v2.4</span>
+</div>
+</div>
+<button class="hover:bg-[#30312d] transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-inverse-primary" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+</header><div class="bg-[#00213C] border-b border-[#41BEFD]/30 px-margin py-2 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[#41BEFD] text-sm">sync</span>
+<span class="font-label-caps text-label-caps text-[#41BEFD] uppercase tracking-widest">Offline Sync Active</span>
+</div>
+<!-- Main Content Canvas (Blueprint Viewer) -->
+<main class="flex-grow relative blueprint-grid overflow-hidden">
+<!-- Blueprint Image / Schematic -->
+<div class="absolute inset-0 flex items-center justify-center p-8">
+<div class="relative w-full h-full max-w-lg max-h-lg border border-[#41BEFD]/30 bg-[#0A0F14]/50 rounded-lg overflow-hidden">
+<img alt="Actuator Assembly Blueprint" class="w-full h-full object-contain opacity-80" data-alt="A detailed, high-contrast mechanical blueprint of an actuator housing assembly. Rendered in a strict technical style with neon cyan lines on a deep black/slate background, mimicking a professional CAD software interface. The diagram shows complex internal gears, mounting holes, and cross-sectional views. Lighting is flat and uniform, emphasizing precision and industrial reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUM7jaX70xUEGuvZ1VhObbR7faZ0tLZ743DWnuc77vG4jjNSOI7wrFbOEMTh91Pg5S_KS4GzO1wi3WhaKCRizWCpgZXhaPicBkhVP45XMdfVd5IosibOwuPsaMY6dvwF1MfHbTj6SV5mVvdZ8XdDN34p9Y-LLlDUj8e3G1lwUWllSpUQoZlygwfZx4IefZn6pIjET4VTqwSs5Z9xYtZBFHeuE_YHLg-U8eMcUiu6xxASy9vDxswgPC"/>
+<!-- Crosshairs / Calibration Marks -->
+<div class="crosshair top-4 left-4 min-h-[48px] min-w-[48px]"></div>
+<div class="crosshair top-4 right-4 min-h-[48px] min-w-[48px]"></div>
+<div class="crosshair bottom-4 left-4 min-h-[48px] min-w-[48px]"></div>
+<div class="crosshair bottom-4 right-4 min-h-[48px] min-w-[48px]"></div>
+<!-- Overlay Metadata -->
+<div class="absolute top-1/4 left-1/4 bg-[#00213C]/80 border border-[#41BEFD]/50 px-2 py-1 rounded min-h-[48px] min-w-[48px] flex items-center justify-center">
+<span class="font-data-mono text-data-mono text-[#41BEFD]">Z-Axis: +14.05mm</span>
+</div>
+<div class="absolute bottom-1/3 right-1/4 bg-[#00213C]/80 border border-[#41BEFD]/50 px-2 py-1 rounded min-h-[48px] min-w-[48px] flex items-center justify-center">
+<span class="font-data-mono text-data-mono text-[#41BEFD]">Tol: ±0.005mm</span>
+</div>
+<!-- Active Target Indicator -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+<div class="w-8 h-8 rounded-full border-2 border-[#41BEFD] animate-pulse"></div>
+<div class="w-2 h-2 rounded-full bg-[#41BEFD] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+</div>
+</div>
+</div>
+<!-- Component Inspector Bottom Sheet -->
+<div class="absolute bottom-[72px] left-0 w-full bg-[#121A21] border-t border-[#30312d] rounded-t-xl shadow-[0_-8px_30px_rgba(0,0,0,0.5)] z-40 transition-transform duration-300 transform translate-y-0 flex flex-col max-h-[442px]">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center py-2 cursor-grab min-h-[48px]">
+<div class="w-12 h-1.5 bg-[#43474d] rounded-full"></div>
+</div>
+<div class="px-margin pb-margin overflow-y-auto flex-grow">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-inverse-primary mb-1">Actuator Housing Assembly</h2>
+<div class="flex gap-2 items-center">
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-[#30312d] px-2 py-0.5 rounded">MPN: AX-902-B</span>
+<span class="font-data-mono text-data-mono text-[#41BEFD] bg-[#00213C] px-2 py-0.5 rounded border border-[#41BEFD]/30">REV: C</span>
+</div>
+</div>
+<button class="bg-[#00213C] text-inverse-primary border border-inverse-primary/30 p-2 rounded-DEFAULT flex items-center justify-center min-h-[48px] min-w-[48px]">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-gutter mb-4">
+<div class="bg-[#0A0F14] border border-[#30312d] p-3 rounded-lg">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1 uppercase">Material Spec</span>
+<span class="font-data-mono text-data-mono text-inverse-on-surface">AL-6061-T6</span>
+</div>
+<div class="bg-[#0A0F14] border border-[#30312d] p-3 rounded-lg">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1 uppercase">Surface Finish</span>
+<span class="font-data-mono text-data-mono text-inverse-on-surface">Anodized MIL-A-8625</span>
+</div>
+</div>
+<div class="border-t border-[#30312d] pt-4">
+<h3 class="font-title-md text-title-md text-inverse-primary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">history</span> Revision History
+                    </h3>
+<ul class="space-y-3">
+<li class="flex gap-3">
+<div class="w-1.5 h-1.5 bg-[#41BEFD] rounded-full mt-2"></div>
+<div>
+<span class="font-data-mono text-data-mono text-inverse-on-surface block">Rev C - 2023-10-24</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Updated mounting hole tolerances for improved alignment.</span>
+</div>
+</li>
+<li class="flex gap-3">
+<div class="w-1.5 h-1.5 bg-[#43474d] rounded-full mt-2"></div>
+<div>
+<span class="font-data-mono text-data-mono text-on-surface-variant block">Rev B - 2023-08-12</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Material switch to AL-6061-T6.</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-md bg-[#1B1C19]/85 border-t border-[#30312d] flex justify-around items-center h-[72px] px-gutter">
+<a class="flex flex-col items-center justify-center text-[#43474d] px-3 py-1.5 hover:text-inverse-primary w-16" href="#">
+<span class="material-symbols-outlined mb-1">grid_view</span>
+<span class="font-label-caps text-label-caps">Workbench</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#43474d] px-3 py-1.5 hover:text-inverse-primary w-16" href="#">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="font-label-caps text-label-caps">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-fixed-dim text-on-secondary-fixed rounded-xl px-3 py-1.5 scale-95 transition-transform duration-200 w-16" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">layers</span>
+<span class="font-label-caps text-label-caps">Hub</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#43474d] px-3 py-1.5 hover:text-inverse-primary w-16" href="#">
+<span class="material-symbols-outlined mb-1">bug_report</span>
+<span class="font-label-caps text-label-caps">Issues</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#43474d] px-3 py-1.5 hover:text-inverse-primary w-16" href="#">
+<span class="material-symbols-outlined mb-1">file_download</span>
+<span class="font-label-caps text-label-caps">Workspace</span>
+</a>
+</nav>
+</body></html>

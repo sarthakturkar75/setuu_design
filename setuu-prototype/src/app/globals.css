@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@layer base {
+  :root {
+    --surface: #faf9f4;
+    --surface-dim: #dbdad5;
+    --surface-bright: #faf9f4;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f5f4ef;
+    --surface-container: #efeee9;
+    --surface-container-high: #e9e8e3;
+    --surface-container-highest: #e3e3de;
+
+    --on-surface: #1b1c19;
+    --on-surface-variant: #43474d;
+
+    --outline: #73777e;
+    --outline-variant: #c3c6ce;
+
+    --primary: #000815;
+    --on-primary: #ffffff;
+    --primary-container: #00213c;
+    --on-primary-container: #6f89a9;
+    --inverse-primary: #aec9eb;
+
+    --secondary: #00658d;
+    --on-secondary: #ffffff;
+    --secondary-container: #8ad1ff;
+    --on-secondary-container: #005a7f;
+
+    --tertiary: #00080f;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #002233;
+
+    --error: #ba1a1a;
+    --on-error: #ffffff;
+    --error-container: #ffdad6;
+    --on-error-container: #93000a;
+
+    --surface-tint: #46607e;
+    --background: #faf9f4;
+    --on-background: #1b1c19;
+    --surface-variant: #e3e3de;
+
+    /* Semantic 8-Tone System */
+    --semantic-slate: #64748b;
+    --semantic-slate-bg: #64748b;
+    --semantic-slate-on: #ffffff;
+
+    --semantic-sky: #0284c7;
+    --semantic-sky-bg: #0284c7;
+    --semantic-sky-on: #ffffff;
+
+    --semantic-amber: #d97706;
+    --semantic-amber-bg: #d97706;
+    --semantic-amber-on: #ffffff;
+
+    --semantic-emerald: #16a34a;
+    --semantic-emerald-bg: #16a34a;
+    --semantic-emerald-on: #ffffff;
+
+    --semantic-teal: #0d9488;
+    --semantic-teal-bg: #0d9488;
+    --semantic-teal-on: #ffffff;
+
+    --semantic-royal: #2563eb;
+    --semantic-royal-bg: #2563eb;
+    --semantic-royal-on: #ffffff;
+
+    --semantic-purple: #9333ea;
+    --semantic-purple-bg: #9333ea;
+    --semantic-purple-on: #ffffff;
+
+    --semantic-crimson: #dc2626;
+    --semantic-crimson-bg: #dc2626;
+    --semantic-crimson-on: #ffffff;
+  }
+
+  .dark {
+    --surface: #121411;
+    --surface-dim: #121411;
+    --surface-bright: #383a36;
+    --surface-container-lowest: #0d0f0c;
+    --surface-container-low: #1b1c19;
+    --surface-container: #1f201d;
+    --surface-container-high: #292a27;
+    --surface-container-highest: #343532;
+
+    --on-surface: #e3e3de;
+    --on-surface-variant: #c3c6ce;
+
+    --outline: #8d9198;
+    --outline-variant: #43474d;
+
+    --primary: #aec9eb;
+    --on-primary: #15324e;
+    --primary-container: #00213c;
+    --on-primary-container: #6f89a9;
+    --inverse-primary: #46607e;
+
+    --secondary: #88cffc;
+    --on-secondary: #00344b;
+    --secondary-container: #00658d;
+    --on-secondary-container: #b0deff;
+
+    --tertiary: #82cfff;
+    --on-tertiary: #00344b;
+    --tertiary-container: #002233;
+
+    --error: #ffb4ab;
+    --on-error: #690005;
+    --error-container: #93000a;
+    --on-error-container: #ffdad6;
+
+    --surface-tint: #aec9eb;
+    --background: #121411;
+    --on-background: #e3e3de;
+    --surface-variant: #343532;
+
+    /* Semantic 8-Tone System - Dark Mode Uses 15% opacity backgrounds */
+    --semantic-slate-bg: rgba(100, 116, 139, 0.15);
+    --semantic-slate-on: #64748b;
+
+    --semantic-sky-bg: rgba(2, 132, 199, 0.15);
+    --semantic-sky-on: #0284c7;
+
+    --semantic-amber-bg: rgba(217, 119, 6, 0.15);
+    --semantic-amber-on: #d97706;
+
+    --semantic-emerald-bg: rgba(22, 163, 74, 0.15);
+    --semantic-emerald-on: #16a34a;
+
+    --semantic-teal-bg: rgba(13, 148, 136, 0.15);
+    --semantic-teal-on: #0d9488;
+
+    --semantic-royal-bg: rgba(37, 99, 235, 0.15);
+    --semantic-royal-on: #2563eb;
+
+    --semantic-purple-bg: rgba(147, 51, 234, 0.15);
+    --semantic-purple-on: #9333ea;
+
+    --semantic-crimson-bg: rgba(220, 38, 38, 0.15);
+    --semantic-crimson-on: #dc2626;
+  }
+}

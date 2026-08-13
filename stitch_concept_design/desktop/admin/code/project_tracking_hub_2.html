@@ -1,0 +1,244 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Setuu - Project Tracking Hub</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#2e4965",
+                    "secondary": "#00658d",
+                    "surface-dim": "#dbdad5",
+                    "on-tertiary-fixed": "#001e2d",
+                    "surface-container": "#efeee9",
+                    "secondary-fixed": "#c6e7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#6f89a9",
+                    "on-secondary-container": "#005a7f",
+                    "inverse-on-surface": "#f2f1ec",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "on-background": "#1b1c19",
+                    "surface-container-highest": "#e3e3de",
+                    "on-tertiary-container": "#0090c7",
+                    "inverse-primary": "#aec9eb",
+                    "background": "#faf9f4",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#00213c",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#002233",
+                    "secondary-container": "#8ad1ff",
+                    "outline": "#73777e",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d1e4ff",
+                    "outline-variant": "#c3c6ce",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "on-surface": "#1b1c19",
+                    "surface-tint": "#46607e",
+                    "on-surface-variant": "#43474d",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-primary-fixed": "#001d35",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e3e3de",
+                    "secondary-fixed-dim": "#88cffc",
+                    "surface-container-low": "#f5f4ef",
+                    "primary": "#000815",
+                    "surface": "#faf9f4",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-secondary-fixed": "#001e2d",
+                    "surface-bright": "#faf9f4",
+                    "tertiary-fixed": "#c6e7ff",
+                    "inverse-surface": "#30312e",
+                    "surface-container-high": "#e9e8e3",
+                    "tertiary": "#00080f",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined', sans-serif;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar for horizontal sections */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased pb-24 pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex items-center justify-between px-4 h-16 w-full">
+<div class="flex items-center">
+<span aria-label="Menu" class="material-symbols-outlined text-primary mr-3 text-2xl" role="button">menu</span>
+<span class="font-headline text-headline-md font-bold tracking-tight text-primary">Setuu</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high/50 transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary text-xl">search</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-4 py-6 max-w-lg mx-auto">
+<!-- Header Section -->
+<section class="mb-8">
+<h1 class="font-headline text-3xl font-bold text-primary mb-2">Project Controls</h1>
+<p class="text-on-surface-variant text-sm leading-relaxed">Manage task statuses, workflow milestones, and synchronize data across industrial units.</p>
+</section>
+<!-- Action Bar & Search -->
+<section class="mb-8 space-y-4">
+<div class="flex gap-3">
+<button class="flex-1 bg-primary text-on-primary font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    New Milestone
+                </button>
+<button class="px-4 py-3 border border-outline-variant text-on-surface font-medium rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform bg-white">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+                    Filter
+                </button>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm placeholder-outline transition-all" placeholder="Search milestones..." type="text">
+</div>
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label text-xs tracking-wider whitespace-nowrap">
+                    ACTIVE: 24
+                </span>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label text-xs tracking-wider whitespace-nowrap">
+                    ARCHIVED: 112
+                </span>
+</div>
+</section>
+<!-- Milestone List -->
+<section class="mb-8">
+<h2 class="font-headline text-lg font-bold text-primary mb-4">Milestones</h2>
+<div class="space-y-3">
+<!-- Card 1: In Progress -->
+<div class="bg-white rounded-lg p-4 border border-outline-variant/30 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#0284C7]"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-xs text-outline">TSK-8892</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[#0284C7] text-[16px] animate-spin-slow">sync</span>
+<span class="font-label text-[10px] text-[#0284C7] font-semibold tracking-wider">IN PROGRESS</span>
+</div>
+</div>
+<h3 class="font-semibold text-on-surface text-base mb-3">Foundation Pour...</h3>
+<div class="flex justify-between items-center text-xs">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-surface-container border border-white flex items-center justify-center text-[10px] font-medium">JD</div>
+<div class="w-6 h-6 rounded-full bg-surface-container border border-white flex items-center justify-center text-[10px] font-medium">AM</div>
+</div>
+<span class="font-label text-outline text-[10px]">Just now</span>
+</div>
+</div>
+<!-- Card 2: Discussion -->
+<div class="bg-white rounded-lg p-4 border border-outline-variant/30 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#9333EA]"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-xs text-outline">TSK-8891</span>
+<div class="flex items-center gap-1.5 bg-purple-50 px-2 py-0.5 rounded-sm">
+<span class="font-label text-[10px] text-[#9333EA] font-semibold tracking-wider">DISCUSSION</span>
+</div>
+</div>
+<h3 class="font-semibold text-on-surface text-base mb-3">Structural Steel...</h3>
+<div class="flex justify-between items-center text-xs">
+<span class="material-symbols-outlined text-outline text-[16px]">chat</span>
+<span class="font-label text-outline text-[10px]">2 hrs ago</span>
+</div>
+</div>
+<!-- Card 3: Completed -->
+<div class="bg-white rounded-lg p-4 border border-outline-variant/30 shadow-sm relative overflow-hidden opacity-75">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#16A34A]"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-xs text-outline">TSK-8890</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[#16A34A] text-[16px]">check_circle</span>
+<span class="font-label text-[10px] text-[#16A34A] font-semibold tracking-wider">COMPLETED</span>
+</div>
+</div>
+<h3 class="font-semibold text-on-surface text-base mb-3 text-on-surface-variant line-through decoration-outline-variant/50">Site Clearance...</h3>
+<div class="flex justify-between items-center text-xs">
+<span class="text-outline">Approved by PM</span>
+<span class="font-label text-outline text-[10px]">Yesterday</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-white/85 backdrop-blur-md border-t border-outline-variant/30 shadow-lg flex justify-around items-center h-20 px-2 w-full">
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-2 w-16 cursor-pointer active:scale-90 duration-200">
+<span class="material-symbols-outlined fill mb-1 text-[24px]">dataset</span>
+<span class="font-label text-[10px]">Projects</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 cursor-pointer hover:text-primary active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1 text-[24px]">assignment_turned_in</span>
+<span class="font-label text-[10px]">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 cursor-pointer hover:text-primary active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1 text-[24px]">architecture</span>
+<span class="font-label text-[10px]">Drawing</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-16 cursor-pointer hover:text-primary active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1 text-[24px]">description</span>
+<span class="font-label text-[10px]">Reports</span>
+</div>
+</nav>
+<style>
+        .animate-spin-slow {
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Safe area padding for iOS */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .pb-safe {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+    </style>
+</body></html>

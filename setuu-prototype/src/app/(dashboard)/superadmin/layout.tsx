@@ -1,0 +1,1 @@
+export default function SuperadminLayout({ children }: { children: React.ReactNode }) { return <div className="superadmin-layout">{children}</div> }

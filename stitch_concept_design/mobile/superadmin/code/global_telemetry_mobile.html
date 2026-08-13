@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Security &amp; Storage Telemetry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#c3c6ce",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#000815",
+                        "background": "#faf9f4",
+                        "surface": "#faf9f4",
+                        "on-background": "#1b1c19",
+                        "primary-container": "#00213c",
+                        "surface-variant": "#e3e3de",
+                        "on-error": "#ffffff",
+                        "outline": "#73777e",
+                        "on-primary-fixed": "#001d35",
+                        "surface-tint": "#46607e",
+                        "secondary-fixed-dim": "#88cffc",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-dim": "#dbdad5",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "tertiary": "#00080f",
+                        "tertiary-container": "#002233",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#005a7f",
+                        "on-surface": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#aec9eb",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-surface-variant": "#43474d",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-surface": "#30312e",
+                        "secondary": "#00658d",
+                        "surface-container": "#efeee9",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-container-highest": "#e3e3de",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-container": "#8ad1ff",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-container": "#0090c7",
+                        "primary-fixed": "#d1e4ff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "surface-container-low": "#f5f4ef",
+                        "error-container": "#ffdad6"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Merriweather', serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E0E0E0;
+        }
+        .gauge-bar-bg { background-color: #efeee9; } /* surface-container */
+        .gauge-bar-fill-sky { background-color: #0284C7; }
+        .gauge-bar-fill-crimson { background-color: #DC2626; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col pt-16 pb-24 font-body">
+<!-- TopAppBar -->
+<header class="bg-surface/85 backdrop-blur-xl flex justify-between items-center px-4 py-2 w-full z-50 border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky">
+<button class="p-2 text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300 ease-in-out active:scale-95 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline font-bold text-primary text-lg">Governance Suite</div>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant/50">
+<img alt="Super Admin Profile" class="w-full h-full object-cover" data-alt="A small, stylized profile avatar for a super admin, featuring abstract geometric shapes in deep blue and white, conveying a sense of secure, high-level access within a modern, light-themed SaaS platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBea5Z4Nw9AFjUL5ba_dPbqmeyjcefcO-ajaPoGSBwwePn8BOf9gG4RdHSW435BYhkRHExH_FOSDcCfT22TDQQ-cNmQxphM3hEV-GLr0LUC4LpQd2uf6OOP9BkD6jEBs7dAjYIPMQakl2ZJQBuKe7W6XQuPKqDcfmDsYtYDM27eUzfkF8-NnG5uonuRq7iq-TZbLZ_NJISsk-uxzJQdgrZu76H_T2I6l_6iR3fDO5wIlhE-MGvrTdww"/>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-4 py-6 flex flex-col gap-6 max-w-md mx-auto w-full">
+<header>
+<h1 class="text-2xl font-bold font-headline text-primary mb-1">Global Telemetry</h1>
+<p class="text-sm text-on-surface-variant font-body">Anonymized Security &amp; Storage Overview</p>
+</header>
+<!-- KPI Grid -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Threats Intercepted -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-error-container opacity-20 rounded-bl-full -mr-4 -mt-4"></div>
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="text-xs font-label uppercase tracking-wider font-semibold">Threats</span>
+</div>
+<div class="text-2xl font-bold font-headline text-primary mt-1">12,408</div>
+<div class="text-xs font-mono text-on-surface-variant">+3.2% vs last week</div>
+</div>
+<!-- Storage Saved -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-secondary-container opacity-20 rounded-bl-full -mr-4 -mt-4"></div>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">save</span>
+<span class="text-xs font-label uppercase tracking-wider font-semibold">Saved</span>
+</div>
+<div class="text-2xl font-bold font-headline text-primary mt-1">4.2 TB</div>
+<div class="text-xs font-mono text-on-surface-variant">Deduplication active</div>
+</div>
+<!-- API Requests (Full Width) -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm flex flex-col gap-2 col-span-2 relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">api</span>
+<span class="text-xs font-label uppercase tracking-wider font-semibold">API Requests (24h)</span>
+</div>
+<span class="text-xs font-mono text-on-surface-variant">Avg Latency: 42ms</span>
+</div>
+<div class="text-3xl font-bold font-headline text-primary mt-2">8.5M</div>
+<!-- Simple Sparkline Placeholder -->
+<div class="h-12 w-full mt-2 flex items-end gap-1 opacity-60">
+<div class="w-1/12 bg-primary-container h-1/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-2/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-1/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-3/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-full rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-2/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-1/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-2/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-3/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-1/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-2/4 rounded-t-sm"></div>
+<div class="w-1/12 bg-primary-container h-1/4 rounded-t-sm"></div>
+</div>
+</div>
+</section>
+<!-- System Gauges -->
+<section class="flex flex-col gap-4 mt-2">
+<h2 class="text-lg font-bold font-headline text-primary border-b border-outline-variant/30 pb-2">Resource Utilization</h2>
+<!-- Global Storage Quota -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-semibold text-on-surface">Global Storage Quota</span>
+<span class="text-xs font-mono text-on-surface-variant">72%</span>
+</div>
+<div class="h-2 w-full gauge-bar-bg rounded-full overflow-hidden">
+<div class="h-full gauge-bar-fill-sky w-[72%]"></div>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant font-mono">14.4 PB / 20.0 PB Allocated</div>
+</div>
+<!-- Threat Mitigation Load -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-4 shadow-sm border-l-4 border-l-error">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-semibold text-on-surface flex items-center gap-1">
+                        Threat Mitigation Load
+                        <span class="material-symbols-outlined text-[16px] text-error">warning</span>
+</span>
+<span class="text-xs font-mono text-error font-bold">94%</span>
+</div>
+<div class="h-2 w-full gauge-bar-bg rounded-full overflow-hidden">
+<div class="h-full gauge-bar-fill-crimson w-[94%]"></div>
+</div>
+<div class="mt-2 text-xs text-error font-mono">High volume detected in EU-West</div>
+</div>
+</section>
+<!-- Regional Distribution -->
+<section class="flex flex-col gap-4 mt-2 mb-6">
+<h2 class="text-lg font-bold font-headline text-primary border-b border-outline-variant/30 pb-2">Regional Distribution</h2>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg shadow-sm overflow-hidden flex flex-col">
+<!-- Map Placeholder -->
+<div class="h-48 w-full bg-surface-container-high relative overflow-hidden" data-location="Global" style="">
+<img alt="Global Node Distribution Map" class="w-full h-full object-cover opacity-80" data-alt="A stylized, light-themed vector map of the world, rendered in clean lines and soft blue tones against an off-white background. The map features subtle glowing nodes indicating data center locations, with a modern, clinical, and corporate SaaS aesthetic suitable for a high-level administrative dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTQFPrMKBcg5PJujV7bnJqWExQMJe8YC3FguB2eB4PBGOYB-ftBf_6laWZZP3e7Wx-oJ0QRYJiqVSdU3JUUpbFTuVR8r41nEabz4Nsjl4YJYyRhyuZ0NbCrJu95LyM9QierkTrqKRlqWjLOE5my1x9EulwxBFtAnhkgqeGNWfUnMKmLa0Z-YFiS_hnkZwdVrO3foNZmOZKNG4_EMgcd5aa_WjSbiXDXnJvcvbTdUHZJdAD17Q9o-uz"/>
+<!-- Overlay Nodes (Faked for visual) -->
+<div class="absolute top-1/3 left-1/4 w-3 h-3 bg-secondary rounded-full shadow-[0_0_8px_rgba(0,101,141,0.6)]"></div>
+<div class="absolute top-1/4 right-1/3 w-3 h-3 bg-error rounded-full shadow-[0_0_8px_rgba(186,26,26,0.6)] animate-pulse"></div>
+<div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-secondary rounded-full"></div>
+</div>
+<!-- Regional List -->
+<div class="p-0 divide-y divide-outline-variant/20">
+<div class="flex justify-between items-center p-3 text-sm">
+<span class="font-medium text-on-surface">NA-East (Primary)</span>
+<span class="font-mono text-xs text-on-surface-variant">42% Traffic</span>
+</div>
+<div class="flex justify-between items-center p-3 text-sm bg-error-container/10">
+<span class="font-medium text-error flex items-center gap-1">EU-West <span class="w-2 h-2 bg-error rounded-full inline-block"></span></span>
+<span class="font-mono text-xs text-error font-bold">38% Traffic</span>
+</div>
+<div class="flex justify-between items-center p-3 text-sm">
+<span class="font-medium text-on-surface">AP-South</span>
+<span class="font-mono text-xs text-on-surface-variant">20% Traffic</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-primary-container/90 backdrop-blur-md fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/5 shadow-[0_-4px_12px_rgba(0,0,0,0.15)] flex justify-around items-center h-20 px-2 md:hidden">
+<!-- Active Tab: Dashboard -->
+<button class="flex flex-col items-center justify-center bg-secondary-container/20 text-secondary-container rounded-full px-4 py-1.5 transition-transform active:scale-90 w-20">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label text-label-sm uppercase tracking-wider text-[10px]">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container transition-transform active:scale-90 w-16">
+<span class="material-symbols-outlined mb-1">corporate_fare</span>
+<span class="font-label text-label-sm uppercase tracking-wider text-[10px]">Orgs</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container transition-transform active:scale-90 w-16">
+<span class="material-symbols-outlined mb-1">dns</span>
+<span class="font-label text-label-sm uppercase tracking-wider text-[10px]">Infra</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container transition-transform active:scale-90 w-16">
+<span class="material-symbols-outlined mb-1">receipt_long</span>
+<span class="font-label text-label-sm uppercase tracking-wider text-[10px]">Audit</span>
+</button>
+</nav>
+</body></html>

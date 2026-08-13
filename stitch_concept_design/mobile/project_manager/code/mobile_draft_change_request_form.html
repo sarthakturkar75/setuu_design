@@ -1,0 +1,233 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Draft Change Request</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#005a7f",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#dbdad5",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "inverse-primary": "#aec9eb",
+                      "surface-container": "#efeee9",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "surface-bright": "#faf9f4",
+                      "secondary-container": "#8ad1ff",
+                      "surface-container-high": "#e9e8e3",
+                      "on-surface-variant": "#43474d",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e3e3de",
+                      "inverse-on-surface": "#f2f1ec",
+                      "surface": "#faf9f4",
+                      "on-background": "#1b1c19",
+                      "on-tertiary-container": "#0090c7",
+                      "primary-container": "#00213c",
+                      "on-primary-container": "#6f89a9",
+                      "tertiary-container": "#002233",
+                      "on-tertiary-fixed": "#001e2d",
+                      "surface-container-highest": "#e3e3de",
+                      "tertiary-fixed": "#c6e7ff",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed": "#001d35",
+                      "surface-container-low": "#f5f4ef",
+                      "primary-fixed-dim": "#aec9eb",
+                      "outline-variant": "#c3c6ce",
+                      "primary-fixed": "#d1e4ff",
+                      "primary": "#000815",
+                      "on-secondary": "#ffffff",
+                      "background": "#faf9f4",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#001e2d",
+                      "error": "#ba1a1a",
+                      "tertiary": "#00080f",
+                      "secondary": "#00658d",
+                      "secondary-fixed-dim": "#88cffc",
+                      "outline": "#73777e",
+                      "inverse-surface": "#30312e",
+                      "surface-tint": "#46607e",
+                      "on-surface": "#1b1c19"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                    "unit": "4px",
+                    "gutter-md": "24px",
+                    "margin-mobile": "16px",
+                    "margin-tablet": "24px",
+                    "margin-desktop": "32px",
+                    "sidebar-width": "280px",
+                    "rail-width": "72px"
+              },
+              "fontFamily": {
+                      "headline": [
+                              "Merriweather"
+                      ],
+                      "display": [
+                              "Merriweather"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "label": [
+                              "JetBrains Mono"
+                      ]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col pt-16 pb-24 selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant/20 shadow-sm flex items-center justify-between px-margin-mobile h-16 transition-colors">
+<div class="flex items-center gap-4">
+<button class="text-primary hover:bg-surface-container-high/50 p-2 rounded-full active:scale-95 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline text-headline-md font-bold text-primary">Setuu Enterprise</h1>
+</div>
+<div class="flex items-center">
+<button class="hover:bg-surface-container-high/50 rounded-full p-1 active:scale-95 transition-transform">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-outline-variant/30">
+<span class="material-symbols-outlined text-outline" data-icon="person">person</span>
+</div>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col px-margin-mobile w-full max-w-lg mx-auto gap-6 py-6 mt-4">
+<!-- Header Section -->
+<section class="flex flex-col gap-2">
+<h2 class="font-headline text-headline-lg-mobile text-primary tracking-tight">Draft Change Request</h2>
+<p class="font-body text-body-md text-on-surface-variant">Document scope adjustments, analyze root causes, and submit for preliminary review.</p>
+</section>
+<!-- Form Section -->
+<form class="flex flex-col gap-6" onsubmit="event.preventDefault();">
+<!-- Standard Fields Card -->
+<div class="bg-surface-container-lowest rounded-lg border border-[#e0e0e0] p-4 flex flex-col gap-5 shadow-sm">
+<!-- Request Title -->
+<div class="flex flex-col gap-1.5">
+<label class="font-body text-body-md font-medium text-on-surface" for="requestTitle">Request Title</label>
+<input class="w-full bg-surface rounded-md border border-outline-variant px-3 py-2 text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-shadow placeholder:text-outline/70" id="requestTitle" placeholder="e.g., HVAC Ducting Reroute - Sector B" type="text">
+</div>
+<!-- Detailed Description -->
+<div class="flex flex-col gap-1.5">
+<label class="font-body text-body-md font-medium text-on-surface" for="description">Detailed Description</label>
+<textarea class="w-full bg-surface rounded-md border border-outline-variant px-3 py-2 text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-shadow placeholder:text-outline/70 resize-y" id="description" placeholder="Describe the proposed change, affected areas, and reasoning..." rows="4"></textarea>
+</div>
+<!-- Root Cause Analysis -->
+<div class="flex flex-col gap-1.5">
+<label class="font-body text-body-md font-medium text-on-surface" for="rootCause">Root Cause Analysis</label>
+<div class="relative">
+<select class="w-full bg-surface rounded-md border border-outline-variant px-3 py-2 text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-shadow appearance-none" id="rootCause">
+<option disabled="" selected="" value="">Select primary driver</option>
+<option value="client_request">Client Request / Owner Directive</option>
+<option value="design_error">Design Discrepancy / Error</option>
+<option value="unforeseen_conditions">Unforeseen Site Conditions</option>
+<option value="regulatory">Regulatory / Code Compliance</option>
+<option value="material_delay">Material Procurement Delay</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Time Impact -->
+<div class="flex flex-col gap-1.5">
+<label class="font-body text-body-md font-medium text-on-surface" for="timeImpact">Time Impact (Days)</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline-variant">schedule</span>
+<input class="w-full bg-surface rounded-md border border-outline-variant pl-10 pr-3 py-2 text-body-md text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-shadow placeholder:text-outline/70" id="timeImpact" min="0" placeholder="0" type="number">
+</div>
+</div>
+</div>
+<!-- Financial Impact - Restricted Section -->
+<div class="bg-surface-container rounded-lg border border-outline-variant/40 p-5 flex flex-col gap-4 relative overflow-hidden">
+<!-- Overlay Pattern -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#1b1c19 1px, transparent 1px); background-size: 8px 8px;"></div>
+<div class="flex items-center gap-2 mb-1 relative z-10">
+<span class="material-symbols-outlined text-outline" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+<h3 class="font-headline text-headline-sm text-on-surface-variant">Financial Impact</h3>
+</div>
+<div class="flex flex-col gap-3 opacity-60 relative z-10 pointer-events-none">
+<div class="flex flex-col gap-1">
+<label class="font-body text-body-md text-on-surface-variant">Estimated Cost Impact</label>
+<div class="w-full bg-surface-container-high rounded-md border border-outline-variant/50 px-3 py-2 flex items-center">
+<span class="text-outline-variant mr-2">$</span>
+<span class="text-outline-variant">---</span>
+</div>
+</div>
+</div>
+<div class="mt-2 bg-surface-variant/50 border border-outline-variant/30 rounded p-3 flex items-start gap-2 relative z-10">
+<span class="material-symbols-outlined text-outline text-sm mt-0.5" data-icon="info">info</span>
+<p class="font-label text-label-sm text-on-surface-variant uppercase tracking-wider leading-relaxed">
+                        [RESTRICTED: Admin Authorization Required for Financial Inputs]
+                    </p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-3 mt-4 pt-2 border-t border-outline-variant/20">
+<button class="flex-1 py-2.5 px-4 rounded-md border border-outline text-on-surface font-body font-medium hover:bg-surface-container transition-colors active:scale-95 duration-150" type="button">
+                    Cancel
+                </button>
+<button class="flex-1 py-2.5 px-4 rounded-md bg-primary-container text-on-primary-container font-body font-medium hover:bg-primary-container/90 transition-colors shadow-sm active:scale-95 duration-150 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-sm" data-icon="save">save</span>
+                    Submit Draft
+                </button>
+</div>
+</form>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-white/85 backdrop-blur-md shadow-lg border-t border-outline-variant/30 flex justify-around items-center h-20 pb-safe px-2 transition-colors">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 rounded-xl active:scale-90 transition-all duration-150 group">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="architecture">architecture</span>
+<span class="font-label text-label-sm mt-1">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 rounded-xl active:scale-90 transition-all duration-150 group">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="perm_media">perm_media</span>
+<span class="font-label text-label-sm mt-1">Media</span>
+</button>
+<!-- Centered FAB style upload action -->
+<div class="relative -top-5">
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full w-14 h-14 shadow-lg active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined text-2xl" data-icon="cloud_upload">cloud_upload</span>
+</button>
+</div>
+<!-- Active Tab: Tasks -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 active:scale-90 transition-all duration-150">
+<span class="material-symbols-outlined" data-icon="assignment" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label text-label-sm mt-1 font-bold">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest/40 rounded-xl active:scale-90 transition-all duration-150 group">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label text-label-sm mt-1">Admin</span>
+</button>
+</nav>
+</body></html>

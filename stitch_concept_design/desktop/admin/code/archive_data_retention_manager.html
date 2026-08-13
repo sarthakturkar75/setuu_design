@@ -1,0 +1,404 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Archive &amp; Data Retention Manager - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#6f89a9",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#43474d",
+                        "background": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "tertiary-container": "#002233",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container": "#efeee9",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-surface": "#30312e",
+                        "on-surface": "#1b1c19",
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary-container": "#0090c7",
+                        "on-background": "#1b1c19",
+                        "on-error": "#ffffff",
+                        "tertiary": "#00080f",
+                        "outline": "#73777e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "surface-bright": "#faf9f4",
+                        "secondary-container": "#8ad1ff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#00658d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Merriweather', serif; }
+        .font-label, .mono-text { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-filled { font-variation-settings: 'FILL' 1; }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.outline-variant' / 30%);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (Desktop/Tablet) -->
+<nav aria-label="Main Navigation" class="hidden md:flex w-[280px] h-screen fixed left-0 top-0 z-50 bg-primary flex-col py-6 shadow-xl">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary font-bold">domain</span>
+</div>
+<div>
+<h2 class="font-headline text-xl font-black text-on-primary">Setuu Admin</h2>
+<p class="font-label text-xs text-on-primary/70 tracking-widest">Enterprise Tier</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all mx-2 my-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all mx-2 my-1" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-body text-sm">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all mx-2 my-1" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-body text-sm">Drawings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all mx-2 my-1" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body text-sm">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all mx-2 my-1" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span class="font-body text-sm">Vendors</span>
+</a>
+<!-- Active State Navigation Item based on context (Settings/Admin area) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary-container text-on-primary-container mx-2 my-1 font-semibold border-l-2 border-secondary" href="#">
+<span class="material-symbols-outlined icon-filled">settings</span>
+<span class="font-body text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-primary/70 hover:text-on-primary hover:bg-on-primary/10 transition-all mx-2 my-1" href="#">
+<span class="material-symbols-outlined">confirmation_number</span>
+<span class="font-body text-sm">Support</span>
+</a>
+</div>
+<div class="px-6 mt-auto space-y-4 pt-6 border-t border-on-primary/10">
+<button class="w-full flex justify-center items-center gap-2 bg-on-primary text-primary py-2 rounded font-body text-sm font-semibold hover:bg-surface-dim transition-colors">
+<span class="material-symbols-outlined text-sm">add</span> Raise Ticket
+            </button>
+<div class="space-y-2 mt-4">
+<a class="flex items-center gap-3 text-on-primary/60 hover:text-on-primary transition-colors text-xs font-label" href="#">
+<span class="material-symbols-outlined text-sm">history_edu</span> Audit Logs
+                </a>
+<a class="flex items-center gap-3 text-on-primary/60 hover:text-on-primary transition-colors text-xs font-label" href="#">
+<span class="material-symbols-outlined text-sm">terminal</span> System Status
+                </a>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-[280px] flex flex-col min-h-screen w-full relative">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-6 h-16 bg-white/85 backdrop-blur-md border-b border-outline-variant/20 shadow-sm docked full-width top-0 sticky z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface p-2 hover:bg-surface-container rounded transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="hidden md:flex font-headline font-bold text-primary text-lg">
+                    Setuu Enterprise
+                </div>
+</div>
+<!-- Search Bar (Left aligned per JSON intent, though structurally center-left here) -->
+<div class="flex-1 max-w-md ml-4 mr-8 hidden md:flex">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/30 text-body-md rounded pl-9 pr-4 py-1.5 focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary transition-all text-on-surface" placeholder="Search archives, policies, or IDs..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded cursor-pointer active:opacity-80" title="Notifications">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded cursor-pointer active:opacity-80" title="Cloud Sync">
+<span class="material-symbols-outlined">cloud_done</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded cursor-pointer active:opacity-80" title="Help">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/40 mx-2"></div>
+<img alt="Administrator Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover ml-1" data-alt="A professional headshot of a corporate IT administrator, confident and sharply dressed in a modern office environment. High-key lighting, bright light-mode aesthetic, corporate SaaS context. Solid neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA66MWdQxSz2Xo20LF-q1kezPV77ao61uygEypLFlZIA3ViI_woWr3nsfmgowv_pqYgovuuuaeWnBtbTQeRCWtg-REBxz3s4s0Sa_7BaRy4--4WmAFZC6XgxnJeFSlQOLqOWeN8uQK06b5L8IplUdcN20XLxL6AzxfNjgiiO9qUZG7VpC72fLYKy9L-USWC8FxrkHRo5UtAow3cYFwgamNipxfq8405LagOSClxK2kkAsYmB2S6TJ_R">
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-6 md:p-8 lg:p-10 max-w-[1600px] mx-auto w-full space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant/30 pb-6">
+<div>
+<div class="flex items-center gap-2 text-xs font-label text-outline mb-2">
+<span>Settings</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">Archive &amp; Retention</span>
+</div>
+<h1 class="font-headline text-3xl font-bold text-primary flex items-center gap-3">
+<span class="material-symbols-outlined text-3xl text-secondary">inventory</span>
+                        Archive &amp; Data Retention Manager
+                    </h1>
+<p class="font-body text-on-surface-variant mt-2 max-w-2xl text-sm">
+                        Manage soft-deleted records, enforce retention policies, and oversee legal holds. Actions performed here are immutable and recorded in the compliance audit trail.
+                    </p>
+</div>
+<div class="flex gap-3 shrink-0">
+<button class="px-4 py-2 border border-outline-variant bg-surface hover:bg-surface-container rounded text-sm font-semibold text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span> Export Audit
+                    </button>
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded text-sm font-semibold hover:bg-secondary/90 transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">rule</span> Run Purge Policy
+                    </button>
+</div>
+</div>
+<!-- Dashboard Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Retention Status Overview (Col Span 2) -->
+<div class="md:col-span-2 bg-surface-container-lowest border border-outline-variant/40 rounded-lg p-6 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-8 -mt-8 pointer-events-none"></div>
+<h3 class="font-headline text-lg font-bold text-primary mb-4">Retention Status Overview</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface p-4 rounded border border-outline-variant/30">
+<p class="font-label text-xs text-outline mb-1 uppercase tracking-wider">Storage Reclaimed</p>
+<p class="font-headline text-2xl font-bold text-secondary">4.2 TB</p>
+<p class="font-body text-xs text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-emerald-600">trending_up</span> YTD 2024
+                            </p>
+</div>
+<div class="bg-error-container/20 p-4 rounded border border-error/20">
+<p class="font-label text-xs text-error mb-1 uppercase tracking-wider">Ready For Purge</p>
+<p class="font-headline text-2xl font-bold text-error">128</p>
+<p class="font-body text-xs text-on-error-container mt-1">Records exceeding 7yr policy</p>
+</div>
+</div>
+</div>
+<!-- Legal Hold Alert -->
+<div class="bg-surface-container-lowest border border-amber-300 rounded-lg p-6 shadow-sm border-l-4 border-l-amber-500">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-amber-600 icon-filled">gavel</span>
+<h3 class="font-headline text-md font-bold text-primary">Active Legal Holds</h3>
+</div>
+<p class="font-headline text-3xl font-black text-amber-700 mb-2">3</p>
+<p class="font-body text-xs text-on-surface-variant mb-4">Projects shielded from automated purge policies.</p>
+<button class="text-xs font-semibold text-secondary hover:underline flex items-center gap-1">
+                        Review Holds <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<!-- Compliance Grade -->
+<div class="bg-primary border border-primary-container rounded-lg p-6 shadow-sm text-on-primary">
+<h3 class="font-headline text-md font-bold text-primary-fixed mb-1">Compliance Grade</h3>
+<div class="flex items-end gap-2 mb-3">
+<span class="font-headline text-4xl font-black text-white">A+</span>
+<span class="font-label text-xs text-primary-fixed-dim pb-1">SOC2 Aligned</span>
+</div>
+<div class="w-full bg-primary-container h-2 rounded-full overflow-hidden mb-2">
+<div class="bg-emerald-500 h-full w-[98%]"></div>
+</div>
+<p class="font-label text-[10px] text-primary-fixed-dim opacity-80 uppercase tracking-widest">Last Audit: 24h ago</p>
+</div>
+</div>
+<!-- Archive Data Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-lg shadow-sm overflow-hidden flex flex-col">
+<div class="p-4 border-b border-outline-variant/30 flex flex-wrap justify-between items-center gap-4 bg-surface-container-low/50">
+<h2 class="font-headline text-lg font-bold text-primary">Archived Records Repository</h2>
+<div class="flex gap-2">
+<select class="text-sm bg-white border border-outline-variant/50 rounded py-1.5 px-3 font-body text-on-surface focus:ring-secondary focus:border-secondary">
+<option>All Modules</option>
+<option>Projects</option>
+<option>Drawings</option>
+<option>Audit Logs</option>
+</select>
+<select class="text-sm bg-white border border-outline-variant/50 rounded py-1.5 px-3 font-body text-on-surface focus:ring-secondary focus:border-secondary">
+<option>Filter by Status</option>
+<option>Soft Deleted</option>
+<option>Ready for Purge</option>
+<option>Legal Hold</option>
+</select>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant/40 text-xs font-label text-on-surface-variant uppercase tracking-wider">
+<th class="p-4 font-medium w-12"></th>
+<th class="p-4 font-medium">Record ID / Name</th>
+<th class="p-4 font-medium">Module</th>
+<th class="p-4 font-medium">Archived Date</th>
+<th class="p-4 font-medium">Status &amp; Policy</th>
+<th class="p-4 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 font-body text-sm">
+<!-- Row 1: Ready for Purge -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 text-center">
+<span class="material-symbols-outlined text-outline text-lg">folder_zip</span>
+</td>
+<td class="p-4">
+<p class="font-semibold text-primary">PROJ-2016-042</p>
+<p class="text-xs text-on-surface-variant font-label mt-0.5">Hydra Facility Expansion</p>
+</td>
+<td class="p-4 text-on-surface-variant">Projects</td>
+<td class="p-4 font-label text-xs text-on-surface-variant">
+                                    2017-03-15<br><span class="opacity-70">08:12:44Z</span>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-error-container/30 text-error border border-error/20 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">delete_sweep</span>
+                                        Ready for Purge
+                                    </span>
+</td>
+<td class="p-4 text-right space-x-2">
+<button class="px-3 py-1.5 bg-surface border border-outline-variant rounded text-xs font-semibold text-secondary hover:bg-secondary hover:text-white transition-colors">Restore</button>
+<button class="px-3 py-1.5 bg-error/10 text-error border border-error/20 rounded text-xs font-semibold hover:bg-error hover:text-white transition-colors">Purge</button>
+</td>
+</tr>
+<!-- Row 2: Legal Hold -->
+<tr class="bg-amber-50/50 hover:bg-amber-50 transition-colors group">
+<td class="p-4 text-center">
+<span class="material-symbols-outlined text-amber-600 text-lg">gavel</span>
+</td>
+<td class="p-4">
+<p class="font-semibold text-primary">AUDIT-2022-Q3</p>
+<p class="text-xs text-on-surface-variant font-label mt-0.5">Vendor Discrepancy Log</p>
+</td>
+<td class="p-4 text-on-surface-variant">Audit Logs</td>
+<td class="p-4 font-label text-xs text-on-surface-variant">
+                                    2022-11-01<br><span class="opacity-70">14:33:09Z</span>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-100 text-amber-800 border border-amber-300 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                                        Legal Hold (Active)
+                                    </span>
+</td>
+<td class="p-4 text-right space-x-2">
+<button class="px-3 py-1.5 bg-surface border border-outline-variant rounded text-xs font-semibold text-outline cursor-not-allowed opacity-50" disabled="">Restore</button>
+<button class="px-3 py-1.5 bg-error/10 text-error border border-error/20 rounded text-xs font-semibold cursor-not-allowed opacity-50" disabled="" title="Cannot purge while under Legal Hold">Purge</button>
+</td>
+</tr>
+<!-- Row 3: Standard Soft Delete -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 text-center">
+<span class="material-symbols-outlined text-outline text-lg">description</span>
+</td>
+<td class="p-4">
+<p class="font-semibold text-primary">DWG-A-104-REV3</p>
+<p class="text-xs text-on-surface-variant font-label mt-0.5">HVAC Schematic v3</p>
+</td>
+<td class="p-4 text-on-surface-variant">Drawings</td>
+<td class="p-4 font-label text-xs text-on-surface-variant">
+                                    2023-09-12<br><span class="opacity-70">09:45:21Z</span>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-high text-on-surface border border-outline-variant/30 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                                        Soft Deleted (Retain 7y)
+                                    </span>
+</td>
+<td class="p-4 text-right space-x-2">
+<button class="px-3 py-1.5 bg-surface border border-outline-variant rounded text-xs font-semibold text-secondary hover:bg-secondary hover:text-white transition-colors">Restore</button>
+<button class="px-3 py-1.5 bg-error/10 text-error border border-error/20 rounded text-xs font-semibold hover:bg-error hover:text-white transition-colors">Purge</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline-variant/30 bg-surface-container-low flex justify-between items-center text-sm">
+<span class="text-on-surface-variant font-label text-xs">Showing 1-3 of 1,204 records</span>
+<div class="flex gap-1">
+<button class="p-1.5 rounded border border-outline-variant/50 text-outline hover:bg-surface disabled:opacity-50" disabled=""><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-1.5 rounded border border-outline-variant/50 text-outline hover:bg-surface"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Terminal Audit Log Preview -->
+<div class="mt-8">
+<h3 class="font-headline text-sm font-bold text-primary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-outline">terminal</span>
+                    Recent Compliance Events
+                </h3>
+<div class="bg-[#0A0F14] rounded-lg p-4 font-label text-xs text-emerald-400 overflow-x-auto shadow-inner border border-primary/20">
+<div class="flex flex-col gap-1.5 opacity-90">
+<div><span class="text-slate-500">[2023-10-27 14:02:11 UTC]</span> <span class="text-blue-400">INFO:</span> Admin user <span class="text-white">'j.doe@setuu.com'</span> initiated RESTORE on <span class="text-yellow-300">DWG-A-104-REV2</span>. Verification: PASS.</div>
+<div><span class="text-slate-500">[2023-10-27 11:45:00 UTC]</span> <span class="text-blue-400">INFO:</span> Automated CRON triggered Policy Check <span class="text-white">'RET-7Y'</span>. 42 records flagged for purge queue.</div>
+<div><span class="text-slate-500">[2023-10-26 09:15:22 UTC]</span> <span class="text-red-400">ALERT:</span> Legal Hold applied to <span class="text-yellow-300">PROJ-2022-019</span> by compliance officer. Purge logic suspended.</div>
+<div class="flex items-center gap-2 mt-2"><span class="w-2 h-4 bg-emerald-400 animate-pulse inline-block"></span></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) - Suppressed on desktop per layout rules, but included in DOM for mobile view -->
+<nav class="md:hidden fixed bottom-0 w-full bg-white/90 backdrop-blur-md border-t border-outline-variant/20 h-16 flex justify-around items-center px-2 z-50 pb-safe">
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-[10px]">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label text-[10px]">Projects</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-secondary font-bold" href="#">
+<span class="material-symbols-outlined icon-filled bg-secondary/10 rounded-full px-4 py-0.5">settings</span>
+<span class="font-label text-[10px]">Settings</span>
+</a>
+</nav>
+</body></html>

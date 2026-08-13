@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Meeting &amp; Agenda Hub - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "primary": "#000815",
+                "on-secondary": "#ffffff",
+                "on-secondary-container": "#005a7f",
+                "secondary-fixed-dim": "#88cffc",
+                "surface-container": "#efeee9",
+                "error-container": "#ffdad6",
+                "surface-dim": "#dbdad5",
+                "inverse-on-surface": "#f2f1ec",
+                "on-secondary-fixed-variant": "#004c6b",
+                "secondary-container": "#8ad1ff",
+                "outline-variant": "#c3c6ce",
+                "tertiary-fixed": "#c6e7ff",
+                "on-surface": "#1b1c19",
+                "error": "#ba1a1a",
+                "surface-container-high": "#e9e8e3",
+                "on-primary-fixed-variant": "#2e4965",
+                "on-primary": "#ffffff",
+                "surface": "#faf9f4",
+                "on-secondary-fixed": "#001e2d",
+                "background": "#faf9f4",
+                "surface-container-low": "#f5f4ef",
+                "primary-fixed": "#d1e4ff",
+                "outline": "#73777e",
+                "surface-tint": "#46607e",
+                "tertiary-container": "#002233",
+                "on-error": "#ffffff",
+                "inverse-surface": "#30312e",
+                "primary-container": "#00213c",
+                "on-tertiary-fixed-variant": "#004c6b",
+                "on-primary-fixed": "#001d35",
+                "surface-variant": "#e3e3de",
+                "inverse-primary": "#aec9eb",
+                "on-error-container": "#93000a",
+                "tertiary-fixed-dim": "#82cfff",
+                "secondary": "#00658d",
+                "surface-container-highest": "#e3e3de",
+                "on-tertiary-fixed": "#001e2d",
+                "tertiary": "#00080f",
+                "primary-fixed-dim": "#aec9eb",
+                "on-background": "#1b1c19",
+                "on-tertiary": "#ffffff",
+                "on-primary-container": "#6f89a9",
+                "secondary-fixed": "#c6e7ff",
+                "on-tertiary-container": "#0090c7",
+                "surface-bright": "#faf9f4",
+                "on-surface-variant": "#43474d",
+                "surface-container-lowest": "#ffffff",
+                "semantic-verification": "#2563EB",
+                "deep-navy": "#00213C"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {},
+        "fontFamily": {
+                "headline": [
+                        "Merriweather"
+                ],
+                "display": [
+                        "Merriweather"
+                ],
+                "body": [
+                        "Inter"
+                ],
+                "label": [
+                        "Jetbrains Mono"
+                ]
+        },
+        "fontSize": {},
+        "boxShadow": {
+            'glass-inner': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+            'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        }
+},
+    },
+  }
+</script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; color: #1b1c19; }
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        /* Semantic Colors for Status */
+        .status-upcoming { background-color: rgba(2, 132, 199, 0.1); color: #0284C7; border-color: #0284C7; }
+        .status-completed { background-color: rgba(22, 163, 74, 0.1); color: #16A34A; border-color: #16A34A; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden bg-background">
+<!-- Client Sidebar Isolated Component -->
+<aside class="fixed left-0 top-0 w-[280px] h-screen bg-deep-navy flex flex-col shadow-xl flex-shrink-0 z-50 bg-primary-container">
+<!-- Header / Brand Area -->
+<div class="px-6 py-8 flex items-center gap-3 border-b border-on-primary-container/20"><div class="flex items-center gap-3"><img alt="Setuu Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A"/><div><h1 class="text-on-primary-container font-headline font-bold text-lg leading-tight tracking-tight">Setuu Enterprise</h1><p class="text-on-primary-container/70 font-label text-[10px] uppercase tracking-wider mt-0.5">Capital Project Portal</p></div></div></div>
+<!-- Navigation Links -->
+<nav class="flex-1 py-6 flex flex-col gap-1 px-3 overflow-y-auto">
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>Portfolio</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>Briefing Room</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">payments</span>Financials</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">inventory_2</span>Deliverables</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">timeline</span>Progress</a>
+<!-- Active State -->
+<a class="group flex items-center gap-4 px-4 py-3 rounded text-on-primary-container bg-primary-fixed/10 font-bold border-l-4 border-secondary-fixed text-sm font-body transition-all duration-200" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>Meetings</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-fixed/5 transition-colors text-sm font-body" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">lock</span>Vault</a>
+</nav>
+<!-- User Profile & Footer Area -->
+<div class="mt-auto px-6 py-4 border-t border-on-primary-container/20 flex flex-col gap-4">
+<!-- User Profile Snippet -->
+<button class="flex items-center gap-3 text-left group w-full p-2 -ml-2 rounded hover:bg-white/5 transition-colors"><div class="w-8 h-8 rounded-full bg-on-primary-container/30 border border-on-primary-container/50 overflow-hidden flex-shrink-0"><img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkdHJXHFKTfqOSHfWgPY6AsfuZcHqyNHslAPDjasVGUNQsiMySglP6n32sa0mBKi1gBEy1wIAzk630B6iLrt7RcwIIreYH9_tLy9UdJK3E6wVS2RRUJdAO9j0CAl1ZRPewVwElWWP_xUMpDdkegnhGsOyIiXQ0iVzpmXlxXkoyBZO4_ONZdl2Y09BBl1C716JBjylOIo0ZI9U_fDaes-UVu9nQxp43TSuyhPgPEd0WCvP6PdUcSNZO"/></div><div class="flex-1 overflow-hidden"><p class="text-on-primary-container font-headline font-bold text-sm truncate">Client Executive</p><p class="text-on-primary-container/60 font-body text-xs truncate">Acme Corporation</p></div><span class="material-symbols-outlined text-on-primary-container/50 text-[18px] group-hover:text-on-primary-container transition-colors">unfold_more</span></button>
+<!-- Version Info -->
+<div class="flex justify-between items-center text-[11px] font-label text-on-primary/40 pt-2">
+<span class="">Setuu Enterprise v2.4</span>
+<span class="material-symbols-outlined text-[14px]">cloud_done</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 ml-[280px] flex flex-col h-full bg-surface-container-low">
+<!-- TopNavBar Component -->
+<header class="bg-white/85 backdrop-blur-xl border-b border-outline-variant/40 shadow-glass-inner shadow-sm flex justify-between items-center w-full px-8 h-20 z-40 sticky top-0 transition-all duration-300">
+<!-- Left: Co-branding -->
+<div class="flex items-center gap-6">
+<!-- Setuu Logo -->
+<div class="flex items-center h-10"><img alt="Setuu Enterprise Logo" class="h-full w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLure7wf5bUVGTUbG5jJACCYk6a6EGkSVlgsDU1b_RWnW3LbzW6_BCLfaqJZ51Z7lHAVRqzlkWW8Ofxt5_TfTPAMaP7nW1mh07hTHoS0hF7n-EzT0zkMH0eVgG7hO1Ta71qxynom3njj207wfbWHwdgHw1ebEdq8cOHn61KUJhxWS9gYa32sm0_mvjMVcMN3c41MXgiS9JQisOZYTh64pQrl5LNvwiKguIB2H8o10sjJNLmjhFGYI4p083A"/></div>
+<!-- Divider -->
+<div class="h-8 w-px bg-outline-variant/50 hidden md:block"></div>
+<!-- Client Logo Placeholder -->
+<div class="hidden md:flex items-center gap-3 opacity-80">
+<img alt="Client Logo" class="w-8 h-8 rounded-sm object-contain mix-blend-multiply" data-alt="A sleek, modern corporate logo icon featuring geometric shapes in deep slate and sky blue, representing a high-end construction or engineering firm. The logo should look professional, vector-style, and clean against a light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-baD_O7KO3TX5JCVg8c39yGEl1W8IYifO-uknpgHXQBBALffu8Z48iqhVS6fxnmJ3zej75JZf8L6KhmCkbI00kdxSA1yeOnzUXF7cCNbEtmojP4FOL-Qz8hvaIFEHM3SQlcHHtdgZLoZtZ9kjG8T1GVnnL_WCZmeY8zMceGO3S_6zuoDP-XW2J2Sc3l2G_kGS60L7iSfFLIn5K9cwe9OxMvh1Nw4Te_cbunPHkLfyLgdAC8vKB-Ps"/>
+<span class="font-body font-medium text-sm text-on-surface-variant tracking-wide uppercase">Acme Corp</span>
+</div>
+</div>
+<!-- Center: Search -->
+<div class="flex-1 max-w-2xl mx-8 hidden lg:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/60 rounded-lg text-sm text-on-surface placeholder-outline focus:ring-2 focus:ring-primary focus:border-primary transition-all shadow-sm group-hover:shadow-md" placeholder="Search projects, documents, or audit logs..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<span class="font-label text-xs text-outline bg-surface-container px-2 py-1 rounded">⌘K</span>
+</div>
+</div>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-5">
+<!-- Primary Action -->
+<button class="hidden md:flex items-center gap-2 bg-semantic-verification hover:bg-semantic-verification/90 text-white px-5 py-2.5 rounded-lg shadow-sm transition-colors active:scale-95 font-body font-medium text-sm">
+<span class="material-symbols-outlined text-lg">description</span>
+                Generate Executive Report
+            </button>
+<div class="h-8 w-px bg-outline-variant/50 hidden md:block"></div>
+<!-- Notifications -->
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">settings</span>
+</button><button class="relative p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-full transition-colors group">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface-container-lowest"></span>
+</button>
+<!-- Profile Avatar -->
+<button class="flex items-center gap-3 pl-2 focus:outline-none">
+<div class="w-10 h-10 rounded-full border border-outline-variant/50 overflow-hidden shadow-sm hover:shadow transition-shadow">
+<img alt="Client Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a female executive in her 40s, wearing a tailored navy blazer against a neutral corporate background. She has a confident, approachable expression, suitable for a high-end SaaS dashboard avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC36L6xoJ_6oak3czavjl-Uw6Q51KJ12VaVCcuJD-xpJLigXOuNI3WPQcwzwcrG2LGaa9C2dyQrydpkGO450pVlwgOMhBtaNvuHIPMbpXHtEEzuZRpsKdyjiDa9K2GPxWdR2wdKkE8RMOIY3jgSXEQVZKMAswAFZ6PpNRQNt_J89T_6jtLzfXqgYZ1nbhbGY2IIVIlIQcmgu2zDR4LZDLiBkfjKIAWql4DXFJq7cVhlfkS4YbwtHZ6i"/>
+</div>
+</button>
+</div>
+</header>
+<!-- 12-Column Grid Layout for Content -->
+<main class="flex-1 overflow-hidden p-6">
+<div class="max-w-[1600px] mx-auto h-full grid grid-cols-12 gap-6">
+<!-- Left Column: Meeting Roster (4 cols) -->
+<div class="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col h-full bg-surface rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
+<div class="p-4 border-b border-outline-variant/20 bg-surface-bright flex justify-between items-center">
+<h3 class="font-headline font-bold text-primary text-base">Meeting Roster</h3>
+<button class="text-secondary hover:bg-secondary-container/20 p-1.5 rounded flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-2 space-y-2">
+<!-- Upcoming Meeting Item -->
+<div class="p-4 rounded-lg bg-surface border border-outline-variant/30 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Nov 15, 2023 • 10:00 AM</span>
+<span class="status-upcoming text-[10px] font-label px-2 py-0.5 rounded border">Upcoming</span>
+</div>
+<h4 class="font-body font-semibold text-primary text-sm mb-1 group-hover:text-secondary transition-colors">Q4 Planning Session</h4>
+<p class="font-body text-xs text-on-surface-variant truncate">Preliminary budget allocations and timeline review.</p>
+</div>
+<!-- Active/Selected Past Meeting Item -->
+<div class="p-4 rounded-lg bg-secondary/5 border-l-4 border-secondary cursor-pointer transition-colors shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Oct 24, 2023 • 02:00 PM</span>
+<span class="status-completed text-[10px] font-label px-2 py-0.5 rounded border">Completed</span>
+</div>
+<h4 class="font-body font-semibold text-primary text-sm mb-1">Q3 Strategic Review</h4>
+<p class="font-body text-xs text-on-surface-variant mb-3">Quarterly milestone review and change request approvals.</p>
+<button class="font-label text-[11px] text-secondary flex items-center gap-1 font-medium hover:underline">
+<span class="material-symbols-outlined text-[14px]">article</span> View Minutes
+                            </button>
+</div>
+<!-- Past Meeting Item -->
+<div class="p-4 rounded-lg bg-surface border border-outline-variant/30 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] uppercase tracking-wider text-on-surface-variant">Sep 12, 2023 • 11:30 AM</span>
+<span class="status-completed text-[10px] font-label px-2 py-0.5 rounded border">Completed</span>
+</div>
+<h4 class="font-body font-semibold text-primary text-sm mb-1 group-hover:text-secondary transition-colors">Phase 1 Handover</h4>
+<p class="font-body text-xs text-on-surface-variant mb-3">Official sign-off for site preparation phase.</p>
+<button class="font-label text-[11px] text-secondary flex items-center gap-1 font-medium hover:underline">
+<span class="material-symbols-outlined text-[14px]">article</span> View Minutes
+                            </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Meeting Detail View (8 cols) -->
+<div class="col-span-12 md:col-span-8 lg:col-span-9 flex flex-col h-full overflow-y-auto">
+<!-- Level 2 Sheet for Details -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md border border-outline-variant/50 p-8 min-h-full">
+<!-- Detail Header -->
+<div class="border-b border-outline-variant/30 pb-6 mb-8">
+<div class="flex justify-between items-start mb-2">
+<h2 class="font-headline font-bold text-headline-md text-primary">Q3 Strategic Review - October 24, 2023</h2>
+<button class="bg-surface-container border border-outline-variant/50 hover:bg-surface-container-high text-on-surface px-3 py-1.5 rounded font-label text-xs flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">print</span> Export PDF
+                                </button>
+</div>
+<div class="flex items-center gap-4 text-sm text-on-surface-variant font-label">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 14:00 - 15:30 EST</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> Virtual (Teams)</span>
+<span class="flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded"><span class="material-symbols-outlined text-[16px]">verified</span> Acknowledged by Client</span>
+</div>
+</div>
+<!-- Main Content Grid inside Detail View -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Sub-col: Agenda & Decisions -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Documented Decisions (Merriweather emphasis) -->
+<section class="bg-primary/5 border-l-4 border-primary p-5 rounded-r-lg">
+<h3 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-secondary">gavel</span> Key Decisions &amp; Approvals
+                                    </h3>
+<ul class="space-y-3 font-body text-sm text-on-surface leading-relaxed">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span class=""><strong>CR-402 Approved:</strong> Structural reinforcement schedule modified to accommodate revised architectural blueprints without timeline impact.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">check_circle</span>
+<span class=""><strong>Vendor Pivot:</strong> Transitioned secondary steel supplier to Tier 2 due to supply chain constraints, pending final compliance check.</span>
+</li>
+</ul>
+</section>
+<!-- Formal Agenda (Inter body) -->
+<section>
+<h3 class="font-headline font-bold text-lg text-primary border-b border-outline-variant/30 pb-2 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">format_list_bulleted</span> Formal Agenda
+                                    </h3>
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="font-label text-xs text-on-surface-variant w-16 pt-1">1.0</div>
+<div class="flex-1">
+<h4 class="font-body font-semibold text-primary">Milestone 3 Progress Review</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">Review of completed structural milestones vs proposed timeline. Addressed minor delays in concrete pouring due to weather.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="font-label text-xs text-on-surface-variant w-16 pt-1">2.0</div>
+<div class="flex-1">
+<h4 class="font-body font-semibold text-primary">Change Request Evaluation</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">Discussion on CR-402 and associated risk mitigation strategies. (See Decisions).</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="font-label text-xs text-on-surface-variant w-16 pt-1">3.0</div>
+<div class="flex-1">
+<h4 class="font-body font-semibold text-primary">Safety &amp; Compliance Audit</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">Monthly safety report presented. Zero critical incidents reported. Minor housekeeping advisories noted for Sector B.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Sub-col: Responsibility Matrix / Action Items -->
+<div class="lg:col-span-1">
+<div class="bg-surface border border-outline-variant/40 rounded-lg p-5 shadow-sm sticky top-0">
+<h3 class="font-headline font-bold text-base text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">task_alt</span> Action Items
+                                    </h3>
+<div class="space-y-4">
+<!-- Action Item 1 -->
+<div class="border border-outline-variant/30 rounded p-3 bg-surface-bright">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] bg-surface-variant text-on-surface-variant px-1.5 py-0.5 rounded">ID: ACT-809</span>
+<span class="font-label text-[10px] text-error font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">calendar_today</span> Due: Oct 28</span>
+</div>
+<p class="font-body text-sm text-on-surface font-medium mb-3 leading-snug">Submit finalized structural plans to compliance board.</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container">PE</div>
+<span class="font-label text-xs text-on-surface-variant">Praimo Engineering</span>
+</div>
+</div>
+<!-- Action Item 2 -->
+<div class="border border-outline-variant/30 rounded p-3 bg-surface-bright">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] bg-surface-variant text-on-surface-variant px-1.5 py-0.5 rounded">ID: ACT-810</span>
+<span class="font-label text-[10px] text-on-surface-variant font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">calendar_today</span> Due: Nov 01</span>
+</div>
+<p class="font-body text-sm text-on-surface font-medium mb-3 leading-snug">Review and sign off on updated vendor compliance forms.</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Client Executive" class="w-full h-full object-cover" data-alt="Small avatar of a client executive, professional attire, neutral background, sharp focus, corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAZWJGePy3-CSSV9X8WaAAK5zTBtFxsB4bheyyOc8-dUNcjleVVZiIn2hUw5BZJuvLDtSKow9_LfCiCv1U9kd0kD5upa6ur6YWg8uDJLN7Glfc0h-eA8fDsAaRrgBnTM5Pj71jU849cPRtS26ciQesKW9FblCNNohXA4qCbRfDmaJ5NN076omjtsE2qdveunZzs8WDBfx9UebbcHgQZjhSclFwzrznTh2DNWrD15ThTQR1wX6Sg2DM"/>
+</div>
+<span class="font-label text-xs text-on-surface-variant">Client Executive</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

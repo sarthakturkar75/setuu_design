@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Drawing Version Comparison - Setuu</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed": "#001d35",
+                        "on-primary-container": "#6f89a9",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#46607e",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary": "#00080f",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-background": "#1b1c19",
+                        "primary-container": "#00213c",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d1e4ff",
+                        "surface": "#faf9f4",
+                        "tertiary-container": "#002233",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#005a7f",
+                        "surface-variant": "#e3e3de",
+                        "background": "#faf9f4",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#88cffc",
+                        "secondary": "#00658d",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-highest": "#e3e3de",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed": "#c6e7ff",
+                        "inverse-surface": "#30312e",
+                        "inverse-on-surface": "#f2f1ec",
+                        "outline-variant": "#c3c6ce",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container": "#efeee9",
+                        "on-tertiary-container": "#0090c7",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "primary": "#000815",
+                        "secondary-container": "#8ad1ff",
+                        "on-surface": "#1b1c19",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "outline": "#73777e",
+                        "on-surface-variant": "#43474d"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #1B1C19; /* Forced Dark Inverse */
+            color: #ffffff;
+            touch-action: none; /* Prevent browser handling of gestures for custom pinch-zoom */
+            overflow: hidden;
+        }
+        .precision-cyan { color: #41BEFD; }
+        .bg-precision-cyan { background-color: #41BEFD; }
+        .border-precision-cyan { border-color: #41BEFD; }
+        
+        .slider-handle {
+            box-shadow: 0 0 10px rgba(65, 190, 253, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="h-screen w-screen flex flex-col font-body antialiased">
+<!-- Top AppBar (Simplified for Viewer) -->
+<header class="fixed top-0 w-full z-50 bg-[#121A21]/85 backdrop-blur-md shadow-sm border-b border-cyan-400/20 flex justify-between items-center px-4 h-16 transition-opacity">
+<button class="text-secondary-fixed-dim p-2 -ml-2 rounded-full hover:bg-surface-container-highest/20 active:scale-95 transition-transform duration-150 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="font-headline font-bold text-secondary-fixed-dim tracking-tight text-lg">Structural_A_Floor1.pdf</h1>
+<span class="font-label text-xs text-on-surface-variant opacity-80">Comparing Rev A vs Rev B</span>
+</div>
+<button class="text-secondary-fixed-dim p-2 -mr-2 rounded-full hover:bg-surface-container-highest/20 active:scale-95 transition-transform duration-150 flex items-center justify-center" id="optionsBtn">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</header>
+<!-- Main Comparison Canvas Area -->
+<main class="flex-grow relative overflow-hidden mt-16 touch-none" id="viewport">
+<!-- Zoom/Pan Container -->
+<div class="absolute inset-0 w-full h-full transform origin-top-left flex items-center justify-center" id="transformContainer" style="transform: scale(1) translate(0px, 0px);">
+<!-- Comparison Wrapper -->
+<div class="relative w-[800px] h-[600px] max-w-none shadow-2xl border border-surface-tint/30" id="comparisonArea">
+<!-- Base Image (Rev A - Older) -->
+<div class="absolute inset-0 w-full h-full bg-[#0A0F14] overflow-hidden">
+<div class="w-full h-full opacity-60 mix-blend-screen bg-cover bg-center" data-alt="A highly detailed, technical architectural blueprint of a commercial building floor plan in a dark-mode theme. The lines are rendered in sharp white against a deep, slate-black background, showing structural columns, walls, and basic HVAC layouts. The visual style is clinical, precise, and professional, mimicking specialized CAD software." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2NVYv0oDTswu22Q-luwwbsue85Uxk0TUKB7-bOqNLNHAJF2pkUquHlN38hI02HSZfPcIvz7Xchc09ev38t4c4s5WiBuknwnLsXyEjySXrQmC1EWHcS3ydCqI23DGKfehVAwxgZnF3anRPMQndwawrXtxbAzpbxuH0otFY3WYZ8Ut2RSwdd0qTvG-xvU2ZcoJotj-4LMcsY-K3GNELHX828QEaXzBMs-ycGgojs1KtOev1prb1WYDX')"></div>
+</div>
+<!-- Overlay Image (Rev B - Newer) with Clip Path -->
+<div class="absolute inset-0 w-full h-full bg-[#0A0F14] overflow-hidden pointer-events-none" id="overlayLayer" style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);">
+<!-- Overlay Blueprint -->
+<div class="w-full h-full opacity-80 mix-blend-screen bg-cover bg-center" data-alt="A highly detailed, technical architectural blueprint of the same commercial building floor plan, but with slight modifications. The background is deep slate-black. Crucially, specific new additions—like a moved wall section and added structural supports—are drawn in bright, glowing Precision Cyan (#41BEFD) to highlight changes against the white lines. The mood is analytical and precise." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAPX_mpsjfA3yasJLuR4PKz1LnBTBsqIzSlc3ZyqlC_DlhEMGkqTjqt_eTvC3QkRdoYVVr1qYkZVlqinxshUq41wYZrPkQ6rp0h-uLerB4mpdJFxSfHJNVDtbyeHG8VqRWhyXw2YlHkO_6p8jt-9NsIFtw4qOavElO7xsfFfUQ_mbI6OnWh92KN_8ysQ_UxTbhPDst5SxOT2ctw97IvxbP3cwMRP6gN66NDpzKlD_NAdixp5VZGnKr8')"></div>
+<!-- Highlight specific changes simulated via divs -->
+<div class="absolute top-[30%] left-[60%] w-24 h-16 border-2 border-precision-cyan rounded-sm bg-cyan-400/10 flex items-center justify-center">
+<span class="font-label text-[8px] text-secondary-fixed-dim bg-[#121A21] px-1 rounded absolute -top-2 -right-2">+ Wall</span>
+</div>
+</div>
+<!-- Slider Divider -->
+<div class="absolute top-0 bottom-0 w-1 bg-precision-cyan left-[50%] -translate-x-1/2 cursor-ew-resize z-10 flex items-center justify-center" id="sliderLine">
+<div class="w-8 h-12 bg-[#121A21] border border-precision-cyan rounded-full flex items-center justify-center slider-handle shadow-lg">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-sm" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+</div>
+<!-- Watermark / Coordinates -->
+<div class="absolute bottom-2 left-2 z-20 pointer-events-none">
+<span class="font-label text-[10px] text-on-surface-variant opacity-50 block">COORD: 34.0522° N, 118.2437° W</span>
+<span class="font-label text-[10px] text-on-surface-variant opacity-50 block">HASH: 8f4e9a2b</span>
+</div>
+</div>
+</div>
+<!-- Floating Controls / Badges (Fixed over canvas) -->
+<div class="absolute top-4 left-4 z-30 flex gap-2">
+<div class="bg-[#121A21]/80 backdrop-blur-md px-3 py-1.5 rounded border border-surface-tint/20 flex items-center gap-2 shadow-lg">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="font-label text-[10px] text-slate-300">Rev A (Base)</span>
+</div>
+</div>
+<div class="absolute top-4 right-4 z-30 flex gap-2">
+<div class="bg-[#121A21]/80 backdrop-blur-md px-3 py-1.5 rounded border border-precision-cyan/40 flex items-center gap-2 shadow-lg">
+<span class="w-2 h-2 rounded-full bg-precision-cyan"></span>
+<span class="font-label text-[10px] text-secondary-fixed-dim">Rev B (New)</span>
+</div>
+</div>
+<!-- Drawing Hub Markup Rail (Simplified for Mobile view - Bottom right) -->
+<div class="absolute bottom-6 right-4 z-30 flex flex-col gap-3">
+<button class="w-12 h-12 bg-[#121A21]/85 backdrop-blur-md rounded-full shadow-lg border border-cyan-400/20 flex items-center justify-center text-secondary-fixed-dim hover:bg-surface-container-highest/20 active:scale-90 transition-transform" id="versionsBtn">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
+</button>
+<button class="w-12 h-12 bg-secondary-container/30 backdrop-blur-md rounded-full shadow-lg border border-cyan-400/40 flex items-center justify-center text-secondary-fixed-dim active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">zoom_in</span>
+</button>
+</div>
+</main>
+<!-- Bottom Sheet Modal: Version Selector -->
+<div class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm transition-opacity opacity-0 pointer-events-none" id="versionModalOverlay">
+<div class="absolute bottom-0 left-0 w-full bg-[#121A21] rounded-t-xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)] transform translate-y-full transition-transform duration-300 border-t border-cyan-400/20" id="versionModalSheet">
+<!-- Handle -->
+<div class="w-full flex justify-center py-3">
+<div class="w-12 h-1.5 bg-surface-tint rounded-full opacity-50"></div>
+</div>
+<div class="px-6 pb-8 pt-2">
+<h2 class="font-headline font-bold text-lg text-secondary-fixed-dim mb-4">Compare Versions</h2>
+<div class="flex flex-col gap-4">
+<!-- Current Target (Rev B) -->
+<div class="bg-[#0A0F14] border border-precision-cyan/30 rounded-lg p-3 flex justify-between items-center relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-precision-cyan"></div>
+<div class="pl-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-body font-semibold text-sm text-secondary-fixed-dim">Revision B (Target)</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-cyan-400/10 text-cyan-400 border border-cyan-400/20">Active</span>
+</div>
+<div class="font-label text-xs text-on-surface-variant flex flex-col gap-0.5">
+<span>Upld: J.Smith (PM)</span>
+<span>Date: 2023-10-27 14:32:00Z</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-precision-cyan" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- Comparison Source (Rev A) -->
+<div class="bg-[#0A0F14] border border-surface-tint/30 rounded-lg p-3 flex justify-between items-center relative cursor-pointer hover:bg-white/5 transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-500"></div>
+<div class="pl-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-body font-semibold text-sm text-slate-300">Revision A (Base)</span>
+</div>
+<div class="font-label text-xs text-on-surface-variant flex flex-col gap-0.5">
+<span>Upld: M.Davis (Arch)</span>
+<span>Date: 2023-10-15 09:15:00Z</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border border-surface-tint/50 flex items-center justify-center">
+<div class="w-2.5 h-2.5 bg-slate-400 rounded-full"></div>
+</div>
+</div>
+<!-- Older Version -->
+<div class="bg-[#0A0F14] border border-surface-tint/10 rounded-lg p-3 flex justify-between items-center relative cursor-pointer hover:bg-white/5 transition-colors opacity-70">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-slate-700"></div>
+<div class="pl-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-body font-semibold text-sm text-slate-400">Initial Draft</span>
+</div>
+<div class="font-label text-xs text-on-surface-variant flex flex-col gap-0.5">
+<span>Upld: System</span>
+<span>Date: 2023-10-01 11:00:00Z</span>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border border-surface-tint/30"></div>
+</div>
+</div>
+<button class="w-full mt-6 bg-secondary-fixed-dim/10 border border-secondary-fixed-dim text-secondary-fixed-dim font-body font-semibold py-3 rounded-lg hover:bg-secondary-fixed-dim/20 active:scale-95 transition-all">
+                    Apply Comparison
+                </button>
+</div>
+</div>
+</div>
+<script>
+        // Slider Logic
+        const sliderLine = document.getElementById('sliderLine');
+        const overlayLayer = document.getElementById('overlayLayer');
+        const comparisonArea = document.getElementById('comparisonArea');
+        let isDragging = false;
+
+        const updateSlider = (clientX) => {
+            const rect = comparisonArea.getBoundingClientRect();
+            let x = clientX - rect.left;
+            x = Math.max(0, Math.min(x, rect.width)); // clamp
+            const percentage = (x / rect.width) * 100;
+            
+            sliderLine.style.left = `${percentage}%`;
+            overlayLayer.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
+        };
+
+        sliderLine.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.clientX);
+        });
+
+        // Touch support for slider
+        sliderLine.addEventListener('touchstart', () => isDragging = true, {passive: true});
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            // Prevent default zooming/scrolling while dragging slider
+            e.preventDefault(); 
+            updateSlider(e.touches[0].clientX);
+        }, {passive: false});
+
+
+        // Basic Pan/Zoom Implementation (Simulated for Demo)
+        const viewport = document.getElementById('viewport');
+        const transformContainer = document.getElementById('transformContainer');
+        let scale = 1;
+        let panX = 0;
+        let panY = 0;
+        let isPanning = false;
+        let startX, startY;
+
+        viewport.addEventListener('mousedown', (e) => {
+            if(e.target === sliderLine || sliderLine.contains(e.target)) return;
+            isPanning = true;
+            startX = e.clientX - panX;
+            startY = e.clientY - panY;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            panX = e.clientX - startX;
+            panY = e.clientY - startY;
+            updateTransform();
+        });
+
+        window.addEventListener('mouseup', () => isPanning = false);
+
+        viewport.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomSensitivity = 0.1;
+            const delta = e.deltaY > 0 ? -1 : 1;
+            scale = Math.max(0.5, Math.min(scale + (delta * zoomSensitivity), 4));
+            updateTransform();
+        }, {passive: false});
+
+        function updateTransform() {
+            transformContainer.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+        }
+
+
+        // Modal Logic
+        const versionsBtn = document.getElementById('versionsBtn');
+        const modalOverlay = document.getElementById('versionModalOverlay');
+        const modalSheet = document.getElementById('versionModalSheet');
+
+        const openModal = () => {
+            modalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            modalSheet.classList.remove('translate-y-full');
+        };
+
+        const closeModal = () => {
+            modalSheet.classList.add('translate-y-full');
+            setTimeout(() => {
+                modalOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }, 300);
+        };
+
+        versionsBtn.addEventListener('click', openModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+    </script>
+</body></html>

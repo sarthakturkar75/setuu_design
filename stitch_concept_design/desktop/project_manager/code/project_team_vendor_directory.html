@@ -1,0 +1,354 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Project Team</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#f2f1ec",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-error-container": "#93000a",
+                      "background": "#faf9f4",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "on-primary-container": "#6f89a9",
+                      "surface-container-low": "#f5f4ef",
+                      "secondary-container": "#8ad1ff",
+                      "surface-variant": "#e3e3de",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#001e2d",
+                      "tertiary-container": "#002233",
+                      "secondary-fixed": "#c6e7ff",
+                      "on-secondary-container": "#005a7f",
+                      "surface-container-high": "#e9e8e3",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "outline-variant": "#c3c6ce",
+                      "on-tertiary-container": "#0090c7",
+                      "primary": "#000815",
+                      "inverse-surface": "#30312e",
+                      "secondary": "#00658d",
+                      "on-primary-fixed": "#001d35",
+                      "primary-fixed-dim": "#aec9eb",
+                      "surface-container": "#efeee9",
+                      "surface-bright": "#faf9f4",
+                      "on-surface-variant": "#43474d",
+                      "surface-dim": "#dbdad5",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "surface-tint": "#46607e",
+                      "on-background": "#1b1c19",
+                      "tertiary-fixed": "#c6e7ff",
+                      "primary-container": "#00213c",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "on-surface": "#1b1c19",
+                      "inverse-primary": "#aec9eb",
+                      "primary-fixed": "#d1e4ff",
+                      "surface-container-highest": "#e3e3de",
+                      "tertiary": "#00080f",
+                      "outline": "#73777e",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface": "#faf9f4",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed": "#001e2d",
+                      
+                      // Semantic Colors (Light Mode approximation)
+                      "semantic-neutral": "#64748B",
+                      "semantic-active": "#0284C7",
+                      "semantic-warning": "#D97706",
+                      "semantic-success": "#16A34A",
+                      "semantic-final": "#0D9488",
+                      "semantic-verify": "#2563EB",
+                      "semantic-attention": "#9333EA",
+                      "semantic-emergency": "#DC2626",
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                  "sidebar": "280px"
+              },
+              "fontFamily": {
+                      "headline": ["Merriweather", "serif"],
+                      "display": ["Merriweather", "serif"],
+                      "body": ["Inter", "sans-serif"],
+                      "label": ["JetBrains Mono", "monospace"]
+              },
+              "fontSize": {}
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+          }
+          .material-symbols-outlined.fill-icon {
+              font-variation-settings: 'FILL' 1;
+          }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<aside class="w-[280px] h-screen sticky left-0 top-0 bg-primary-container dark:bg-[#04070A] flex flex-col py-6 px-4 hidden md:flex shrink-0 z-40">
+<div class="mb-8 px-2 flex items-center gap-3">
+<img alt="Project Manager Profile" class="w-8 h-8 rounded-sm object-cover bg-white" data-alt="A small, highly detailed, metallic industrial gear logo icon, conveying precision and reliability, set against a dark background, in a modern, clean corporate style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCdoUPrKtkv07pmvCX7Zu8X6y4qrmVPe93R2YNuVMccxq2ZziO-SgdjccvnivZl6FKdN03FOoGfxGz-xiavzNmMd_tL504lNS0vVS4dhwM8JkT_5HcIEWsqiIaqrrg2x0WTOzjTZe5_2xGslY0R47UZDjiZ80o1bgmSBDPa9tCHDCQ9rm0VWdW_q5fyNBN_Zshx3MOrjPUG4a-bVjp2TtejOLX_3JRNW5VMSpcPqRI3BdGvIB_B1EU">
+<div>
+<h1 class="font-headline text-xl font-bold text-on-primary dark:text-inverse-primary tracking-tight">Setuu Enterprise</h1>
+<p class="font-label text-xs text-on-primary-container/80 uppercase tracking-widest mt-1">Industrial Reliability</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+<span class="font-body text-sm font-medium">Milestones</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+<span class="font-body text-sm font-medium">Drawings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="font-body text-sm font-medium">Materials</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container bg-secondary-container dark:bg-secondary dark:text-on-secondary font-bold rounded-lg shadow-sm" href="#">
+<span class="material-symbols-outlined text-[20px] fill-icon text-on-secondary-container">groups</span>
+<span class="font-body text-sm text-on-secondary-container">Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span class="font-body text-sm font-medium">Timeline</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="font-body text-sm font-medium">Reporting</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-primary-container opacity-70 hover:opacity-100 hover:bg-on-primary-fixed-variant/10 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+<span class="font-body text-sm font-medium">Support</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/10">
+<div class="flex items-center gap-3 px-3 py-2">
+<img alt="User Avatar" class="w-10 h-10 rounded-full object-cover border border-white/20" data-alt="A professional headshot of a female Project Manager in a bright, modern industrial office setting, wearing a white hardhat and hi-vis vest, looking confident." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcXkempNO2sQNZPobzZ9O_uNOzcbsWXYZJqURLfwZHlw6aG4yF83pHY1iffZc2XdeHjGaapGhkgfEcW913Z8oV4daozvmfWr5dWBPiM-8YOu0SkClxPoqFGmG33_azAWEvNB_nH46W6woYv5E4Q_PYd98nhHF0qjzAg1_d1Fo2KCUJB_F1GMvedHZgw2rf4SDEukBExMKHkHo_Wj9iCTvc3im_Ja4tzrI1efKtCPZ4679RMTGfFwsY">
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-white truncate">Sarah Jenkins</p>
+<p class="text-xs text-on-primary-container truncate font-label">PM - Alpha Tower</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background">
+<!-- TopNavBar -->
+<header class="docked full-width top-0 sticky z-50 bg-white/85 dark:bg-[#121A21]/85 backdrop-blur-md shadow-sm flex justify-between items-center w-full h-16 px-6 max-w-full">
+<div class="flex items-center gap-2 text-sm">
+<span class="font-headline font-bold text-primary dark:text-secondary-fixed-dim">Projects</span>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+<span class="font-headline font-bold text-primary dark:text-secondary-fixed-dim">Alpha Tower</span>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+<span class="font-body text-on-surface-variant font-medium">Team</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none ring-2 ring-transparent focus:ring-secondary/50 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none ring-2 ring-transparent focus:ring-secondary/50 rounded-full">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none ring-2 ring-transparent focus:ring-secondary/50 rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 p-6 lg:p-8 max-w-[1600px] mx-auto w-full flex flex-col gap-6">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-2">
+<div>
+<h2 class="font-headline text-3xl font-bold text-primary">Project Team &amp; Vendor Directory</h2>
+<p class="font-body text-on-surface-variant mt-1 text-sm">Managing personnel assigned to Alpha Tower site operations.</p>
+</div>
+</div>
+<!-- Elevated Data Sheet -->
+<div class="bg-surface-container-lowest rounded-lg border border-[#E0E0E0] shadow-sm flex flex-col overflow-hidden">
+<!-- Toolbar -->
+<div class="p-5 border-b border-[#E0E0E0] flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface-bright">
+<div class="relative w-full sm:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-[#E0E0E0] rounded-md text-sm font-body text-primary focus:outline-none focus:ring-2 focus:ring-secondary/50 transition-shadow" placeholder="Search team members..." type="text">
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<button class="flex items-center gap-2 px-4 py-2 border border-[#E0E0E0] rounded-md bg-white hover:bg-surface-container-low transition-colors text-sm font-medium text-primary">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Export List
+                        </button>
+<div class="flex relative inline-flex shadow-sm rounded-md">
+<button class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-primary-container bg-primary-container text-sm font-medium text-white hover:bg-primary transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-secondary/50" type="button">
+                                Assign to Project
+                            </button>
+<button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-l-0 border-primary-container bg-primary-container text-white hover:bg-primary transition-colors focus:outline-none focus:ring-2 focus:ring-secondary/50" type="button">
+<span class="material-symbols-outlined text-lg">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50 border-b border-[#E0E0E0]">
+<th class="px-6 py-4 font-label text-xs uppercase tracking-wider text-on-surface-variant font-medium">Personnel</th>
+<th class="px-6 py-4 font-label text-xs uppercase tracking-wider text-on-surface-variant font-medium">Project Role</th>
+<th class="px-6 py-4 font-label text-xs uppercase tracking-wider text-on-surface-variant font-medium">Organization</th>
+<th class="px-6 py-4 font-label text-xs uppercase tracking-wider text-on-surface-variant font-medium">Contact</th>
+<th class="px-6 py-4 font-label text-xs uppercase tracking-wider text-on-surface-variant font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E0E0E0] bg-white">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="w-10 h-10 rounded-full object-cover border border-[#E0E0E0]" data-alt="Professional headshot of a male Site Engineer wearing a yellow hardhat and safety glasses, bright construction site background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDApoFiflzkoG2CbM7GCso6QiFIlp2OXZrn8rYAkHwFV6UvfFAGuOcYZpikesDYmBq3bsVZUIGkiJyMfFmWgIQMheKupZQltsoYEDdnNSULzos9ajQozBP3YH2RHEbBR6gdc0NXccvMv21BqDZkaZjNs4kFoCJmRmm7UHmhymY8RDKv2GOboriRSKYeNPOHmo5KzLoydaUHfSlkyESK4BZH4Evlz2JLEiSDebpITlPCinubs3Ifgg8D">
+<div>
+<p class="text-sm font-semibold text-primary">Marcus Vance</p>
+<p class="text-xs font-label text-on-surface-variant mt-0.5">ID: ST-0924</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-semantic-active/10 text-semantic-active border border-semantic-active/20">
+                                        Site Engineer
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm text-primary font-medium">Setuu Internal</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+                                            m.vance@setuu.com
+                                        </div>
+<div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">phone</span>
+                                            +1 (555) 019-2834
+                                        </div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container border border-[#E0E0E0] flex items-center justify-center text-primary font-headline font-bold text-sm">
+                                            EL
+                                        </div>
+<div>
+<p class="text-sm font-semibold text-primary">Elena Rodriguez</p>
+<p class="text-xs font-label text-on-surface-variant mt-0.5">ID: CR-1102</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-semantic-verify/10 text-semantic-verify border border-semantic-verify/20">
+                                        Client Rep
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm text-primary font-medium">Apex Holdings LLC</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+                                            elena.r@apexholdings.net
+                                        </div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="w-10 h-10 rounded-full object-cover border border-[#E0E0E0]" data-alt="Professional headshot of a middle-aged male subcontractor in a blue collared shirt, rugged appearance, neutral grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC0EdUHN-j_71A_0FZEjK-X20wJxMMpBERzjWp1NyBYYv_abtxsuDGwNezecprdoy6SSfYGKau5Is41MGTlNRnAB0dYkV6WS5u07r9TM3BTtfxGdTOAUuzhp9zELbKujDF2nzBQ5H8GqmE_9Ld-fRWMOwnItwpAtqwURFe9YplGUzUjKvIWxC68amNGKxqdowgQGJUBR08LJVkS20GPGstV20PV-0WFEcEqB89YECN1GeddEFFLDko">
+<div>
+<p class="text-sm font-semibold text-primary">David Chen</p>
+<p class="text-xs font-label text-on-surface-variant mt-0.5">ID: VN-8831</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-semantic-warning/10 text-semantic-warning border border-semantic-warning/20">
+                                        Subcontractor
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<p class="text-sm text-primary font-medium">Chen Steelworks</p>
+<p class="text-xs text-on-surface-variant mt-0.5">Structural Fabricator</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+                                            d.chen@chensteel.com
+                                        </div>
+<div class="flex items-center gap-1.5 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">phone</span>
+                                            +1 (555) 882-1004
+                                        </div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary p-1 rounded transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="px-6 py-4 border-t border-[#E0E0E0] bg-surface-bright flex items-center justify-between">
+<p class="text-sm text-on-surface-variant">Showing <span class="font-medium text-primary">1</span> to <span class="font-medium text-primary">3</span> of <span class="font-medium text-primary">24</span> team members</p>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded border border-[#E0E0E0] text-outline hover:text-primary hover:bg-surface-container-low disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-1 rounded border border-[#E0E0E0] text-outline hover:text-primary hover:bg-surface-container-low">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

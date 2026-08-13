@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Setuu Enterprise - Offline Sync Queue</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e9e8e3",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#2e4965",
+                    "tertiary-container": "#002233",
+                    "inverse-surface": "#30312e",
+                    "outline-variant": "#c3c6ce",
+                    "on-surface-variant": "#43474d",
+                    "surface-dim": "#dbdad5",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#82cfff",
+                    "tertiary-fixed": "#c6e7ff",
+                    "surface-container": "#efeee9",
+                    "surface-bright": "#faf9f4",
+                    "on-background": "#1b1c19",
+                    "primary": "#000815",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#46607e",
+                    "on-primary-container": "#6f89a9",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#faf9f4",
+                    "on-primary-fixed": "#001d35",
+                    "on-tertiary-container": "#0090c7",
+                    "secondary-fixed-dim": "#88cffc",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#aec9eb",
+                    "secondary": "#00658d",
+                    "primary-container": "#00213c",
+                    "tertiary": "#00080f",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e3e3de",
+                    "inverse-on-surface": "#f2f1ec",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#8ad1ff",
+                    "on-secondary-container": "#005a7f",
+                    "on-surface": "#1b1c19",
+                    "on-secondary-fixed": "#001e2d",
+                    "on-tertiary-fixed": "#001e2d",
+                    "outline": "#73777e",
+                    "primary-fixed": "#d1e4ff",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f5f4ef",
+                    "primary-fixed-dim": "#aec9eb",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "on-tertiary-fixed-variant": "#004c6b",
+                    "background": "#faf9f4",
+                    "surface-variant": "#e3e3de",
+                    "secondary-fixed": "#c6e7ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Merriweather"],
+                    "display": ["Merriweather"],
+                    "body": ["Inter"],
+                    "label": ["JetBrains Mono"]
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f4; color: #1b1c19; }
+        .font-headline { font-family: 'Merriweather', serif; }
+        .font-label { font-family: 'JetBrains Mono', monospace; }
+        
+        .progress-bar-indeterminate {
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar-indeterminate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 30%;
+            background-color: #0284C7; /* Active Sky Blue */
+            animation: indeterminate 1.5s infinite linear;
+        }
+        @keyframes indeterminate {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
+        }
+        
+        .pulse-amber {
+            animation: pulseAmber 2s infinite;
+        }
+        @keyframes pulseAmber {
+            0% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(217, 119, 6, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+        }
+    </style>
+</head>
+<body class="bg-surface antialiased overflow-x-hidden min-h-screen flex text-on-surface">
+<!-- SIDEBAR -->
+<aside class="w-[280px] h-screen fixed left-0 top-0 bg-primary-container text-on-primary-container border-r border-outline-variant shadow-md flex flex-col justify-between py-6 z-50">
+<div>
+<div class="px-6 mb-8 flex items-center gap-4">
+<img alt="Setuu Enterprise Logo" class="w-10 h-10 object-contain rounded-DEFAULT" data-alt="A minimalist, industrial corporate logo featuring a stylised blueprint motif in deep navy and bright white, perfectly suited for a high-end construction management SaaS platform. Clean lines, vector style, light mode environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYpX0i_7jj5onrEVGGobn12c6OCHvQKYJNP0UfWP5nX2S_Gs5rEVLoMRTpC30lz7SWQ18diGCUZfMe5a-WmJr6T9kiLB3MBGJObdreQrZD8Uqe5-W-lcNjUPl4C499RR6jpQQzRoDFio8g4FM-dmPpvqEbq3Sd46rfR9L0hrIe8NXlixw7L-JD3LaN3-yXzgKY5Q5TBIJRPxKWnTIOd8-ZrYNXTXUqJ4iljQ6LxWH8nwGT_ogxqRk9"/>
+<div>
+<h1 class="text-2xl font-headline font-bold text-on-primary">Setuu Admin</h1>
+<p class="text-label-sm text-on-primary-container uppercase tracking-wider">Enterprise Control</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined" data-weight="fill">dashboard</span>
+<span class="text-body-md font-body font-medium">Dashboard</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="text-body-md font-body font-medium">Milestones</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-body-md font-body font-medium">Materials</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">engineering</span>
+<span class="text-body-md font-body font-medium">Resources</span>
+</a>
+<!-- Semantic Match: Issues/Support/Sync Queue logic implies Support or Issues, defaulting Issues as active for troubleshooting -->
+<a class="bg-secondary-container text-on-secondary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 scale-95 duration-150 ease-in-out font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">report_problem</span>
+<span class="text-body-md font-body">Issues</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-body-md font-body font-medium">Handovers</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-body-md font-body font-medium">Support</span>
+</a>
+</nav>
+</div>
+<nav class="flex flex-col gap-1 border-t border-primary-container/30 pt-4 mt-4">
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body font-medium">Settings</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="text-body-md font-body font-medium">Compliance</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="text-body-md font-body font-medium">Logs</span>
+</a>
+</nav>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-[280px] w-[calc(100%-280px)] min-h-screen flex flex-col">
+<!-- TOP APP BAR -->
+<header class="sticky top-0 right-0 z-40 bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 shadow-sm flex justify-between items-center px-8 py-3 w-full transition-all duration-300">
+<div class="flex items-center gap-8">
+<span class="text-xl font-headline font-black text-primary">Setuu Enterprise</span>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-md font-body font-medium" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-md font-body font-medium" href="#">Projects</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 text-body-md font-body" href="#">Materials</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/60 text-sm">search</span>
+<input class="pl-9 pr-4 py-2 bg-surface-container-low border border-outline-variant/50 rounded-full text-body-md font-body focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-on-surface w-64 placeholder-on-surface-variant/50" placeholder="Search queues..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 transition-all duration-200 active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined">sync</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 transition-all duration-200 active:scale-95 flex items-center justify-center relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant/50 rounded-full p-2 transition-all duration-200 active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- CONTENT CANVAS -->
+<div class="p-8 max-w-[1600px] mx-auto w-full flex-grow">
+<!-- HEADER SECTION -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b border-outline-variant/30 pb-6">
+<div>
+<h2 class="text-headline-lg font-headline text-primary mb-2">Offline Sync Queue</h2>
+<p class="text-body-md font-body text-on-surface-variant max-w-2xl">
+                        Monitoring field operations and data integrity. Review pending network operations, resolve conflicts, and force-sync cached actions to the primary database cluster.
+                    </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-surface-container rounded-lg text-body-md font-body font-medium text-on-surface hover:bg-surface-variant transition-colors flex items-center gap-2 border border-outline-variant/30">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                        Filter
+                    </button>
+<!-- Precision Cyan Action Button as requested -->
+<button class="px-5 py-2 rounded-lg text-body-md font-body font-bold text-[#0A0F14] bg-[#41BEFD] hover:bg-[#41BEFD]/90 shadow-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
+<span class="material-symbols-outlined text-sm font-bold">cloud_upload</span>
+                        Retry All Failed
+                    </button>
+</div>
+</div>
+<!-- METRICS BENTO GRID -->
+<div class="grid grid-cols-12 gap-6 mb-8">
+<!-- Total Pending -->
+<div class="col-span-12 md:col-span-4 lg:col-span-3 bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-5 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-md font-label text-on-surface-variant uppercase">Pending Ops</span>
+<span class="material-symbols-outlined text-outline">pending_actions</span>
+</div>
+<div class="text-headline-lg font-headline text-primary">14</div>
+<div class="text-label-sm font-label text-outline mt-2">LAST 24 HOURS</div>
+</div>
+<!-- Syncing Now -->
+<div class="col-span-12 md:col-span-4 lg:col-span-3 bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-5 shadow-sm relative overflow-hidden">
+<div class="flex justify-between items-start mb-2 relative z-10">
+<span class="text-label-md font-label text-[#0284C7] uppercase">Active Sync</span>
+<span class="material-symbols-outlined text-[#0284C7] animate-spin-slow" style="animation-duration: 3s;">sync</span>
+</div>
+<div class="text-headline-lg font-headline text-primary relative z-10">3</div>
+<div class="text-label-sm font-label text-outline mt-2 relative z-10">BANDWIDTH: 1.2MB/s</div>
+<!-- Ambient background for active state -->
+<div class="absolute inset-0 bg-[#0284C7]/5 pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-[#0284C7]/20 progress-bar-indeterminate"></div>
+</div>
+<!-- Failed Ops -->
+<div class="col-span-12 md:col-span-4 lg:col-span-3 bg-surface-container-lowest border border-[#DC2626]/30 rounded-xl p-5 shadow-sm relative overflow-hidden">
+<div class="flex justify-between items-start mb-2">
+<span class="text-label-md font-label text-[#DC2626] uppercase">Failed (Hold)</span>
+<span class="material-symbols-outlined text-[#DC2626]">error</span>
+</div>
+<div class="text-headline-lg font-headline text-primary">2</div>
+<div class="text-label-sm font-label text-[#DC2626] mt-2">REQUIRES ATTENTION</div>
+<div class="absolute inset-0 bg-[#DC2626]/5 pointer-events-none"></div>
+</div>
+<!-- Storage Gauge -->
+<div class="col-span-12 lg:col-span-3 bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-5 shadow-sm flex flex-col justify-center">
+<div class="flex justify-between items-end mb-3">
+<span class="text-label-md font-label text-on-surface-variant uppercase">Cache Vol.</span>
+<span class="text-body-md font-body font-bold">4.2 GB</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[42%]"></div>
+</div>
+<div class="flex justify-between mt-2 text-label-sm font-label text-outline">
+<span>USED</span>
+<span>10 GB CAP</span>
+</div>
+</div>
+</div>
+<!-- DATA TABLE / QUEUE LIST -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl shadow-sm overflow-hidden flex flex-col h-[600px]">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant/40 bg-surface-container-low text-label-md font-label text-on-surface-variant uppercase tracking-wider items-center">
+<div class="col-span-1 text-center">T/O</div>
+<div class="col-span-3">Operation ID &amp; Type</div>
+<div class="col-span-2">Project / Actor</div>
+<div class="col-span-2">Payload Size</div>
+<div class="col-span-3">Status / Logs</div>
+<div class="col-span-1 text-right">Action</div>
+</div>
+<!-- Scrollable Body -->
+<div class="overflow-y-auto flex-grow flex flex-col">
+<!-- ACTIVE SYNC ROW -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant/20 hover:bg-surface-container-low/50 transition-colors items-center relative group">
+<!-- Active background indicator -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#0284C7]"></div>
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-[#0284C7]">sync</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-body-md font-label font-bold text-primary">SYNC_8F2A9</span>
+<span class="text-label-sm font-label text-outline mt-1">Upload Media (Drawing Revision)</span>
+</div>
+<div class="col-span-2 flex flex-col">
+<span class="text-body-sm font-body font-medium">PRJ-Alpha-99</span>
+<span class="text-label-sm font-label text-outline mt-1">usr_fld_442</span>
+</div>
+<div class="col-span-2">
+<span class="text-label-md font-label">24.5 MB</span>
+</div>
+<div class="col-span-3 flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-label-sm font-label text-[#0284C7] font-bold">SYNCING...</span>
+<span class="text-label-sm font-label text-outline">68%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-[#0284C7] progress-bar-indeterminate"></div>
+</div>
+</div>
+<div class="col-span-1 flex justify-end">
+<button class="p-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+<!-- FAILED ROW 1 -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-[#DC2626]/20 bg-[#DC2626]/5 items-start relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#DC2626]"></div>
+<div class="col-span-1 flex justify-center pt-1">
+<span class="material-symbols-outlined text-[#DC2626]">cloud_off</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-body-md font-label font-bold text-primary">MUT_B77X1</span>
+<span class="text-label-sm font-label text-outline mt-1">Update Milestone State</span>
+</div>
+<div class="col-span-2 flex flex-col">
+<span class="text-body-sm font-body font-medium">PRJ-Delta-04</span>
+<span class="text-label-sm font-label text-outline mt-1">usr_pm_102</span>
+</div>
+<div class="col-span-2 pt-1">
+<span class="text-label-md font-label">1.2 KB</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-label-sm font-label text-[#DC2626] font-bold mb-1">FAILED (TIMEOUT)</span>
+<div class="bg-inverse-surface text-on-tertiary p-2 rounded text-[10px] font-label leading-tight overflow-x-auto whitespace-nowrap">
+                                &gt; err_net_timeout_tls<br/>
+                                &gt; retry_count: 3/3 reached<br/>
+                                &gt; connection_reset_by_peer
+                            </div>
+</div>
+<div class="col-span-1 flex flex-col gap-2 items-end">
+<button class="p-1.5 bg-surface text-primary border border-outline-variant rounded hover:bg-surface-variant transition-colors" title="Retry">
+<span class="material-symbols-outlined text-sm">replay</span>
+</button>
+</div>
+</div>
+<!-- QUEUED ROW (Amber Pulse) -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant/20 hover:bg-surface-container-low/50 transition-colors items-center relative pulse-amber bg-[#D97706]/5">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#D97706]"></div>
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-[#D97706]">schedule</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-body-md font-label font-bold text-primary">SYNC_9A3B</span>
+<span class="text-label-sm font-label text-outline mt-1">Submit Incident Report</span>
+</div>
+<div class="col-span-2 flex flex-col">
+<span class="text-body-sm font-body font-medium">PRJ-Alpha-99</span>
+<span class="text-label-sm font-label text-outline mt-1">usr_fld_442</span>
+</div>
+<div class="col-span-2">
+<span class="text-label-md font-label">4.8 MB</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-label-sm font-label text-[#D97706] font-bold">QUEUED</span>
+<span class="text-label-sm font-label text-outline mt-1">Awaiting active connection</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<button class="p-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+<!-- FAILED ROW 2 (Duplicate) -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-[#D97706]/20 bg-[#D97706]/5 items-start relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-[#D97706]"></div>
+<div class="col-span-1 flex justify-center pt-1">
+<span class="material-symbols-outlined text-[#D97706]">warning</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-body-md font-label font-bold text-primary">UPL_DUP_88</span>
+<span class="text-label-sm font-label text-outline mt-1">Material Proof Upload</span>
+</div>
+<div class="col-span-2 flex flex-col">
+<span class="text-body-sm font-body font-medium">PRJ-Zeta-12</span>
+<span class="text-label-sm font-label text-outline mt-1">vnd_con_09</span>
+</div>
+<div class="col-span-2 pt-1">
+<span class="text-label-md font-label">12.1 MB</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-label-sm font-label text-[#D97706] font-bold mb-1">DUPLICATE DETECTED</span>
+<div class="bg-surface-dim text-on-surface p-2 rounded text-[10px] font-label leading-tight border border-outline-variant/50">
+                                similarity_score: 0.98<br/>
+                                matches_hash: hx_7829ac9...
+                            </div>
+</div>
+<div class="col-span-1 flex flex-col gap-2 items-end">
+<button class="p-1.5 bg-surface text-primary border border-outline-variant rounded hover:bg-surface-variant transition-colors" title="Review">
+<span class="material-symbols-outlined text-sm">fact_check</span>
+</button>
+</div>
+</div>
+<!-- PENDING / IDLE ROWS (Filler for density) -->
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant/20 hover:bg-surface-container-low/50 transition-colors items-center">
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-outline">hourglass_empty</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-body-md font-label font-bold text-primary">MUT_C99D2</span>
+<span class="text-label-sm font-label text-outline mt-1">Ack Change Request</span>
+</div>
+<div class="col-span-2 flex flex-col">
+<span class="text-body-sm font-body font-medium">PRJ-Beta-01</span>
+<span class="text-label-sm font-label text-outline mt-1">usr_cli_02</span>
+</div>
+<div class="col-span-2">
+<span class="text-label-md font-label">0.8 KB</span>
+</div>
+<div class="col-span-3">
+<span class="text-label-sm font-label text-outline font-bold">PENDING</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<button class="p-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-4 p-4 border-b border-outline-variant/20 hover:bg-surface-container-low/50 transition-colors items-center">
+<div class="col-span-1 flex justify-center">
+<span class="material-symbols-outlined text-outline">hourglass_empty</span>
+</div>
+<div class="col-span-3 flex flex-col">
+<span class="text-body-md font-label font-bold text-primary">SYNC_E44F</span>
+<span class="text-label-sm font-label text-outline mt-1">Download Material Batch</span>
+</div>
+<div class="col-span-2 flex flex-col">
+<span class="text-body-sm font-body font-medium">PRJ-Alpha-99</span>
+<span class="text-label-sm font-label text-outline mt-1">usr_pm_102</span>
+</div>
+<div class="col-span-2">
+<span class="text-label-md font-label">145.0 MB</span>
+</div>
+<div class="col-span-3">
+<span class="text-label-sm font-label text-outline font-bold">PENDING</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<button class="p-1 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Table Footer -->
+<div class="p-4 border-t border-outline-variant/40 bg-surface-container flex justify-between items-center text-label-sm font-label text-outline">
+<span>Showing 1-6 of 14 operations</span>
+<div class="flex items-center gap-2">
+<button class="p-1 hover:text-primary"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<span>Page 1 of 3</span>
+<button class="p-1 hover:text-primary"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

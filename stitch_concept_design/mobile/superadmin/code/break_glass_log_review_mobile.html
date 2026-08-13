@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Break-Glass Log Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c3c6ce",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#000815",
+                        "background": "#faf9f4",
+                        "surface": "#faf9f4",
+                        "on-background": "#1b1c19",
+                        "primary-container": "#00213c",
+                        "surface-variant": "#e3e3de",
+                        "on-error": "#ffffff",
+                        "outline": "#73777e",
+                        "on-primary-fixed": "#001d35",
+                        "surface-tint": "#46607e",
+                        "secondary-fixed-dim": "#88cffc",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-dim": "#dbdad5",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "tertiary": "#00080f",
+                        "tertiary-container": "#002233",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#005a7f",
+                        "on-surface": "#1b1c19",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#aec9eb",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-surface-variant": "#43474d",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-surface": "#30312e",
+                        "secondary": "#00658d",
+                        "surface-container": "#efeee9",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "surface-container-highest": "#e3e3de",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-container": "#8ad1ff",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container-high": "#e9e8e3",
+                        "on-tertiary-container": "#0090c7",
+                        "primary-fixed": "#d1e4ff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "surface-container-low": "#f5f4ef",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pulse-border {
+            animation: pulseBorder 3s infinite;
+        }
+        @keyframes pulseBorder {
+            0% { border-color: rgba(186, 26, 26, 0.4); }
+            50% { border-color: rgba(186, 26, 26, 1); box-shadow: 0 0 8px rgba(186, 26, 26, 0.3) inset; }
+            100% { border-color: rgba(186, 26, 26, 0.4); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body min-h-screen flex flex-col antialiased border-x-4 border-t-4 border-error pulse-border">
+<!-- TopAppBar -->
+<header class="bg-surface/85 backdrop-blur-xl text-primary font-headline text-headline-sm docked full-width top-0 sticky border-b border-outline-variant/30 shadow-sm transition-all duration-300 ease-in-out active:scale-95 flex justify-between items-center px-4 py-2 w-full z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-headline font-bold text-error">Emergency Override Log</span>
+</div>
+<div class="flex items-center">
+<span class="font-label text-label-sm text-on-surface-variant mr-2">SYS_ADMIN</span>
+<div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center text-on-error-container font-bold text-sm">
+                SA
+            </div>
+</div>
+</header>
+<!-- Main Content (Canvas) -->
+<main class="flex-grow p-4 mb-24 overflow-y-auto">
+<!-- Filters (Glassmorphism Card) -->
+<section class="bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/30 rounded-lg p-4 mb-6 shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span> Filters
+                </h2>
+<button class="text-secondary font-label text-xs uppercase hover:underline">Reset</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Timestamp Filter -->
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">TIMESTAMP RANGE</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded p-2 text-sm font-label focus:ring-1 focus:ring-secondary focus:border-secondary appearance-none">
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+<option>Custom Range</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-on-surface-variant text-sm pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Target Org Filter -->
+<div>
+<label class="block font-label text-label-sm text-on-surface-variant mb-1">TARGET_ORG</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded p-2 text-sm font-label focus:ring-1 focus:ring-secondary focus:border-secondary appearance-none">
+<option>ALL_ORGS</option>
+<option>ORG_A_INDUSTRIAL</option>
+<option>ORG_B_LOGISTICS</option>
+<option>ORG_C_CONSTRUCTION</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-on-surface-variant text-sm pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Log List (High Density Cards) -->
+<section class="space-y-4">
+<!-- Log Entry 1 -->
+<div class="bg-surface-container-lowest border-l-4 border-error border-y border-r border-outline-variant/30 rounded shadow-sm hover:shadow-md transition-shadow">
+<div class="p-3 border-b border-outline-variant/30 flex justify-between items-start bg-error-container/10">
+<div>
+<div class="font-label text-xs text-error font-bold mb-1">EVT_ID: BG-9824-A1</div>
+<div class="font-label text-[10px] text-on-surface-variant">2023-10-27T14:32:01.452Z</div>
+</div>
+<span class="px-2 py-1 bg-error/10 text-error font-label text-[10px] rounded border border-error/20">ELEVATED_ACCESS</span>
+</div>
+<div class="p-3 font-label text-xs grid grid-cols-2 gap-y-2 gap-x-4">
+<div class="text-on-surface-variant">ACTOR_ID:</div>
+<div class="text-primary font-bold truncate">USR-773-SA</div>
+<div class="text-on-surface-variant">TARGET_ORG:</div>
+<div class="text-primary truncate">ORG_B_LOGISTICS</div>
+<div class="text-on-surface-variant">REASON_CODE:</div>
+<div class="text-primary truncate">CRIT_DB_DEADLOCK</div>
+<div class="col-span-2 mt-2 pt-2 border-t border-outline-variant/20">
+<span class="text-on-surface-variant block mb-1">ACTION_PAYLOAD:</span>
+<div class="bg-surface-dim p-2 rounded text-[10px] overflow-x-auto text-primary-container">
+<code>SELECT * FROM pg_stat_activity WHERE state = 'active'; <br/> pg_terminate_backend(pid);</code>
+</div>
+</div>
+</div>
+</div>
+<!-- Log Entry 2 -->
+<div class="bg-surface-container-lowest border-l-4 border-error border-y border-r border-outline-variant/30 rounded shadow-sm hover:shadow-md transition-shadow">
+<div class="p-3 border-b border-outline-variant/30 flex justify-between items-start bg-error-container/10">
+<div>
+<div class="font-label text-xs text-error font-bold mb-1">EVT_ID: BG-9823-B2</div>
+<div class="font-label text-[10px] text-on-surface-variant">2023-10-26T09:15:22.108Z</div>
+</div>
+<span class="px-2 py-1 bg-error/10 text-error font-label text-[10px] rounded border border-error/20">DATA_MUTATION</span>
+</div>
+<div class="p-3 font-label text-xs grid grid-cols-2 gap-y-2 gap-x-4">
+<div class="text-on-surface-variant">ACTOR_ID:</div>
+<div class="text-primary font-bold truncate">USR-773-SA</div>
+<div class="text-on-surface-variant">TARGET_ORG:</div>
+<div class="text-primary truncate">ORG_A_INDUSTRIAL</div>
+<div class="text-on-surface-variant">REASON_CODE:</div>
+<div class="text-primary truncate">MANUAL_SYNC_RECOVER</div>
+<div class="col-span-2 mt-2 pt-2 border-t border-outline-variant/20">
+<span class="text-on-surface-variant block mb-1">ACTION_PAYLOAD:</span>
+<div class="bg-surface-dim p-2 rounded text-[10px] overflow-x-auto text-primary-container">
+<code>UPDATE project_status SET state = 'SYNCED' <br/>WHERE id = 'PRJ-992-X';</code>
+</div>
+</div>
+</div>
+</div>
+<!-- Log Entry 3 -->
+<div class="bg-surface-container-lowest border-l-4 border-secondary border-y border-r border-outline-variant/30 rounded shadow-sm hover:shadow-md transition-shadow opacity-75">
+<div class="p-3 border-b border-outline-variant/30 flex justify-between items-start">
+<div>
+<div class="font-label text-xs text-secondary font-bold mb-1">EVT_ID: BG-9822-C3</div>
+<div class="font-label text-[10px] text-on-surface-variant">2023-10-25T18:45:00.000Z</div>
+</div>
+<span class="px-2 py-1 bg-secondary-container/30 text-on-secondary-container font-label text-[10px] rounded border border-secondary/20">SESSION_END</span>
+</div>
+<div class="p-3 font-label text-xs grid grid-cols-2 gap-y-2 gap-x-4">
+<div class="text-on-surface-variant">ACTOR_ID:</div>
+<div class="text-primary font-bold truncate">USR-773-SA</div>
+<div class="text-on-surface-variant">TARGET_ORG:</div>
+<div class="text-primary truncate">SYSTEM_GLOBAL</div>
+<div class="text-on-surface-variant">REASON_CODE:</div>
+<div class="text-primary truncate">AUTO_TIMEOUT</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-primary-container/90 backdrop-blur-md text-secondary-container font-label text-label-sm uppercase tracking-wider fixed bottom-0 w-full z-50 rounded-t-xl border-t border-white/5 shadow-[0_-4px_12px_rgba(0,0,0,0.15)] flex justify-around items-center h-20 px-2 transition-transform active:scale-90 md:hidden border-b-4 border-error pulse-border">
+<a class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="corporate_fare">corporate_fare</span>
+<span>Orgs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-primary-container/70 hover:text-secondary-container" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dns">dns</span>
+<span>Infra</span>
+</a>
+<a aria-current="page" class="flex flex-col items-center justify-center bg-error/20 text-error rounded-full px-4 py-1.5" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="receipt_long">receipt_long</span>
+<span>Audit</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Resource &amp; Timesheet Hub</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-on-surface": "#f2f1ec",
+                        "surface-container-high": "#e9e8e3",
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "secondary": "#00658d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#faf9f4",
+                        "tertiary-fixed": "#c6e7ff",
+                        "background": "#faf9f4",
+                        "primary-fixed": "#d1e4ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "surface-dim": "#dbdad5",
+                        "surface-tint": "#46607e",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#1b1c19",
+                        "secondary-container": "#8ad1ff",
+                        "primary-container": "#00213c",
+                        "outline": "#73777e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container-highest": "#e3e3de",
+                        "surface": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-surface-variant": "#43474d",
+                        "tertiary-container": "#002233",
+                        "inverse-surface": "#30312e",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-container": "#6f89a9",
+                        "inverse-primary": "#aec9eb",
+                        "on-surface": "#1b1c19",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#00080f",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed-dim": "#aec9eb",
+                        "surface-container-low": "#f5f4ef",
+                        "on-secondary-fixed": "#001e2d",
+                        "on-error": "#ffffff",
+                        "primary": "#000815",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#0090c7",
+                        "on-primary-fixed": "#001d35"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for data density */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3c6ce;
+            border-radius: 4px;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.expanded {
+            max-height: 500px; /* arbitrary max height large enough for content */
+            opacity: 1;
+        }
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+        .expanded .chevron {
+            transform: rotate(180deg);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body antialiased flex flex-col h-screen overflow-hidden selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar (from JSON) -->
+<header class="fixed top-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-4 h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of an administrative user in a corporate industrial setting. The person is wearing neutral tones, softly lit from the side against a clean, modern white office background. The aesthetic is sharp, professional, and corporate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxEpKAoZVElm1IPB0GvhlKGRAj7MIdr7TARntQjn6st5u3Qew0E5FjIs6dKFQWfrClO9mlmUizTqjJpQYU6I_2-VIOaktzNe82qXfkFTulR59SEWKYldfrXCLn7hXI38pefPokNGCz-u-JpDtdICS-VQmPEgYCMy7Xm-EEWWZ-XIsYuMybqZxeZYW96mJTAWsREG0CvJuAMcXKrbGcc8MUxBOv2yToLxF3zRaBCgMu3QXNxZPniU4O">
+</div>
+<h1 class="font-headline text-[18px] leading-[24px] font-bold text-primary">SETUU Enterprise</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-150">
+<span class="material-symbols-outlined text-2xl" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto pt-20 pb-24 px-4 md:px-8 space-y-6">
+<!-- Page Header -->
+<div class="flex flex-col gap-2">
+<h2 class="font-headline text-2xl font-bold text-primary tracking-tight">Timesheet Approvals</h2>
+<p class="font-body text-sm text-on-surface-variant">Review and manage field resource allocations for the current billing cycle.</p>
+</div>
+<!-- Metric Summary (Industrial Data Dense) -->
+<div class="grid grid-cols-2 gap-3 mb-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 shadow-sm">
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-wider block mb-1">Pending Review</span>
+<span class="font-label text-xl font-bold text-error">142.5<span class="text-sm font-normal text-outline ml-1">hrs</span></span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-3 shadow-sm">
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-wider block mb-1">Approved Cycle</span>
+<span class="font-label text-xl font-bold text-primary">890.0<span class="text-sm font-normal text-outline ml-1">hrs</span></span>
+</div>
+</div>
+<!-- Timesheet List -->
+<div class="space-y-3">
+<!-- Employee Row 1 (Expanded Default for demo) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden accordion-item">
+<!-- Summary Row (Clickable) -->
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low transition-colors text-left accordion-trigger">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-label font-bold text-sm shrink-0 border border-outline-variant">
+                            MC
+                        </div>
+<div class="flex flex-col">
+<span class="font-body font-semibold text-on-surface leading-tight">Marcus Chen</span>
+<span class="font-label text-[10px] text-outline mt-0.5">ID: EMP-8492</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="font-label text-lg font-bold text-primary leading-none">42.5</span>
+<span class="font-label text-[10px] text-error mt-1 px-1.5 py-0.5 bg-error-container rounded border border-error/20">PENDING</span>
+</div>
+<span class="material-symbols-outlined text-outline chevron" data-icon="expand_more">expand_more</span>
+</div>
+</button>
+<!-- Expanded Details -->
+<div class="accordion-content expanded bg-surface-container p-4 border-t border-outline-variant">
+<!-- Daily Breakdown (Data Grid) -->
+<div class="mb-5">
+<h4 class="font-label text-[10px] text-on-surface-variant uppercase tracking-wider mb-2">Daily Breakdown (Wk 42)</h4>
+<div class="grid grid-cols-7 gap-1 text-center">
+<div class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded p-1">
+<span class="font-label text-[9px] text-outline">M</span>
+<span class="font-label text-xs font-bold text-on-surface">8.0</span>
+</div>
+<div class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded p-1">
+<span class="font-label text-[9px] text-outline">T</span>
+<span class="font-label text-xs font-bold text-on-surface">8.5</span>
+</div>
+<div class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded p-1">
+<span class="font-label text-[9px] text-outline">W</span>
+<span class="font-label text-xs font-bold text-on-surface">8.0</span>
+</div>
+<div class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded p-1">
+<span class="font-label text-[9px] text-outline">T</span>
+<span class="font-label text-xs font-bold text-on-surface">9.0</span>
+</div>
+<div class="flex flex-col bg-surface-container-lowest border border-outline-variant rounded p-1">
+<span class="font-label text-[9px] text-outline">F</span>
+<span class="font-label text-xs font-bold text-on-surface">9.0</span>
+</div>
+<div class="flex flex-col bg-surface-container-high border border-outline-variant rounded p-1 opacity-50">
+<span class="font-label text-[9px] text-outline">S</span>
+<span class="font-label text-xs text-outline">-</span>
+</div>
+<div class="flex flex-col bg-surface-container-high border border-outline-variant rounded p-1 opacity-50">
+<span class="font-label text-[9px] text-outline">S</span>
+<span class="font-label text-xs text-outline">-</span>
+</div>
+</div>
+</div>
+<!-- Project Allocation -->
+<div class="mb-5">
+<h4 class="font-label text-[10px] text-on-surface-variant uppercase tracking-wider mb-2">Project Allocation</h4>
+<div class="space-y-2">
+<div class="flex justify-between items-center text-sm border-b border-outline-variant pb-1">
+<span class="font-body text-on-surface truncate pr-2">PRJ-Alpha Substructure</span>
+<span class="font-label font-bold text-primary shrink-0">32.0h <span class="text-xs text-outline font-normal">(75%)</span></span>
+</div>
+<div class="flex justify-between items-center text-sm border-b border-outline-variant pb-1">
+<span class="font-body text-on-surface truncate pr-2">Facility Maintenance</span>
+<span class="font-label font-bold text-primary shrink-0">10.5h <span class="text-xs text-outline font-normal">(25%)</span></span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-3">
+<button class="flex-1 bg-surface-container-lowest border border-error text-error font-label text-xs font-bold py-2.5 rounded hover:bg-error-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="close">close</span> REJECT
+                        </button>
+<button class="flex-1 bg-primary text-on-primary font-label text-xs font-bold py-2.5 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="check">check</span> APPROVE
+                        </button>
+</div>
+</div>
+</div>
+<!-- Employee Row 2 (Collapsed) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden accordion-item">
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low transition-colors text-left accordion-trigger">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-container text-on-secondary-container flex items-center justify-center font-label font-bold text-sm shrink-0 border border-outline-variant">
+                            SJ
+                        </div>
+<div class="flex flex-col">
+<span class="font-body font-semibold text-on-surface leading-tight">Sarah Jenkins</span>
+<span class="font-label text-[10px] text-outline mt-0.5">ID: EMP-2210</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="font-label text-lg font-bold text-primary leading-none">38.0</span>
+<span class="font-label text-[10px] text-error mt-1 px-1.5 py-0.5 bg-error-container rounded border border-error/20">PENDING</span>
+</div>
+<span class="material-symbols-outlined text-outline chevron" data-icon="expand_more">expand_more</span>
+</div>
+</button>
+<div class="accordion-content bg-surface-container p-4 border-t border-outline-variant">
+<!-- Similar content structure would go here for real implementation -->
+<div class="flex gap-3 mt-4">
+<button class="flex-1 bg-surface-container-lowest border border-error text-error font-label text-xs font-bold py-2.5 rounded hover:bg-error-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">close</span> REJECT
+                        </button>
+<button class="flex-1 bg-primary text-on-primary font-label text-xs font-bold py-2.5 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span> APPROVE
+                        </button>
+</div>
+</div>
+</div>
+<!-- Employee Row 3 (Collapsed) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden accordion-item">
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-surface-container-low transition-colors text-left accordion-trigger">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label font-bold text-sm shrink-0 border border-outline-variant">
+                            TR
+                        </div>
+<div class="flex flex-col">
+<span class="font-body font-semibold text-on-surface leading-tight">Thomas Rivera</span>
+<span class="font-label text-[10px] text-outline mt-0.5">ID: EMP-5501</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="font-label text-lg font-bold text-primary leading-none">45.0</span>
+<span class="font-label text-[10px] text-error mt-1 px-1.5 py-0.5 bg-error-container rounded border border-error/20">PENDING</span>
+</div>
+<span class="material-symbols-outlined text-outline chevron" data-icon="expand_more">expand_more</span>
+</div>
+</button>
+<div class="accordion-content bg-surface-container p-4 border-t border-outline-variant">
+<!-- Content placeholder -->
+<div class="flex gap-3 mt-4">
+<button class="flex-1 bg-surface-container-lowest border border-error text-error font-label text-xs font-bold py-2.5 rounded hover:bg-error-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">close</span> REJECT
+                        </button>
+<button class="flex-1 bg-primary text-on-primary font-label text-xs font-bold py-2.5 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span> APPROVE
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (from JSON) -->
+<nav class="fixed bottom-0 w-full z-50 bg-white/85 backdrop-blur-md border-t border-outline-variant shadow-lg flex justify-around items-center pt-2 pb-safe w-full">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Projects</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="assignment">assignment</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Tasks</span>
+</button>
+<!-- Active State: Admin (Contextual logic dictates Admin handles timesheet approvals) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-3 py-1 hover:bg-surface-container-highest transition-colors active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="admin_panel_settings" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-[10px] uppercase tracking-wider font-bold">Admin</span>
+</button>
+</nav>
+<!-- Micro-interaction JS for Accordion -->
+<script>
+        document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const content = trigger.nextElementSibling;
+                const isExpanded = content.classList.contains('expanded');
+                
+                // Optional: Close others (accordion behavior)
+                // document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('expanded'));
+                
+                if (!isExpanded) {
+                    content.classList.add('expanded');
+                } else {
+                    content.classList.remove('expanded');
+                }
+            });
+        });
+    </script>
+</body></html>

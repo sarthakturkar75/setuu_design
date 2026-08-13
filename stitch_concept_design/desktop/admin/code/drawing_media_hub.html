@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>SETUU Enterprise - Drawing Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#aec9eb",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-container": "#efeee9",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-secondary-container": "#005a7f",
+                        "on-primary-container": "#6f89a9",
+                        "secondary-container": "#8ad1ff",
+                        "inverse-on-surface": "#f2f1ec",
+                        "secondary": "#00658d",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#0090c7",
+                        "on-primary-fixed": "#001d35",
+                        "surface-bright": "#faf9f4",
+                        "tertiary-fixed": "#c6e7ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "surface-tint": "#46607e",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "primary-fixed": "#d1e4ff",
+                        "outline": "#73777e",
+                        "tertiary": "#00080f",
+                        "outline-variant": "#c3c6ce",
+                        "primary-container": "#00213c",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-primary": "#ffffff",
+                        "background": "#faf9f4",
+                        "on-secondary": "#ffffff",
+                        "primary": "#000815",
+                        "surface": "#faf9f4",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "inverse-surface": "#30312e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e3e3de",
+                        "on-surface-variant": "#43474d",
+                        "primary-fixed-dim": "#aec9eb",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-background": "#1b1c19",
+                        "on-surface": "#1b1c19"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather"],
+                        "display": ["Merriweather"],
+                        "body": ["Inter"],
+                        "label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Hide scrollbars for a clean app feel */
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
+        .blueprint-bg {
+            background-color: #1B1C19;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-on-surface font-body text-surface-container-lowest antialiased overflow-hidden h-screen w-screen flex flex-col relative">
+<!-- Specialized Top App Bar for Drawing Hub -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#121A21]/85 border-b border-white/10 flex justify-between items-center px-4 h-16 shadow-lg">
+<button class="text-surface-container-lowest p-2 hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#41BEFD]">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="font-headline font-bold text-lg tracking-tight text-surface-container-lowest">Drawing Hub</h1>
+<span class="font-label text-[10px] text-surface-dim opacity-70 tracking-widest uppercase">REV-B.pdf</span>
+</div>
+<div class="flex gap-1">
+<button class="text-surface-container-lowest p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm">history</span>
+</button>
+<button class="text-surface-container-lowest p-2 hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas Area -->
+<main class="flex-1 w-full relative overflow-hidden touch-none blueprint-bg" id="canvas-container">
+<!-- Blueprint Image Layer -->
+<div class="absolute inset-0 w-[150%] h-[150%] bg-contain bg-center bg-no-repeat origin-top-left translate-x-[-10%] translate-y-[-5%] scale-110 opacity-90 mix-blend-screen" data-alt="A highly detailed, high-resolution architectural blueprint of a commercial HVAC system floor plan. The drawing features precise CAD linework, technical annotations, grid lines, and dimension markers in stark white layered over a very dark, inverse charcoal background. The aesthetic is extremely clinical, professional, and engineering-focused, representing a modern digital CAD viewer interface optimized for low light environments without any glare." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuKkAV-9CIkkTUVO0IRpawUj4IhELagLUWTsUqE7lkPwuhjN1Gf5Y88RzRcFho79H4CXlUcqDj3SjKn0MEJ5kV1O_6cUWED-SStsrzSPgUl9AAbm2OWlcVLI7sqoSsgjcwBmvwjvkyVBaxUzxP2LYDpfhOXKp7p_QUbbrbpvN2alndNVF3LYu_ix_1sPV8OO-PMvWSEXmSXrrRBPqWPQ9_PoNq9sWPG0JWuUK53KVPJ_N-YV_i1YQR')"></div>
+<!-- Floating Annotation / Comment -->
+<div class="absolute top-[42%] left-[35%] z-20 flex flex-col items-start pointer-events-auto transform -translate-x-1/2 -translate-y-1/2">
+<!-- Pin Head -->
+<div class="relative group cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-[#9333EA] border-2 border-on-surface shadow-2xl flex items-center justify-center text-white z-10 animate-pulse relative">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">priority_high</span>
+</div>
+<!-- Line connecting to comment -->
+<div class="absolute top-full left-1/2 w-0.5 h-6 bg-[#9333EA] -translate-x-1/2"></div>
+</div>
+<!-- Comment Card -->
+<div class="bg-surface-container-lowest text-on-surface rounded-xl shadow-2xl border border-outline-variant p-4 mt-6 w-64 text-sm font-body backdrop-blur-md relative left-1/2 -translate-x-1/2">
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-surface-container-lowest border-t border-l border-outline-variant rotate-45"></div>
+<div class="flex justify-between items-start mb-2 relative z-10">
+<span class="font-label font-bold text-[11px] text-primary-container bg-primary/5 px-2 py-0.5 rounded-sm">ID: ISS-842</span>
+<span class="font-label text-[10px] text-on-surface-variant">10:42 AM</span>
+</div>
+<p class="leading-relaxed text-xs text-on-surface-variant relative z-10 font-medium">Verify duct clearance against structural beam B-12. Current elevation shows probable conflict.</p>
+<div class="mt-3 flex gap-2 relative z-10">
+<button class="flex-1 bg-surface-container-high hover:bg-surface-variant text-on-surface-variant text-[11px] font-bold py-1.5 rounded-md transition-colors">Resolve</button>
+<button class="flex-1 bg-primary text-on-primary text-[11px] font-bold py-1.5 rounded-md transition-colors shadow-sm">Reply</button>
+</div>
+</div>
+</div>
+<!-- Vertical Glassmorphic Markup Toolbar (Left) -->
+<div class="absolute left-3 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2 p-1.5 rounded-2xl backdrop-blur-xl bg-[#121A21]/85 border border-[#41BEFD]/20 shadow-2xl">
+<button class="p-2.5 rounded-xl text-surface-dim hover:text-surface-container-lowest hover:bg-white/10 transition-colors" title="Pan Tool">
+<span class="material-symbols-outlined text-[22px]">pan_tool</span>
+</button>
+<button class="p-2.5 rounded-xl text-surface-dim hover:text-surface-container-lowest hover:bg-white/10 transition-colors" title="Select">
+<span class="material-symbols-outlined text-[22px]">arrow_selector_tool</span>
+</button>
+<!-- Active Tool (Pen) -->
+<button class="p-2.5 rounded-xl text-[#41BEFD] bg-[#41BEFD]/15 shadow-[0_0_15px_rgba(65,190,253,0.25)] transition-all border border-[#41BEFD]/40" title="Pen Tool">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">draw</span>
+</button>
+<button class="p-2.5 rounded-xl text-surface-dim hover:text-surface-container-lowest hover:bg-white/10 transition-colors" title="Shapes">
+<span class="material-symbols-outlined text-[22px]">category</span>
+</button>
+<div class="w-full h-px bg-white/10 my-1"></div>
+<button class="p-2.5 rounded-xl text-surface-dim hover:text-surface-container-lowest hover:bg-white/10 transition-colors" title="Add Comment">
+<span class="material-symbols-outlined text-[22px]">add_comment</span>
+</button>
+<button class="p-2.5 rounded-xl text-error/80 hover:text-error hover:bg-error/10 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[22px]">delete</span>
+</button>
+</div>
+<!-- Offline Sync Banner (Contextual feature from design system) -->
+<div class="absolute top-16 left-0 w-full bg-[#0284C7] text-white py-1.5 px-4 flex items-center justify-center gap-2 z-30 shadow-md">
+<span class="material-symbols-outlined text-[14px] animate-spin">sync</span>
+<span class="font-label text-[10px] font-bold tracking-widest uppercase">Syncing Markups...</span>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Rendered from JSON - Preserving light mode styling per generic component rules) -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-md border-t border-outline-variant bg-white/85 shadow-lg flex justify-around items-center pt-2 pb-6 px-2">
+<!-- Inactive: Dashboard -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="font-label text-[10px] mt-1 font-medium">Dashboard</span>
+</button>
+<!-- Active: Projects (Matches closest to a drawing viewer intent) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-1.5 shadow-sm active:scale-90 duration-200">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label text-[10px] mt-1 font-bold">Projects</span>
+</button>
+<!-- Inactive: Tasks -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl">
+<span class="material-symbols-outlined text-[24px]">assignment</span>
+<span class="font-label text-[10px] mt-1 font-medium">Tasks</span>
+</button>
+<!-- Inactive: Admin -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-highest transition-colors rounded-xl">
+<span class="material-symbols-outlined text-[24px]">admin_panel_settings</span>
+<span class="font-label text-[10px] mt-1 font-medium">Admin</span>
+</button>
+</nav>
+</body></html>

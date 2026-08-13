@@ -1,0 +1,467 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - PM Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#e3e3de",
+                      "on-surface": "#1b1c19",
+                      "on-primary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "outline-variant": "#c3c6ce",
+                      "background": "#faf9f4",
+                      "primary-fixed": "#d1e4ff",
+                      "surface-variant": "#e3e3de",
+                      "on-tertiary": "#ffffff",
+                      "primary": "#000815",
+                      "tertiary-fixed-dim": "#82cfff",
+                      "surface-container-high": "#e9e8e3",
+                      "on-secondary-fixed": "#001e2d",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#8ad1ff",
+                      "on-tertiary-fixed-variant": "#004c6b",
+                      "on-primary-container": "#6f89a9",
+                      "on-primary-fixed-variant": "#2e4965",
+                      "surface-container": "#efeee9",
+                      "tertiary-fixed": "#c6e7ff",
+                      "on-surface-variant": "#43474d",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#1b1c19",
+                      "primary-fixed-dim": "#aec9eb",
+                      "inverse-surface": "#30312e",
+                      "surface-dim": "#dbdad5",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#001d35",
+                      "outline": "#73777e",
+                      "secondary": "#00658d",
+                      "surface": "#faf9f4",
+                      "surface-tint": "#46607e",
+                      "surface-bright": "#faf9f4",
+                      "primary-container": "#00213c",
+                      "on-tertiary-fixed": "#001e2d",
+                      "inverse-primary": "#aec9eb",
+                      "tertiary": "#00080f",
+                      "surface-container-low": "#f5f4ef",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#002233",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-container": "#0090c7",
+                      "secondary-fixed-dim": "#88cffc",
+                      "on-secondary-fixed-variant": "#004c6b",
+                      "on-secondary-container": "#005a7f",
+                      "secondary-fixed": "#c6e7ff",
+                      "inverse-on-surface": "#f2f1ec",
+                      
+                      // Semantic Workflow System Colors (Light Mode)
+                      "semantic-neutral": "#64748B",
+                      "semantic-active": "#0284C7",
+                      "semantic-warning": "#D97706",
+                      "semantic-success": "#16A34A",
+                      "semantic-finalization": "#0D9488",
+                      "semantic-verification": "#2563EB",
+                      "semantic-attention": "#9333EA",
+                      "semantic-emergency": "#DC2626"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "sm": "0.25rem",
+                      "md": "0.75rem",
+                      "lg": "1rem",
+                      "xl": "1.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                "unit": "4px",
+                "gutter-md": "24px",
+                "margin-mobile": "16px",
+                "margin-tablet": "24px",
+                "margin-desktop": "32px",
+                "sidebar-width": "280px",
+                "rail-width": "72px"
+              },
+              "fontFamily": {
+                      "headline": ["Merriweather", "serif"],
+                      "display": ["Merriweather", "serif"],
+                      "body": ["Inter", "sans-serif"],
+                      "label": ["JetBrains Mono", "monospace"]
+              },
+              "fontSize": {
+                  "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                  "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+                  "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                  "headline-md": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                  "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                  "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                  "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                  "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                  "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.05em", fontWeight: "500" }]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-overlay { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid theme('colors.outline-variant'); }
+        .card-level-1 { background-color: theme('colors.surface-container-lowest'); border-radius: theme('borderRadius.DEFAULT'); border: 1px solid #E0E0E0; }
+        .card-level-1:hover { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .masonry-grid { column-count: 1; column-gap: theme('spacing.gutter-md'); }
+        @media (min-width: 768px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        .masonry-item { break-inside: avoid; margin-bottom: theme('spacing.gutter-md'); }
+    </style>
+</head>
+<body class="font-body antialiased flex h-screen overflow-hidden">
+<!-- Navigation Drawer (SideNav) - Hidden on mobile, flex on desktop -->
+<aside class="w-sidebar-width h-full bg-primary-container flex-shrink-0 flex flex-col border-r border-outline-variant/10 shadow-xl z-40">
+<div class="h-20 px-6 flex items-center border-b border-on-primary-container/20">
+<div class="flex items-center gap-3">
+<img alt="Setuu Enterprise Logo" class="w-10 h-10 rounded-md object-contain bg-surface-container-lowest" src="https://lh3.googleusercontent.com/aida/AP1WRLvf2UnxQ99O3n3KzcQzx1a93WtRA-nLN209AiWzpl00FpjWloCC1aRRCUSLlFAnNTkt9xjXFFA8tKEOfaHNyxVmW4yRJwFApS3CEhoaqBWEC9upVq44WzrgAW128Duc8XtUFU-3v5B-zXAwdmbQw90acwCUC1nEJEkZBigc82M_hV-WSov8eOqN0CquoDsmN5Z7JQHQZOe1wefOGHujAvFUxzaN5u-p8rbqC8SkT-FNj--tSktX5VYZnZY">
+<span class="font-headline text-headline-sm text-on-primary tracking-tight">Setuu Enterprise</span>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1 custom-scrollbar">
+<div class="mb-4">
+<h3 class="px-3 mb-2 font-headline text-[11px] uppercase tracking-wider text-on-primary-container/70">Overview</h3>
+<ul class="flex flex-col gap-1">
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface/10 text-on-primary font-medium hover:bg-surface/15 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-sm">Home / Global Dashboard</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-4">
+<h3 class="px-3 mb-2 font-headline text-[11px] uppercase tracking-wider text-on-primary-container/70">Operations</h3>
+<ul class="flex flex-col gap-1">
+<li class="relative">
+<button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">architecture</span>
+<span class="text-sm font-medium">Active Projects</span>
+</div>
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:rotate-180">expand_more</span>
+</button>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-sm font-medium">Milestones &amp; Tasks</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">perm_media</span>
+<span class="text-sm font-medium">Drawings &amp; Media Hub</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-medium">Material Tracking</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-sm font-medium">Issues &amp; Blockers</span>
+<span class="ml-auto bg-error text-on-error text-[10px] font-label px-2 py-0.5 rounded-full">3</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-4">
+<h3 class="px-3 mb-2 font-headline text-[11px] uppercase tracking-wider text-on-primary-container/70">Client &amp; Admin</h3>
+<ul class="flex flex-col gap-1">
+<li class="">
+<div class="flex items-center justify-between px-3 py-2.5 rounded-lg opacity-40 cursor-not-allowed">
+<div class="flex items-center gap-3 text-on-primary-container">
+<span class="material-symbols-outlined">verified</span>
+<span class="text-sm font-medium">Handovers &amp; Approvals</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-primary-container">lock</span>
+</div>
+</li>
+<li class="">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-primary-container hover:bg-surface/5 hover:text-inverse-primary transition-colors" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="text-sm font-medium">Support Tickets</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<div class="p-4 border-t border-on-primary-container/20">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-tertiary-container border border-on-primary-container/10">
+<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-on-secondary font-headline text-sm font-bold flex-shrink-0">PM</div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-medium text-on-primary truncate">Project Manager</span>
+<span class="text-xs font-label text-on-primary-container truncate">Lead Engineer Workspace</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full relative overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-white/85 dark:bg-[#121a21]/85 backdrop-blur-md border-b border-outline-variant/20 dark:border-outline/20 shadow-sm fixed top-0 w-full md:w-[calc(100%-theme(spacing.sidebar-width))] z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-4 flex-1">
+<button class="text-primary dark:text-secondary-fixed hover:bg-surface-container-high/50 transition-colors p-2 rounded-full active:scale-95 transition-transform hidden lg:block">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<nav aria-label="Breadcrumb" class="hidden md:flex items-center gap-2 text-sm text-on-surface-variant font-medium">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold">Project Dashboard</span>
+</nav>
+</div>
+<div class="flex-1 flex justify-center max-w-md hidden sm:flex">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-outline-variant rounded-full leading-5 bg-surface-container-low text-on-surface placeholder-outline focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-colors duration-200" placeholder="Search milestones, materials, or files..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4 flex-1 justify-end">
+<div class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/50">
+<span class="material-symbols-outlined text-[18px] text-[#0284C7]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span class="font-label text-label-sm text-[#0284C7]">SYNCED</span>
+</div>
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high/50 rounded-full transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 block h-2.5 w-2.5 rounded-full bg-error ring-2 ring-surface"></span>
+</button>
+<button class="flex items-center gap-2 hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<div class="h-8 w-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant flex items-center justify-center">
+<img class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDfqGb5VolTeANC-oL_FSqEStyXz7KW9ApMB6D5miaBVLiDzcCo3gkJhh5Ds60s9g1FdTZauUhvGXxTrwpTwW1to60oDGw-nbPRqiLQkDHAz7hPGqFeKQ5oHtFIGrrRrrigSOkN2d8SXwdrWmn810rHVqhl8FHsOmyshPODzky4oYlY2PwNLNRlK-6_Kvs4-0-O86DP94E81qpmzBpYuo8qZ915GeVTIRDjix-ghDU7KwITWVRsxNg">
+</div>
+</button>
+</div>
+</header>
+<!-- Scrollable Content Canvas -->
+<div class="flex-1 overflow-y-auto pt-20 pb-24 md:pb-8 px-margin-mobile md:px-margin-desktop bg-surface mt-16 md:mt-0">
+<div class="max-w-[1600px] mx-auto w-full flex flex-col gap-gutter-md">
+<!-- Page Header -->
+<div class="flex flex-col gap-1">
+<h2 class="font-headline text-headline-lg text-on-surface">Command Center</h2>
+<p class="font-body text-body-lg text-on-surface-variant">Overview of critical path items and project health.</p>
+</div>
+<!-- Stagnation Alert Banner -->
+<div class="w-full flex items-center gap-3 p-4 rounded-md border-l-4 border-semantic-warning bg-semantic-warning/10 shadow-sm">
+<span class="material-symbols-outlined text-semantic-warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-body text-body-md font-medium text-on-surface">Warning: 3 Projects lack progress updates for 3+ days.</span>
+</div>
+<!-- KPI Widgets (Top Row Level 1 Cards) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-md">
+<div class="card-level-1 p-6 flex flex-col gap-2 transition-shadow">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body text-body-md font-semibold uppercase tracking-wider">Pending Milestones</span>
+<span class="material-symbols-outlined text-semantic-attention">flag</span>
+</div>
+<div class="font-headline text-display-lg text-on-surface">12</div>
+</div>
+<div class="card-level-1 p-6 flex flex-col gap-2 transition-shadow">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body text-body-md font-semibold uppercase tracking-wider">Overdue Tasks</span>
+<span class="material-symbols-outlined text-semantic-emergency">assignment_late</span>
+</div>
+<div class="font-headline text-display-lg text-on-surface">4</div>
+</div>
+<div class="card-level-1 p-6 flex flex-col gap-2 transition-shadow">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-body text-body-md font-semibold uppercase tracking-wider">Material Deliveries</span>
+<span class="material-symbols-outlined text-semantic-active">local_shipping</span>
+</div>
+<div class="font-headline text-display-lg text-on-surface">8</div>
+</div>
+</div>
+<!-- Project Grid (Masonry) -->
+<div class="mt-4">
+<h3 class="font-headline text-headline-md text-on-surface mb-6 border-b border-outline-variant pb-2">Active Projects</h3>
+<div class="masonry-grid">
+<!-- Project Card 1: In Progress -->
+<article class="masonry-item card-level-1 flex flex-col overflow-hidden group cursor-pointer transition-all">
+<div class="h-40 w-full relative overflow-hidden bg-surface-container-high">
+<img alt="Alpha Site Construction" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A modern industrial construction site during early morning light. Steel girders are being lifted by a crane against a clear sky. The image has a clean, high-contrast aesthetic fitting a premium B2B software dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvcz1XAvYIb4GyjxVvP9K5qFCsFlpqGQ8_2TxKLZvIwd3tVqixcEsdz7JMqwrV8YF8RnsRNpyaIeOTLmOzDvnJhzrdhE6RnR0PReFWzNEmscW3owLWNAneCamsWBzzOVANltDmylvz2fMNEeZ-0AMdTH58Y9FxEtBqR71fHgLsI211JooaoU8VNsKLftIXCecRZvcHPkv95FummKpp95ZckjN9p2fqzwZO87kqNI9b49Wt8ecbUb5i">
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-surface/90 backdrop-blur-sm text-semantic-active border border-semantic-active/20 px-2 py-1 rounded font-label text-label-md flex items-center gap-1 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-semantic-active"></span> In Progress
+                                    </span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<div>
+<h4 class="font-headline text-headline-sm text-primary group-hover:text-secondary transition-colors">Project Alpha - Substation B</h4>
+<p class="font-body text-body-sm text-on-surface-variant mt-1 line-clamp-2">Installation of secondary transformers and grounding grid expansion.</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center font-label text-label-sm text-on-surface-variant">
+<span class="">Progress</span>
+<span class="">65%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1">
+<div class="bg-semantic-active h-1 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant/30 mt-auto">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span class="font-label text-label-sm">tgt: 2024-10-15</span>
+</div>
+<div class="flex -space-x-2">
+<img alt="Worker" class="w-6 h-6 rounded-full border border-surface-container-lowest" data-alt="A small avatar of a male construction worker wearing a high-vis vest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXqg8NI2beZkS3ViXDMMjwo0B1KnUMRwSn1dNLjw2WAGr_TG2etNH8J-UkZuNTQiGEn5fByeEWlHaGfmxKCCLwZPesBpgkab-1e4xIA8ZkHgyMViYMBIVePPxWc8B8zQYJYcFaOhsxCRohXU4ND6JuS8aGPaYFmvyvkgUp06eec_PjO2DxqvviHKCr4QDNoaLJW3lJ4vTBZuovaUfoK8krJXxhAfy4NBR-jWNoi4SfQ5kzqKjGIsVc">
+<img alt="Worker" class="w-6 h-6 rounded-full border border-surface-container-lowest" data-alt="A small avatar of a female engineer." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPDLaRRH3sxmE7FESeJ1rZjRQxRdhZIHvzcsTJycVZ4ihFFZEpaQU4MQm1hjq2fWxHP6LDJvMQe2DKQqOZKd-r1i9rcZbvuKjaMHFTsAEw-dD1feHIg3PzWjPB-D_SIPVsgc2BROUy3NHdofYBZ6YQz0ugprFS1obSWRQsg0Vyj2ECwNtP1Z1t5tGtMrn27VzCO1fiVqXbGOhAvCo5qZPqTVISaYrRhwzkIvSWFObpmji-iOOyoMid">
+</div>
+</div>
+</div>
+</article>
+<!-- Project Card 2: On Hold -->
+<article class="masonry-item card-level-1 flex flex-col overflow-hidden group cursor-pointer transition-all">
+<div class="h-32 w-full relative overflow-hidden bg-surface-container-high">
+<img alt="Delta Office Fitout" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 grayscale hover:grayscale-0" data-alt="A wide shot of a commercial building interior under renovation, showing exposed HVAC ducts and framing. The lighting is bright and flat, suitable for a corporate project management thumbnail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI-n6O2P9tnDA3LjXOjFwTRRtsg2K4gJbJHB-bf7tTVUgNRfYmTzQg2g_L8Kx6AdtTPDmur9qVLbOVyoGvVHHE2qFlvLj_KDwpt-qByOReOqzq-gwzlwV92S1wOhbEgRI45TQft3YRnbXqEgY32USbiIWfZ-3Ms8MP-xyt9r4lnC9HuhA1DndBf05m9t8xs8DVE70-5ersTa51JPhB71Wc7kYG-KQSKBarBRVvHzgBzsk_odngfZHm">
+<div class="absolute inset-0 bg-semantic-warning/10 mix-blend-multiply"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-surface/90 backdrop-blur-sm text-semantic-warning border border-semantic-warning/20 px-2 py-1 rounded font-label text-label-md flex items-center gap-1 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-semantic-warning"></span> On Hold
+                                    </span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<div>
+<h4 class="font-headline text-headline-sm text-primary group-hover:text-secondary transition-colors">Delta Commercial Fitout</h4>
+<p class="font-body text-body-sm text-on-surface-variant mt-1 line-clamp-2">Awaiting municipal permit approval for HVAC modifications.</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center font-label text-label-sm text-on-surface-variant">
+<span class="">Progress</span>
+<span class="">32%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1">
+<div class="bg-semantic-neutral h-1 rounded-full" style="width: 32%"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant/30 mt-auto">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span class="font-label text-label-sm text-semantic-warning line-through">tgt: 2024-09-01</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Project Card 3: In Progress (Warning) -->
+<article class="masonry-item card-level-1 flex flex-col overflow-hidden group cursor-pointer transition-all border-l-4 border-l-semantic-attention">
+<div class="h-48 w-full relative overflow-hidden bg-surface-container-high">
+<img alt="Highway Expansion" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="An aerial view of a large-scale highway infrastructure project showing earthmoving equipment and concrete forms. Bright daylight, high resolution, industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt2aUXMZ60qGE5_MTNRqTYpvpmXYfHcYw-8d1AmTauEGmh3uCeQvUJRlxuJa8oI5N00-jXJ-S3l6fbc9IaLH1FKdPV_qoATWEJfQ8xsH9GJ846KOwxHk4nTGDscmata_i9k1FRryQR_MKDqLlPRwwdCt5TbMw1gc2KUNM_JPw5Bd2d33dGffcCB52P92qJatalGBuupWOL2rsYuACBdGfXzFJyyFOX_qyOGNYcek7WKEiG9h1lE_vG">
+<div class="absolute top-3 left-3 flex flex-col gap-2">
+<span class="bg-surface/90 backdrop-blur-sm text-semantic-active border border-semantic-active/20 px-2 py-1 rounded font-label text-label-md flex items-center gap-1 shadow-sm w-fit">
+<span class="w-2 h-2 rounded-full bg-semantic-active"></span> In Progress
+                                    </span>
+<span class="bg-surface/90 backdrop-blur-sm text-semantic-attention border border-semantic-attention/20 px-2 py-1 rounded font-label text-label-md flex items-center gap-1 shadow-sm w-fit">
+<span class="material-symbols-outlined text-[14px]">flag</span> Needs Review
+                                    </span>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-4">
+<div>
+<h4 class="font-headline text-headline-sm text-primary group-hover:text-secondary transition-colors">Highway 401 Expansion - Phase 2</h4>
+<p class="font-body text-body-sm text-on-surface-variant mt-1 line-clamp-2">Earthworks and grading for northbound lanes. Client requested change order review.</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center font-label text-label-sm text-on-surface-variant">
+<span class="">Progress</span>
+<span class="">88%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1">
+<div class="bg-semantic-active h-1 rounded-full" style="width: 88%"></div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant/30 mt-auto">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span class="font-label text-label-sm">tgt: 2024-11-30</span>
+</div>
+<span class="font-label text-label-sm text-semantic-attention">2 Action Items</span>
+</div>
+</div>
+</article>
+<!-- Skeleton Loader Card -->
+<article class="masonry-item card-level-1 flex flex-col overflow-hidden animate-pulse">
+<div class="h-40 w-full bg-surface-container-high"></div>
+<div class="p-5 flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<div class="h-6 bg-surface-container-high rounded w-3/4"></div>
+<div class="h-4 bg-surface-container-high rounded w-full mt-1"></div>
+<div class="h-4 bg-surface-container-high rounded w-5/6"></div>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex justify-between">
+<div class="h-3 bg-surface-container-high rounded w-16"></div>
+<div class="h-3 bg-surface-container-high rounded w-8"></div>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1"></div>
+</div>
+<div class="flex justify-between items-center pt-3 border-t border-outline-variant/30 mt-auto">
+<div class="h-4 bg-surface-container-high rounded w-24"></div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-surface-container-high border border-surface-container-lowest"></div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high border border-surface-container-lowest"></div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl bg-white/85 backdrop-blur-md border-t border-outline-variant/30 shadow-lg flex justify-around items-center h-20 pb-safe px-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-label text-label-sm mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">perm_media</span>
+<span class="font-label text-label-sm mt-1">Media</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="font-label text-label-sm mt-1">Upload</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label text-label-sm mt-1">Tasks</span>
+</a>
+<!-- Assuming Dashboard context might align somewhat with Admin oversight for this specific layout, though loosely -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container hover:bg-surface-container-highest/40 active:scale-90 transition-all duration-150 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="font-label text-label-sm mt-1 font-bold">Admin</span>
+</a>
+</nav>
+
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: rgba(111, 137, 169, 0.3);
+      border-radius: 4px;
+    }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(111, 137, 169, 0.6);
+    }
+</style></body></html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Support Ticket Triage - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Merriweather:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "primary": "#000815",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#46607e",
+                        "on-primary-container": "#6f89a9",
+                        "surface-container": "#efeee9",
+                        "outline": "#73777e",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e3e3de",
+                        "primary-fixed": "#d1e4ff",
+                        "on-secondary-fixed": "#001e2d",
+                        "secondary-container": "#8ad1ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container-high": "#e9e8e3",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-bright": "#faf9f4",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary": "#00658d",
+                        "on-background": "#1b1c19",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#002233",
+                        "background": "#faf9f4",
+                        "surface-dim": "#dbdad5",
+                        "inverse-surface": "#30312e",
+                        "on-surface": "#1b1c19",
+                        "surface": "#faf9f4",
+                        "on-secondary-container": "#005a7f",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#aec9eb",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#00213c",
+                        "on-primary-fixed": "#001d35",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-surface-variant": "#43474d",
+                        "tertiary": "#00080f",
+                        "on-tertiary-fixed": "#001e2d",
+                        "semantic-critical": "#DC2626",
+                        "semantic-high": "#D97706",
+                        "semantic-medium": "#0284C7",
+                        "semantic-low": "#64748B"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[280px] bg-tertiary-container text-secondary-container flex flex-col py-8 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<img class="w-8 h-8 rounded-sm object-cover bg-tertiary" data-alt="A small, stylized logo icon representing an industrial structure or gear, clean and precise, in a monochrome or dual-tone metallic color scheme, perfect for a high-end enterprise software application interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqCq9HtW2cQNIqH3iixkhB0BWR-YYDmA8XGTX6GMKVXSu-4-TWRDf_OS91iyr57UJKxwIvTodksRQ367-e2EInubYSHtmtNro5LUhxL_0gBmBO2h32gsMppAgeUAPSDNrHaPj7RVWGS6NWhQs7ZGwfJ00rkCa8iHeRVyxr0KzDGTcVvTBFAKgvq5ViWNo-tKKUzTpxbPP1yFAv0ShYxgVbGc7fdKYBcFHS9Ga9PEp122domhIVB-i-">
+<div>
+<h1 class="text-headline-sm font-headline font-bold text-on-tertiary-fixed">Setuu Enterprise</h1>
+<p class="font-label text-xs text-on-tertiary-fixed-variant opacity-80">Industrial Project Management</p>
+</div>
+</div>
+<div class="px-6 mb-6">
+<button class="w-full bg-secondary text-on-secondary rounded-DEFAULT py-2 px-4 flex justify-center items-center gap-2 hover:bg-secondary-container hover:text-on-secondary-container transition-colors duration-200">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="font-body text-sm font-medium">New Project</span>
+</button>
+</div>
+<ul class="flex-1 overflow-y-auto space-y-1">
+<li class="">
+<a class="flex items-center gap-3 py-3 px-5 text-on-tertiary-fixed-variant hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-sm">Dashboard</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 py-3 px-5 text-on-tertiary-fixed-variant hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-body text-sm">Projects</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 py-3 px-5 text-on-tertiary-fixed-variant hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-body text-sm">Drawings</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 py-3 px-5 text-on-tertiary-fixed-variant hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body text-sm">Inventory</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 py-3 px-5 text-on-tertiary-fixed-variant hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">handshake</span>
+<span class="font-body text-sm">Vendors</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-3 py-3 px-5 text-on-tertiary-fixed-variant hover:bg-tertiary hover:text-secondary-container transition-colors duration-200 ease-in-out" href="#"><span class="material-symbols-outlined">settings</span><span class="font-body text-sm">Settings</span></a>
+</li><li class="">
+<a class="flex items-center gap-3 py-3 pl-4 border-l-4 border-secondary-container text-secondary-container font-bold bg-tertiary/50 transition-colors duration-200 ease-in-out" href="#"><span class="material-symbols-outlined">confirmation_number</span><span class="font-body text-sm">Raise Ticket</span></a>
+</li>
+</ul>
+<div class="mt-auto px-5 border-t border-tertiary pt-4 space-y-1">
+<a class="flex items-center gap-3 py-2 text-on-tertiary-fixed-variant hover:text-secondary-container text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-body">Support</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-on-tertiary-fixed-variant hover:text-secondary-container text-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="font-body">System Status</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="ml-[280px] w-[calc(100%-280px)] h-full flex flex-col bg-background">
+<!-- TopNavBar -->
+<header class="glassmorphic-topbar sticky top-0 z-50 w-full h-16 shadow-sm border-b border-outline-variant flex items-center justify-between px-6 shrink-0 transition-all duration-300 bg-white/85 backdrop-blur-md">
+  <div class="flex items-center gap-8 h-full">
+    <a class="text-xl font-bold text-primary tracking-tight font-headline shrink-0 hover:opacity-80 transition-opacity" href="#">
+      Setuu Enterprise
+    </a>
+    <nav class="hidden md:flex items-center h-full gap-1">
+      <a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" href="#">Home</a>
+      <div class="relative h-full flex items-center">
+        <a class="px-3 py-2 text-sm font-semibold text-primary transition-colors" href="#">Projects</a>
+        <div class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-t-full"></div>
+      </div>
+      <a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" href="#">Alpha</a>
+      <a class="px-3 py-2 text-sm font-medium text-on-surface-variant hover:text-primary transition-colors rounded-lg hover:bg-surface-container" href="#">Materials</a>
+    </nav>
+  </div>
+  <div class="flex-1 max-w-xl px-6 hidden lg:block">
+    <div class="relative group">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <span class="material-symbols-outlined text-outline text-[20px] group-focus-within:text-primary transition-colors">search</span>
+      </div>
+      <input autocomplete="off" class="block w-full pl-10 pr-12 py-2 border border-outline-variant rounded-full leading-5 bg-surface-container-low placeholder-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm transition-all shadow-sm" placeholder="Search..." type="text">
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        <span class="text-xs text-outline font-label border border-outline-variant rounded px-1.5 py-0.5 bg-surface-container-low">⌘K</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-4 shrink-0">
+    <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary text-on-primary rounded-full text-xs font-medium shadow-sm">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      Syncing
+    </div>
+    <button class="hidden sm:inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-full text-on-error-container bg-error-container hover:bg-error hover:text-on-error transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-error shadow-sm">
+      Emergency
+    </button>
+    <div class="w-px h-6 bg-outline-variant hidden sm:block mx-1"></div>
+    <div class="flex items-center gap-1">
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary relative">
+        <span class="material-symbols-outlined text-[24px]">notifications</span>
+        <span class="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full bg-error ring-2 ring-white"></span>
+      </button>
+      <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary">
+        <span class="material-symbols-outlined text-[24px]">apps</span>
+      </button>
+    </div>
+    <button class="flex items-center focus:outline-none ml-2">
+      <img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover hover:border-primary transition-colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvXrcc52wppQgIC7oOb4sS8zpfIqKtAv2gaPi5IVAva62VTGv0ZwqASsD3lq-z7H2aI0pwu4inw0AGW4fHyTpr6nWJDsigVdyptHkCvFPOpT-P3b4Ppg1t9YXRg2oIvFkA4mj3prk1eUbWmZbvY3pcL3AA6IIRl5GOuKKUtv4BgcXkwBWZjxFhKzK5G4eDkUd0PqV5KqFfikbR0Us6KaqLmcGflKxdJkaVMlqUrb2dTuNjpGZ5cHW8">
+    </button>
+  </div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 overflow-x-auto overflow-y-hidden p-8 flex flex-col">
+<div class="mb-6 flex justify-between items-end">
+<div>
+<h2 class="font-headline text-headline-md text-primary mb-1">Support Ticket Triage</h2>
+<p class="font-body text-sm text-on-surface-variant">Manage organizational escalations and user issues.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-DEFAULT text-sm font-body text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-DEFAULT text-sm font-body hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New Ticket
+                    </button>
+</div>
+</div>
+<!-- Kanban Board -->
+<div class="flex-1 flex gap-6 min-w-max pb-4">
+<!-- Open Column -->
+<div class="w-[380px] flex flex-col bg-surface-container-low rounded-lg border border-surface-variant p-3">
+<div class="flex items-center justify-between px-2 pb-3 border-b border-surface-variant mb-3">
+<h3 class="font-body font-semibold text-sm text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-semantic-high"></span>
+                            Open
+                        </h3>
+<span class="font-label text-xs bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full">3</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+<!-- Ticket Card 1 (Critical) -->
+<div class="bg-surface border border-outline-variant rounded-DEFAULT p-4 hover:shadow-sm transition-shadow cursor-pointer border-l-4 border-l-semantic-critical">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] bg-error-container text-on-error-container px-2 py-1 rounded-sm uppercase tracking-wider">Critical</span>
+<span class="font-label text-[11px] text-on-surface-variant">ID: #T-8892</span>
+</div>
+<h4 class="font-body font-semibold text-sm text-primary mb-2">Cloud Sync Failure on Site B</h4>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2 mb-3">Offline sync exponential backoff triggered repeatedly for field team on Site B. Data not merging.</p>
+<div class="flex justify-between items-center border-t border-surface-variant pt-2 mt-2">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">JD</div>
+<span class="font-label text-[11px] text-outline">usr_942a</span>
+</div>
+<span class="font-label text-[11px] text-on-surface-variant">2023-10-27T08:14Z</span>
+</div>
+</div>
+<!-- Ticket Card 2 (High) -->
+<div class="bg-surface border border-outline-variant rounded-DEFAULT p-4 hover:shadow-sm transition-shadow cursor-pointer border-l-4 border-l-semantic-high">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] bg-orange-100 text-semantic-high px-2 py-1 rounded-sm uppercase tracking-wider">High</span>
+<span class="font-label text-[11px] text-on-surface-variant">ID: #T-8890</span>
+</div>
+<h4 class="font-body font-semibold text-sm text-primary mb-2">Blueprint PDF Rendering Error</h4>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2 mb-3">Large structural schematic (PDF) is failing to render in the Drawing Hub view on iPad Pros.</p>
+<div class="flex justify-between items-center border-t border-surface-variant pt-2 mt-2">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">AL</div>
+<span class="font-label text-[11px] text-outline">usr_118x</span>
+</div>
+<span class="font-label text-[11px] text-on-surface-variant">2023-10-27T07:45Z</span>
+</div>
+</div>
+</div>
+</div>
+<!-- In Progress Column -->
+<div class="w-[380px] flex flex-col bg-surface-container-low rounded-lg border border-surface-variant p-3">
+<div class="flex items-center justify-between px-2 pb-3 border-b border-surface-variant mb-3">
+<h3 class="font-body font-semibold text-sm text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-semantic-medium"></span>
+                            In Progress
+                        </h3>
+<span class="font-label text-xs bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full">1</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+<!-- Ticket Card 3 (Medium) -->
+<div class="bg-surface border border-outline-variant rounded-DEFAULT p-4 hover:shadow-sm transition-shadow cursor-pointer border-l-4 border-l-semantic-medium">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] bg-blue-100 text-semantic-medium px-2 py-1 rounded-sm uppercase tracking-wider">Medium</span>
+<span class="font-label text-[11px] text-on-surface-variant">ID: #T-8875</span>
+</div>
+<h4 class="font-body font-semibold text-sm text-primary mb-2">Vendor Portal Upload Timeout</h4>
+<p class="font-body text-xs text-on-surface-variant line-clamp-2 mb-3">Subcontractor reporting timeouts when batch uploading delivery proof images over 50MB.</p>
+<div class="flex justify-between items-center border-t border-surface-variant pt-2 mt-2">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">MK</div>
+<span class="font-label text-[11px] text-outline">vnd_442p</span>
+</div>
+<span class="font-label text-[11px] text-on-surface-variant">2023-10-26T14:20Z</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Resolved Column -->
+<div class="w-[380px] flex flex-col bg-surface-container-low rounded-lg border border-surface-variant p-3 opacity-80">
+<div class="flex items-center justify-between px-2 pb-3 border-b border-surface-variant mb-3">
+<h3 class="font-body font-semibold text-sm text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            Resolved
+                        </h3>
+<span class="font-label text-xs bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full">2</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pr-2 custom-scrollbar">
+<!-- Ticket Card 4 (Low) -->
+<div class="bg-surface border border-outline-variant rounded-DEFAULT p-4 hover:shadow-sm transition-shadow cursor-pointer border-l-4 border-l-semantic-low">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label text-[10px] bg-slate-100 text-semantic-low px-2 py-1 rounded-sm uppercase tracking-wider">Low</span>
+<span class="font-label text-[11px] text-on-surface-variant">ID: #T-8860</span>
+</div>
+<h4 class="font-body font-semibold text-sm text-primary mb-2 line-through text-outline">Update Client Dashboard Logo</h4>
+<p class="font-body text-xs text-outline line-clamp-2 mb-3">Request to update the placeholder logo on the client presentation dashboard to the new brand asset.</p>
+<div class="flex justify-between items-center border-t border-surface-variant pt-2 mt-2">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-outline">ST</div>
+<span class="font-label text-[11px] text-outline">adm_001a</span>
+</div>
+<span class="font-label text-[11px] text-outline">2023-10-25T11:05Z</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<style>
+        /* Custom Scrollbar for columns to keep UI clean */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c3c6ce; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #73777e; 
+        }
+    </style>
+
+
+</body></html>

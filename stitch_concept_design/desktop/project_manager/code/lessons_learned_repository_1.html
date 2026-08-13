@@ -1,0 +1,281 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Lessons Learned - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#88cffc",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-tertiary-container": "#0090c7",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container": "#efeee9",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "tertiary": "#00080f",
+                        "error": "#ba1a1a",
+                        "primary": "#000815",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary-container": "#8ad1ff",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "inverse-primary": "#aec9eb",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#001e2d",
+                        "primary-fixed-dim": "#aec9eb",
+                        "on-primary-container": "#6f89a9",
+                        "surface-container-low": "#f5f4ef",
+                        "tertiary-container": "#002233",
+                        "primary-container": "#00213c",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e3e3de",
+                        "secondary": "#00658d",
+                        "surface-variant": "#e3e3de",
+                        "surface-container-high": "#e9e8e3",
+                        "on-surface": "#1b1c19",
+                        "surface-dim": "#dbdad5",
+                        "surface": "#faf9f4",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#30312e",
+                        "on-secondary-fixed": "#001e2d",
+                        "surface-bright": "#faf9f4",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "primary-fixed": "#d1e4ff",
+                        "on-background": "#1b1c19",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#c6e7ff",
+                        "on-surface-variant": "#43474d",
+                        "on-secondary": "#ffffff",
+                        "background": "#faf9f4",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#46607e",
+                        "outline": "#73777e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 bg-primary-container text-on-primary-container border-r border-outline-variant shadow-md flex flex-col justify-between py-6 z-50">
+<div>
+<!-- Header -->
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary font-bold">domain</span>
+</div>
+<div>
+<h2 class="text-2xl font-headline font-bold text-on-primary">Setuu Admin</h2>
+<p class="text-label-md font-label text-on-primary-container/80">Enterprise Control</p>
+</div>
+</div>
+</div>
+<!-- Main Tabs -->
+<div class="flex flex-col gap-1">
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body text-body-md font-medium">Dashboard</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="font-body text-body-md font-medium">Milestones</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body text-body-md font-medium">Materials</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">engineering</span>
+<span class="font-body text-body-md font-medium">Resources</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-body text-body-md font-medium">Issues</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="font-body text-body-md font-medium">Handovers</span>
+</a>
+<a class="bg-secondary-container text-on-secondary-container rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 scale-95 duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">contact_support</span>
+<span class="font-body text-body-md font-bold">Support</span>
+</a>
+</div>
+</div>
+<!-- Footer Tabs -->
+<div class="flex flex-col gap-1 border-t border-on-primary-container/10 pt-4 px-2">
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg px-4 py-2 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="font-body text-body-md">Settings</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg px-4 py-2 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-sm">fact_check</span>
+<span class="font-body text-body-md">Compliance</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container rounded-lg px-4 py-2 flex items-center gap-3 transition-colors hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined text-sm">list_alt</span>
+<span class="font-body text-body-md">Logs</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-[280px] flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 right-0 w-full z-40 bg-surface/85 backdrop-blur-md shadow-sm flex justify-between items-center px-8 py-3 transition-all duration-300">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-headline font-black text-primary">Setuu Enterprise</h1>
+<!-- Breadcrumbs / Navigation Structure -->
+<nav class="hidden md:flex items-center gap-2 text-body-md font-body text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Alpha Tower</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1">Lessons Learned</span>
+</nav>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 rounded-full p-2 transition-colors active:scale-95">
+<span class="material-symbols-outlined">sync</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 rounded-full p-2 transition-colors active:scale-95 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 rounded-full p-2 transition-colors active:scale-95">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-1 p-8">
+<div class="max-w-[1600px] mx-auto">
+<!-- Page Header -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-headline font-bold text-on-surface mb-2">Lessons Learned Repository</h2>
+<p class="text-body-lg text-on-surface-variant max-w-3xl">A formal knowledge base capturing critical insights, safety incidents, and process optimizations from the Alpha Tower project lifecycle to inform future structural engineering endeavors.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-4 py-2 border border-outline-variant text-primary font-body text-body-md font-medium rounded-lg hover:bg-surface-variant/30 transition-colors flex items-center gap-2 shadow-sm bg-surface">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                            Filter Entries
+                        </button>
+<button class="px-4 py-2 bg-primary text-on-primary font-body text-body-md font-medium rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+                            Log New Insight
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Featured / High Impact Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow p-6 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-error/5 to-transparent rounded-bl-full z-0"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-2">
+<span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded font-label text-label-sm border border-amber-200">SAFETY_INCIDENT</span>
+<span class="px-2.5 py-1 bg-surface-variant text-on-surface rounded font-label text-label-sm border border-outline-variant/30">STRUCTURAL_PHASE</span>
+</div>
+<span class="text-label-md font-label text-on-surface-variant">ID: LL-AT-042 • Oct 12, 2023</span>
+</div>
+<h3 class="text-xl font-headline font-bold text-on-surface mb-3 group-hover:text-primary transition-colors">Wind-Shear Vulnerability During Temporary Cladding Installation</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+<div class="bg-surface p-4 rounded-lg border border-surface-dim/50">
+<h4 class="text-body-md font-bold text-on-surface-variant mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-error">warning</span>
+                                        Impact Description
+                                    </h4>
+<p class="text-body-md text-on-surface leading-relaxed">During high-elevation installation (Level 42+), sudden localized wind-shear events exceeded forecasted parameters, causing significant lateral stress on temporary bracketing. This resulted in near-miss detachment of three composite panels, halting work for 48 hours while localized meteorological reassessments were conducted.</p>
+</div>
+<div class="bg-primary/5 p-4 rounded-lg border border-primary/10">
+<h4 class="text-body-md font-bold text-primary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">lightbulb</span>
+                                        Formal Recommendation
+                                    </h4>
+<p class="text-body-md text-on-surface leading-relaxed">Implement mandatory real-time anemometers affixed directly to the leading edge of active installation floors. Do not rely solely on macro-level regional forecasts. Establish a hard-stop protocol triggering at 35km/h sustained, updating standard operating procedures for all subsequent high-rise exterior phases.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Process Optimization Card -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col h-full">
+<div class="flex gap-2 mb-4">
+<span class="px-2.5 py-1 bg-sky-100 text-sky-800 rounded font-label text-label-sm border border-sky-200">PROCUREMENT</span>
+</div>
+<h3 class="text-lg font-headline font-bold text-on-surface mb-2">Supply Chain Delay Mitigation via Dual-Sourcing</h3>
+<p class="text-body-md text-on-surface-variant mb-4 flex-1">Reliance on a single vendor for specialized tension cables led to a 3-week critical path delay when their primary forge went offline unexpectedly.</p>
+<div class="bg-surface p-3 rounded border border-surface-dim/50 mt-auto">
+<h4 class="text-label-md font-label font-bold text-primary mb-1 uppercase">Recommendation</h4>
+<p class="text-body-md text-on-surface">Mandate pre-approved secondary vendors for all Tier 1 materials with active SLA contracts before foundation pour begins.</p>
+</div>
+</div>
+<!-- Technical Insight Card -->
+<div class="col-span-12 md:col-span-6 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow p-6">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2.5 py-1 bg-teal-100 text-teal-800 rounded font-label text-label-sm border border-teal-200">MATERIALS_SCIENCE</span>
+<span class="text-label-md font-label text-on-surface-variant">ID: LL-AT-038</span>
+</div>
+<h3 class="text-lg font-headline font-bold text-on-surface mb-3">Concrete Curing Anomalies in Sub-Zero Microclimates</h3>
+<div class="space-y-4">
+<div>
+<p class="text-label-sm font-label text-on-surface-variant uppercase tracking-wider mb-1">Impact</p>
+<p class="text-body-md text-on-surface">Thermal blankets were insufficient in corners of the subterranean parking levels, leading to micro-fracturing during early strength testing (7-day mark).</p>
+</div>
+<div class="border-t border-surface-variant pt-3">
+<p class="text-label-sm font-label text-primary uppercase tracking-wider mb-1">Recommendation</p>
+<p class="text-body-md text-on-surface">Deploy active hydronic heating loops embedded in temporary forms for pours conducted in temperatures below -5°C, rather than relying strictly on passive insulation.</p>
+</div>
+</div>
+</div>
+<!-- Client Relations Card -->
+<div class="col-span-12 md:col-span-6 bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm hover:shadow-md transition-shadow p-6">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2.5 py-1 bg-purple-100 text-purple-800 rounded font-label text-label-sm border border-purple-200">CLIENT_RELATIONS</span>
+<span class="text-label-md font-label text-on-surface-variant">ID: LL-AT-029</span>
+</div>
+<h3 class="text-lg font-headline font-bold text-on-surface mb-3">Approval Bottlenecks on Change Orders</h3>
+<div class="space-y-4">
+<div>
+<p class="text-label-sm font-label text-on-surface-variant uppercase tracking-wider mb-1">Impact</p>
+<p class="text-body-md text-on-surface">Paper-based sign-offs for minor budgetary adjustments caused compounding delays, pushing interior finish schedules back by 12 cumulative days.</p>
+</div>
+<div class="border-t border-surface-variant pt-3">
+<p class="text-label-sm font-label text-primary uppercase tracking-wider mb-1">Recommendation</p>
+<p class="text-body-md text-on-surface">Enforce utilization of the digital 'Acknowledge' RBAC workflow for all change orders under $50k, ensuring instantaneous cryptographic audit logging and reducing friction.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Client Meeting Registry - Setuu Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Merriweather:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#6f89a9",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#43474d",
+                        "background": "#faf9f4",
+                        "secondary-fixed-dim": "#88cffc",
+                        "surface-container-low": "#f5f4ef",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed": "#c6e7ff",
+                        "outline-variant": "#c3c6ce",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e3e3de",
+                        "primary": "#000815",
+                        "on-primary-fixed": "#001d35",
+                        "surface-dim": "#dbdad5",
+                        "on-tertiary-fixed": "#001e2d",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "tertiary-container": "#002233",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary-container": "#005a7f",
+                        "surface-container": "#efeee9",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-surface": "#30312e",
+                        "on-surface": "#1b1c19",
+                        "inverse-primary": "#aec9eb",
+                        "on-tertiary-container": "#0090c7",
+                        "on-background": "#1b1c19",
+                        "on-error": "#ffffff",
+                        "tertiary": "#00080f",
+                        "outline": "#73777e",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "surface-bright": "#faf9f4",
+                        "secondary-container": "#8ad1ff",
+                        "primary-fixed": "#d1e4ff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#00658d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 224, 224, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="w-[280px] h-screen fixed left-0 top-0 z-50 bg-primary dark:bg-surface-container-lowest shadow-xl flex flex-col py-6 hidden md:flex">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden shrink-0">
+<img alt="Setuu Enterprise Logo" class="w-full h-full object-cover" data-alt="A stylized, minimalist logo for an enterprise construction management software named Setuu. The logo uses deep navy blue and crisp white geometric shapes resembling abstract building blocks or architectural blueprints. High quality, crisp vector style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA61eUfUsCmnqSVTo3ILRnw6A9Ms-LsadnAbBkEl741nHrcT28iNs-ecadZeqGnzcDMDgKQ-kv5sjE8Jf5bW2v1hugjO7ToZ-c87SsJ4hLAUs7GbVTa2Rtxuo1R19QUOOh1m8pfpcC9l178E7m7lTDct6QxpuhjVOm1R_r03jLKFpv5sbZRbgz_u0X_5XIxutO-VkfleLOQGdWoF_-bajdhCCAcuiKf182i43rGFSIqVNkxLhFg00u2">
+</div>
+<div>
+<h1 class="font-headline text-xl font-black text-on-primary dark:text-on-surface">Setuu Admin</h1>
+<p class="font-label text-label-sm text-on-primary/70">Enterprise Tier</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 mx-2 my-1" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 1;" data-icon="dashboard">dashboard</span>
+<span class="font-body text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container mx-2 my-1 shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-body text-body-md font-medium">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 mx-2 my-1" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="font-body text-body-md font-medium">Drawings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 mx-2 my-1" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body text-body-md font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 mx-2 my-1" href="#">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+<span class="font-body text-body-md font-medium">Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 mx-2 my-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body text-body-md font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-primary/70 dark:text-on-surface-variant/70 hover:text-on-primary dark:hover:text-on-surface hover:bg-on-primary/10 dark:hover:bg-on-surface/5 transition-all scale-100 active:scale-[0.98] duration-150 mx-2 my-1" href="#">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span>
+<span class="font-body text-body-md font-medium">Support</span>
+</a>
+</div>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full py-2 px-4 bg-secondary text-on-secondary rounded-lg font-body text-body-md font-medium shadow-sm hover:opacity-90 transition-opacity">Raise Ticket</button>
+<div class="pt-4 border-t border-on-primary/20 space-y-1">
+<a class="flex items-center gap-3 px-2 py-2 rounded-lg text-on-primary/70 text-label-sm font-label hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="history_edu">history_edu</span>
+                    Audit Logs
+                </a>
+<a class="flex items-center gap-3 px-2 py-2 rounded-lg text-on-primary/70 text-label-sm font-label hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="terminal">terminal</span>
+                    System Status
+                </a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] w-full min-h-screen bg-background relative">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-6 md:px-8 h-16 bg-white/85 dark:bg-surface-container/85 backdrop-blur-md border-b border-outline-variant/20 shadow-sm docked full-width top-0 sticky z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary p-2 -ml-2 rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="font-headline font-bold text-primary dark:text-primary-fixed text-lg">Setuu Enterprise</div>
+</div>
+<div class="flex-1 max-w-xl px-8 hidden md:block">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-body-md focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all" placeholder="Search..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80 hidden sm:block">
+<span class="material-symbols-outlined" data-icon="cloud_done">cloud_done</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors cursor-pointer active:opacity-80 hidden sm:block">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden ml-2 cursor-pointer border border-outline-variant/50">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a sharp navy suit against a clean, bright minimalist background. The lighting is soft and flattering, suggesting competence and reliability. High resolution, shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRXKCGQ2hK8trZvvTKSdEz_Vrz9ZLxgP-t-cxlfEi8LE7_BvGGenK-immpPOrXdmqReOCvxJreITUGzi9MfLI6sAz_QSNEkH98pyGS1sQDrqFzN8vwst4XvbN_nP_XDnNyFdOUPWElcbasMrgO7yzLNsHoT9goEaHyrUZDWgspL3xZIu8AIm7q2NntDB3fUDYSgcoqZZ8DgyumenkrVWvFcMsYLhBo3KnYYwknquwl7VKOKioDPde_">
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-6 md:p-8 max-w-[1600px] mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-label-sm font-label text-outline mb-2">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[14px] mx-1">chevron_right</span>
+<span class="text-on-surface">Client Meetings</span>
+</div>
+</li>
+</ol>
+</nav>
+<h2 class="font-headline text-3xl font-bold text-primary tracking-tight">Meeting Registry</h2>
+<p class="font-body text-body-md text-on-surface-variant mt-1">Macro-overview of all stakeholder engagements and action items.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-surface-container-high text-on-surface rounded-lg font-body text-body-md font-medium border border-outline-variant hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+                        Filter
+                    </button>
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded-lg font-body text-body-md font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                        New Meeting
+                    </button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Upcoming Meetings (Span 8) -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col h-full">
+<div class="p-5 border-b border-outline-variant/20 flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-headline text-lg font-bold text-primary">Upcoming Engagements</h3>
+<a class="text-body-sm font-medium text-secondary hover:underline" href="#">View Calendar</a>
+</div>
+<div class="p-5 flex-1 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-label-sm font-label text-outline uppercase border-b border-outline-variant/30">
+<th class="pb-3 font-medium w-1/4">Project / Topic</th>
+<th class="pb-3 font-medium w-1/4">Date &amp; Time</th>
+<th class="pb-3 font-medium w-1/4">Stakeholders</th>
+<th class="pb-3 font-medium text-right w-1/4">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<tr class="hover:bg-surface-container-low/50 transition-colors group cursor-pointer">
+<td class="py-4 pr-4">
+<div class="font-body text-body-md font-semibold text-primary group-hover:text-secondary transition-colors">Phase 3 Design Review</div>
+<div class="text-label-sm font-label text-on-surface-variant mt-1 truncate">PRJ-Alpha Tower</div>
+</td>
+<td class="py-4 pr-4">
+<div class="font-body text-body-md text-on-surface">Oct 24, 2023</div>
+<div class="text-label-sm font-label text-outline mt-1">10:00 AM - 11:30 AM EST</div>
+</td>
+<td class="py-4 pr-4">
+<div class="flex -space-x-2">
+<img alt="Attendee" class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A corporate portrait of a female architect in a hard hat and high visibility vest, looking confident on a construction site. Clear, sunny daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeiNOFmUp1BSLHS-0IHr4C_UsQt9hu43vkEvT7BnBrvknZzGgfLTKM0WW8atrBvCz4E4mnWqoJk6jSloMq98Hh3k1G0ud84I9gclhLUli6yZXK8c5_rhIb8vnaRhpr7md1iiQtoWKd2FNEiaCd8jLIOiDilFLcJxXTiocY2kw9_bzhxReyC0jYie_Zm0X5aVAb75mm8CPdQzqzsvGXZ_pfLgErO8bXGyohUps4aQlCTS01Sk1_Kxm-">
+<img alt="Attendee" class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A portrait of a male project manager in a crisp business shirt, standing in front of architectural blueprints in a modern office. Bright, professional lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDEPUuJfkr08iB6YQ5wGePtvMioD7dv5pcIFgR5suqNzJQN-mqnkW-UWMVcI0o5m1YLTL59vCHX2RrXe1qPU1mrWUMJrWIH03kP9HyRG_4SHldYbQwfUt1GK_msY55wjBzwKhGQ62imNrTeV8KQZoSZniB3kPcw0qkuKhrt4MNarBBb26mdlOoylgP8hsgCkOXyZaWseeCTpnvgAosmW9bA_Yfordje_UGSZ85bGLUojinbU1t294r">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-container-high flex items-center justify-center text-label-sm font-label text-on-surface-variant">+3</div>
+</div>
+</td>
+<td class="py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label bg-emerald-100/50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Confirmed
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors group cursor-pointer">
+<td class="py-4 pr-4">
+<div class="font-body text-body-md font-semibold text-primary group-hover:text-secondary transition-colors">Quarterly Budget Alignment</div>
+<div class="text-label-sm font-label text-on-surface-variant mt-1 truncate">PRJ-Delta Logistics</div>
+</td>
+<td class="py-4 pr-4">
+<div class="font-body text-body-md text-on-surface">Oct 26, 2023</div>
+<div class="text-label-sm font-label text-outline mt-1">02:00 PM - 03:00 PM EST</div>
+</td>
+<td class="py-4 pr-4">
+<div class="flex -space-x-2">
+<img alt="Attendee" class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A professional headshot of a male finance executive in a suit, against a neutral gray background. Soft, even studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXxp849RFb2wnp7y6T-UusaxqwCkLMqCNrGhxoSfuEHLzDrR9uYGCPmJJkIAlcAvbaGebUYtgdOUOun6tNFNFRbGp8NXrjifQkLnZERv77I2mxIfrGEcL_B9MZdBs4zbXZX4uYLA3bq-Y7o7lbRVirAbkyzjZq6OJ0rL6T4-lV5f3PodpYyGhyygREOW4drMZHGsHVoqlf8lTywsIwy0ndNxe9QMibSxZIds-hghxN_dZTMEjrhKSG">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-container-high flex items-center justify-center text-label-sm font-label text-on-surface-variant">+1</div>
+</div>
+</td>
+<td class="py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label bg-amber-100/50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Pending RSVP
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors group cursor-pointer">
+<td class="py-4 pr-4">
+<div class="font-body text-body-md font-semibold text-primary group-hover:text-secondary transition-colors">Vendor Handover Sync</div>
+<div class="text-label-sm font-label text-on-surface-variant mt-1 truncate">PRJ-Echo Park</div>
+</td>
+<td class="py-4 pr-4">
+<div class="font-body text-body-md text-on-surface">Nov 02, 2023</div>
+<div class="text-label-sm font-label text-outline mt-1">09:00 AM - 10:00 AM EST</div>
+</td>
+<td class="py-4 pr-4">
+<div class="flex -space-x-2">
+<img alt="Attendee" class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A portrait of a female engineer reviewing a tablet on site. Bright daylight, shallow depth of field focusing on her professional demeanor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdTS01CFbMEw87GXqceHgaNnrlmT_BvsOZt9nTQJcBH6afh3sSk8Xn8xXr2lKoYpYHSOto-kvlAliaHuwD3g5mmkpx4u1TIQst5E1aRXJcT-48dDGWGozhG1DrNYr_nwiSujPeU3VhZzCOOpuDuxFbeIiQAFDx9EViJiXLhL8B6CYJLVcYKk-H6lzKFUji2VEVVHBrqj02_CFr6125dmPxk3iWZv-jBU3pkr8T7zSuMTbS2UIAtQxs">
+<img alt="Attendee" class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover" data-alt="A portrait of a senior construction manager pointing at something off-camera. Dressed in professional field gear, clear lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ7jZeXyQLPZq8dGMbAJEcCfOEFHKq4-HE0RY5o6J0oQXXnlVRCwJaJITxAJspwRS72SqmmyE8aQZAQQobwDuQG89m0xfbMKfue9WIBg55ezbOT53fBPvCKoIucg_wv2ztxAiN3cafMF3eldixwitwp_DLrp0_hZNSMgClGg64quui3xXXOwXOOxD5eoFaovKBlQ_bJevMJcQ2RxtZgqKf3f9G3p7MqlFVsltlTGgvZoIsyiazUEQy">
+</div>
+</td>
+<td class="py-4 text-right">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label bg-slate-100 text-slate-700 border border-slate-200">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Draft
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Action Items Summary (Span 4) -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-5 h-full">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline text-lg font-bold text-primary">Pending Actions</h3>
+<button class="p-1 rounded-md text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Action Item 1 -->
+<div class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant/20 bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<div class="mt-0.5">
+<input class="rounded border-outline-variant text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" type="checkbox">
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body text-body-sm font-semibold text-primary truncate">Submit revised structural load calcs</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-error bg-error/10 px-1.5 py-0.5 rounded">Due: Today</span>
+<span class="text-label-sm font-label text-outline truncate">Alpha Tower</span>
+</div>
+</div>
+</div>
+<!-- Action Item 2 -->
+<div class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant/20 bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<div class="mt-0.5">
+<input class="rounded border-outline-variant text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" type="checkbox">
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body text-body-sm font-semibold text-primary truncate">Client approval on HVAC substitution</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">Due: Tomorrow</span>
+<span class="text-label-sm font-label text-outline truncate">Delta Logistics</span>
+</div>
+</div>
+</div>
+<!-- Action Item 3 -->
+<div class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant/20 bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<div class="mt-0.5">
+<input class="rounded border-outline-variant text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" type="checkbox">
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body text-body-sm font-semibold text-primary truncate">Distribute finalized meeting minutes</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-label-sm font-label text-outline bg-surface-container-high px-1.5 py-0.5 rounded">Due: Oct 26</span>
+<span class="text-label-sm font-label text-outline truncate">Site Inspection</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-body-sm font-medium text-secondary border border-secondary/30 rounded-lg hover:bg-secondary/5 transition-colors">View All Actions</button>
+</div>
+</div>
+<!-- Recent Minutes Repository (Span 12) -->
+<div class="md:col-span-12 bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-6">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+<div>
+<h3 class="font-headline text-lg font-bold text-primary">Meeting Minutes Repository</h3>
+<p class="font-body text-body-sm text-on-surface-variant">Quick access to formalized records and distribution URLs.</p>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]" data-icon="search">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-md text-body-sm focus:outline-none focus:ring-1 focus:ring-secondary transition-all w-full sm:w-64" placeholder="Search minutes..." type="text">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Document Card 1 -->
+<div class="glass-panel p-4 rounded-lg flex flex-col relative group cursor-pointer hover:-translate-y-1 transition-transform duration-200">
+<div class="absolute top-3 right-3 text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</div>
+<div class="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center text-primary mb-3">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<h4 class="font-body text-body-md font-semibold text-primary line-clamp-2 mb-1">Site Safety Briefing - Week 42</h4>
+<p class="font-label text-label-sm text-outline mb-4">PRJ-Alpha Tower</p>
+<div class="mt-auto flex justify-between items-center pt-3 border-t border-outline-variant/20">
+<span class="font-label text-[10px] text-on-surface-variant">Oct 18, 2023</span>
+<button class="text-secondary hover:text-primary transition-colors flex items-center gap-1 text-label-sm font-label" title="Copy URL">
+<span class="material-symbols-outlined text-[14px]" data-icon="link">link</span> URL
+                                </button>
+</div>
+</div>
+<!-- Document Card 2 -->
+<div class="glass-panel p-4 rounded-lg flex flex-col relative group cursor-pointer hover:-translate-y-1 transition-transform duration-200">
+<div class="absolute top-3 right-3 text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</div>
+<div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center text-purple-700 mb-3">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+</div>
+<h4 class="font-body text-body-md font-semibold text-primary line-clamp-2 mb-1">Contract Addendum Negotiation</h4>
+<p class="font-label text-label-sm text-outline mb-4">PRJ-Delta Logistics</p>
+<div class="mt-auto flex justify-between items-center pt-3 border-t border-outline-variant/20">
+<span class="font-label text-[10px] text-on-surface-variant">Oct 15, 2023</span>
+<button class="text-secondary hover:text-primary transition-colors flex items-center gap-1 text-label-sm font-label" title="Copy URL">
+<span class="material-symbols-outlined text-[14px]" data-icon="link">link</span> URL
+                                </button>
+</div>
+</div>
+<!-- Document Card 3 -->
+<div class="glass-panel p-4 rounded-lg flex flex-col relative group cursor-pointer hover:-translate-y-1 transition-transform duration-200">
+<div class="absolute top-3 right-3 text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</div>
+<div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center text-amber-700 mb-3">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<h4 class="font-body text-body-md font-semibold text-primary line-clamp-2 mb-1">Material Delay Strategy Mtg</h4>
+<p class="font-label text-label-sm text-outline mb-4">PRJ-Echo Park</p>
+<div class="mt-auto flex justify-between items-center pt-3 border-t border-outline-variant/20">
+<span class="font-label text-[10px] text-on-surface-variant">Oct 12, 2023</span>
+<button class="text-secondary hover:text-primary transition-colors flex items-center gap-1 text-label-sm font-label" title="Copy URL">
+<span class="material-symbols-outlined text-[14px]" data-icon="link">link</span> URL
+                                </button>
+</div>
+</div>
+<!-- Document Card 4 -->
+<div class="glass-panel p-4 rounded-lg flex flex-col relative group cursor-pointer border-dashed border-2 hover:bg-surface-container-low transition-colors items-center justify-center text-center">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-outline mb-3 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]" data-icon="upload_file">upload_file</span>
+</div>
+<h4 class="font-body text-body-md font-semibold text-primary mb-1">Upload Minutes</h4>
+<p class="font-label text-label-sm text-outline">Drag &amp; Drop or click to browse</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Setuu Enterprise - Project Timeline Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a",
+                        "surface-container": "#efeee9",
+                        "surface-container-low": "#f5f4ef",
+                        "on-background": "#1b1c19",
+                        "primary-fixed": "#d1e4ff",
+                        "on-surface-variant": "#43474d",
+                        "on-tertiary-fixed": "#001e2d",
+                        "tertiary-fixed-dim": "#82cfff",
+                        "secondary-fixed-dim": "#88cffc",
+                        "on-primary-fixed-variant": "#2e4965",
+                        "secondary": "#00658d",
+                        "on-secondary-container": "#005a7f",
+                        "tertiary-fixed": "#c6e7ff",
+                        "surface": "#faf9f4",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#0090c7",
+                        "surface-bright": "#faf9f4",
+                        "background": "#faf9f4",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e8e3",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#aec9eb",
+                        "primary-container": "#00213c",
+                        "outline": "#73777e",
+                        "outline-variant": "#c3c6ce",
+                        "inverse-primary": "#aec9eb",
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#002233",
+                        "on-tertiary-fixed-variant": "#004c6b",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "tertiary": "#00080f",
+                        "on-surface": "#1b1c19",
+                        "secondary-fixed": "#c6e7ff",
+                        "surface-dim": "#dbdad5",
+                        "inverse-on-surface": "#f2f1ec",
+                        "on-secondary-fixed": "#001e2d",
+                        "inverse-surface": "#30312e",
+                        "surface-container-highest": "#e3e3de",
+                        "surface-variant": "#e3e3de",
+                        "surface-tint": "#46607e",
+                        "primary": "#000815",
+                        "secondary-container": "#8ad1ff",
+                        "on-primary-container": "#6f89a9",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-lowest": "#ffffff",
+                        
+                        // Semantic Workflow Colors
+                        "workflow-queue": "#64748B",
+                        "workflow-active": "#0284C7",
+                        "workflow-warning": "#D97706",
+                        "workflow-success": "#16A34A",
+                        "workflow-finalization": "#0D9488",
+                        "workflow-verification": "#2563EB",
+                        "workflow-attention": "#9333EA",
+                        "workflow-emergency": "#DC2626",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "sm": "0.25rem",
+                        "md": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Merriweather", "serif"],
+                        "display": ["Merriweather", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: -32px; /* Extend to connect to next card */
+            width: 2px;
+            background-color: theme('colors.surface-container-high');
+            z-index: 0;
+        }
+        
+        /* Hide line on the last item */
+        .timeline-item:last-child .timeline-line::before {
+            display: none;
+        }
+
+        .watermark {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface flex justify-between items-center w-full px-4 h-16 border-b border-outline-variant docked full-width top-0 sticky z-40 transition-colors">
+<div class="flex items-center gap-4">
+<button aria-label="Menu" class="p-2 rounded-full hover:bg-surface-container-high transition-colors scale-95 active:opacity-80 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline font-bold text-primary text-headline-sm">Setuu Enterprise</h1>
+<span class="font-label text-label-sm text-on-surface-variant">DXB-702 • Timeline Feed</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-3 py-1.5 border border-outline-variant shadow-sm mr-2">
+<span class="w-2 h-2 rounded-full bg-workflow-success mr-2"></span>
+<span class="font-label text-label-sm text-on-surface-variant">System Online</span>
+</div>
+<button class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant hover:bg-surface-container-high transition-colors scale-95 active:opacity-80 relative">
+<img alt="Project Manager Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate project manager in their late 30s. They are wearing a sharp navy blue blazer over a crisp white shirt. The background is a slightly blurred, modern office interior with large glass windows and soft, cool daylight streaming in. The lighting is flattering and high-key, emphasizing a reliable and authoritative demeanor typical of enterprise leadership." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWSt5J4LAU8CkcBV2guNtofHBUU4PAQuLPCm2hFYJ8uqwC779Y2S2cnQ85Y92FxlnYyn6yO5qISRWUzMQSGKGAuBHahZ4axHSACFIUZl65bJ7EE0eoBJEzqSASi6o63_zaCiayAvg-azdHJppry2kM93VH-K-uUPG4hPcBZgmm-WamUlk9RWGw_W6EgDNDsnrdGfXUnK6bHd9ygIJv1uXldIDdEslSecw1h83tSlutus3aak7PQT_Z">
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-workflow-success rounded-full border-2 border-surface"></div>
+</button>
+</div>
+</header>
+<!-- Main Layout Grid -->
+<div class="flex min-h-[calc(100vh-64px)] w-full max-w-[1600px] mx-auto">
+<!-- Desktop Sidebar (NavigationDrawer mapped for Web) -->
+<aside class="hidden md:flex flex-col w-[280px] bg-primary-container text-on-primary border-r border-surface-container-lowest/10 sticky top-16 h-[calc(100vh-64px)] shrink-0 z-[60]">
+<div class="p-6 border-b border-surface-container-lowest/10">
+<div class="flex items-center gap-4 mb-4">
+<img alt="User Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-surface-container-lowest/20" data-alt="A professional headshot of a corporate project manager in their late 30s. They are wearing a sharp navy blue blazer over a crisp white shirt. The background is a slightly blurred, modern office interior with large glass windows and soft, cool daylight streaming in. The lighting is flattering and high-key, emphasizing a reliable and authoritative demeanor typical of enterprise leadership." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG6gikXFvwV1PdAyjQxFcEypJrqVot3nPzbkufcLIRGRyLffCWDtFdkjyM_QbYnBeKDqywWKcs9ijVvbV6b1wuE3RIKU4nU_nGJdjDS7EAylefQWrg4yKTEnUQuc5OjtjrIbWBNyFezU4ANqm1oHcogs5XbntnCDp5V2CoMZ08x98_cFfuylWZAn4zD7QcZdMTnoUsuZRZx8Nhn45x9o5VPYUoVPVhGPqup6wugoD1UjOVEIzre5q0">
+<div>
+<h2 class="font-headline font-bold text-on-primary">Lead PM</h2>
+<p class="font-label text-label-sm text-primary-fixed-dim">Site ID: DXB-702</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest/10 rounded-md p-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-workflow-active text-sm" data-icon="cloud_done">cloud_done</span>
+<p class="font-label text-label-sm text-primary-fixed-dim">Offline Mode Available</p>
+</div>
+</div>
+<nav class="flex-1 py-4 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Projects conceptually represents this timeline view -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary text-on-secondary font-bold shadow-md transition-colors font-body" href="#">
+<span class="material-symbols-outlined" data-icon="foundation">foundation</span>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+<span>Media</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span>Tasks</span>
+</a>
+<div class="mt-8 mb-2 px-4">
+<p class="font-label text-label-sm text-primary-fixed-dim opacity-70 uppercase tracking-widest">System Tools</p>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+<span>Sync Queue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span>Drawing Hub</span>
+</a>
+</nav>
+<div class="p-4 border-t border-surface-container-lowest/10">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-surface-container-lowest/10 transition-colors text-on-primary-fixed-dim font-body" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Log Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 px-4 md:px-8 py-6 max-w-4xl mx-auto w-full pb-24 md:pb-8">
+<!-- Context Header -->
+<div class="mb-8">
+<div class="flex items-center gap-2 mb-2 text-on-surface-variant font-label text-label-sm">
+<span>DXB-702</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Foundation Phase</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-bold text-primary">Timeline Feed</span>
+</div>
+<h2 class="font-headline text-headline-lg text-primary mb-2">Project Updates</h2>
+<p class="text-on-surface-variant font-body">Real-time log of milestone progress, media uploads, and client acknowledgements.</p>
+</div>
+<!-- Feed Container (4-column grid mapping to design system grid, but functioning as a vertical list here) -->
+<div class="flex flex-col gap-6 relative">
+<!-- Timeline Item 1: Client Acknowledgement (Verification State) -->
+<div class="timeline-item relative pl-16">
+<!-- Timeline Node -->
+<div class="absolute left-0 top-1 w-12 h-12 rounded-full bg-workflow-verification/10 flex items-center justify-center border-2 border-surface z-10 shadow-sm timeline-line">
+<span class="material-symbols-outlined text-workflow-verification" data-icon="verified">verified</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<!-- Header -->
+<div class="p-4 flex justify-between items-start border-b border-surface-container">
+<div class="flex items-center gap-3">
+<img alt="Client Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="A professional profile photo of a corporate client executive in her 40s, wearing smart-casual business attire. The setting is a bright, high-rise boardroom with expansive windows overlooking a modern city skyline. The lighting is crisp and natural, projecting a sense of formal authority and executive decision-making typical of enterprise B2B interactions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA56VqnYQfLUkZjEjRgvg617j5Uvf0pBtHFYcIIP_In_OuitBqQU3QqY3lHKz_aB8S7JXAgEu7jMt52gsPg_SatiFyXLmPx0EFOLt3ycstWD_Ppk9EsYLhnmSKBhbmEHdPGgkL9pxr-_3uJpqH7C1AQNdgGOeKTpz9oEbOGpr69FHknPGB5NLNUKZhbkrILd2YB3bm6doqXGeZVqwuiS2VNZ3K5Y06ajwdcp3scWkl88lcxXs4jbAAp">
+<div>
+<h3 class="font-bold text-on-surface text-body-lg">Sarah Jenkins</h3>
+<p class="text-on-surface-variant text-label-sm font-label">Client Representative • Emaar Properties</p>
+</div>
+</div>
+<span class="text-on-surface-variant text-label-sm font-label bg-surface-container px-2 py-1 rounded-md">Just now</span>
+</div>
+<!-- Content -->
+<div class="p-4 bg-workflow-verification/5">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-workflow-verification text-on-primary px-3 py-1 rounded-full text-label-sm font-label font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">task_alt</span>
+                                    Acknowledged
+                                </span>
+<span class="text-on-surface-variant text-label-sm font-label">Milestone 2B: Pouring Phase</span>
+</div>
+<p class="text-on-surface font-body mb-4">The structural integrity report and visual evidence submitted yesterday have been reviewed. We approve moving to the next phase.</p>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2: Heavy Media Upload with Needs Discussion -->
+<div class="timeline-item relative pl-16">
+<!-- Timeline Node -->
+<div class="absolute left-0 top-1 w-12 h-12 rounded-full bg-workflow-attention/10 flex items-center justify-center border-2 border-surface z-10 shadow-sm timeline-line">
+<span class="material-symbols-outlined text-workflow-attention" data-icon="feedback">feedback</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<!-- Header -->
+<div class="p-4 flex justify-between items-start">
+<div class="flex items-center gap-3">
+<img alt="Foreman Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a male construction site foreman in his 50s, wearing a high-visibility orange vest and a white hard hat. He has a rugged appearance and is standing in an active industrial construction site with steel girders and cranes visible in the background. The scene is brightly lit by harsh daytime sunlight, emphasizing a gritty, hands-on industrial workflow aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHfJlQcW3fm9FE4EhUEkeypCaEw-_MHvnGOwhtD2B35oozN4Kjjcp8DmCUITSR66v5skOqMW69QaSsFiUayt_gVWuWyXXrwliZae0kOeL8v3-lHZKZwm7cB_lgD9rMXNZgv3DNcclNZaEMR14X60LkrBRGCT5ofbgQI0U_WsQARgcjVE4xVCJBKvg1Wb5X8Z56RYd2umVm2BF1CF8rZdctzhYdRO-n3HH2HtCh7SdJVSCk0bIQgwAH">
+<div>
+<h3 class="font-bold text-on-surface text-body-lg">Marcus Thorne</h3>
+<p class="text-on-surface-variant text-label-sm font-label">Site Supervisor • Sector 4</p>
+</div>
+</div>
+<span class="text-on-surface-variant text-label-sm font-label bg-surface-container px-2 py-1 rounded-md">2 hrs ago</span>
+</div>
+<!-- Content -->
+<div class="p-4 pt-0">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-workflow-attention text-on-primary px-3 py-1 rounded-full text-label-sm font-label font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">gavel</span>
+                                    Needs Discussion
+                                </span>
+<span class="text-on-surface-variant text-label-sm font-label">Rebar Installation Issue</span>
+</div>
+<p class="text-on-surface font-body mb-4">Encountered an unexpected grade discrepancy near Grid Line F-7. Attached evidence. Requesting structural engineer review before pour commences tomorrow.</p>
+<!-- Media Frame -->
+<div class="relative rounded-lg overflow-hidden border border-outline-variant shadow-inner aspect-video bg-surface-dim">
+<div class="w-full h-full bg-cover bg-center" data-alt="A close-up, high-resolution photograph of a complex steel rebar grid laid out for a concrete foundation on an active construction site. The rebar forms a dense geometric pattern. In the center, a bright yellow industrial measuring tape is pulled taut across a junction, highlighting a specific dimension. The lighting is harsh midday sun casting sharp shadows. A bright cyan digital markup circle highlights a specific rebar intersection." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcXuf7WEsJG4nV0_hFGAfG5dRtyI0wiwxoywST4B2fCHq6pWohgcYlceAKSQ8wnVuCxCYEudT3CSMG31JXklK42S37sri6LaCRtHddKD3nctxLSpek6arGKwzWud_HGdvWoC6Jyu-7T1F9FEM8jUNSZ-ER8h8gcLzJ9DMZzouM9LXe7FRmhneF0Lf2fDlXxxGMy9VlvVIfZpOOc_Jsg6qUskKnNC0tbACHSVmceIE7mr_Lp1b1ty6e')"></div>
+<!-- GPS/Timestamp Watermark -->
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 backdrop-blur-sm text-inverse-on-surface p-2 rounded-md font-label text-label-sm flex flex-col items-end watermark border border-white/10">
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[12px] text-workflow-attention">location_on</span>
+<span>25.2048° N, 55.2708° E</span>
+</div>
+<span class="opacity-80">2023-10-27T14:32:01Z</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3: System Event (Sync) -->
+<div class="timeline-item relative pl-16">
+<!-- Timeline Node -->
+<div class="absolute left-0 top-1 w-12 h-12 rounded-full bg-workflow-active/10 flex items-center justify-center border-2 border-surface z-10 shadow-sm timeline-line">
+<span class="material-symbols-outlined text-workflow-active" data-icon="sync">sync</span>
+</div>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant shadow-sm p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-workflow-active/20 flex items-center justify-center text-workflow-active">
+<span class="material-symbols-outlined" data-icon="dns">dns</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface text-body-md">Batch Sync Completed</h3>
+<p class="text-on-surface-variant text-label-sm font-label">14 offline records merged successfully</p>
+</div>
+</div>
+<span class="text-on-surface-variant text-label-sm font-label">5 hrs ago</span>
+</div>
+</div>
+<!-- Timeline Item 4: Warning State (Material Delivery) -->
+<div class="timeline-item relative pl-16">
+<!-- Timeline Node -->
+<div class="absolute left-0 top-1 w-12 h-12 rounded-full bg-workflow-warning/10 flex items-center justify-center border-2 border-surface z-10 shadow-sm timeline-line">
+<span class="material-symbols-outlined text-workflow-warning" data-icon="warning">warning</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden group hover:shadow-md transition-shadow">
+<!-- Header -->
+<div class="p-4 flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-tint text-white flex items-center justify-center font-bold font-headline">
+                                     LD
+                                 </div>
+<div>
+<h3 class="font-bold text-on-surface text-body-lg">Logistics Dept</h3>
+<p class="text-on-surface-variant text-label-sm font-label">Automated System Alert</p>
+</div>
+</div>
+<span class="text-on-surface-variant text-label-sm font-label bg-surface-container px-2 py-1 rounded-md">1 day ago</span>
+</div>
+<!-- Content -->
+<div class="p-4 pt-0">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-workflow-warning text-white px-3 py-1 rounded-full text-label-sm font-label font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+                                    Delivery Delayed
+                                </span>
+<span class="text-on-surface-variant text-label-sm font-label">PO-2023-882</span>
+</div>
+<p class="text-on-surface font-body mb-4">Cement mixture delivery from Vendor A is delayed due to transit issues. Expected ETA shifted by +4 hours. Impact assessment required for afternoon pour schedule.</p>
+<div class="bg-surface-container p-3 rounded-lg border border-outline-variant/50 flex justify-between items-center">
+<span class="font-label text-label-sm font-bold text-workflow-warning">Required Action: Adjust Shift Roster</span>
+<button class="px-4 py-1.5 bg-primary text-on-primary rounded-md text-sm font-medium hover:bg-primary/90 transition-colors">
+                                    Open Schedule
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Floating Action Button (Contextual for Desktop/Tablet) -->
+<button class="fixed bottom-24 md:bottom-8 right-6 md:right-8 w-14 h-14 bg-secondary text-on-secondary rounded-full shadow-lg flex items-center justify-center hover:bg-secondary-container hover:text-on-secondary-container transition-all hover:scale-105 active:scale-95 z-50 group">
+<span class="material-symbols-outlined text-[28px]" data-icon="add_a_photo">add_a_photo</span>
+<!-- Tooltip -->
+<span class="absolute right-full mr-4 bg-inverse-surface text-inverse-on-surface text-label-sm font-label px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            New Update
+        </span>
+</button>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden glass-panel fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 border-t border-white/20 shadow-lg rounded-t-xl transition-all duration-200">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl p-2 active:scale-90 transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="foundation" style="font-variation-settings: 'FILL' 1;">foundation</span>
+<span class="font-body text-label-sm mt-1 font-bold">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+<span class="font-body text-label-sm mt-1">Media</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-body text-label-sm mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-body text-label-sm mt-1">Admin</span>
+</a>
+</nav>
+</body></html>
