@@ -4,16 +4,28 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { LogoutButton } from "@/components/navigation/LogoutButton"
 
+import { Menu } from "lucide-react";
+
 export interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   breadcrumbs?: { label: string; href?: string }[]
   actions?: React.ReactNode
+  onMenuClick?: () => void
 }
 
-export function Topbar({ title, breadcrumbs, actions, className, ...props }: TopbarProps) {
+export function Topbar({ title, breadcrumbs, actions, className, onMenuClick, ...props }: TopbarProps) {
   return (
     <header className={cn("h-16 border-b border-outline-variant bg-surface-container-lowest flex items-center justify-between px-6 sticky top-0 z-10", className)} {...props}>
       <div className="flex items-center space-x-4">
+        {onMenuClick && (
+          <button 
+            className="md:hidden p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors"
+            onClick={onMenuClick}
+            aria-label="Toggle Menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
         {breadcrumbs ? (
           <nav className="flex items-center space-x-2 text-sm font-inter">
             {breadcrumbs.map((crumb, idx) => (

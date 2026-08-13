@@ -1,10 +1,10 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
   isOpen: boolean
   onClose: () => void
-  title: string
+  title: React.ReactNode
   description?: string
 }
 
