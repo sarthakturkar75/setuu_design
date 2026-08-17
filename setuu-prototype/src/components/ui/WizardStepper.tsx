@@ -23,12 +23,12 @@ export function WizardStepper({ steps, currentStep, className, ...props }: Wizar
         return (
           <React.Fragment key={idx}>
             <div className="flex flex-col items-center relative z-10">
-              <div 
+              <div
                 className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors duration-300",
-                  isPast ? "bg-primary text-on-primary" : 
-                  isActive ? "bg-primary-container text-on-primary-container ring-2 ring-primary ring-offset-2" : 
-                  "bg-surface-variant text-on-surface-variant"
+                  isPast ? "bg-primary text-on-primary" :
+                    isActive ? "bg-primary-container text-on-primary-container ring-2 ring-primary ring-offset-2" :
+                      "bg-surface-variant text-on-surface-variant"
                 )}
               >
                 {isPast ? <Check className="w-4 h-4" strokeWidth={3} /> : idx + 1}
@@ -42,8 +42,8 @@ export function WizardStepper({ steps, currentStep, className, ...props }: Wizar
             </div>
             {!isLast && (
               <div className="flex-1 h-0.5 mx-2 bg-surface-variant relative z-0">
-                <div 
-                  className="absolute left-0 top-0 h-full bg-primary transition-all duration-500 ease-in-out" 
+                <div
+                  className="absolute left-0 top-0 h-full bg-primary transition-all duration-500 ease-in-out"
                   style={{ width: isPast ? "100%" : "0%" }}
                 />
               </div>
