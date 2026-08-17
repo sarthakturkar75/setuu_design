@@ -23,8 +23,8 @@ export default function ClientOnboardingPage() {
 
   return (
     <div className="flex flex-col h-full bg-surface">
-      <PageHeader 
-        title="Client Onboarding Wizard" 
+      <PageHeader
+        title="Client Onboarding Wizard"
         subtitle="Provision a new isolated client organization environment"
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
@@ -42,16 +42,16 @@ export default function ClientOnboardingPage() {
           </Link>
         }
       />
-      
-      <div className="flex-1 overflow-y-auto p-6 max-w-[1200px] mx-auto w-full flex flex-col gap-8">
-        
+
+      <div className="flex-1 overflow-y-auto p-6 max-w-300 mx-auto w-full flex flex-col gap-8">
+
         <WizardStepper steps={steps} currentStep={activeStep - 1} />
 
         <Card className="p-8 shadow-elevation-l1">
           {activeStep === 1 && (
             <div className="flex flex-col gap-6 animate-in fade-in duration-300">
               <h2 className="text-xl font-bold text-on-surface mb-2">Organization Profile</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">Organization Name <span className="text-crimson">*</span></label>
@@ -64,7 +64,7 @@ export default function ClientOnboardingPage() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">Industrial Sector</label>
-                  <SelectMenu 
+                  <SelectMenu
                     options={[
                       { label: "Commercial Real Estate", value: "cre" },
                       { label: "Heavy Infrastructure", value: "heavy" },
@@ -72,7 +72,7 @@ export default function ClientOnboardingPage() {
                       { label: "Government / Public Sector", value: "gov" },
                     ]}
                     value="cre"
-                    onChange={() => {}}
+                    onChange={() => { }}
                   />
                 </div>
               </div>
@@ -91,9 +91,9 @@ export default function ClientOnboardingPage() {
           {activeStep === 2 && (
             <div className="flex flex-col gap-6 animate-in fade-in duration-300">
               <h2 className="text-xl font-bold text-on-surface mb-2">Subscription Tier & Project Limits</h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
+
                 {/* Starter Tier */}
                 <div className="p-6 rounded-xl border border-outline-variant bg-surface hover:border-primary/50 transition-colors cursor-pointer flex flex-col gap-4">
                   <div className="flex flex-col">
@@ -145,7 +145,7 @@ export default function ClientOnboardingPage() {
           {activeStep === 3 && (
             <div className="flex flex-col gap-6 animate-in fade-in duration-300">
               <h2 className="text-xl font-bold text-on-surface mb-2">Primary Organization Admin</h2>
-              
+
               <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 mb-4">
                 <ShieldCheck className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <p className="text-sm text-on-surface leading-relaxed">
@@ -180,7 +180,7 @@ export default function ClientOnboardingPage() {
                 <h2 className="text-xl font-bold text-on-surface">Review & Launch</h2>
                 <span className="px-3 py-1 bg-emerald-500/10 text-semantic-emerald text-sm font-bold rounded-full">Ready for Provisioning</span>
               </div>
-              
+
               <div className="flex flex-col gap-6 p-6 rounded-xl border border-outline-variant bg-surface-variant/20">
                 <div className="flex flex-col gap-2">
                   <span className="text-xs font-bold text-primary uppercase tracking-wider">Organization Identity</span>
@@ -220,7 +220,7 @@ export default function ClientOnboardingPage() {
 
           {/* Wizard Navigation */}
           <div className="flex items-center justify-between mt-10 pt-6 border-t border-outline-variant">
-            <button 
+            <button
               onClick={() => setActiveStep(prev => Math.max(1, prev - 1))}
               disabled={activeStep === 1}
               className="px-6 py-2.5 border border-outline-variant bg-surface text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -228,21 +228,21 @@ export default function ClientOnboardingPage() {
               Back
             </button>
             <div className="flex gap-4">
-              <button 
+              <button
                 onClick={() => router.push("/admin/users")}
                 className="px-6 py-2.5 text-on-surface-variant text-sm font-semibold hover:text-on-surface transition-colors"
               >
                 Cancel
               </button>
               {activeStep < 4 ? (
-                <button 
+                <button
                   onClick={() => setActiveStep(prev => Math.min(4, prev + 1))}
                   className="px-6 py-2.5 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors shadow-elevation-l1"
                 >
                   Continue to {steps[activeStep].label}
                 </button>
               ) : (
-                <button 
+                <button
                   onClick={() => router.push("/admin/users")}
                   className="flex items-center gap-2 px-8 py-2.5 bg-semantic-emerald text-white rounded-lg text-sm font-bold hover:bg-semantic-emerald/90 transition-colors shadow-elevation-l2"
                 >
