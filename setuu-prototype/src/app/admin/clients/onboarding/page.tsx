@@ -15,10 +15,10 @@ export default function ClientOnboardingPage() {
   const router = useRouter();
 
   const steps = [
-    { id: 1, title: "Organization Profile", icon: <Building2 className="w-4 h-4" /> },
-    { id: 2, title: "Subscription & Limits", icon: <DollarSign className="w-4 h-4" /> },
-    { id: 3, title: "Primary Contact", icon: <Users className="w-4 h-4" /> },
-    { id: 4, title: "Review & Launch", icon: <Rocket className="w-4 h-4" /> },
+    { id: 1, label: "Organization Profile", icon: <Building2 className="w-4 h-4" /> },
+    { id: 2, label: "Subscription & Limits", icon: <DollarSign className="w-4 h-4" /> },
+    { id: 3, label: "Primary Contact", icon: <Users className="w-4 h-4" /> },
+    { id: 4, label: "Review & Launch", icon: <Rocket className="w-4 h-4" /> },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default function ClientOnboardingPage() {
       
       <div className="flex-1 overflow-y-auto p-6 max-w-[1200px] mx-auto w-full flex flex-col gap-8">
         
-        <WizardStepper steps={steps} activeStep={activeStep} />
+        <WizardStepper steps={steps} currentStep={activeStep - 1} />
 
         <Card className="p-8 shadow-elevation-l1">
           {activeStep === 1 && (
@@ -239,7 +239,7 @@ export default function ClientOnboardingPage() {
                   onClick={() => setActiveStep(prev => Math.min(4, prev + 1))}
                   className="px-6 py-2.5 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors shadow-elevation-l1"
                 >
-                  Continue to {steps[activeStep].title}
+                  Continue to {steps[activeStep].label}
                 </button>
               ) : (
                 <button 
