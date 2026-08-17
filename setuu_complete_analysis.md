@@ -9,6 +9,7 @@
 **Setuu** (Seamless Engineering Tracking & User Updates) is a **B2B construction/industrial project management platform** built by Praimo Innovation. It manages the full lifecycle of engineering projects — from project creation, blueprints, field progress tracking, materials procurement, vendor management, through to client reporting, handover, and compliance.
 
 ### Core Value Proposition
+
 Setuu bridges the gap between **field workers on construction sites** (often with poor connectivity) and **corporate stakeholders** (clients like Rieter, Hitachi, Halliburton) who need real-time, auditable visibility into project progress. It replaces WhatsApp groups, email chains, and spreadsheets with a structured, permission-controlled platform.
 
 ---
@@ -39,7 +40,7 @@ graph TB
 ### Role Access Matrix
 
 | Capability | Super Admin | Admin | PM | Employee | Vendor | Client |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| --- | :-: | :-: | :-: | :-: | :-: | :-: |
 | View projects | ❌ | All | Assigned | Assigned | Assigned | Org only |
 | Create projects | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
 | View contract values | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
@@ -61,7 +62,7 @@ graph TB
 ## 3. Screen Inventory Per Role
 
 | Role | Desktop Screens | Mobile Screens | Total | Primary Function |
-|---|:-:|:-:|:-:|---|
+| --- | :-: | :-: | :-: | --- |
 | **Super Admin** | 16 | 7 | **23** | Platform governance, multi-tenant monitoring, security |
 | **Admin** | 41 | 25 | **66** | Strategic oversight, project lifecycle, vendor management |
 | **Project Manager** | 24 | 10 | **34** | Field execution, milestones, materials, collaboration |
@@ -77,7 +78,7 @@ graph TB
 ### 4.1 Dual-Theme Philosophy
 
 | Aspect | Light Mode ("Canvas & Sheet") | Dark Mode ("CAD Blueprint") |
-|---|---|---|
+| --- | --- | --- |
 | **Metaphor** | Architectural drawing on paper | Terminal / IDE readout |
 | **Canvas** | Warm off-white `#FAF9F4` | Deep charcoal `#121411` |
 | **Cards** | Pure white `#FFFFFF`, `#E0E0E0` borders | Dark `#1F201D`, `#334155` borders |
@@ -88,7 +89,7 @@ graph TB
 ### 4.2 Color Token System (Material 3)
 
 | Token | Light | Dark | Purpose |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `surface` | `#FAF9F4` | `#121411` | Canvas base |
 | `on-surface` | `#1B1C19` | `#E3E3DE` | Primary text |
 | `primary` | `#000815` | `#AEC9EB` | Primary actions |
@@ -100,7 +101,7 @@ graph TB
 ### 4.3 Semantic Workflow Colors (8-Tone)
 
 | Status | Color | Hex | DB Mapping |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Neutral/Queue | Slate | `#64748B` | `Not Started`, Draft |
 | Active | Sky Blue | `#0284C7` | `In Progress`, Syncing |
 | Warning | Amber | `#D97706` | `On Hold`, Offline |
@@ -113,7 +114,7 @@ graph TB
 ### 4.4 Typography — Tri-Font System
 
 | Layer | Font | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | Executive | **Merriweather** (Serif) | Dashboard titles, PDF reports, formal headers |
 | Operational | **Inter** (Sans-Serif) | Tables, forms, body text, comments |
 | Technical | **JetBrains Mono** (Monospace) | Timestamps, GPS coords, file hashes, audit logs |
@@ -121,7 +122,7 @@ graph TB
 ### 4.5 Layout System
 
 | Breakpoint | Columns | Margins | Navigation |
-|---|:-:|:-:|---|
+| --- | :-: | :-: | --- |
 | Mobile (<640px) | 4 | 16px | Glassmorphic bottom nav (4-5 tabs) |
 | Tablet (640-1024px) | 8 | 24px | Collapsible 72px rail |
 | Desktop (>1024px) | 12 | 32px | Persistent 280px sidebar |
@@ -129,7 +130,7 @@ graph TB
 ### 4.6 Elevation System
 
 | Level | Description | Light | Dark |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | L0 | Canvas | `#FAF9F4` flat | `#121411` flat |
 | L1 | Card | White, 8px radius, 1px border | Navy surface, subtle border |
 | L2 | Glass | `rgba(255,255,255,0.85)` + 12px blur | `rgba(18,26,33,0.85)` + cyan edge + 12px blur |
@@ -142,7 +143,7 @@ graph TB
 ### 5.1 Super Admin — Platform Governance
 
 | Screen | Purpose | Key Data |
-|---|---|---|
+| --- | --- | --- |
 | Control Center | Real-time system health dashboard | API uptime, active users, error rates |
 | Infrastructure Command | Node topology, regional metrics | Server status, response times |
 | Organization & Subscription Hub | Multi-tenant provisioning | Org list, tiers, storage quotas |
@@ -157,6 +158,7 @@ graph TB
 ### 5.2 Admin — Organizational Command Center (66 Screens)
 
 **Key Screens:**
+
 - **Executive Dashboard**: Financial KPIs (contract values, CapEx), portfolio health, activity stream
 - **Project Tracking Hub**: Active projects directory with status, PM, dates, milestones
 - **Project Creation Wizard**: Multi-step flow (Master Data → Assignments → Config)
@@ -180,6 +182,7 @@ graph TB
 ### 5.3 Project Manager — Field Execution
 
 **Key Screens:**
+
 - **PM Command Center**: Portfolio overview, active projects, pending tasks
 - **Milestone & Task Management Hub**: Nested checklists, Kanban board, drag-reorder
 - **Fullscreen Drawing Hub**: Anti-glare dark viewport, glassmorphic markup toolbar, version history
@@ -195,6 +198,7 @@ graph TB
 ### 5.4 Employee/Engineer — Technical Execution
 
 **Key Screens:**
+
 - **Master Workbench**: Daily sprint overview, task summary, open blockers, pending reviews
 - **Multidisciplinary Task Board**: Kanban with markdown specs, checklist items
 - **Engineering Asset Hub (CAD Viewer)**: Dark inverse viewport for technical inspection
@@ -208,6 +212,7 @@ graph TB
 ### 5.5 Vendor — Supply Chain Fulfillment
 
 **Key Screens:**
+
 - **Dispatch Dashboard**: KPI stack (pending deliveries, overdue, compliance score)
 - **Material PO & Delivery Hub**: Transactional material ledger with PO tracking
 - **Delivery Proof Upload Dropzone**: Secure media upload with ClamAV scanning
@@ -219,6 +224,7 @@ graph TB
 ### 5.6 Client — Executive Briefing
 
 **Key Screens:**
+
 - **Executive Portfolio Dashboard**: Macro overview with geospatial map, capital deployment
 - **Project Briefing Hub**: Project-specific command room with live field telemetry
 - **Financials & Change Request Board**: Financial sign-off portal, variation table
@@ -282,7 +288,7 @@ erDiagram
 ### 7.1 What Exists
 
 | Component | Status | Quality |
-|---|---|---|
+| --- | --- | --- |
 | Next.js App Router structure | ✅ Exists | Properly scaffolded with route groups |
 | Supabase Auth integration | ✅ Functional | Login flow works, middleware role-checking |
 | Role-based routing middleware | ✅ Functional | Redirects users to correct role dashboards |
@@ -299,7 +305,7 @@ erDiagram
 > **The prototype is fundamentally a navigation shell with ~95% placeholder pages.**
 
 | Gap | Severity | Description |
-|---|---|---|
+| --- | --- | --- |
 | **95% of pages are placeholders** | 🔴 Critical | Most routes render a "construction" banner, no actual UI or data |
 | **Role column bug** | 🔴 Critical | `database.ts` types define `roles: string[]` (array) but auth code reads `role` (singular string) |
 | **No base migrations** | 🔴 Critical | Foundational tables (`projects`, `user_actor`) have no migration file |
@@ -320,7 +326,7 @@ erDiagram
 ### 7.3 Design vs Prototype — Side-by-Side Comparison
 
 | Design Feature | Stitch Concept | Current Prototype |
-|---|---|---|
+| --- | --- | --- |
 | **Admin Dashboard** | Financial KPIs, portfolio health chart, activity stream, storage analytics | Empty page with navigation shell |
 | **Admin Sidebar** | ~20 items (Dashboard, Projects, Materials, Drawings, Issues, Resources, Changes, Reports, Vendors, Audit, Archive, Security, Settings, Support) | ~6 generic items that don't match |
 | **Project Tracking Hub** | Data-dense table with status badges, PM names, milestone progress bars | Placeholder |
@@ -353,21 +359,27 @@ erDiagram
 ### 8.2 Navigation Structure Per Role
 
 **Super Admin Sidebar:**
+
 - Control Center, Infrastructure, Organizations, Storage Monitoring, Break-Glass Console, Break-Glass Logs, Audit Logs, Support Triage, Invite Org Admin, Platform Config
 
 **Admin Sidebar:**
+
 - Dashboard, Projects (Tracking Hub, Creation, Config, Module Flags), Users & Vendors, Materials, Drawings, Issues & Blockers, Resources & Timesheets, Change Requests, Reports, Audit Log, Support, Vendor Performance, Broadcasts, Archive, Security (Threats, Duplicates, Dropzone, Force Logout, Break-Glass), Client (Onboarding, Approvals, Moderation), Settings
 
 **PM Sidebar:**
+
 - Command Center, Active Projects (expandable), Milestones & Tasks, Drawings, Materials, Collaboration, Timesheets, Handovers & Meetings, Lessons Learned, Reporting, Offline Sync, Support
 
 **Engineer Sidebar:**
+
 - Workbench, Assigned Tasks, Engineering Hub (CAD Viewer), Peer Reviews, Issue Tracker, Timesheets, Collaboration, Team Docs & Wiki, Settings
 
 **Vendor Sidebar:**
+
 - Dispatch Dashboard, Material PO & Deliveries, Proof Upload, Task Execution, Defect & Rework, Invoicing
 
 **Client Sidebar:**
+
 - Executive Summary/Portfolio, Project Briefing, Financials, Progress Feed, Deliverables, Meetings, Handover Vault, Support
 
 ---
@@ -377,6 +389,7 @@ erDiagram
 To transform the current prototype into a faithful, functional representation of the Setuu platform:
 
 ### Phase 1: Foundation (Architecture & Shell)
+
 - Fix the `role` vs `roles` type bug
 - Create complete Supabase migrations matching db.md
 - Implement proper RLS policies from db.md
@@ -386,6 +399,7 @@ To transform the current prototype into a faithful, functional representation of
 - Build the complete design system (tokens already mostly correct)
 
 ### Phase 2: Core Screens (Admin + PM)
+
 - Admin Executive Dashboard with KPI cards and charts
 - Project Tracking Hub with data tables
 - Project Creation Wizard (full multi-step flow)
@@ -395,6 +409,7 @@ To transform the current prototype into a faithful, functional representation of
 - Progress Update Feed
 
 ### Phase 3: Feature Modules
+
 - Drawing & Media Hub (viewer + annotations)
 - Material Tracking
 - Change Request flow
@@ -403,12 +418,14 @@ To transform the current prototype into a faithful, functional representation of
 - Support Ticket system
 
 ### Phase 4: Remaining Roles
+
 - Engineer Workbench & Task Board
 - Vendor Dashboard & Invoicing
 - Client Portal & Executive Briefing
 - Super Admin Platform Management
 
 ### Phase 5: Advanced Features
+
 - Offline sync indicators
 - ClamAV file upload states
 - Break-glass security console

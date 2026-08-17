@@ -5,6 +5,7 @@
 - `[x]` completed tasks
 
 ## Phase 0: Critical Bug Fixes (Must Do First)
+
 - `[ ]` **0.1 Role Column Type Mismatch**
   - `[ ]` Fix database.ts: Change user_actor.Row.roles: string[] → role: string to match the actual user_actor table in db.md which has a singular role text column
   - `[ ]` Fix user_actor.Row: Add ALL missing columns from db.md: organization_id, created_at, display_name, is_active, failed_login_attempts, lockout_until, bio, avatar_url
@@ -84,6 +85,7 @@
     - `[ ]` Break-glass log samples
 
 ## Phase 1: Design System & Shared Component Library
+
 - `[ ]` **1.1 CSS Token Completions**
   - `[ ]` Add missing elevation tokens to globals.css:
   - `[ ]` --elevation-l0, --elevation-l1 (card shadow), --elevation-l2 (glass), --elevation-l3 (modal shadow)
@@ -176,6 +178,7 @@
   - `[ ]` Enhance BottomNav.tsx: Implement glassmorphic style (backdrop-filter: blur(12px), semi-transparent background), restrict to 4-5 tabs per role
 
 ## Phase 2: Server Actions & API Layer
+
 - `[ ]` **2.1 Existing Server Actions — Fix & Expand**
   - `[ ]` Fix projectActions.ts: Currently only handles updateProjectConfig. Needs:
   - `[ ]` createProject(formData) — full wizard data insert
@@ -278,6 +281,7 @@
   - `[ ]` getCategories() — technical/financial/safety
 
 ## Phase 3: Super Admin Role — 23 Screens
+
 - `[ ]` **3.1 Sidebar Navigation Rebuild**
   - `[ ]` Replace SuperadminSidebar.tsx items to match design exactly:
   - `[ ]` Platform:
@@ -367,6 +371,7 @@
   - `[ ]` Bottom nav: Dashboard, Orgs, Security, Support, More
 
 ## Phase 4: Admin Role — 66 Screens (Largest)
+
 - `[ ]` **4.1 Sidebar Navigation Rebuild**
   - `[ ]` Replace AdminSidebar.tsx items to match design exactly:
   - `[ ]` (No section title - primary):
@@ -588,6 +593,7 @@
   - `[ ]` FAB for primary actions ("New Project", "New Ticket")
 
 ## Phase 5: Project Manager Role — 34 Screens
+
 - `[ ]` **5.1 Sidebar Navigation Rebuild**
   - `[ ]` Replace PMSidebar.tsx items to match design:
   - `[ ]` Overview:
@@ -713,6 +719,7 @@
   - `[ ]` Bottom nav: Dashboard, Projects, Updates (camera icon), Tasks, More
 
 ## Phase 6: Employee/Engineer Role — 23 Screens
+
 - `[ ]` **6.1 Sidebar Navigation Rebuild**
   - `[ ]` Replace EngineerSidebar.tsx to match design:
   - `[ ]` (Logo: "Engineer Workbench")
@@ -792,6 +799,7 @@
   - `[ ]` Financial Blindness: Employee/Engineer screens must NEVER show contract_value, invoice amounts, or any financial data. This is enforced at both the UI level (no financial columns) and the RLS level (column-level security).
 
 ## Phase 7: Vendor Role — 17 Screens
+
 - `[ ]` **7.1 Sidebar Navigation Rebuild**
   - `[ ]` Replace VendorSidebar.tsx to match design:
   - `[ ]` (Logo: "Supply Portal" or "Vendor Portal")
@@ -838,6 +846,7 @@
   - `[ ]` Bottom nav: Dash, Items, Tasks, Defects, More
 
 ## Phase 8: Client Role — 18 Screens
+
 - `[ ]` **8.1 Sidebar Navigation Rebuild**
   - `[ ]` Replace ClientSidebar.tsx to match design:
   - `[ ]` (Logo: "[Org Name]" e.g. "Acme Corp")
@@ -914,6 +923,7 @@
   - `[ ]` Client UX Philosophy: Clients see a curated, executive-grade view. Zero technical jargon, zero internal operations. Everything is "briefing room" / "executive summary" language. Merriweather headers are used more heavily here than in any other role.
 
 ## Phase 9: Cross-Cutting Features
+
 - `[ ]` **9.1 Offline Sync Engine (Visual Indicators)**
   - `[ ]` SyncBanner.tsx overhaul: Full-width banner at top of content area showing sync status
   - `[ ]` Green: "All changes synced" with checkmark
@@ -968,6 +978,7 @@
   - `[ ]` Export package: ZIP download of all handover documents
 
 ## Phase 10: Polish & Quality
+
 - `[ ]` **10.1 Accessibility**
   - `[ ]` All interactive elements have aria-label attributes
   - `[ ]` Focus ring visible on keyboard navigation (2px outline using --primary)

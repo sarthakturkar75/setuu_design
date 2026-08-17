@@ -17,7 +17,7 @@ The platform serves **6 distinct user roles** with strict **Role-Based Access Co
 ## 2. The Six Roles & Their Screen Inventory
 
 | Role | Desktop Screens | Mobile Screens | Total | Primary Function |
-|------|:-:|:-:|:-:|---|
+| ------ | :-: | :-: | :-: | --- |
 | **Super Admin** | 16 HTML + 17 PNG | 7 HTML + 7 PNG | 23 | Platform governance, multi-tenant monitoring, security |
 | **Admin** (Praimo Leadership) | 41 HTML + 42 PNG | 25 HTML + 25 PNG | **66** | Strategic org oversight, project lifecycle, vendor mgmt |
 | **Project Manager** | 24 HTML + 24 PNG | 10 HTML + 10 PNG | 34 | Field execution, milestones, materials, collaboration |
@@ -32,6 +32,7 @@ The platform serves **6 distinct user roles** with strict **Role-Based Access Co
 ## 3. Design System & Visual Language
 
 The design system is fully specified across **4 dedicated theme files** plus 3 master spec documents:
+
 - [desktop-design-light.md](file:///Users/sarthakturkar/Documents/Praimo/setuu/stitch/setuu_design/stitch_concept_design/desktop/desktop-design-light.md)
 - [desktop-design-dark.md](file:///Users/sarthakturkar/Documents/Praimo/setuu/stitch/setuu_design/stitch_concept_design/desktop/desktop-design-dark.md)
 - [mobile-design-light.md](file:///Users/sarthakturkar/Documents/Praimo/setuu/stitch/setuu_design/stitch_concept_design/mobile/mobile-design-light.md)
@@ -44,7 +45,7 @@ The design system is fully specified across **4 dedicated theme files** plus 3 m
 The desktop theme uses a Material 3-inspired token architecture with full light/dark parity.
 
 | Token | Light Mode | Dark Mode | Purpose |
-|-------|-----------|-----------|--------|
+| ------- | ----------- | ----------- | -------- |
 | `surface` | `#FAF9F4` (warm off-white) | `#121411` (deep charcoal) | Canvas base |
 | `surface-dim` | `#DBDAD5` | `#121411` | Subdued canvas |
 | `surface-bright` | `#FAF9F4` | `#383A36` | Bright canvas areas |
@@ -86,7 +87,7 @@ The desktop theme uses a Material 3-inspired token architecture with full light/
 The mobile theme closely mirrors desktop but with minor calibration differences:
 
 | Token | Light Mode | Dark Mode | Δ vs Desktop |
-|-------|-----------|-----------|-------------|
+| ------- | ----------- | ----------- | ------------- |
 | `surface` | `#FBF9F4` | `#131411` | Slightly warmer light; slightly different dark |
 | `surface-container-lowest` | `#FFFFFF` | `#0D0F0C` | Same |
 | `surface-container-low` | `#F5F4EE` | `#1B1C19` | Same |
@@ -111,7 +112,7 @@ The mobile theme closely mirrors desktop but with minor calibration differences:
 These semantic colors are **consistent across all themes** and are used outside the M3 token system for business logic status indicators:
 
 | Status | Color Name | Hex | Light Usage | Dark Usage |
-|--------|-----------|-----|------------|------------|
+| -------- | ----------- | ----- | ------------ | ------------ |
 | Neutral/Queue | Slate | `#64748B` | Full saturation bg | 15% opacity bg fill |
 | Active | Sky Blue | `#0284C7` | Full saturation bg | 15% opacity bg fill |
 | Warning | Amber | `#D97706` | Full saturation bg | 15% opacity bg fill |
@@ -128,8 +129,9 @@ These semantic colors are **consistent across all themes** and are used outside 
 Typography tokens differ between desktop and mobile:
 
 #### Desktop Typography
+
 | Token | Font | Size | Weight | Line Height | Letter Spacing |
-|-------|------|------|--------|------------|---------------|
+| ------- | ------ | ------ | -------- | ------------ | --------------- |
 | `display-lg` | Merriweather | 40px | 700 | 48px | -0.02em |
 | `headline-lg` | Merriweather | 32px | 700 | 40px | — |
 | `headline-lg-mobile` | Merriweather | 24px | 700 | 32px | — |
@@ -141,8 +143,9 @@ Typography tokens differ between desktop and mobile:
 | `label-sm` | JetBrains Mono | 10px | 500 | 14px | 0.05em |
 
 #### Mobile Typography
+
 | Token | Font | Size | Weight | Line Height | Letter Spacing |
-|-------|------|------|--------|------------|---------------|
+| ------- | ------ | ------ | -------- | ------------ | --------------- |
 | `headline-lg` | Merriweather | 24px | 700 | 32px | — |
 | `headline-md` | Merriweather | 20px | 700 | 28px | — |
 | `title-md` | Inter | 16px | **600** | 24px | — |
@@ -157,8 +160,9 @@ Typography tokens differ between desktop and mobile:
 ### 3.5 Spacing & Layout
 
 #### Desktop Spacing
+
 | Token | Value | Usage |
-|-------|-------|-------|
+| ------- | ------- | ------- |
 | `unit` | 4px | Base spacing unit |
 | `gutter-md` | 24px | Grid gutters |
 | `margin-mobile` | 16px | Mobile breakpoint margins |
@@ -168,8 +172,9 @@ Typography tokens differ between desktop and mobile:
 | `rail-width` | 72px | Collapsed sidebar rail |
 
 #### Mobile Spacing
+
 | Token | Value | Usage |
-|-------|-------|-------|
+| ------- | ------- | ------- |
 | `grid-columns` | 4 | 4-column fluid grid |
 | `margin` | 16px | Side margins |
 | `gutter` | 12px | Column gutters |
@@ -179,8 +184,9 @@ Typography tokens differ between desktop and mobile:
 | `unit-lg` | 24px | Large spacing |
 
 ### 3.6 Border Radius (Shared)
+
 | Token | Value |
-|-------|-------|
+| ------- | ------- |
 | `sm` | 0.25rem (4px) |
 | `DEFAULT` | 0.5rem (8px) |
 | `md` | 0.75rem (12px) |
@@ -191,7 +197,7 @@ Typography tokens differ between desktop and mobile:
 ### 3.7 Elevation System (Light vs Dark)
 
 | Level | Light Mode | Dark Mode |
-|-------|-----------|----------|
+| ------- | ----------- | ---------- |
 | **L0 (Canvas)** | `#FAF9F4` flat | `#121411` / `#1B1C19` flat |
 | **L1 (Card)** | White, 8px radius, 1px `#E0E0E0` border, no shadow | Navy surface, 8px radius, 1px `#334155` border |
 | **L2 (Glass)** | `rgba(255,255,255,0.85)` + white inner border + 12px blur | `rgba(18,26,33,0.85)` + faint cyan inner border `rgba(65,190,253,0.2)` + 12px blur |
@@ -200,7 +206,7 @@ Typography tokens differ between desktop and mobile:
 ### 3.8 Dual Theme Design Philosophy
 
 | Aspect | Light Mode ("Canvas & Sheet") | Dark Mode ("CAD Blueprint") |
-|--------|------------------------------|----------------------------|
+| -------- | ------------------------------ | ---------------------------- |
 | **Metaphor** | Architectural drawing on paper | Terminal / IDE readout |
 | **Canvas** | Warm off-white `#FAF9F4` | Deep charcoal `#121411` |
 | **Cards** | Pure white `#FFFFFF` with `#E0E0E0` borders | Dark surfaces `#1F201D` with `#334155` borders |
@@ -215,7 +221,7 @@ Typography tokens differ between desktop and mobile:
 ## 4. Technology Stack (Current State)
 
 | Layer | Technology | Notes |
-|-------|-----------|-------|
+| ------- | ----------- | ------- |
 | Structure | **HTML5** | Semantic elements, each screen is a standalone file |
 | Styling | **Tailwind CSS (CDN)** | Loaded via `<script src="https://cdn.tailwindcss.com">` with inline config |
 | Icons | **Material Symbols Outlined** | Google Fonts CDN |
@@ -231,6 +237,7 @@ Typography tokens differ between desktop and mobile:
 ## 5. Screen-by-Screen Architecture
 
 ### 5.1 Super Admin
+
 ````carousel
 ![Super Admin Control Center — Mobile](/Users/sarthakturkar/.gemini/antigravity/brain/3a06dac8-8878-4853-8f3c-266e614adce9/super_admin_control_center.png)
 <!-- slide -->
@@ -246,6 +253,7 @@ Typography tokens differ between desktop and mobile:
 ````
 
 ### 5.2 Admin (Praimo Leadership)
+
 ````carousel
 ![Executive Admin Dashboard](/Users/sarthakturkar/.gemini/antigravity/brain/3a06dac8-8878-4853-8f3c-266e614adce9/executive_admin_dashboard_1.png)
 <!-- slide -->
@@ -267,6 +275,7 @@ Typography tokens differ between desktop and mobile:
 ````
 
 ### 5.3 Project Manager
+
 ````carousel
 ![PM Mobile Dashboard](/Users/sarthakturkar/.gemini/antigravity/brain/3a06dac8-8878-4853-8f3c-266e614adce9/pm_mobile_dashboard_sync_wrapper.png)
 <!-- slide -->
@@ -284,6 +293,7 @@ Typography tokens differ between desktop and mobile:
 ````
 
 ### 5.4 Employee
+
 ````carousel
 ![Engineer's Master Workbench](/Users/sarthakturkar/.gemini/antigravity/brain/3a06dac8-8878-4853-8f3c-266e614adce9/engineer_s_master_workbench.png)
 <!-- slide -->
@@ -300,6 +310,7 @@ Typography tokens differ between desktop and mobile:
 ````
 
 ### 5.5 Vendor
+
 ````carousel
 ![Vendor Mobile Dashboard](/Users/sarthakturkar/.gemini/antigravity/brain/3a06dac8-8878-4853-8f3c-266e614adce9/vendor_dispatch_dashboard_mobile_1.png)
 <!-- slide -->
@@ -314,6 +325,7 @@ Typography tokens differ between desktop and mobile:
 ````
 
 ### 5.6 Client (Executive Briefing)
+
 ````carousel
 ![Client Executive Portfolio](/Users/sarthakturkar/.gemini/antigravity/brain/3a06dac8-8878-4853-8f3c-266e614adce9/global_executive_portfolio_dashboard.png)
 <!-- slide -->
@@ -333,14 +345,16 @@ Typography tokens differ between desktop and mobile:
 ## 6. Frank Assessment — What's Real vs. What's Placeholder
 
 ### ✅ What's Well Done
+
 - **Visual fidelity is high** — These aren't wireframes. They're pixel-complete UI mockups with proper typography, spacing, elevation, and semantic colors.
 - **Design system is cohesive** — The tri-font strategy, 8-tone semantic workflow colors, and elevation system are consistently applied across all 181 screens.
 - **Role separation is clear** — Each role has distinct navigation, data visibility, and interaction patterns that reflect real RBAC thinking.
 - **Domain knowledge is deep** — The screens reference real construction industry concepts (BOL, PO numbers, ClamAV scanning, break-glass access, GPS-watermarked media, offline sync queues).
 
 ### ⚠️ What's Placeholder / Incomplete
+
 | Issue | Details |
-|-------|---------|
+| ------- | --------- |
 | **All data is hardcoded** | Every metric, table row, name, date, and chart is static placeholder text |
 | **No shared components** | Every HTML file duplicates the entire Tailwind config (~100 lines) and nav elements |
 | **No routing** | All `href="#"` — no actual navigation between screens |
@@ -359,11 +373,13 @@ Typography tokens differ between desktop and mobile:
 ## 7. Key Design Specifications for Prototype Development
 
 ### Navigation Patterns
+
 - **Desktop**: Persistent 280px sidebar (deep navy `#00213C`) + glassmorphic topbar
 - **Mobile**: Glassmorphic bottom navigation (4-5 tabs) + hamburger drawer
 - **Each role has a unique sidebar/bottom-nav configuration**
 
 ### Critical UX Patterns to Implement
+
 1. **Offline Sync Engine**: Amber pulsing border on queued items → Sky Blue sync banner → Crimson on failure
 2. **File Upload Dropzone**: Drag/drop with ClamAV scanning states (scanning → clean/infected)
 3. **Break-Glass Security**: Crimson pulsating border, forensic audit trail, emergency RLS override
@@ -372,8 +388,9 @@ Typography tokens differ between desktop and mobile:
 6. **Semantic Status Badges**: Consistent 8-tone system mapped to database enums
 
 ### Responsive Breakpoints
+
 | Breakpoint | Columns | Margins | Navigation |
-|-----------|:-------:|:-------:|-----------|
+| ----------- | :-------: | :-------: | ----------- |
 | Mobile (<640px) | 4 | 16px | Bottom nav bar |
 | Tablet (640-1024px) | 8 | 24px | Collapsible 72px rail |
 | Desktop (>1024px) | 12 | 32px | 280px sidebar |
@@ -388,18 +405,21 @@ Typography tokens differ between desktop and mobile:
 The choice of framework depends on the final deployment target. Given this is described as the "Setuu app" and the designs include both desktop and mobile:
 
 ### Option A: Next.js Web App (Responsive)
+
 - Single codebase for desktop + mobile (responsive)
 - React components extractable from the Tailwind HTML
 - File-based routing maps cleanly to role-based navigation
 - Mock API layer for prototype data
 
 ### Option B: Flutter (Cross-Platform Native)
+
 - True native mobile + web from single codebase
 - Ideal if the final product targets iOS/Android
 - Material 3 design system aligns with the M3-inspired tokens
 - Offline-first architecture built into Flutter
 
 ### Option C: Vite + React SPA
+
 - Lightweight, fast iteration
 - Good for a clickable prototype
 - Tailwind already used — minimal CSS migration

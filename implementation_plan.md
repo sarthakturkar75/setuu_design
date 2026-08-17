@@ -7,6 +7,7 @@
 ## Phase 0: Critical Bug Fixes (Must Do First)
 
 ### 0.1 Role Column Type Mismatch
+
 - [ ] **Fix `database.ts`**: Change `user_actor.Row.roles: string[]` → `role: string` to match the actual `user_actor` table in db.md which has a singular `role text` column
 - [ ] **Fix `user_actor.Row`**: Add ALL missing columns from db.md: `organization_id`, `created_at`, `display_name`, `is_active`, `failed_login_attempts`, `lockout_until`, `bio`, `avatar_url`
 - [ ] **Fix `user_actor.Row`**: Remove `user_id` (db.md uses `id` as the primary key tied to auth, not a separate `user_id`)
@@ -15,6 +16,7 @@
 - [ ] **Fix `AuthContext.tsx` L28-33**: The `.select('role')` query should also select `organization_id`, `display_name`, `avatar_url` to populate user context properly
 
 ### 0.2 Missing Supabase Migrations
+
 - [ ] **Create base migration** `20260801000000_foundation.sql` containing:
   - `user_identity` table (with `actor_id`, `email`, `phone`, `full_name`, `password_hash`, `biometric_enabled`)
   - `organizations` table (with `id`, `name`, `type`, `created_at`, `max_projects`, `subscription_tier`, `status`)
@@ -64,12 +66,14 @@
   - `log_audit_event()` trigger function
 
 ### 0.3 TypeScript Type Definitions Expansion
+
 - [ ] **Add to `database.ts`**: Type definitions for ALL 30 tables (currently only 7 are defined):
   - Missing: `organizations`, `milestones`, `milestone_checklist_items`, `updates`, `media_attachments`, `comments`, `comment_mentions`, `acknowledgements`, `notifications`, `push_tokens`, `project_materials`, `project_issues`, `change_requests`, `project_resources`, `client_approvals`, `lessons_learned`, `project_handovers`, `client_meetings`, `client_meeting_agendas`, `drawing_versions`, `project_config`, `duplicate_files`, `support_tickets`, `org_vendors`, `project_vendors`, `tasks`, `employee_timesheets`, `subscription_tiers`, `platform_settings`, `audit_log`
 - [ ] **Add custom enum types** in TypeScript: `ProjectType`, `ProjectStatus`, `DepartmentType`, `MediaType`, `AckStatus`, `NotificationType`
 - [ ] **Fix `projects` type**: Add missing columns: `client_org_id`, `assigned_pm_id`, `start_date`, `type`, `tags`, `is_archived`, `contract_value`, `client_visibility`, `po_reference`, `target_date`
 
 ### 0.4 Database Seed Data
+
 - [ ] **Create `supabase/seed.sql`** with realistic mock data:
   - 2 organizations (e.g., "Praimo Innovation", "Acme Manufacturing")
   - 1 super admin user
@@ -92,6 +96,7 @@
 ## Phase 1: Design System & Shared Component Library
 
 ### 1.1 CSS Token Completions
+
 - [ ] **Add missing elevation tokens** to `globals.css`:
   - `--elevation-l0`, `--elevation-l1` (card shadow), `--elevation-l2` (glass), `--elevation-l3` (modal shadow)
   - `--glassmorphism-bg` (light: `rgba(255,255,255,0.85)`, dark: `rgba(18,26,33,0.85)`)
@@ -102,6 +107,7 @@
 - [ ] **Add max-width token**: `--max-content-width: 1600px`
 
 ### 1.2 Tailwind Config Additions
+
 - [ ] **Add to `tailwind.config.ts`**: glassmorphism utilities (backdrop-blur classes, glass-bg, glass-border)
 - [ ] **Add animation keyframes**: `pulse-crimson` (for break-glass border), `scan-radar` (for ClamAV), `sync-spin` (for offline sync), `fade-in-up` (for card entrance)
 - [ ] **Add custom plugin**: `.glass` utility class combining backdrop-filter + semi-transparent bg + border
@@ -109,6 +115,7 @@
 ### 1.3 New Shared UI Components (Build These Before Any Pages)
 
 #### Navigation Components
+
 - [ ] **`Breadcrumb.tsx`** — Path-based breadcrumb with clickable segments (e.g., Projects > Alpha Tower > Milestones)
 - [ ] **`TabBar.tsx`** — Horizontal tab navigation for sub-views within a page (used extensively in designs: e.g., Project Config has tabs for Details, Assignments, Modules)
 - [ ] **`PageHeader.tsx`** — Standardized page header with title (Merriweather), subtitle, action buttons area, and optional breadcrumb slot
@@ -116,6 +123,7 @@
 - [ ] **`BottomSheet.tsx`** — Mobile-specific slide-up panel for forms, filters, and detail views
 
 #### Data Display Components
+
 - [ ] **Enhance `DataTable.tsx`**:
   - Add column sorting (click header to sort asc/desc)
   - Add row selection checkboxes
@@ -134,6 +142,7 @@
 - [ ] **`TimelineEntry.tsx`** — Vertical timeline item with avatar, timestamp (JetBrains Mono), caption, and media thumbnails (for progress feed)
 
 #### Form Components
+
 - [ ] **`FormField.tsx`** — Labeled input wrapper with label, helper text, error state, required indicator
 - [ ] **`TextInput.tsx`** — Standard text input with M3 outlined style
 - [ ] **`TextArea.tsx`** — Multi-line text area
@@ -147,6 +156,7 @@
 - [ ] **`WizardStepper.tsx`** — Horizontal step indicator for multi-step forms (numbered circles with connecting lines, active/completed/pending states)
 
 #### Feedback Components
+
 - [ ] **`Toast.tsx`** — Temporary notification toast (success/error/warning/info using semantic colors)
 - [ ] **`ConfirmDialog.tsx`** — Modal confirmation with destructive/safe action buttons
 - [ ] **`Drawer.tsx`** — Slide-in panel from right side for detail views (drawing history, user profile, etc.)
@@ -157,6 +167,7 @@
 - [ ] **`Spinner.tsx`** — Loading spinner with optional label
 
 #### Status & Indicator Components
+
 - [ ] **Enhance `StatusBadge.tsx`**: Map to the full 8-tone semantic system:
   - `not_started` / `draft` / `queued` → Slate
   - `in_progress` / `syncing` / `active` → Sky Blue
@@ -171,6 +182,7 @@
 - [ ] **`SeverityIndicator.tsx`** — Colored severity chips (Low/Medium/High/Critical) for issues and support tickets
 
 #### Specialized Components
+
 - [ ] **`AvatarGroup.tsx`** — Overlapping circular avatars for team/stakeholder display
 - [ ] **`KanbanColumn.tsx`** — Vertical column container for Kanban boards (To Do / In Progress / Done / Blocked)
 - [ ] **`KanbanCard.tsx`** — Draggable card within Kanban column with title, assignee avatar, priority badge
@@ -179,6 +191,7 @@
 - [ ] **`CalendarView.tsx`** — Simple month calendar grid for meetings/timesheets
 
 ### 1.4 Enhance Existing Components
+
 - [ ] **Enhance `KPICard.tsx`**: Add optional sparkline/mini-chart, add semantic color background option, add clickable link
 - [ ] **Enhance `Card.tsx`**: Add `variant` prop for `elevated` (shadow), `outlined` (border), `filled` (background tint)
 - [ ] **Enhance `SyncBanner.tsx`**: Match design — amber pulsing border on queued items, sky blue sync indicator, retry button
@@ -187,6 +200,7 @@
 - [ ] **Enhance `ActivityFeed.tsx`**: Add avatar support, media thumbnail previews, action buttons (Acknowledge, Discuss), timestamp in JetBrains Mono
 
 ### 1.5 Navigation Overhaul
+
 - [ ] **Enhance `Sidebar.tsx`**: Add collapsible sections with chevron toggle, add nested expandable items (for Active Projects list), add notification badge support on items, add bottom divider for settings/logout section
 - [ ] **Enhance `Topbar.tsx`**: Add notification bell with unread count badge, add global search input, add user avatar dropdown, add "Emergency" button (admin-only, crimson), add sync status indicator, add help icon
 - [ ] **Enhance `DashboardShell.tsx`**: Add responsive breakpoint handling (sidebar → rail → hamburger), add max content width `1600px`, add proper 32px desktop margins
@@ -197,6 +211,7 @@
 ## Phase 2: Server Actions & API Layer
 
 ### 2.1 Existing Server Actions — Fix & Expand
+
 - [ ] **Fix `projectActions.ts`**: Currently only handles `updateProjectConfig`. Needs:
   - `createProject(formData)` — full wizard data insert
   - `getProjects(filters)` — with status/PM/date filtering
@@ -213,6 +228,7 @@
   - `deactivateClientOrg(id)` — soft deactivation
 
 ### 2.2 New Server Actions Required
+
 - [ ] **`userActions.ts`**:
   - `getUsers(filters)` — filterable by role, org, status
   - `getUserById(id)` — full profile
@@ -303,7 +319,9 @@
 ## Phase 3: Super Admin Role — 23 Screens
 
 ### 3.1 Sidebar Navigation Rebuild
+
 - [ ] **Replace `SuperadminSidebar.tsx`** items to match design exactly:
+
   ```
   Platform:
     ├── Control Center          → /superadmin
@@ -323,10 +341,12 @@
   Bottom:
     └── System Health (indicator)
   ```
+
 - [ ] **Logo**: "SETUU" with "Control Center" subtitle
 - [ ] **Topbar**: Add "Global Announcement" button, notification bell with count badge, settings gear
 
 ### 3.2 Desktop Pages to Build
+
 - [ ] **`/superadmin` — Control Center Dashboard**:
   - KPI row: Active Sessions, DB Connections, API Latency, Error Rate (5xx), Sync Queue depth
   - Storage Quota donut chart
@@ -391,6 +411,7 @@
   - Global Security Events table
 
 ### 3.3 Mobile Pages
+
 - [ ] Mobile versions of: Control Center, Storage Monitoring, Telemetry, Break-Glass Logs, Invite Org Admin, Platform Config, Audit Logs
 - [ ] Bottom nav: Dashboard, Orgs, Security, Support, More
 
@@ -399,7 +420,9 @@
 ## Phase 4: Admin Role — 66 Screens (Largest)
 
 ### 4.1 Sidebar Navigation Rebuild
+
 - [ ] **Replace `AdminSidebar.tsx`** items to match design exactly:
+
   ```
   (No section title - primary):
     ├── Dashboard               → /admin
@@ -435,12 +458,14 @@
     ├── System Status           → /admin/status
     └── New Project button
   ```
+
 - [ ] **Logo**: "Setuu Enterprise" with "System Administration" subtitle
 - [ ] **Topbar**: "Emergency" button (crimson), notification bell, sync indicator, help icon, "New Project" button
 
 ### 4.2 Desktop Pages to Build
 
 #### Dashboard & Overview
+
 - [ ] **`/admin` — Executive Admin Dashboard**:
   - **Section 1**: KPI cards row — Total Contract Value (₹), Active Projects count, CapEx Run Rate, Pending Impact
   - **Section 2**: Portfolio Health Distribution (donut chart: On Track / At Risk / Delayed / Completed)
@@ -451,6 +476,7 @@
   - Actions: "New Project" button, "Generate System Report" button
 
 #### Projects Module
+
 - [ ] **`/admin/projects` — Project Tracking Hub**:
   - DataTable columns: Project ID & Name, Status (StatusBadge), Discipline, Assigned PM, Start Date, Target Date, Actions (more_vert)
   - Filter bar: Status dropdown, Discipline dropdown, PM dropdown, Date range
@@ -478,6 +504,7 @@
   - Audit Log panel showing configuration changes
 
 #### User & Vendor Management
+
 - [ ] **`/admin/users` — User & Vendor Directory**:
   - DataTable columns: (checkbox), System ID (JetBrains Mono), User (avatar + name), Role (StatusBadge), Organization, Status (Active/Inactive/Locked), Actions
   - Filter bar: Type (User/Vendor/All), Role dropdown, Status dropdown, "Clear Filters"
@@ -501,6 +528,7 @@
   - Compliance Issues by Category breakdown
 
 #### Materials & Drawings
+
 - [ ] **`/admin/materials` — Master Material Tracking**:
   - DataTable columns: (checkbox), Item Name, Project Name, Spec ID, PO Number, Supplier, Status (StatusBadge), Est. Delivery, Actual Delivery
   - Actions: "Receive PO" button, "Export" button, per-row "more_vert"
@@ -518,6 +546,7 @@
   - Version selector dropdowns
 
 #### Issues, Changes, Resources
+
 - [ ] **`/admin/issues` — Project Issues & Blockers Console**:
   - DataTable columns: ID, Title & Category, Status, Severity (color-coded), Assignee
   - Filter bar: Project, Severity, Status
@@ -541,6 +570,7 @@
   - "Log Blocker" button, "Execute Transfer" button
 
 #### Administration & Security
+
 - [ ] **`/admin/security/audit` — Organizational Audit Log**:
   - Event count header ("12,408 Events")
   - DataTable columns: Timestamp (UTC) (JetBrains Mono), Event, Actor, Table Target, Source IP
@@ -574,6 +604,7 @@
   - Audit Log link
 
 #### Client Management
+
 - [ ] **`/admin/clients/onboarding` — Client Onboarding Wizard**:
   - WizardStepper: 1 Org Profile → 2 Subscription → 3 Primary Contact → 4 Review
   - Step 1: Organization name, domain, industrial sector, branding
@@ -595,6 +626,7 @@
   - "Generate Report" button
 
 #### Other Admin Pages
+
 - [ ] **`/admin/reports` — Automated Reporting Engine**:
   - Report Configuration form: Select data modules, date range, output format (PDF/CSV)
   - Execution Schedule: "Schedule Recurring" with cron-like UI
@@ -625,6 +657,7 @@
   - Uptime percentage
 
 ### 4.3 Mobile Admin Pages (25 screens)
+
 - [ ] Mobile versions for all major admin screens with card-based layouts instead of tables
 - [ ] Bottom nav: Dashboard, Projects, Users, Security, More
 - [ ] Bottom sheet modals for forms (onboarding, invite, broadcast)
@@ -635,7 +668,9 @@
 ## Phase 5: Project Manager Role — 34 Screens
 
 ### 5.1 Sidebar Navigation Rebuild
+
 - [ ] **Replace `PMSidebar.tsx`** items to match design:
+
   ```
   Overview:
     └── Command Center          → /pm
@@ -658,9 +693,11 @@
   Bottom:
     └── View Calendar
   ```
+
 - [ ] **Topbar**: Active project dropdown selector (`Alpha Tower ▼`), sync status indicator, notification bell
 
 ### 5.2 Desktop Pages to Build
+
 - [ ] **`/pm` — PM Command Center**:
   - Active Projects summary cards (project name, status, milestone progress bar, overdue count)
   - Pending Tasks count, Open Blockers count, Pending Reviews count
@@ -759,6 +796,7 @@
   - "Export List" button
 
 ### 5.3 Mobile PM Pages (10 screens)
+
 - [ ] PM Dashboard (sync wrapper), Timeline Feed, Milestone Checklist, Drawing Viewer with annotations, Material Receipt, Offline Sync Queue, Collaboration @mentions bottom sheet, Camera-first update creator, Draft Change Request, Project Issues Logger
 - [ ] Bottom nav: Dashboard, Projects, Updates (camera icon), Tasks, More
 
@@ -767,7 +805,9 @@
 ## Phase 6: Employee/Engineer Role — 23 Screens
 
 ### 6.1 Sidebar Navigation Rebuild
+
 - [ ] **Replace `EngineerSidebar.tsx`** to match design:
+
   ```
   (Logo: "Engineer Workbench")
   
@@ -785,9 +825,11 @@
     ├── Notification Filters
     └── System Status indicator
   ```
+
 - [ ] **Topbar**: "Log Time" button, System Status health indicator, notification bell, user dropdown
 
 ### 6.2 Desktop Pages to Build
+
 - [ ] **`/engineer` — Engineer's Master Workbench**:
   - Sprint Overview: current sprint name, dates, velocity
   - Assigned Sprint Tasks summary (count by status)
@@ -844,6 +886,7 @@
   - Auto-scroll toggle
 
 ### 6.3 Mobile Engineer Pages (11 screens)
+
 - [ ] Master Workbench, Task Kanban, CAD Viewer, Peer Reviews, Issue Console, Timesheet Logger (2 variants), Collaboration Hub, Asset Hub, Preferences, Log Peek
 - [ ] Bottom nav: Workbench, Tasks, Hub, Issues, Me
 
@@ -855,7 +898,9 @@
 ## Phase 7: Vendor Role — 17 Screens
 
 ### 7.1 Sidebar Navigation Rebuild
+
 - [ ] **Replace `VendorSidebar.tsx`** to match design:
+
   ```
   (Logo: "Supply Portal" or "Vendor Portal")
   
@@ -869,9 +914,11 @@
     ├── Support                  → /vendor/support (NEW route)
     └── Settings                 → /vendor/settings (NEW route)
   ```
+
 - [ ] **Topbar**: "Log Delivery" button, sync indicator, notification bell
 
 ### 7.2 Desktop Pages to Build
+
 - [ ] **`/vendor` — Vendor Dispatch Dashboard**:
   - KPI row: Pending Deliveries, Overdue Items, Compliance Score, Active POs
   - Active Dispatch Queue table: Material/Item, PO Number, Quantity, Site Location, Target Date, Actions
@@ -901,6 +948,7 @@
   - "Submit Proof" / "Cancel" buttons
 
 ### 7.3 Mobile Vendor Pages (10 screens)
+
 - [ ] Dispatch Dashboard (2 variants), Material PO Hub, Task Execution, Defect Console, Delivery Proof upload, Invoicing tracker, Driver Delivery Capture (camera), Proof of Delivery capture, Dispatch Fulfillment Dashboard
 - [ ] Bottom nav: Dash, Items, Tasks, Defects, More
 
@@ -909,7 +957,9 @@
 ## Phase 8: Client Role — 18 Screens
 
 ### 8.1 Sidebar Navigation Rebuild
+
 - [ ] **Replace `ClientSidebar.tsx`** to match design:
+
   ```
   (Logo: "[Org Name]" e.g. "Acme Corp")
   
@@ -929,10 +979,12 @@
   Bottom:
     └── Sign Out
   ```
+
 - [ ] **Logo**: Dynamic — show the client's organization name (from `organizations.name` via auth context)
 - [ ] **Topbar**: "Generate Executive Report" button, help icon, settings gear, user avatar dropdown, notification bell
 
 ### 8.2 Desktop Pages to Build
+
 - [ ] **`/client` — Global Executive Portfolio Dashboard**:
   - Welcome header: "Welcome back, [name]" with Executive Sponsor title
   - Geospatial Portfolio Overview (map with project markers)
@@ -983,6 +1035,7 @@
   - "Raise Ticket" form
 
 ### 8.3 Mobile Client Pages (11 screens)
+
 - [ ] Executive Portfolio, Project Briefing, Progress Feed, Financials/Change Requests, Deliverables Room, Meeting Agenda, Handover Vault, Drawing Version Comparison (2 variants), Client Portal Configuration, Client Portal Initial State
 - [ ] Bottom nav: Portfolio, Progress, Deliverables, Financials, More
 
@@ -994,6 +1047,7 @@
 ## Phase 9: Cross-Cutting Features
 
 ### 9.1 Offline Sync Engine (Visual Indicators)
+
 - [ ] **`SyncBanner.tsx`** overhaul: Full-width banner at top of content area showing sync status
   - Green: "All changes synced" with checkmark
   - Amber: "You are offline — 3 changes queued" with pulsing dot
@@ -1004,6 +1058,7 @@
 - [ ] **Network detection hook**: `useOnlineStatus()` that listens to `navigator.onLine` and triggers banner
 
 ### 9.2 ClamAV File Upload States (Visual Only for Prototype)
+
 - [ ] **State machine in `FileDropzone.tsx`**:
   - `idle` → Dashed border, "Drag & drop files here or click to browse"
   - `uploading` → Progress bar, file name, percentage
@@ -1013,6 +1068,7 @@
   - `duplicate` → Amber alert, side-by-side comparison modal trigger
 
 ### 9.3 Notification System
+
 - [ ] **`NotificationDropdown.tsx`**: Dropdown from bell icon showing recent notifications
   - Grouped by type: update, comment, mention, project, system
   - Unread count badge (red circle)
@@ -1022,6 +1078,7 @@
 - [ ] **Push notification registration**: Store push tokens (placeholder for prototype)
 
 ### 9.4 Responsive & Mobile
+
 - [ ] **Glassmorphic Bottom Navigation**: Per-role tab bars with `backdrop-filter: blur(12px)`, 4-5 items max, 48px minimum touch targets
 - [ ] **Responsive DashboardShell**:
   - Desktop (>1024px): 280px persistent sidebar
@@ -1033,6 +1090,7 @@
 - [ ] **FAB (Floating Action Button)**: Primary action per role (New Project for Admin, Upload Update for PM, Log Time for Engineer, Log Delivery for Vendor)
 
 ### 9.5 Authentication & Security UI
+
 - [ ] **Login page redesign**: Match the Setuu brand (Praimo Blue background, white card, Merriweather heading)
 - [ ] **Signup page**: Registration form with role context
 - [ ] **Session timeout warning**: Modal at 25 min inactivity, auto-logout at 30 min
@@ -1041,12 +1099,14 @@
 - [ ] **Break-glass visual overlay**: When break-glass mode is active, admin sees a crimson pulsating border around their entire interface with a notification banner
 
 ### 9.6 Client Meeting Flow
+
 - [ ] **Meeting creation form**: Date, time, project, stakeholders, location/link
 - [ ] **Agenda builder**: Add/remove/reorder agenda topics with duration estimates
 - [ ] **Minutes editor**: Rich text per agenda item, action items with assignee
 - [ ] **Decision log**: Key decisions with approval status
 
 ### 9.7 Handover Workflow
+
 - [ ] **Checklist system**: Admin/PM creates handover checklist items
 - [ ] **Document upload**: Attach warranty docs, as-builts, O&M manuals
 - [ ] **Client sign-off**: Digital signature request and tracking
@@ -1057,6 +1117,7 @@
 ## Phase 10: Polish & Quality
 
 ### 10.1 Accessibility
+
 - [ ] All interactive elements have `aria-label` attributes
 - [ ] Focus ring visible on keyboard navigation (2px outline using `--primary`)
 - [ ] Color contrast ratios meet WCAG AA (4.5:1 for text, 3:1 for UI elements)
@@ -1065,6 +1126,7 @@
 - [ ] Table `scope` attributes on headers
 
 ### 10.2 Error Handling
+
 - [ ] Server Action error responses with user-friendly messages
 - [ ] Form validation with inline error messages (crimson text below field)
 - [ ] Network error fallback UI ("Something went wrong. Please try again.")
@@ -1072,11 +1134,13 @@
 - [ ] Empty state illustrations for every data-dependent page
 
 ### 10.3 Loading States
+
 - [ ] Skeleton screens matching exact layout for: Dashboard KPIs, DataTables, Project cards, Timeline entries, Drawing viewer
 - [ ] Button loading states (spinner replacing text)
 - [ ] Page transition animations (`fade-in-up` for card entrance)
 
 ### 10.4 Micro-Interactions
+
 - [ ] Hover effects on cards (subtle elevation increase)
 - [ ] Active/pressed states on buttons
 - [ ] Smooth sidebar section collapse/expand (150ms ease-out)
@@ -1086,11 +1150,13 @@
 - [ ] Checkbox check animation
 
 ### 10.5 Print & Export
+
 - [ ] Print-optimized CSS for audit logs, reports, timesheets
 - [ ] CSV export functionality for all DataTables
 - [ ] PDF generation trigger (placeholder endpoint for prototype)
 
 ### 10.6 Theme Finalization
+
 - [ ] Verify all 30+ pages look correct in BOTH light and dark themes
 - [ ] Semantic status badge contrast in both themes
 - [ ] Glassmorphism rendering in both themes
@@ -1102,7 +1168,7 @@
 ## Summary: Total Scope
 
 | Category | Count |
-|---|:-:|
+| --- | :-: |
 | **Bug fixes** | 6 |
 | **Migration files to create** | 5 |
 | **TypeScript type definitions to add/fix** | 30 tables |
