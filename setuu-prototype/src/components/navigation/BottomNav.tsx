@@ -15,8 +15,8 @@ export interface BottomNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function BottomNav({ items, activePath, className, ...props }: BottomNavProps) {
   return (
-    <div className={cn("fixed bottom-0 left-0 right-0 h-16 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-around z-50 lg:hidden", className)} {...props}>
-      {items.map((item) => {
+    <div className={cn("fixed bottom-0 left-0 right-0 h-16 glass flex items-center justify-around z-50 md:hidden", className)} {...props}>
+      {items.slice(0, 5).map((item) => {
         const isActive = activePath.startsWith(item.href)
         return (
           <Link

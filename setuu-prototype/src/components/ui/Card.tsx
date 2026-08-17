@@ -1,19 +1,21 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
+export type CardVariant = "elevated" | "outlined" | "filled"
+
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  elevation?: 1 | 2 | 3;
+  variant?: CardVariant;
 }
 
-export function Card({ className, elevation = 1, ...props }: CardProps) {
+export function Card({ className, variant = "elevated", ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-xl border border-outline-variant bg-surface-container-lowest text-on-surface",
+        "rounded-xl text-on-surface transition-shadow",
         {
-          "shadow-none": elevation === 1,
-          "shadow-md backdrop-blur-md bg-opacity-90": elevation === 2,
-          "shadow-xl": elevation === 3,
+          "shadow-elevation-l1 bg-surface-container-lowest border border-outline-variant": variant === "elevated",
+          "border border-outline-variant bg-transparent": variant === "outlined",
+          "bg-surface-container border-none shadow-none": variant === "filled",
         },
         className
       )}

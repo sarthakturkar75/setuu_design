@@ -1,0 +1,261 @@
+"use client";
+
+import { PageHeader } from "@/components/ui/PageHeader";
+import { WizardStepper } from "@/components/ui/WizardStepper";
+import { Card } from "@/components/ui/Card";
+import { TextInput } from "@/components/ui/TextInput";
+import { SelectMenu } from "@/components/ui/SelectMenu";
+import { ArrowLeft, Rocket, UploadCloud, Building2, ShieldCheck, DollarSign, Users, Mail, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+export default function ClientOnboardingPage() {
+  const [activeStep, setActiveStep] = useState(1);
+  const router = useRouter();
+
+  const steps = [
+    { id: 1, title: "Organization Profile", icon: <Building2 className="w-4 h-4" /> },
+    { id: 2, title: "Subscription & Limits", icon: <DollarSign className="w-4 h-4" /> },
+    { id: 3, title: "Primary Contact", icon: <Users className="w-4 h-4" /> },
+    { id: 4, title: "Review & Launch", icon: <Rocket className="w-4 h-4" /> },
+  ];
+
+  return (
+    <div className="flex flex-col h-full bg-surface">
+      <PageHeader 
+        title="Client Onboarding Wizard" 
+        subtitle="Provision a new isolated client organization environment"
+        breadcrumb={
+          <div className="flex items-center gap-2 text-sm text-on-surface-variant">
+            <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
+            <span>/</span>
+            <span className="text-on-surface font-medium">Clients</span>
+            <span>/</span>
+            <span className="text-on-surface font-medium">Onboarding</span>
+          </div>
+        }
+        actions={
+          <Link href="/admin/users" className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors">
+            <ArrowLeft className="w-4 h-4" />
+            Cancel
+          </Link>
+        }
+      />
+      
+      <div className="flex-1 overflow-y-auto p-6 max-w-[1200px] mx-auto w-full flex flex-col gap-8">
+        
+        <WizardStepper steps={steps} activeStep={activeStep} />
+
+        <Card className="p-8 shadow-elevation-l1">
+          {activeStep === 1 && (
+            <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+              <h2 className="text-xl font-bold text-on-surface mb-2">Organization Profile</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-on-surface">Organization Name <span className="text-crimson">*</span></label>
+                  <TextInput placeholder="e.g., Apex Construction Partners" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-on-surface">Primary Domain <span className="text-crimson">*</span></label>
+                  <TextInput placeholder="e.g., apexbuild.com" />
+                  <span className="text-xs text-on-surface-variant">Used for SSO and email whitelisting.</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-on-surface">Industrial Sector</label>
+                  <SelectMenu 
+                    options={[
+                      { label: "Commercial Real Estate", value: "cre" },
+                      { label: "Heavy Infrastructure", value: "heavy" },
+                      { label: "Residential Development", value: "res" },
+                      { label: "Government / Public Sector", value: "gov" },
+                    ]}
+                    value="cre"
+                    onChange={() => {}}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 mt-4">
+                <label className="text-sm font-semibold text-on-surface">Corporate Branding (Optional)</label>
+                <div className="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-surface-variant/30 transition-colors cursor-pointer">
+                  <UploadCloud className="w-8 h-8 text-on-surface-variant mb-2" />
+                  <span className="font-medium text-on-surface">Upload Company Logo</span>
+                  <span className="text-xs text-on-surface-variant mt-1">PNG, JPG up to 5MB. Transparent background recommended.</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeStep === 2 && (
+            <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+              <h2 className="text-xl font-bold text-on-surface mb-2">Subscription Tier & Project Limits</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                {/* Starter Tier */}
+                <div className="p-6 rounded-xl border border-outline-variant bg-surface hover:border-primary/50 transition-colors cursor-pointer flex flex-col gap-4">
+                  <div className="flex flex-col">
+                    <span className="text-xl font-bold text-on-surface">Starter</span>
+                    <span className="text-sm text-on-surface-variant mt-1">For small contractors</span>
+                  </div>
+                  <div className="text-3xl font-bold text-primary my-2 font-jetbrains">$499<span className="text-sm text-on-surface-variant font-medium">/mo</span></div>
+                  <ul className="flex flex-col gap-2 text-sm text-on-surface">
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Up to 3 Active Projects</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> 10 Admin Users</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> 500GB Storage</li>
+                  </ul>
+                </div>
+
+                {/* Enterprise Tier */}
+                <div className="p-6 rounded-xl border-2 border-primary bg-primary/5 shadow-elevation-l1 cursor-pointer flex flex-col gap-4 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-primary text-on-primary text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-bl-lg">Recommended</div>
+                  <div className="flex flex-col">
+                    <span className="text-xl font-bold text-primary">Enterprise</span>
+                    <span className="text-sm text-on-surface-variant mt-1">Full-scale portfolio management</span>
+                  </div>
+                  <div className="text-3xl font-bold text-primary my-2 font-jetbrains">$1,999<span className="text-sm text-on-surface-variant font-medium">/mo</span></div>
+                  <ul className="flex flex-col gap-2 text-sm text-on-surface">
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Unlimited Projects</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Unlimited Users</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> 10TB Storage</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> White-glove Support</li>
+                  </ul>
+                </div>
+
+                {/* Custom Tier */}
+                <div className="p-6 rounded-xl border border-outline-variant bg-surface hover:border-primary/50 transition-colors cursor-pointer flex flex-col gap-4">
+                  <div className="flex flex-col">
+                    <span className="text-xl font-bold text-on-surface">Custom Build</span>
+                    <span className="text-sm text-on-surface-variant mt-1">Mega-projects & consortia</span>
+                  </div>
+                  <div className="text-3xl font-bold text-on-surface my-2 font-jetbrains">Contact Sales</div>
+                  <ul className="flex flex-col gap-2 text-sm text-on-surface">
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Dedicated Instances</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Custom SLA</li>
+                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> On-Premise Sync</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          {activeStep === 3 && (
+            <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+              <h2 className="text-xl font-bold text-on-surface mb-2">Primary Organization Admin</h2>
+              
+              <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 mb-4">
+                <ShieldCheck className="w-6 h-6 text-primary shrink-0 mt-0.5" />
+                <p className="text-sm text-on-surface leading-relaxed">
+                  This user will receive the initial login credentials and will have full administrative rights over the new Organization. They will be responsible for inviting the rest of their team.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-on-surface">First Name <span className="text-crimson">*</span></label>
+                  <TextInput placeholder="e.g., Robert" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-semibold text-on-surface">Last Name <span className="text-crimson">*</span></label>
+                  <TextInput placeholder="e.g., House" />
+                </div>
+                <div className="flex flex-col gap-2 md:col-span-2">
+                  <label className="text-sm font-semibold text-on-surface">Corporate Email <span className="text-crimson">*</span></label>
+                  <TextInput placeholder="e.g., rhouse@apexbuild.com" type="email" />
+                </div>
+                <div className="flex flex-col gap-2 md:col-span-2">
+                  <label className="text-sm font-semibold text-on-surface">Contact Phone</label>
+                  <TextInput placeholder="+1 (555) 123-4567" type="tel" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeStep === 4 && (
+            <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold text-on-surface">Review & Launch</h2>
+                <span className="px-3 py-1 bg-emerald-500/10 text-semantic-emerald text-sm font-bold rounded-full">Ready for Provisioning</span>
+              </div>
+              
+              <div className="flex flex-col gap-6 p-6 rounded-xl border border-outline-variant bg-surface-variant/20">
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-bold text-primary uppercase tracking-wider">Organization Identity</span>
+                  <div className="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
+                    <span className="text-on-surface-variant">Name</span>
+                    <span className="font-semibold text-on-surface">Apex Construction Partners</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-outline-variant pb-2">
+                    <span className="text-on-surface-variant">Domain</span>
+                    <span className="font-semibold text-on-surface">apexbuild.com</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-bold text-primary uppercase tracking-wider">Subscription</span>
+                  <div className="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
+                    <span className="text-on-surface-variant">Selected Tier</span>
+                    <span className="font-semibold text-on-surface">Enterprise ($1,999/mo)</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-bold text-primary uppercase tracking-wider">Primary Admin</span>
+                  <div className="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
+                    <span className="text-on-surface-variant">User</span>
+                    <span className="font-semibold text-on-surface">Robert House (rhouse@apexbuild.com)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 mt-2">
+                <input type="checkbox" id="terms" className="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary" />
+                <label htmlFor="terms" className="text-sm text-on-surface-variant">I confirm these details are accurate and authorize billing initiation.</label>
+              </div>
+            </div>
+          )}
+
+          {/* Wizard Navigation */}
+          <div className="flex items-center justify-between mt-10 pt-6 border-t border-outline-variant">
+            <button 
+              onClick={() => setActiveStep(prev => Math.max(1, prev - 1))}
+              disabled={activeStep === 1}
+              className="px-6 py-2.5 border border-outline-variant bg-surface text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Back
+            </button>
+            <div className="flex gap-4">
+              <button 
+                onClick={() => router.push("/admin/users")}
+                className="px-6 py-2.5 text-on-surface-variant text-sm font-semibold hover:text-on-surface transition-colors"
+              >
+                Cancel
+              </button>
+              {activeStep < 4 ? (
+                <button 
+                  onClick={() => setActiveStep(prev => Math.min(4, prev + 1))}
+                  className="px-6 py-2.5 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors shadow-elevation-l1"
+                >
+                  Continue to {steps[activeStep].title}
+                </button>
+              ) : (
+                <button 
+                  onClick={() => router.push("/admin/users")}
+                  className="flex items-center gap-2 px-8 py-2.5 bg-semantic-emerald text-white rounded-lg text-sm font-bold hover:bg-semantic-emerald/90 transition-colors shadow-elevation-l2"
+                >
+                  <Rocket className="w-4 h-4" />
+                  Provision Environment
+                </button>
+              )}
+            </div>
+          </div>
+
+        </Card>
+
+      </div>
+    </div>
+  );
+}

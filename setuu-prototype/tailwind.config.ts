@@ -114,8 +114,64 @@ const config: Config = {
         inter: ["var(--font-inter)"],
         "jetbrains-mono": ["var(--font-jetbrains-mono)"],
       },
+      boxShadow: {
+        'elevation-l0': 'var(--elevation-l0)',
+        'elevation-l1': 'var(--elevation-l1)',
+        'elevation-l2': 'var(--elevation-l2)',
+        'elevation-l3': 'var(--elevation-l3)',
+      },
+      transitionDuration: {
+        'fast': 'var(--duration-fast)',
+        'normal': 'var(--duration-normal)',
+        'slow': 'var(--duration-slow)',
+      },
+      spacing: {
+        'sidebar': 'var(--space-sidebar)',
+        'rail': 'var(--space-rail)',
+        'margin-desktop': 'var(--space-margin-desktop)',
+        'margin-tablet': 'var(--space-margin-tablet)',
+        'margin-mobile': 'var(--space-margin-mobile)',
+      },
+      maxWidth: {
+        'content': 'var(--max-content-width)',
+      },
+      keyframes: {
+        'pulse-crimson': {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(220, 38, 38, 0.7)' },
+          '50%': { boxShadow: '0 0 0 10px rgba(220, 38, 38, 0)' },
+        },
+        'scan-radar': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        'sync-spin': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        }
+      },
+      animation: {
+        'pulse-crimson': 'pulse-crimson 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'scan-radar': 'scan-radar 2s linear infinite',
+        'sync-spin': 'sync-spin 1s linear infinite',
+        'fade-in-up': 'fade-in-up 0.3s ease-out forwards',
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: any) {
+      addUtilities({
+        '.glass': {
+          'backdrop-filter': 'blur(var(--glassmorphism-blur))',
+          '-webkit-backdrop-filter': 'blur(var(--glassmorphism-blur))',
+          'background-color': 'var(--glassmorphism-bg)',
+          'border': '1px solid var(--glassmorphism-border)',
+        },
+      })
+    }
+  ],
 };
 export default config;

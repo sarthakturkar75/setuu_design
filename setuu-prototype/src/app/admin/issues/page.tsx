@@ -1,0 +1,255 @@
+"use client";
+
+import { PageHeader } from "@/components/ui/PageHeader";
+import { FilterBar } from "@/components/ui/FilterBar";
+import { DataTable } from "@/components/ui/DataTable";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { Card } from "@/components/ui/Card";
+import { SelectMenu } from "@/components/ui/SelectMenu";
+import { TextInput } from "@/components/ui/TextInput";
+import { Search, AlertOctagon, User, Clock, ArrowRight, ShieldAlert, CheckCircle2, MessageSquare } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+
+const mockIssues = [
+  { id: "ISS-2026-441", title: "Core Drill Hit Unmarked Rebar", category: "Safety / Structural", status: "Open", severity: "Critical", assignee: "Sarah Jenkins", date: "Oct 16, 2026" },
+  { id: "ISS-2026-440", title: "HVAC Unit Delivery Delayed by 2 Weeks", category: "Supply Chain", status: "In Progress", severity: "High", assignee: "Mike Torres", date: "Oct 15, 2026" },
+  { id: "ISS-2026-439", title: "Permit Renewal Required for Zone B", category: "Compliance", status: "Resolved", severity: "Medium", assignee: "Elena Rostova", date: "Oct 10, 2026" },
+  { id: "ISS-2026-438", title: "Water pooling in basement level 3", category: "Site Conditions", status: "Open", severity: "High", assignee: "David Chen", date: "Oct 14, 2026" },
+  { id: "ISS-2026-437", title: "Contractor dispute regarding overtime pay", category: "Labor Relations", status: "Escalated", severity: "Critical", assignee: "Admin Team", date: "Oct 12, 2026" },
+];
+
+export default function IssuesConsolePage() {
+  const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
+
+  const selectedIssue = mockIssues.find(i => i.id === selectedIssueId);
+
+  const getSeverityBadge = (severity: string) => {
+    switch(severity) {
+      case "Critical": return <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-crimson/10 text-crimson border border-crimson/20"><AlertOctagon className="w-3 h-3" /> Critical</span>;
+      case "High": return <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-semantic-amber/10 text-semantic-amber border border-semantic-amber/20">High</span>;
+      case "Medium": return <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-sky/10 text-sky border border-sky/20">Medium</span>;
+      default: return <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-surface-variant text-on-surface-variant">Low</span>;
+    }
+  };
+
+  const columns = [
+    { 
+      key: "id_title", 
+      header: "Issue & Category", 
+      sortable: true,
+      cell: (row: any) => (
+        <div className="flex flex-col">
+          <span className="font-semibold text-on-surface line-clamp-1">{row.title}</span>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-xs font-jetbrains text-primary">{row.id}</span>
+            <span className="text-xs text-on-surface-variant/50">•</span>
+            <span className="text-xs text-on-surface-variant">{row.category}</span>
+          </div>
+        </div>
+      )
+    },
+    { 
+      key: "severity", 
+      header: "Severity", 
+      sortable: true,
+      cell: (row: any) => getSeverityBadge(row.severity)
+    },
+    { 
+      key: "status", 
+      header: "Status",
+      cell: (row: any) => (
+        <StatusBadge 
+          tone={row.status === "Resolved" ? "emerald" : row.status === "Escalated" ? "crimson" : row.status === "In Progress" ? "sky" : "slate"} 
+          label={row.status} 
+        />
+      )
+    },
+    { 
+      key: "assignee", 
+      header: "Assignee", 
+      cell: (row: any) => (
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+            <span className="text-[10px] font-bold text-primary">{row.assignee.charAt(0)}</span>
+          </div>
+          <span className="text-sm font-medium text-on-surface-variant">{row.assignee}</span>
+        </div>
+      )
+    },
+    { 
+      key: "date", 
+      header: "Logged Date", 
+      sortable: true,
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.date}</span>
+    },
+    { 
+      key: "actions", 
+      header: "", 
+      cell: (row: any) => (
+        <button 
+          onClick={() => setSelectedIssueId(row.id)}
+          className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+        >
+          Inspect <ArrowRight className="w-4 h-4" />
+        </button>
+      )
+    }
+  ];
+
+  return (
+    <div className="flex flex-col h-full bg-surface">
+      <PageHeader 
+        title="Project Issues & Blockers Console" 
+        subtitle="Track, escalate, and resolve impediments across the portfolio"
+        breadcrumb={
+          <div className="flex items-center gap-2 text-sm text-on-surface-variant">
+            <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
+            <span>/</span>
+            <span className="text-on-surface font-medium">Issues</span>
+          </div>
+        }
+        actions={
+          <button className="flex items-center gap-2 px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson/90 transition-colors shadow-elevation-l1">
+            <AlertOctagon className="w-4 h-4" />
+            Log Global Blocker
+          </button>
+        }
+      />
+      
+      <div className="flex-1 overflow-hidden flex max-w-[1800px] mx-auto w-full">
+        
+        {/* Main List Area */}
+        <div className={`flex-1 flex flex-col p-6 overflow-y-auto transition-all ${selectedIssueId ? 'hidden xl:flex xl:w-2/3' : 'w-full'}`}>
+          <FilterBar onClear={() => {}} onApply={() => {}}>
+            <div className="w-full sm:w-64 relative">
+              <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
+              <TextInput placeholder="Search issue ID or keywords..." className="pl-9" />
+            </div>
+            <SelectMenu 
+              options={[
+                { label: "All Severities", value: "" },
+                { label: "Critical", value: "critical" },
+                { label: "High", value: "high" },
+              ]}
+              value=""
+              onChange={() => {}}
+            />
+            <SelectMenu 
+              options={[
+                { label: "All Statuses", value: "" },
+                { label: "Open", value: "open" },
+                { label: "In Progress", value: "ip" },
+                { label: "Escalated", value: "escalated" },
+              ]}
+              value=""
+              onChange={() => {}}
+            />
+          </FilterBar>
+
+          <Card className="mt-6 flex-1 min-h-[400px]">
+            <DataTable 
+              data={mockIssues}
+              columns={columns}
+              getRowId={(row: any) => row.id}
+            />
+          </Card>
+        </div>
+
+        {/* Issue Details Slide-out Panel */}
+        {selectedIssueId && selectedIssue && (
+          <div className="w-full xl:w-1/3 border-l border-outline-variant bg-surface flex flex-col shadow-elevation-l3 xl:shadow-none animate-in slide-in-from-right-4 duration-300">
+            <div className="p-6 border-b border-outline-variant flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <span className="font-jetbrains text-primary font-bold">{selectedIssue.id}</span>
+                <button 
+                  onClick={() => setSelectedIssueId(null)}
+                  className="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors xl:hidden"
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
+              <h2 className="text-xl font-bold text-on-surface leading-tight">{selectedIssue.title}</h2>
+              
+              <div className="flex items-center gap-3">
+                {getSeverityBadge(selectedIssue.severity)}
+                <StatusBadge 
+                  tone={selectedIssue.status === "Resolved" ? "emerald" : selectedIssue.status === "Escalated" ? "crimson" : "slate"} 
+                  label={selectedIssue.status} 
+                />
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Assignee</span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <User className="w-4 h-4 text-primary" />
+                    <span className="font-medium text-on-surface">{selectedIssue.assignee}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Date Logged</span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Clock className="w-4 h-4 text-primary" />
+                    <span className="font-medium text-on-surface font-jetbrains">{selectedIssue.date}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Description</span>
+                <div className="p-4 rounded-lg bg-surface-variant/30 border border-outline-variant text-sm text-on-surface leading-relaxed">
+                  During routine structural assessments on Level 2, the core drilling team intersected with unmarked rebar, causing drill damage and halting progress in Sector 4. Structural engineer evaluation required before proceeding.
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Activity Log</span>
+                <div className="flex flex-col gap-4 relative before:absolute before:inset-y-0 before:left-3.5 before:w-px before:bg-outline-variant ml-1">
+                  
+                  <div className="flex gap-4 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-surface border border-outline-variant flex items-center justify-center shrink-0 mt-0.5">
+                      <MessageSquare className="w-4 h-4 text-on-surface-variant" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-on-surface">Sarah Jenkins <span className="font-normal text-on-surface-variant">added a comment</span></span>
+                      <span className="text-xs text-on-surface-variant mt-0.5">Oct 16, 2026 - 14:30 UTC</span>
+                      <p className="text-sm text-on-surface mt-2 bg-surface-variant/50 p-3 rounded-lg">Structural assessment booked for tomorrow morning. Pausing all work in Sector 4.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-crimson/10 border border-crimson/20 flex items-center justify-center shrink-0 mt-0.5">
+                      <ShieldAlert className="w-4 h-4 text-crimson" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-on-surface">System <span className="font-normal text-on-surface-variant">escalated severity to Critical</span></span>
+                      <span className="text-xs text-on-surface-variant mt-0.5">Oct 16, 2026 - 10:15 UTC</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div className="p-6 border-t border-outline-variant bg-surface flex flex-col sm:flex-row gap-3">
+              <button className="flex-1 px-4 py-2 bg-surface text-primary border border-outline-variant rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors flex items-center justify-center gap-2">
+                <CheckCircle2 className="w-4 h-4" />
+                Mark Resolved
+              </button>
+              <button className="flex-1 px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson/90 transition-colors flex items-center justify-center gap-2">
+                <AlertOctagon className="w-4 h-4" />
+                Escalate
+              </button>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}

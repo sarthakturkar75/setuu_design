@@ -1,5 +1,7 @@
 import React from "react";
-import { UserCircleIcon, ClockIcon } from "lucide-react";
+import { UserCircleIcon, ClockIcon, MessageSquare, CheckCircle } from "lucide-react";
+import { AvatarGroup } from "./AvatarGroup";
+import { cn } from "@/lib/utils";
 
 export interface ActivityItem {
   id: string;
@@ -7,10 +9,12 @@ export interface ActivityItem {
   content: string;
   timestamp: string;
   author_name?: string;
+  author_avatar?: string;
   media?: { url: string; type: string }[];
+  requiresAction?: boolean;
 }
 
-export function ActivityFeed({ items }: { items: ActivityItem[] }) {
+export function ActivityFeed({ items, onAcknowledge, onDiscuss }: { items: ActivityItem[], onAcknowledge?: (id: string) => void, onDiscuss?: (id: string) => void }) {
   if (!items || items.length === 0) {
     return (
       <div className="py-8 text-center text-on-surface-variant border border-dashed border-outline-variant rounded-xl bg-surface-container-lowest">
@@ -33,12 +37,18 @@ export function ActivityFeed({ items }: { items: ActivityItem[] }) {
           <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-outline-variant bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <UserCircleIcon className="w-5 h-5 text-on-surface-variant" />
+                {item.author_avatar ? (
+                  <AvatarGroup users={[{ id: item.id, name: item.author_name || "System", avatarUrl: item.author_avatar }]} size="sm" max={1} />
+                ) : (
+                  <UserCircleIcon className="w-5 h-5 text-on-surface-variant" />
+                )}
                 <span className="font-semibold text-sm text-on-surface">{item.author_name || "System"}</span>
               </div>
-              <div className="flex items-center gap-1 text-xs text-on-surface-variant font-jetbrains-mono">
-                <ClockIcon className="w-3.5 h-3.5" />
-                {new Date(item.timestamp).toLocaleString()}
+              <div className="flex items-center gap-1 text-xs text-on-surface-variant font-jetbrains-mono tracking-tight">
+                <ClockIcon className="w-3 h-3" />
+                {new Date(item.timestamp).toLocaleString(undefined, { 
+                   month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+                })}
               </div>
             </div>
             
@@ -54,6 +64,25 @@ export function ActivityFeed({ items }: { items: ActivityItem[] }) {
                     <img src={m.url} alt="Attachment" className="object-cover w-full h-full hover:scale-105 transition-transform" />
                   </div>
                 ))}
+              </div>
+            )}
+
+            {item.requiresAction && (
+              <div className="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-end gap-2">
+                <button 
+                  onClick={() => onDiscuss?.(item.id)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-surface-variant text-on-surface-variant hover:bg-outline-variant/30 transition-colors"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  Discuss
+                </button>
+                <button 
+                  onClick={() => onAcknowledge?.(item.id)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-semantic-royal-bg text-semantic-royal-on hover:bg-semantic-royal-bg/90 transition-colors"
+                >
+                  <CheckCircle className="w-3.5 h-3.5" />
+                  Acknowledge
+                </button>
               </div>
             )}
           </div>

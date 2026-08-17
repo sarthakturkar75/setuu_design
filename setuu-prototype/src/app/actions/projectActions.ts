@@ -3,6 +3,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Database } from "@/types/database";
+
+type Project = Database["public"]["Tables"]["projects"]["Row"];
 
 export async function createProject(formData: FormData) {
   const supabase = await createClient();
@@ -63,11 +66,57 @@ export async function updateProjectConfig(formData: FormData) {
     })
     .eq("id", id);
 
-  if (error) {
-    return { success: false, error: error.message };
-  }
+  if (error) return { success: false, error: error.message };
 
   revalidatePath(`/admin/projects/${id}`);
   revalidatePath(`/admin/projects/${id}/config`);
+  return { success: true };
+}
+
+export async function getProjects(filters?: { status?: string, pm_id?: string }) {
+  const supabase = await createClient();
+  let query = supabase.from("projects").select("*");
+  
+  if (filters?.status) query = query.eq("status", filters.status);
+  if (filters?.pm_id) query = query.eq("assigned_pm_id", filters.pm_id);
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return data as Project[];
+}
+
+export async function getProjectById(id: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("id", id)
+    .single();
+    
+  if (error) throw error;
+  return data as Project;
+}
+
+export async function archiveProject(id: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("projects")
+    .update({ is_archived: true })
+    .eq("id", id);
+    
+  if (error) return { success: false, error: error.message };
+  revalidatePath("/admin/projects");
+  return { success: true };
+}
+
+export async function deleteProject(id: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", id);
+    
+  if (error) return { success: false, error: error.message };
+  revalidatePath("/admin/projects");
   return { success: true };
 }

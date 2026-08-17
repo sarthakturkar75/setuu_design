@@ -36,7 +36,7 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        "w-[280px] bg-primary-container flex-shrink-0 flex flex-col h-full border-r border-outline-variant/10 shadow-xl z-40",
+        "w-sidebar md:w-rail lg:w-sidebar group/sidebar bg-primary-container flex-shrink-0 flex flex-col h-full border-r border-outline-variant/10 shadow-elevation-l2 z-40 transition-all duration-normal overflow-x-hidden",
         className
       )}
       {...props}
@@ -46,7 +46,7 @@ export function Sidebar({
         <div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center font-merriweather font-bold text-white shadow-sm border border-white/5 shrink-0">
           {logoText.substring(0, 2).toUpperCase()}
         </div>
-        <div className="overflow-hidden">
+        <div className="overflow-hidden md:hidden lg:block">
           <h1 className="font-merriweather font-bold text-white text-lg leading-tight tracking-wide truncate">
             {logoText}
           </h1>
@@ -84,7 +84,7 @@ export function Sidebar({
           className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-[#6f89a9] hover:bg-white/5 hover:text-white transition-colors w-full text-left group"
         >
            <LogOutIcon className="w-5 h-5 opacity-70 group-hover:opacity-100" />
-           Logout
+           <span className="md:hidden lg:block">Logout</span>
         </Link>
       </div>
     </aside>
@@ -110,17 +110,17 @@ function SidebarItem({ item, activePath }: { item: NavItem; activePath: string }
         >
           <div className="flex items-center gap-3">
             {item.icon && <span className="opacity-70 group-hover:opacity-100">{item.icon}</span>}
-            {item.label}
+            <span className="md:hidden lg:block">{item.label}</span>
           </div>
           <ChevronDownIcon
             className={cn(
-              "w-4 h-4 transition-transform duration-200",
+              "w-4 h-4 transition-transform duration-200 md:hidden lg:block",
               isOpen && "rotate-180"
             )}
           />
         </button>
         {isOpen && (
-          <ul className="pl-11 pr-3 py-1 flex flex-col gap-1 border-l border-white/10 ml-6 mt-1">
+          <ul className="pl-11 pr-3 py-1 flex flex-col gap-1 border-l border-white/10 ml-6 mt-1 md:hidden lg:flex">
             {item.items.map((subItem, idx) => {
               const isSubActive = subItem.href && (activePath === subItem.href || activePath.startsWith(subItem.href));
               return (
@@ -159,8 +159,8 @@ function SidebarItem({ item, activePath }: { item: NavItem; activePath: string }
             {item.icon}
           </span>
         )}
-        {item.label}
-        {item.badge && <span className="ml-auto">{item.badge}</span>}
+        <span className="md:hidden lg:block">{item.label}</span>
+        {item.badge && <span className="ml-auto md:hidden lg:block">{item.badge}</span>}
       </Link>
     </li>
   );

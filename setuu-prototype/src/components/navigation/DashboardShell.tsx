@@ -5,10 +5,12 @@ import { usePathname } from "next/navigation";
 export function DashboardShell({
   sidebar,
   topbar,
+  bottomNav,
   children,
 }: {
   sidebar: (props: { activePath: string; onClick?: () => void }) => React.ReactNode;
   topbar: (props: { onMenuClick: () => void }) => React.ReactNode;
+  bottomNav?: (props: { onMenuClick: () => void }) => React.ReactNode;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -38,12 +40,17 @@ export function DashboardShell({
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden pb-16 md:pb-0">
         {topbar({ onMenuClick: () => setIsMobileMenuOpen(true) })}
-        <main className="flex-1 overflow-y-auto bg-surface-container-lowest relative">
-          {children}
+        <main className="flex-1 overflow-y-auto bg-surface-container-lowest relative p-margin-mobile md:p-margin-tablet lg:p-margin-desktop">
+          <div className="max-w-content mx-auto h-full">
+            {children}
+          </div>
         </main>
       </div>
+
+      {/* Bottom Nav */}
+      {bottomNav && bottomNav({ onMenuClick: () => setIsMobileMenuOpen(true) })}
     </div>
   );
 }

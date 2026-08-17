@@ -75,6 +75,27 @@
     --semantic-crimson: #dc2626;
     --semantic-crimson-bg: #dc2626;
     --semantic-crimson-on: #ffffff;
+
+    --elevation-l0: none;
+    --elevation-l1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --elevation-l2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --elevation-l3: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    --glassmorphism-bg: rgba(255, 255, 255, 0.85);
+    --glassmorphism-border: rgba(255, 255, 255, 0.3);
+    --glassmorphism-blur: 12px;
+
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --duration-slow: 400ms;
+
+    --space-sidebar: 280px;
+    --space-rail: 72px;
+    --space-margin-desktop: 32px;
+    --space-margin-tablet: 24px;
+    --space-margin-mobile: 16px;
+
+    --max-content-width: 1600px;
   }
 
   .dark {
@@ -142,5 +163,12 @@
 
     --semantic-crimson-bg: rgba(220, 38, 38, 0.15);
     --semantic-crimson-on: #dc2626;
+
+    --elevation-l1: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px -1px rgba(0, 0, 0, 0.5);
+    --elevation-l2: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+    --elevation-l3: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+
+    --glassmorphism-bg: rgba(18, 26, 33, 0.85);
+    --glassmorphism-border: rgba(65, 190, 253, 0.15);
   }
 }

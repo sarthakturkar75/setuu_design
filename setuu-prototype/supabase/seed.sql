@@ -1,0 +1,550 @@
+-- Comprehensive Seed Data for Phase 0
+-- Generated automatically
+
+-- 1. Organizations
+INSERT INTO organizations (id, name, type, max_projects, subscription_tier, status) VALUES 
+  ('11111111-1111-1111-1111-111111111111', 'Praimo Innovation', 'Enterprise', 100, 'Pro', 'Active'),
+  ('22222222-2222-2222-2222-222222222222', 'Acme Manufacturing', 'Client', 50, 'Basic', 'Active');
+-- 2. Users (Super Admin, Admins, PMs, Employees, Vendors, Clients)
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('33333333-3333-3333-3333-333333333333', 'super@setuu.com', '+15550000000', 'Super Admin', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('33333333-3333-3333-3333-333333333333', 'super_admin', NULL, 'Super Admin', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('44444444-4444-4444-4444-444444444444', 'admin1@praimo.com', '+15550000000', 'Praimo Admin', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('44444444-4444-4444-4444-444444444444', 'admin', '11111111-1111-1111-1111-111111111111', 'Praimo Admin', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('55555555-5555-5555-5555-555555555555', 'admin2@acme.com', '+15550000000', 'Acme Admin', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('55555555-5555-5555-5555-555555555555', 'admin', '22222222-2222-2222-2222-222222222222', 'Acme Admin', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('66666666-6666-6666-6666-000000000000', 'pm0@praimo.com', '+15550000000', 'Project Manager 0', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('66666666-6666-6666-6666-000000000000', 'pm', '11111111-1111-1111-1111-111111111111', 'Project Manager 0', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('66666666-6666-6666-6666-000000000001', 'pm1@praimo.com', '+15550000000', 'Project Manager 1', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('66666666-6666-6666-6666-000000000001', 'pm', '11111111-1111-1111-1111-111111111111', 'Project Manager 1', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('66666666-6666-6666-6666-000000000002', 'pm2@praimo.com', '+15550000000', 'Project Manager 2', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('66666666-6666-6666-6666-000000000002', 'pm', '11111111-1111-1111-1111-111111111111', 'Project Manager 2', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('77777777-7777-7777-7777-000000000000', 'emp0@praimo.com', '+15550000000', 'Engineer 0', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('77777777-7777-7777-7777-000000000000', 'employee', '11111111-1111-1111-1111-111111111111', 'Engineer 0', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('77777777-7777-7777-7777-000000000001', 'emp1@praimo.com', '+15550000000', 'Engineer 1', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('77777777-7777-7777-7777-000000000001', 'employee', '11111111-1111-1111-1111-111111111111', 'Engineer 1', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('77777777-7777-7777-7777-000000000002', 'emp2@praimo.com', '+15550000000', 'Engineer 2', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('77777777-7777-7777-7777-000000000002', 'employee', '11111111-1111-1111-1111-111111111111', 'Engineer 2', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('77777777-7777-7777-7777-000000000003', 'emp3@praimo.com', '+15550000000', 'Engineer 3', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('77777777-7777-7777-7777-000000000003', 'employee', '11111111-1111-1111-1111-111111111111', 'Engineer 3', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('77777777-7777-7777-7777-000000000004', 'emp4@praimo.com', '+15550000000', 'Engineer 4', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('77777777-7777-7777-7777-000000000004', 'employee', '11111111-1111-1111-1111-111111111111', 'Engineer 4', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('88888888-8888-8888-8888-000000000000', 'vendor0@supply.com', '+15550000000', 'Vendor 0', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('88888888-8888-8888-8888-000000000000', 'vendor', '11111111-1111-1111-1111-111111111111', 'Vendor 0', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('88888888-8888-8888-8888-000000000001', 'vendor1@supply.com', '+15550000000', 'Vendor 1', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('88888888-8888-8888-8888-000000000001', 'vendor', '11111111-1111-1111-1111-111111111111', 'Vendor 1', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('88888888-8888-8888-8888-000000000002', 'vendor2@supply.com', '+15550000000', 'Vendor 2', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('88888888-8888-8888-8888-000000000002', 'vendor', '11111111-1111-1111-1111-111111111111', 'Vendor 2', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('99999999-9999-9999-9999-000000000000', 'client0@acme.com', '+15550000000', 'Client 0', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('99999999-9999-9999-9999-000000000000', 'client', '22222222-2222-2222-2222-222222222222', 'Client 0', true);
+
+INSERT INTO user_identity (actor_id, email, phone, full_name, password_hash)
+VALUES ('99999999-9999-9999-9999-000000000001', 'client1@acme.com', '+15550000000', 'Client 1', 'hashed_password_mock');
+INSERT INTO user_actor (id, role, organization_id, display_name, is_active)
+VALUES ('99999999-9999-9999-9999-000000000001', 'client', '22222222-2222-2222-2222-222222222222', 'Client 1', true);
+-- 3. Projects (8 Projects)
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Project Alpha 0', 'Description for project 0', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000000', 'draft', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Project Alpha 1', 'Description for project 1', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000001', 'active', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Project Alpha 2', 'Description for project 2', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000002', 'on_hold', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Project Alpha 3', 'Description for project 3', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000000', 'completed', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Project Alpha 4', 'Description for project 4', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000001', 'archived', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'Project Alpha 5', 'Description for project 5', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000002', 'active', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'Project Alpha 6', 'Description for project 6', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000000', 'active', 'commercial');
+INSERT INTO projects (id, name, description, client_org_id, assigned_pm_id, status, type) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'Project Alpha 7', 'Description for project 7', '22222222-2222-2222-2222-222222222222', '66666666-6666-6666-6666-000000000001', 'active', 'commercial');
+-- 4. Milestones (20+ Milestones)
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-000000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-100000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-200000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-300000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-400000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-500000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-600000000002', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'Phase 1', 'active', 33.3, 'civil', 0);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000000', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000000', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'Phase 2', 'active', 33.3, 'civil', 1);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000001', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000001', 'Checklist Item 1', false, 1, now(), now());
+INSERT INTO milestones (id, project_id, name, status, weight_percent, department, display_order) 
+      VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000002', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'Phase 3', 'active', 33.3, 'civil', 2);
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000002', 'Checklist Item 0', false, 0, now(), now());
+INSERT INTO milestone_checklist_items (milestone_id, title, is_complete, display_order, created_at, updated_at)
+        VALUES ('bbbbbbbb-bbbb-bbbb-bbbb-700000000002', 'Checklist Item 1', false, 1, now(), now());
+-- 5. Updates (30+ Updates) and Attachments
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-000000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'bbbbbbbb-bbbb-bbbb-bbbb-000000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-000000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'bbbbbbbb-bbbb-bbbb-bbbb-000000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-000000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-100000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'bbbbbbbb-bbbb-bbbb-bbbb-000000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-100000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-100000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'bbbbbbbb-bbbb-bbbb-bbbb-000000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-100000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-200000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'bbbbbbbb-bbbb-bbbb-bbbb-000000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-200000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-200000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'bbbbbbbb-bbbb-bbbb-bbbb-000000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-200000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-300000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-100000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-300000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-300000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-100000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-300000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-400000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-100000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-400000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-400000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-100000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-400000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-500000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-100000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-500000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-500000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'bbbbbbbb-bbbb-bbbb-bbbb-100000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-500000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-600000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'bbbbbbbb-bbbb-bbbb-bbbb-200000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-600000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-600000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'bbbbbbbb-bbbb-bbbb-bbbb-200000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-600000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-700000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'bbbbbbbb-bbbb-bbbb-bbbb-200000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-700000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-700000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'bbbbbbbb-bbbb-bbbb-bbbb-200000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-700000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-800000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'bbbbbbbb-bbbb-bbbb-bbbb-200000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-800000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-800000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'bbbbbbbb-bbbb-bbbb-bbbb-200000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-800000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-900000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'bbbbbbbb-bbbb-bbbb-bbbb-300000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-900000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-900000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'bbbbbbbb-bbbb-bbbb-bbbb-300000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-900000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1000000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'bbbbbbbb-bbbb-bbbb-bbbb-300000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1000000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'bbbbbbbb-bbbb-bbbb-bbbb-300000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1000000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1100000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'bbbbbbbb-bbbb-bbbb-bbbb-300000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1100000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1100000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'bbbbbbbb-bbbb-bbbb-bbbb-300000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1100000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1200000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'bbbbbbbb-bbbb-bbbb-bbbb-400000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1200000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1200000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'bbbbbbbb-bbbb-bbbb-bbbb-400000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1200000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1300000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'bbbbbbbb-bbbb-bbbb-bbbb-400000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1300000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1300000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'bbbbbbbb-bbbb-bbbb-bbbb-400000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1300000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1400000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'bbbbbbbb-bbbb-bbbb-bbbb-400000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1400000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1400000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'bbbbbbbb-bbbb-bbbb-bbbb-400000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1400000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1500000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'bbbbbbbb-bbbb-bbbb-bbbb-500000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1500000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1500000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'bbbbbbbb-bbbb-bbbb-bbbb-500000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1500000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1600000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'bbbbbbbb-bbbb-bbbb-bbbb-500000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1600000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1600000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'bbbbbbbb-bbbb-bbbb-bbbb-500000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1600000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1700000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'bbbbbbbb-bbbb-bbbb-bbbb-500000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1700000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1700000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000005', 'bbbbbbbb-bbbb-bbbb-bbbb-500000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1700000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1800000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'bbbbbbbb-bbbb-bbbb-bbbb-600000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1800000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1800000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'bbbbbbbb-bbbb-bbbb-bbbb-600000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1800000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1900000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'bbbbbbbb-bbbb-bbbb-bbbb-600000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1900000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-1900000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'bbbbbbbb-bbbb-bbbb-bbbb-600000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-1900000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2000000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'bbbbbbbb-bbbb-bbbb-bbbb-600000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2000000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2000000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000006', 'bbbbbbbb-bbbb-bbbb-bbbb-600000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2000000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2100000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'bbbbbbbb-bbbb-bbbb-bbbb-700000000000', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2100000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2100000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'bbbbbbbb-bbbb-bbbb-bbbb-700000000000', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2100000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2200000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'bbbbbbbb-bbbb-bbbb-bbbb-700000000001', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2200000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2200000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'bbbbbbbb-bbbb-bbbb-bbbb-700000000001', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2200000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2300000000000', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'bbbbbbbb-bbbb-bbbb-bbbb-700000000002', '77777777-7777-7777-7777-000000000000', 'Site update 0 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2300000000000', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+INSERT INTO updates (id, project_id, milestone_id, author_id, body, location_name, latitude, longitude)
+      VALUES ('cccccccc-cccc-cccc-cccc-2300000000001', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000007', 'bbbbbbbb-bbbb-bbbb-bbbb-700000000002', '77777777-7777-7777-7777-000000000000', 'Site update 1 for milestone', 'Site A', 37.77, -122.41);
+INSERT INTO media_attachments (update_id, file_url, media_type, uploaded_by)
+      VALUES ('cccccccc-cccc-cccc-cccc-2300000000001', 'https://example.com/photo.jpg', 'image', '77777777-7777-7777-7777-000000000000');
+-- 6. Comments (15+ Comments)
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-000000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 0');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-000000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 1');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-100000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 2');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-100000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 3');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-200000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 4');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-200000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 5');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-300000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 6');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-300000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 7');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-400000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 8');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-400000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 9');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-500000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 10');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-500000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 11');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-600000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 12');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-600000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 13');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-700000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 14');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-700000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 15');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-800000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 16');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-800000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 17');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-900000000000', '77777777-7777-7777-7777-000000000001', 'Looks good 18');
+INSERT INTO comments (update_id, author_id, body)
+    VALUES ('cccccccc-cccc-cccc-cccc-900000000001', '77777777-7777-7777-7777-000000000001', 'Looks good 19');
+-- 7. Acknowledgements (10+ Acks)
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-000000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-000000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-100000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-100000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-200000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-200000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-300000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-300000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-400000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-400000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-500000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-500000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-600000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-600000000001', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+INSERT INTO acknowledgements (update_id, acknowledged_by, status)
+    VALUES ('cccccccc-cccc-cccc-cccc-700000000000', '99999999-9999-9999-9999-000000000000', 'acknowledged');
+-- 8. Materials, Issues, Change Requests, etc.
+INSERT INTO project_materials (project_id, item_name, quantity, status) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Steel Beams', 100, 'ordered');
+INSERT INTO project_issues (project_id, title, severity, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Delay in delivery', 'high', 'open');
+INSERT INTO change_requests (project_id, title, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000000', 'Design change', 'pending');
+INSERT INTO project_materials (project_id, item_name, quantity, status) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Steel Beams', 100, 'ordered');
+INSERT INTO project_issues (project_id, title, severity, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Delay in delivery', 'high', 'open');
+INSERT INTO change_requests (project_id, title, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000001', 'Design change', 'pending');
+INSERT INTO project_materials (project_id, item_name, quantity, status) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Steel Beams', 100, 'ordered');
+INSERT INTO project_issues (project_id, title, severity, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Delay in delivery', 'high', 'open');
+INSERT INTO change_requests (project_id, title, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000002', 'Design change', 'pending');
+INSERT INTO project_materials (project_id, item_name, quantity, status) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Steel Beams', 100, 'ordered');
+INSERT INTO project_issues (project_id, title, severity, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Delay in delivery', 'high', 'open');
+INSERT INTO change_requests (project_id, title, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000003', 'Design change', 'pending');
+INSERT INTO project_materials (project_id, item_name, quantity, status) 
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Steel Beams', 100, 'ordered');
+INSERT INTO project_issues (project_id, title, severity, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Delay in delivery', 'high', 'open');
+INSERT INTO change_requests (project_id, title, status)
+    VALUES ('aaaaaaaa-aaaa-aaaa-aaaa-000000000004', 'Design change', 'pending');
+-- 9. Audit Logs & Break-glass Logs
+INSERT INTO audit_log (event_type, table_name, resource_id) VALUES ('UPDATE', 'projects', 'aaaaaaaa-aaaa-aaaa-aaaa-000000000000');
+INSERT INTO break_glass_logs (super_admin_id, target_org_id, reason, duration_minutes) 
+  VALUES ('33333333-3333-3333-3333-333333333333', '11111111-1111-1111-1111-111111111111', 'Emergency maintenance', 60);
