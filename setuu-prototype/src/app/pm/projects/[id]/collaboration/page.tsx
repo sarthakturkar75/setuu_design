@@ -41,7 +41,7 @@ export default function ProjectCollaborationPage() {
                     .select('*, author:user_actor(display_name, role)')
                     .in('update_id', updateIds)
                     .order('created_at', { ascending: true });
-                
+
                 if (comments && isMounted) {
                     setMessages(comments.map(c => ({
                         id: c.id,
@@ -62,7 +62,7 @@ export default function ProjectCollaborationPage() {
         const channel = supabase.channel('public:comments')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comments' }, payload => {
                 // Simplistic append (in reality, check if it belongs to this project)
-                loadMessages(); 
+                loadMessages();
             })
             .subscribe();
 
@@ -74,7 +74,7 @@ export default function ProjectCollaborationPage() {
 
     const handleSend = async () => {
         if (!input.trim() || !currentUser) return;
-        
+
         const text = input;
         setInput("");
 
@@ -111,7 +111,7 @@ export default function ProjectCollaborationPage() {
     };
 
     return (
-        <div className="p-0 md:p-6 h-[calc(100vh-200px)] md:h-[calc(100vh-140px)] flex flex-col max-w-[1200px] mx-auto">
+        <div className="p-0 md:p-6 h-[calc(100vh-200px)] md:h-[calc(100vh-140px)] flex flex-col max-w-300 mx-auto">
             <div className="p-4 md:p-0 flex justify-between items-center mb-4 shrink-0 bg-surface md:bg-transparent border-b md:border-b-0 border-outline-variant">
                 <div>
                     <h2 className="text-xl font-bold font-merriweather text-on-surface">Team Collaboration</h2>
@@ -159,9 +159,9 @@ export default function ProjectCollaborationPage() {
                         <PaperclipIcon className="w-5 h-5" />
                     </button>
                     <div className="flex-1">
-                        <TextInput 
-                            placeholder="Type a message... Use @ to tag team members." 
-                            className="rounded-full" 
+                        <TextInput
+                            placeholder="Type a message... Use @ to tag team members."
+                            className="rounded-full"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => {

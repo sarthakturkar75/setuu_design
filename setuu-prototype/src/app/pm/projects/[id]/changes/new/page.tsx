@@ -16,22 +16,22 @@ export default function NewChangeRequestPage() {
   const id = params?.id as string;
 
   if (isSubmitted) {
-      return (
-        <div className="p-6 max-w-[800px] mx-auto space-y-8 pt-24 text-center">
-            <CheckCircleIcon className="w-16 h-16 text-semantic-emerald mx-auto mb-4" />
-            <h2 className="text-2xl font-bold font-merriweather text-on-surface">Change Request Submitted</h2>
-            <p className="text-on-surface-variant max-w-md mx-auto">Your draft has been routed to the client and engineering teams for review.</p>
-            <div className="pt-8">
-                <Link href={`/pm/projects/${id}`}>
-                    <Button variant="primary">Return to Dashboard</Button>
-                </Link>
-            </div>
+    return (
+      <div className="p-6 max-w-200 mx-auto space-y-8 pt-24 text-center">
+        <CheckCircleIcon className="w-16 h-16 text-semantic-emerald mx-auto mb-4" />
+        <h2 className="text-2xl font-bold font-merriweather text-on-surface">Change Request Submitted</h2>
+        <p className="text-on-surface-variant max-w-md mx-auto">Your draft has been routed to the client and engineering teams for review.</p>
+        <div className="pt-8">
+          <Link href={`/pm/projects/${id}`}>
+            <Button variant="primary">Return to Dashboard</Button>
+          </Link>
         </div>
-      );
+      </div>
+    );
   }
 
   return (
-    <div className="p-6 max-w-[800px] mx-auto space-y-8 pb-32">
+    <div className="p-6 max-w-200 mx-auto space-y-8 pb-32">
       <div>
         <h2 className="text-2xl font-bold font-merriweather text-on-surface">Draft Change Request</h2>
         <p className="text-on-surface-variant mt-1">Submit a formal request for scope, timeline, or cost changes.</p>

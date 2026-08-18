@@ -10,7 +10,7 @@ export default function MaterialReceiptPage() {
   const [isScanned, setIsScanned] = React.useState(false);
 
   return (
-    <div className="p-6 max-w-[600px] mx-auto space-y-8 pb-32">
+    <div className="p-6 max-w-150 mx-auto space-y-8 pb-32">
       <div>
         <h2 className="text-2xl font-bold font-merriweather text-on-surface">Material Receipt</h2>
         <p className="text-on-surface-variant mt-1">Scan a packing slip or enter details manually to log incoming materials.</p>
@@ -23,7 +23,7 @@ export default function MaterialReceiptPage() {
           </div>
           <div>
             <h3 className="font-bold text-lg text-on-surface">Scan Packing Slip</h3>
-            <p className="text-sm text-on-surface-variant max-w-[250px] mx-auto mt-2">Use your device camera to automatically extract materials and quantities using AI.</p>
+            <p className="text-sm text-on-surface-variant max-w-62.5 mx-auto mt-2">Use your device camera to automatically extract materials and quantities using AI.</p>
           </div>
           <Button variant="primary" onClick={() => setIsScanned(true)} className="mt-4">
             Open Camera
