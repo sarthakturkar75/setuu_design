@@ -51,10 +51,16 @@ export async function rejectChangeRequest(id: string, reason: string) {
 
 export async function getChangeRequests(projectId?: string) {
   const supabase = await createClient();
-  let query = supabase.from("change_requests").select("*");
+  let query = supabase.from("change_requests").select("*, project:projects!change_requests_project_id_fkey(name)");
   if (projectId) query = query.eq("project_id", projectId);
   
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(cr => ({
+    ...cr,
+    project_name: cr.project && typeof cr.project === 'object' && !Array.isArray(cr.project) 
+      ? (cr.project as any).name 
+      : "Unknown Project"
+  }));
 }

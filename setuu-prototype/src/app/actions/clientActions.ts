@@ -60,3 +60,20 @@ export async function deactivateClientOrg(id: string) {
   revalidatePath("/admin/users");
   return { success: true };
 }
+
+export async function getClientApprovals() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("client_approvals")
+    .select("*, project:projects!client_approvals_project_id_fkey(name)");
+    
+  if (error) throw error;
+
+  return data.map(item => ({
+    ...item,
+    project_name: item.project && typeof item.project === 'object' && !Array.isArray(item.project) 
+      ? (item.project as any).name 
+      : "Unknown Project"
+  }));
+}
+

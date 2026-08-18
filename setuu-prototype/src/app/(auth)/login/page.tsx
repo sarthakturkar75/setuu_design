@@ -18,17 +18,29 @@ export default function LoginPage() {
     setIsLoading(true)
     setError(null)
     
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    
-    if (error) {
-      setError(error.message)
+    try {
+      const { data: { user }, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+      
+      if (signInError) throw signInError
+
+      if (user) {
+        const { data: actor } = await supabase
+          .from('user_actor')
+          .select('role')
+          .eq('id', user.id)
+          .single()
+          
+        const userRole = actor?.role || 'admin'
+        const routeName = userRole.replace('_', '')
+        router.push(`/${routeName}`)
+        router.refresh()
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign in')
       setIsLoading(false)
-    } else {
-      router.push('/admin') // Redirect to default dashboard role
-      router.refresh()
     }
   }
 
