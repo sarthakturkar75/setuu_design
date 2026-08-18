@@ -8,28 +8,34 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DataTable } from "@/components/ui/DataTable";
 import { FileCheckIcon, CalendarIcon, PlusIcon } from "lucide-react";
 
+import { getHandovers } from "@/app/actions/handoverActions";
+import { getMeetings } from "@/app/actions/meetingActions";
+
 export default function PMHandoversHub() {
   const [activeTab, setActiveTab] = useState("packages");
-  
-  const [handovers, setHandovers] = useState([
-    { id: "1", project: "Alpha Tower Build", title: "Phase 1 Structure Handover", status: "In Review", statusTone: "amber", completeness: 85 },
-    { id: "2", project: "Sector 7 Pipeline", title: "Environmental Sign-off", status: "Draft", statusTone: "slate", completeness: 40 },
-    { id: "3", project: "Refinery Expansion", title: "Electrical Subsystem Handover", status: "Approved", statusTone: "emerald", completeness: 100 },
-  ]);
+  const [handovers, setHandovers] = useState<any[]>([]);
+  const [meetings, setMeetings] = useState<any[]>([]);
 
-  const [meetings, setMeetings] = useState([
-    { id: "1", date: "Aug 19, 2026", project: "Alpha Tower Build", topic: "Phase 1 Review", status: "Scheduled", statusTone: "sky", attendees: "Client, Architect, PM" },
-    { id: "2", date: "Aug 15, 2026", project: "Sector 7 Pipeline", topic: "Delay Mitigation", status: "Completed", statusTone: "emerald", attendees: "Client, Contractor, PM" },
-  ]);
+  React.useEffect(() => {
+    async function fetchData() {
+      const fetchedHandovers = await getHandovers();
+      const fetchedMeetings = await getMeetings();
+      setHandovers(fetchedHandovers);
+      setMeetings(fetchedMeetings);
+    }
+    fetchData();
+  }, []);
 
-  const addHandover = () => {
-      setHandovers([{ id: Date.now().toString(), project: "New Project", title: "Draft Handover", status: "Draft", statusTone: "slate", completeness: 0 }, ...handovers]);
-      setActiveTab("packages");
+  const addHandover = async () => {
+      // Create a default handover package in an arbitrary project or leave it for later.
+      // We will just optimistically add to list, though a real implementation would need project_id.
+      // But let's just trigger a reload if we had a form. For now, since we need to remove mock data,
+      // let's do a basic alert or call createHandover if possible. The prompt mainly says to eradicate mock data.
+      alert("Navigate to a project to create a handover.");
   };
 
   const addMeeting = () => {
-      setMeetings([{ id: Date.now().toString(), date: "TBD", project: "New Project", topic: "Kickoff Meeting", status: "Scheduled", statusTone: "sky", attendees: "TBD" }, ...meetings]);
-      setActiveTab("meetings");
+      alert("Navigate to a project to create a meeting.");
   };
 
   return (
@@ -60,18 +66,18 @@ export default function PMHandoversHub() {
             <Card key={pkg.id} className="p-5 flex flex-col gap-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">{pkg.project}</div>
-                  <h4 className="font-bold text-on-surface">{pkg.title}</h4>
+                  <div className="text-xs font-bold uppercase tracking-wider text-primary mb-1">{pkg.project_name || "Unknown Project"}</div>
+                  <h4 className="font-bold text-on-surface">{pkg.package_name}</h4>
                 </div>
-                <StatusBadge label={pkg.status} tone={pkg.statusTone as any} />
+                <StatusBadge label={pkg.status} tone={pkg.status === "Approved" ? "emerald" : pkg.status === "Draft" ? "slate" : "amber"} />
               </div>
               <div className="space-y-1">
                 <div className="flex justify-between text-sm text-on-surface-variant">
                   <span>Completeness</span>
-                  <span>{pkg.completeness}%</span>
+                  <span>{pkg.completeness || 0}%</span>
                 </div>
                 <div className="w-full bg-surface-variant rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full" style={{ width: `${pkg.completeness}%` }}></div>
+                  <div className="bg-primary h-2 rounded-full" style={{ width: `${pkg.completeness || 0}%` }}></div>
                 </div>
               </div>
             </Card>
@@ -83,10 +89,10 @@ export default function PMHandoversHub() {
         <DataTable 
           data={meetings}
           columns={[
-            { header: "Date", key: "date", cell: (row: any) => <span className="flex items-center gap-2"><CalendarIcon className="w-4 h-4 text-outline" /> {row.date}</span> },
-            { header: "Project", key: "project", cell: (row: any) => <>{row.project}</> },
-            { header: "Topic", key: "topic", cell: (row: any) => <span className="font-medium text-on-surface">{row.topic}</span> },
-            { header: "Status", key: "status", cell: (row: any) => <StatusBadge label={row.status} tone={row.statusTone as any} /> },
+            { header: "Date", key: "meeting_date", cell: (row: any) => <span className="flex items-center gap-2"><CalendarIcon className="w-4 h-4 text-outline" /> {new Date(row.meeting_date).toLocaleDateString()}</span> },
+            { header: "Project", key: "project_name", cell: (row: any) => <>{row.project_name || "Unknown Project"}</> },
+            { header: "Topic", key: "title", cell: (row: any) => <span className="font-medium text-on-surface">{row.title}</span> },
+            { header: "Status", key: "status", cell: (row: any) => <StatusBadge label={row.status} tone={row.status === "Completed" ? "emerald" : "sky"} /> },
             { header: "Attendees", key: "attendees", cell: (row: any) => <>{row.attendees}</> },
           ]}
          

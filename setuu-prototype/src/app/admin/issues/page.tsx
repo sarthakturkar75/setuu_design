@@ -47,15 +47,23 @@ export default function IssuesConsolePage() {
   const columns = [
     { 
       key: "id_title", 
-      header: "Issue & Category", 
+      header: "Issue & Impact", 
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
           <span className="font-semibold text-on-surface line-clamp-1">{row.title}</span>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs font-jetbrains text-primary">{row.id}</span>
-            <span className="text-xs text-on-surface-variant/50">•</span>
-            <span className="text-xs text-on-surface-variant">{row.category}</span>
+            <span className="text-xs font-jetbrains text-primary">{row.display_id || (row.id ? row.id.split('-')[0] : "ISSUE")}</span>
+            {(row.timeline_impact || row.cost_impact) && (
+              <>
+                <span className="text-xs text-on-surface-variant/50">•</span>
+                <span className="text-xs text-on-surface-variant">
+                  {row.timeline_impact ? `Timeline: ${row.timeline_impact}` : ""}
+                  {row.timeline_impact && row.cost_impact ? " | " : ""}
+                  {row.cost_impact ? `Cost: ${row.cost_impact}` : ""}
+                </span>
+              </>
+            )}
           </div>
         </div>
       )
@@ -176,7 +184,7 @@ export default function IssuesConsolePage() {
           <div className="w-full xl:w-1/3 border-l border-outline-variant bg-surface flex flex-col shadow-elevation-l3 xl:shadow-none animate-in slide-in-from-right-4 duration-300">
             <div className="p-6 border-b border-outline-variant flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <span className="font-jetbrains text-primary font-bold">{selectedIssue.id}</span>
+                <span className="font-jetbrains text-primary font-bold">{selectedIssue.display_id || (selectedIssue.id ? selectedIssue.id.split('-')[0] : "ISSUE")}</span>
                 <button 
                   onClick={() => setSelectedIssueId(null)}
                   className="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors xl:hidden"
@@ -189,7 +197,7 @@ export default function IssuesConsolePage() {
               <div className="flex items-center gap-3">
                 {getSeverityBadge(selectedIssue.severity)}
                 <StatusBadge 
-                  tone={selectedIssue.status === "Resolved" ? "emerald" : selectedIssue.status === "Escalated" ? "crimson" : "slate"} 
+                  tone={selectedIssue.status === "Resolved" ? "emerald" : selectedIssue.status === "Escalated" ? "crimson" : selectedIssue.status === "In Progress" ? "sky" : "slate"} 
                   label={selectedIssue.status} 
                 />
               </div>
@@ -209,17 +217,26 @@ export default function IssuesConsolePage() {
                   <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Date Logged</span>
                   <div className="flex items-center gap-2 mt-1">
                     <Clock className="w-4 h-4 text-primary" />
-                    <span className="font-medium text-on-surface font-jetbrains">{selectedIssue.date}</span>
+                    <span className="font-medium text-on-surface font-jetbrains">{selectedIssue.created_at ? new Date(selectedIssue.created_at).toLocaleDateString() : "--"}</span>
                   </div>
                 </div>
               </div>
 
               <div className="flex flex-col gap-3">
                 <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Description</span>
-                <div className="p-4 rounded-lg bg-surface-variant/30 border border-outline-variant text-sm text-on-surface leading-relaxed">
-                  During routine structural assessments on Level 2, the core drilling team intersected with unmarked rebar, causing drill damage and halting progress in Sector 4. Structural engineer evaluation required before proceeding.
+                <div className="p-4 rounded-lg bg-surface-variant/30 border border-outline-variant text-sm text-on-surface leading-relaxed whitespace-pre-wrap">
+                  {selectedIssue.description || "No description provided."}
                 </div>
               </div>
+
+              {selectedIssue.root_cause && (
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Root Cause</span>
+                  <div className="p-4 rounded-lg bg-surface-variant/30 border border-outline-variant text-sm text-on-surface leading-relaxed">
+                    {selectedIssue.root_cause}
+                  </div>
+                </div>
+              )}
 
               <div className="flex flex-col gap-3">
                 <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Activity Log</span>
@@ -230,21 +247,22 @@ export default function IssuesConsolePage() {
                       <MessageSquare className="w-4 h-4 text-on-surface-variant" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-on-surface">Sarah Jenkins <span className="font-normal text-on-surface-variant">added a comment</span></span>
-                      <span className="text-xs text-on-surface-variant mt-0.5">Oct 16, 2026 - 14:30 UTC</span>
-                      <p className="text-sm text-on-surface mt-2 bg-surface-variant/50 p-3 rounded-lg">Structural assessment booked for tomorrow morning. Pausing all work in Sector 4.</p>
+                      <span className="text-sm font-medium text-on-surface">System <span className="font-normal text-on-surface-variant">created issue</span></span>
+                      <span className="text-xs text-on-surface-variant mt-0.5">{selectedIssue.created_at ? new Date(selectedIssue.created_at).toLocaleString() : "--"}</span>
                     </div>
                   </div>
 
-                  <div className="flex gap-4 relative z-10">
-                    <div className="w-8 h-8 rounded-full bg-crimson/10 border border-crimson/20 flex items-center justify-center shrink-0 mt-0.5">
-                      <ShieldAlert className="w-4 h-4 text-crimson" />
+                  {selectedIssue.resolved_at && (
+                    <div className="flex gap-4 relative z-10">
+                      <div className="w-8 h-8 rounded-full bg-emerald/10 border border-emerald/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-on-surface">System <span className="font-normal text-on-surface-variant">marked as Resolved</span></span>
+                        <span className="text-xs text-on-surface-variant mt-0.5">{new Date(selectedIssue.resolved_at).toLocaleString()}</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-on-surface">System <span className="font-normal text-on-surface-variant">escalated severity to Critical</span></span>
-                      <span className="text-xs text-on-surface-variant mt-0.5">Oct 16, 2026 - 10:15 UTC</span>
-                    </div>
-                  </div>
+                  )}
 
                 </div>
               </div>

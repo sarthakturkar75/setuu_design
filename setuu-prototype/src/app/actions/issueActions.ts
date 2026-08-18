@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 
 export async function getIssues(projectId?: string, filters?: { severity?: string }) {
   const supabase = await createClient();
-  let query = supabase.from("project_issues").select("*, assignee:user_actor!project_issues_assigned_to_fkey(display_name)");
+  let query = supabase.from("project_issues").select("*, assignee:user_actor!project_issues_assigned_to_fkey(display_name), project:projects!project_issues_project_id_fkey(name)");
   
   if (projectId) query = query.eq("project_id", projectId);
   if (filters?.severity) query = query.eq("severity", filters.severity);
@@ -18,6 +18,9 @@ export async function getIssues(projectId?: string, filters?: { severity?: strin
     ...issue,
     assignee_name: issue.assignee && typeof issue.assignee === 'object' && !Array.isArray(issue.assignee)
       ? (issue.assignee as any).display_name 
+      : null,
+    project_name: issue.project && typeof issue.project === 'object' && !Array.isArray(issue.project)
+      ? (issue.project as any).name 
       : null
   }));
 }

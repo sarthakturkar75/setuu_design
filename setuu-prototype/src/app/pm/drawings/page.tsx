@@ -6,39 +6,15 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { LayoutGridIcon, ListIcon, FileBoxIcon } from "lucide-react";
 import { DataTable } from "@/components/ui/DataTable";
 import Link from "next/link";
+import { getDrawings } from "@/app/actions/drawingActions";
 
 export default function PMDrawings() {
 	const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
+	const [drawings, setDrawings] = React.useState<any[]>([]);
 
-	const drawings = [
-		{
-			id: 1,
-			title: "Level 1 Floor Plan",
-			project: "Alpha Tower Build",
-			projectId: 1,
-			version: "v3",
-			date: "2026-08-15",
-			author: "Jane Doe",
-		},
-		{
-			id: 2,
-			title: "HVAC Schematic B",
-			project: "Alpha Tower Build",
-			projectId: 1,
-			version: "v1",
-			date: "2026-08-16",
-			author: "Tom Carter",
-		},
-		{
-			id: 3,
-			title: "Trench Profile 1-A",
-			project: "Sector 7 Pipeline",
-			projectId: 2,
-			version: "v2",
-			date: "2026-08-10",
-			author: "Alex Mercer",
-		},
-	];
+	React.useEffect(() => {
+		getDrawings().then(setDrawings);
+	}, []);
 
 	const columns = [
 		{
@@ -46,29 +22,29 @@ export default function PMDrawings() {
 			header: "Drawing Title",
 			cell: (row: any) => (
 				<Link
-					href={`/pm/projects/${row.projectId}/drawings`}
+					href={`/pm/projects/${row.project_id}/drawings`}
 					className="font-medium text-primary hover:underline flex items-center gap-2"
 				>
 					<FileBoxIcon className="w-4 h-4 text-outline" />
-					{row.title}
+					{row.display_id || 'Untitled'}
 				</Link>
 			),
 		},
 		{
 			key: "project",
 			header: "Project",
-			cell: (row: any) => <>{row.project}</>,
+			cell: (row: any) => <>{row.project_name || 'Unknown Project'}</>,
 		},
 		{
 			key: "version",
 			header: "Version",
-			cell: (row: any) => <>{row.version}</>,
+			cell: (row: any) => <>v{row.version_number}</>,
 		},
-		{ key: "date", header: "Upload Date", cell: (row: any) => <>{row.date}</> },
+		{ key: "date", header: "Upload Date", cell: (row: any) => <>{row.created_at ? new Date(row.created_at).toLocaleDateString() : 'N/A'}</> },
 		{
 			key: "author",
 			header: "Uploaded By",
-			cell: (row: any) => <>{row.author}</>,
+			cell: (row: any) => <>{row.uploaded_by || 'Unknown'}</>,
 		},
 	];
 
@@ -115,24 +91,24 @@ export default function PMDrawings() {
 							<div className="aspect-4/3 bg-surface-variant flex items-center justify-center border-b border-outline-variant/30 relative">
 								<FileBoxIcon className="w-12 h-12 text-outline/50 group-hover:text-primary/50 transition-colors" />
 								<div className="absolute top-2 right-2 px-2 py-0.5 bg-surface-container-lowest/80 backdrop-blur-md text-xs font-bold rounded-md border border-outline-variant/50">
-									{drawing.version}
+									v{drawing.version_number}
 								</div>
 							</div>
 							<CardContent className="p-4">
 								<h3 className="font-semibold text-on-surface truncate">
 									<Link
-										href={`/pm/projects/${drawing.projectId}/drawings`}
+										href={`/pm/projects/${drawing.project_id}/drawings`}
 										className="hover:underline hover:text-primary before:absolute before:inset-0"
 									>
-										{drawing.title}
+										{drawing.display_id || 'Untitled'}
 									</Link>
 								</h3>
 								<p className="text-xs text-on-surface-variant mt-1">
-									{drawing.project}
+									{drawing.project_name || 'Unknown Project'}
 								</p>
 								<div className="flex items-center justify-between mt-3 pt-3 border-t border-outline-variant/30 text-xs text-on-surface-variant">
-									<span>{drawing.date}</span>
-									<span>{drawing.author}</span>
+									<span>{drawing.created_at ? new Date(drawing.created_at).toLocaleDateString() : 'N/A'}</span>
+									<span>{drawing.uploaded_by || 'Unknown'}</span>
 								</div>
 							</CardContent>
 						</Card>

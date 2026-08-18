@@ -5,45 +5,24 @@ import { Card } from "@/components/ui/Card";
 import { Plus, Shield, Settings2, Users } from "lucide-react";
 import Link from "next/link";
 
-const roles = [
-  { 
-    id: "role-admin", 
-    name: "Platform Administrator", 
-    type: "System", 
-    description: "Full access to all organizational data, billing, and platform settings.",
-    users: 4
-  },
-  { 
-    id: "role-pm", 
-    name: "Project Manager", 
-    type: "Default", 
-    description: "Can create projects, manage budgets, approve change requests, and invite team members to assigned projects.",
-    users: 42
-  },
-  { 
-    id: "role-eng", 
-    name: "Site Engineer", 
-    type: "Default", 
-    description: "Can log daily reports, view drawings, raise issues, and track material receipts on assigned projects.",
-    users: 156
-  },
-  { 
-    id: "role-client", 
-    name: "Client Representative", 
-    type: "Default", 
-    description: "View-only access to high-level dashboards, milestone progress, and approved change orders.",
-    users: 28
-  },
-  { 
-    id: "role-vendor", 
-    name: "External Vendor", 
-    type: "Default", 
-    description: "Can view assigned purchase orders, submit invoices, and update delivery schedules.",
-    users: 814
-  },
-];
+import { useState, useEffect } from "react";
+import { getRoles } from "@/app/actions/userActions";
 
 export default function RoleManagementPage() {
+  const [roles, setRoles] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const fetchedRoles = await getRoles();
+        setRoles(fetchedRoles);
+      } catch (error) {
+        console.error("Failed to fetch roles:", error);
+      }
+    }
+    loadData();
+  }, []);
+
   return (
     <div className="flex flex-col h-full bg-surface">
       <PageHeader 

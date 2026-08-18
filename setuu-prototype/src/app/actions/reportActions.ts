@@ -22,6 +22,17 @@ export async function generateProjectReport(projectId: string, modules: string[]
   };
 }
 
+export async function getProjectReports() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("project_reports")
+    .select("*")
+    .order("generated_at", { ascending: false });
+    
+  if (error) throw error;
+  return data;
+}
+
 export async function getScheduledReports() {
   const supabase = await createClient();
   const { data, error } = await supabase

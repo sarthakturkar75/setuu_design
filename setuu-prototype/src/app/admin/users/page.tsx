@@ -35,14 +35,18 @@ export default function UserDirectoryPage() {
 
   const columns = [
     { 
-      key: "name_email", 
+      key: "display_name", 
       header: "User", 
       sortable: true,
       cell: (row: any) => (
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
-            {row.display_name ? row.display_name.substring(0, 2).toUpperCase() : "?"}
-          </div>
+          {row.avatar_url ? (
+            <img src={row.avatar_url} alt={row.display_name} className="w-10 h-10 rounded-full object-cover shrink-0" />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
+              {row.display_name ? row.display_name.substring(0, 2).toUpperCase() : "?"}
+            </div>
+          )}
           <div className="flex flex-col">
             <Link href={`/admin/users/${row.id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.display_name || "Unknown"}</Link>
             <span className="text-xs text-on-surface-variant">{row.organization_name || "No Organization"}</span>
@@ -57,7 +61,7 @@ export default function UserDirectoryPage() {
       cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.role}</span>
     },
     { 
-      key: "status", 
+      key: "is_active", 
       header: "Status",
       cell: (row: any) => (
         <StatusBadge 
@@ -67,10 +71,10 @@ export default function UserDirectoryPage() {
       )
     },
     { 
-      key: "lastActive", 
-      header: "Last Active", 
+      key: "created_at", 
+      header: "Joined At", 
       sortable: true,
-      cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">--</span>
+      cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">{row.created_at ? new Date(row.created_at).toLocaleDateString() : "--"}</span>
     },
     { 
       key: "actions", 

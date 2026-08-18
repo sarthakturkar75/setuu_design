@@ -6,20 +6,8 @@ import { ActivityFeed } from "@/components/ui/ActivityFeed";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { CheckCircle, AlertOctagon, Clock, DollarSign } from "lucide-react";
-import { use } from "react";
-
-const teamMembers = [
-  { name: "Alice Chen", role: "PM", fallback: "AC" },
-  { name: "Bob Smith", role: "Eng", fallback: "BS" },
-  { name: "Charlie Davis", role: "Arch", fallback: "CD" },
-  { name: "Diana Prince", role: "Client", fallback: "DP" },
-];
-
-const recentActivity = [
-  { id: "1", type: "update", title: "Foundation Pour Milestone Reached", user: "Bob Smith", time: "2 hours ago" },
-  { id: "2", type: "issue", title: "Material Shortage: Steel Rebar", user: "Charlie Davis", time: "1 day ago" },
-  { id: "3", type: "approval", title: "Change Order #4 Approved", user: "Alice Chen", time: "2 days ago" },
-];
+import { use, useState, useEffect } from "react";
+import { getProjectTeam, getRecentActivity } from "@/app/actions/projectActions";
 
 export default function ProjectOverviewPage({
   params,
@@ -28,6 +16,21 @@ export default function ProjectOverviewPage({
 }) {
   const { id } = use(params);
   
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [recentActivity, setRecentActivity] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const [team, activities] = await Promise.all([
+        getProjectTeam(id),
+        getRecentActivity(id)
+      ]);
+      setTeamMembers(team);
+      setRecentActivity(activities);
+    }
+    loadData();
+  }, [id]);
+
   return (
     <div className="p-6 max-w-[1600px] mx-auto space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">

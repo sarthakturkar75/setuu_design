@@ -98,3 +98,42 @@ export async function forceLogout(id: string) {
   revalidatePath("/superadmin/users");
   return { success: true };
 }
+
+export async function getRoles() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("user_actor").select("role");
+  
+  if (error) throw error;
+  
+  const defaultDefinitions: Record<string, { type: string, description: string }> = {
+    "Platform Administrator": { type: "System", description: "Full access to all organizational data, billing, and platform settings." },
+    "Project Manager": { type: "Default", description: "Can create projects, manage budgets, approve change requests, and invite team members to assigned projects." },
+    "Site Engineer": { type: "Default", description: "Can log daily reports, view drawings, raise issues, and track material receipts on assigned projects." },
+    "Client Representative": { type: "Default", description: "View-only access to high-level dashboards, milestone progress, and approved change orders." },
+    "External Vendor": { type: "Default", description: "Can view assigned purchase orders, submit invoices, and update delivery schedules." },
+  };
+
+  const roleCounts: Record<string, number> = {};
+  data.forEach((u) => {
+    if (u.role) {
+      roleCounts[u.role] = (roleCounts[u.role] || 0) + 1;
+    }
+  });
+
+  Object.keys(defaultDefinitions).forEach(role => {
+    if (roleCounts[role] === undefined) {
+      roleCounts[role] = 0;
+    }
+  });
+
+  return Object.entries(roleCounts).map(([role, count], index) => {
+    const def = defaultDefinitions[role] || { type: "Custom", description: "Custom role" };
+    return {
+      id: `role-${index}`,
+      name: role,
+      type: def.type,
+      description: def.description,
+      users: count
+    };
+  });
+}

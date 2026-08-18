@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getTelemetryData } from "@/app/actions/platformActions";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { KPICard } from "@/components/ui/KPICard";
@@ -11,51 +12,31 @@ import { Activity, Shield, HardDrive, Download, AlertTriangle } from "lucide-rea
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
 export default function PlatformTelemetry() {
-  const kpiData = [
-    { label: "Total API Requests (24h)", value: "12.4M", trend: { value: 5.2, label: "% increase", isPositive: true }, icon: <Activity className="w-5 h-5 text-semantic-blue" /> },
-    { label: "Threats Intercepted", value: "8,942", trend: { value: 12, label: "% decrease", isPositive: true }, icon: <Shield className="w-5 h-5 text-semantic-emerald" /> },
-    { label: "Storage Saved (Dedup)", value: "452 GB", trend: { value: 45, label: "GB this week", isPositive: true }, icon: <HardDrive className="w-5 h-5 text-semantic-purple" /> },
-  ];
+  const [kpiData, setKpiData] = useState<any[]>([]);
+  const [apiRequestData, setApiRequestData] = useState<any[]>([]);
+  const [regionalData, setRegionalData] = useState<any[]>([]);
+  const [securityEvents, setSecurityEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Map to BarChart structure
-  const apiRequestData = [
-    { hour: "00:00", Requests: 450 },
-    { hour: "04:00", Requests: 300 },
-    { hour: "08:00", Requests: 800 },
-    { hour: "12:00", Requests: 1200 },
-    { hour: "16:00", Requests: 950 },
-    { hour: "20:00", Requests: 600 },
-    { hour: "23:59", Requests: 480 },
-  ];
-
-  const regionalData = [
-    { name: "US East", value: 45, color: "var(--semantic-blue)" },
-    { name: "EU Central", value: 30, color: "var(--semantic-emerald)" },
-    { name: "AP South", value: 15, color: "var(--semantic-amber)" },
-    { name: "SA East", value: 10, color: "var(--semantic-purple)" }
-  ];
-
-  const securityEvents = [
-    { id: "SEC-101", time: "10:45:00 UTC", type: "DDoS Attempt", region: "EU Central", status: "Mitigated", severity: "high" },
-    { id: "SEC-102", time: "09:30:12 UTC", type: "Brute Force (SSH)", region: "US East", status: "Blocked", severity: "medium" },
-    { id: "SEC-103", time: "08:15:44 UTC", type: "Suspicious API Pattern", region: "AP South", status: "Flagged", severity: "low" },
-    { id: "SEC-104", time: "05:00:10 UTC", type: "SQL Injection Payload", region: "US East", status: "Blocked", severity: "critical" },
-  ];
+  useEffect(() => {
+    getTelemetryData().then(data => {
+      setKpiData(data.kpiData || []);
+      setApiRequestData(data.apiRequestData || []);
+      setRegionalData(data.regionalData || []);
+      setSecurityEvents(data.securityEvents || []);
+      setLoading(false);
+    });
+  }, []);
 
   const columns = [
-    { key: "time", header: "Time", cell: (row: any) => <span className="font-jetbrains-mono text-xs">{row.time}</span> },
-    { key: "type", header: "Event Type", cell: (row: any) => row.type },
-    { key: "region", header: "Region", cell: (row: any) => row.region },
+    { key: "time", header: "Time", cell: (row: any) => <span className="font-jetbrains-mono text-xs">{row.created_at}</span> },
+    { key: "type", header: "Event Type", cell: (row: any) => row.event_type },
+    { key: "region", header: "Table", cell: (row: any) => row.table_name },
     { key: "severity", header: "Severity", cell: (row: any) => (
-      <StatusBadge 
-        tone={row.severity === "critical" ? "crimson" : row.severity === "high" ? "amber" : row.severity === "medium" ? "amber" : "slate"} 
-        label={row.severity} 
-      />
+      <StatusBadge tone="slate" label="Log" />
     )},
     { key: "status", header: "Resolution", cell: (row: any) => (
-      <span className={`text-xs font-semibold uppercase ${row.status === 'Blocked' || row.status === 'Mitigated' ? 'text-semantic-emerald' : 'text-semantic-amber'}`}>
-        {row.status}
-      </span>
+      <span className="text-xs font-semibold text-semantic-emerald">Logged</span>
     )}
   ];
 

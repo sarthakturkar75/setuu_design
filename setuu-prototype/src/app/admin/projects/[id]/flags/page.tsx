@@ -4,14 +4,15 @@ import { Card } from "@/components/ui/Card";
 import { Toggle } from "@/components/ui/Toggle";
 import { ActivityFeed } from "@/components/ui/ActivityFeed";
 import { Save, RefreshCw, Download, Copy } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
+import { getAuditLogs } from "@/app/actions/auditActions";
 
-const auditLogs = [
-  { id: "1", type: "system", title: "Module 'Change Requests' Enabled", user: "John Doe", time: "2 hours ago" },
-  { id: "2", type: "system", title: "Module 'Resource Tracking' Disabled", user: "John Doe", time: "1 day ago" },
-];
-
-export default function ProjectFlagsPage() {
+export default function ProjectFlagsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
   const [flags, setFlags] = useState({
     resources: true,
     changes: true,
@@ -19,6 +20,27 @@ export default function ProjectFlagsPage() {
     issues: true,
     drawings: true,
   });
+
+  const [auditLogs, setAuditLogs] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadLogs() {
+      try {
+        const logs = await getAuditLogs({ resource_id: id });
+        const formattedLogs = logs.map(log => ({
+          id: log.id,
+          type: "update",
+          content: `${log.event_type} on ${log.table_name}`,
+          timestamp: log.created_at,
+          author_name: log.user_actor?.display_name || "System"
+        }));
+        setAuditLogs(formattedLogs);
+      } catch (error) {
+        console.error("Failed to load audit logs", error);
+      }
+    }
+    loadLogs();
+  }, [id]);
 
   return (
     <div className="flex flex-col lg:flex-row h-full max-w-[1600px] mx-auto p-6 gap-6">

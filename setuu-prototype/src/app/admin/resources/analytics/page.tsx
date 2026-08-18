@@ -5,17 +5,25 @@ import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
 import { ArrowLeft, Map, Users, AlertTriangle, Replace, Truck, Wrench, ShieldAlert } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-
-const mockConflicts = [
-  { id: "CFL-882", type: "Double Booking", resource: "Heavy Crane A1", project: "Alpha / Beta", status: "Critical", date: "Oct 18, 2026" },
-  { id: "CFL-881", type: "Shortage", resource: "Master Electricians", project: "Gamma Hub", status: "Warning", date: "Oct 19, 2026" },
-  { id: "CFL-880", type: "Certification Expired", resource: "Safety Officer (SJ)", project: "Alpha Tower", status: "Resolved", date: "Oct 15, 2026" },
-];
+import { getResourceConflicts } from "@/app/actions/resourceActions";
 
 export default function ResourceAnalyticsPage() {
   const [activeTab, setActiveTab] = useState<"workforce" | "materials" | "machinery">("workforce");
+  const [conflicts, setConflicts] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadConflicts() {
+      try {
+        const data = await getResourceConflicts();
+        setConflicts(data);
+      } catch (err) {
+        console.error("Failed to load conflicts:", err);
+      }
+    }
+    loadConflicts();
+  }, []);
 
   const columns = [
     { 
@@ -24,42 +32,50 @@ export default function ResourceAnalyticsPage() {
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-on-surface">{row.type}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id}</span>
+          <span className="font-semibold text-on-surface">{row.title || row.type}</span>
+          <span className="text-xs text-on-surface-variant font-jetbrains">{row.display_id || (row.id && row.id.substring(0, 8))}</span>
         </div>
       )
     },
     { 
       key: "resource", 
       header: "Resource Type", 
-      cell: (row: any) => <span className="text-on-surface font-medium">{row.resource}</span>
+      cell: (row: any) => <span className="text-on-surface font-medium">{row.root_cause || row.resource || "Unspecified"}</span>
     },
     { 
       key: "project", 
       header: "Assigned Project(s)", 
-      cell: (row: any) => <span className="text-on-surface-variant">{row.project}</span>
+      cell: (row: any) => <span className="text-on-surface-variant">{row.project_name || row.project}</span>
     },
     { 
       key: "status", 
       header: "Status",
-      cell: (row: any) => (
-        <StatusBadge 
-          tone={row.status === "Critical" ? "crimson" : row.status === "Warning" ? "amber" : "emerald"} 
-          label={row.status} 
-        />
-      )
+      cell: (row: any) => {
+        const statusLabel = row.severity || row.status || "Unknown";
+        const isCritical = statusLabel === "Critical" || statusLabel === "High";
+        const isWarning = statusLabel === "Warning" || statusLabel === "Medium";
+        return (
+          <StatusBadge 
+            tone={isCritical ? "crimson" : isWarning ? "amber" : "emerald"} 
+            label={statusLabel} 
+          />
+        );
+      }
     },
     { 
       key: "actions", 
       header: "", 
-      cell: (row: any) => (
-        <button 
-          className="text-primary text-sm font-semibold hover:underline flex items-center gap-1"
-          disabled={row.status === "Resolved"}
-        >
-          {row.status === "Resolved" ? "Archived" : "Resolve"}
-        </button>
-      )
+      cell: (row: any) => {
+        const isResolved = row.status === "Resolved" || row.status === "Closed";
+        return (
+          <button 
+            className="text-primary text-sm font-semibold hover:underline flex items-center gap-1"
+            disabled={isResolved}
+          >
+            {isResolved ? "Archived" : "Resolve"}
+          </button>
+        );
+      }
     }
   ];
 
@@ -189,7 +205,7 @@ export default function ResourceAnalyticsPage() {
             <h3 className="font-semibold text-on-surface">Active Resource Conflicts</h3>
           </div>
           <DataTable 
-            data={mockConflicts}
+            data={conflicts}
             columns={columns}
             getRowId={(row: any) => row.id}
           />

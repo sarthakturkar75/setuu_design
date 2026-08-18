@@ -7,13 +7,8 @@ import { Select } from "@/components/ui/Select";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Save, LifeBuoy } from "lucide-react";
 import Link from "next/link";
-import { use } from "react";
-
-const projectList = [
-  { id: "PRJ-1042", name: "Alpha Tower", status: "in_progress" },
-  { id: "PRJ-1045", name: "Beta Site", status: "on_hold" },
-  { id: "PRJ-1048", name: "Gamma Facility", status: "completed" },
-];
+import { use, useState, useEffect } from "react";
+import { getProjects } from "@/app/actions/projectActions";
 
 export default function ProjectConfigPage({
   params,
@@ -21,6 +16,19 @@ export default function ProjectConfigPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const [projects, setProjects] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const data = await getProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      }
+    }
+    loadProjects();
+  }, []);
 
   return (
     <div className="flex flex-col lg:flex-row h-full max-w-[1600px] mx-auto p-6 gap-6">
@@ -29,7 +37,7 @@ export default function ProjectConfigPage({
       <div className="w-full lg:w-72 shrink-0 flex flex-col gap-4">
         <h3 className="font-merriweather font-bold text-on-surface">Active Projects</h3>
         <div className="space-y-2">
-          {projectList.map(p => (
+          {projects.map(p => (
             <Link
               key={p.id}
               href={`/admin/projects/${p.id}/config`}
@@ -61,10 +69,12 @@ export default function ProjectConfigPage({
             <FormField label="Project Type">
               <Select
                 options={[
-                  { label: "Commercial", value: "commercial" },
-                  { label: "Residential", value: "residential" },
+                  { label: "Mechanical", value: "Mechanical" },
+                  { label: "Electrical", value: "Electrical" },
+                  { label: "Software", value: "Software" },
+                  { label: "Combined", value: "Combined" },
                 ]}
-                value="commercial"
+                value="Mechanical"
                 onChange={() => { }}
               />
             </FormField>

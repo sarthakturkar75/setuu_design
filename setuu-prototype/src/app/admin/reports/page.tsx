@@ -8,64 +8,67 @@ import { TextInput } from "@/components/ui/TextInput";
 import { Toggle } from "@/components/ui/Toggle";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { FileBarChart, Play, CalendarClock, Download, FileText, FileSpreadsheet, Settings } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-
-const mockExports = [
-  { id: "RPT-104", name: "Q3 Financial Summary", format: "PDF", date: "Oct 20, 2026 - 14:00", status: "Ready" },
-  { id: "RPT-103", name: "Vendor SLA Compliance", format: "CSV", date: "Oct 19, 2026 - 09:00", status: "Ready" },
-  { id: "RPT-102", name: "Weekly Resource Allocation", format: "PDF", date: "Oct 18, 2026 - 08:00", status: "Expired" },
-];
+import { getProjectReports } from "@/app/actions/reportActions";
 
 export default function ReportingEnginePage() {
   const [isRecurring, setIsRecurring] = useState(false);
   const [outputFormat, setOutputFormat] = useState<"pdf" | "csv">("pdf");
+  const [exportsData, setExportsData] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadReports() {
+      try {
+        const data = await getProjectReports();
+        setExportsData(data || []);
+      } catch (error) {
+        console.error("Failed to load reports:", error);
+      }
+    }
+    loadReports();
+  }, []);
 
   const columns = [
     { 
       key: "report", 
-      header: "Report Name", 
+      header: "Report ID", 
       sortable: true,
-      cell: (row: any) => (
-        <div className="flex flex-col">
-          <span className="font-semibold text-on-surface">{row.name}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id}</span>
-        </div>
-      )
+      cell: (row: any) => {
+        let name = "Project Report";
+        try {
+          const data = JSON.parse(row.report_data);
+          if (data && data.name) name = data.name;
+        } catch(e) {}
+        return (
+          <div className="flex flex-col">
+            <span className="font-semibold text-on-surface">{name}</span>
+            <span className="text-xs text-on-surface-variant font-jetbrains">{row.id?.substring(0, 8)}</span>
+          </div>
+        );
+      }
     },
     { 
-      key: "format", 
-      header: "Format", 
+      key: "project", 
+      header: "Project", 
       cell: (row: any) => (
         <div className="flex items-center gap-1.5 text-on-surface-variant text-sm font-medium">
-          {row.format === "PDF" ? <FileText className="w-4 h-4 text-crimson" /> : <FileSpreadsheet className="w-4 h-4 text-emerald-500" />}
-          {row.format}
+          {row.project_id ? row.project_id.substring(0, 8) : "N/A"}
         </div>
       )
     },
     { 
-      key: "date", 
+      key: "generated_at", 
       header: "Generated At", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.date}</span>
-    },
-    { 
-      key: "status", 
-      header: "Status",
-      cell: (row: any) => (
-        <StatusBadge 
-          tone={row.status === "Ready" ? "emerald" : "slate"} 
-          label={row.status} 
-        />
-      )
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.generated_at ? new Date(row.generated_at).toLocaleString() : 'N/A'}</span>
     },
     { 
       key: "actions", 
       header: "", 
       cell: (row: any) => (
         <button 
-          className={`flex items-center gap-1 text-sm font-semibold transition-colors ${row.status === "Ready" ? "text-primary hover:text-primary/80" : "text-on-surface-variant/50 cursor-not-allowed"}`}
-          disabled={row.status !== "Ready"}
+          className="flex items-center gap-1 text-sm font-semibold transition-colors text-primary hover:text-primary/80"
         >
           <Download className="w-4 h-4" /> Download
         </button>
@@ -193,7 +196,7 @@ export default function ReportingEnginePage() {
             </div>
             <div className="flex-1 overflow-y-auto">
               <DataTable 
-                data={mockExports}
+                data={exportsData}
                 columns={columns}
                 getRowId={(row: any) => row.id}
               />

@@ -34,7 +34,7 @@ export async function uploadDrawingVersion(drawingId: string, formData: FormData
   const { data: latest } = await supabase
     .from("drawing_versions")
     .select("version_number")
-    .eq("display_id", drawingId)
+    .eq("drawing_id", drawingId)
     .order("version_number", { ascending: false })
     .limit(1)
     .single();
@@ -43,7 +43,8 @@ export async function uploadDrawingVersion(drawingId: string, formData: FormData
   
   const { error } = await supabase.from("drawing_versions").insert({
     project_id,
-    display_id: drawingId,
+    drawing_id: drawingId,
+    drawing_name: "Drawing " + drawingId.substring(0, 8),
     file_url: url,
     uploaded_by,
     version_number: nextVersion,

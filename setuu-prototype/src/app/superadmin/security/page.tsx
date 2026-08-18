@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getBreakGlassLogs } from "@/app/actions/platformActions";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
@@ -11,18 +12,28 @@ export default function BreakGlassConsole() {
   const [isActive, setIsActive] = useState(false);
   const [reason, setReason] = useState("");
   const [duration, setDuration] = useState("15");
+  const [activeSessions, setActiveSessions] = useState<any[]>([]);
 
-  const activeSessions = isActive ? [
-    { id: "BGS-8842", admin: "s.admin@setuu.com", target: "System Core", reason: reason || "Emergency Access", expires: "14:59", status: "Active" }
-  ] : [];
+  useEffect(() => {
+    getBreakGlassLogs().then(logs => {
+      setActiveSessions(logs.map(log => ({
+        id: log.id,
+        admin: log.user?.display_name || log.super_admin_id,
+        target: log.organization?.name || log.target_org_id,
+        reason: log.reason,
+        expires: log.created_at,
+        status: "Logged"
+      })));
+    });
+  }, [isActive]);
 
   const columns = [
     { key: "id", header: "Session ID", cell: (row: any) => <span className="font-jetbrains-mono">{row.id}</span> },
     { key: "admin", header: "Super Admin", cell: (row: any) => row.admin },
     { key: "target", header: "Target", cell: (row: any) => row.target },
     { key: "reason", header: "Reason", cell: (row: any) => row.reason },
-    { key: "expires", header: "Expires In", cell: (row: any) => <span className="font-jetbrains-mono text-semantic-crimson animate-pulse">{row.expires}</span> },
-    { key: "status", header: "Status", cell: (row: any) => <StatusBadge tone="crimson" label={row.status} /> }
+    { key: "expires", header: "Created At", cell: (row: any) => <span className="font-jetbrains-mono text-semantic-crimson">{row.expires}</span> },
+    { key: "status", header: "Status", cell: (row: any) => <StatusBadge tone="slate" label={row.status} /> }
   ];
 
   const handleInvoke = (e: React.FormEvent) => {

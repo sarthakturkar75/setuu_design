@@ -12,36 +12,26 @@ import { TextInput } from "@/components/ui/TextInput";
 import { DollarSign, FileText, CheckCircle, Search, Download, TrendingDown, ArrowUpRight, AlertTriangle } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getInvoices } from "@/app/actions/invoiceActions";
-
-const cashFlowData = [
-  { month: "May", Inflow: 45, Outflow: 38 },
-  { month: "Jun", Inflow: 52, Outflow: 41 },
-  { month: "Jul", Inflow: 48, Outflow: 49 },
-  { month: "Aug", Inflow: 61, Outflow: 55 },
-  { month: "Sep", Inflow: 59, Outflow: 52 },
-  { month: "Oct", Inflow: 65, Outflow: 48 },
-];
+import { getProjects } from "@/app/actions/projectActions";
+import { getCashFlowData } from "@/app/actions/financialActions";
 
 export default function FinancialMasterPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
-  const [invoices, setInvoices] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [cashFlowData, setCashFlowData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await getInvoices();
-        setInvoices(data.map(inv => ({
-          id: inv.invoice_number || inv.id.substring(0, 8),
-          project: inv.project_name || "Unknown Project",
-          vendor: inv.vendor_name || "Unknown Vendor",
-          amount: new Intl.NumberFormat('en-IN', { style: 'currency', currency: inv.currency || 'INR' }).format(inv.amount),
-          status: inv.status.toLowerCase(),
-          date: inv.created_at ? new Date(inv.created_at).toLocaleDateString() : "Unknown",
-        })));
+        const [projectsData, cashFlow] = await Promise.all([
+          getProjects(),
+          getCashFlowData()
+        ]);
+        setProjects(projectsData);
+        setCashFlowData(cashFlow);
       } catch (e) {
-        console.error("Failed to load invoices", e);
+        console.error("Failed to load financials data", e);
       } finally {
         setLoading(false);
       }
@@ -52,40 +42,40 @@ export default function FinancialMasterPage() {
   const columns = [
     { 
       key: "id", 
-      header: "Invoice ID", 
+      header: "Project ID", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-primary font-semibold hover:underline cursor-pointer">{row.id}</span>
+      cell: (row: any) => <span className="font-jetbrains text-primary font-semibold hover:underline cursor-pointer">{row.id.substring(0, 8)}</span>
     },
     { 
-      key: "project", 
+      key: "name", 
       header: "Project", 
       sortable: true,
-      cell: (row: any) => <span className="font-medium text-on-surface">{row.project}</span>
+      cell: (row: any) => <span className="font-medium text-on-surface">{row.name}</span>
     },
     { 
-      key: "vendor", 
-      header: "Vendor", 
+      key: "client_org_id", 
+      header: "Client", 
       sortable: true,
-      cell: (row: any) => <span className="text-on-surface-variant">{row.vendor}</span>
+      cell: (row: any) => <span className="text-on-surface-variant">{row.client_org_id || "Unknown"}</span>
     },
     { 
-      key: "amount", 
-      header: "Amount", 
+      key: "contract_value", 
+      header: "Contract Value", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains font-bold text-on-surface">{row.amount}</span>
+      cell: (row: any) => <span className="font-jetbrains font-bold text-on-surface">{row.contract_value ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(row.contract_value) : "N/A"}</span>
     },
     { 
-      key: "date", 
-      header: "Submitted", 
+      key: "start_date", 
+      header: "Start Date", 
       sortable: true,
-      cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">{row.date}</span>
+      cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">{row.start_date ? new Date(row.start_date).toLocaleDateString() : "Unknown"}</span>
     },
     { 
       key: "status", 
       header: "Status",
       cell: (row: any) => (
         <StatusBadge 
-          tone={row.status === "approved" ? "emerald" : row.status === "pending" ? "amber" : "crimson"} 
+          tone={row.status === "Completed" || row.status === "Delivered" ? "emerald" : row.status === "In Progress" ? "amber" : "crimson"} 
           label={row.status} 
         />
       )
@@ -189,7 +179,7 @@ export default function FinancialMasterPage() {
                   <div className="p-8 text-center text-on-surface-variant">Loading invoices...</div>
                 ) : (
                   <DataTable 
-                    data={invoices}
+                    data={projects}
                     columns={columns}
                     getRowId={(row: any) => row.id}
                     selectable={true}

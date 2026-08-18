@@ -7,7 +7,16 @@ export async function getUpdates(filters?: { projectId?: string, milestone_id?: 
   const supabase = await createClient();
   let query = supabase.from("updates").select("*, user_actor(display_name, avatar_url), media_attachments(*), comments(*), project:projects!updates_project_id_fkey(name)");
   
-  if (filters?.projectId) query = query.eq("project_id", filters.projectId);
+  if (filters?.projectId) {
+    if (filters.projectId === 'default') {
+      const { data: firstProject } = await supabase.from('projects').select('id').limit(1).single();
+      if (firstProject) {
+        query = query.eq("project_id", firstProject.id);
+      }
+    } else {
+      query = query.eq("project_id", filters.projectId);
+    }
+  }
   if (filters?.milestone_id) query = query.eq("milestone_id", filters.milestone_id);
   if (filters?.status) query = query.eq("approval_status", filters.status);
   
@@ -22,10 +31,17 @@ export async function getUpdates(filters?: { projectId?: string, milestone_id?: 
 
 export async function createUpdate(formData: FormData) {
   const supabase = await createClient();
-  const project_id = formData.get("project_id") as string;
+  let project_id = formData.get("project_id") as string;
   const author_id = formData.get("author_id") as string;
   const caption = formData.get("caption") as string;
   const milestone_id = formData.get("milestone_id") as string;
+
+  if (project_id === 'default') {
+    const { data: firstProject } = await supabase.from('projects').select('id').limit(1).single();
+    if (firstProject) {
+      project_id = firstProject.id;
+    }
+  }
   
   const { data, error } = await supabase.from("updates").insert({
     project_id,

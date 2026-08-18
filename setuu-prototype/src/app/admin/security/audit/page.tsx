@@ -19,14 +19,7 @@ export default function SecurityAuditLogPage() {
     async function loadData() {
       try {
         const data = await getAuditLogs();
-        setLogs(data.map(log => ({
-          id: log.id.substring(0, 8),
-          timestamp: log.created_at ? new Date(log.created_at).toLocaleString() : "Unknown",
-          event: log.event_type,
-          actor: (log.user_actor as any)?.display_name || "System",
-          target: log.table_target || "N/A",
-          ip: log.ip_address || "Unknown"
-        })));
+        setLogs(data);
       } catch (e) {
         console.error("Failed to load audit logs", e);
       } finally {
@@ -37,32 +30,32 @@ export default function SecurityAuditLogPage() {
   }, []);
   const columns = [
     { 
-      key: "timestamp", 
+      key: "created_at", 
       header: "Timestamp (UTC)", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.timestamp}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.created_at ? new Date(row.created_at).toLocaleString() : "Unknown"}</span>
     },
     { 
-      key: "event", 
+      key: "event_type", 
       header: "Event Description", 
       sortable: true,
-      cell: (row: any) => <span className="font-medium text-on-surface">{row.event}</span>
+      cell: (row: any) => <span className="font-medium text-on-surface">{row.event_type}</span>
     },
     { 
-      key: "actor", 
+      key: "user_actor", 
       header: "Actor", 
       sortable: true,
-      cell: (row: any) => <span className="text-on-surface">{row.actor}</span>
+      cell: (row: any) => <span className="text-on-surface">{row.user_actor?.display_name || "System"}</span>
     },
     { 
-      key: "target", 
+      key: "table_name", 
       header: "Table Target", 
-      cell: (row: any) => <span className="font-jetbrains text-sm text-primary bg-primary/10 px-2 py-1 rounded">{row.target}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-primary bg-primary/10 px-2 py-1 rounded">{row.table_name || "N/A"}</span>
     },
     { 
-      key: "ip", 
+      key: "ip_address", 
       header: "Source IP",
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.ip}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.ip_address || "Unknown"}</span>
     }
   ];
 

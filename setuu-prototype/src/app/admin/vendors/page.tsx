@@ -13,27 +13,22 @@ import Link from "next/link";
 import { TextInput } from "@/components/ui/TextInput";
 
 import { useEffect } from "react";
-import { getVendors } from "@/app/actions/vendorActions";
-
-// mockVendors removed, using live data
-
-const categoryData = [
-  { name: "Materials", count: 42 },
-  { name: "Subcontractors", count: 28 },
-  { name: "Equipment", count: 15 },
-  { name: "Consultants", count: 12 },
-  { name: "Logistics", count: 8 },
-];
+import { getVendors, getVendorCategoryData } from "@/app/actions/vendorActions";
 
 export default function VendorRegistryPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [vendors, setVendors] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{name: string, count: number}[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getVendors()
-      .then(data => {
-        setVendors(data);
+    Promise.all([
+      getVendors(),
+      getVendorCategoryData()
+    ])
+      .then(([vendorData, categoryData]) => {
+        setVendors(vendorData);
+        setCategories(categoryData);
         setLoading(false);
       })
       .catch(err => {
@@ -49,8 +44,8 @@ export default function VendorRegistryPage() {
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <Link href={`/admin/vendors/${row.id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.name}</Link>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id}</span>
+          <Link href={`/admin/vendors/${row.vendor_id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.name}</Link>
+          <span className="text-xs text-on-surface-variant font-jetbrains">{row.vendor_id?.slice(0,8)}...</span>
         </div>
       )
     },
@@ -76,16 +71,16 @@ export default function VendorRegistryPage() {
       sortable: true,
       cell: (row: any) => (
         <span className={`font-jetbrains font-bold text-sm ${
-          row.sla === "-" ? "text-on-surface-variant" : 
+          !row.sla || row.sla === "-" ? "text-on-surface-variant" : 
           parseInt(row.sla) > 95 ? "text-semantic-emerald" : 
           parseInt(row.sla) > 90 ? "text-semantic-amber" : "text-semantic-crimson"
         }`}>
-          {row.sla}
+          {row.sla}%
         </span>
       )
     },
     { 
-      key: "contracts", 
+      key: "organization_name", 
       header: "Organization", 
       sortable: true,
       cell: (row: any) => <span className="text-sm text-on-surface-variant">{row.organization_name || "Platform"}</span>
@@ -180,7 +175,7 @@ export default function VendorRegistryPage() {
             <Card className="p-5">
               <h3 className="font-merriweather font-bold text-on-surface mb-4">Vendors by Category</h3>
               <div className="h-48 mb-2">
-                <BarChart data={categoryData} keys={["count"]} colors={["var(--primary)"]} />
+                <BarChart data={categories} keys={["count"]} colors={["var(--primary)"]} />
               </div>
             </Card>
 

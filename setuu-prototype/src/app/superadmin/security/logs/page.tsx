@@ -17,12 +17,12 @@ export default function BreakGlassLogs() {
       const data = await getBreakGlassLogs();
       setLogData(data.map(log => ({
         id: log.id,
-        timestamp: new Date(log.invoked_at).toLocaleString(),
-        admin: log.user?.display_name || log.invoked_by,
+        timestamp: new Date(log.created_at).toLocaleString(),
+        admin: log.user?.display_name || log.super_admin_id,
         target: log.organization?.name || log.target_org_id,
         reason: log.reason,
-        duration: `${log.duration_minutes}m`,
-        status: log.status
+        duration: "N/A",
+        status: "Logged"
       })));
     } catch (e) {
       console.error(e);

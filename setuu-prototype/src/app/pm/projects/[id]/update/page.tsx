@@ -6,6 +6,8 @@ import { FormField } from "@/components/ui/FormField";
 import { TextArea } from "@/components/ui/TextArea";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { createUpdate } from "@/app/actions/updateActions";
+import { createClient } from "@/lib/supabase/client";
 
 export default function CameraUpdatePage() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -16,9 +18,11 @@ export default function CameraUpdatePage() {
   const [location, setLocation] = React.useState<{ lat: number; lng: number } | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [caption, setCaption] = React.useState("");
 
   const params = useParams();
   const id = params?.id as string;
+  const supabase = createClient();
 
   React.useEffect(() => {
     // Start camera
@@ -86,13 +90,47 @@ export default function CameraUpdatePage() {
     setPhotoDataUrl(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setIsSubmitting(true);
-      setTimeout(() => {
-          setIsSubmitting(false);
-          setIsSubmitted(true);
-      }, 1000);
+      
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        // Find an active milestone to link this to
+        let { data: milestones } = await supabase
+          .from('milestones')
+          .select('id')
+          .eq('project_id', id)
+          .limit(1);
+
+        const milestoneId = milestones?.[0]?.id || null;
+        
+        // Save the update record
+        const { data: newUpdate, error } = await supabase.from('updates').insert({
+          project_id: id,
+          milestone_id: milestoneId,
+          author_id: user?.id,
+          caption: caption || "Photo update",
+          latitude: location?.lat || 0,
+          longitude: location?.lng || 0,
+          location_name: "Mobile App Capture",
+          is_watermarked: true,
+          approval_status: "Pending"
+        }).select().single();
+
+        if (error) throw error;
+
+        // In a full app, we would upload photoDataUrl to Supabase Storage, 
+        // then insert a row into `media_attachments` linked to newUpdate.id
+
+        setIsSubmitted(true);
+      } catch (error) {
+        console.error("Failed to post update:", error);
+        alert("Failed to submit update. Check console for details.");
+      } finally {
+        setIsSubmitting(false);
+      }
   };
 
   if (isSubmitted) {
@@ -102,7 +140,7 @@ export default function CameraUpdatePage() {
             <h2 className="text-2xl font-bold font-merriweather text-on-surface">Update Saved</h2>
             <p className="text-on-surface-variant max-w-md mx-auto">Your watermarked photo and description have been securely logged to the timeline.</p>
             <div className="pt-8 flex justify-center gap-4">
-                <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); }}>Log Another Update</Button>
+                <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); setCaption(""); }}>Log Another Update</Button>
                 <Link href={`/pm/projects/${id}`}>
                     <Button variant="primary">Return to Dashboard</Button>
                 </Link>
@@ -158,7 +196,36 @@ export default function CameraUpdatePage() {
       </div>
 
       {photoDataUrl && (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
+        <form action={async (formData) => {
+            setIsSubmitting(true);
+            try {
+              // 1. Get the actual user ID from the Supabase auth context
+              const { data: { user }, error: authError } = await supabase.auth.getUser();
+              if (authError || !user) throw new Error("User not authenticated");
+              
+              formData.append('project_id', id);
+              formData.append('author_id', user.id);
+              
+              // 2. Convert base64 data URL to an actual Blob/File
+              const response = await fetch(photoDataUrl);
+              const blob = await response.blob();
+              const file = new File([blob], `update-${Date.now()}.jpg`, { type: blob.type });
+              
+              // 3. Append the actual file
+              formData.append('files', file);
+              
+              const res = await createUpdate(formData);
+              if (res.success) {
+                setIsSubmitted(true);
+              } else {
+                alert("Error: " + res.error);
+              }
+            } catch (error: any) {
+              alert("Error: " + error.message);
+            } finally {
+              setIsSubmitting(false);
+            }
+        }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
           <div className="flex items-center gap-2 text-semantic-emerald bg-semantic-emerald-bg/10 p-3 rounded-lg border border-semantic-emerald/20">
              <CheckCircleIcon className="w-5 h-5" />
              <span className="font-medium text-sm">Image captured with GPS and timestamp watermark.</span>
@@ -166,6 +233,7 @@ export default function CameraUpdatePage() {
 
           <FormField label="Update Description">
             <TextArea 
+              name="caption"
               placeholder="Describe what was completed or what the photo demonstrates..."
               rows={4}
             />

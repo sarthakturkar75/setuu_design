@@ -20,9 +20,9 @@ export default function GlobalSupportHub() {
           id: t.id.substring(0,8),
           status: t.status === "open" ? "Open" : t.status === "in_progress" ? "Escalated" : "Resolved",
           priority: t.priority === "high" ? "High" : t.priority === "urgent" ? "Critical" : "Normal",
-          org: "Global", // Usually joined from a related project or org
+          org: t.user_id || "Global", 
           updated: new Date(t.updated_at || t.created_at || Date.now()).toLocaleDateString(),
-          subject: t.subject
+          subject: t.title
         })));
         setLoading(false);
       })

@@ -4,34 +4,14 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { AlertTriangleIcon } from "lucide-react";
+import { getIssues } from "@/app/actions/issueActions";
 
 export default function PMCrossProjectIssues() {
-	const issues = [
-		{
-			id: "ISS-001",
-			project: "Sector 7 Pipeline",
-			title: "Foundation crack detected in Sector B",
-			severity: "High",
-			status: "Open",
-			assignee: "Site Admin",
-		},
-		{
-			id: "ISS-002",
-			project: "Alpha Tower Build",
-			title: "Delayed steel delivery",
-			severity: "Medium",
-			status: "Investigating",
-			assignee: "Jane Doe",
-		},
-		{
-			id: "ISS-003",
-			project: "Refinery Expansion",
-			title: "Permit pending approval",
-			severity: "Low",
-			status: "Resolved",
-			assignee: "Tom Carter",
-		},
-	];
+	const [issues, setIssues] = React.useState<any[]>([]);
+
+	React.useEffect(() => {
+		getIssues().then(setIssues);
+	}, []);
 
 	const columns = [
 		{
@@ -47,7 +27,7 @@ export default function PMCrossProjectIssues() {
 			key: "project",
 			header: "Project",
 			sortable: true,
-			cell: (row: any) => <>{row.project}</>,
+			cell: (row: any) => <>{row.project_name || 'Unknown Project'}</>,
 		},
 		{
 			key: "title",
@@ -87,7 +67,7 @@ export default function PMCrossProjectIssues() {
 		{
 			key: "assignee",
 			header: "Assigned To",
-			cell: (row: any) => <>{row.assignee}</>,
+			cell: (row: any) => <>{row.assignee_name || 'Unassigned'}</>,
 		},
 	];
 

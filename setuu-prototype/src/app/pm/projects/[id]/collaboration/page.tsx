@@ -5,6 +5,7 @@ import { MessageSquareIcon, SendIcon, PaperclipIcon } from "lucide-react";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { TextInput } from "@/components/ui/TextInput";
 import { Button } from "@/components/ui/Button";
+import { getUpdates, addComment, createUpdate } from "@/app/actions/updateActions";
 import { createClient } from "@/lib/supabase/client";
 
 export default function ProjectCollaborationPage() {
@@ -17,57 +18,51 @@ export default function ProjectCollaborationPage() {
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        let isMounted = true;
-
-        async function loadMessages() {
-            // 1. Get Current User
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user && isMounted) {
-                const { data: actor } = await supabase.from('user_actor').select('*').eq('id', user.id).single();
-                setCurrentUser(actor || { display_name: "Unknown", role: "admin" });
-            }
-
-            // 2. Fetch all comments for updates linked to this project
-            const { data: updates } = await supabase
-                .from('updates')
-                .select('id')
-                .eq('project_id', projectId);
-
-            if (updates && updates.length > 0) {
-                const updateIds = updates.map(u => u.id);
-                const { data: comments } = await supabase
-                    .from('comments')
-                    .select('*, author:user_actor(display_name, role)')
-                    .in('update_id', updateIds)
-                    .order('created_at', { ascending: true });
-
-                if (comments && isMounted) {
-                    setMessages(comments.map(c => ({
-                        id: c.id,
-                        user: c.author?.display_name || 'Unknown',
-                        role: c.author?.role || 'User',
-                        text: c.content,
-                        time: new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        isMe: c.author_id === user?.id
-                    })));
-                }
-            }
-            if (isMounted) setLoading(false);
+    const loadMessages = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+            const { data: actor } = await supabase.from('user_actor').select('*').eq('id', user.id).single();
+            setCurrentUser(actor || { id: user.id, display_name: "Unknown", role: "admin" });
         }
 
-        loadMessages();
+        const updates = await getUpdates({ projectId });
+        
+        let allComments: any[] = [];
+        updates.forEach((u: any) => {
+             if (u.comments) {
+                 u.comments.forEach((c: any) => {
+                     allComments.push({
+                         ...c,
+                         author_name: 'User', // In a real app we would join user_actor, but let's keep it simple
+                     });
+                 });
+             }
+        });
 
-        // 3. Optional: Set up realtime subscription here
+        allComments.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+
+        setMessages(allComments.map(c => ({
+            id: c.id,
+            user: c.author_name,
+            role: 'User',
+            text: c.content,
+            time: new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            isMe: c.author_id === user?.id
+        })));
+        
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        loadMessages();
+        
         const channel = supabase.channel('public:comments')
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comments' }, payload => {
-                // Simplistic append (in reality, check if it belongs to this project)
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'comments' }, () => {
                 loadMessages();
             })
             .subscribe();
 
         return () => {
-            isMounted = false;
             supabase.removeChannel(channel);
         };
     }, [projectId, supabase]);
@@ -78,35 +73,23 @@ export default function ProjectCollaborationPage() {
         const text = input;
         setInput("");
 
-        // Find or create a master "collaboration" update for this project to attach comments to
-        let { data: updates } = await supabase
-            .from('updates')
-            .select('id')
-            .eq('project_id', projectId)
-            .limit(1);
-
+        const updates = await getUpdates({ projectId });
         let targetUpdateId = updates?.[0]?.id;
 
-        // If no updates exist for this project, create a dummy one just to hold the thread
         if (!targetUpdateId) {
-            const { data: { user } } = await supabase.auth.getUser();
-            const { data: newUpdate } = await supabase.from('updates').insert({
-                project_id: projectId,
-                author_id: user?.id,
-                caption: "General Discussion",
-                approval_status: "Approved"
-            }).select().single();
-            targetUpdateId = newUpdate?.id;
+            const formData = new FormData();
+            formData.append("project_id", projectId);
+            formData.append("author_id", currentUser.id);
+            formData.append("caption", "General Discussion");
+            
+            const res = await createUpdate(formData);
+            if (res.success && res.data) {
+                targetUpdateId = res.data.id;
+            }
         }
 
         if (targetUpdateId) {
-            const { data: { user } } = await supabase.auth.getUser();
-            await supabase.from('comments').insert({
-                update_id: targetUpdateId,
-                author_id: user?.id,
-                content: text
-            });
-            // Realtime subscription will fetch the new message
+            await addComment(targetUpdateId, currentUser.id, text);
         }
     };
 

@@ -46,7 +46,7 @@ export default function OrganizationsHub() {
     {
       key: "tier",
       header: "Tier",
-      cell: (row: any) => <span className="text-sm">{row.tier}</span>
+      cell: (row: any) => <span className="text-sm">{row.subscription_tier}</span>
     },
     {
       key: "members",

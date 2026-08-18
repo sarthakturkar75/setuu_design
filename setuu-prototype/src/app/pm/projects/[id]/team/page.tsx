@@ -1,17 +1,28 @@
 "use client";
 import * as React from "react";
 import { DataTable } from "@/components/ui/DataTable";
+import { getProjectResources } from "@/app/actions/resourceActions";
+import { useParams } from "next/navigation";
 
 export default function ProjectTeamPage() {
-  const team = [
-    { id: "1", name: "David Miller", role: "Site Supervisor", phone: "+1 555-0198" },
-    { id: "2", name: "Sarah Jenkins", role: "Lead Engineer", phone: "+1 555-0233" }
-  ];
+  const [team, setTeam] = React.useState<any[]>([]);
+  const params = useParams();
+  const id = params?.id as string;
+
+  React.useEffect(() => {
+    async function fetchTeam() {
+      if (!id) return;
+      const data = await getProjectResources({ projectId: id });
+      setTeam(data);
+    }
+    fetchTeam();
+  }, [id]);
 
   const columns = [
     { key: "name", header: "Name", cell: (row: any) => <span className="font-medium text-on-surface">{row.name}</span> },
-    { key: "role", header: "Role", cell: (row: any) => <>{row.role}</> },
-    { key: "phone", header: "Contact", cell: (row: any) => <span className="text-sm">{row.phone}</span> }
+    { key: "resource_type", header: "Role", cell: (row: any) => <>{row.resource_type}</> },
+    { key: "allocated_hours", header: "Allocated Hours", cell: (row: any) => <span className="text-sm">{row.allocated_hours} hrs</span> },
+    { key: "status", header: "Status", cell: (row: any) => <>{row.status}</> }
   ];
 
   return (

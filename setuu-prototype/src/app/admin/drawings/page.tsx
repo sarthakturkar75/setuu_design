@@ -45,8 +45,8 @@ export default function DrawingHubPage() {
             <FileImage className="w-5 h-5 text-on-surface-variant" />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-on-surface line-clamp-1">{row.file_url ? row.file_url.split('/').pop() : 'Drawing'}</span>
-            <span className="text-xs text-on-surface-variant font-jetbrains">{row.display_id}</span>
+            <span className="font-semibold text-on-surface line-clamp-1">{row.drawing_name || (row.file_url ? row.file_url.split('/').pop() : 'Drawing')}</span>
+            <span className="text-xs text-on-surface-variant font-jetbrains">{row.drawing_id ? `${row.drawing_id.substring(0, 8)}...` : ""}</span>
           </div>
         </div>
       )
@@ -194,10 +194,10 @@ export default function DrawingHubPage() {
                 
                 {/* Details */}
                 <div className="p-4 flex flex-col">
-                  <span className="font-semibold text-on-surface line-clamp-1 mb-1">{dwg.file_url ? dwg.file_url.split('/').pop() : 'Drawing'}</span>
+                  <span className="font-semibold text-on-surface line-clamp-1 mb-1">{dwg.drawing_name || (dwg.file_url ? dwg.file_url.split('/').pop() : 'Drawing')}</span>
                   <span className="text-sm font-medium text-primary mb-3">{dwg.project_name || "Unknown"}</span>
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="text-xs font-jetbrains text-on-surface-variant">{dwg.display_id}</span>
+                    <span className="text-xs font-jetbrains text-on-surface-variant">{dwg.drawing_id ? `${dwg.drawing_id.substring(0, 8)}...` : ""}</span>
                     <span className="text-xs text-on-surface-variant">{dwg.created_at ? new Date(dwg.created_at).toLocaleDateString() : "--"}</span>
                   </div>
                 </div>

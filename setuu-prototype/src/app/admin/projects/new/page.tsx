@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { WizardStepper } from "@/components/ui/WizardStepper";
@@ -11,11 +11,32 @@ import { TextInput } from "@/components/ui/TextInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createProject } from "@/app/actions/projectActions";
+import { getClientOrgs } from "@/app/actions/clientActions";
+import { getUsers } from "@/app/actions/userActions";
 
 export default function NewProjectWizard() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 4;
+  
+  const [clientOptions, setClientOptions] = useState<{label: string, value: string}[]>([]);
+  const [pmOptions, setPmOptions] = useState<{label: string, value: string}[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [orgs, pms] = await Promise.all([
+          getClientOrgs(),
+          getUsers({ role: 'pm' })
+        ]);
+        setClientOptions(orgs.map(o => ({ label: o.name, value: o.id })));
+        setPmOptions(pms.map(p => ({ label: p.display_name || p.id, value: p.id })));
+      } catch (err) {
+        console.error("Failed to load options", err);
+      }
+    }
+    loadData();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -47,15 +68,12 @@ export default function NewProjectWizard() {
     data.append("po_reference", formData.poRef);
     data.append("contract_value", formData.contractValue);
     data.append("target_date", formData.targetDate);
-    // Hardcode an ID for test PM if none provided, or ignore
+    
+    // In a real implementation we would get proper UUIDs from the dropdown. 
     if (formData.pm) data.append("assigned_pm_id", formData.pm);
     if (formData.clientOrg) data.append("client_org_id", formData.clientOrg);
     
-    // In a real implementation we would also save the modules toggles
-    
     await createProject(data);
-    // createProject already redirects to the new project config, 
-    // but as a fallback we could push here.
   };
 
   return (
@@ -143,8 +161,7 @@ export default function NewProjectWizard() {
                     onChange={(e: any) => setFormData({...formData, clientOrg: e.target.value})}
                     options={[
                       { label: "Select Client...", value: "" },
-                      { label: "Acme Corp", value: "acme" },
-                      { label: "Stark Industries", value: "stark" },
+                      ...clientOptions
                     ]}
                   />
                 </FormField>
@@ -166,8 +183,7 @@ export default function NewProjectWizard() {
                     onChange={(e: any) => setFormData({...formData, pm: e.target.value})}
                     options={[
                       { label: "Select PM...", value: "" },
-                      { label: "Alice Chen", value: "alice" },
-                      { label: "Bob Smith", value: "bob" },
+                      ...pmOptions
                     ]}
                   />
                 </FormField>

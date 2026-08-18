@@ -1,45 +1,62 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { PlusIcon, ScanLineIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 export default function ProjectMaterialsPage() {
   const params = useParams();
   const id = params?.id as string;
+  const supabase = createClient();
 
-  const [materials, setMaterials] = useState([
-    { id: "MAT-101", item: "Portland Cement (Type I)", quantity: "500 bags", status: "In Stock", nextDelivery: "-" },
-    { id: "MAT-102", item: "Rebar #5 (5/8 inch)", quantity: "150 tons", status: "Low Stock", nextDelivery: "Aug 20" },
-    { id: "MAT-103", item: "HVAC Ducting", quantity: "0 m", status: "Awaiting", nextDelivery: "Aug 22" }
-  ]);
+  const [materials, setMaterials] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleOrder = () => {
-    setMaterials([...materials, {
-        id: `MAT-${Math.floor(Math.random() * 900) + 100}`,
-        item: "New Custom Material Order",
-        quantity: "100 units",
-        status: "Awaiting",
-        nextDelivery: "TBD"
-    }]);
+  useEffect(() => {
+    async function fetchMaterials() {
+      try {
+        const { getMaterials } = await import('@/app/actions/materialActions');
+        const data = await getMaterials(id);
+        setMaterials(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMaterials();
+  }, [id]);
+
+  const handleOrder = async () => {
+    const { createMaterial } = await import('@/app/actions/materialActions');
+    await createMaterial(id, {
+      item_name: "New Custom Material Order",
+      quantity: 100,
+      expected_arrival_date: new Date(Date.now() + 86400000 * 7).toISOString()
+    });
+    // Optimistic reload
+    const { getMaterials } = await import('@/app/actions/materialActions');
+    const data = await getMaterials(id);
+    setMaterials(data);
   };
 
   const columns = [
-    { key: "id", header: "SKU", cell: (row: any) => <span className="font-jetbrains-mono text-xs text-outline">{row.id}</span> },
-    { key: "item", header: "Item Description", sortable: true, cell: (row: any) => <span className="font-medium text-on-surface">{row.item}</span> },
+    { key: "id", header: "SKU", cell: (row: any) => <span className="font-jetbrains-mono text-xs text-outline">{row.spec_id || row.id.split('-')[0]}</span> },
+    { key: "item_name", header: "Item Description", sortable: true, cell: (row: any) => <span className="font-medium text-on-surface">{row.item_name}</span> },
     { key: "quantity", header: "Quantity", cell: (row: any) => <>{row.quantity}</> },
     {
       key: "status", header: "Status", cell: (row: any) => (
         <StatusBadge
-          tone={row.status === "In Stock" ? "emerald" : row.status === "Low Stock" ? "amber" : "sky"}
-          label={row.status}
+          tone={row.status?.toLowerCase() === "in stock" || row.status === "Delivered" ? "emerald" : row.status === "Low Stock" ? "amber" : "sky"}
+          label={row.status || "Unknown"}
         />
       )
     },
-    { key: "nextDelivery", header: "Next Delivery", cell: (row: any) => <span className="text-sm">{row.nextDelivery}</span> }
+    { key: "expected_arrival_date", header: "Next Delivery", cell: (row: any) => <span className="text-sm">{row.expected_arrival_date ? new Date(row.expected_arrival_date).toLocaleDateString() : row.estimated_delivery ? new Date(row.estimated_delivery).toLocaleDateString() : "TBD"}</span> }
   ];
 
   return (
@@ -58,8 +75,17 @@ export default function ProjectMaterialsPage() {
         </div>
       </div>
 
-      <div className="bg-surface-container rounded-xl border border-outline-variant/50 overflow-hidden">
-        <DataTable data={materials} columns={columns} />
+      <div className="bg-surface-container rounded-xl border border-outline-variant/50 overflow-hidden min-h-[300px]">
+        {loading ? (
+          <div className="flex items-center justify-center h-full p-12 text-on-surface-variant">Loading inventory...</div>
+        ) : materials.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full p-12 text-on-surface-variant">
+            <p>No materials tracked yet.</p>
+            <button className="mt-4 text-primary hover:underline" onClick={handleOrder}>Add your first order</button>
+          </div>
+        ) : (
+          <DataTable data={materials} columns={columns} />
+        )}
       </div>
     </div>
   );

@@ -10,27 +10,18 @@ import { Select } from "@/components/ui/Select";
 import { Plus, Download, MoreVertical, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getProjects } from "@/app/actions/projectActions";
+import { getProjects, getResourceAllocationData, getCriticalPathMilestones } from "@/app/actions/projectActions";
 
 // Removed mockProjects array. It is replaced by live data.
 
-const resourceAllocationData = [
-  { label: "Architecture", value: 4500 },
-  { label: "Structural", value: 3200 },
-  { label: "MEP", value: 2800 },
-  { label: "Civil", value: 1500 },
-];
 
-const criticalPathMilestones = [
-  { id: 1, project: "Alpha Tower", name: "Foundation Pour", daysLeft: 4, status: "critical" },
-  { id: 2, project: "Beta Site", name: "Site Clearance", daysLeft: 12, status: "warning" },
-  { id: 3, project: "Gamma Facility", name: "Final Inspection", daysLeft: 2, status: "critical" },
-];
 
 export default function ProjectTrackingHub() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [resourceData, setResourceData] = useState<{label: string, value: number}[]>([]);
+  const [criticalMilestones, setCriticalMilestones] = useState<any[]>([]);
 
   useEffect(() => {
     getProjects()
@@ -42,6 +33,9 @@ export default function ProjectTrackingHub() {
         console.error("Failed to fetch projects", err);
         setLoading(false);
       });
+
+    getResourceAllocationData().then(setResourceData).catch(console.error);
+    getCriticalPathMilestones().then(setCriticalMilestones).catch(console.error);
   }, []);
 
   const columns = [
@@ -163,7 +157,7 @@ export default function ProjectTrackingHub() {
           <Card className="p-5">
             <h3 className="font-merriweather font-bold text-on-surface mb-4">Critical Path Milestones</h3>
             <div className="space-y-4">
-              {criticalPathMilestones.map(m => (
+              {criticalMilestones.map(m => (
                 <div key={m.id} className="p-3 border border-outline-variant rounded-lg bg-surface-variant/30 flex flex-col gap-2">
                   <div className="flex justify-between items-start">
                     <h4 className="text-sm font-semibold text-on-surface">{m.name}</h4>
@@ -183,7 +177,7 @@ export default function ProjectTrackingHub() {
           <Card className="p-5">
             <h3 className="font-merriweather font-bold text-on-surface mb-4">Resource Allocation (Hrs)</h3>
             <div className="h-48">
-              <BarChart data={resourceAllocationData} keys={["value"]} colors={["var(--primary)"]} />
+              <BarChart data={resourceData} keys={["value"]} colors={["var(--primary)"]} />
             </div>
           </Card>
         </div>

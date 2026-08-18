@@ -1,12 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { FileTextIcon, DownloadIcon } from "lucide-react";
+import { getProjectReports } from "@/app/actions/reportActions";
 
 export default function PMReports() {
   const [selectedModules, setSelectedModules] = useState<string[]>(["summary", "milestones"]);
+  const [reports, setReports] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchReports() {
+      try {
+        const data = await getProjectReports();
+        setReports(data || []);
+      } catch (error) {
+        console.error("Failed to fetch reports", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchReports();
+  }, []);
 
   const toggleModule = (mod: string) => {
     setSelectedModules(prev =>
@@ -70,20 +87,26 @@ export default function PMReports() {
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-on-surface">Recent Exports</h3>
           <div className="space-y-3">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="p-3 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-between group hover:border-primary transition-colors cursor-pointer">
-                <div className="flex items-center gap-3">
-                  <FileTextIcon className="w-5 h-5 text-semantic-crimson" />
-                  <div>
-                    <div className="text-sm font-medium text-on-surface">Alpha_Tower_Status_Wk{42 - i}.pdf</div>
-                    <div className="text-xs text-on-surface-variant">{i} days ago • 2.4 MB</div>
+            {isLoading ? (
+              <div className="text-sm text-on-surface-variant">Loading exports...</div>
+            ) : reports.length === 0 ? (
+              <div className="text-sm text-on-surface-variant">No recent exports.</div>
+            ) : (
+              reports.map((report) => (
+                <div key={report.id} className="p-3 bg-surface-container rounded-lg border border-outline-variant flex items-center justify-between group hover:border-primary transition-colors cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <FileTextIcon className="w-5 h-5 text-semantic-crimson" />
+                    <div>
+                      <div className="text-sm font-medium text-on-surface">Project_{report.project_id}_Report.pdf</div>
+                      <div className="text-xs text-on-surface-variant">{new Date(report.generated_at).toLocaleString()}</div>
+                    </div>
                   </div>
+                  <button className="text-on-surface-variant hover:text-primary p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <DownloadIcon className="w-4 h-4" />
+                  </button>
                 </div>
-                <button className="text-on-surface-variant hover:text-primary p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <DownloadIcon className="w-4 h-4" />
-                </button>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

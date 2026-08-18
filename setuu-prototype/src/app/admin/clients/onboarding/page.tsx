@@ -9,10 +9,43 @@ import { ArrowLeft, Rocket, UploadCloud, Building2, CreditCard, ShieldCheck, Che
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createClientOrg } from "@/app/actions/clientActions";
 
 export default function ClientOnboardingPage() {
   const [activeStep, setActiveStep] = useState(1);
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [formData, setFormData] = useState({
+    orgName: "",
+    domain: "",
+    sector: "cre",
+    subscriptionTier: "Enterprise",
+    adminFirstName: "",
+    adminLastName: "",
+    adminEmail: "",
+    adminPhone: "",
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleProvision = async () => {
+    setIsSubmitting(true);
+    const fd = new FormData();
+    fd.append("name", formData.orgName);
+    fd.append("subscription_tier", formData.subscriptionTier);
+    
+    const result = await createClientOrg(fd);
+    setIsSubmitting(false);
+    
+    if (result.success) {
+      router.push("/admin/users");
+    } else {
+      console.error(result.error);
+    }
+  };
 
   const steps = [
     { id: 1, label: "Organization Profile", icon: <Building2 className="w-4 h-4" /> },
@@ -55,11 +88,19 @@ export default function ClientOnboardingPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">Organization Name <span className="text-crimson">*</span></label>
-                  <TextInput placeholder="e.g., Apex Construction Partners" />
+                  <TextInput 
+                    placeholder="e.g., Apex Construction Partners" 
+                    value={formData.orgName}
+                    onChange={(e) => handleInputChange("orgName", e.target.value)}
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">Primary Domain <span className="text-crimson">*</span></label>
-                  <TextInput placeholder="e.g., apexbuild.com" />
+                  <TextInput 
+                    placeholder="e.g., apexbuild.com" 
+                    value={formData.domain}
+                    onChange={(e) => handleInputChange("domain", e.target.value)}
+                  />
                   <span className="text-xs text-on-surface-variant">Used for SSO and email whitelisting.</span>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -71,8 +112,8 @@ export default function ClientOnboardingPage() {
                       { label: "Residential Development", value: "res" },
                       { label: "Government / Public Sector", value: "gov" },
                     ]}
-                    value="cre"
-                    onChange={() => { }}
+                    value={formData.sector}
+                    onChange={(val) => handleInputChange("sector", val)}
                   />
                 </div>
               </div>
@@ -95,7 +136,9 @@ export default function ClientOnboardingPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                 {/* Starter Tier */}
-                <div className="p-6 rounded-xl border border-outline-variant bg-surface hover:border-primary/50 transition-colors cursor-pointer flex flex-col gap-4">
+                <div 
+                  onClick={() => handleInputChange("subscriptionTier", "Starter")}
+                  className={`p-6 rounded-xl border transition-colors cursor-pointer flex flex-col gap-4 ${formData.subscriptionTier === "Starter" ? "border-2 border-primary bg-primary/5 shadow-elevation-l1" : "border-outline-variant bg-surface hover:border-primary/50"}`}>
                   <div className="flex flex-col">
                     <span className="text-xl font-bold text-on-surface">Starter</span>
                     <span className="text-sm text-on-surface-variant mt-1">For small contractors</span>
@@ -109,7 +152,9 @@ export default function ClientOnboardingPage() {
                 </div>
 
                 {/* Enterprise Tier */}
-                <div className="p-6 rounded-xl border-2 border-primary bg-primary/5 shadow-elevation-l1 cursor-pointer flex flex-col gap-4 relative overflow-hidden">
+                <div 
+                  onClick={() => handleInputChange("subscriptionTier", "Enterprise")}
+                  className={`p-6 rounded-xl border transition-colors cursor-pointer flex flex-col gap-4 relative overflow-hidden ${formData.subscriptionTier === "Enterprise" ? "border-2 border-primary bg-primary/5 shadow-elevation-l1" : "border-outline-variant bg-surface hover:border-primary/50"}`}>
                   <div className="absolute top-0 right-0 bg-primary text-on-primary text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-bl-lg">Recommended</div>
                   <div className="flex flex-col">
                     <span className="text-xl font-bold text-primary">Enterprise</span>
@@ -125,7 +170,9 @@ export default function ClientOnboardingPage() {
                 </div>
 
                 {/* Custom Tier */}
-                <div className="p-6 rounded-xl border border-outline-variant bg-surface hover:border-primary/50 transition-colors cursor-pointer flex flex-col gap-4">
+                <div 
+                  onClick={() => handleInputChange("subscriptionTier", "Custom Build")}
+                  className={`p-6 rounded-xl border transition-colors cursor-pointer flex flex-col gap-4 ${formData.subscriptionTier === "Custom Build" ? "border-2 border-primary bg-primary/5 shadow-elevation-l1" : "border-outline-variant bg-surface hover:border-primary/50"}`}>
                   <div className="flex flex-col">
                     <span className="text-xl font-bold text-on-surface">Custom Build</span>
                     <span className="text-sm text-on-surface-variant mt-1">Mega-projects & consortia</span>
@@ -161,19 +208,35 @@ export default function ClientOnboardingPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">First Name <span className="text-crimson">*</span></label>
-                  <TextInput placeholder="e.g., Robert" />
+                  <TextInput 
+                    placeholder="e.g., Robert" 
+                    value={formData.adminFirstName}
+                    onChange={(e) => handleInputChange("adminFirstName", e.target.value)}
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">Last Name <span className="text-crimson">*</span></label>
-                  <TextInput placeholder="e.g., House" />
+                  <TextInput 
+                    placeholder="e.g., House" 
+                    value={formData.adminLastName}
+                    onChange={(e) => handleInputChange("adminLastName", e.target.value)}
+                  />
                 </div>
                 <div className="flex flex-col gap-2 md:col-span-2">
                   <label className="text-sm font-semibold text-on-surface">Corporate Email <span className="text-crimson">*</span></label>
-                  <TextInput placeholder="e.g., rhouse@apexbuild.com" type="email" />
+                  <TextInput 
+                    placeholder="e.g., rhouse@apexbuild.com" type="email" 
+                    value={formData.adminEmail}
+                    onChange={(e) => handleInputChange("adminEmail", e.target.value)}
+                  />
                 </div>
                 <div className="flex flex-col gap-2 md:col-span-2">
                   <label className="text-sm font-semibold text-on-surface">Contact Phone</label>
-                  <TextInput placeholder="+1 (555) 123-4567" type="tel" />
+                  <TextInput 
+                    placeholder="+1 (555) 123-4567" type="tel" 
+                    value={formData.adminPhone}
+                    onChange={(e) => handleInputChange("adminPhone", e.target.value)}
+                  />
                 </div>
               </div>
             </div>
@@ -191,11 +254,11 @@ export default function ClientOnboardingPage() {
                   <span className="text-xs font-bold text-primary uppercase tracking-wider">Organization Identity</span>
                   <div className="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
                     <span className="text-on-surface-variant">Name</span>
-                    <span className="font-semibold text-on-surface">Apex Construction Partners</span>
+                    <span className="font-semibold text-on-surface">{formData.orgName || "Not specified"}</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-outline-variant pb-2">
                     <span className="text-on-surface-variant">Domain</span>
-                    <span className="font-semibold text-on-surface">apexbuild.com</span>
+                    <span className="font-semibold text-on-surface">{formData.domain || "Not specified"}</span>
                   </div>
                 </div>
 
@@ -203,7 +266,7 @@ export default function ClientOnboardingPage() {
                   <span className="text-xs font-bold text-primary uppercase tracking-wider">Subscription</span>
                   <div className="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
                     <span className="text-on-surface-variant">Selected Tier</span>
-                    <span className="font-semibold text-on-surface">Enterprise ($1,999/mo)</span>
+                    <span className="font-semibold text-on-surface">{formData.subscriptionTier}</span>
                   </div>
                 </div>
 
@@ -211,7 +274,7 @@ export default function ClientOnboardingPage() {
                   <span className="text-xs font-bold text-primary uppercase tracking-wider">Primary Admin</span>
                   <div className="flex items-center justify-between border-b border-outline-variant pb-2 mt-2">
                     <span className="text-on-surface-variant">User</span>
-                    <span className="font-semibold text-on-surface">Robert House (rhouse@apexbuild.com)</span>
+                    <span className="font-semibold text-on-surface">{formData.adminFirstName} {formData.adminLastName} ({formData.adminEmail || "No email"})</span>
                   </div>
                 </div>
               </div>
@@ -248,11 +311,12 @@ export default function ClientOnboardingPage() {
                 </button>
               ) : (
                 <button
-                  onClick={() => router.push("/admin/users")}
-                  className="flex items-center gap-2 px-8 py-2.5 bg-semantic-emerald text-white rounded-lg text-sm font-bold hover:bg-semantic-emerald/90 transition-colors shadow-elevation-l2"
+                  onClick={handleProvision}
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2 px-8 py-2.5 bg-semantic-emerald text-white rounded-lg text-sm font-bold hover:bg-semantic-emerald/90 transition-colors shadow-elevation-l2 disabled:opacity-50"
                 >
                   <Rocket className="w-4 h-4" />
-                  Provision Environment
+                  {isSubmitting ? "Provisioning..." : "Provision Environment"}
                 </button>
               )}
             </div>

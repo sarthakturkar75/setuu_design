@@ -4,42 +4,14 @@ import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { getProjects } from "@/app/actions/projectActions";
 
 export default function PMProjectsList() {
-	const data = [
-		{
-			id: 1,
-			name: "Alpha Tower Build",
-			client: "Apex Holdings",
-			status: "In Progress",
-			pm: "Jane Doe",
-			progress: 68,
-		},
-		{
-			id: 2,
-			name: "Sector 7 Pipeline",
-			client: "City Works",
-			status: "At Risk",
-			pm: "Alex Mercer",
-			progress: 42,
-		},
-		{
-			id: 3,
-			name: "Refinery Expansion",
-			client: "PetroCorp",
-			status: "On Track",
-			pm: "Jane Doe",
-			progress: 15,
-		},
-		{
-			id: 4,
-			name: "Downtown Office Park",
-			client: "Metro Dev",
-			status: "Completed",
-			pm: "Sarah Jenkins",
-			progress: 100,
-		},
-	];
+	const [data, setData] = React.useState<any[]>([]);
+
+	React.useEffect(() => {
+		getProjects().then(setData);
+	}, []);
 
 	const columns = [
 		{
@@ -59,7 +31,7 @@ export default function PMProjectsList() {
 			key: "client",
 			header: "Client Organization",
 			sortable: true,
-			cell: (row: any) => <>{row.client}</>,
+			cell: (row: any) => <>{row.client_org_id || 'N/A'}</>,
 		},
 		{
 			key: "status",
@@ -78,7 +50,7 @@ export default function PMProjectsList() {
 				/>
 			),
 		},
-		{ key: "pm", header: "Project Manager", cell: (row: any) => <>{row.pm}</> },
+		{ key: "pm", header: "Project Manager", cell: (row: any) => <>{row.pm_name || 'Unassigned'}</> },
 		{
 			key: "progress",
 			header: "Milestone Completion",
@@ -86,7 +58,7 @@ export default function PMProjectsList() {
 			cell: (row: any) => (
 				<div className="w-48">
 					<ProgressBar
-						progress={row.progress}
+						progress={row.progress || 0}
 						showPercentage
 						colorClass={
 							row.status === "At Risk" ? "bg-semantic-crimson" : "bg-primary"

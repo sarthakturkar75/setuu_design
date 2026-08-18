@@ -17,3 +17,17 @@ export async function getProjectResources(filters?: { projectId?: string, type?:
     project_name: res.project && typeof res.project === 'object' && !Array.isArray(res.project) ? (res.project as any).name : "Unknown Project"
   }));
 }
+
+export async function getResourceConflicts() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("project_issues")
+    .select("*, project:projects(name)");
+  
+  if (error) throw error;
+  
+  return data.map(issue => ({
+    ...issue,
+    project_name: issue.project && typeof issue.project === 'object' && !Array.isArray(issue.project) ? (issue.project as any).name : "Unknown Project"
+  }));
+}

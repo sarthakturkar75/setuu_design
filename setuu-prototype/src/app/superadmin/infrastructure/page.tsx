@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getInfrastructureData } from "@/app/actions/platformActions";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -10,19 +11,15 @@ import { Server, ShieldAlert, Activity, Database, Play, Pause, Maximize2 } from 
 
 export default function InfrastructureCommand() {
   const [isPaused, setIsPaused] = React.useState(false);
+  const [nodeTopology, setNodeTopology] = useState<any[]>([]);
+  const [edgeThreats, setEdgeThreats] = useState<any[]>([]);
 
-  const nodeTopology = [
-    { region: "ap-south-1 (Mumbai)", status: "emerald", load: 45, type: "Primary Cluster" },
-    { region: "eu-central-1 (Frankfurt)", status: "emerald", load: 62, type: "Replica" },
-    { region: "us-east-1 (N. Virginia)", status: "amber", load: 88, type: "Edge Node" },
-    { region: "ap-southeast-1 (Singapore)", status: "emerald", load: 30, type: "Edge Node" }
-  ];
-
-  const edgeThreats = [
-    { timestamp: "2026-08-17T06:12:00Z", ip: "192.168.1.45", threat: "DDoS Attempt", status: "Blocked" },
-    { timestamp: "2026-08-17T05:40:00Z", ip: "45.22.19.102", threat: "SQL Injection", status: "Blocked" },
-    { timestamp: "2026-08-17T04:15:00Z", ip: "112.44.55.10", threat: "Brute Force", status: "Blocked" }
-  ];
+  useEffect(() => {
+    getInfrastructureData().then(data => {
+      setNodeTopology(data.nodeTopology || []);
+      setEdgeThreats(data.edgeThreats || []);
+    });
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -119,10 +116,10 @@ export default function InfrastructureCommand() {
                 {edgeThreats.map((threat, idx) => (
                   <div key={idx} className="flex justify-between items-center py-2 border-b border-outline-variant/20 last:border-0">
                     <div>
-                      <p className="text-sm font-medium text-on-surface">{threat.threat}</p>
-                      <p className="text-xs font-jetbrains-mono text-on-surface-variant">{threat.ip}</p>
+                      <p className="text-sm font-medium text-on-surface">{threat.event_type}</p>
+                      <p className="text-xs font-jetbrains-mono text-on-surface-variant">{threat.created_at}</p>
                     </div>
-                    <StatusBadge tone="slate" label={threat.status} />
+                    <StatusBadge tone="slate" label="Blocked" />
                   </div>
                 ))}
               </div>

@@ -9,11 +9,49 @@ import { Button } from "@/components/ui/Button";
 import { CheckCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 export default function NewChangeRequestPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const [title, setTitle] = useState("");
+  const [timeImpact, setTimeImpact] = useState("");
+  const [costImpact, setCostImpact] = useState("");
+  const [description, setDescription] = useState("");
+  
   const params = useParams();
-  const id = params?.id as string;
+  const projectId = params?.id as string;
+  const supabase = createClient();
+
+  const handleSubmit = async (e: React.FormEvent, status: string = 'Pending') => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      const { error } = await supabase.from('change_requests').insert({
+        project_id: projectId,
+        title: title || "Untitled Request",
+        description: description,
+        cost_impact: parseFloat(costImpact.replace(/[^0-9.-]+/g,"")) || 0,
+        time_impact_days: parseInt(timeImpact.replace(/[^0-9.-]+/g,""), 10) || 0,
+        status: status,
+        created_by: user?.id,
+        display_id: `CR-${Math.floor(Math.random() * 9000) + 1000}`
+      });
+      
+      if (error) throw error;
+      
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("Error creating change request:", err);
+      alert("Failed to create change request. Check console for details.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (isSubmitted) {
     return (
@@ -22,7 +60,7 @@ export default function NewChangeRequestPage() {
         <h2 className="text-2xl font-bold font-merriweather text-on-surface">Change Request Submitted</h2>
         <p className="text-on-surface-variant max-w-md mx-auto">Your draft has been routed to the client and engineering teams for review.</p>
         <div className="pt-8">
-          <Link href={`/pm/projects/${id}`}>
+          <Link href={`/pm/projects/${projectId}`}>
             <Button variant="primary">Return to Dashboard</Button>
           </Link>
         </div>
@@ -37,18 +75,33 @@ export default function NewChangeRequestPage() {
         <p className="text-on-surface-variant mt-1">Submit a formal request for scope, timeline, or cost changes.</p>
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); setIsSubmitted(true); }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
+      <form onSubmit={(e) => handleSubmit(e, 'Pending')} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
 
         <FormField label="Request Title">
-          <TextInput placeholder="e.g., HVAC routing variation due to beam clash" />
+          <TextInput 
+            placeholder="e.g., HVAC routing variation due to beam clash" 
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
         </FormField>
 
         <div className="grid grid-cols-2 gap-6">
-          <FormField label="Impact on Timeline">
-            <TextInput placeholder="e.g., +2 Days" />
+          <FormField label="Impact on Timeline (Days)">
+            <TextInput 
+              placeholder="e.g., 2" 
+              type="number"
+              value={timeImpact}
+              onChange={(e) => setTimeImpact(e.target.value)}
+            />
           </FormField>
-          <FormField label="Impact on Cost">
-            <TextInput placeholder="e.g., $4,500" />
+          <FormField label="Impact on Cost ($)">
+            <TextInput 
+              placeholder="e.g., 4500" 
+              type="number"
+              value={costImpact}
+              onChange={(e) => setCostImpact(e.target.value)}
+            />
           </FormField>
         </div>
 
@@ -56,6 +109,8 @@ export default function NewChangeRequestPage() {
           <TextArea
             placeholder="Explain the reason for the change, alternatives considered, and the necessary steps to implement it."
             rows={5}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </FormField>
 
@@ -64,8 +119,12 @@ export default function NewChangeRequestPage() {
         </FormField>
 
         <div className="pt-4 flex justify-end gap-3">
-          <Button variant="ghost" type="button" onClick={() => setIsSubmitted(true)}>Save Draft</Button>
-          <Button variant="primary" type="submit">Submit for Client Approval</Button>
+          <Button variant="ghost" type="button" onClick={(e) => handleSubmit(e, 'Draft')} disabled={isSubmitting}>
+            Save Draft
+          </Button>
+          <Button variant="primary" type="submit" disabled={isSubmitting || !title.trim()}>
+            {isSubmitting ? 'Submitting...' : 'Submit for Client Approval'}
+          </Button>
         </div>
       </form>
     </div>

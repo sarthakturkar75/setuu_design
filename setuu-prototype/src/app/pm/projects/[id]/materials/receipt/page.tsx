@@ -5,9 +5,15 @@ import { TextInput } from "@/components/ui/TextInput";
 import { FileDropzone } from "@/components/ui/FileDropzone";
 import { Button } from "@/components/ui/Button";
 import { CameraIcon, CheckCircleIcon } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { createMaterial } from "@/app/actions/materialActions";
 
 export default function MaterialReceiptPage() {
   const [isScanned, setIsScanned] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const params = useParams();
+  const id = params?.id as string;
+  const router = useRouter();
 
   return (
     <div className="p-6 max-w-150 mx-auto space-y-8 pb-32">
@@ -34,22 +40,41 @@ export default function MaterialReceiptPage() {
           </Button>
         </div>
       ) : (
-        <form onSubmit={(e) => { e.preventDefault(); alert("Successfully submitted!"); }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
+        <form action={async (formData) => {
+          setIsSubmitting(true);
+          try {
+            const data = {
+              name: formData.get("item_name") as string,
+              quantity: parseInt(formData.get("quantity") as string) || 0,
+              unit: formData.get("unit") as string,
+              // In a real scenario you would parse out multiple items
+            };
+            const res = await createMaterial(id, data);
+            if (res.success) {
+              alert("Successfully submitted!");
+              router.push(`/pm/projects/${id}/materials`);
+            } else {
+              alert("Error: " + res.error);
+            }
+          } finally {
+            setIsSubmitting(false);
+          }
+        }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
           <div className="flex items-center gap-2 text-semantic-emerald mb-6 bg-semantic-emerald-bg/10 p-3 rounded-lg border border-semantic-emerald/20">
             <CheckCircleIcon className="w-5 h-5" />
             <span className="font-medium text-sm">Packing slip scanned successfully</span>
           </div>
 
           <FormField label="Purchase Order Reference">
-            <TextInput defaultValue="PO-2026-8891" />
+            <TextInput name="po_reference" defaultValue="PO-2026-8891" />
           </FormField>
 
           <FormField label="Items Received">
             <div className="space-y-3">
               <div className="flex gap-3 items-center">
-                <div className="flex-1"><TextInput defaultValue="Rebar #5 (5/8 inch)" /></div>
-                <div className="w-24"><TextInput defaultValue="150" /></div>
-                <div className="text-sm font-medium text-on-surface-variant w-12">tons</div>
+                <div className="flex-1"><TextInput name="item_name" defaultValue="Rebar #5 (5/8 inch)" /></div>
+                <div className="w-24"><TextInput name="quantity" defaultValue="150" /></div>
+                <div className="w-24"><TextInput name="unit" defaultValue="tons" /></div>
               </div>
               <Button variant="ghost" size="sm" type="button" className="w-full text-primary">+ Add Item</Button>
             </div>
@@ -60,7 +85,9 @@ export default function MaterialReceiptPage() {
           </FormField>
 
           <div className="pt-4">
-            <Button variant="primary" className="w-full" type="submit">Confirm Receipt</Button>
+            <Button variant="primary" className="w-full" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Confirming..." : "Confirm Receipt"}
+            </Button>
           </div>
         </form>
       )}

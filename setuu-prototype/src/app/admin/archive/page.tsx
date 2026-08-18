@@ -22,15 +22,7 @@ export default function ArchiveManagerPage() {
     async function loadData() {
       try {
         const data = await getProjects({ is_archived: true });
-        setArchives(data.map(p => ({
-          id: p.id,
-          name: p.name,
-          module: "Projects",
-          date: p.created_at ? new Date(p.created_at).toLocaleDateString() : "Unknown",
-          policy: "Permanent",
-          status: p.status,
-          hold: false
-        })));
+        setArchives(data || []);
       } catch (e) {
         console.error("Failed to load archives", e);
       } finally {
@@ -56,18 +48,18 @@ export default function ArchiveManagerPage() {
       key: "module", 
       header: "Origin Module", 
       sortable: true,
-      cell: (row: any) => <span className="text-on-surface-variant">{row.module}</span>
+      cell: (row: any) => <span className="text-on-surface-variant">Projects</span>
     },
     { 
       key: "policy", 
       header: "Retention Policy",
-      cell: (row: any) => <span className="font-medium text-on-surface">{row.policy}</span>
+      cell: (row: any) => <span className="font-medium text-on-surface">Permanent</span>
     },
     { 
-      key: "date", 
+      key: "created_at", 
       header: "Archived Date", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.date}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.created_at ? new Date(row.created_at).toLocaleDateString() : "Unknown"}</span>
     },
     { 
       key: "status", 
@@ -76,9 +68,8 @@ export default function ArchiveManagerPage() {
         <div className="flex items-center gap-2">
           <StatusBadge 
             tone={row.status === "Secure" ? "emerald" : row.status === "Legal Hold" ? "amber" : "crimson"} 
-            label={row.status} 
+            label={row.status || "Unknown"} 
           />
-          {row.hold && <span title="Active Legal Hold"><Scale className="w-4 h-4 text-semantic-amber" /></span>}
         </div>
       )
     },
@@ -87,10 +78,10 @@ export default function ArchiveManagerPage() {
       header: "", 
       cell: (row: any) => (
         <div className="flex items-center gap-3">
-          <button className="text-sm font-semibold text-primary hover:underline flex items-center gap-1" disabled={row.hold}>
+          <button className="text-sm font-semibold text-primary hover:underline flex items-center gap-1">
             <RefreshCcw className="w-4 h-4" /> Restore
           </button>
-          <button className="text-sm font-semibold text-crimson hover:underline flex items-center gap-1" disabled={row.hold || row.status === "Secure"}>
+          <button className="text-sm font-semibold text-crimson hover:underline flex items-center gap-1" disabled={row.status === "Secure"}>
             <Trash2 className="w-4 h-4" /> Purge
           </button>
         </div>

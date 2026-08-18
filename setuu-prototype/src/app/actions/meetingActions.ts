@@ -3,16 +3,19 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function getMeetings(projectId: string) {
+export async function getMeetings(projectId?: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("client_meetings")
-    .select("*, client_meeting_agendas(*)")
-    .eq("project_id", projectId)
-    .order("meeting_date", { ascending: false });
+  let query = supabase.from("client_meetings").select("*, client_meeting_agendas(*), project:projects!client_meetings_project_id_fkey(name)").order("meeting_date", { ascending: false });
+  if (projectId) {
+    query = query.eq("project_id", projectId);
+  }
+  const { data, error } = await query;
     
   if (error) throw error;
-  return data;
+  return data.map(m => ({
+    ...m,
+    project_name: m.project && typeof m.project === 'object' && !Array.isArray(m.project) ? (m.project as any).name : "Unknown Project"
+  }));
 }
 
 export async function createMeeting(data: any) {

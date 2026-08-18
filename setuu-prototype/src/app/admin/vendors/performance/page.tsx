@@ -7,22 +7,23 @@ import { KPICard } from "@/components/ui/KPICard";
 import { TrendingUp, AlertTriangle, ShieldCheck, Download } from "lucide-react";
 import Link from "next/link";
 
-const slaData = [
-  { name: "BuildTech", score: 98 },
-  { name: "Apex Arch", score: 95 },
-  { name: "Metro MEP", score: 92 },
-  { name: "Global Steel", score: 88 },
-  { name: "Heavy Mach", score: 82 },
-];
-
-const scorecardData = [
-  { metric: "Delivery Timeliness", score: 94, trend: "+2.1%" },
-  { metric: "Quality & Compliance", score: 97, trend: "+0.5%" },
-  { metric: "Safety Record", score: 99, trend: "0.0%" },
-  { metric: "Cost Variance", score: 88, trend: "-4.2%" },
-];
+import { useState, useEffect } from "react";
+import { getVendorSlaData, getVendorScorecardData } from "@/app/actions/vendorActions";
 
 export default function VendorPerformancePage() {
+  const [slaData, setSlaData] = useState<any[]>([]);
+  const [scorecardData, setScorecardData] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const sla = await getVendorSlaData();
+      const scorecard = await getVendorScorecardData();
+      setSlaData(sla);
+      setScorecardData(scorecard);
+    }
+    loadData();
+  }, []);
+
   return (
     <div className="flex flex-col h-full bg-surface">
       <PageHeader 

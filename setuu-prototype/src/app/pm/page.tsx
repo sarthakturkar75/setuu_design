@@ -1,4 +1,6 @@
+"use client";
 import * as React from "react";
+import { getProjects } from "@/app/actions/projectActions";
 import { KPICard } from "@/components/ui/KPICard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -14,32 +16,11 @@ import {
 import Link from "next/link";
 
 export default function PMCommandCenter() {
-	const activeProjects = [
-		{
-			id: 1,
-			name: "Alpha Tower Build",
-			client: "Apex Holdings",
-			status: "In Progress",
-			progress: 68,
-			overdue: 2,
-		},
-		{
-			id: 2,
-			name: "Sector 7 Pipeline",
-			client: "City Works",
-			status: "At Risk",
-			progress: 42,
-			overdue: 8,
-		},
-		{
-			id: 3,
-			name: "Refinery Expansion",
-			client: "PetroCorp",
-			status: "On Track",
-			progress: 15,
-			overdue: 0,
-		},
-	];
+	const [activeProjects, setActiveProjects] = React.useState<any[]>([]);
+
+	React.useEffect(() => {
+		getProjects().then(setActiveProjects);
+	}, []);
 
 	return (
 		<div className="p-6 max-w-[1600px] mx-auto space-y-8 animate-fade-in-up">
@@ -129,7 +110,7 @@ export default function PMCommandCenter() {
 											</Link>
 										</h3>
 										<p className="text-sm text-on-surface-variant">
-											{project.client}
+											{project.client_org_id || 'N/A'}
 										</p>
 									</div>
 									<StatusBadge
@@ -146,7 +127,7 @@ export default function PMCommandCenter() {
 
 								<div>
 									<ProgressBar
-										progress={project.progress}
+										progress={project.progress || 0}
 										showPercentage
 										label="Milestone Completion"
 										colorClass={
@@ -159,10 +140,10 @@ export default function PMCommandCenter() {
 
 								<div className="flex items-center justify-between pt-2 border-t border-outline-variant/50">
 									<div className="text-sm flex items-center gap-1">
-										{project.overdue > 0 ? (
+										{(project.overdue || 0) > 0 ? (
 											<span className="text-semantic-crimson font-medium flex items-center gap-1">
 												<AlertTriangleIcon className="w-3 h-3" />{" "}
-												{project.overdue} overdue tasks
+												{project.overdue || 0} overdue tasks
 											</span>
 										) : (
 											<span className="text-semantic-emerald font-medium flex items-center gap-1">

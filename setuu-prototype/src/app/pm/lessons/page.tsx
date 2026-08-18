@@ -1,19 +1,36 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { PlusIcon, Edit3Icon } from "lucide-react";
+import { getLessons } from "@/app/actions/lessonsLearnedActions";
 
 export default function PMLessonsLearned() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [lessons, setLessons] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadLessons() {
+      try {
+        const data = await getLessons();
+        setLessons(data || []);
+      } catch (error) {
+        console.error("Failed to fetch lessons", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadLessons();
+  }, []);
 
   const categories = ["All", "Technical", "Financial", "Safety"];
 
   const filteredLessons = activeCategory === "All"
-    ? mockLessons
-    : mockLessons.filter(l => l.category === activeCategory);
+    ? lessons
+    : lessons.filter(l => l.category === activeCategory);
 
   return (
     <div className="p-6 space-y-6 max-w-300 mx-auto">
@@ -45,32 +62,30 @@ export default function PMLessonsLearned() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredLessons.map(lesson => (
-          <Card key={lesson.id} className="p-5 flex flex-col gap-4">
-            <div className="flex justify-between items-start gap-2">
-              <h4 className="font-bold text-on-surface line-clamp-2">{lesson.title}</h4>
-              <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider whitespace-nowrap ${lesson.category === "Technical" ? "bg-sky-500/10 text-sky-600" :
-                  lesson.category === "Safety" ? "bg-semantic-crimson/10 text-semantic-crimson" :
-                    "bg-semantic-emerald/10 text-semantic-emerald"
-                }`}>
-                {lesson.category}
-              </span>
-            </div>
-            <p className="text-sm text-on-surface-variant line-clamp-3">{lesson.excerpt}</p>
-            <div className="mt-auto pt-4 border-t border-outline-variant/50 flex justify-between items-center text-xs text-on-surface-variant">
-              <span>{lesson.project}</span>
-              <span className="font-medium text-on-surface">{lesson.author}</span>
-            </div>
-          </Card>
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="p-8 text-center text-on-surface-variant">Loading lessons...</div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredLessons.map(lesson => (
+            <Card key={lesson.id} className="p-5 flex flex-col gap-4">
+              <div className="flex justify-between items-start gap-2">
+                <h4 className="font-bold text-on-surface line-clamp-2">{lesson.title}</h4>
+                <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider whitespace-nowrap ${lesson.category === "Technical" ? "bg-sky-500/10 text-sky-600" :
+                    lesson.category === "Safety" ? "bg-semantic-crimson/10 text-semantic-crimson" :
+                      "bg-semantic-emerald/10 text-semantic-emerald"
+                  }`}>
+                  {lesson.category}
+                </span>
+              </div>
+              <p className="text-sm text-on-surface-variant line-clamp-3">{lesson.description}</p>
+              <div className="mt-auto pt-4 border-t border-outline-variant/50 flex justify-between items-center text-xs text-on-surface-variant">
+                <span>{lesson.project_id || "Unknown Project"}</span>
+                <span className="font-medium text-on-surface">Impact: {lesson.impact || "N/A"}</span>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
-
-const mockLessons = [
-  { id: "1", title: "Concrete Curing in High Humidity", category: "Technical", excerpt: "We experienced a 15% delay in curing times due to unexpected humidity levels. Future schedules should account for local microclimates.", project: "Alpha Tower Build", author: "Sarah Jenkins" },
-  { id: "2", title: "Subcontractor Invoice Discrepancies", category: "Financial", excerpt: "Implementing a strict bi-weekly review of all subcontractor logs prevented a potential 5% budget overrun.", project: "Sector 7 Pipeline", author: "Marcus Chen" },
-  { id: "3", title: "Crane Wind Limits on High Floors", category: "Safety", excerpt: "Anemometer readings differed significantly from ground level forecasts. Mandating dedicated local wind sensors is crucial.", project: "Alpha Tower Build", author: "Alex Kho" },
-];

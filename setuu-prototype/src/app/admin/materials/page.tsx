@@ -40,8 +40,8 @@ export default function MasterMaterialTrackingPage() {
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-on-surface">{row.name}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.specification || "--"}</span>
+          <span className="font-semibold text-on-surface">{row.item_name}</span>
+          <span className="text-xs text-on-surface-variant font-jetbrains">{row.spec_id || "--"}</span>
         </div>
       )
     },
@@ -57,7 +57,7 @@ export default function MasterMaterialTrackingPage() {
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <Link href="#" className="font-jetbrains text-primary hover:underline text-sm">{row.po_reference || "--"}</Link>
+          <Link href="#" className="font-jetbrains text-primary hover:underline text-sm">{row.po_number || "--"}</Link>
           <span className="text-xs text-on-surface-variant">{row.supplier_name || "--"}</span>
         </div>
       )
@@ -81,7 +81,7 @@ export default function MasterMaterialTrackingPage() {
       header: "Delivery (Est / Act)", 
       cell: (row: any) => (
         <div className="flex flex-col font-jetbrains text-sm">
-          <span className="text-on-surface-variant">E: {row.est_delivery ? new Date(row.est_delivery).toLocaleDateString() : "--"}</span>
+          <span className="text-on-surface-variant">E: {row.estimated_delivery ? new Date(row.estimated_delivery).toLocaleDateString() : "--"}</span>
           <span className={row.status === "Delivered" ? "text-semantic-emerald font-bold" : "text-on-surface-variant/50"}>
             A: {row.actual_delivery ? new Date(row.actual_delivery).toLocaleDateString() : "--"}
           </span>

@@ -38,23 +38,6 @@ export default function InviteUserWizard() {
     loadOrgs();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await inviteUser(formData.email, formData.role, formData.orgId);
-      setSuccess(true);
-      setTimeout(() => {
-        router.push("/admin/users");
-      }, 2000);
-    } catch (err) {
-      console.error("Failed to invite user", err);
-      alert("Failed to send invitation. Check console for details.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -109,7 +92,21 @@ export default function InviteUserWizard() {
       />
       
       <div className="flex-1 overflow-y-auto p-6 max-w-4xl mx-auto w-full">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <form action={async (fd: FormData) => {
+          setLoading(true);
+          try {
+            const email = fd.get("email") as string;
+            await inviteUser(email, formData.role, formData.orgId);
+            setSuccess(true);
+            setTimeout(() => {
+              router.push("/admin/users");
+            }, 2000);
+          } catch (err) {
+            console.error("Failed to invite user", err);
+          } finally {
+            setLoading(false);
+          }
+        }} className="flex flex-col gap-6">
           
           <Card className="p-6 border-t-4 border-t-primary">
             <div className="flex items-center gap-3 mb-6 pb-4 border-b border-outline-variant">

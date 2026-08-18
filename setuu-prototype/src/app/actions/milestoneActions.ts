@@ -3,13 +3,24 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function getMilestones(projectId: string) {
+export async function getProjectMilestones(projectId: string) {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("milestones")
     .select("*, milestone_checklist_items(*)")
     .eq("project_id", projectId)
     .order("display_order", { ascending: true });
+    
+  if (error) throw error;
+  return data;
+}
+
+export async function getMilestones() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("milestones")
+    .select("*, projects(name)")
+    .order("target_date", { ascending: true });
     
   if (error) throw error;
   return data;
@@ -63,7 +74,7 @@ export async function toggleChecklistItem(itemId: string, completed: boolean) {
   const supabase = await createClient();
   const { error } = await supabase
     .from("milestone_checklist_items")
-    .update({ is_completed: completed })
+    .update({ is_complete: completed })
     .eq("id", itemId);
     
   if (error) return { success: false, error: error.message };

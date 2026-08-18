@@ -20,34 +20,26 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-
-const portfolioHealthData = [
-  { name: "In Progress", value: 24, color: "var(--semantic-primary)" },
-  { name: "Planning", value: 12, color: "var(--semantic-emerald)" },
-  { name: "On Hold", value: 6, color: "var(--semantic-amber)" },
-];
-
-const regionalData = [
-  { label: "North America", value: 120 },
-  { label: "Europe", value: 85 },
-  { label: "Asia Pacific", value: 150 },
-  { label: "Middle East", value: 40 },
-];
-
-const recentActivity = [
-  { id: "1", type: "update", title: "Site Inspection Completed", user: "Alice Chen", time: "10 mins ago", project: "Alpha Tower" },
-  { id: "2", type: "issue", title: "Material Delivery Delayed", user: "Bob Smith", time: "1 hour ago", project: "Beta Site" },
-  { id: "3", type: "approval", title: "Design Phase 2 Approved", user: "Charlie Davis", time: "3 hours ago", project: "Gamma Facility" },
-  { id: "4", type: "system", title: "New Vendor Onboarded", user: "System Admin", time: "5 hours ago", project: "Global" },
-];
-
-const pendingChangeRequests = [
-  { id: "CR-1042", project: "Alpha Tower", impact: "$45,000", time: "+14 Days", status: "pending" },
-  { id: "CR-1045", project: "Beta Site", impact: "$12,500", time: "+0 Days", status: "pending" },
-  { id: "CR-1048", project: "Gamma Facility", impact: "$89,000", time: "+30 Days", status: "pending" },
-];
+import { useState, useEffect } from "react";
+import { getAdminDashboardData } from "@/app/actions/platformActions";
 
 export default function AdminDashboardPage() {
+  const [portfolioHealthData, setPortfolioHealthData] = useState<any[]>([]);
+  const [regionalData, setRegionalData] = useState<any[]>([]);
+  const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [pendingChangeRequests, setPendingChangeRequests] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await getAdminDashboardData();
+      setPortfolioHealthData(data.portfolioHealthData);
+      setRegionalData(data.regionalData);
+      setRecentActivity(data.recentActivity);
+      setPendingChangeRequests(data.pendingChangeRequests);
+    }
+    loadData();
+  }, []);
+
   return (
     <div className="flex-1 overflow-y-auto">
       <PageHeader 

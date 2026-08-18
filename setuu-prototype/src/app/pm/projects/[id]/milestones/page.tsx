@@ -1,35 +1,39 @@
 "use client";
 import * as React from "react";
+import { useParams } from "next/navigation";
 import { KanbanColumn } from "@/components/ui/KanbanColumn";
 import { KanbanCard } from "@/components/ui/KanbanCard";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { PlusIcon } from "lucide-react";
+import { getProjectMilestones, updateMilestone } from "@/app/actions/milestoneActions";
 
-type TaskStatus = "todo" | "in_progress" | "review" | "completed";
-
-type Task = {
-  id: string;
-  title: string;
-  status: TaskStatus;
-  assignee: { id: string; name: string; avatarUrl?: string };
-  priority: "high" | "medium" | "low";
-};
+type MilestoneStatus = "todo" | "in_progress" | "review" | "completed";
 
 export default function MilestoneKanbanPage() {
-  const [tasks, setTasks] = React.useState<Task[]>([
-    { id: "TSK-01", title: "Pour Foundation Block A", status: "completed", assignee: { id: "1", name: "David M." }, priority: "high" },
-    { id: "TSK-02", title: "Erect Steel Frame", status: "in_progress", assignee: { id: "2", name: "Sarah J." }, priority: "high" },
-    { id: "TSK-03", title: "Install HVAC Ducting", status: "todo", assignee: { id: "3", name: "Tom C." }, priority: "medium" },
-    { id: "TSK-04", title: "Initial Plumbing Rough-in", status: "review", assignee: { id: "4", name: "Jane D." }, priority: "high" },
-    { id: "TSK-05", title: "Electrical Wiring (1st Floor)", status: "todo", assignee: { id: "1", name: "David M." }, priority: "medium" },
-  ]);
+  const params = useParams();
+  const projectId = params?.id as string;
 
+  const [milestones, setMilestones] = React.useState<any[]>([]);
   const [draggedTask, setDraggedTask] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchMilestones = async () => {
+      try {
+        const data = await getProjectMilestones(projectId);
+        setMilestones(data || []);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMilestones();
+  }, [projectId]);
 
   const handleDragStart = (e: React.DragEvent, id: string) => {
     setDraggedTask(id);
     e.dataTransfer.effectAllowed = "move";
-    // Slightly delay adding dragging class so the ghost image doesn't look invisible
     setTimeout(() => {
       const el = document.getElementById(id);
       if (el) el.classList.add("opacity-50");
@@ -47,26 +51,39 @@ export default function MilestoneKanbanPage() {
     e.dataTransfer.dropEffect = "move";
   };
 
-  const handleDrop = (e: React.DragEvent, targetStatus: TaskStatus) => {
+  const handleDrop = async (e: React.DragEvent, targetStatus: string) => {
     e.preventDefault();
     if (draggedTask) {
-      setTasks(prev => prev.map(t => 
-        t.id === draggedTask ? { ...t, status: targetStatus } : t
+      // Optimistic update
+      setMilestones(prev => prev.map(t => 
+        t.id === draggedTask ? { ...t, completion_status: targetStatus } : t
       ));
+      
+      // Server update
+      await updateMilestone(draggedTask, { completion_status: targetStatus });
     }
   };
 
-  const renderColumn = (status: TaskStatus, title: string) => {
-    const columnTasks = tasks.filter(t => t.status === status);
+  // Map arbitrary completion_status strings to columns, defaulting appropriately
+  const getColumnForStatus = (status: string) => {
+    const s = (status || "").toLowerCase();
+    if (s.includes("progress")) return "in_progress";
+    if (s.includes("review")) return "review";
+    if (s.includes("complete")) return "completed";
+    return "todo";
+  };
+
+  const renderColumn = (columnId: string, title: string) => {
+    const columnMilestones = milestones.filter(t => getColumnForStatus(t.completion_status) === columnId);
     
     return (
       <div 
         className="h-full flex-shrink-0"
         onDragOver={handleDragOver}
-        onDrop={(e) => handleDrop(e, status)}
+        onDrop={(e) => handleDrop(e, title)} // using title or mapped status to save to DB
       >
-        <KanbanColumn title={title} count={columnTasks.length}>
-          {columnTasks.map(t => (
+        <KanbanColumn title={title} count={columnMilestones.length}>
+          {columnMilestones.map(t => (
             <div 
               key={t.id} 
               id={t.id}
@@ -77,19 +94,19 @@ export default function MilestoneKanbanPage() {
               <KanbanCard 
                 id={t.id}
                 title={t.title}
-                assignee={t.assignee}
+                assignee={{ id: "1", name: t.department || "Unassigned" }}
                 badge={
                   <StatusBadge 
-                    tone={t.priority === "high" ? "crimson" : t.priority === "medium" ? "amber" : "slate"} 
-                    label={t.priority} 
+                    tone={t.completion_status === "Overdue" ? "crimson" : "slate"} 
+                    label={t.target_date || "No date"} 
                   />
                 }
               />
             </div>
           ))}
-          {status === "todo" && (
+          {columnId === "todo" && (
             <button className="w-full mt-2 py-2 flex items-center justify-center gap-2 text-sm text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-lg transition-colors border border-dashed border-outline-variant hover:border-primary/50">
-              <PlusIcon className="w-4 h-4" /> Add Task
+              <PlusIcon className="w-4 h-4" /> Add Milestone
             </button>
           )}
         </KanbanColumn>
@@ -97,18 +114,22 @@ export default function MilestoneKanbanPage() {
     );
   };
 
+  if (loading) {
+    return <div className="p-6 text-center text-on-surface-variant">Loading milestone board...</div>;
+  }
+
   return (
     <div className="p-6 h-[calc(100vh-140px)] overflow-hidden flex flex-col">
       <div className="flex justify-between items-center mb-6 shrink-0 max-w-[1600px] w-full mx-auto">
          <h2 className="text-xl font-bold font-merriweather text-on-surface">Milestone Board</h2>
          <div className="flex items-center gap-3">
-           <StatusBadge tone="sky" label="Sprint 14" />
+           <StatusBadge tone="sky" label="Active" />
          </div>
       </div>
 
       <div className="flex-1 overflow-x-auto overflow-y-hidden w-full pb-4 px-6 -mx-6">
         <div className="flex h-full gap-6 px-6 pb-2 min-w-max">
-          {renderColumn("todo", "To Do")}
+          {renderColumn("todo", "Not Started")}
           {renderColumn("in_progress", "In Progress")}
           {renderColumn("review", "Review")}
           {renderColumn("completed", "Completed")}

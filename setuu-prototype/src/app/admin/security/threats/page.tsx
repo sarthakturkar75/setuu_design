@@ -20,15 +20,7 @@ export default function ThreatScanDashboardPage() {
     async function loadData() {
       try {
         const data = await getVirusScanResults();
-        setThreats(data.map(scan => ({
-          id: scan.id,
-          file: scan.file_name || "Unknown File",
-          status: scan.is_clean ? "Clean" : (scan.threats_found ? "Infected" : "Quarantined"),
-          scanner: "ClamAV v0.103", // Hardcoded for prototype
-          project: scan.project_id || "Unknown Project",
-          timestamp: scan.scanned_at ? new Date(scan.scanned_at).toLocaleString() : "Unknown",
-          threatName: scan.threats_found || null
-        })));
+        setThreats(data);
       } catch (e) {
         console.error("Failed to load scan results", e);
       } finally {
@@ -37,48 +29,52 @@ export default function ThreatScanDashboardPage() {
     }
     loadData();
   }, []);
+
   const columns = [
     { 
-      key: "file_hash", 
+      key: "file_id", 
       header: "File & Hash", 
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-on-surface">{row.file}</span>
+          <span className="font-semibold text-on-surface">{row.file_name || "Unknown File"}</span>
           <span className="text-xs text-on-surface-variant font-jetbrains truncate max-w-[200px]" title={row.id}>{row.id}</span>
         </div>
       )
     },
     { 
-      key: "status", 
+      key: "is_clean", 
       header: "Scan Status", 
       sortable: true,
-      cell: (row: any) => (
-        <div className="flex flex-col gap-1 items-start">
-          <StatusBadge 
-            tone={row.status === "Clean" ? "emerald" : row.status === "Infected" ? "crimson" : "amber"} 
-            label={row.status} 
-          />
-          {row.threatName && <span className="text-xs font-jetbrains font-bold text-crimson">{row.threatName}</span>}
-        </div>
-      )
+      cell: (row: any) => {
+        const status = row.is_clean ? "Clean" : (row.threats_found ? "Infected" : "Quarantined");
+        return (
+          <div className="flex flex-col gap-1 items-start">
+            <StatusBadge 
+              tone={status === "Clean" ? "emerald" : status === "Infected" ? "crimson" : "amber"} 
+              label={status} 
+            />
+            {row.threats_found && <span className="text-xs font-jetbrains font-bold text-crimson">{row.threats_found}</span>}
+          </div>
+        );
+      }
     },
     { 
       key: "scanner", 
       header: "Scanned By", 
-      sortable: true,
-      cell: (row: any) => <span className="text-sm font-medium text-on-surface-variant">{row.scanner}</span>
+      sortable: false,
+      cell: () => <span className="text-sm font-medium text-on-surface-variant">ClamAV v0.103</span>
     },
     { 
-      key: "project", 
+      key: "project_id", 
       header: "Project Context", 
-      cell: (row: any) => <span className="text-on-surface">{row.project}</span>
+      cell: (row: any) => <span className="text-on-surface">{row.project_id || "Unknown Project"}</span>
     },
     { 
-      key: "timestamp", 
+      key: "scanned_at", 
       header: "Timestamp (UTC)", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.timestamp}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.scanned_at ? new Date(row.scanned_at).toLocaleString() : "Unknown"}</span>
     }
   ];
 

@@ -10,15 +10,20 @@ export interface SelectOption {
 
 interface SelectProps {
   options: SelectOption[];
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  name?: string;
+  required?: boolean;
 }
 
-export function Select({ options, value, onChange, placeholder = "Select an option", disabled }: SelectProps) {
+export function Select({ options, value, onChange, placeholder = "Select an option", disabled, name, required }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [internalValue, setInternalValue] = useState(value || "");
   const ref = useRef<HTMLDivElement>(null);
+
+  const currentValue = value !== undefined ? value : internalValue;
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -30,10 +35,11 @@ export function Select({ options, value, onChange, placeholder = "Select an opti
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selectedOption = options.find(o => o.value === value);
+  const selectedOption = options.find(o => o.value === currentValue);
 
   return (
     <div className="relative w-full" ref={ref}>
+      {name && <input type="hidden" name={name} value={currentValue} required={required} />}
       <button
         type="button"
         disabled={disabled}
@@ -53,7 +59,7 @@ export function Select({ options, value, onChange, placeholder = "Select an opti
       {isOpen && (
         <div className="absolute z-50 w-full mt-1 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-elevation-l2 max-h-60 overflow-y-auto py-1 animate-fade-in-up">
           {options.map((option) => {
-            const isSelected = option.value === value;
+            const isSelected = option.value === currentValue;
             return (
               <button
                 key={option.value}
@@ -63,7 +69,8 @@ export function Select({ options, value, onChange, placeholder = "Select an opti
                   isSelected ? "bg-primary/5 text-primary font-medium" : "text-on-surface"
                 )}
                 onClick={() => {
-                  onChange(option.value);
+                  if (onChange) onChange(option.value);
+                  setInternalValue(option.value);
                   setIsOpen(false);
                 }}
               >

@@ -1,4 +1,6 @@
-import * as React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import { getTelemetryData, getStorageMetrics } from "@/app/actions/platformActions";
 import { KPICard } from "@/components/ui/KPICard";
 import { DonutChart } from "@/components/ui/DonutChart";
 import { BarChart } from "@/components/ui/BarChart";
@@ -8,38 +10,21 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Activity, Database, Zap, AlertOctagon, RefreshCcw } from "lucide-react";
 
 export default function SuperadminControlCenter() {
-  // Mock data for prototype rendering
-  const kpiData = [
-    { label: "Active Sessions", value: "1,248", trend: { value: 12, label: "vs last hour", isPositive: true }, icon: <Activity className="w-5 h-5" /> },
-    { label: "DB Connections", value: "342", icon: <Database className="w-5 h-5" /> },
-    { label: "API Latency", value: "48ms", trend: { value: 5, label: "ms slower", isPositive: false }, icon: <Zap className="w-5 h-5" /> },
-    { label: "Error Rate (5xx)", value: "0.02%", trend: { value: 0.01, label: "% down", isPositive: true }, icon: <AlertOctagon className="w-5 h-5 text-crimson-500" /> },
-    { label: "Sync Queue", value: "45", trend: { value: 20, label: "items cleared", isPositive: true }, icon: <RefreshCcw className="w-5 h-5" /> }
-  ];
+  const [kpiData, setKpiData] = useState<any[]>([]);
+  const [storageData, setStorageData] = useState<any[]>([]);
+  const [regionalData, setRegionalData] = useState<any[]>([]);
+  const [systemStatus, setSystemStatus] = useState<any[]>([]);
 
-  const storageData = [
-    { name: "Praimo", value: 450, color: "var(--semantic-emerald)" },
-    { name: "Acme Corp", value: 320, color: "var(--semantic-blue)" },
-    { name: "Stark Ind", value: 150, color: "var(--semantic-purple)" },
-    { name: "Available", value: 80, color: "var(--surface-variant)" }
-  ];
-
-  // Map to BarChart structure
-  const regionalData = [
-    { region: "ap-south-1", Usage: 45 },
-    { region: "eu-central-1", Usage: 30 },
-    { region: "us-east-1", Usage: 15 },
-    { region: "ap-southeast-1", Usage: 10 }
-  ];
-
-  const systemStatus = [
-    { service: "Core API Gateway", tone: "emerald", label: "Operational" },
-    { service: "Auth Subsystem", tone: "emerald", label: "Operational" },
-    { service: "Real-time Sync Engine", tone: "sky", label: "Syncing" },
-    { service: "Blob Storage", tone: "emerald", label: "Operational" },
-    { service: "PDF Generation Service", tone: "amber", label: "Queued" },
-    { service: "Threat Detection (ClamAV)", tone: "emerald", label: "Operational" }
-  ];
+  useEffect(() => {
+    Promise.all([getTelemetryData(), getStorageMetrics()]).then(([telemetry, storage]) => {
+      setKpiData(telemetry.kpiData || []);
+      setRegionalData(telemetry.regionalData || []);
+      setStorageData(storage.map((s: any) => ({ name: s.name, value: s.usedGb, color: "var(--semantic-blue)" })));
+      setSystemStatus([
+        { service: "Core API Gateway", tone: "emerald", label: "Operational" }
+      ]);
+    });
+  }, []);
 
   return (
     <div className="space-y-6">

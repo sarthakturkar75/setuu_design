@@ -21,25 +21,7 @@ export default function ResourceHubPage() {
     async function loadData() {
       try {
         const data = await getProjectResources();
-        setResources(data.map(res => {
-          const allocated = res.allocated_hours || 0;
-          const actual = res.actual_hours || 0;
-          const variance = actual - allocated;
-          let status = "On Track";
-          if (variance < 0) status = "Under Budget";
-          if (variance > 0 && variance <= 50) status = "Over Budget";
-          if (variance > 50) status = "Critical Overrun";
-
-          return {
-            id: res.id.substring(0, 8),
-            project: res.project_name || "Unknown Project",
-            group: res.name || "Unknown Resource",
-            allocated,
-            actual,
-            variance,
-            status
-          };
-        }));
+        setResources(data);
       } catch (e) {
         console.error("Failed to load resources", e);
       } finally {
@@ -57,52 +39,67 @@ export default function ResourceHubPage() {
 
   const columns = [
     { 
-      key: "group_id", 
+      key: "name", 
       header: "Resource Group", 
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-on-surface">{row.group}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id}</span>
+          <span className="font-semibold text-on-surface">{row.name || "Unknown Resource"}</span>
+          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id?.substring(0, 8)}</span>
         </div>
       )
     },
     { 
-      key: "project", 
+      key: "project_id", 
       header: "Project", 
       sortable: true,
-      cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.project}</span>
+      cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.project_name || "Unknown Project"}</span>
     },
     { 
-      key: "allocated", 
+      key: "allocated_hours", 
       header: "Allocated", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-on-surface">{row.allocated} hrs</span>
+      cell: (row: any) => <span className="font-jetbrains text-on-surface">{row.allocated_hours || 0} hrs</span>
     },
     { 
-      key: "actual", 
+      key: "actual_hours", 
       header: "Actual Logged", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-on-surface font-medium">{row.actual} hrs</span>
+      cell: (row: any) => <span className="font-jetbrains text-on-surface font-medium">{row.actual_hours || 0} hrs</span>
     },
     { 
       key: "variance", 
       header: "Variance",
-      cell: (row: any) => getVarianceNode(row.variance)
+      cell: (row: any) => {
+        const allocated = row.allocated_hours || 0;
+        const actual = row.actual_hours || 0;
+        const variance = actual - allocated;
+        return getVarianceNode(variance);
+      }
     },
     { 
       key: "status", 
       header: "Status",
-      cell: (row: any) => (
-        <StatusBadge 
-          tone={
-            row.status === "Under Budget" ? "emerald" : 
-            row.status === "On Track" ? "sky" : 
-            row.status === "Over Budget" ? "amber" : "crimson"
-          } 
-          label={row.status} 
-        />
-      )
+      cell: (row: any) => {
+        const allocated = row.allocated_hours || 0;
+        const actual = row.actual_hours || 0;
+        const variance = actual - allocated;
+        let status = "On Track";
+        if (variance < 0) status = "Under Budget";
+        if (variance > 0 && variance <= 50) status = "Over Budget";
+        if (variance > 50) status = "Critical Overrun";
+
+        return (
+          <StatusBadge 
+            tone={
+              status === "Under Budget" ? "emerald" : 
+              status === "On Track" ? "sky" : 
+              status === "Over Budget" ? "amber" : "crimson"
+            } 
+            label={status} 
+          />
+        );
+      }
     },
     { 
       key: "actions", 
