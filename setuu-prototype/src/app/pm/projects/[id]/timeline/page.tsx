@@ -4,7 +4,10 @@ import * as React from "react";
 import { TimelineEntry } from "@/components/ui/TimelineEntry";
 import { CameraIcon, PenToolIcon, CheckCircleIcon } from "lucide-react";
 
-export default function ProjectTimelinePage({ params }: { params?: { id: string } }) {
+import { useParams } from "next/navigation";
+
+export default function ProjectTimelinePage() {
+  const params = useParams();
   return (
     <div className="p-6 max-w-[1200px] mx-auto space-y-8">
       <div className="flex justify-between items-center">

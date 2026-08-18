@@ -1,17 +1,24 @@
 "use client";
 import * as React from "react";
+import { useState } from "react";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Button } from "@/components/ui/Button";
 import { CheckCircleIcon, FileTextIcon, WrenchIcon, KeyIcon, AlertTriangleIcon } from "lucide-react";
 
 export default function ProjectHandoverPage() {
-  const checklist = [
+  const [checklist, setChecklist] = useState([
     { id: "1", category: "Documentation", task: "All As-Built Drawings Uploaded", isComplete: true, icon: FileTextIcon },
     { id: "2", category: "Documentation", task: "O&M Manuals Compiled", isComplete: true, icon: FileTextIcon },
     { id: "3", category: "Inspections", task: "Final Fire Safety Certificate", isComplete: false, icon: AlertTriangleIcon },
     { id: "4", category: "Physical", task: "All Keys & Access Cards Transferred", isComplete: false, icon: KeyIcon },
     { id: "5", category: "Maintenance", task: "Spare Parts Inventory Logged", isComplete: true, icon: WrenchIcon },
-  ];
+  ]);
+
+  const toggleItem = (id: string) => {
+    setChecklist(prev => prev.map(item => 
+      item.id === id ? { ...item, isComplete: !item.isComplete } : item
+    ));
+  };
 
   const completedCount = checklist.filter(item => item.isComplete).length;
   const progress = Math.round((completedCount / checklist.length) * 100);
@@ -52,8 +59,8 @@ export default function ProjectHandoverPage() {
                   </div>
                 </div>
                 <div>
-                  <Button variant={item.isComplete ? "outline" : "primary"} size="sm">
-                    {item.isComplete ? "View Record" : "Mark Complete"}
+                  <Button variant={item.isComplete ? "outline" : "primary"} size="sm" onClick={() => toggleItem(item.id)}>
+                    {item.isComplete ? "Mark Incomplete" : "Mark Complete"}
                   </Button>
                 </div>
               </div>
@@ -63,8 +70,8 @@ export default function ProjectHandoverPage() {
       </div>
 
       <div className="flex justify-end gap-4 pt-4">
-        <Button variant="outline">Export Handover Dossier</Button>
-        <Button variant="primary" disabled={progress < 100}>Schedule Client Meeting</Button>
+        <Button variant="outline" onClick={() => alert("Downloading PDF Dossier...")}>Export Handover Dossier</Button>
+        <Button variant="primary" disabled={progress < 100} onClick={() => alert("Meeting Scheduled!")}>Schedule Client Meeting</Button>
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import { CameraIcon, MapPinIcon, RefreshCwIcon, CheckCircleIcon, XIcon } from "l
 import { Button } from "@/components/ui/Button";
 import { FormField } from "@/components/ui/FormField";
 import { TextArea } from "@/components/ui/TextArea";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function CameraUpdatePage() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -13,6 +15,10 @@ export default function CameraUpdatePage() {
   const [photoDataUrl, setPhotoDataUrl] = React.useState<string | null>(null);
   const [location, setLocation] = React.useState<{ lat: number; lng: number } | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+  const params = useParams();
+  const id = params?.id as string;
 
   React.useEffect(() => {
     // Start camera
@@ -80,6 +86,31 @@ export default function CameraUpdatePage() {
     setPhotoDataUrl(null);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSubmitting(true);
+      setTimeout(() => {
+          setIsSubmitting(false);
+          setIsSubmitted(true);
+      }, 1000);
+  };
+
+  if (isSubmitted) {
+      return (
+        <div className="p-6 max-w-[800px] mx-auto space-y-8 pt-24 text-center">
+            <CheckCircleIcon className="w-16 h-16 text-semantic-emerald mx-auto mb-4" />
+            <h2 className="text-2xl font-bold font-merriweather text-on-surface">Update Saved</h2>
+            <p className="text-on-surface-variant max-w-md mx-auto">Your watermarked photo and description have been securely logged to the timeline.</p>
+            <div className="pt-8 flex justify-center gap-4">
+                <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); }}>Log Another Update</Button>
+                <Link href={`/pm/projects/${id}`}>
+                    <Button variant="primary">Return to Dashboard</Button>
+                </Link>
+            </div>
+        </div>
+      );
+  }
+
   return (
     <div className="p-6 max-w-[800px] mx-auto space-y-6 pb-32">
       <div>
@@ -127,7 +158,7 @@ export default function CameraUpdatePage() {
       </div>
 
       {photoDataUrl && (
-        <form onSubmit={(e) => { e.preventDefault(); alert("Successfully submitted!"); }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
           <div className="flex items-center gap-2 text-semantic-emerald bg-semantic-emerald-bg/10 p-3 rounded-lg border border-semantic-emerald/20">
              <CheckCircleIcon className="w-5 h-5" />
              <span className="font-medium text-sm">Image captured with GPS and timestamp watermark.</span>

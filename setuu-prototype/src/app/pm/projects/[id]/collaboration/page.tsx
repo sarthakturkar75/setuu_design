@@ -1,16 +1,30 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { MessageSquareIcon, SendIcon, PaperclipIcon } from "lucide-react";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { TextInput } from "@/components/ui/TextInput";
 import { Button } from "@/components/ui/Button";
 
 export default function ProjectCollaborationPage() {
-    const messages = [
+    const [messages, setMessages] = useState([
         { id: "1", user: "Michael Chen", role: "Project Manager", text: "Has anyone verified the rebar delivery for Block B?", time: "10:30 AM", isMe: true },
         { id: "2", user: "Jane Doe", role: "Inventory", text: "@Michael Yes, it arrived this morning. I've logged the receipt in the materials tab.", time: "10:45 AM", isMe: false },
         { id: "3", user: "Sarah Jenkins", role: "Lead Engineer", text: "Great. Let's schedule the pour for tomorrow 8 AM.", time: "11:00 AM", isMe: false }
-    ];
+    ]);
+    const [input, setInput] = useState("");
+
+    const handleSend = () => {
+        if (!input.trim()) return;
+        setMessages([...messages, {
+            id: Date.now().toString(),
+            user: "Michael Chen",
+            role: "Project Manager",
+            text: input,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            isMe: true
+        }]);
+        setInput("");
+    };
 
     return (
         <div className="p-0 md:p-6 h-[calc(100vh-200px)] md:h-[calc(100vh-140px)] flex flex-col max-w-[1200px] mx-auto">
@@ -59,9 +73,17 @@ export default function ProjectCollaborationPage() {
                         <PaperclipIcon className="w-5 h-5" />
                     </button>
                     <div className="flex-1">
-                        <TextInput placeholder="Type a message... Use @ to tag team members." className="rounded-full" />
+                        <TextInput 
+                            placeholder="Type a message... Use @ to tag team members." 
+                            className="rounded-full" 
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleSend();
+                            }}
+                        />
                     </div>
-                    <Button variant="primary" className="rounded-full w-12 h-12 p-0 flex items-center justify-center shrink-0">
+                    <Button variant="primary" className="rounded-full w-12 h-12 p-0 flex items-center justify-center shrink-0" onClick={handleSend}>
                         <SendIcon className="w-5 h-5" />
                     </Button>
                 </div>

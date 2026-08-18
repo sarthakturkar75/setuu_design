@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useState } from "react";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { PlusIcon, ScanLineIcon } from "lucide-react";
@@ -10,11 +11,21 @@ export default function ProjectMaterialsPage() {
   const params = useParams();
   const id = params?.id as string;
 
-  const materials = [
+  const [materials, setMaterials] = useState([
     { id: "MAT-101", item: "Portland Cement (Type I)", quantity: "500 bags", status: "In Stock", nextDelivery: "-" },
     { id: "MAT-102", item: "Rebar #5 (5/8 inch)", quantity: "150 tons", status: "Low Stock", nextDelivery: "Aug 20" },
     { id: "MAT-103", item: "HVAC Ducting", quantity: "0 m", status: "Awaiting", nextDelivery: "Aug 22" }
-  ];
+  ]);
+
+  const handleOrder = () => {
+    setMaterials([...materials, {
+        id: `MAT-${Math.floor(Math.random() * 900) + 100}`,
+        item: "New Custom Material Order",
+        quantity: "100 units",
+        status: "Awaiting",
+        nextDelivery: "TBD"
+    }]);
+  };
 
   const columns = [
     { key: "id", header: "SKU", cell: (row: any) => <span className="font-jetbrains-mono text-xs text-outline">{row.id}</span> },
@@ -40,7 +51,7 @@ export default function ProjectMaterialsPage() {
             <ScanLineIcon className="w-4 h-4" />
             Scan Receipt
           </Link>
-          <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white hover:bg-primary/90 rounded-lg text-sm font-medium transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white hover:bg-primary/90 rounded-lg text-sm font-medium transition-colors" onClick={handleOrder}>
             <PlusIcon className="w-4 h-4" />
             Order Material
           </button>
