@@ -26,11 +26,9 @@ export async function createLesson(data: any) {
 }
 
 export async function getCategories() {
-  return [
-    "Technical",
-    "Financial",
-    "Safety",
-    "Client Relations",
-    "Supply Chain"
-  ];
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("lessons_learned").select("category");
+  if (error) throw error;
+  
+  return Array.from(new Set(data.map((d: any) => d.category))).filter(Boolean) as string[];
 }

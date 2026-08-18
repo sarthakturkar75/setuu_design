@@ -1,22 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DataTable } from "@/components/ui/DataTable";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Drawer } from "@/components/ui/Drawer"; // Assuming we have Drawer or Modal for side-panel. I'll use Modal if Drawer doesn't exist. Actually, let's use a side-panel div or Modal.
 import { Download, Filter, Copy, FileJson, Clock } from "lucide-react";
+import { getAuditLogs } from "@/app/actions/auditActions";
 
 export default function AuditLogExplorer() {
   const [selectedLog, setSelectedLog] = useState<any>(null);
+  const [auditLogs, setAuditLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const auditLogs = [
-    { id: "EVT-9001", timestamp: "2026-08-17T06:15:22Z", type: "system.config_updated", actor: "s.admin@setuu.com", org: "Global", severity: "high", payload: { "key": "maintenance_mode", "old": false, "new": true } },
-    { id: "EVT-9002", timestamp: "2026-08-17T06:14:10Z", type: "org.created", actor: "s.admin@setuu.com", org: "ORG-005", severity: "info", payload: { "name": "Cyberdyne", "tier": "Enterprise" } },
-    { id: "EVT-9003", timestamp: "2026-08-16T18:05:00Z", type: "user.login_failed", actor: "unknown (192.168.1.5)", org: "ORG-003", severity: "warning", payload: { "reason": "invalid_credentials", "attempts": 5 } },
-    { id: "EVT-9004", timestamp: "2026-08-16T12:00:00Z", type: "security.break_glass_invoked", actor: "j.doe@setuu.com", org: "ORG-003", severity: "critical", payload: { "reason": "Customer lock-out", "duration": "1h" } }
-  ];
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getAuditLogs();
+        setAuditLogs(data.map(log => ({
+          id: log.id.substring(0, 8),
+          timestamp: log.created_at ? new Date(log.created_at).toLocaleString() : "Unknown",
+          type: log.event_type,
+          actor: (log.user_actor as any)?.display_name || "System",
+          org: log.organization_id || "Global",
+          severity: log.event_type.includes("failed") || log.event_type.includes("break_glass") ? "critical" : "info",
+          payload: log.payload || {}
+        })));
+      } catch (e) {
+        console.error("Failed to load audit logs", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   const columns = [
     { key: "timestamp", header: "Timestamp (UTC)", cell: (row: any) => <span className="font-jetbrains-mono text-sm text-on-surface-variant">{row.timestamp}</span> },
@@ -80,11 +98,15 @@ export default function AuditLogExplorer() {
           </div>
 
           <div className="flex-1 overflow-auto">
-            <DataTable 
-              columns={columns}
-              data={auditLogs}
-              pagination={{ currentPage: 1, totalPages: 12, onPageChange: () => {} }}
-            />
+            {loading ? (
+              <div className="p-12 text-center text-on-surface-variant">Loading audit logs...</div>
+            ) : (
+              <DataTable 
+                columns={columns}
+                data={auditLogs}
+                pagination={{ currentPage: 1, totalPages: 1, onPageChange: () => {} }}
+              />
+            )}
           </div>
         </div>
 

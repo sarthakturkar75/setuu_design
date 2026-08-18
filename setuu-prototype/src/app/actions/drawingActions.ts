@@ -3,16 +3,25 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function getDrawings(projectId: string) {
+export async function getDrawings(projectId?: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("drawing_versions")
-    .select("*")
-    .eq("project_id", projectId)
-    .order("version_number", { ascending: false });
+  let query = supabase.from("drawing_versions").select("*, project:projects!drawing_versions_project_id_fkey(name)");
+  
+  if (projectId) {
+    query = query.eq("project_id", projectId);
+  }
+  
+  query = query.order("version_number", { ascending: false });
     
+  const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(drawing => ({
+    ...drawing,
+    project_name: drawing.project && typeof drawing.project === 'object' && !Array.isArray(drawing.project)
+      ? (drawing.project as any).name
+      : null
+  }));
 }
 
 export async function uploadDrawingVersion(drawingId: string, formData: FormData) {

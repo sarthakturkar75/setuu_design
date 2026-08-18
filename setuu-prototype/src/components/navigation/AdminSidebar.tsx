@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Sidebar } from "@/components/navigation/Sidebar";
 import { 
   LayoutDashboard, 
@@ -23,9 +24,19 @@ import {
   Plus
 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { getPlatformMetrics } from "@/app/actions/platformActions";
 
 export function AdminSidebar() {
   const pathname = usePathname();
+  const [healthStatus, setHealthStatus] = useState<"healthy" | "warning" | "critical">("healthy");
+
+  useEffect(() => {
+    getPlatformMetrics().then(metrics => {
+      if (metrics.errorRate5xx > 0.05) setHealthStatus("critical");
+      else if (metrics.errorRate5xx > 0.01 || metrics.apiLatencyMs > 200) setHealthStatus("warning");
+      else setHealthStatus("healthy");
+    }).catch(() => setHealthStatus("critical"));
+  }, []);
 
   const sections = [
     {
@@ -37,10 +48,10 @@ export function AdminSidebar() {
           href: "/admin/projects", 
           icon: <FolderKanban className="w-5 h-5" />,
           isExpandable: true,
-          children: [
+          items: [
             { label: "Tracking Hub", href: "/admin/projects" },
             { label: "New Project", href: "/admin/projects/new" },
-            { label: "Configuration", href: "/admin/projects/config-hub" }
+            { label: "Configuration", href: "#" }
           ]
         },
         { label: "Users & Vendors", href: "/admin/users", icon: <Users className="w-5 h-5" /> },
@@ -55,8 +66,7 @@ export function AdminSidebar() {
           href: "/admin/vendors", 
           icon: <Store className="w-5 h-5" />,
           isExpandable: true,
-          children: [
-            { label: "Directory", href: "/admin/vendors" },
+          items: [
             { label: "Performance Audit", href: "/admin/vendors/performance" }
           ]
         },
@@ -73,7 +83,7 @@ export function AdminSidebar() {
           href: "/admin/security", 
           icon: <ShieldAlert className="w-5 h-5" />,
           isExpandable: true,
-          children: [
+          items: [
             { label: "Threats & Scans", href: "/admin/security/threats" },
             { label: "Duplicate Files", href: "/admin/security/duplicates" },
             { label: "Upload Dropzone", href: "/admin/security/dropzone" },
@@ -85,7 +95,7 @@ export function AdminSidebar() {
           href: "/admin/clients", 
           icon: <Handshake className="w-5 h-5" />,
           isExpandable: true,
-          children: [
+          items: [
             { label: "Onboarding", href: "/admin/clients/onboarding" },
             { label: "Approvals Tracker", href: "/admin/clients/approvals" },
             { label: "Moderation Feed", href: "/admin/moderation" }
@@ -98,7 +108,11 @@ export function AdminSidebar() {
   ];
 
   const bottomItems = [
-    { label: "System Status", href: "/admin/status", icon: <Activity className="w-5 h-5 text-semantic-emerald" /> },
+    { 
+      label: `System Status: ${healthStatus}`, 
+      href: "/admin/status", 
+      icon: <Activity className={`w-5 h-5 ${healthStatus === 'healthy' ? 'text-semantic-emerald' : healthStatus === 'warning' ? 'text-semantic-amber' : 'text-semantic-crimson'}`} /> 
+    },
     { label: "New Project", href: "/admin/projects/new", icon: <Plus className="w-5 h-5 text-primary" /> },
   ];
 

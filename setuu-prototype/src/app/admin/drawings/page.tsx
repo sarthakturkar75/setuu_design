@@ -3,7 +3,7 @@
 import { PageHeader } from "@/components/ui/PageHeader";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -11,18 +11,28 @@ import { Search, UploadCloud, LayoutGrid, List, FileImage, Maximize2 } from "luc
 import { useState } from "react";
 import Link from "next/link";
 
-const mockDrawings = [
-  { id: "DWG-101", title: "Level 4 Floor Plan", project: "Alpha Tower", type: "Architectural", version: "v4", date: "Oct 10, 2026" },
-  { id: "DWG-102", title: "HVAC Layout North", project: "Alpha Tower", type: "MEP", version: "v2", date: "Oct 12, 2026" },
-  { id: "DWG-103", title: "Foundation Detail", project: "Beta Complex", type: "Structural", version: "v1", date: "Sep 28, 2026" },
-  { id: "DWG-104", title: "Electrical Schematics", project: "Gamma Hub", type: "MEP", version: "v3", date: "Oct 05, 2026" },
-  { id: "DWG-105", title: "Exterior Elevations", project: "Alpha Tower", type: "Architectural", version: "v5", date: "Oct 14, 2026" },
-  { id: "DWG-106", title: "Plumbing Riser", project: "Beta Complex", type: "MEP", version: "v1", date: "Oct 01, 2026" },
-];
+import { useEffect } from "react";
+import { getDrawings } from "@/app/actions/drawingActions";
+
+// mockDrawings removed, using live data
 
 export default function DrawingHubPage() {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [drawings, setDrawings] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getDrawings()
+      .then(data => {
+        setDrawings(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load drawings", err);
+        setLoading(false);
+      });
+  }, []);
 
   const columns = [
     { 
@@ -35,8 +45,8 @@ export default function DrawingHubPage() {
             <FileImage className="w-5 h-5 text-on-surface-variant" />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-on-surface">{row.title}</span>
-            <span className="text-xs text-on-surface-variant font-jetbrains">{row.id}</span>
+            <span className="font-semibold text-on-surface line-clamp-1">{row.file_url ? row.file_url.split('/').pop() : 'Drawing'}</span>
+            <span className="text-xs text-on-surface-variant font-jetbrains">{row.display_id}</span>
           </div>
         </div>
       )
@@ -45,24 +55,24 @@ export default function DrawingHubPage() {
       key: "project", 
       header: "Project", 
       sortable: true,
-      cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.project}</span>
+      cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.project_name || "Unknown"}</span>
     },
     { 
       key: "type", 
-      header: "Discipline", 
+      header: "Status", 
       sortable: true,
-      cell: (row: any) => <span className="text-on-surface-variant">{row.type}</span>
+      cell: (row: any) => <span className="text-on-surface-variant">{row.status}</span>
     },
     { 
       key: "version", 
       header: "Latest Version",
-      cell: (row: any) => <StatusBadge tone="sky" label={row.version} />
+      cell: (row: any) => <StatusBadge tone="sky" label={`v${row.version_number}`} />
     },
     { 
       key: "date", 
       header: "Last Updated", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.date}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.created_at ? new Date(row.created_at).toLocaleDateString() : "--"}</span>
     },
     { 
       key: "actions", 
@@ -122,7 +132,7 @@ export default function DrawingHubPage() {
             <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
             <TextInput placeholder="Search drawing title or ID..." className="pl-9" />
           </div>
-          <SelectMenu 
+          <Select 
             options={[
               { label: "All Projects", value: "" },
               { label: "Alpha Tower", value: "alpha" },
@@ -131,7 +141,7 @@ export default function DrawingHubPage() {
             value=""
             onChange={() => {}}
           />
-          <SelectMenu 
+          <Select 
             options={[
               { label: "All Disciplines", value: "" },
               { label: "Architectural", value: "arch" },
@@ -146,7 +156,7 @@ export default function DrawingHubPage() {
         {viewMode === "table" ? (
           <Card className="mt-6 min-h-[400px]">
             <DataTable 
-              data={mockDrawings}
+              data={drawings}
               columns={columns}
               getRowId={(row: any) => row.id}
               selectable={true}
@@ -155,13 +165,17 @@ export default function DrawingHubPage() {
             />
           </Card>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-            {mockDrawings.map((drawing) => (
-              <Card key={drawing.id} className="overflow-hidden flex flex-col group hover:shadow-elevation-l2 transition-all">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 mt-6">
+            {loading ? (
+              <div className="col-span-full py-20 text-center text-on-surface-variant">Loading drawings...</div>
+            ) : drawings.length === 0 ? (
+              <div className="col-span-full py-20 text-center text-on-surface-variant">No drawings found.</div>
+            ) : drawings.map(dwg => (
+              <Card key={dwg.id} className="overflow-hidden group hover:shadow-elevation-l3 hover:border-primary/50 transition-all cursor-pointer">
                 {/* Thumbnail Area */}
-                <div className="h-48 bg-surface-variant/50 relative border-b border-outline-variant flex items-center justify-center overflow-hidden">
+                <div className="h-48 bg-surface-variant border-b border-outline-variant relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-50" />
-                  <FileImage className="w-16 h-16 text-primary/20" />
+                  <FileImage className="w-16 h-16 text-primary/20 absolute inset-0 m-auto" />
                   
                   {/* Overlay Actions */}
                   <div className="absolute inset-0 bg-scrim/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
@@ -174,20 +188,17 @@ export default function DrawingHubPage() {
                   </div>
 
                   <div className="absolute top-3 right-3">
-                    <StatusBadge tone="sky" label={drawing.version} />
+                    <StatusBadge tone="sky" label={`v${dwg.version_number}`} />
                   </div>
                 </div>
                 
                 {/* Details */}
-                <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-semibold text-on-surface text-lg line-clamp-1">{drawing.title}</h3>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-sm font-medium text-on-surface-variant">{drawing.project}</span>
-                    <span className="text-xs text-on-surface-variant/70 uppercase tracking-wider font-bold">{drawing.type}</span>
-                  </div>
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-outline-variant border-dashed">
-                    <span className="text-xs font-jetbrains text-on-surface-variant">{drawing.id}</span>
-                    <span className="text-xs text-on-surface-variant">{drawing.date}</span>
+                <div className="p-4 flex flex-col">
+                  <span className="font-semibold text-on-surface line-clamp-1 mb-1">{dwg.file_url ? dwg.file_url.split('/').pop() : 'Drawing'}</span>
+                  <span className="text-sm font-medium text-primary mb-3">{dwg.project_name || "Unknown"}</span>
+                  <div className="flex items-center justify-between mt-auto">
+                    <span className="text-xs font-jetbrains text-on-surface-variant">{dwg.display_id}</span>
+                    <span className="text-xs text-on-surface-variant">{dwg.created_at ? new Date(dwg.created_at).toLocaleDateString() : "--"}</span>
                   </div>
                 </div>
               </Card>

@@ -2,9 +2,9 @@
 
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Toggle } from "@/components/ui/Toggle";
 import { Radio, AlertTriangle, Send, Save, Bold, Italic, List, Link as LinkIcon, Users, Building2, MousePointerClick, MailOpen } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
@@ -54,7 +54,7 @@ export default function BroadcastCenterPage() {
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Recipient Targeting</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <SelectMenu 
+                  <Select 
                     options={[
                       { label: "Target: All Organizations", value: "all" },
                       { label: "Specific Project Team", value: "project" },
@@ -63,7 +63,7 @@ export default function BroadcastCenterPage() {
                     value="all"
                     onChange={() => {}}
                   />
-                  <SelectMenu 
+                  <Select 
                     options={[
                       { label: "Platform: All Devices", value: "all" },
                       { label: "Mobile App Only", value: "mobile" },
@@ -111,7 +111,7 @@ export default function BroadcastCenterPage() {
                     <span className="text-sm text-on-surface-variant">Bypass user notification preferences and send immediately via SMS and Push.</span>
                   </div>
                 </div>
-                <ToggleSwitch checked={isEmergency} onChange={(c) => setIsEmergency(c)} />
+                <Toggle checked={isEmergency} onChange={(c) => setIsEmergency(c)} />
               </div>
 
               <div className="mt-4 border-t border-outline-variant pt-6">

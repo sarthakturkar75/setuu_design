@@ -6,17 +6,13 @@ import { FilterBar } from "@/components/ui/FilterBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
 import { BarChart } from "@/components/ui/BarChart";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { Plus, Download, MoreVertical, MapPin } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getProjects } from "@/app/actions/projectActions";
 
-const mockProjects = [
-  { id: "PRJ-1042", name: "Alpha Tower", status: "in_progress", discipline: "Architecture", pm: "Alice Chen", start: "2026-01-15", target: "2027-12-01" },
-  { id: "PRJ-1045", name: "Beta Site", status: "on_hold", discipline: "Civil", pm: "Bob Smith", start: "2026-03-01", target: "2026-10-15" },
-  { id: "PRJ-1048", name: "Gamma Facility", status: "completed", discipline: "MEP", pm: "Charlie Davis", start: "2025-06-10", target: "2026-07-20" },
-  { id: "PRJ-1050", name: "Delta Complex", status: "not_started", discipline: "Structural", pm: "Alice Chen", start: "2026-09-01", target: "2028-05-30" },
-];
+// Removed mockProjects array. It is replaced by live data.
 
 const resourceAllocationData = [
   { label: "Architecture", value: 4500 },
@@ -33,6 +29,20 @@ const criticalPathMilestones = [
 
 export default function ProjectTrackingHub() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProjects()
+      .then(data => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch projects", err);
+        setLoading(false);
+      });
+  }, []);
 
   const columns = [
     { 
@@ -49,12 +59,12 @@ export default function ProjectTrackingHub() {
     { 
       key: "status", 
       header: "Status",
-      cell: (row: any) => <StatusBadge tone={row.status as any} label={row.status} />
+      cell: (row: any) => <StatusBadge tone={row.status === "Not Started" ? "slate" : row.status === "In Progress" ? "sky" : row.status === "Completed" ? "emerald" : "amber"} label={row.status} />
     },
-    { key: "discipline", header: "Discipline", sortable: true, cell: (row: any) => <span>{row.discipline}</span> },
-    { key: "pm", header: "Assigned PM", sortable: true, cell: (row: any) => <span>{row.pm}</span> },
-    { key: "start", header: "Start Date", sortable: true, cell: (row: any) => <span className="font-jetbrains text-sm">{row.start}</span> },
-    { key: "target", header: "Target Date", sortable: true, cell: (row: any) => <span className="font-jetbrains text-sm">{row.target}</span> },
+    { key: "type", header: "Discipline", sortable: true, cell: (row: any) => <span>{row.type || "General"}</span> },
+    { key: "pm_name", header: "Assigned PM", sortable: true, cell: (row: any) => <span>{row.pm_name || "Unassigned"}</span> },
+    { key: "start_date", header: "Start Date", sortable: true, cell: (row: any) => <span className="font-jetbrains text-sm">{row.start_date ? new Date(row.start_date).toLocaleDateString() : "--"}</span> },
+    { key: "target_date", header: "Target Date", sortable: true, cell: (row: any) => <span className="font-jetbrains text-sm">{row.target_date ? new Date(row.target_date).toLocaleDateString() : "--"}</span> },
     { 
       key: "actions", 
       header: "", 
@@ -97,7 +107,7 @@ export default function ProjectTrackingHub() {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col gap-6">
           <FilterBar onClear={() => {}} onApply={() => {}}>
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Statuses", value: "" },
                 { label: "In Progress", value: "in_progress" },
@@ -107,7 +117,7 @@ export default function ProjectTrackingHub() {
               value=""
               onChange={() => {}}
             />
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Disciplines", value: "" },
                 { label: "Architecture", value: "Architecture" },
@@ -117,7 +127,7 @@ export default function ProjectTrackingHub() {
               value=""
               onChange={() => {}}
             />
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All PMs", value: "" },
                 { label: "Alice Chen", value: "Alice Chen" },
@@ -133,14 +143,18 @@ export default function ProjectTrackingHub() {
           </FilterBar>
 
           <Card className="flex-1 min-h-[400px]">
-            <DataTable 
-              data={mockProjects}
-              columns={columns}
-              getRowId={(row: any) => row.id}
-              selectable={true}
-              selectedIds={selectedIds}
-              onSelectionChange={setSelectedIds}
-            />
+            {loading ? (
+              <div className="flex items-center justify-center h-full text-on-surface-variant">Loading projects...</div>
+            ) : (
+              <DataTable 
+                data={projects}
+                columns={columns}
+                getRowId={(row: any) => row.id}
+                selectable={true}
+                selectedIds={selectedIds}
+                onSelectionChange={setSelectedIds}
+              />
+            )}
           </Card>
         </div>
 

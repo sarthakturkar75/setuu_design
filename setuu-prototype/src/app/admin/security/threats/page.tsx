@@ -7,17 +7,36 @@ import { Card } from "@/components/ui/Card";
 import { Download, FileText, Activity, ShieldAlert, FileWarning, Search } from "lucide-react";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { TextInput } from "@/components/ui/TextInput";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const mockThreats = [
-  { id: "e3b0c44298fc1c149afbf4c8996fb924", file: "Q3_Invoice_Payload.pdf", status: "Clean", scanner: "ClamAV v0.103", project: "Alpha Tower", timestamp: "2026-10-21 15:01:22 UTC" },
-  { id: "8b1a9953c4611296a827abf8c47804d7", file: "blueprint_macro_v2.xlsm", status: "Infected", scanner: "ClamAV v0.103", project: "Beta Complex", timestamp: "2026-10-21 14:55:10 UTC", threatName: "VBA:Downloader-A" },
-  { id: "9b74c9897bac770ffc029102a200c5de", file: "site_photo_01.jpg", status: "Clean", scanner: "ClamAV v0.103", project: "Gamma Hub", timestamp: "2026-10-21 13:42:05 UTC" },
-  { id: "f2ca1bb6c7e907d06dafe4687e579fce", file: "contract_draft_signed.docx", status: "Quarantined", scanner: "Heuristic Engine", project: "Alpha Tower", timestamp: "2026-10-21 10:15:00 UTC", threatName: "Suspicious PDF payload" },
-];
+import { getVirusScanResults } from "@/app/actions/auditActions";
 
 export default function ThreatScanDashboardPage() {
+  const [threats, setThreats] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getVirusScanResults();
+        setThreats(data.map(scan => ({
+          id: scan.id,
+          file: scan.file_name || "Unknown File",
+          status: scan.is_clean ? "Clean" : (scan.threats_found ? "Infected" : "Quarantined"),
+          scanner: "ClamAV v0.103", // Hardcoded for prototype
+          project: scan.project_id || "Unknown Project",
+          timestamp: scan.scanned_at ? new Date(scan.scanned_at).toLocaleString() : "Unknown",
+          threatName: scan.threats_found || null
+        })));
+      } catch (e) {
+        console.error("Failed to load scan results", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
   const columns = [
     { 
       key: "file_hash", 
@@ -129,7 +148,7 @@ export default function ThreatScanDashboardPage() {
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
               <TextInput placeholder="Search file name or hash..." className="pl-9" />
             </div>
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Statuses", value: "" },
                 { label: "Clean", value: "clean" },
@@ -141,11 +160,15 @@ export default function ThreatScanDashboardPage() {
             />
           </FilterBar>
 
-          <DataTable 
-            data={mockThreats}
-            columns={columns}
-            getRowId={(row: any) => row.id}
-          />
+          {loading ? (
+            <div className="p-12 text-center text-on-surface-variant">Loading scan results...</div>
+          ) : (
+            <DataTable 
+              data={threats}
+              columns={columns}
+              getRowId={(row: any) => row.id}
+            />
+          )}
           
           <div className="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-variant/30">
             <span className="text-sm text-on-surface-variant">Showing 1 to 4 of 45,102 entries</span>

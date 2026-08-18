@@ -1244,43 +1244,78 @@ export interface Database {
           created_at?: string | null
           updated_at?: string | null
         }
-        invoices: {
-          Row: {
-            id: string
-            vendor_id: string
-            project_id: string
-            invoice_number: string
-            amount: number
-            currency: string | null
-            status: string
-            due_date: string | null
-            created_at: string | null
-            updated_at: string | null
-          }
-          Insert: {
-            id?: string
-            vendor_id: string
-            project_id: string
-            invoice_number: string
-            amount: number
-            currency?: string | null
-            status: string
-            due_date?: string | null
-            created_at?: string | null
-            updated_at?: string | null
-          }
-          Update: {
-            id?: string
-            vendor_id?: string
-            project_id?: string
-            invoice_number?: string
-            amount?: number
-            currency?: string | null
-            status?: string
-            due_date?: string | null
-            created_at?: string | null
-            updated_at?: string | null
-          }
+      }
+      invoices: {
+        Row: {
+          id: string
+          vendor_id: string
+          project_id: string
+          invoice_number: string
+          amount: number
+          currency: string | null
+          status: string
+          due_date: string | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          vendor_id: string
+          project_id: string
+          invoice_number: string
+          amount: number
+          currency?: string | null
+          status: string
+          due_date?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          vendor_id?: string
+          project_id?: string
+          invoice_number?: string
+          amount?: number
+          currency?: string | null
+          status?: string
+          due_date?: string | null
+          created_at?: string | null
+          updated_at?: string | null
+        }
+      }
+      scheduled_reports: {
+        Row: {
+          id: string
+          name: string
+          format: string
+          schedule: string
+          next_run: string | null
+          created_at: string | null
+          created_by: string | null
+          project_id: string | null
+          parameters: any | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          format: string
+          schedule: string
+          next_run?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          project_id?: string | null
+          parameters?: any | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          format?: string
+          schedule?: string
+          next_run?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          project_id?: string | null
+          parameters?: any | null
         }
       }
     }

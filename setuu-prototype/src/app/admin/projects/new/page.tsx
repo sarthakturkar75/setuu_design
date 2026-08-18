@@ -5,11 +5,12 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { WizardStepper } from "@/components/ui/WizardStepper";
 import { FormField } from "@/components/ui/FormField";
-import { SelectMenu } from "@/components/ui/SelectMenu";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Select } from "@/components/ui/Select";
+import { Toggle } from "@/components/ui/Toggle";
 import { TextInput } from "@/components/ui/TextInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createProject } from "@/app/actions/projectActions";
 
 export default function NewProjectWizard() {
   const router = useRouter();
@@ -38,9 +39,23 @@ export default function NewProjectWizard() {
 
   const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, totalSteps));
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
-  const handleCreate = () => {
-    // Navigate back to projects list or specific project ID in real app
-    router.push("/admin/projects");
+  const handleCreate = async () => {
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("description", formData.description);
+    data.append("type", formData.type);
+    data.append("po_reference", formData.poRef);
+    data.append("contract_value", formData.contractValue);
+    data.append("target_date", formData.targetDate);
+    // Hardcode an ID for test PM if none provided, or ignore
+    if (formData.pm) data.append("assigned_pm_id", formData.pm);
+    if (formData.clientOrg) data.append("client_org_id", formData.clientOrg);
+    
+    // In a real implementation we would also save the modules toggles
+    
+    await createProject(data);
+    // createProject already redirects to the new project config, 
+    // but as a fallback we could push here.
   };
 
   return (
@@ -81,7 +96,7 @@ export default function NewProjectWizard() {
                   <TextInput value={formData.name} onChange={(e: any) => setFormData({...formData, name: e.target.value})} placeholder="e.g. Alpha Tower" />
                 </FormField>
                 <FormField label="Project Type *">
-                  <SelectMenu 
+                  <Select 
                     value={formData.type}
                     onChange={(e: any) => setFormData({...formData, type: e.target.value})}
                     options={[
@@ -123,7 +138,7 @@ export default function NewProjectWizard() {
               <h3 className="font-merriweather text-xl font-bold text-on-surface mb-2">Stakeholder Assignments</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField label="Client Organization *">
-                  <SelectMenu 
+                  <Select 
                     value={formData.clientOrg}
                     onChange={(e: any) => setFormData({...formData, clientOrg: e.target.value})}
                     options={[
@@ -134,7 +149,7 @@ export default function NewProjectWizard() {
                   />
                 </FormField>
                 <FormField label="Primary Discipline *">
-                  <SelectMenu 
+                  <Select 
                     value={formData.discipline}
                     onChange={(e: any) => setFormData({...formData, discipline: e.target.value})}
                     options={[
@@ -146,7 +161,7 @@ export default function NewProjectWizard() {
                   />
                 </FormField>
                 <FormField label="Assigned Project Manager *">
-                  <SelectMenu 
+                  <Select 
                     value={formData.pm}
                     onChange={(e: any) => setFormData({...formData, pm: e.target.value})}
                     options={[
@@ -171,7 +186,7 @@ export default function NewProjectWizard() {
                     <h4 className="font-semibold text-on-surface">Material Tracking</h4>
                     <p className="text-sm text-on-surface-variant">Track POs, deliveries, and field receipts</p>
                   </div>
-                  <ToggleSwitch checked={formData.modules.materials} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, materials: c}})} />
+                  <Toggle checked={formData.modules.materials} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, materials: c}})} />
                 </div>
                 
                 <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -179,7 +194,7 @@ export default function NewProjectWizard() {
                     <h4 className="font-semibold text-on-surface">Drawing Hub</h4>
                     <p className="text-sm text-on-surface-variant">Manage architectural and engineering blueprints</p>
                   </div>
-                  <ToggleSwitch checked={formData.modules.drawings} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, drawings: c}})} />
+                  <Toggle checked={formData.modules.drawings} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, drawings: c}})} />
                 </div>
 
                 <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -187,7 +202,7 @@ export default function NewProjectWizard() {
                     <h4 className="font-semibold text-on-surface">Issues Logger</h4>
                     <p className="text-sm text-on-surface-variant">Log defects, snags, and site blockers</p>
                   </div>
-                  <ToggleSwitch checked={formData.modules.issues} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, issues: c}})} />
+                  <Toggle checked={formData.modules.issues} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, issues: c}})} />
                 </div>
 
                 <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -195,7 +210,7 @@ export default function NewProjectWizard() {
                     <h4 className="font-semibold text-on-surface">Change Requests</h4>
                     <p className="text-sm text-on-surface-variant">Manage scope variations and financial approvals</p>
                   </div>
-                  <ToggleSwitch checked={formData.modules.changes} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, changes: c}})} />
+                  <Toggle checked={formData.modules.changes} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, changes: c}})} />
                 </div>
 
                 <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -203,7 +218,7 @@ export default function NewProjectWizard() {
                     <h4 className="font-semibold text-on-surface">Resource Tracking</h4>
                     <p className="text-sm text-on-surface-variant">Timesheets and workforce allocation metrics</p>
                   </div>
-                  <ToggleSwitch checked={formData.modules.resources} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, resources: c}})} />
+                  <Toggle checked={formData.modules.resources} onChange={(c: any) => setFormData({...formData, modules: {...formData.modules, resources: c}})} />
                 </div>
               </div>
             </div>

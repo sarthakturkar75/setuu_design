@@ -5,21 +5,33 @@ import { FilterBar } from "@/components/ui/FilterBar";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { Plus, MoreVertical, Search, Download } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { TextInput } from "@/components/ui/TextInput";
 
-const mockUsers = [
-  { id: "USR-001", name: "Alice Chen", email: "alice@setuu.com", role: "Project Manager", status: "active", lastActive: "2 mins ago" },
-  { id: "USR-002", name: "Bob Smith", email: "bob@setuu.com", role: "Site Engineer", status: "active", lastActive: "1 hour ago" },
-  { id: "USR-003", name: "Charlie Davis", email: "charlie@acmecorp.com", role: "Client Rep", status: "pending", lastActive: "Never" },
-  { id: "USR-004", name: "Diana Prince", email: "diana@setuu.com", role: "Architect", status: "inactive", lastActive: "2 weeks ago" },
-];
+import { useEffect } from "react";
+import { getUsers } from "@/app/actions/userActions";
+
+// mockUsers removed, using live data
 
 export default function UserDirectoryPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [users, setUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getUsers()
+      .then(data => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load users", err);
+        setLoading(false);
+      });
+  }, []);
 
   const columns = [
     { 
@@ -29,11 +41,11 @@ export default function UserDirectoryPage() {
       cell: (row: any) => (
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
-            {row.name.substring(0, 2).toUpperCase()}
+            {row.display_name ? row.display_name.substring(0, 2).toUpperCase() : "?"}
           </div>
           <div className="flex flex-col">
-            <Link href={`/admin/users/${row.id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.name}</Link>
-            <span className="text-xs text-on-surface-variant">{row.email}</span>
+            <Link href={`/admin/users/${row.id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.display_name || "Unknown"}</Link>
+            <span className="text-xs text-on-surface-variant">{row.organization_name || "No Organization"}</span>
           </div>
         </div>
       )
@@ -49,8 +61,8 @@ export default function UserDirectoryPage() {
       header: "Status",
       cell: (row: any) => (
         <StatusBadge 
-          tone={row.status === "active" ? "emerald" : row.status === "pending" ? "amber" : "slate"} 
-          label={row.status} 
+          tone={row.is_active ? "emerald" : "slate"} 
+          label={row.is_active ? "Active" : "Inactive"} 
         />
       )
     },
@@ -58,7 +70,7 @@ export default function UserDirectoryPage() {
       key: "lastActive", 
       header: "Last Active", 
       sortable: true,
-      cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">{row.lastActive}</span>
+      cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">--</span>
     },
     { 
       key: "actions", 
@@ -89,10 +101,10 @@ export default function UserDirectoryPage() {
               <Download className="w-4 h-4" />
               Export
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
+            <Link href="/admin/users/invite" className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
               <Plus className="w-4 h-4" />
               Invite User
-            </button>
+            </Link>
           </div>
         }
       />
@@ -107,7 +119,7 @@ export default function UserDirectoryPage() {
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
                 <TextInput placeholder="Search users by name or email..." className="pl-9" />
               </div>
-              <SelectMenu 
+              <Select 
                 options={[
                   { label: "All Roles", value: "" },
                   { label: "Project Manager", value: "pm" },
@@ -117,7 +129,7 @@ export default function UserDirectoryPage() {
                 value=""
                 onChange={() => {}}
               />
-              <SelectMenu 
+              <Select 
                 options={[
                   { label: "All Statuses", value: "" },
                   { label: "Active", value: "active" },
@@ -129,15 +141,19 @@ export default function UserDirectoryPage() {
               />
             </FilterBar>
 
-            <Card className="flex-1 min-h-[400px]">
-              <DataTable 
-                data={mockUsers}
-                columns={columns}
-                getRowId={(row: any) => row.id}
-                selectable={true}
-                selectedIds={selectedIds}
-                onSelectionChange={setSelectedIds}
-              />
+            <Card className="min-h-[500px]">
+              {loading ? (
+                <div className="flex items-center justify-center h-full py-20 text-on-surface-variant">Loading users...</div>
+              ) : (
+                <DataTable 
+                  data={users}
+                  columns={columns}
+                  getRowId={(row: any) => row.id}
+                  selectable={true}
+                  selectedIds={selectedIds}
+                  onSelectionChange={setSelectedIds}
+                />
+              )}
             </Card>
           </div>
 

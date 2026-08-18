@@ -73,16 +73,24 @@ export async function updateProjectConfig(formData: FormData) {
   return { success: true };
 }
 
-export async function getProjects(filters?: { status?: string, pm_id?: string }) {
+export async function getProjects(filters?: { status?: string, pm_id?: string, is_archived?: boolean }) {
   const supabase = await createClient();
-  let query = supabase.from("projects").select("*");
+  let query = supabase.from("projects").select("*, assigned_pm:user_actor!projects_assigned_pm_id_fkey(display_name)");
   
   if (filters?.status) query = query.eq("status", filters.status);
   if (filters?.pm_id) query = query.eq("assigned_pm_id", filters.pm_id);
+  if (filters?.is_archived !== undefined) query = query.eq("is_archived", filters.is_archived);
 
   const { data, error } = await query;
   if (error) throw error;
-  return data as Project[];
+  
+  // Map the joined data to include a flat pm_name field for easy UI rendering
+  return data.map(p => ({
+    ...p,
+    pm_name: p.assigned_pm && typeof p.assigned_pm === 'object' && !Array.isArray(p.assigned_pm)
+      ? (p.assigned_pm as any).display_name 
+      : null
+  }));
 }
 
 export async function getProjectById(id: string) {

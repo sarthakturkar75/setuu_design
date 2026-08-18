@@ -3,15 +3,23 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function getMaterials(projectId: string) {
+export async function getMaterials(projectId?: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("project_materials")
-    .select("*")
-    .eq("project_id", projectId);
+  let query = supabase.from("project_materials").select("*, project:projects!project_materials_project_id_fkey(name)");
+  
+  if (projectId) {
+    query = query.eq("project_id", projectId);
+  }
     
+  const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(material => ({
+    ...material,
+    project_name: material.project && typeof material.project === 'object' && !Array.isArray(material.project)
+      ? (material.project as any).name
+      : null
+  }));
 }
 
 export async function createMaterial(projectId: string, data: any) {

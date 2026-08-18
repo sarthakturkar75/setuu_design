@@ -1,21 +1,36 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DataTable } from "@/components/ui/DataTable";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { MessageSquare, AlertCircle, CheckCircle, ArrowUpRight, MessageCircle, RefreshCw, Send } from "lucide-react";
+import { getTickets } from "@/app/actions/supportActions";
 
 export default function GlobalSupportHub() {
   const [selectedTicket, setSelectedTicket] = useState<any>(null);
+  const [supportTickets, setSupportTickets] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const supportTickets = [
-    { id: "TKT-9942", status: "Open", priority: "High", org: "Praimo Innovation", updated: "2h ago", subject: "API Rate Limit Exhausted" },
-    { id: "TKT-9941", status: "Escalated", priority: "Critical", org: "Stark Industries", updated: "4h ago", subject: "SAML SSO Configuration Failure" },
-    { id: "TKT-9940", status: "Pending", priority: "Normal", org: "Acme Corp", updated: "1d ago", subject: "Storage Quota Inquiry" },
-    { id: "TKT-9939", status: "Resolved", priority: "Low", org: "Wayne Enterprises", updated: "2d ago", subject: "Billing Address Update" },
-  ];
+  useEffect(() => {
+    getTickets()
+      .then(data => {
+        setSupportTickets(data.map(t => ({
+          id: t.id.substring(0,8),
+          status: t.status === "open" ? "Open" : t.status === "in_progress" ? "Escalated" : "Resolved",
+          priority: t.priority === "high" ? "High" : t.priority === "urgent" ? "Critical" : "Normal",
+          org: "Global", // Usually joined from a related project or org
+          updated: new Date(t.updated_at || t.created_at || Date.now()).toLocaleDateString(),
+          subject: t.subject
+        })));
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load tickets", err);
+        setLoading(false);
+      });
+  }, []);
 
   const columns = [
     { key: "id", header: "Ticket ID", cell: (row: any) => <span className="font-jetbrains-mono text-sm">{row.id}</span> },
@@ -71,11 +86,15 @@ export default function GlobalSupportHub() {
           </div>
 
           <div className="flex-1 overflow-auto">
-            <DataTable 
-              columns={columns}
-              data={supportTickets}
-              pagination={{ currentPage: 1, totalPages: 4, onPageChange: () => {} }}
-            />
+            {loading ? (
+              <div className="p-12 text-center text-on-surface-variant font-jetbrains-mono">Loading support tickets...</div>
+            ) : (
+              <DataTable 
+                columns={columns}
+                data={supportTickets}
+                pagination={{ currentPage: 1, totalPages: 1, onPageChange: () => {} }}
+              />
+            )}
           </div>
         </div>
 

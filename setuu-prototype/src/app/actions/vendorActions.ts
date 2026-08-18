@@ -11,7 +11,13 @@ export async function getVendors(orgId?: string) {
   
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(vendor => ({
+    ...vendor,
+    organization_name: vendor.organizations && typeof vendor.organizations === 'object' && !Array.isArray(vendor.organizations)
+      ? (vendor.organizations as any).name
+      : null
+  }));
 }
 
 export async function assignVendorToProject(vendorId: string, projectId: string) {
@@ -31,8 +37,7 @@ export async function assignVendorToProject(vendorId: string, projectId: string)
 
 export async function getVendorPerformance(vendorId: string) {
   const supabase = await createClient();
-  // We can query project_vendors and tasks or materials related to this vendor
-  // For the prototype, we'll check if they exist in org_vendors and return a base object
+  
   const { data: vendor, error } = await supabase
     .from("org_vendors")
     .select("*")
@@ -41,13 +46,48 @@ export async function getVendorPerformance(vendorId: string) {
     
   if (error) throw error;
   
-  // Real implementation would calculate based on invoices/materials.
-  // For now we map based on vendor type or status for demonstration
+  const { data: materials, error: matError } = await supabase
+    .from("project_materials")
+    .select("status, estimated_delivery, actual_delivery")
+    .eq("vendor_id", vendorId);
+    
+  let onTimePercent = 0;
+  let avgDelayDays = 0;
+  let totalOrders = 0;
+  
+  if (!matError && materials && materials.length > 0) {
+    totalOrders = materials.length;
+    let onTimeCount = 0;
+    let totalDelay = 0;
+    
+    materials.forEach((m: any) => {
+      if (m.actual_delivery && m.estimated_delivery) {
+        const actual = new Date(m.actual_delivery);
+        const est = new Date(m.estimated_delivery);
+        const delay = (actual.getTime() - est.getTime()) / (1000 * 3600 * 24);
+        
+        if (delay <= 0) {
+          onTimeCount++;
+        } else {
+          totalDelay += delay;
+        }
+      } else if (m.status === 'Delivered') {
+         onTimeCount++;
+      }
+    });
+    
+    onTimePercent = Math.round((onTimeCount / totalOrders) * 100);
+    avgDelayDays = (totalOrders - onTimeCount) > 0 ? parseFloat((totalDelay / (totalOrders - onTimeCount)).toFixed(1)) : 0;
+  } else {
+    onTimePercent = 0;
+    avgDelayDays = 0;
+  }
+  
   return {
     vendor,
-    onTimePercent: vendor.status === "Active" ? 95 : 70,
-    avgDelayDays: vendor.status === "Active" ? 1.2 : 5.4,
+    onTimePercent,
+    avgDelayDays,
     complianceStatus: vendor.status === "Active" ? "Compliant" : "Warning",
-    totalOrders: 0
+    totalOrders
   };
 }

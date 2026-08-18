@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Sidebar } from "@/components/navigation/Sidebar";
 import { 
   LayoutDashboard, 
@@ -17,9 +18,19 @@ import {
   Activity 
 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { getPlatformMetrics } from "@/app/actions/platformActions";
 
 export function SuperadminSidebar() {
   const pathname = usePathname();
+  const [healthStatus, setHealthStatus] = useState<"healthy" | "warning" | "critical">("healthy");
+
+  useEffect(() => {
+    getPlatformMetrics().then(metrics => {
+      if (metrics.errorRate5xx > 0.05) setHealthStatus("critical");
+      else if (metrics.errorRate5xx > 0.01 || metrics.apiLatencyMs > 200) setHealthStatus("warning");
+      else setHealthStatus("healthy");
+    }).catch(() => setHealthStatus("critical"));
+  }, []);
 
   const sections = [
     {
@@ -36,8 +47,16 @@ export function SuperadminSidebar() {
     {
       title: "Security & Audit",
       items: [
-        { label: "Break-Glass Console", href: "/superadmin/security", icon: <ShieldAlert className="w-5 h-5 text-red-400" /> },
-        { label: "Break-Glass Logs", href: "/superadmin/security/logs", icon: <FileTerminal className="w-5 h-5" /> },
+        { 
+          label: "Security", 
+          href: "/superadmin/security", 
+          icon: <ShieldAlert className="w-5 h-5 text-red-400" />,
+          isExpandable: true,
+          items: [
+            { label: "Break-Glass Console", href: "/superadmin/security" },
+            { label: "Break-Glass Logs", href: "/superadmin/security/logs" }
+          ]
+        },
         { label: "Audit Log Explorer", href: "/superadmin/audit", icon: <ListTree className="w-5 h-5" /> },
       ],
     },
@@ -52,7 +71,11 @@ export function SuperadminSidebar() {
   ];
 
   const bottomItems = [
-    { label: "System Health", href: "/superadmin/telemetry", icon: <Activity className="w-5 h-5 text-emerald-400" /> },
+    { 
+      label: `System Health: ${healthStatus}`, 
+      href: "/superadmin/telemetry", 
+      icon: <Activity className={`w-5 h-5 ${healthStatus === 'healthy' ? 'text-semantic-emerald' : healthStatus === 'warning' ? 'text-semantic-amber' : 'text-semantic-crimson'}`} /> 
+    },
   ];
 
   return (

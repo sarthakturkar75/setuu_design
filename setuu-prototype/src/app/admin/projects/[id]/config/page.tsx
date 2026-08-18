@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/Card";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Save, LifeBuoy } from "lucide-react";
 import Link from "next/link";
@@ -59,7 +59,7 @@ export default function ProjectConfigPage({
               <TextInput value="Alpha Tower" />
             </FormField>
             <FormField label="Project Type">
-              <SelectMenu
+              <Select
                 options={[
                   { label: "Commercial", value: "commercial" },
                   { label: "Residential", value: "residential" },
@@ -89,7 +89,7 @@ export default function ProjectConfigPage({
           <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Management & Timeline</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField label="Assigned Project Manager *">
-              <SelectMenu
+              <Select
                 options={[
                   { label: "Alice Chen", value: "alice" },
                   { label: "Bob Smith", value: "bob" },
@@ -99,7 +99,7 @@ export default function ProjectConfigPage({
               />
             </FormField>
             <FormField label="Client Organization *">
-              <SelectMenu
+              <Select
                 options={[
                   { label: "Acme Corp", value: "acme" },
                 ]}

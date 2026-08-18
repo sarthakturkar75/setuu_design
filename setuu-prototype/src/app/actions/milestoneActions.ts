@@ -44,9 +44,15 @@ export async function updateMilestone(id: string, updateData: any) {
 export async function reorderMilestones(projectId: string, orderedIds: string[]) {
   const supabase = await createClient();
   
-  // In a real app we'd want a transaction or RPC call here
-  for (let i = 0; i < orderedIds.length; i++) {
-    await supabase.from("milestones").update({ display_order: i }).eq("id", orderedIds[i]);
+  const promises = orderedIds.map((id, index) => 
+    supabase.from("milestones").update({ display_order: index }).eq("id", id)
+  );
+  
+  const results = await Promise.all(promises);
+  
+  const errors = results.filter(r => r.error);
+  if (errors.length > 0) {
+    return { success: false, error: "Failed to reorder some milestones", details: errors.map(e => e.error?.message) };
   }
   
   revalidatePath(`/admin/projects/${projectId}`);

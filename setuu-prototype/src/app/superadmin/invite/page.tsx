@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { TextInput } from "@/components/ui/TextInput";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Toggle } from "@/components/ui/Toggle";
 import { ShieldCheck, Send, X, Mail } from "lucide-react";
 
 export default function InviteOrgAdmin() {
@@ -77,21 +77,21 @@ export default function InviteOrgAdmin() {
             <div className="p-4 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium text-on-surface">Enforce SAML SSO</span>
-                <ToggleSwitch 
+                <Toggle 
                   checked={formData.requireSso} 
                   onChange={(v) => setFormData({...formData, requireSso: v})} 
                 />
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium text-on-surface">Allow API Access</span>
-                <ToggleSwitch 
+                <Toggle 
                   checked={formData.allowApiAccess} 
                   onChange={(v) => setFormData({...formData, allowApiAccess: v})} 
                 />
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium text-on-surface">Allow MFA Bypass (Not Recommended)</span>
-                <ToggleSwitch 
+                <Toggle 
                   checked={formData.allowMfaBypass} 
                   onChange={(v) => setFormData({...formData, allowMfaBypass: v})} 
                 />

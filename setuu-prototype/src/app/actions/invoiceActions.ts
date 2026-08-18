@@ -5,13 +5,18 @@ import { revalidatePath } from "next/cache";
 
 export async function getInvoices(vendorId?: string) {
   const supabase = await createClient();
-  let query = supabase.from("invoices").select("*");
+  let query = supabase.from("invoices").select("*, vendor:organizations!invoices_vendor_id_fkey(name), project:projects!invoices_project_id_fkey(name)");
   
   if (vendorId) query = query.eq("vendor_id", vendorId);
   
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(inv => ({
+    ...inv,
+    vendor_name: inv.vendor && typeof inv.vendor === 'object' && !Array.isArray(inv.vendor) ? (inv.vendor as any).name : "Unknown Vendor",
+    project_name: inv.project && typeof inv.project === 'object' && !Array.isArray(inv.project) ? (inv.project as any).name : "Unknown Project"
+  }));
 }
 
 export async function createInvoice(data: any) {

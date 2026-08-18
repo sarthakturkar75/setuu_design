@@ -10,12 +10,22 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Building2, Plus, Download, MoreVertical, AlertTriangle } from "lucide-react";
 
 export default function OrganizationsHub() {
-  const orgsData = [
-    { id: "ORG-001", name: "Praimo Innovation", members: 42, status: "Active", storageUsed: 450, storageQuota: 1000, tier: "Enterprise" },
-    { id: "ORG-002", name: "Acme Corp", members: 15, status: "Active", storageUsed: 320, storageQuota: 500, tier: "Professional" },
-    { id: "ORG-003", name: "Stark Industries", members: 120, status: "Warning", storageUsed: 980, storageQuota: 1000, tier: "Enterprise" },
-    { id: "ORG-004", name: "Wayne Enterprises", members: 8, status: "Inactive", storageUsed: 12, storageQuota: 100, tier: "Starter" },
-  ];
+  const [organizations, setOrganizations] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    import("@/app/actions/platformActions").then(({ getOrganizations }) => {
+      getOrganizations()
+        .then(data => {
+          setOrganizations(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Failed to load organizations", err);
+          setLoading(false);
+        });
+    });
+  }, []);
 
   const columns = [
     {
@@ -41,30 +51,33 @@ export default function OrganizationsHub() {
     {
       key: "members",
       header: "Members",
-      cell: (row: any) => <span className="font-jetbrains-mono">{row.members}</span>
+      cell: (row: any) => <span className="font-jetbrains-mono">{row.member_count || 0}</span>
     },
     {
       key: "storage",
       header: "Storage Usage",
-      cell: (row: any) => (
-        <div className="w-32">
-          <div className="flex justify-between text-xs mb-1">
-            <span>{row.storageUsed} GB</span>
-            <span className="text-on-surface-variant">{row.storageQuota} GB</span>
+      cell: (row: any) => {
+        const used = row.storage_used_gb || 0;
+        const quota = row.storage_quota_gb || 100; // default 100
+        const percentage = Math.min((used / quota) * 100, 100);
+        return (
+          <div className="w-32">
+            <div className="flex justify-between text-xs mb-1">
+              <span>{used} GB</span>
+              <span className="text-on-surface-variant">{quota} GB</span>
+            </div>
+            <ProgressBar progress={percentage} />
           </div>
-          <ProgressBar 
-            progress={(row.storageUsed / row.storageQuota) * 100} 
-          />
-        </div>
-      )
+        );
+      }
     },
     {
       key: "status",
       header: "Status",
       cell: (row: any) => (
         <StatusBadge 
-          tone={row.status === "Active" ? "emerald" : row.status === "Warning" ? "amber" : "slate"} 
-          label={row.status} 
+          tone={row.status === "Active" ? "emerald" : "slate"} 
+          label={row.status || "Inactive"} 
         />
       )
     }
@@ -109,17 +122,23 @@ export default function OrganizationsHub() {
             </div>
           </FilterBar>
           
-          <DataTable 
-            columns={columns}
-            data={orgsData}
-            selectable={true}
-            rowActions={(row) => (
-              <button className="p-2 hover:bg-surface-variant rounded-full text-on-surface-variant">
-                <MoreVertical className="w-5 h-5" />
-              </button>
+          <Card className="min-h-[400px]">
+            {loading ? (
+              <div className="flex items-center justify-center h-full text-on-surface-variant py-20">Loading organizations...</div>
+            ) : (
+              <DataTable 
+                columns={columns}
+                data={organizations}
+                selectable={true}
+                rowActions={(row) => (
+                  <button className="p-2 hover:bg-surface-variant rounded-full text-on-surface-variant">
+                    <MoreVertical className="w-5 h-5" />
+                  </button>
+                )}
+                pagination={{ currentPage: 1, totalPages: 1, onPageChange: () => {} }}
+              />
             )}
-            pagination={{ currentPage: 1, totalPages: 1, onPageChange: () => {} }}
-          />
+          </Card>
         </div>
 
         <div className="xl:col-span-1 space-y-6">

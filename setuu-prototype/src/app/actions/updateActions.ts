@@ -3,16 +3,21 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
-export async function getUpdates(projectId: string, filters?: { milestone_id?: string, status?: string }) {
+export async function getUpdates(filters?: { projectId?: string, milestone_id?: string, status?: string }) {
   const supabase = await createClient();
-  let query = supabase.from("updates").select("*, user_actor(display_name, avatar_url), media_attachments(*), comments(*)").eq("project_id", projectId);
+  let query = supabase.from("updates").select("*, user_actor(display_name, avatar_url), media_attachments(*), comments(*), project:projects!updates_project_id_fkey(name)");
   
+  if (filters?.projectId) query = query.eq("project_id", filters.projectId);
   if (filters?.milestone_id) query = query.eq("milestone_id", filters.milestone_id);
   if (filters?.status) query = query.eq("approval_status", filters.status);
   
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(upd => ({
+    ...upd,
+    project_name: upd.project && typeof upd.project === 'object' && !Array.isArray(upd.project) ? (upd.project as any).name : "Unknown Project"
+  }));
 }
 
 export async function createUpdate(formData: FormData) {

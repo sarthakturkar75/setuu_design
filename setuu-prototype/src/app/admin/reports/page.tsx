@@ -3,9 +3,9 @@
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Toggle } from "@/components/ui/Toggle";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { FileBarChart, Play, CalendarClock, Download, FileText, FileSpreadsheet, Settings } from "lucide-react";
 import { useState } from "react";
@@ -107,7 +107,7 @@ export default function ReportingEnginePage() {
             
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Report Template</label>
-              <SelectMenu 
+              <Select 
                 options={[
                   { label: "Financial Summary (Budget vs Actual)", value: "financials" },
                   { label: "Resource Allocation Matrix", value: "resources" },
@@ -118,30 +118,6 @@ export default function ReportingEnginePage() {
                 value="financials"
                 onChange={() => {}}
               />
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Data Source (Projects)</label>
-              <SelectMenu 
-                options={[
-                  { label: "All Active Projects", value: "all" },
-                  { label: "Alpha Tower", value: "alpha" },
-                  { label: "Beta Complex", value: "beta" },
-                ]}
-                value="all"
-                onChange={() => {}}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Date Range Start</label>
-                <TextInput type="date" placeholder="Start Date" />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Date Range End</label>
-                <TextInput type="date" placeholder="End Date" />
-              </div>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -176,14 +152,14 @@ export default function ReportingEnginePage() {
                   <span className="text-sm text-on-surface-variant">Run this report automatically</span>
                 </div>
               </div>
-              <ToggleSwitch checked={isRecurring} onChange={(checked) => setIsRecurring(checked)} />
+              <Toggle checked={isRecurring} onChange={(checked) => setIsRecurring(checked)} />
             </div>
 
             {isRecurring && (
               <div className="flex flex-col gap-4 pt-4 border-t border-outline-variant animate-in slide-in-from-top-2">
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-medium text-on-surface-variant uppercase tracking-wider">Frequency</label>
-                  <SelectMenu 
+                  <Select 
                     options={[
                       { label: "Daily at Midnight", value: "daily" },
                       { label: "Weekly (Monday 8:00 AM)", value: "weekly" },

@@ -5,20 +5,17 @@ import { FilterBar } from "@/components/ui/FilterBar";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { BarChart } from "@/components/ui/BarChart";
 import { Plus, MoreVertical, Search, Download } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { TextInput } from "@/components/ui/TextInput";
 
-const mockVendors = [
-  { id: "VND-1001", name: "BuildTech Concrete", category: "Materials", status: "active", sla: "98%", contracts: 14 },
-  { id: "VND-1002", name: "Metro MEP Services", category: "Subcontractor", status: "active", sla: "92%", contracts: 3 },
-  { id: "VND-1003", name: "Acme Heavy Machinery", category: "Equipment", status: "pending", sla: "-", contracts: 0 },
-  { id: "VND-1004", name: "Global Steel Co", category: "Materials", status: "active", sla: "88%", contracts: 8 },
-  { id: "VND-1005", name: "Apex Architecture", category: "Consultant", status: "inactive", sla: "95%", contracts: 1 },
-];
+import { useEffect } from "react";
+import { getVendors } from "@/app/actions/vendorActions";
+
+// mockVendors removed, using live data
 
 const categoryData = [
   { name: "Materials", count: 42 },
@@ -30,6 +27,20 @@ const categoryData = [
 
 export default function VendorRegistryPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [vendors, setVendors] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getVendors()
+      .then(data => {
+        setVendors(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load vendors", err);
+        setLoading(false);
+      });
+  }, []);
 
   const columns = [
     { 
@@ -54,7 +65,7 @@ export default function VendorRegistryPage() {
       header: "Status",
       cell: (row: any) => (
         <StatusBadge 
-          tone={row.status === "active" ? "emerald" : row.status === "pending" ? "amber" : "slate"} 
+          tone={row.status === "Active" ? "emerald" : row.status === "Pending" ? "amber" : "slate"} 
           label={row.status} 
         />
       )
@@ -75,9 +86,9 @@ export default function VendorRegistryPage() {
     },
     { 
       key: "contracts", 
-      header: "Active Contracts", 
+      header: "Organization", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.contracts}</span>
+      cell: (row: any) => <span className="text-sm text-on-surface-variant">{row.organization_name || "Platform"}</span>
     },
     { 
       key: "actions", 
@@ -126,7 +137,7 @@ export default function VendorRegistryPage() {
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
                 <TextInput placeholder="Search vendors by name or ID..." className="pl-9" />
               </div>
-              <SelectMenu 
+              <Select 
                 options={[
                   { label: "All Categories", value: "" },
                   { label: "Materials", value: "materials" },
@@ -136,7 +147,7 @@ export default function VendorRegistryPage() {
                 value=""
                 onChange={() => {}}
               />
-              <SelectMenu 
+              <Select 
                 options={[
                   { label: "All Statuses", value: "" },
                   { label: "Active", value: "active" },
@@ -148,15 +159,19 @@ export default function VendorRegistryPage() {
               />
             </FilterBar>
 
-            <Card className="flex-1 min-h-[400px]">
-              <DataTable 
-                data={mockVendors}
-                columns={columns}
-                getRowId={(row: any) => row.id}
-                selectable={true}
-                selectedIds={selectedIds}
-                onSelectionChange={setSelectedIds}
-              />
+            <Card className="col-span-2 min-h-[500px]">
+              {loading ? (
+                <div className="flex items-center justify-center h-full text-on-surface-variant">Loading vendors...</div>
+              ) : (
+                <DataTable 
+                  data={vendors}
+                  columns={columns}
+                  getRowId={(row: any) => row.id}
+                  selectable={true}
+                  selectedIds={selectedIds}
+                  onSelectionChange={setSelectedIds}
+                />
+              )}
             </Card>
           </div>
 

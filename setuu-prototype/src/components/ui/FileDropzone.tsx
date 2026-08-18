@@ -3,14 +3,14 @@ import { cn } from "@/lib/utils"
 
 export type FileScanState = 'idle' | 'scanning' | 'clean' | 'infected' | 'duplicate'
 
-export interface FileUploadProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+export interface FileDropzoneProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   onFileSelect?: (files: FileList | null) => void
   accept?: string
   multiple?: boolean
   scanState?: FileScanState
 }
 
-export function FileUpload({ onFileSelect, accept, multiple, scanState = 'idle', className, ...props }: FileUploadProps) {
+export function FileDropzone({ onFileSelect, accept, multiple, scanState = 'idle', className, ...props }: FileDropzoneProps) {
   const [isDragging, setIsDragging] = React.useState(false)
   const inputRef = React.useRef<HTMLInputElement>(null)
 

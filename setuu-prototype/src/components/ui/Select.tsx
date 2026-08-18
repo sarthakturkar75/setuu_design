@@ -8,7 +8,7 @@ export interface SelectOption {
   label: string;
 }
 
-interface SelectMenuProps {
+interface SelectProps {
   options: SelectOption[];
   value: string;
   onChange: (value: string) => void;
@@ -16,7 +16,7 @@ interface SelectMenuProps {
   disabled?: boolean;
 }
 
-export function SelectMenu({ options, value, onChange, placeholder = "Select an option", disabled }: SelectMenuProps) {
+export function Select({ options, value, onChange, placeholder = "Select an option", disabled }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

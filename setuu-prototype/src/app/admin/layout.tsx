@@ -2,7 +2,7 @@
 
 import { DashboardShell } from "@/components/navigation/DashboardShell";
 import { AdminSidebar } from "@/components/navigation/AdminSidebar";
-import { MobileBottomNav } from "@/components/navigation/MobileBottomNav";
+import { AdminMobileBottomNav } from "@/components/navigation/AdminMobileBottomNav";
 import { Topbar } from "@/components/navigation/Topbar";
 import { Plus } from "lucide-react";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export default function AdminLayout({
   return (
     <DashboardShell
       sidebar={(props) => <AdminSidebar />}
-      bottomNav={(props) => <MobileBottomNav onMenuClick={props.onMenuClick} />}
+      bottomNav={(props) => <AdminMobileBottomNav onMenuClick={props.onMenuClick} />}
       topbar={(props) => (
         <Topbar
           title="Admin Portal"

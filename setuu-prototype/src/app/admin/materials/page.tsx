@@ -5,21 +5,33 @@ import { FilterBar } from "@/components/ui/FilterBar";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
 import { MoreVertical, Search, Download, Camera, PackagePlus } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
-const mockMaterials = [
-  { id: "MAT-2026-001", name: "Grade 60 Rebar", project: "Alpha Tower", spec: "STR-001", po: "PO-2026-042", supplier: "Global Steel Co", status: "transit", estDelivery: "Oct 15, 2026", actualDelivery: "-" },
-  { id: "MAT-2026-002", name: "Portland Cement Type I", project: "Alpha Tower", spec: "STR-002", po: "PO-2026-042", supplier: "BuildTech Concrete", status: "delivered", estDelivery: "Oct 10, 2026", actualDelivery: "Oct 09, 2026" },
-  { id: "MAT-2026-003", name: "HVAC Ducting Hub", project: "Beta Complex", spec: "MEP-442", po: "PO-2026-081", supplier: "Metro MEP Services", status: "pending", estDelivery: "Nov 01, 2026", actualDelivery: "-" },
-  { id: "MAT-2026-004", name: "Architectural Glass Panels", project: "Gamma Hub", spec: "ARC-104", po: "PO-2026-092", supplier: "ClearView Glass", status: "delayed", estDelivery: "Oct 12, 2026", actualDelivery: "-" },
-];
+import { useEffect } from "react";
+import { getMaterials } from "@/app/actions/materialActions";
+
+// mockMaterials removed, using live data
 
 export default function MasterMaterialTrackingPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [materials, setMaterials] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getMaterials()
+      .then(data => {
+        setMaterials(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch materials", err);
+        setLoading(false);
+      });
+  }, []);
 
   const columns = [
     { 
@@ -29,7 +41,7 @@ export default function MasterMaterialTrackingPage() {
       cell: (row: any) => (
         <div className="flex flex-col">
           <span className="font-semibold text-on-surface">{row.name}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.spec}</span>
+          <span className="text-xs text-on-surface-variant font-jetbrains">{row.specification || "--"}</span>
         </div>
       )
     },
@@ -37,7 +49,7 @@ export default function MasterMaterialTrackingPage() {
       key: "project", 
       header: "Project", 
       sortable: true,
-      cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.project}</span>
+      cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.project_name || "Unknown"}</span>
     },
     { 
       key: "po_supplier", 
@@ -45,8 +57,8 @@ export default function MasterMaterialTrackingPage() {
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <Link href="#" className="font-jetbrains text-primary hover:underline text-sm">{row.po}</Link>
-          <span className="text-xs text-on-surface-variant">{row.supplier}</span>
+          <Link href="#" className="font-jetbrains text-primary hover:underline text-sm">{row.po_reference || "--"}</Link>
+          <span className="text-xs text-on-surface-variant">{row.supplier_name || "--"}</span>
         </div>
       )
     },
@@ -56,9 +68,9 @@ export default function MasterMaterialTrackingPage() {
       cell: (row: any) => (
         <StatusBadge 
           tone={
-            row.status === "delivered" ? "emerald" : 
-            row.status === "transit" ? "sky" : 
-            row.status === "delayed" ? "crimson" : "slate"
+            row.status === "Delivered" ? "emerald" : 
+            row.status === "In Transit" ? "sky" : 
+            row.status === "Delayed" ? "crimson" : "slate"
           } 
           label={row.status} 
         />
@@ -69,9 +81,9 @@ export default function MasterMaterialTrackingPage() {
       header: "Delivery (Est / Act)", 
       cell: (row: any) => (
         <div className="flex flex-col font-jetbrains text-sm">
-          <span className="text-on-surface-variant">E: {row.estDelivery}</span>
-          <span className={row.status === "delivered" ? "text-semantic-emerald font-bold" : "text-on-surface-variant/50"}>
-            A: {row.actualDelivery}
+          <span className="text-on-surface-variant">E: {row.est_delivery ? new Date(row.est_delivery).toLocaleDateString() : "--"}</span>
+          <span className={row.status === "Delivered" ? "text-semantic-emerald font-bold" : "text-on-surface-variant/50"}>
+            A: {row.actual_delivery ? new Date(row.actual_delivery).toLocaleDateString() : "--"}
           </span>
         </div>
       )
@@ -124,7 +136,7 @@ export default function MasterMaterialTrackingPage() {
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
               <TextInput placeholder="Search item, PO, or spec ID..." className="pl-9" />
             </div>
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Projects", value: "" },
                 { label: "Alpha Tower", value: "alpha" },
@@ -134,7 +146,7 @@ export default function MasterMaterialTrackingPage() {
               value=""
               onChange={() => {}}
             />
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Statuses", value: "" },
                 { label: "Pending", value: "pending" },
@@ -147,14 +159,20 @@ export default function MasterMaterialTrackingPage() {
             />
           </FilterBar>
 
-          <DataTable 
-            data={mockMaterials}
-            columns={columns}
-            getRowId={(row: any) => row.id}
-            selectable={true}
-            selectedIds={selectedIds}
-            onSelectionChange={setSelectedIds}
-          />
+          <Card className="flex-1 min-h-[400px]">
+            {loading ? (
+              <div className="flex items-center justify-center h-full text-on-surface-variant py-20">Loading materials...</div>
+            ) : (
+              <DataTable 
+                data={materials}
+                columns={columns}
+                getRowId={(row: any) => row.id}
+                selectable={true}
+                selectedIds={selectedIds}
+                onSelectionChange={setSelectedIds}
+              />
+            )}
+          </Card>
         </Card>
       </div>
     </div>

@@ -7,18 +7,12 @@ import { BarChart } from "@/components/ui/BarChart";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { FilterBar } from "@/components/ui/FilterBar";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
 import { DollarSign, FileText, CheckCircle, Search, Download, TrendingDown, ArrowUpRight, AlertTriangle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const mockInvoices = [
-  { id: "INV-2026-081", project: "Alpha Tower", vendor: "BuildTech Concrete", amount: "₹1,250,000", status: "pending", date: "Oct 12, 2026" },
-  { id: "INV-2026-082", project: "Beta Complex", vendor: "Metro MEP Services", amount: "₹450,000", status: "approved", date: "Oct 10, 2026" },
-  { id: "INV-2026-083", project: "Gamma Hub", vendor: "Global Steel Co", amount: "₹890,000", status: "rejected", date: "Oct 08, 2026" },
-  { id: "INV-2026-084", project: "Alpha Tower", vendor: "Apex Architecture", amount: "₹120,000", status: "approved", date: "Oct 05, 2026" },
-];
+import { getInvoices } from "@/app/actions/invoiceActions";
 
 const cashFlowData = [
   { month: "May", Inflow: 45, Outflow: 38 },
@@ -31,6 +25,29 @@ const cashFlowData = [
 
 export default function FinancialMasterPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [invoices, setInvoices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getInvoices();
+        setInvoices(data.map(inv => ({
+          id: inv.invoice_number || inv.id.substring(0, 8),
+          project: inv.project_name || "Unknown Project",
+          vendor: inv.vendor_name || "Unknown Vendor",
+          amount: new Intl.NumberFormat('en-IN', { style: 'currency', currency: inv.currency || 'INR' }).format(inv.amount),
+          status: inv.status.toLowerCase(),
+          date: inv.created_at ? new Date(inv.created_at).toLocaleDateString() : "Unknown",
+        })));
+      } catch (e) {
+        console.error("Failed to load invoices", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   const columns = [
     { 
@@ -155,7 +172,7 @@ export default function FinancialMasterPage() {
                   <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
                   <TextInput placeholder="Search invoice or vendor..." className="pl-9" />
                 </div>
-                <SelectMenu 
+                <Select 
                   options={[
                     { label: "All Statuses", value: "" },
                     { label: "Pending", value: "pending" },
@@ -168,14 +185,18 @@ export default function FinancialMasterPage() {
               </FilterBar>
 
               <div className="mt-4">
-                <DataTable 
-                  data={mockInvoices}
-                  columns={columns}
-                  getRowId={(row: any) => row.id}
-                  selectable={true}
-                  selectedIds={selectedIds}
-                  onSelectionChange={setSelectedIds}
-                />
+                {loading ? (
+                  <div className="p-8 text-center text-on-surface-variant">Loading invoices...</div>
+                ) : (
+                  <DataTable 
+                    data={invoices}
+                    columns={columns}
+                    getRowId={(row: any) => row.id}
+                    selectable={true}
+                    selectedIds={selectedIds}
+                    onSelectionChange={setSelectedIds}
+                  />
+                )}
               </div>
             </Card>
 

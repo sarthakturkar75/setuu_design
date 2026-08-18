@@ -47,13 +47,16 @@ export async function updateSession(request: NextRequest) {
     const { data: actor } = await supabase
       .from('user_actor')
       .select('role')
-      .eq('user_id', user.id)
+      .eq('id', user.id)
       .single()
       
     const userRole = actor?.role || 'admin' // Default to admin if none found
     
+    // Normalize role for routing (e.g., 'super_admin' -> 'superadmin')
+    const routeName = userRole.replace('_', '')
+    
     const url = request.nextUrl.clone()
-    url.pathname = `/${userRole}`
+    url.pathname = `/${routeName}`
     return NextResponse.redirect(url)
   }
 
@@ -69,11 +72,12 @@ export async function updateSession(request: NextRequest) {
       const { data: actor } = await supabase
         .from('user_actor')
         .select('role')
-        .eq('user_id', user.id)
+        .eq('id', user.id)
         .single()
         
       const userRole = actor?.role || 'admin'
-      const expectedRoute = `/${userRole}`
+      const routeName = userRole.replace('_', '')
+      const expectedRoute = `/${routeName}`
       
       if (matchingRoute !== expectedRoute) {
         // Unauthorized role access, redirect to their correct dashboard

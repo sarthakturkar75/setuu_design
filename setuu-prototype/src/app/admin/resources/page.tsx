@@ -5,22 +5,49 @@ import { FilterBar } from "@/components/ui/FilterBar";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
 import { Search, UserPlus, FileSpreadsheet, Clock, CheckCircle2, MoreVertical, TrendingUp, TrendingDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const mockResources = [
-  { id: "RES-001", project: "Alpha Tower", group: "Structural Engineering", allocated: 450, actual: 425, variance: -25, status: "Under Budget" },
-  { id: "RES-002", project: "Alpha Tower", group: "Site Management", allocated: 200, actual: 215, variance: 15, status: "Over Budget" },
-  { id: "RES-003", project: "Beta Complex", group: "MEP Subcontractors", allocated: 800, actual: 800, variance: 0, status: "On Track" },
-  { id: "RES-004", project: "Gamma Hub", group: "Heavy Machinery Ops", allocated: 320, actual: 380, variance: 60, status: "Critical Overrun" },
-  { id: "RES-005", project: "Gamma Hub", group: "Safety Inspectors", allocated: 120, actual: 95, variance: -25, status: "Under Budget" },
-];
+import { getProjectResources } from "@/app/actions/resourceActions";
 
 export default function ResourceHubPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
+  const [resources, setResources] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getProjectResources();
+        setResources(data.map(res => {
+          const allocated = res.allocated_hours || 0;
+          const actual = res.actual_hours || 0;
+          const variance = actual - allocated;
+          let status = "On Track";
+          if (variance < 0) status = "Under Budget";
+          if (variance > 0 && variance <= 50) status = "Over Budget";
+          if (variance > 50) status = "Critical Overrun";
+
+          return {
+            id: res.id.substring(0, 8),
+            project: res.project_name || "Unknown Project",
+            group: res.name || "Unknown Resource",
+            allocated,
+            actual,
+            variance,
+            status
+          };
+        }));
+      } catch (e) {
+        console.error("Failed to load resources", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
 
   const getVarianceNode = (variance: number) => {
     if (variance === 0) return <span className="text-on-surface-variant">0 hrs</span>;
@@ -190,7 +217,7 @@ export default function ResourceHubPage() {
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
               <TextInput placeholder="Search resource group..." className="pl-9" />
             </div>
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Projects", value: "" },
                 { label: "Alpha Tower", value: "alpha" },
@@ -202,14 +229,20 @@ export default function ResourceHubPage() {
             />
           </FilterBar>
 
-          <DataTable 
-            data={mockResources}
-            columns={columns}
-            getRowId={(row: any) => row.id}
-            selectable={true}
-            selectedIds={selectedIds}
-            onSelectionChange={setSelectedIds}
-          />
+          <div className="p-4">
+            {loading ? (
+              <div className="p-8 text-center text-on-surface-variant">Loading resources...</div>
+            ) : (
+              <DataTable 
+                data={resources}
+                columns={columns}
+                getRowId={(row: any) => row.id}
+                selectable={true}
+                selectedIds={selectedIds}
+                onSelectionChange={setSelectedIds}
+              />
+            )}
+          </div>
         </Card>
       </div>
     </div>

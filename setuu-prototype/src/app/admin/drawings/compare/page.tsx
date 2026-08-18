@@ -2,8 +2,8 @@
 
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Select } from "@/components/ui/Select";
+import { Toggle } from "@/components/ui/Toggle";
 import { ArrowLeft, SplitSquareHorizontal, Layers, FileImage, Search, ZoomIn, ZoomOut, Maximize, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
@@ -92,7 +92,7 @@ export default function DrawingComparePage() {
             
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-on-surface">Auto-Highlight Diffs</span>
-              <ToggleSwitch checked={true} onChange={() => {}} />
+              <Toggle checked={true} onChange={() => {}} />
             </div>
           </div>
         </Card>
@@ -108,7 +108,7 @@ export default function DrawingComparePage() {
                 <h3 className="font-semibold text-on-surface">Version A (Base)</h3>
               </div>
               <div className="w-full sm:w-48">
-                <SelectMenu 
+                <Select 
                   options={[
                     { label: "v3 - Sep 28, 2026", value: "v3" },
                     { label: "v2 - Sep 15, 2026", value: "v2" },
@@ -144,7 +144,7 @@ export default function DrawingComparePage() {
                 <h3 className="font-semibold text-on-surface">Version B (Compare)</h3>
               </div>
               <div className="w-full sm:w-48">
-                <SelectMenu 
+                <Select 
                   options={[
                     { label: "v4 - Oct 10, 2026", value: "v4" },
                     { label: "v3 - Sep 28, 2026", value: "v3" },

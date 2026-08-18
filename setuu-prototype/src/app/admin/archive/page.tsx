@@ -8,16 +8,38 @@ import { Card } from "@/components/ui/Card";
 import { Archive, Download, Server, FileWarning, ShieldCheck, Scale, RefreshCcw, Trash2, Search } from "lucide-react";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { TextInput } from "@/components/ui/TextInput";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import Link from "next/link";
 
-const mockArchives = [
-  { id: "REC-9941", name: "2024 Q1 Financial Ledgers", module: "Financials", date: "Jan 15, 2025", policy: "7-Year Retention", status: "Secure", hold: false },
-  { id: "REC-9940", name: "Alpha Tower - Phase 1 Approvals", module: "Projects", date: "Nov 01, 2024", policy: "Permanent", status: "Legal Hold", hold: true },
-  { id: "REC-9939", name: "Vendor Contracts (Expired 2023)", module: "Vendors", date: "Dec 31, 2023", policy: "3-Year Retention", status: "Pending Purge", hold: false },
-];
+import { useEffect, useState } from "react";
+import { getProjects } from "@/app/actions/projectActions";
 
 export default function ArchiveManagerPage() {
+  const [archives, setArchives] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getProjects({ is_archived: true });
+        setArchives(data.map(p => ({
+          id: p.id,
+          name: p.name,
+          module: "Projects",
+          date: p.created_at ? new Date(p.created_at).toLocaleDateString() : "Unknown",
+          policy: "Permanent",
+          status: p.status,
+          hold: false
+        })));
+      } catch (e) {
+        console.error("Failed to load archives", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
   const columns = [
     { 
       key: "record", 
@@ -131,32 +153,59 @@ export default function ArchiveManagerPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          {/* Active Legal Holds */}
-          <Card className="col-span-1 flex flex-col">
-            <div className="p-4 border-b border-outline-variant bg-surface-variant/30 flex items-center justify-between">
-              <h3 className="font-semibold text-on-surface flex items-center gap-2">
-                <Scale className="w-4 h-4 text-semantic-amber" /> Active Legal Holds
-              </h3>
-              <span className="text-xs font-bold bg-semantic-amber text-on-primary px-2 py-0.5 rounded-full">3 Active</span>
-            </div>
-            <div className="p-4 flex flex-col gap-4 overflow-y-auto max-h-[400px]">
-              
-              <div className="p-4 rounded-lg border border-semantic-amber/50 bg-semantic-amber/10 flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-on-surface">Subcontractor Dispute #884</span>
-                  <span className="text-xs font-jetbrains text-semantic-amber">HLD-001</span>
+          {/* Active Legal Holds & Compliance Events */}
+          <div className="col-span-1 flex flex-col gap-6">
+            <Card className="flex flex-col">
+              <div className="p-4 border-b border-outline-variant bg-surface-variant/30 flex items-center justify-between">
+                <h3 className="font-semibold text-on-surface flex items-center gap-2">
+                  <Scale className="w-4 h-4 text-semantic-amber" /> Active Legal Holds
+                </h3>
+                <span className="text-xs font-bold bg-semantic-amber text-on-primary px-2 py-0.5 rounded-full">3 Active</span>
+              </div>
+              <div className="p-4 flex flex-col gap-4 overflow-y-auto max-h-[300px]">
+                
+                <div className="p-4 rounded-lg border border-semantic-amber/50 bg-semantic-amber/10 flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-on-surface">Subcontractor Dispute #884</span>
+                    <span className="text-xs font-jetbrains text-semantic-amber">HLD-001</span>
+                  </div>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    Prevents deletion or modification of any financial or timesheet records related to "Alpha Tower" from Q3 2024 to Q1 2025.
+                  </p>
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-semantic-amber/20">
+                    <span className="text-xs text-on-surface-variant font-medium">Applied: Oct 12, 2025</span>
+                    <button className="text-xs font-semibold text-primary hover:underline">Manage</button>
+                  </div>
                 </div>
-                <p className="text-xs text-on-surface-variant leading-relaxed">
-                  Prevents deletion or modification of any financial or timesheet records related to "Alpha Tower" from Q3 2024 to Q1 2025.
-                </p>
-                <div className="flex items-center justify-between mt-2 pt-2 border-t border-semantic-amber/20">
-                  <span className="text-xs text-on-surface-variant font-medium">Applied: Oct 12, 2025</span>
-                  <button className="text-xs font-semibold text-primary hover:underline">Manage</button>
+
+              </div>
+            </Card>
+
+            <Card className="flex flex-col flex-1">
+              <div className="p-4 border-b border-outline-variant bg-surface-variant/30 flex items-center justify-between">
+                <h3 className="font-semibold text-on-surface flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-semantic-emerald" /> Recent Compliance Events
+                </h3>
+              </div>
+              <div className="p-4 flex flex-col gap-4 overflow-y-auto max-h-[300px]">
+                <div className="flex flex-col gap-1 pb-3 border-b border-outline-variant/50">
+                  <span className="text-xs font-jetbrains text-on-surface-variant">Today, 14:22 UTC</span>
+                  <span className="text-sm font-medium text-on-surface">Automated Purge Completed</span>
+                  <span className="text-xs text-on-surface-variant">Purged 1,420 expired visitor logs according to 30-day retention policy.</span>
+                </div>
+                <div className="flex flex-col gap-1 pb-3 border-b border-outline-variant/50">
+                  <span className="text-xs font-jetbrains text-on-surface-variant">Yesterday, 09:00 UTC</span>
+                  <span className="text-sm font-medium text-on-surface">Legal Hold HLD-001 Applied</span>
+                  <span className="text-xs text-on-surface-variant">Hold successfully locked 14,022 records from modification/deletion.</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-jetbrains text-on-surface-variant">Oct 12, 11:45 UTC</span>
+                  <span className="text-sm font-medium text-on-surface">Quarterly Audit Backup Verification</span>
+                  <span className="text-xs text-on-surface-variant text-semantic-emerald">Verified matching SHA-256 hashes for all Q2 cold storage vaults.</span>
                 </div>
               </div>
-
-            </div>
-          </Card>
+            </Card>
+          </div>
 
           {/* Archived Records Table */}
           <Card className="col-span-1 lg:col-span-2 flex flex-col min-h-[400px]">
@@ -168,7 +217,7 @@ export default function ArchiveManagerPage() {
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
                 <TextInput placeholder="Search record ID or name..." className="pl-9" />
               </div>
-              <SelectMenu 
+              <Select 
                 options={[
                   { label: "All Modules", value: "" },
                   { label: "Financials", value: "fin" },
@@ -180,11 +229,15 @@ export default function ArchiveManagerPage() {
               />
             </FilterBar>
 
-            <DataTable 
-              data={mockArchives}
-              columns={columns}
-              getRowId={(row: any) => row.id}
-            />
+            {loading ? (
+              <div className="p-8 text-center text-on-surface-variant">Loading archives...</div>
+            ) : (
+              <DataTable 
+                data={archives}
+                columns={columns}
+                getRowId={(row: any) => row.id}
+              />
+            )}
           </Card>
 
         </div>

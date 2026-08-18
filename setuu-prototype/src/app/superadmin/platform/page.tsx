@@ -1,20 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Toggle } from "@/components/ui/Toggle";
 import { AlertTriangle, Save, RotateCcw, Radio, Activity, Terminal } from "lucide-react";
+import { getAuditLogs } from "@/app/actions/auditActions";
 
 export default function PlatformConfig() {
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const [broadcast, setBroadcast] = useState("");
+  const [auditTrail, setAuditTrail] = useState<any[]>([]);
 
-  const auditTrail = [
-    { time: "10:45:22 UTC", user: "s.admin@setuu.com", action: "Updated API Rate Limits" },
-    { time: "08:12:00 UTC", user: "system", action: "Automated Backup Completed" },
-    { time: "Yesterday", user: "j.doe@setuu.com", action: "Provisioned ORG-005" },
-  ];
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getAuditLogs();
+        setAuditTrail(data.slice(0, 5).map(log => ({
+          time: log.created_at ? new Date(log.created_at).toLocaleString() : "Unknown",
+          user: (log.user_actor as any)?.display_name || "System",
+          action: log.event_type
+        })));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    loadData();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -52,7 +64,7 @@ export default function PlatformConfig() {
                   <h4 className="font-medium text-on-surface">Enable Maintenance Mode</h4>
                   <p className="text-sm text-on-surface-variant mt-1">Isolates the platform for critical updates.</p>
                 </div>
-                <ToggleSwitch checked={maintenanceMode} onChange={setMaintenanceMode} />
+                <Toggle checked={maintenanceMode} onChange={setMaintenanceMode} />
               </div>
 
               <div className="space-y-3">
@@ -86,7 +98,7 @@ export default function PlatformConfig() {
                      <h4 className="font-medium text-on-surface text-sm">{flag.name}</h4>
                      <p className="text-xs text-on-surface-variant mt-0.5">{flag.desc}</p>
                    </div>
-                   <ToggleSwitch checked={flag.state} onChange={() => {}} />
+                   <Toggle checked={flag.state} onChange={() => {}} />
                  </div>
                ))}
             </div>

@@ -1,20 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Database, AlertTriangle, ArrowUpRight, Bell } from "lucide-react";
+import { getStorageMetrics } from "@/app/actions/platformActions";
 
 export default function GlobalStorageMonitoring() {
-  const storageData = [
-    { id: "ORG-003", name: "Stark Industries", used: 980, quota: 1000, trend: "+45 GB this week" },
-    { id: "ORG-001", name: "Praimo Innovation", used: 450, quota: 1000, trend: "+12 GB this week" },
-    { id: "ORG-002", name: "Acme Corp", used: 320, quota: 500, trend: "+5 GB this week" },
-    { id: "ORG-005", name: "Cyberdyne", used: 85, quota: 100, trend: "+2 GB this week" },
-    { id: "ORG-004", name: "Wayne Enterprises", used: 12, quota: 100, trend: "Stable" },
-  ];
+  const [storageData, setStorageData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getStorageMetrics()
+      .then(data => {
+        // Sort descending by used percentage
+        const sorted = data.sort((a, b) => (b.usedGb / b.maxGb) - (a.usedGb / a.maxGb));
+        setStorageData(sorted);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -26,8 +36,10 @@ export default function GlobalStorageMonitoring() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card title="Resource Pressure (Top Consumers)" className="col-span-1 lg:col-span-2">
           <div className="p-4 space-y-6">
-            {storageData.map((org, idx) => {
-              const percent = (org.used / org.quota) * 100;
+            {loading ? (
+              <div className="p-12 text-center text-on-surface-variant">Loading storage metrics...</div>
+            ) : storageData.map((org, idx) => {
+              const percent = (org.usedGb / org.maxGb) * 100;
               const isCritical = percent > 90;
               const isWarning = percent > 75 && !isCritical;
               
@@ -36,13 +48,13 @@ export default function GlobalStorageMonitoring() {
                   <div className="flex justify-between items-center">
                     <div>
                       <h4 className="font-semibold text-on-surface">{org.name}</h4>
-                      <p className="text-xs text-on-surface-variant font-jetbrains-mono">{org.id} • {org.trend}</p>
+                      <p className="text-xs text-on-surface-variant font-jetbrains-mono">{org.orgId.substring(0,8)} • {org.trend}</p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <span className="font-jetbrains-mono font-medium text-sm text-on-surface">{org.used} GB</span>
+                        <span className="font-jetbrains-mono font-medium text-sm text-on-surface">{org.usedGb} GB</span>
                         <span className="text-xs text-on-surface-variant mx-1">/</span>
-                        <span className="text-xs text-on-surface-variant">{org.quota} GB</span>
+                        <span className="text-xs text-on-surface-variant">{org.maxGb} GB</span>
                       </div>
                       <StatusBadge 
                         tone={isCritical ? "crimson" : isWarning ? "amber" : "emerald"}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/Card";
-import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { Toggle } from "@/components/ui/Toggle";
 import { ActivityFeed } from "@/components/ui/ActivityFeed";
 import { Save, RefreshCw, Download, Copy } from "lucide-react";
 import { useState } from "react";
@@ -43,7 +43,7 @@ export default function ProjectFlagsPage() {
                   </div>
                 )}
               </div>
-              <ToggleSwitch checked={flags.resources} onChange={(c: any) => setFlags({...flags, resources: c})} />
+              <Toggle checked={flags.resources} onChange={(c: any) => setFlags({...flags, resources: c})} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -51,7 +51,7 @@ export default function ProjectFlagsPage() {
                 <h4 className="font-semibold text-on-surface">Change Order Requests</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Manage scope variations and financial approvals.</p>
               </div>
-              <ToggleSwitch checked={flags.changes} onChange={(c: any) => setFlags({...flags, changes: c})} />
+              <Toggle checked={flags.changes} onChange={(c: any) => setFlags({...flags, changes: c})} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -59,7 +59,7 @@ export default function ProjectFlagsPage() {
                 <h4 className="font-semibold text-on-surface">Master Material Tracking</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Track POs, deliveries, and field receipts.</p>
               </div>
-              <ToggleSwitch checked={flags.materials} onChange={(c: any) => setFlags({...flags, materials: c})} />
+              <Toggle checked={flags.materials} onChange={(c: any) => setFlags({...flags, materials: c})} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -67,7 +67,7 @@ export default function ProjectFlagsPage() {
                 <h4 className="font-semibold text-on-surface">Defect & Issue Logger</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Log defects, snags, and site blockers.</p>
               </div>
-              <ToggleSwitch checked={flags.issues} onChange={(c: any) => setFlags({...flags, issues: c})} />
+              <Toggle checked={flags.issues} onChange={(c: any) => setFlags({...flags, issues: c})} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -75,7 +75,7 @@ export default function ProjectFlagsPage() {
                 <h4 className="font-semibold text-on-surface">Architectural Drawing Hub</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Manage architectural and engineering blueprints.</p>
               </div>
-              <ToggleSwitch checked={flags.drawings} onChange={(c: any) => setFlags({...flags, drawings: c})} />
+              <Toggle checked={flags.drawings} onChange={(c: any) => setFlags({...flags, drawings: c})} />
             </div>
           </div>
         </Card>

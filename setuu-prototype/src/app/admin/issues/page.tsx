@@ -5,24 +5,35 @@ import { FilterBar } from "@/components/ui/FilterBar";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Card } from "@/components/ui/Card";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
 import { Search, AlertOctagon, User, Clock, ArrowRight, ShieldAlert, CheckCircle2, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
-const mockIssues = [
-  { id: "ISS-2026-441", title: "Core Drill Hit Unmarked Rebar", category: "Safety / Structural", status: "Open", severity: "Critical", assignee: "Sarah Jenkins", date: "Oct 16, 2026" },
-  { id: "ISS-2026-440", title: "HVAC Unit Delivery Delayed by 2 Weeks", category: "Supply Chain", status: "In Progress", severity: "High", assignee: "Mike Torres", date: "Oct 15, 2026" },
-  { id: "ISS-2026-439", title: "Permit Renewal Required for Zone B", category: "Compliance", status: "Resolved", severity: "Medium", assignee: "Elena Rostova", date: "Oct 10, 2026" },
-  { id: "ISS-2026-438", title: "Water pooling in basement level 3", category: "Site Conditions", status: "Open", severity: "High", assignee: "David Chen", date: "Oct 14, 2026" },
-  { id: "ISS-2026-437", title: "Contractor dispute regarding overtime pay", category: "Labor Relations", status: "Escalated", severity: "Critical", assignee: "Admin Team", date: "Oct 12, 2026" },
-];
+import { useEffect } from "react";
+import { getIssues } from "@/app/actions/issueActions";
+
+// mockIssues replaced by live data
 
 export default function IssuesConsolePage() {
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
+  const [issues, setIssues] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const selectedIssue = mockIssues.find(i => i.id === selectedIssueId);
+  useEffect(() => {
+    getIssues()
+      .then(data => {
+        setIssues(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load issues", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const selectedIssue = issues.find(i => i.id === selectedIssueId);
 
   const getSeverityBadge = (severity: string) => {
     switch(severity) {
@@ -71,9 +82,9 @@ export default function IssuesConsolePage() {
       cell: (row: any) => (
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-            <span className="text-[10px] font-bold text-primary">{row.assignee.charAt(0)}</span>
+            <span className="text-[10px] font-bold text-primary">{row.assignee_name ? row.assignee_name.charAt(0) : "?"}</span>
           </div>
-          <span className="text-sm font-medium text-on-surface-variant">{row.assignee}</span>
+          <span className="text-sm font-medium text-on-surface-variant">{row.assignee_name || "Unassigned"}</span>
         </div>
       )
     },
@@ -81,7 +92,7 @@ export default function IssuesConsolePage() {
       key: "date", 
       header: "Logged Date", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.date}</span>
+      cell: (row: any) => <span className="font-jetbrains text-sm text-on-surface-variant">{row.created_at ? new Date(row.created_at).toLocaleDateString() : "--"}</span>
     },
     { 
       key: "actions", 
@@ -126,7 +137,7 @@ export default function IssuesConsolePage() {
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
               <TextInput placeholder="Search issue ID or keywords..." className="pl-9" />
             </div>
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Severities", value: "" },
                 { label: "Critical", value: "critical" },
@@ -135,7 +146,7 @@ export default function IssuesConsolePage() {
               value=""
               onChange={() => {}}
             />
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Statuses", value: "" },
                 { label: "Open", value: "open" },
@@ -147,12 +158,16 @@ export default function IssuesConsolePage() {
             />
           </FilterBar>
 
-          <Card className="mt-6 flex-1 min-h-[400px]">
-            <DataTable 
-              data={mockIssues}
-              columns={columns}
-              getRowId={(row: any) => row.id}
-            />
+          <Card className="flex-1 min-h-[500px]">
+            {loading ? (
+              <div className="flex items-center justify-center h-full text-on-surface-variant">Loading issues...</div>
+            ) : (
+              <DataTable 
+                data={issues}
+                columns={columns}
+                getRowId={(row: any) => row.id}
+              />
+            )}
           </Card>
         </div>
 
@@ -187,7 +202,7 @@ export default function IssuesConsolePage() {
                   <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Assignee</span>
                   <div className="flex items-center gap-2 mt-1">
                     <User className="w-4 h-4 text-primary" />
-                    <span className="font-medium text-on-surface">{selectedIssue.assignee}</span>
+                    <span className="font-medium text-on-surface">{selectedIssue.assignee_name || "Unassigned"}</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">

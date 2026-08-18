@@ -5,19 +5,36 @@ import { DataTable } from "@/components/ui/DataTable";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { Card } from "@/components/ui/Card";
 import { TextInput } from "@/components/ui/TextInput";
-import { SelectMenu } from "@/components/ui/SelectMenu";
+import { Select } from "@/components/ui/Select";
 import { ListTree, RefreshCcw, Download, Search, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const mockAuditLogs = [
-  { id: "LOG-09941", timestamp: "2026-10-21 14:32:01 UTC", event: "User Role Escalation", actor: "System Administrator", target: "auth.users", ip: "192.168.1.45" },
-  { id: "LOG-09940", timestamp: "2026-10-21 14:28:15 UTC", event: "Project Configuration Updated", actor: "Sarah Jenkins", target: "projects.config", ip: "10.0.0.102" },
-  { id: "LOG-09939", timestamp: "2026-10-21 14:15:00 UTC", event: "Failed Login Attempt", actor: "Unknown User", target: "auth.sessions", ip: "45.22.109.11" },
-  { id: "LOG-09938", timestamp: "2026-10-21 13:55:42 UTC", event: "Document Export (PDF)", actor: "Mike Torres", target: "storage.documents", ip: "10.0.0.104" },
-  { id: "LOG-09937", timestamp: "2026-10-21 13:10:21 UTC", event: "Change Request Approved", actor: "Elena Rostova", target: "projects.changes", ip: "10.0.0.108" },
-];
+import { getAuditLogs } from "@/app/actions/auditActions";
 
 export default function SecurityAuditLogPage() {
+  const [logs, setLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getAuditLogs();
+        setLogs(data.map(log => ({
+          id: log.id.substring(0, 8),
+          timestamp: log.created_at ? new Date(log.created_at).toLocaleString() : "Unknown",
+          event: log.event_type,
+          actor: (log.user_actor as any)?.display_name || "System",
+          target: log.table_target || "N/A",
+          ip: log.ip_address || "Unknown"
+        })));
+      } catch (e) {
+        console.error("Failed to load audit logs", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
   const columns = [
     { 
       key: "timestamp", 
@@ -106,7 +123,7 @@ export default function SecurityAuditLogPage() {
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
               <TextInput placeholder="Search event, actor, or IP..." className="pl-9" />
             </div>
-            <SelectMenu 
+            <Select 
               options={[
                 { label: "All Event Types", value: "" },
                 { label: "Authentication", value: "auth" },
@@ -120,11 +137,15 @@ export default function SecurityAuditLogPage() {
             <TextInput type="date" placeholder="End Date" />
           </FilterBar>
 
-          <DataTable 
-            data={mockAuditLogs}
-            columns={columns}
-            getRowId={(row: any) => row.id}
-          />
+          {loading ? (
+            <div className="p-12 text-center text-on-surface-variant">Loading audit logs...</div>
+          ) : (
+            <DataTable 
+              data={logs}
+              columns={columns}
+              getRowId={(row: any) => row.id}
+            />
+          )}
           
           {/* Pagination controls for DataTable */}
           <div className="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-variant/30">

@@ -15,7 +15,13 @@ export async function getUsers(filters?: { role?: string, organization_id?: stri
 
   const { data, error } = await query;
   if (error) throw error;
-  return data;
+  
+  return data.map(user => ({
+    ...user,
+    organization_name: user.organizations && typeof user.organizations === 'object' && !Array.isArray(user.organizations) 
+      ? (user.organizations as any).name 
+      : null
+  }));
 }
 
 export async function getUserById(id: string) {

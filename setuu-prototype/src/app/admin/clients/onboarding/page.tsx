@@ -4,8 +4,8 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { WizardStepper } from "@/components/ui/WizardStepper";
 import { Card } from "@/components/ui/Card";
 import { TextInput } from "@/components/ui/TextInput";
-import { SelectMenu } from "@/components/ui/SelectMenu";
-import { ArrowLeft, Rocket, UploadCloud, Building2, ShieldCheck, DollarSign, Users, Mail, CheckCircle2 } from "lucide-react";
+import { Select } from "@/components/ui/Select";
+import { ArrowLeft, Rocket, UploadCloud, Building2, CreditCard, ShieldCheck, CheckCircle2, ChevronRight, ServerCrash, UserPlus, Users, Mail, DollarSign } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -64,7 +64,7 @@ export default function ClientOnboardingPage() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="text-sm font-semibold text-on-surface">Industrial Sector</label>
-                  <SelectMenu
+                  <Select
                     options={[
                       { label: "Commercial Real Estate", value: "cre" },
                       { label: "Heavy Infrastructure", value: "heavy" },
@@ -144,7 +144,12 @@ export default function ClientOnboardingPage() {
 
           {activeStep === 3 && (
             <div className="flex flex-col gap-6 animate-in fade-in duration-300">
-              <h2 className="text-xl font-bold text-on-surface mb-2">Primary Organization Admin</h2>
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="text-xl font-bold text-on-surface">Primary Organization Admin</h2>
+                <button className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors">
+                  <UserPlus className="w-4 h-4" /> Add New User
+                </button>
+              </div>
 
               <div className="flex items-start gap-4 p-4 rounded-xl border border-primary/20 bg-primary/5 mb-4">
                 <ShieldCheck className="w-6 h-6 text-primary shrink-0 mt-0.5" />

@@ -21,24 +21,23 @@ export function MobileBottomNav({ onMenuClick }: { onMenuClick: () => void }) {
         const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
         // Exact match for dashboard
         const isActuallyActive = item.href === "/superadmin" ? pathname === "/superadmin" : isActive;
-        
+
         return (
-          <Link 
-            key={item.href} 
+          <Link
+            key={item.href}
             href={item.href}
-            className={`flex flex-col items-center justify-center p-2 rounded-lg min-w-[64px] transition-colors ${
-              isActuallyActive ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
-            }`}
+            className={`flex flex-col items-center justify-center p-2 rounded-lg min-w-16 transition-colors ${isActuallyActive ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
+              }`}
           >
             {item.icon}
             <span className="text-[10px] font-medium mt-1">{item.label}</span>
           </Link>
         );
       })}
-      
-      <button 
+
+      <button
         onClick={onMenuClick}
-        className="flex flex-col items-center justify-center p-2 rounded-lg min-w-[64px] text-on-surface-variant hover:text-on-surface transition-colors"
+        className="flex flex-col items-center justify-center p-2 rounded-lg min-w-16 text-on-surface-variant hover:text-on-surface transition-colors"
       >
         <Menu className="w-5 h-5" />
         <span className="text-[10px] font-medium mt-1">More</span>

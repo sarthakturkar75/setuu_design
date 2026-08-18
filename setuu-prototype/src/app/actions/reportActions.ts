@@ -23,14 +23,22 @@ export async function generateProjectReport(projectId: string, modules: string[]
 }
 
 export async function getScheduledReports() {
-  // Querying a config or settings table for report schedules (Mocking struct for prototype as table doesn't exist yet)
-  return [
-    { id: "1", name: "Weekly Executive Summary", format: "PDF", schedule: "Every Monday 8:00 AM", nextRun: new Date(Date.now() + 86400000).toISOString() }
-  ];
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("scheduled_reports")
+    .select("*");
+    
+  if (error) throw error;
+  return data;
 }
 
 export async function scheduleReport(config: any) {
-  // Validate and mock insert
   if (!config.name) return { success: false, error: "Report name required" };
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("scheduled_reports")
+    .insert(config);
+    
+  if (error) return { success: false, error: error.message };
   return { success: true };
 }
