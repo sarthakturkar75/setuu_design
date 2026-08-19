@@ -11,6 +11,7 @@ export interface SelectOption {
 interface SelectProps {
   options: SelectOption[];
   value?: string;
+  defaultValue?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
@@ -18,9 +19,9 @@ interface SelectProps {
   required?: boolean;
 }
 
-export function Select({ options, value, onChange, placeholder = "Select an option", disabled, name, required }: SelectProps) {
+export function Select({ options, value, defaultValue, onChange, placeholder = "Select an option", disabled, name, required }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [internalValue, setInternalValue] = useState(value || "");
+  const [internalValue, setInternalValue] = useState(value || defaultValue || "");
   const ref = useRef<HTMLDivElement>(null);
 
   const currentValue = value !== undefined ? value : internalValue;

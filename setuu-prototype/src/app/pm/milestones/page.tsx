@@ -71,7 +71,7 @@ export default function PMMilestones() {
 														href={`/pm/projects/${project.id}/milestones`}
 														className="hover:underline hover:text-primary"
 													>
-														{milestone.title}
+														{milestone.name}
 													</Link>
 												</h3>
 												<StatusBadge

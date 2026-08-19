@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useSearchParams } from "next/navigation";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -12,6 +13,16 @@ import { Building2, Plus, Download, MoreVertical, AlertTriangle } from "lucide-r
 export default function OrganizationsHub() {
   const [organizations, setOrganizations] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const searchParams = useSearchParams();
+  const [searchQuery, setSearchQuery] = React.useState(searchParams.get("q") || "");
+
+  const filteredOrganizations = searchQuery
+    ? organizations.filter(
+      (org) =>
+        org.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        org.id?.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+    : organizations;
 
   React.useEffect(() => {
     import("@/app/actions/platformActions").then(({ getOrganizations }) => {
@@ -75,9 +86,9 @@ export default function OrganizationsHub() {
       key: "status",
       header: "Status",
       cell: (row: any) => (
-        <StatusBadge 
-          tone={row.status === "Active" ? "emerald" : "slate"} 
-          label={row.status || "Inactive"} 
+        <StatusBadge
+          tone={row.status === "Active" ? "emerald" : "slate"}
+          label={row.status || "Inactive"}
         />
       )
     }
@@ -85,8 +96,8 @@ export default function OrganizationsHub() {
 
   return (
     <div className="space-y-6">
-      <PageHeader 
-        title="Organizations & Subscriptions" 
+      <PageHeader
+        title="Organizations & Subscriptions"
         subtitle="Manage client organizations, billing tiers, and resource limits."
         actions={
           <div className="flex items-center gap-3">
@@ -104,9 +115,15 @@ export default function OrganizationsHub() {
 
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
         <div className="xl:col-span-3 space-y-4">
-          <FilterBar onClear={() => {}} onApply={() => {}}>
+          <FilterBar onClear={() => { }} onApply={() => { }}>
             <div className="flex gap-4 items-center w-full">
-              <input type="text" placeholder="Search organizations by name or ID..." className="flex-1 bg-surface-container border border-outline-variant rounded p-2 text-sm text-on-surface focus:outline-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search organizations by name or ID..."
+                className="flex-1 bg-surface-container border border-outline-variant rounded p-2 text-sm text-on-surface focus:outline-none"
+              />
               <select className="bg-surface-container border border-outline-variant rounded p-2 text-sm text-on-surface outline-none">
                 <option value="">Status</option>
                 <option value="active">Active</option>
@@ -121,21 +138,21 @@ export default function OrganizationsHub() {
               </select>
             </div>
           </FilterBar>
-          
+
           <Card className="min-h-[400px]">
             {loading ? (
               <div className="flex items-center justify-center h-full text-on-surface-variant py-20">Loading organizations...</div>
             ) : (
-              <DataTable 
+              <DataTable
                 columns={columns}
-                data={organizations}
+                data={filteredOrganizations}
                 selectable={true}
                 rowActions={(row) => (
                   <button className="p-2 hover:bg-surface-variant rounded-full text-on-surface-variant">
                     <MoreVertical className="w-5 h-5" />
                   </button>
                 )}
-                pagination={{ currentPage: 1, totalPages: 1, onPageChange: () => {} }}
+                pagination={{ currentPage: 1, totalPages: 1, onPageChange: () => { } }}
               />
             )}
           </Card>

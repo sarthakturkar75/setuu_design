@@ -12,7 +12,18 @@ export async function getProjectMilestones(projectId: string) {
     .order("display_order", { ascending: true });
     
   if (error) throw error;
-  return data;
+  
+  return data.map((m: any) => {
+    let status = "Pending";
+    if (m.completion_status === true) {
+      status = "Completed";
+    } else if (m.target_date && new Date(m.target_date) < new Date()) {
+      status = "Overdue";
+    } else {
+      status = "In Progress";
+    }
+    return { ...m, completion_status: status };
+  });
 }
 
 export async function getMilestones() {
@@ -23,7 +34,18 @@ export async function getMilestones() {
     .order("target_date", { ascending: true });
     
   if (error) throw error;
-  return data;
+  
+  return data.map((m: any) => {
+    let status = "Pending";
+    if (m.completion_status === true) {
+      status = "Completed";
+    } else if (m.target_date && new Date(m.target_date) < new Date()) {
+      status = "Overdue";
+    } else {
+      status = "In Progress";
+    }
+    return { ...m, completion_status: status };
+  });
 }
 
 export async function createMilestone(projectId: string, milestoneData: any) {

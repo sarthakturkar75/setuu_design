@@ -76,19 +76,19 @@ export async function updateProjectConfig(formData: FormData) {
 export async function getProjects(filters?: { status?: string, pm_id?: string, is_archived?: boolean }) {
   const supabase = await createClient();
   let query = supabase.from("projects").select("*, assigned_pm:user_actor!projects_assigned_pm_id_fkey(display_name)");
-  
+
   if (filters?.status) query = query.eq("status", filters.status);
   if (filters?.pm_id) query = query.eq("assigned_pm_id", filters.pm_id);
   if (filters?.is_archived !== undefined) query = query.eq("is_archived", filters.is_archived);
 
   const { data, error } = await query;
   if (error) throw error;
-  
+
   // Map the joined data to include a flat pm_name field for easy UI rendering
   return data.map(p => ({
     ...p,
     pm_name: p.assigned_pm && typeof p.assigned_pm === 'object' && !Array.isArray(p.assigned_pm)
-      ? (p.assigned_pm as any).display_name 
+      ? (p.assigned_pm as any).display_name
       : null
   }));
 }
@@ -100,7 +100,7 @@ export async function getProjectById(id: string) {
     .select("*")
     .eq("id", id)
     .single();
-    
+
   if (error) throw error;
   return data as Project;
 }
@@ -111,7 +111,7 @@ export async function archiveProject(id: string) {
     .from("projects")
     .update({ is_archived: true })
     .eq("id", id);
-    
+
   if (error) return { success: false, error: error.message };
   revalidatePath("/admin/projects");
   return { success: true };
@@ -123,7 +123,7 @@ export async function deleteProject(id: string) {
     .from("projects")
     .delete()
     .eq("id", id);
-    
+
   if (error) return { success: false, error: error.message };
   revalidatePath("/admin/projects");
   return { success: true };
@@ -134,46 +134,48 @@ export async function getResourceAllocationData() {
   const { data, error } = await supabase
     .from("project_resources")
     .select("resource_type, allocated_hours");
-    
+
   if (error) {
     console.error("Error fetching resource allocation", error);
     return [];
   }
-  
+
   const aggregated: Record<string, number> = {};
   for (const row of data) {
     const type = row.resource_type || "Unknown";
     const hours = row.allocated_hours || 0;
     aggregated[type] = (aggregated[type] || 0) + Number(hours);
   }
-  
+
   return Object.entries(aggregated).map(([label, value]) => ({ label, value }));
 }
 
 export async function getCriticalPathMilestones() {
   const supabase = await createClient();
+
+  // FIX: Changed "name" to "title" in the select statement
   const { data, error } = await supabase
     .from("milestones")
     .select("id, title, target_date, projects(name)")
     .eq("completion_status", false)
     .order("target_date", { ascending: true })
     .limit(5);
-    
+
   if (error) {
     console.error("Error fetching critical milestones", error);
     return [];
   }
-  
+
   return data.map((m: any) => {
     const targetDate = new Date(m.target_date || new Date());
     const today = new Date();
     const diffTime = targetDate.getTime() - today.getTime();
     const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     return {
       id: m.id,
       project: m.projects?.name || "Unknown Project",
-      name: m.title,
+      name: m.title, // Maps the database 'title' to the frontend 'name' prop
       daysLeft,
       status: daysLeft <= 7 ? "critical" : "warning"
     };
@@ -182,7 +184,7 @@ export async function getCriticalPathMilestones() {
 
 export async function getProjectTeam(projectId: string) {
   const supabase = await createClient();
-  
+
   // Get PM
   const { data: project } = await supabase
     .from("projects")
@@ -197,7 +199,7 @@ export async function getProjectTeam(projectId: string) {
     .eq("project_id", projectId);
 
   const team = [];
-  
+
   if (project?.assigned_pm && typeof project.assigned_pm === "object") {
     team.push({
       id: (project.assigned_pm as any).id,
@@ -223,10 +225,10 @@ export async function getProjectTeam(projectId: string) {
 
   return uniqueTeam.map(member => {
     const names = member.name.split(" ");
-    const fallback = names.length > 1 
-      ? `${names[0][0]}${names[1][0]}`.toUpperCase() 
+    const fallback = names.length > 1
+      ? `${names[0][0]}${names[1][0]}`.toUpperCase()
       : names[0].substring(0, 2).toUpperCase();
-      
+
     return {
       ...member,
       fallback
@@ -236,7 +238,7 @@ export async function getProjectTeam(projectId: string) {
 
 export async function getRecentActivity(projectId: string) {
   const supabase = await createClient();
-  
+
   // Fetch updates
   const { data: updates } = await supabase
     .from("updates")
@@ -295,4 +297,29 @@ export async function getRecentActivity(projectId: string) {
     ...a,
     time: formatTime(a.time)
   }));
+}
+
+export async function getProjectConfigOptions() {
+  const supabase = await createClient();
+
+  // Fetch users with the 'pm' role
+  const { data: pms, error: pmError } = await supabase
+    .from("user_actor")
+    .select("id, display_name")
+    .eq("role", "pm");
+
+  if (pmError) console.error("Error fetching PMs:", pmError);
+
+  // Fetch organizations of type 'client'
+  const { data: clients, error: clientError } = await supabase
+    .from("organizations")
+    .select("id, name")
+    .eq("type", "client");
+
+  if (clientError) console.error("Error fetching clients:", clientError);
+
+  return {
+    pms: pms || [],
+    clients: clients || []
+  };
 }

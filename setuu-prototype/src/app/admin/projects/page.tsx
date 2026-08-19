@@ -1,5 +1,5 @@
 "use client";
-
+import { useSearchParams } from "next/navigation";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DataTable } from "@/components/ui/DataTable";
 import { FilterBar } from "@/components/ui/FilterBar";
@@ -12,16 +12,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getProjects, getResourceAllocationData, getCriticalPathMilestones } from "@/app/actions/projectActions";
 
-// Removed mockProjects array. It is replaced by live data.
-
 
 
 export default function ProjectTrackingHub() {
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [resourceData, setResourceData] = useState<{label: string, value: number}[]>([]);
+  const [resourceData, setResourceData] = useState<{ label: string, value: number }[]>([]);
   const [criticalMilestones, setCriticalMilestones] = useState<any[]>([]);
+  const searchParams = useSearchParams();
+  const q = searchParams.get("q")?.toLowerCase().trim() || "";
+
+  const filteredProjects = q
+    ? projects.filter(
+      (p) => p.name?.toLowerCase().includes(q) || p.id?.toLowerCase().includes(q),
+    )
+    : projects;
 
   useEffect(() => {
     getProjects()
@@ -39,9 +45,9 @@ export default function ProjectTrackingHub() {
   }, []);
 
   const columns = [
-    { 
-      key: "id_name", 
-      header: "Project", 
+    {
+      key: "id_name",
+      header: "Project",
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
@@ -50,8 +56,8 @@ export default function ProjectTrackingHub() {
         </div>
       )
     },
-    { 
-      key: "status", 
+    {
+      key: "status",
       header: "Status",
       cell: (row: any) => <StatusBadge tone={row.status === "Not Started" ? "slate" : row.status === "In Progress" ? "sky" : row.status === "Completed" ? "emerald" : "amber"} label={row.status} />
     },
@@ -59,9 +65,9 @@ export default function ProjectTrackingHub() {
     { key: "pm_name", header: "Assigned PM", sortable: true, cell: (row: any) => <span>{row.pm_name || "Unassigned"}</span> },
     { key: "start_date", header: "Start Date", sortable: true, cell: (row: any) => <span className="font-jetbrains text-sm">{row.start_date ? new Date(row.start_date).toLocaleDateString() : "--"}</span> },
     { key: "target_date", header: "Target Date", sortable: true, cell: (row: any) => <span className="font-jetbrains text-sm">{row.target_date ? new Date(row.target_date).toLocaleDateString() : "--"}</span> },
-    { 
-      key: "actions", 
-      header: "", 
+    {
+      key: "actions",
+      header: "",
       cell: () => (
         <button className="p-1 hover:bg-surface-variant rounded-full text-on-surface-variant transition-colors">
           <MoreVertical className="w-5 h-5" />
@@ -72,8 +78,8 @@ export default function ProjectTrackingHub() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <PageHeader 
-        title="Project Tracking Hub" 
+      <PageHeader
+        title="Project Tracking Hub"
         subtitle="Manage and monitor all active initiatives"
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
@@ -97,11 +103,11 @@ export default function ProjectTrackingHub() {
       />
 
       <div className="flex-1 overflow-y-auto p-6 max-w-[1600px] w-full mx-auto flex flex-col lg:flex-row gap-6">
-        
+
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col gap-6">
-          <FilterBar onClear={() => {}} onApply={() => {}}>
-            <Select 
+          <FilterBar onClear={() => { }} onApply={() => { }}>
+            <Select
               options={[
                 { label: "All Statuses", value: "" },
                 { label: "In Progress", value: "in_progress" },
@@ -109,9 +115,9 @@ export default function ProjectTrackingHub() {
                 { label: "Completed", value: "completed" },
               ]}
               value=""
-              onChange={() => {}}
+              onChange={() => { }}
             />
-            <Select 
+            <Select
               options={[
                 { label: "All Disciplines", value: "" },
                 { label: "Architecture", value: "Architecture" },
@@ -119,16 +125,16 @@ export default function ProjectTrackingHub() {
                 { label: "MEP", value: "MEP" },
               ]}
               value=""
-              onChange={() => {}}
+              onChange={() => { }}
             />
-            <Select 
+            <Select
               options={[
                 { label: "All PMs", value: "" },
                 { label: "Alice Chen", value: "Alice Chen" },
                 { label: "Bob Smith", value: "Bob Smith" },
               ]}
               value=""
-              onChange={() => {}}
+              onChange={() => { }}
             />
             {/* Date range mock */}
             <div className="px-3 py-2 border border-outline-variant rounded-lg bg-surface text-sm text-on-surface flex items-center min-w-[200px]">
@@ -140,8 +146,8 @@ export default function ProjectTrackingHub() {
             {loading ? (
               <div className="flex items-center justify-center h-full text-on-surface-variant">Loading projects...</div>
             ) : (
-              <DataTable 
-                data={projects}
+              <DataTable
+                data={filteredProjects}
                 columns={columns}
                 getRowId={(row: any) => row.id}
                 selectable={true}

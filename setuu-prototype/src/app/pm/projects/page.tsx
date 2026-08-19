@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -8,10 +9,20 @@ import { getProjects } from "@/app/actions/projectActions";
 
 export default function PMProjectsList() {
 	const [data, setData] = React.useState<any[]>([]);
+	const searchParams = useSearchParams();
+	const q = searchParams.get("q")?.toLowerCase().trim() || "";
 
 	React.useEffect(() => {
 		getProjects().then(setData);
 	}, []);
+
+	const filteredData = q
+		? data.filter(
+			(row) =>
+				row.name?.toLowerCase().includes(q) ||
+				row.pm_name?.toLowerCase().includes(q),
+		)
+		: data;
 
 	const columns = [
 		{
@@ -19,10 +30,7 @@ export default function PMProjectsList() {
 			header: "Project Name",
 			sortable: true,
 			cell: (row: any) => (
-				<a
-					href={`/pm/projects/${row.id}`}
-					className="font-medium text-primary hover:underline"
-				>
+				<a href={`/pm/projects/${row.id}`} className="font-medium text-primary hover:underline">
 					{row.name}
 				</a>
 			),
@@ -31,7 +39,7 @@ export default function PMProjectsList() {
 			key: "client",
 			header: "Client Organization",
 			sortable: true,
-			cell: (row: any) => <>{row.client_org_id || 'N/A'}</>,
+			cell: (row: any) => <>{row.client_org_id || "N/A"}</>,
 		},
 		{
 			key: "status",
@@ -50,7 +58,7 @@ export default function PMProjectsList() {
 				/>
 			),
 		},
-		{ key: "pm", header: "Project Manager", cell: (row: any) => <>{row.pm_name || 'Unassigned'}</> },
+		{ key: "pm", header: "Project Manager", cell: (row: any) => <>{row.pm_name || "Unassigned"}</> },
 		{
 			key: "progress",
 			header: "Milestone Completion",
@@ -60,9 +68,7 @@ export default function PMProjectsList() {
 					<ProgressBar
 						progress={row.progress || 0}
 						showPercentage
-						colorClass={
-							row.status === "At Risk" ? "bg-semantic-crimson" : "bg-primary"
-						}
+						colorClass={row.status === "At Risk" ? "bg-semantic-crimson" : "bg-primary"}
 					/>
 				</div>
 			),
@@ -72,8 +78,14 @@ export default function PMProjectsList() {
 	return (
 		<div className="p-6 max-w-[1600px] mx-auto space-y-6">
 			<PageHeader title="Active Projects" />
+			{q && (
+				<p className="text-sm text-on-surface-variant">
+					Showing results for "{q}" — {filteredData.length} match
+					{filteredData.length === 1 ? "" : "es"}
+				</p>
+			)}
 			<div className="bg-surface-container rounded-xl border border-outline-variant/50 overflow-hidden">
-				<DataTable data={data} columns={columns} />
+				<DataTable data={filteredData} columns={columns} />
 			</div>
 		</div>
 	);

@@ -43,13 +43,14 @@ export default function MaterialReceiptPage() {
         <form action={async (formData) => {
           setIsSubmitting(true);
           try {
-            const data = {
-              name: formData.get("item_name") as string,
-              quantity: parseInt(formData.get("quantity") as string) || 0,
-              unit: formData.get("unit") as string,
-              // In a real scenario you would parse out multiple items
-            };
-            const res = await createMaterial(id, data);
+            // FIX: Map the UI inputs to the FormData expected by createMaterial
+            const submitData = new FormData();
+            submitData.append("project_id", id);
+            submitData.append("name", formData.get("item_name") as string);
+            submitData.append("po_number", formData.get("po_reference") as string);
+
+            const res = await createMaterial(submitData);
+
             if (res.success) {
               alert("Successfully submitted!");
               router.push(`/pm/projects/${id}/materials`);

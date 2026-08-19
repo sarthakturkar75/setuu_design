@@ -54,13 +54,33 @@ export async function exportAuditLogs(filters?: any, format: "csv" | "pdf" = "cs
 
 export async function getVirusScanResults() {
   const supabase = await createClient();
-  const { data, error } = await supabase.from("virus_scan_results").select("*, file:media_attachments!virus_scan_results_file_id_fkey(file_name, file_url, project_id)");
+  const { data: scans, error } = await supabase.from("virus_scan_results").select("*");
   
   if (error) throw error;
   
-  return data.map(scan => ({
-    ...scan,
-    file_name: scan.file && typeof scan.file === 'object' && !Array.isArray(scan.file) ? (scan.file as any).file_name : "Unknown File",
-    project_id: scan.file && typeof scan.file === 'object' && !Array.isArray(scan.file) ? (scan.file as any).project_id : "Unknown Project"
-  }));
+  // Since file_id doesn't have an explicit foreign key in the schema, fetch media_attachments separately
+  const fileIds = scans.map(s => s.file_id).filter(id => id);
+  let filesMap: Record<string, any> = {};
+  
+  if (fileIds.length > 0) {
+    const { data: files } = await supabase
+      .from("media_attachments")
+      .select("id, file_name, project_id")
+      .in("id", fileIds);
+      
+    if (files) {
+      files.forEach(f => {
+        filesMap[f.id] = f;
+      });
+    }
+  }
+  
+  return scans.map(scan => {
+    const fileInfo = filesMap[scan.file_id];
+    return {
+      ...scan,
+      file_name: fileInfo?.file_name || "Unknown File",
+      project_id: fileInfo?.project_id || "Unknown Project"
+    };
+  });
 }

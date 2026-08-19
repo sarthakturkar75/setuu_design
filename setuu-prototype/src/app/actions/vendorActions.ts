@@ -10,14 +10,13 @@ export async function getVendors(orgId?: string) {
     organization_id,
     vendor_id,
     created_at,
-    organizations (
+    client:organizations!organization_id (
       name
     ),
-    user_actor (
-      id,
-      display_name,
-      role,
-      is_active
+    vendor:organizations!vendor_id (
+      name,
+      type,
+      status
     )
   `);
   
@@ -28,10 +27,10 @@ export async function getVendors(orgId?: string) {
   
   return data.map((vendor: any) => ({
     ...vendor,
-    organization_name: vendor.organizations?.name || "Platform",
-    name: vendor.user_actor?.display_name || "Unknown",
-    category: vendor.user_actor?.role || "Uncategorized",
-    status: vendor.user_actor?.is_active ? "Active" : "Pending",
+    organization_name: vendor.client?.name || "Platform",
+    name: vendor.vendor?.name || "Unknown",
+    category: vendor.vendor?.type || "vendor",
+    status: vendor.vendor?.status || "active",
     sla: "95" // placeholder
   }));
 }

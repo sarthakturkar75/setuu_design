@@ -1,19 +1,47 @@
 "use client";
+
 import * as React from "react";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
 import { TextArea } from "@/components/ui/TextArea";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
-import { AlertTriangleIcon } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { AlertTriangleIcon, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { createIssue } from "@/app/actions/issueActions";
 
-export default function IssueLoggingPage() {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const params = useParams();
-  const id = params?.id as string;
+export default function IssueLoggingPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = React.use(params);
   const router = useRouter();
+
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("project_id", id); // Inject project ID securely
+
+    try {
+      const res = await createIssue(formData);
+      if (res.success) {
+        alert("Issue logged successfully!");
+        router.push(`/pm/projects/${id}/issues`);
+      } else {
+        alert("Error: " + res.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-8 pb-32">
@@ -27,28 +55,8 @@ export default function IssueLoggingPage() {
         </div>
       </div>
 
-      <form action={async (formData) => {
-        setIsSubmitting(true);
-        try {
-          const data = {
-            title: formData.get("title"),
-            description: formData.get("description"),
-            severity: formData.get("severity"),
-            type: formData.get("type"),
-          };
-          
-          const res = await createIssue(id, data);
-          if (res.success) {
-            alert("Issue logged successfully!");
-            router.push(`/pm/projects/${id}/issues`);
-          } else {
-            alert("Error: " + res.error);
-          }
-        } finally {
-          setIsSubmitting(false);
-        }
-      }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
-        
+      <form onSubmit={handleSubmit} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
+
         <FormField label="Issue Title *">
           <TextInput name="title" placeholder="e.g. Foundation crack detected in Sector B" required />
         </FormField>
@@ -66,7 +74,7 @@ export default function IssueLoggingPage() {
               { label: "Critical", value: "Critical" },
             ]} />
           </FormField>
-          
+
           <FormField label="Issue Type *">
             <Select name="type" required options={[
               { label: "Defect", value: "Defect" },
@@ -79,8 +87,11 @@ export default function IssueLoggingPage() {
         </div>
 
         <div className="pt-6 flex justify-end gap-3 border-t border-outline-variant">
-          <Button variant="ghost" type="button" onClick={() => router.back()}>Cancel</Button>
+          <Button variant="ghost" type="button" onClick={() => router.back()} disabled={isSubmitting}>
+            Cancel
+          </Button>
           <Button variant="primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
             {isSubmitting ? "Submitting..." : "Submit Issue"}
           </Button>
         </div>

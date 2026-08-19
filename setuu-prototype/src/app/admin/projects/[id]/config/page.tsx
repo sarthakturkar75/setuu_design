@@ -5,10 +5,15 @@ import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
 import { Select } from "@/components/ui/Select";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { Save, LifeBuoy } from "lucide-react";
+import { Save, LifeBuoy, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { use, useState, useEffect } from "react";
-import { getProjects } from "@/app/actions/projectActions";
+import {
+  getProjects,
+  getProjectById,
+  updateProjectConfig,
+  getProjectConfigOptions // <-- NEW IMPORT
+} from "@/app/actions/projectActions";
 
 export default function ProjectConfigPage({
   params,
@@ -16,19 +21,86 @@ export default function ProjectConfigPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+
   const [projects, setProjects] = useState<any[]>([]);
+  const [currentProject, setCurrentProject] = useState<any>(null);
+
+  // NEW: State to hold our dropdown options
+  const [pmOptions, setPmOptions] = useState<{ label: string, value: string }[]>([]);
+  const [clientOptions, setClientOptions] = useState<{ label: string, value: string }[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    async function loadProjects() {
+    async function loadData() {
+      setIsLoading(true);
       try {
-        const data = await getProjects();
-        setProjects(data);
+        // Fetch all required data simultaneously
+        const [allProjects, projectData, configOptions] = await Promise.all([
+          getProjects(),
+          getProjectById(id),
+          getProjectConfigOptions() // <-- Fetch our dropdown data
+        ]);
+
+        setProjects(allProjects || []);
+        setCurrentProject(projectData);
+
+        // Map database records to the { label, value } format the Select component expects
+        setPmOptions(configOptions.pms.map(pm => ({ label: pm.display_name, value: pm.id })));
+        setClientOptions(configOptions.clients.map(client => ({ label: client.name, value: client.id })));
+
       } catch (error) {
-        console.error("Failed to fetch projects:", error);
+        console.error("Failed to fetch project data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
-    loadProjects();
-  }, []);
+    loadData();
+  }, [id]);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsSaving(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("id", id);
+    formData.append("status", currentProject?.status || "Not Started");
+
+    try {
+      const result = await updateProjectConfig(formData);
+      if (result.success) {
+        alert("Project configuration saved successfully!");
+      } else {
+        alert(`Failed to save: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("Save error:", error);
+      alert("An unexpected error occurred while saving.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  const formattedTargetDate = currentProject?.target_date
+    ? new Date(currentProject.target_date).toISOString().split('T')[0]
+    : "";
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full min-h-[400px]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!currentProject) {
+    return (
+      <div className="p-6 text-center text-on-surface-variant">
+        Project not found or you do not have permission to view it.
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col lg:flex-row h-full max-w-[1600px] mx-auto p-6 gap-6">
@@ -47,48 +119,66 @@ export default function ProjectConfigPage({
                 }`}
             >
               <div className="flex justify-between items-center mb-1">
-                <span className={`font-semibold text-sm ${p.id === id ? "text-primary" : "text-on-surface"}`}>
+                <span className={`font-semibold text-sm ${p.id === id ? "text-primary" : "text-on-surface truncate pr-2"}`}>
                   {p.name}
                 </span>
                 <StatusBadge tone={p.status as any} label={p.status} />
               </div>
-              <span className="text-xs font-jetbrains text-on-surface-variant">{p.id}</span>
+              <span className="text-xs font-jetbrains text-on-surface-variant">
+                {p.id.substring(0, 8)}...
+              </span>
             </Link>
           ))}
         </div>
       </div>
 
-      {/* Main Form */}
-      <div className="flex-1 flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-6">
         <Card className="p-6">
           <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Project Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField label="Project Name *">
-              <TextInput value="Alpha Tower" />
+              <TextInput
+                name="name"
+                defaultValue={currentProject.name}
+                required
+              />
             </FormField>
+
             <FormField label="Project Type">
               <Select
                 options={[
+                  { label: "General", value: "General" },
                   { label: "Mechanical", value: "Mechanical" },
                   { label: "Electrical", value: "Electrical" },
                   { label: "Software", value: "Software" },
                   { label: "Combined", value: "Combined" },
                 ]}
-                value="Mechanical"
+                defaultValue={currentProject.type || "General"}
                 onChange={() => { }}
               />
             </FormField>
+
             <FormField label="PO Reference">
-              <TextInput value="PO-2026-0042" />
+              <TextInput
+                name="po_reference"
+                defaultValue={currentProject.po_reference || ""}
+              />
             </FormField>
+
             <FormField label="Contract Value">
-              <TextInput value="14500000" type="number" />
+              <TextInput
+                name="contract_value"
+                type="number"
+                defaultValue={currentProject.contract_value || ""}
+              />
             </FormField>
+
             <div className="md:col-span-2">
               <FormField label="Description">
                 <textarea
-                  className="w-full px-3 py-2 bg-surface text-on-surface border border-outline rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary min-h-25"
-                  value="Phase 1 of the new commercial district hub."
+                  name="description"
+                  className="w-full px-3 py-2 bg-surface text-on-surface border border-outline rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary min-h-[100px]"
+                  defaultValue={currentProject.description || ""}
                 />
               </FormField>
             </div>
@@ -98,45 +188,63 @@ export default function ProjectConfigPage({
         <Card className="p-6">
           <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Management & Timeline</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FormField label="Assigned Project Manager *">
+
+            {/* REAL DATA INTEGRATION HERE */}
+            <FormField label="Assigned Project Manager">
               <Select
-                options={[
-                  { label: "Alice Chen", value: "alice" },
-                  { label: "Bob Smith", value: "bob" },
-                ]}
-                value="alice"
+                options={pmOptions}
+                defaultValue={currentProject.assigned_pm_id || ""}
                 onChange={() => { }}
               />
             </FormField>
-            <FormField label="Client Organization *">
+
+            {/* REAL DATA INTEGRATION HERE */}
+            <FormField label="Client Organization">
               <Select
-                options={[
-                  { label: "Acme Corp", value: "acme" },
-                ]}
-                value="acme"
+                options={clientOptions}
+                defaultValue={currentProject.client_org_id || ""}
                 onChange={() => { }}
               />
             </FormField>
-            <FormField label="Start Date">
-              <TextInput type="date" value="2026-01-15" />
+
+            <FormField label="Created Date">
+              <TextInput
+                type="date"
+                disabled
+                defaultValue={new Date(currentProject.created_at).toISOString().split('T')[0]}
+                className="opacity-60 cursor-not-allowed"
+              />
             </FormField>
+
             <FormField label="Target Completion">
-              <TextInput type="date" value="2027-12-01" />
+              <TextInput
+                name="target_date"
+                type="date"
+                defaultValue={formattedTargetDate}
+              />
             </FormField>
           </div>
         </Card>
 
         <div className="flex items-center justify-end gap-3 mt-4">
-          <button className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg font-semibold hover:bg-surface-variant transition-colors">
+          <button
+            type="button"
+            className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg font-semibold hover:bg-surface-variant transition-colors"
+          >
             <LifeBuoy className="w-4 h-4" />
             Raise Ticket
           </button>
-          <button className="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-lg font-semibold hover:bg-primary/90 transition-colors">
-            <Save className="w-4 h-4" />
-            Save Configuration
+
+          <button
+            type="submit"
+            disabled={isSaving}
+            className="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+          >
+            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            {isSaving ? "Saving..." : "Save Configuration"}
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

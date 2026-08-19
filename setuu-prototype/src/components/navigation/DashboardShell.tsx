@@ -1,56 +1,129 @@
 "use client";
+
 import * as React from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { getNavigationForRole } from "@/lib/config/navigation";
+import { Sidebar } from "./Sidebar";
+import { Topbar } from "./Topbar";
+import { getProjects } from "@/app/actions/projectActions";
+import { getPlatformMetrics } from "@/app/actions/platformActions";
+import Link from "next/link";
+import { Menu } from "lucide-react"; // Fallback for mobile menu
 
-export function DashboardShell({
-  sidebar,
-  topbar,
-  bottomNav,
-  children,
-}: {
-  sidebar: (props: { activePath: string; onClick?: () => void }) => React.ReactNode;
-  topbar: (props: { onMenuClick: () => void }) => React.ReactNode;
-  bottomNav?: (props: { onMenuClick: () => void }) => React.ReactNode;
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+export function DashboardShell({ children }: { children: React.ReactNode }) {
+	const pathname = usePathname();
+	const { role, isLoading } = useAuth();
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
-  // Close mobile menu on route change
-  React.useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+	const [projects, setProjects] = React.useState<any[]>([]);
+	const [healthStatus, setHealthStatus] = React.useState<
+		"healthy" | "warning" | "critical"
+	>("healthy");
 
-  return (
-    <div className="flex h-screen overflow-hidden bg-surface relative">
-      {/* Mobile Backdrop */}
-      {isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-45 md:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
+	React.useEffect(() => {
+		setIsMobileMenuOpen(false);
+	}, [pathname]);
 
-      {/* Sidebar Container */}
-      <div className={`
-        fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0
-        ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
-      `}>
-        {sidebar({ activePath: pathname, onClick: () => setIsMobileMenuOpen(false) })}
-      </div>
+	React.useEffect(() => {
+		if (!role) return;
+		if (role === "admin" || role === "pm") {
+			getProjects()
+				.then((data) => setProjects(data || []))
+				.catch(console.error);
+		}
+		if (role === "superadmin") {
+			getPlatformMetrics()
+				.then((metrics) => {
+					if (metrics.errorRate5xx > 0.05) setHealthStatus("critical");
+					else if (metrics.errorRate5xx > 0.01 || metrics.apiLatencyMs > 200)
+						setHealthStatus("warning");
+					else setHealthStatus("healthy");
+				})
+				.catch(() => setHealthStatus("critical"));
+		}
+	}, [role]);
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden pb-16 md:pb-0">
-        {topbar({ onMenuClick: () => setIsMobileMenuOpen(true) })}
-        <main className="flex-1 overflow-y-auto bg-surface-container-lowest relative p-margin-mobile md:p-margin-tablet lg:p-margin-desktop">
-          <div className="max-w-content mx-auto h-full">
-            {children}
-          </div>
-        </main>
-      </div>
+	const uuidRegex =
+		/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
+	const match = pathname.match(uuidRegex);
+	const currentProjectId = match ? match[0] : null;
 
-      {/* Bottom Nav */}
-      {bottomNav && bottomNav({ onMenuClick: () => setIsMobileMenuOpen(true) })}
-    </div>
-  );
+	const { sections } = React.useMemo(() => {
+		return getNavigationForRole(role, currentProjectId, {
+			projects,
+			healthStatus,
+		});
+	}, [role, currentProjectId, projects, healthStatus]);
+
+	// Extract exactly 4 items for the mobile bottom nav
+	const mobileNavItems = sections
+		.flatMap((s) => s.items)
+		.filter((i) => !i.items)
+		.slice(0, 4);
+
+	if (isLoading) return null;
+
+	return (
+		<div className="flex h-screen overflow-hidden bg-surface relative">
+			{isMobileMenuOpen && (
+				<div
+					className="fixed inset-0 bg-black/50 z-45 md:hidden"
+					onClick={() => setIsMobileMenuOpen(false)}
+				/>
+			)}
+
+			{/* Dynamic Sidebar */}
+			<div
+				className={`
+                fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0
+                ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+                `}
+			>
+				<Sidebar sections={sections} activePath={pathname} />
+			</div>
+
+			<div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden pb-16 md:pb-0">
+				{/* Dynamic Topbar */}
+				<Topbar
+					title="Setuu Workspace"
+					onMenuClick={() => setIsMobileMenuOpen(true)}
+					projects={projects}
+				/>
+
+				<main className="flex-1 overflow-y-auto bg-surface-container-lowest relative p-margin-mobile md:p-margin-tablet lg:p-margin-desktop">
+					<div className="max-w-content mx-auto h-full">{children}</div>
+				</main>
+			</div>
+
+			{/* Dynamic Mobile Bottom Nav */}
+			{mobileNavItems.length > 0 && (
+				<div className="md:hidden fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant/30 flex justify-around items-center px-2 py-2 pb-safe z-40 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] glass">
+					{mobileNavItems.map((item) => {
+						const isActive =
+							pathname === item.href || pathname.startsWith(`${item.href}/`);
+						return (
+							<Link
+								key={item.href}
+								href={item.href || "#"}
+								className={`flex flex-col items-center justify-center p-2 rounded-lg min-w-16 transition-colors ${isActive ? "text-primary" : "text-on-surface-variant hover:text-on-surface"}`}
+							>
+								{item.icon}
+								<span className="text-[10px] font-medium mt-1">
+									{item.label}
+								</span>
+							</Link>
+						);
+					})}
+					<button
+						onClick={() => setIsMobileMenuOpen(true)}
+						className="flex flex-col items-center justify-center p-2 rounded-lg min-w-16 text-on-surface-variant hover:text-on-surface transition-colors"
+					>
+						<Menu className="w-5 h-5" />
+						<span className="text-[10px] font-medium mt-1">Menu</span>
+					</button>
+				</div>
+			)}
+		</div>
+	);
 }

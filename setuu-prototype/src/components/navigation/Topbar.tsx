@@ -1,106 +1,409 @@
-import * as React from "react"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { ThemeToggle } from "@/components/ThemeToggle"
-import { LogoutButton } from "@/components/navigation/LogoutButton"
-import { SearchInput } from "@/components/ui/SearchInput"
-import { SyncIndicator } from "@/components/ui/SyncIndicator"
-import { Badge } from "@/components/ui/Badge"
-import { Menu, Bell, HelpCircle, ShieldAlert, UserCircle } from "lucide-react";
+"use client";
 
-export interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string
-  breadcrumbs?: { label: string; href?: string }[]
-  actions?: React.ReactNode
-  onMenuClick?: () => void
-  onSearch?: (val: string) => void
-  isAdmin?: boolean
+import * as React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { LogoutButton } from "@/components/navigation/LogoutButton";
+import { SearchInput } from "@/components/ui/SearchInput";
+import { SyncIndicator, SyncStatus } from "@/components/ui/SyncIndicator";
+import { Badge } from "@/components/ui/Badge";
+import {
+	Menu,
+	Bell,
+	CircleHelp,
+	ShieldAlert,
+	UserCircle,
+	ChevronDownIcon,
+	Plus,
+} from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useOfflineSync } from "@/contexts/OfflineSyncContext";
+import { getNotifications, markAsRead } from "@/app/actions/notificationActions";
+import { getProjects } from "@/app/actions/projectActions";
+import { emergencyLockOrganization } from "@/app/actions/organizationActions";
+
+
+interface Project {
+	id: string;
+	name: string;
+	[key: string]: any;
 }
 
-export function Topbar({ title, breadcrumbs, actions, isAdmin = true, className, onMenuClick, onSearch, ...props }: TopbarProps) {
-  return (
-    <header className={cn("h-16 border-b border-outline-variant bg-surface-container flex items-center justify-between px-6 sticky top-0 z-10", className)} {...props}>
-      <div className="flex items-center space-x-4 flex-1">
-        {onMenuClick && (
-          <button 
-            className="md:hidden p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors"
-            onClick={onMenuClick}
-            aria-label="Toggle Menu"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        )}
-        {breadcrumbs ? (
-          <nav className="flex items-center space-x-2 text-sm font-inter">
-            {breadcrumbs.map((crumb, idx) => (
-              <React.Fragment key={idx}>
-                {idx > 0 && <span className="text-outline">/</span>}
-                {crumb.href ? (
-                  <Link href={crumb.href} className="text-on-surface-variant hover:text-primary transition-colors">{crumb.label}</Link>
-                ) : (
-                  <span className="text-on-surface font-semibold">{crumb.label}</span>
-                )}
-              </React.Fragment>
-            ))}
-          </nav>
-        ) : (
-          <h2 className="font-merriweather text-xl font-bold text-on-surface hidden sm:block">{title}</h2>
-        )}
-      </div>
-      
-      <div className="flex items-center space-x-4 flex-1 justify-end">
-        {onSearch && (
-           <div className="hidden md:block w-64 mr-2">
-             <SearchInput onSearch={onSearch} placeholder="Global search..." />
-           </div>
-        )}
-        
-        {isAdmin && (
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-semantic-crimson-bg/10 text-semantic-crimson border border-semantic-crimson-bg/20 hover:bg-semantic-crimson hover:text-white transition-colors text-xs font-bold uppercase tracking-wider">
-            <ShieldAlert className="w-4 h-4" />
-            <span className="hidden lg:inline">Emergency</span>
-          </button>
-        )}
+interface NotificationItem {
+	id: string;
+	title: string;
+	message: string;
+	is_read: boolean;
+	created_at: string;
+}
 
-        <div className="hidden lg:flex items-center space-x-2 pr-2 border-r border-outline-variant/30">
-          <SyncIndicator status="synced" />
-        </div>
+export interface TopbarProps extends React.HTMLAttributes<HTMLDivElement> {
+	title?: string;
+	breadcrumbs?: { label: string; href?: string }[];
+	onMenuClick?: () => void;
+	onSearch?: (val: string) => void;
+	projects?: Project[];
+}
 
-        <button className="p-2 text-on-surface-variant hover:text-primary transition-colors relative">
-          <Bell className="w-5 h-5" />
-          <Badge count={3} className="absolute top-0 right-0 -mt-1 -mr-1" />
-        </button>
+export function Topbar({
+	title,
+	breadcrumbs,
+	className,
+	onMenuClick,
+	onSearch,
+	projects: projectsProp,
+	...props
+}: TopbarProps) {
+	const { role, displayName, avatarUrl, user, organizationId } = useAuth();
+	const { isOnline, syncQueue } = useOfflineSync();
+	const router = useRouter();
 
-        <button className="p-2 text-on-surface-variant hover:text-primary transition-colors hidden sm:block">
-          <HelpCircle className="w-5 h-5" />
-        </button>
+	const [projects, setProjects] = React.useState<Project[]>(projectsProp ?? []);
+	const [notifications, setNotifications] = React.useState<NotificationItem[]>([]);
+	const [isNotifOpen, setIsNotifOpen] = React.useState(false);
+	const [isLockPending, setIsLockPending] = React.useState(false);
+	const notifRef = React.useRef<HTMLDivElement>(null);
 
-        <ThemeToggle />
-        
-        <div className="relative group">
-          <button className="flex items-center gap-2 p-1 rounded-full hover:bg-surface-variant transition-colors">
-            <UserCircle className="w-8 h-8 text-outline" />
-          </button>
-          <div className="absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-elevation-l2 py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity z-50">
-            <div className="px-4 py-2 border-b border-outline-variant/30">
-              <p className="text-sm font-semibold text-on-surface">John Doe</p>
-              <p className="text-xs text-on-surface-variant">Admin</p>
-            </div>
-            <Link href="/profile" className="block px-4 py-2 text-sm text-on-surface hover:bg-surface-variant transition-colors">Profile</Link>
-            <Link href="/settings" className="block px-4 py-2 text-sm text-on-surface hover:bg-surface-variant transition-colors">Settings</Link>
-            <div className="border-t border-outline-variant/30 my-1"></div>
-            <div className="px-2 pb-1">
-              <LogoutButton />
-            </div>
-          </div>
-        </div>
+	// Use parent-supplied projects if given (avoids double-fetch); self-heal otherwise
+	React.useEffect(() => {
+		if (projectsProp) {
+			setProjects(projectsProp);
+			return;
+		}
+		if (role === "admin" || role === "pm") {
+			getProjects()
+				.then((data) => setProjects(data || []))
+				.catch(console.error);
+		}
+	}, [projectsProp, role]);
 
-        {actions && (
-          <div className="flex items-center space-x-3 border-l border-outline-variant/30 pl-4 ml-2">
-            {actions}
-          </div>
-        )}
-      </div>
-    </header>
-  )
+	// Real notifications, polled every 60s
+	React.useEffect(() => {
+		if (!user?.id) return;
+		let cancelled = false;
+		const load = () => {
+			getNotifications(user.id)
+				.then((data) => {
+					if (!cancelled) setNotifications(data || []);
+				})
+				.catch(console.error);
+		};
+		load();
+		const interval = setInterval(load, 60_000);
+		return () => {
+			cancelled = true;
+			clearInterval(interval);
+		};
+	}, [user?.id]);
+
+	// Close notification dropdown on outside click
+	React.useEffect(() => {
+		const handleClick = (e: MouseEvent) => {
+			if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+				setIsNotifOpen(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClick);
+		return () => document.removeEventListener("mousedown", handleClick);
+	}, []);
+
+	const unreadCount = notifications.filter((n) => !n.is_read).length;
+
+	const handleMarkAsRead = async (id: string) => {
+		setNotifications((prev) =>
+			prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)),
+		);
+		const result = await markAsRead(id);
+		if (!result.success) {
+			setNotifications((prev) =>
+				prev.map((n) => (n.id === id ? { ...n, is_read: false } : n)),
+			);
+		}
+	};
+
+	const handleSearch = (value: string) => {
+		if (onSearch) {
+			onSearch(value);
+			return;
+		}
+		if (!value.trim()) return;
+		const base =
+			role === "admin"
+				? "/admin/projects"
+				: role === "pm"
+					? "/pm/projects"
+					: role === "superadmin"
+						? "/superadmin/organizations"
+						: null;
+		if (!base) return;
+		router.push(`${base}?q=${encodeURIComponent(value.trim())}`);
+	};
+
+	const syncStatus: SyncStatus = !isOnline
+		? "offline"
+		: syncQueue.some((i) => i.status === "failed")
+			? "error"
+			: syncQueue.some((i) => i.status === "queued" || i.status === "syncing")
+				? "syncing"
+				: "synced";
+
+	const handleEmergencyLock = async () => {
+		if (!organizationId || !user?.id) return;
+		const reason = window.prompt(
+			"This will lock write access to your organization. Enter a reason for the audit log:",
+		);
+		if (!reason) return;
+		setIsLockPending(true);
+		const result = await emergencyLockOrganization(organizationId, user.id, reason);
+		setIsLockPending(false);
+		if (!result.success) {
+			window.alert(`Failed to lock organization: ${result.error}`);
+			return;
+		}
+		window.alert("Organization locked and recorded in the audit log.");
+	};
+
+	const renderActions = () => {
+		switch (role) {
+			case "superadmin":
+				return (
+					<Link
+						href="/superadmin/security/logs"
+						className="px-4 py-2 bg-error text-white rounded-lg text-sm font-medium hover:bg-error/90 flex items-center gap-2"
+					>
+						<ShieldAlert className="w-4 h-4" />
+						<span className="hidden lg:inline">Emergency Override Log</span>
+					</Link>
+				);
+			case "admin":
+				return (
+					<>
+						<Link
+							href="/admin/projects/new"
+							className="hidden sm:flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors"
+						>
+							<Plus className="w-4 h-4" />
+							New Project
+						</Link>
+						<button
+							onClick={handleEmergencyLock}
+							disabled={isLockPending}
+							className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-semantic-crimson-bg/10 text-semantic-crimson border border-semantic-crimson-bg/20 hover:bg-semantic-crimson hover:text-white transition-colors text-xs font-bold uppercase tracking-wider disabled:opacity-50"
+						>
+							<ShieldAlert className="w-4 h-4" />
+							<span className="hidden lg:inline">
+								{isLockPending ? "Locking..." : "Emergency Lock"}
+							</span>
+						</button>
+					</>
+				);
+			case "pm":
+				return (
+					<div className="flex items-center gap-3">
+						<div className="relative group">
+							<button className="flex items-center gap-2 px-3 py-1.5 bg-surface-variant hover:bg-surface-variant/80 text-on-surface rounded-lg text-sm font-medium transition-colors border border-outline-variant">
+								<span>Switch Project</span>
+								<ChevronDownIcon className="w-4 h-4 text-on-surface-variant" />
+							</button>
+							<div className="absolute right-0 mt-2 w-56 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-elevation-l2 py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity z-50">
+								<div className="px-3 py-2 text-xs font-semibold text-outline tracking-wider uppercase">
+									Active Projects
+								</div>
+								{projects.length === 0 && (
+									<div className="px-4 py-2 text-sm text-on-surface-variant">
+										No active projects
+									</div>
+								)}
+								{projects.map((p) => (
+									<Link
+										key={p.id}
+										href={`/pm/projects/${p.id}`}
+										className="block px-4 py-2 text-sm text-on-surface hover:bg-surface-variant transition-colors truncate"
+									>
+										{p.name}
+									</Link>
+								))}
+								<div className="border-t border-outline-variant/30 my-1"></div>
+								<Link
+									href="/pm/projects"
+									className="block px-4 py-2 text-sm text-primary hover:bg-surface-variant transition-colors font-medium"
+								>
+									View All
+								</Link>
+							</div>
+						</div>
+					</div>
+				);
+			default:
+				return null;
+		}
+	};
+
+	return (
+		<header
+			className={cn(
+				"h-16 border-b border-outline-variant bg-surface-container flex items-center justify-between px-6 sticky top-0 z-10",
+				className,
+			)}
+			{...props}
+		>
+			<div className="flex items-center space-x-4 flex-1">
+				{onMenuClick && (
+					<button
+						className="md:hidden p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors"
+						onClick={onMenuClick}
+					>
+						<Menu className="w-5 h-5" />
+					</button>
+				)}
+				{breadcrumbs ? (
+					<nav className="flex items-center space-x-2 text-sm font-inter">
+						{breadcrumbs.map((crumb, idx) => (
+							<React.Fragment key={idx}>
+								{idx > 0 && <span className="text-outline">/</span>}
+								{crumb.href ? (
+									<Link
+										href={crumb.href}
+										className="text-on-surface-variant hover:text-primary transition-colors"
+									>
+										{crumb.label}
+									</Link>
+								) : (
+									<span className="text-on-surface font-semibold">
+										{crumb.label}
+									</span>
+								)}
+							</React.Fragment>
+						))}
+					</nav>
+				) : (
+					<h2 className="font-merriweather text-xl font-bold text-on-surface hidden sm:block">
+						{title}
+					</h2>
+				)}
+			</div>
+
+			<div className="flex items-center space-x-4 flex-1 justify-end">
+				<div className="hidden md:block w-64">
+					<SearchInput onSearch={handleSearch} placeholder="Search records..." />
+				</div>
+
+				<div className="hidden lg:flex items-center pr-4 border-r border-outline-variant/30">
+					<SyncIndicator status={syncStatus} />
+				</div>
+
+				{role && (
+					<Link
+						href={`/${role}/support`}
+						className="p-2 text-on-surface-variant hover:text-primary transition-colors hidden sm:block"
+						title="Help & Support"
+					>
+						<CircleHelp className="w-5 h-5" />
+					</Link>
+				)}
+
+				<div className="relative" ref={notifRef}>
+					<button
+						onClick={() => setIsNotifOpen((v) => !v)}
+						className="p-2 text-on-surface-variant hover:text-primary transition-colors relative"
+					>
+						<Bell className="w-5 h-5" />
+						{unreadCount > 0 && (
+							<Badge
+								count={unreadCount}
+								className="absolute top-0 right-0 -mt-1 -mr-1"
+							/>
+						)}
+					</button>
+					{isNotifOpen && (
+						<div className="absolute right-0 mt-2 w-80 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-elevation-l2 py-1 z-50 max-h-96 overflow-y-auto">
+							<div className="px-4 py-2 border-b border-outline-variant/30 flex items-center justify-between">
+								<span className="text-sm font-semibold text-on-surface">
+									Notifications
+								</span>
+								{unreadCount > 0 && (
+									<span className="text-xs text-on-surface-variant">
+										{unreadCount} unread
+									</span>
+								)}
+							</div>
+							{notifications.length === 0 ? (
+								<div className="px-4 py-6 text-sm text-on-surface-variant text-center">
+									No notifications
+								</div>
+							) : (
+								notifications.map((n) => (
+									<button
+										key={n.id}
+										onClick={() => handleMarkAsRead(n.id)}
+										className={cn(
+											"w-full text-left px-4 py-3 text-sm hover:bg-surface-variant transition-colors border-b border-outline-variant/20 last:border-0",
+											!n.is_read && "bg-primary/5",
+										)}
+									>
+										<div className="flex items-start justify-between gap-2">
+											<span className="font-medium text-on-surface">
+												{n.title}
+											</span>
+											{!n.is_read && (
+												<span className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1" />
+											)}
+										</div>
+										<p className="text-on-surface-variant mt-0.5 line-clamp-2">
+											{n.message}
+										</p>
+									</button>
+								))
+							)}
+						</div>
+					)}
+				</div>
+
+				<ThemeToggle />
+
+				<div className="relative group">
+					<button className="flex items-center gap-2 p-1 rounded-full hover:bg-surface-variant transition-colors">
+						{avatarUrl ? (
+							<img
+								src={avatarUrl}
+								alt={displayName || "User avatar"}
+								className="w-8 h-8 rounded-full object-cover"
+							/>
+						) : (
+							<UserCircle className="w-8 h-8 text-outline" />
+						)}
+					</button>
+					<div className="absolute right-0 mt-2 w-56 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-elevation-l2 py-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity z-50">
+						<div className="px-4 py-2 border-b border-outline-variant/30">
+							<p className="text-sm font-semibold text-on-surface truncate">
+								{displayName || user?.email || "User"}
+							</p>
+							{role && (
+								<p className="text-xs text-on-surface-variant capitalize mt-0.5">
+									{role}
+								</p>
+							)}
+						</div>
+						{role && (
+							<Link
+								href={`/${role}/profile`}
+								className="block px-4 py-2 text-sm hover:bg-surface-variant"
+							>
+								Profile
+							</Link>
+						)}
+						<div className="px-2 pb-1">
+							<LogoutButton />
+						</div>
+					</div>
+				</div>
+
+				<div className="flex items-center space-x-3 border-l border-outline-variant/30 pl-4 ml-2">
+					{renderActions()}
+				</div>
+			</div>
+		</header>
+	);
 }

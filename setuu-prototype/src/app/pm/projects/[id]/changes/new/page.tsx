@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import { useState } from "react";
 import { FormField } from "@/components/ui/FormField";
@@ -9,45 +10,52 @@ import { Button } from "@/components/ui/Button";
 import { CheckCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { createChangeRequest } from "@/app/actions/changeRequestActions";
 
 export default function NewChangeRequestPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [title, setTitle] = useState("");
   const [timeImpact, setTimeImpact] = useState("");
   const [costImpact, setCostImpact] = useState("");
   const [description, setDescription] = useState("");
-  
+
   const params = useParams();
   const projectId = params?.id as string;
-  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent, status: string = 'Pending') => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setIsSubmitting(true);
-    
+
+    // Construct the FormData exactly as the Server Action expects it
+    const formData = new FormData();
+    formData.append("project_id", projectId);
+    formData.append("title", title);
+    formData.append("description", description);
+
+    // Strip non-numeric characters just in case the user typed "$" or "days"
+    const parsedCost = costImpact.replace(/[^0-9.-]+/g, "") || "0";
+    const parsedTime = timeImpact.replace(/[^0-9.-]+/g, "") || "0";
+
+    formData.append("cost_impact", parsedCost);
+    formData.append("time_impact_days", parsedTime);
+
+    // Note: Your current Server Action hardcodes the status to "Pending". 
+    // We are passing it here in case you update your action to accept "Draft" later.
+    formData.append("status", status);
+
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      const { error } = await supabase.from('change_requests').insert({
-        project_id: projectId,
-        title: title || "Untitled Request",
-        description: description,
-        cost_impact: parseFloat(costImpact.replace(/[^0-9.-]+/g,"")) || 0,
-        time_impact_days: parseInt(timeImpact.replace(/[^0-9.-]+/g,""), 10) || 0,
-        status: status,
-        created_by: user?.id,
-        display_id: `CR-${Math.floor(Math.random() * 9000) + 1000}`
-      });
-      
-      if (error) throw error;
-      
+      const result = await createChangeRequest(formData);
+
+      if (!result?.success) {
+        throw new Error(result?.error || "Unknown error occurred");
+      }
+
       setIsSubmitted(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error creating change request:", err);
-      alert("Failed to create change request. Check console for details.");
+      alert(`Failed to create change request: ${err.message}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -78,8 +86,8 @@ export default function NewChangeRequestPage() {
       <form onSubmit={(e) => handleSubmit(e, 'Pending')} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
 
         <FormField label="Request Title">
-          <TextInput 
-            placeholder="e.g., HVAC routing variation due to beam clash" 
+          <TextInput
+            placeholder="e.g., HVAC routing variation due to beam clash"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -88,16 +96,16 @@ export default function NewChangeRequestPage() {
 
         <div className="grid grid-cols-2 gap-6">
           <FormField label="Impact on Timeline (Days)">
-            <TextInput 
-              placeholder="e.g., 2" 
+            <TextInput
+              placeholder="e.g., 2"
               type="number"
               value={timeImpact}
               onChange={(e) => setTimeImpact(e.target.value)}
             />
           </FormField>
           <FormField label="Impact on Cost ($)">
-            <TextInput 
-              placeholder="e.g., 4500" 
+            <TextInput
+              placeholder="e.g., 4500"
               type="number"
               value={costImpact}
               onChange={(e) => setCostImpact(e.target.value)}
@@ -119,7 +127,12 @@ export default function NewChangeRequestPage() {
         </FormField>
 
         <div className="pt-4 flex justify-end gap-3">
-          <Button variant="ghost" type="button" onClick={(e) => handleSubmit(e, 'Draft')} disabled={isSubmitting}>
+          <Button
+            variant="ghost"
+            type="button"
+            onClick={(e) => handleSubmit(e, 'Draft')}
+            disabled={isSubmitting}
+          >
             Save Draft
           </Button>
           <Button variant="primary" type="submit" disabled={isSubmitting || !title.trim()}>

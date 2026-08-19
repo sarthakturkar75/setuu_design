@@ -2,7 +2,7 @@ import React from 'react';
 import { RefreshCw, CheckCircle2, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type SyncStatus = 'syncing' | 'synced' | 'error';
+export type SyncStatus = 'syncing' | 'synced' | 'error' | 'offline';
 
 interface SyncIndicatorProps {
   status: SyncStatus;

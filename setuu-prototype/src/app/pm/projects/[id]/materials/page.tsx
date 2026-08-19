@@ -32,16 +32,21 @@ export default function ProjectMaterialsPage() {
   }, [id]);
 
   const handleOrder = async () => {
-    const { createMaterial } = await import('@/app/actions/materialActions');
-    await createMaterial(id, {
-      item_name: "New Custom Material Order",
-      quantity: 100,
-      expected_arrival_date: new Date(Date.now() + 86400000 * 7).toISOString()
-    });
+    setLoading(true); // Optional: add UX feedback
+    const { createMaterial, getMaterials } = await import('@/app/actions/materialActions');
+
+    // FIX: Construct FormData to match the upgraded Server Action
+    const formData = new FormData();
+    formData.append("project_id", id);
+    formData.append("name", "New Custom Material Order");
+    formData.append("expected_delivery", new Date(Date.now() + 86400000 * 7).toISOString());
+
+    await createMaterial(formData);
+
     // Optimistic reload
-    const { getMaterials } = await import('@/app/actions/materialActions');
     const data = await getMaterials(id);
-    setMaterials(data);
+    setMaterials(data || []);
+    setLoading(false);
   };
 
   const columns = [
