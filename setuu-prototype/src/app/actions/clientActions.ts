@@ -1,9 +1,11 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function createClientOrg(formData: FormData) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
   const name = formData.get("name") as string;
@@ -38,6 +40,7 @@ export async function getClientOrgs() {
 }
 
 export async function updateClientOrg(id: string, data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("organizations")
@@ -50,6 +53,7 @@ export async function updateClientOrg(id: string, data: any) {
 }
 
 export async function deactivateClientOrg(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("organizations")

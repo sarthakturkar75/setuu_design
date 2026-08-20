@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getUpdates(filters?: { projectId?: string, milestone_id?: string, status?: string }) {
@@ -30,6 +31,7 @@ export async function getUpdates(filters?: { projectId?: string, milestone_id?: 
 }
 
 export async function createUpdate(formData: FormData) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   let project_id = formData.get("project_id") as string;
   const author_id = formData.get("author_id") as string;
@@ -53,16 +55,33 @@ export async function createUpdate(formData: FormData) {
   
   if (error) return { success: false, error: error.message };
   
-  // In a full environment with Storage buckets configured, we would process uploads:
+  // Storage logic
   const files = formData.getAll("files") as File[];
   if (files && files.length > 0) {
     for (const file of files) {
       if (file.size === 0) continue;
-      // We simulate successful upload processing for the prototype
+      
+      const fileExt = file.name.split('.').pop();
+      const uniqueFileName = `${crypto.randomUUID()}.${fileExt}`;
+      const filePath = `${project_id}/${uniqueFileName}`;
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('updates')
+        .upload(filePath, file);
+        
+      if (uploadError) {
+        console.error('Storage upload failed', uploadError);
+        continue;
+      }
+      
+      const { data: { publicUrl } } = supabase.storage
+        .from('updates')
+        .getPublicUrl(filePath);
+
       const { error: insertError } = await supabase.from("media_attachments").insert({
         update_id: data.id,
         file_name: file.name,
-        file_url: `/mock-storage/${project_id}/${file.name}`,
+        file_url: publicUrl,
         file_type: file.type,
         file_size: file.size
       });
@@ -75,6 +94,7 @@ export async function createUpdate(formData: FormData) {
 }
 
 export async function moderateUpdate(id: string, status: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase.from("updates").update({ approval_status: status }).eq("id", id);
   if (error) return { success: false, error: error.message };
@@ -83,6 +103,7 @@ export async function moderateUpdate(id: string, status: string) {
 }
 
 export async function addComment(updateId: string, authorId: string, content: string, mentions: string[] = []) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { data, error } = await supabase.from("comments").insert({
     update_id: updateId,
@@ -106,6 +127,7 @@ export async function addComment(updateId: string, authorId: string, content: st
 }
 
 export async function acknowledgeUpdate(updateId: string, clientId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase.from("acknowledgements").insert({
     update_id: updateId,

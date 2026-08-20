@@ -57,7 +57,7 @@ export default function MasterMaterialTrackingPage() {
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
-          <Link href="#" className="font-jetbrains text-primary hover:underline text-sm">{row.po_number || "--"}</Link>
+          <span className="font-jetbrains text-primary text-sm">{row.po_number || "--"}</span>
           <span className="text-xs text-on-surface-variant">{row.supplier_name || "--"}</span>
         </div>
       )

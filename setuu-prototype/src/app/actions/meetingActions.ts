@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getMeetings(projectId?: string) {
@@ -19,6 +20,7 @@ export async function getMeetings(projectId?: string) {
 }
 
 export async function createMeeting(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("client_meetings")
@@ -33,6 +35,7 @@ export async function createMeeting(data: any) {
 }
 
 export async function addAgendaItem(meetingId: string, data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("client_meeting_agendas")
@@ -47,6 +50,7 @@ export async function addAgendaItem(meetingId: string, data: any) {
 }
 
 export async function updateMeetingMinutes(meetingId: string, minutes: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("client_meetings")

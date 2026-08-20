@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { verifyRole } from "./authUtils";
 
 export async function getProjectMilestones(projectId: string) {
   const supabase = await createClient();
@@ -49,6 +50,7 @@ export async function getMilestones() {
 }
 
 export async function createMilestone(projectId: string, milestoneData: any) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("milestones")
@@ -63,6 +65,7 @@ export async function createMilestone(projectId: string, milestoneData: any) {
 }
 
 export async function updateMilestone(id: string, updateData: any) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("milestones")
@@ -75,6 +78,7 @@ export async function updateMilestone(id: string, updateData: any) {
 }
 
 export async function reorderMilestones(projectId: string, orderedIds: string[]) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   
   const promises = orderedIds.map((id, index) => 
@@ -93,6 +97,7 @@ export async function reorderMilestones(projectId: string, orderedIds: string[])
 }
 
 export async function toggleChecklistItem(itemId: string, completed: boolean) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("milestone_checklist_items")
@@ -105,6 +110,7 @@ export async function toggleChecklistItem(itemId: string, completed: boolean) {
 }
 
 export async function addChecklistItem(milestoneId: string, title: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("milestone_checklist_items")
@@ -118,3 +124,22 @@ export async function addChecklistItem(milestoneId: string, title: string) {
   revalidatePath(`/`); // Simplified
   return { success: true };
 }
+
+export async function deleteMilestone(milestoneId: string) {
+  await verifyRole(["admin", "pm"]);
+  const supabase = await createClient();
+  const { data: milestone, error: fetchError } = await supabase.from("milestones").select("project_id").eq("id", milestoneId).single();
+  
+  if (fetchError) return { success: false, error: fetchError.message };
+
+  const { error } = await supabase.from("milestones").delete().eq("id", milestoneId);
+  if (error) return { success: false, error: error.message };
+  
+  if (milestone?.project_id) {
+    revalidatePath(`/pm/projects/${milestone.project_id}/milestones`);
+    revalidatePath(`/admin/projects/${milestone.project_id}/milestones`);
+  }
+  
+  return { success: true };
+}
+

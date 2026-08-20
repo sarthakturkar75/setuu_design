@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getTickets(filters?: { priority?: string, status?: string }) {
@@ -16,6 +17,7 @@ export async function getTickets(filters?: { priority?: string, status?: string 
 }
 
 export async function createTicket(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("support_tickets")
@@ -30,6 +32,7 @@ export async function createTicket(data: any) {
 }
 
 export async function updateTicket(id: string, data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("support_tickets")
@@ -42,6 +45,7 @@ export async function updateTicket(id: string, data: any) {
 }
 
 export async function escalateTicket(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("support_tickets")

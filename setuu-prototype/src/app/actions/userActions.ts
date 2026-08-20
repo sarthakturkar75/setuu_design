@@ -1,6 +1,8 @@
 "use server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getUsers(filters?: { role?: string, organization_id?: string, status?: string }) {
@@ -37,19 +39,22 @@ export async function getUserById(id: string) {
 }
 
 export async function inviteUser(email: string, role: string, orgId: string) {
-  // In a real implementation this would use Supabase Admin Auth to generate an invite link
-  // For the prototype we'll just insert a dummy identity and actor
-  const supabase = await createClient();
-  const newUserId = crypto.randomUUID();
+  await verifyRole(["admin", "pm", "superadmin"]);
   
-  await supabase.from("user_identity").insert({
-    actor_id: newUserId,
-    email,
-    full_name: "Invited User",
-    password_hash: "pending",
-  });
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return { success: false, error: "Server configuration error: missing service role key." };
+  }
   
-  const { error } = await supabase.from("user_actor").insert({
+  const adminClient = createAdminClient();
+  const { data, error: inviteError } = await adminClient.auth.admin.inviteUserByEmail(email);
+  
+  if (inviteError) {
+    return { success: false, error: inviteError.message };
+  }
+  
+  const newUserId = data.user.id;
+  
+  const { error } = await adminClient.from("user_actor").insert({
     id: newUserId,
     role,
     organization_id: orgId || null,
@@ -63,6 +68,7 @@ export async function inviteUser(email: string, role: string, orgId: string) {
 }
 
 export async function updateUserProfile(id: string, updateData: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("user_actor")
@@ -75,6 +81,7 @@ export async function updateUserProfile(id: string, updateData: any) {
 }
 
 export async function deactivateUser(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("user_actor")
@@ -87,6 +94,7 @@ export async function deactivateUser(id: string) {
 }
 
 export async function forceLogout(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   // Invalidating tokens or sessions
   const { error } = await supabase

@@ -60,7 +60,7 @@ export function ActivityFeed({ items, onAcknowledge, onDiscuss }: { items: Activ
               <div className="mt-3 grid grid-cols-2 gap-2">
                 {item.media.map((m, i) => (
                   <div key={i} className="relative aspect-video rounded-lg overflow-hidden bg-surface-container border border-outline-variant">
-                    {/* Placeholder for media */}
+
                     <img src={m.url} alt="Attachment" className="object-cover w-full h-full hover:scale-105 transition-transform" />
                   </div>
                 ))}

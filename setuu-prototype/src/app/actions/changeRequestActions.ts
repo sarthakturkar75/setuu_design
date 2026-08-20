@@ -2,8 +2,10 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { verifyRole } from "./authUtils";
 
 export async function createChangeRequest(formData: FormData) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
   // SECURE: Get the actual logged-in user
@@ -43,6 +45,7 @@ export async function createChangeRequest(formData: FormData) {
 }
 
 export async function approveChangeRequest(id: string, projectId: string) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("change_requests")
@@ -58,6 +61,7 @@ export async function approveChangeRequest(id: string, projectId: string) {
 }
 
 export async function rejectChangeRequest(id: string, projectId: string, reason: string) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("change_requests")

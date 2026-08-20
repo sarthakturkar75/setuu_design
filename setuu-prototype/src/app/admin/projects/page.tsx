@@ -143,18 +143,15 @@ export default function ProjectTrackingHub() {
           </FilterBar>
 
           <Card className="flex-1 min-h-[400px]">
-            {loading ? (
-              <div className="flex items-center justify-center h-full text-on-surface-variant">Loading projects...</div>
-            ) : (
-              <DataTable
-                data={filteredProjects}
-                columns={columns}
-                getRowId={(row: any) => row.id}
-                selectable={true}
-                selectedIds={selectedIds}
-                onSelectionChange={setSelectedIds}
-              />
-            )}
+            <DataTable
+              data={filteredProjects}
+              columns={columns}
+              getRowId={(row: any) => row.id}
+              selectable={true}
+              selectedIds={selectedIds}
+              onSelectionChange={setSelectedIds}
+              isLoading={loading}
+            />
           </Card>
         </div>
 

@@ -152,9 +152,6 @@ export default function FinancialMasterPage() {
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-merriweather font-bold text-lg text-on-surface">Invoice Approval Queue</h3>
-                <Link href="#" className="text-sm font-semibold text-primary hover:underline flex items-center gap-1">
-                  View All <ArrowUpRight className="w-4 h-4" />
-                </Link>
               </div>
               
               <FilterBar onClear={() => {}} onApply={() => {}}>

@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getNotifications(userId: string) {
@@ -16,6 +17,7 @@ export async function getNotifications(userId: string) {
 }
 
 export async function markAsRead(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("notifications")
@@ -28,6 +30,7 @@ export async function markAsRead(id: string) {
 }
 
 export async function sendBroadcast(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   
   // We pull all users that match the criteria (for prototype, we might just grab active ones)

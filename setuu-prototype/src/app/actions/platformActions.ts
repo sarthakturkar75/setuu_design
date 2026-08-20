@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getPlatformMetrics() {
@@ -51,6 +52,7 @@ export async function getStorageMetrics() {
 }
 
 export async function updatePlatformSettings(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   // Assume a single row in platform_settings
   const { error } = await supabase
@@ -64,6 +66,7 @@ export async function updatePlatformSettings(data: any) {
 }
 
 export async function invokeBreakGlass(orgId: string, reason: string, durationMinutes: number) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("break_glass_logs")
@@ -80,6 +83,7 @@ export async function invokeBreakGlass(orgId: string, reason: string, durationMi
 }
 
 export async function terminateBreakGlass(sessionId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("break_glass_logs")
@@ -121,6 +125,7 @@ export async function getOrganizations() {
 }
 
 export async function provisionOrg(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("organizations")

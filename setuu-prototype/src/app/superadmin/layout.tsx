@@ -1,6 +1,7 @@
 "use client";
 
 import { DashboardShell } from "@/components/navigation/DashboardShell";
+import { OfflineSyncProvider } from "@/contexts/OfflineSyncContext";
 import * as React from "react";
 
 export default function SuperadminLayout({
@@ -9,8 +10,10 @@ export default function SuperadminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <DashboardShell>
-      {children}
-    </DashboardShell>
+    <OfflineSyncProvider>
+      <DashboardShell>
+        {children}
+      </DashboardShell>
+    </OfflineSyncProvider>
   );
 }

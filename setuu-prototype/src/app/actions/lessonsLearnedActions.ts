@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getLessons(projectId?: string) {
@@ -15,6 +16,7 @@ export async function getLessons(projectId?: string) {
 }
 
 export async function createLesson(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("lessons_learned")

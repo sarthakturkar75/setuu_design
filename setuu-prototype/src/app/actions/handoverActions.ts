@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getHandovers(projectId?: string) {
@@ -20,6 +21,7 @@ export async function getHandovers(projectId?: string) {
 }
 
 export async function createHandover(projectId: string, data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_handovers")
@@ -35,6 +37,7 @@ export async function createHandover(projectId: string, data: any) {
 }
 
 export async function updateHandoverChecklist(id: string, items: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_handovers")
@@ -47,6 +50,7 @@ export async function updateHandoverChecklist(id: string, items: any) {
 }
 
 export async function requestSignature(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_handovers")

@@ -1,8 +1,10 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function generateProjectReport(projectId: string, modules: string[]) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   
   // Actually verify project exists and grab basics to compile report
@@ -44,6 +46,7 @@ export async function getScheduledReports() {
 }
 
 export async function scheduleReport(config: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   if (!config.name) return { success: false, error: "Report name required" };
   const supabase = await createClient();
   const { error } = await supabase

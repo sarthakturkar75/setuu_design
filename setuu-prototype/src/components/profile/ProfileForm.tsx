@@ -115,11 +115,11 @@ export function ProfileForm() {
                         </FormField>
 
                         <FormField label="Email" htmlFor="email">
-                            <TextInput id="email" value={user?.email || ""} disabled />
+                            <TextInput id="email" defaultValue={user?.email || ""} disabled />
                         </FormField>
 
                         <FormField label="Role" htmlFor="role">
-                            <TextInput id="role" value={role || ""} disabled className="capitalize" />
+                            <TextInput id="role" defaultValue={role || ""} disabled className="capitalize" />
                         </FormField>
 
                         {error && <p className="text-sm text-error">{error}</p>}

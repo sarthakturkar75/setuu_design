@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function emergencyLockOrganization(
@@ -8,6 +9,7 @@ export async function emergencyLockOrganization(
     actorId: string,
     reason: string,
 ) {
+  await verifyRole(["admin", "pm", "superadmin"]);
     const supabase = await createClient();
 
     const { data: org, error: fetchError } = await supabase

@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function getAuditLogs(filters?: { event_type?: string, actor_id?: string, dateRange?: { start: string, end: string }, resource_id?: string }) {
   const supabase = await createClient();
@@ -25,6 +26,7 @@ export async function getAuditLogs(filters?: { event_type?: string, actor_id?: s
 }
 
 export async function exportAuditLogs(filters?: any, format: "csv" | "pdf" = "csv") {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   let query = supabase.from("audit_log").select("*").order("created_at", { ascending: false });
   

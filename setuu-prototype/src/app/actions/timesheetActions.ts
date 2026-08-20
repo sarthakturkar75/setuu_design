@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getTimesheets(userId: string, dateRange?: { start: string, end: string }) {
@@ -17,6 +18,7 @@ export async function getTimesheets(userId: string, dateRange?: { start: string,
 }
 
 export async function logTimeEntry(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("employee_timesheets")
@@ -31,6 +33,7 @@ export async function logTimeEntry(data: any) {
 }
 
 export async function submitWeek(userId: string, weekStart: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   
   const startDate = new Date(weekStart);
@@ -51,6 +54,7 @@ export async function submitWeek(userId: string, weekStart: string) {
 }
 
 export async function approveTimesheet(id: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("employee_timesheets")

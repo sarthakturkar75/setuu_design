@@ -31,17 +31,5 @@ export async function getCashFlowData() {
     Outflow: Math.round(monthData[month].Outflow),
   }));
 
-  // If no data, return default mock-like data so chart doesn't break entirely
-  if (result.length === 0) {
-    return [
-      { month: "May", Inflow: 45, Outflow: 38 },
-      { month: "Jun", Inflow: 52, Outflow: 41 },
-      { month: "Jul", Inflow: 48, Outflow: 49 },
-      { month: "Aug", Inflow: 61, Outflow: 55 },
-      { month: "Sep", Inflow: 59, Outflow: 52 },
-      { month: "Oct", Inflow: 65, Outflow: 48 },
-    ];
-  }
-
   return result;
 }

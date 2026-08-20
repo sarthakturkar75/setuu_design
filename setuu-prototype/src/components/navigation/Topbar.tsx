@@ -20,10 +20,13 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useOfflineSync } from "@/contexts/OfflineSyncContext";
-import { getNotifications, markAsRead } from "@/app/actions/notificationActions";
+import { createClient } from "@/lib/supabase/client";
+import {
+	getNotifications,
+	markAsRead,
+} from "@/app/actions/notificationActions";
 import { getProjects } from "@/app/actions/projectActions";
 import { emergencyLockOrganization } from "@/app/actions/organizationActions";
-
 
 interface Project {
 	id: string;
@@ -61,7 +64,9 @@ export function Topbar({
 	const router = useRouter();
 
 	const [projects, setProjects] = React.useState<Project[]>(projectsProp ?? []);
-	const [notifications, setNotifications] = React.useState<NotificationItem[]>([]);
+	const [notifications, setNotifications] = React.useState<NotificationItem[]>(
+		[],
+	);
 	const [isNotifOpen, setIsNotifOpen] = React.useState(false);
 	const [isLockPending, setIsLockPending] = React.useState(false);
 	const notifRef = React.useRef<HTMLDivElement>(null);
@@ -79,7 +84,7 @@ export function Topbar({
 		}
 	}, [projectsProp, role]);
 
-	// Real notifications, polled every 60s
+	// Fetch & Subscribe to Notifications
 	React.useEffect(() => {
 		if (!user?.id) return;
 		let cancelled = false;
@@ -91,10 +96,28 @@ export function Topbar({
 				.catch(console.error);
 		};
 		load();
-		const interval = setInterval(load, 60_000);
+
+		const supabase = createClient();
+		const channel = supabase
+			.channel("realtime:notifications")
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "notifications",
+					filter: `user_id=eq.${user.id}`,
+				},
+				(payload) => {
+					console.log("Notification change received!", payload);
+					load(); // Reload notifications on any change
+				},
+			)
+			.subscribe();
+
 		return () => {
 			cancelled = true;
-			clearInterval(interval);
+			supabase.removeChannel(channel);
 		};
 	}, [user?.id]);
 
@@ -156,7 +179,11 @@ export function Topbar({
 		);
 		if (!reason) return;
 		setIsLockPending(true);
-		const result = await emergencyLockOrganization(organizationId, user.id, reason);
+		const result = await emergencyLockOrganization(
+			organizationId,
+			user.id,
+			reason,
+		);
 		setIsLockPending(false);
 		if (!result.success) {
 			window.alert(`Failed to lock organization: ${result.error}`);
@@ -287,7 +314,10 @@ export function Topbar({
 
 			<div className="flex items-center space-x-4 flex-1 justify-end">
 				<div className="hidden md:block w-64">
-					<SearchInput onSearch={handleSearch} placeholder="Search records..." />
+					<SearchInput
+						onSearch={handleSearch}
+						placeholder="Search records..."
+					/>
 				</div>
 
 				<div className="hidden lg:flex items-center pr-4 border-r border-outline-variant/30">

@@ -3,11 +3,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { verifyRole } from "./authUtils";
 import { Database } from "@/types/database";
 
 type Project = Database["public"]["Tables"]["projects"]["Row"];
 
 export async function createProject(formData: FormData) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
 
   const name = formData.get("name") as string;
@@ -44,6 +46,7 @@ export async function createProject(formData: FormData) {
 }
 
 export async function updateProjectConfig(formData: FormData) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
 
   const id = formData.get("id") as string;
@@ -106,6 +109,7 @@ export async function getProjectById(id: string) {
 }
 
 export async function archiveProject(id: string) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("projects")
@@ -118,6 +122,7 @@ export async function archiveProject(id: string) {
 }
 
 export async function deleteProject(id: string) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("projects")

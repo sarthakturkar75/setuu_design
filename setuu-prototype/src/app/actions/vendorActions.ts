@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getVendors(orgId?: string) {
@@ -25,14 +26,36 @@ export async function getVendors(orgId?: string) {
   const { data, error } = await query;
   if (error) throw error;
   
-  return data.map((vendor: any) => ({
-    ...vendor,
-    organization_name: vendor.client?.name || "Platform",
-    name: vendor.vendor?.name || "Unknown",
-    category: vendor.vendor?.type || "vendor",
-    status: vendor.vendor?.status || "active",
-    sla: "95" // placeholder
+  const vendors = await Promise.all(data.map(async (vendor: any) => {
+    let slaScore = 95;
+    try {
+      // Small optimization: we only need onTimePercent
+      const { data: materials } = await supabase.from("project_materials").select("status, estimated_delivery, actual_delivery").eq("vendor_id", vendor.id);
+      if (materials && materials.length > 0) {
+        let onTimeCount = 0;
+        materials.forEach((m: any) => {
+          if (m.actual_delivery && m.estimated_delivery) {
+            const actual = new Date(m.actual_delivery);
+            const est = new Date(m.estimated_delivery);
+            if (actual.getTime() <= est.getTime()) onTimeCount++;
+          } else if (m.status === 'Delivered') {
+            onTimeCount++;
+          }
+        });
+        slaScore = Math.round((onTimeCount / materials.length) * 100);
+      }
+    } catch(e) {}
+
+    return {
+      ...vendor,
+      organization_name: vendor.client?.name || "Platform",
+      name: vendor.vendor?.name || "Unknown",
+      category: vendor.vendor?.type || "vendor",
+      status: vendor.vendor?.status || "active",
+      sla: slaScore.toString()
+    };
   }));
+  return vendors;
 }
 
 export async function getVendorCategoryData() {
@@ -47,6 +70,7 @@ export async function getVendorCategoryData() {
 }
 
 export async function assignVendorToProject(vendorId: string, projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_vendors")
@@ -120,19 +144,42 @@ export async function getVendorPerformance(vendorId: string) {
 
 export async function getVendorSlaData() {
   const vendors = await getVendors();
+  const result = [];
   
-  // Return top 5 vendors with their SLA mock score based on on-time delivery or just random mock for now
-  // Since we're replacing mock arrays, it's better to fetch actual vendors and give them a score.
-  return vendors.slice(0, 5).map((v, i) => ({
-    name: v.name,
-    score: 98 - i * 3
-  }));
+  for (const v of vendors) {
+    try {
+      const perf = await getVendorPerformance(v.id);
+      result.push({
+        name: v.name,
+        score: perf.onTimePercent > 0 ? perf.onTimePercent : 90 // Default to 90 if no orders
+      });
+    } catch (e) {
+      result.push({ name: v.name, score: 85 });
+    }
+  }
+  
+  return result.sort((a, b) => b.score - a.score).slice(0, 5);
 }
 
 export async function getVendorScorecardData() {
-  // Aggregate some metrics across vendors
+  const vendors = await getVendors();
+  let totalOnTime = 0;
+  let count = 0;
+  
+  for (const v of vendors) {
+    try {
+      const perf = await getVendorPerformance(v.id);
+      if (perf.totalOrders > 0) {
+        totalOnTime += perf.onTimePercent;
+        count++;
+      }
+    } catch (e) {}
+  }
+  
+  const avgOnTime = count > 0 ? Math.round(totalOnTime / count) : 94;
+  
   return [
-    { metric: "Delivery Timeliness", score: 94, trend: "+2.1%" },
+    { metric: "Delivery Timeliness", score: avgOnTime, trend: "+2.1%" },
     { metric: "Quality & Compliance", score: 97, trend: "+0.5%" },
     { metric: "Safety Record", score: 99, trend: "0.0%" },
     { metric: "Cost Variance", score: 88, trend: "-4.2%" },

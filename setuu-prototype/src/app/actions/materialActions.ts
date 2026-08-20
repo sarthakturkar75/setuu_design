@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { verifyRole } from "./authUtils";
 
 export async function getMaterials(projectId?: string) {
   const supabase = await createClient();
@@ -26,6 +27,7 @@ export async function getMaterials(projectId?: string) {
 }
 
 export async function createMaterial(formData: FormData) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
 
   const project_id = formData.get("project_id") as string;
@@ -53,6 +55,7 @@ export async function createMaterial(formData: FormData) {
 }
 
 export async function updateMaterialStatus(id: string, projectId: string, status: string) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_materials")
@@ -67,6 +70,7 @@ export async function updateMaterialStatus(id: string, projectId: string, status
 }
 
 export async function receiveMaterial(id: string, projectId: string, proofData: any) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_materials")
@@ -83,3 +87,21 @@ export async function receiveMaterial(id: string, projectId: string, proofData: 
   revalidatePath(`/pm/materials`);
   return { success: true };
 }
+export async function deleteMaterial(materialId: string) {
+  await verifyRole(["admin", "pm"]);
+  const supabase = await createClient();
+  const { data: material, error: fetchError } = await supabase.from("project_materials").select("project_id").eq("id", materialId).single();
+  
+  if (fetchError) return { success: false, error: fetchError.message };
+
+  const { error } = await supabase.from("project_materials").delete().eq("id", materialId);
+  if (error) return { success: false, error: error.message };
+  
+  if (material?.project_id) {
+    revalidatePath(`/pm/projects/${material.project_id}/materials`);
+    revalidatePath(`/admin/projects/${material.project_id}/materials`);
+  }
+  
+  return { success: true };
+}
+

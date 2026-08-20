@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { verifyRole } from "./authUtils";
 
 export async function getIssues(projectId?: string, filters?: { severity?: string }) {
   const supabase = await createClient();
@@ -29,13 +30,10 @@ export async function getIssues(projectId?: string, filters?: { severity?: strin
 }
 
 export async function createIssue(formData: FormData) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
-  // 1. Securely get the authenticated user making the request
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return { success: false, error: "Unauthorized: You must be logged in to log an issue." };
-  }
+  const user = await verifyRole(["admin", "pm", "engineer", "vendor"]);
 
   // 2. Strictly extract only the allowed fields
   const project_id = formData.get("project_id") as string;
@@ -68,6 +66,7 @@ export async function createIssue(formData: FormData) {
 }
 
 export async function updateIssueStatus(id: string, projectId: string, status: string) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const updateData: any = { status };
 
@@ -87,6 +86,7 @@ export async function updateIssueStatus(id: string, projectId: string, status: s
 }
 
 export async function escalateIssue(id: string, projectId: string) {
+  await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("project_issues")
@@ -98,3 +98,21 @@ export async function escalateIssue(id: string, projectId: string) {
   revalidatePath(`/pm/projects/${projectId}/issues`);
   return { success: true };
 }
+export async function deleteIssue(issueId: string) {
+  await verifyRole(["admin", "pm"]);
+  const supabase = await createClient();
+  const { data: issue, error: fetchError } = await supabase.from("project_issues").select("project_id").eq("id", issueId).single();
+  
+  if (fetchError) return { success: false, error: fetchError.message };
+
+  const { error } = await supabase.from("project_issues").delete().eq("id", issueId);
+  if (error) return { success: false, error: error.message };
+  
+  if (issue?.project_id) {
+    revalidatePath(`/pm/projects/${issue.project_id}/issues`);
+    revalidatePath(`/admin/projects/${issue.project_id}/issues`);
+  }
+  
+  return { success: true };
+}
+

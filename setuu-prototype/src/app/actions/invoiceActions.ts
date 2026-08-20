@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getInvoices(vendorId?: string) {
@@ -20,6 +21,7 @@ export async function getInvoices(vendorId?: string) {
 }
 
 export async function createInvoice(data: any) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("invoices")
@@ -34,6 +36,7 @@ export async function createInvoice(data: any) {
 }
 
 export async function updateInvoiceStatus(id: string, status: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("invoices")
