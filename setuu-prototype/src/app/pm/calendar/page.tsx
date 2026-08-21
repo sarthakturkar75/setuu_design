@@ -1,7 +1,7 @@
 "use client";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { createClient } from "@/lib/supabase/client";
+import { getMilestones } from "@/app/actions/milestoneActions";
 import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, Users, CheckCircle } from "lucide-react";
 import Link from "next/link";
@@ -14,38 +14,22 @@ export default function CalendarPage() {
     useEffect(() => {
         async function fetchEvents() {
             setLoading(true);
-            const supabase = createClient();
-            
-            // Fetch milestones and meetings
-            const { data: milestones } = await supabase.from('milestones').select('*, projects(name)');
-            const { data: meetings } = await supabase.from('client_meetings').select('*, client_actor(display_name), projects(name)');
-            
-            let allEvents: any[] = [];
-            
-            if (milestones) {
-                allEvents.push(...milestones.map(m => ({
+            try {
+                const milestones = await getMilestones();
+                const allEvents = milestones.map((m: any) => ({
                     id: `m-${m.id}`,
                     title: m.title,
-                    date: new Date(m.due_date || m.created_at),
+                    date: new Date(m.target_date || m.created_at),
                     type: 'milestone',
-                    project: m.projects?.name,
-                    status: m.status
-                })));
+                    project: m.projects && typeof m.projects === 'object' && !Array.isArray(m.projects) ? (m.projects as any).name : 'Global',
+                    status: m.completion_status
+                }));
+                setEvents(allEvents);
+            } catch (error) {
+                console.error("Failed to load calendar events", error);
+            } finally {
+                setLoading(false);
             }
-            
-            if (meetings) {
-                allEvents.push(...meetings.map(m => ({
-                    id: `mt-${m.id}`,
-                    title: m.title,
-                    date: new Date(m.scheduled_at),
-                    type: 'meeting',
-                    project: m.projects?.name,
-                    client: m.client_actor?.display_name
-                })));
-            }
-            
-            setEvents(allEvents);
-            setLoading(false);
         }
         
         fetchEvents();

@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { getNavigationForRole } from "@/lib/config/navigation";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
-import { getProjects } from "@/app/actions/projectActions";
+import { getProjects, getProjectFlags } from "@/app/actions/projectActions";
 import { getPlatformMetrics } from "@/app/actions/platformActions";
 import Link from "next/link";
 import { Menu } from "lucide-react"; // Fallback for mobile menu
@@ -17,6 +17,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
 	const [projects, setProjects] = React.useState<any[]>([]);
+	const [projectFlags, setProjectFlags] = React.useState<any>(null);
 	const [healthStatus, setHealthStatus] = React.useState<
 		"healthy" | "warning" | "critical"
 	>("healthy");
@@ -44,17 +45,25 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 		}
 	}, [role]);
 
-	const uuidRegex =
-		/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
+	const uuidRegex = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
 	const match = pathname.match(uuidRegex);
 	const currentProjectId = match ? match[0] : null;
+
+	React.useEffect(() => {
+		if (currentProjectId) {
+			getProjectFlags(currentProjectId).then(flags => setProjectFlags(flags));
+		} else {
+			setProjectFlags(null);
+		}
+	}, [currentProjectId]);
 
 	const { sections } = React.useMemo(() => {
 		return getNavigationForRole(role, currentProjectId, {
 			projects,
 			healthStatus,
+            flags: projectFlags
 		});
-	}, [role, currentProjectId, projects, healthStatus]);
+	}, [role, currentProjectId, projects, healthStatus, projectFlags]);
 
 	// Extract exactly 4 items for the mobile bottom nav
 	const mobileNavItems = sections
