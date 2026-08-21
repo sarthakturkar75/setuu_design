@@ -15,6 +15,9 @@ import { getProjects, getResourceAllocationData, getCriticalPathMilestones } fro
 
 
 export default function ProjectTrackingHub() {
+  const [statusFilter, setStatusFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [pmFilter, setPmFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,11 +26,13 @@ export default function ProjectTrackingHub() {
   const searchParams = useSearchParams();
   const q = searchParams.get("q")?.toLowerCase().trim() || "";
 
-  const filteredProjects = q
-    ? projects.filter(
-      (p) => p.name?.toLowerCase().includes(q) || p.id?.toLowerCase().includes(q),
-    )
-    : projects;
+  const filteredProjects = projects.filter((p) => {
+    const matchesQ = q ? (p.name?.toLowerCase().includes(q) || p.id?.toLowerCase().includes(q)) : true;
+    const matchesStatus = statusFilter ? p.status === statusFilter : true;
+    const matchesType = typeFilter ? p.type === typeFilter : true;
+    const matchesPm = pmFilter ? p.pm_name === pmFilter : true;
+    return matchesQ && matchesStatus && matchesType && matchesPm;
+  });
 
   useEffect(() => {
     getProjects()
@@ -52,7 +57,7 @@ export default function ProjectTrackingHub() {
       cell: (row: any) => (
         <div className="flex flex-col">
           <Link href={`/admin/projects/${row.id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.name}</Link>
-          <span className="text-xs font-jetbrains text-on-surface-variant">{row.id}</span>
+          
         </div>
       )
     },
@@ -110,12 +115,13 @@ export default function ProjectTrackingHub() {
             <Select
               options={[
                 { label: "All Statuses", value: "" },
-                { label: "In Progress", value: "in_progress" },
-                { label: "On Hold", value: "on_hold" },
-                { label: "Completed", value: "completed" },
+                { label: "Not Started", value: "Not Started" },
+                { label: "In Progress", value: "In Progress" },
+                { label: "Completed", value: "Completed" },
+                { label: "At Risk", value: "At Risk" },
               ]}
-              value=""
-              onChange={() => { }}
+              value={statusFilter}
+              onChange={(val) => setStatusFilter(val)}
             />
             <Select
               options={[
@@ -124,17 +130,16 @@ export default function ProjectTrackingHub() {
                 { label: "Structural", value: "Structural" },
                 { label: "MEP", value: "MEP" },
               ]}
-              value=""
-              onChange={() => { }}
+              value={typeFilter}
+              onChange={(val) => setTypeFilter(val)}
             />
             <Select
               options={[
                 { label: "All PMs", value: "" },
-                { label: "Alice Chen", value: "Alice Chen" },
-                { label: "Bob Smith", value: "Bob Smith" },
+                ...Array.from(new Set(projects.map(p => p.pm_name).filter(Boolean))).map(pm => ({ label: pm, value: pm }))
               ]}
-              value=""
-              onChange={() => { }}
+              value={pmFilter}
+              onChange={(val) => setPmFilter(val)}
             />
             {/* Date range mock */}
             <div className="px-3 py-2 border border-outline-variant rounded-lg bg-surface text-sm text-on-surface flex items-center min-w-[200px]">

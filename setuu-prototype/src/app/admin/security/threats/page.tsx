@@ -13,6 +13,8 @@ import Link from "next/link";
 import { getVirusScanResults } from "@/app/actions/auditActions";
 
 export default function ThreatScanDashboardPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [threats, setThreats] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +40,7 @@ export default function ThreatScanDashboardPage() {
       cell: (row: any) => (
         <div className="flex flex-col">
           <span className="font-semibold text-on-surface">{row.file_name || "Unknown File"}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains truncate max-w-[200px]" title={row.id}>{row.id}</span>
+          
         </div>
       )
     },
@@ -142,7 +144,7 @@ export default function ThreatScanDashboardPage() {
           <FilterBar onClear={() => {}} onApply={() => {}}>
             <div className="w-full sm:w-64 relative">
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-              <TextInput placeholder="Search file name or hash..." className="pl-9" />
+              <TextInput placeholder="Search file name or hash..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <Select 
               options={[
@@ -151,8 +153,8 @@ export default function ThreatScanDashboardPage() {
                 { label: "Infected", value: "infected" },
                 { label: "Quarantined", value: "quarantine" },
               ]}
-              value=""
-              onChange={() => {}}
+              value={statusFilter}
+              onChange={(val) => setStatusFilter(val)}
             />
           </FilterBar>
 

@@ -1,4 +1,5 @@
 "use client";
+import { useToast } from "@/contexts/ToastContext";
 import * as React from "react";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
@@ -9,6 +10,8 @@ import { useParams, useRouter } from "next/navigation";
 import { createMaterial } from "@/app/actions/materialActions";
 
 export default function MaterialReceiptPage() {
+  const toast = useToast();
+
   const [isScanned, setIsScanned] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const params = useParams();
@@ -52,10 +55,10 @@ export default function MaterialReceiptPage() {
             const res = await createMaterial(submitData);
 
             if (res.success) {
-              alert("Successfully submitted!");
+              toast.success("Successfully submitted!");
               router.push(`/pm/projects/${id}/materials`);
             } else {
-              alert("Error: " + res.error);
+              toast.error("Error: " + res.error);
             }
           } finally {
             setIsSubmitting(false);

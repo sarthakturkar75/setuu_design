@@ -33,7 +33,7 @@ export default function ResourceAnalyticsPage() {
       cell: (row: any) => (
         <div className="flex flex-col">
           <span className="font-semibold text-on-surface">{row.title || row.type}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.display_id || (row.id && row.id.substring(0, 8))}</span>
+          
         </div>
       )
     },

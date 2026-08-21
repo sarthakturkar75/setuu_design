@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/contexts/ToastContext";
 import * as React from "react";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
@@ -15,6 +16,8 @@ export default function IssueLoggingPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const toast = useToast();
+
   const { id } = React.use(params);
   const router = useRouter();
 
@@ -30,14 +33,14 @@ export default function IssueLoggingPage({
     try {
       const res = await createIssue(formData);
       if (res.success) {
-        alert("Issue logged successfully!");
+        toast.success("Issue logged successfully!");
         router.push(`/pm/projects/${id}/issues`);
       } else {
-        alert("Error: " + res.error);
+        toast.error("Error: " + res.error);
       }
     } catch (err) {
       console.error(err);
-      alert("An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     } finally {
       setIsSubmitting(false);
     }

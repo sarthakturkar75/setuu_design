@@ -17,6 +17,9 @@ import { getMaterials } from "@/app/actions/materialActions";
 // mockMaterials removed, using live data
 
 export default function MasterMaterialTrackingPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [projectFilter, setProjectFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [materials, setMaterials] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -134,28 +137,26 @@ export default function MasterMaterialTrackingPage() {
           <FilterBar onClear={() => {}} onApply={() => {}}>
             <div className="w-full sm:w-64 relative">
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-              <TextInput placeholder="Search item, PO, or spec ID..." className="pl-9" />
+              <TextInput placeholder="Search item, PO, or spec ID..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <Select 
               options={[
                 { label: "All Projects", value: "" },
-                { label: "Alpha Tower", value: "alpha" },
-                { label: "Beta Complex", value: "beta" },
-                { label: "Gamma Hub", value: "gamma" },
+                ...Array.from(new Set(materials.map(m => m.project_name).filter(Boolean))).map(p => ({ label: p, value: p }))
               ]}
-              value=""
-              onChange={() => {}}
+              value={projectFilter}
+              onChange={(val) => setProjectFilter(val)}
             />
             <Select 
               options={[
                 { label: "All Statuses", value: "" },
-                { label: "Pending", value: "pending" },
-                { label: "In Transit", value: "transit" },
-                { label: "Delivered", value: "delivered" },
-                { label: "Delayed", value: "delayed" },
+                { label: "Pending", value: "Pending" },
+                { label: "In Transit", value: "In Transit" },
+                { label: "Delivered", value: "Delivered" },
+                { label: "Delayed", value: "Delayed" },
               ]}
-              value=""
-              onChange={() => {}}
+              value={statusFilter}
+              onChange={(val) => setStatusFilter(val)}
             />
           </FilterBar>
 

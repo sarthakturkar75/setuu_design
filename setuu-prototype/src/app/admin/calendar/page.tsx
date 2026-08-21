@@ -1,23 +1,147 @@
 "use client";
-
 import { PageHeader } from "@/components/ui/PageHeader";
-import { CalendarIcon } from "lucide-react";
+import { Card } from "@/components/ui/Card";
+import { createClient } from "@/lib/supabase/client";
+import React, { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, Users, CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function CalendarPage() {
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [events, setEvents] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchEvents() {
+            setLoading(true);
+            const supabase = createClient();
+            
+            // Fetch milestones and meetings
+            const { data: milestones } = await supabase.from('milestones').select('*, projects(name)');
+            const { data: meetings } = await supabase.from('client_meetings').select('*, client_actor(display_name), projects(name)');
+            
+            let allEvents: any[] = [];
+            
+            if (milestones) {
+                allEvents.push(...milestones.map(m => ({
+                    id: `m-${m.id}`,
+                    title: m.title,
+                    date: new Date(m.due_date || m.created_at),
+                    type: 'milestone',
+                    project: m.projects?.name,
+                    status: m.status
+                })));
+            }
+            
+            if (meetings) {
+                allEvents.push(...meetings.map(m => ({
+                    id: `mt-${m.id}`,
+                    title: m.title,
+                    date: new Date(m.scheduled_at),
+                    type: 'meeting',
+                    project: m.projects?.name,
+                    client: m.client_actor?.display_name
+                })));
+            }
+            
+            setEvents(allEvents);
+            setLoading(false);
+        }
+        
+        fetchEvents();
+    }, []);
+
+    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+    
+    const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    const isToday = (day: number) => {
+        const today = new Date();
+        return day === today.getDate() && currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear();
+    };
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const getEventsForDay = (day: number) => {
+        return events.filter(e => e.date.getDate() === day && e.date.getMonth() === currentDate.getMonth() && e.date.getFullYear() === currentDate.getFullYear());
+    };
+
+    // Make SSR safe for rolePath
+    const [rolePath, setRolePath] = useState("admin");
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setRolePath(window.location.pathname.startsWith('/pm') ? 'pm' : 'admin');
+        }
+    }, []);
+
     return (
         <div className="p-6 max-w-[1600px] mx-auto space-y-6">
             <PageHeader 
                 title="Global Calendar" 
                 subtitle="View all upcoming project milestones and team schedules"
+                breadcrumb={
+                    <div className="flex items-center gap-2 text-sm text-on-surface-variant">
+                        <Link href={`/${rolePath}`} className="hover:text-primary transition-colors">{rolePath === 'pm' ? 'PM' : 'Admin'}</Link>
+                        <span>/</span>
+                        <span className="text-on-surface font-medium">Calendar</span>
+                    </div>
+                }
             />
-            <div className="bg-surface-container rounded-xl border border-outline-variant/50 p-12 text-center text-on-surface-variant flex flex-col items-center justify-center min-h-[400px]">
-                <CalendarIcon className="w-12 h-12 mb-4 opacity-50 text-primary" />
-                <h3 className="text-xl font-semibold mb-2 text-on-surface">Calendar Integration Pending</h3>
-                <p className="max-w-md mx-auto">
-                    Global scheduling, timeline aggregation, and event syncing will be available in an upcoming release. 
-                    For now, view individual project timelines in their respective workspaces.
-                </p>
-            </div>
+            
+            <Card className="p-6 overflow-hidden">
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-4">
+                        <h2 className="text-2xl font-bold font-merriweather text-on-surface">
+                            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+                        </h2>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button onClick={prevMonth} className="p-2 border border-outline-variant rounded-lg hover:bg-surface-variant transition-colors text-on-surface"><ChevronLeft className="w-5 h-5" /></button>
+                        <button onClick={() => setCurrentDate(new Date())} className="px-4 py-2 text-sm font-semibold border border-outline-variant rounded-lg hover:bg-surface-variant transition-colors text-on-surface">Today</button>
+                        <button onClick={nextMonth} className="p-2 border border-outline-variant rounded-lg hover:bg-surface-variant transition-colors text-on-surface"><ChevronRight className="w-5 h-5" /></button>
+                    </div>
+                </div>
+
+                {loading ? (
+                    <div className="flex justify-center py-20 text-on-surface-variant animate-pulse">Loading calendar events...</div>
+                ) : (
+                    <div className="grid grid-cols-7 gap-px bg-outline-variant/30 rounded-xl overflow-hidden border border-outline-variant/30">
+                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                            <div key={day} className="bg-surface-variant/30 p-3 text-center text-xs font-semibold text-on-surface-variant uppercase tracking-wider">
+                                {day}
+                            </div>
+                        ))}
+                        
+                        {Array.from({ length: firstDayOfMonth }).map((_, i) => (
+                            <div key={`empty-${i}`} className="bg-surface/50 min-h-[120px]" />
+                        ))}
+                        
+                        {Array.from({ length: daysInMonth }).map((_, i) => {
+                            const day = i + 1;
+                            const dayEvents = getEventsForDay(day);
+                            return (
+                                <div key={day} className={`bg-surface min-h-[120px] p-2 border-t border-l border-outline-variant/10 ${isToday(day) ? 'bg-primary/5' : ''}`}>
+                                    <div className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-2 ${isToday(day) ? 'bg-primary text-white' : 'text-on-surface-variant'}`}>
+                                        {day}
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        {dayEvents.map(event => (
+                                            <div key={event.id} className={`px-2 py-1.5 rounded text-xs font-medium truncate ${event.type === 'milestone' ? 'bg-semantic-emerald/10 text-semantic-emerald-on border border-semantic-emerald/20' : 'bg-semantic-blue/10 text-semantic-blue-on border border-semantic-blue/20'}`}>
+                                                <div className="flex items-center gap-1 mb-0.5">
+                                                    {event.type === 'milestone' ? <CheckCircle className="w-3 h-3 shrink-0" /> : <Clock className="w-3 h-3 shrink-0" />}
+                                                    <span className="truncate">{event.title}</span>
+                                                </div>
+                                                <div className="text-[10px] opacity-80 truncate">{event.project || 'Global'}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </Card>
         </div>
     );
 }

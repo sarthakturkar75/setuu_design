@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/contexts/ToastContext";
 import { Card } from "@/components/ui/Card";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
@@ -20,6 +21,8 @@ export default function ProjectConfigPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const toast = useToast();
+
   const { id } = use(params);
 
   const [projects, setProjects] = useState<any[]>([]);
@@ -70,13 +73,13 @@ export default function ProjectConfigPage({
     try {
       const result = await updateProjectConfig(formData);
       if (result.success) {
-        alert("Project configuration saved successfully!");
+        toast.success("Project configuration saved successfully!");
       } else {
-        alert(`Failed to save: ${result.error}`);
+        toast.error(`Failed to save: ${result.error}`);
       }
     } catch (error) {
       console.error("Save error:", error);
-      alert("An unexpected error occurred while saving.");
+      toast.error("An unexpected error occurred while saving.");
     } finally {
       setIsSaving(false);
     }
@@ -153,6 +156,7 @@ export default function ProjectConfigPage({
                   { label: "Software", value: "Software" },
                   { label: "Combined", value: "Combined" },
                 ]}
+                name="type"
                 defaultValue={currentProject.type || "General"}
                 onChange={() => { }}
               />
@@ -192,6 +196,7 @@ export default function ProjectConfigPage({
             {/* REAL DATA INTEGRATION HERE */}
             <FormField label="Assigned Project Manager">
               <Select
+                name="assigned_pm_id"
                 options={pmOptions}
                 defaultValue={currentProject.assigned_pm_id || ""}
                 onChange={() => { }}
@@ -201,6 +206,7 @@ export default function ProjectConfigPage({
             {/* REAL DATA INTEGRATION HERE */}
             <FormField label="Client Organization">
               <Select
+                name="client_org_id"
                 options={clientOptions}
                 defaultValue={currentProject.client_org_id || ""}
                 onChange={() => { }}

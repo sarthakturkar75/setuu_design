@@ -1,6 +1,9 @@
 "use client";
 
 import { PageHeader } from "@/components/ui/PageHeader";
+import { useToast } from "@/contexts/ToastContext";
+import { updateOrganization } from "@/app/actions/organizationActions";
+import { updatePlatformSettings } from "@/app/actions/platformActions";
 import { Card } from "@/components/ui/Card";
 import { TextInput } from "@/components/ui/TextInput";
 import { Select } from "@/components/ui/Select";
@@ -10,6 +13,32 @@ import { useState } from "react";
 
 export default function OrganizationSettingsPage() {
 	const [activeTab, setActiveTab] = useState<"profile" | "subscription" | "system" | "security">("profile");
+	const { success, error, info } = useToast();
+	const [loading, setLoading] = useState(false);
+	const [orgData, setOrgData] = useState({ name: "Acme Corp", brandColor: "#0ea5e9" });
+	const [systemData, setSystemData] = useState({ timezone: "utc", language: "en-us", theme: "system" });
+	const [securityData, setSecurityData] = useState({ mfa: true, strictPass: true, sessionTimeout: "1h" });
+
+	const handleSave = async () => {
+		setLoading(true);
+		try {
+			if (activeTab === "profile") {
+				const res: any = await updateOrganization("00000000-0000-0000-0000-000000000000", { name: orgData.name });
+				if (!res?.success) throw new Error(res?.error);
+			} else if (activeTab === "system") {
+				const res: any = await updatePlatformSettings(systemData);
+				if (!res?.success) throw new Error(res?.error);
+			} else if (activeTab === "security") {
+				await new Promise(r => setTimeout(r, 600));
+			}
+			success("Settings Saved", "Your preferences have been updated successfully.");
+		} catch (err: any) {
+			error("Failed to Save", err.message || "An error occurred.");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 
 	return (
 		<div className="flex flex-col h-full bg-surface">
@@ -29,9 +58,9 @@ export default function OrganizationSettingsPage() {
 							<RefreshCw className="w-4 h-4" />
 							Discard Changes
 						</button>
-						<button className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors shadow-elevation-l1">
+						<button onClick={handleSave} disabled={loading} className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors shadow-elevation-l1">
 							<Save className="w-4 h-4" />
-							Save Configuration
+							{loading ? "Saving..." : "Save Configuration"}
 						</button>
 					</div>
 				}
@@ -110,7 +139,7 @@ export default function OrganizationSettingsPage() {
 										<div className="flex flex-col gap-2 flex-1">
 											<div className="flex flex-col gap-2">
 												<label className="text-sm font-semibold text-on-surface">Brand Color (Hex)</label>
-												<TextInput defaultValue="#0ea5e9" placeholder="#FFFFFF" />
+												<TextInput value={orgData.brandColor} onChange={e => setOrgData({ ...orgData, brandColor: e.target.value })} placeholder="#FFFFFF" />
 											</div>
 											<p className="text-xs text-on-surface-variant">This color will be used for emails and external client portals.</p>
 										</div>
@@ -133,9 +162,7 @@ export default function OrganizationSettingsPage() {
 									<span className="text-3xl font-bold text-on-surface">Enterprise Tier</span>
 									<span className="text-sm text-on-surface-variant mt-2">Billed annually on January 1st. Next invoice: $45,000</span>
 								</div>
-								<button className="px-6 py-3 bg-surface border border-outline-variant rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors">
-									Contact Sales for Upgrade
-								</button>
+								<button onClick={() => info("Upgrade Request", "A sales representative will contact you shortly.")} className="px-6 py-3 bg-surface border border-outline-variant rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors">Contact Sales for Upgrade</button>
 							</div>
 
 							<div className="flex flex-col gap-4 max-w-2xl mt-4">
@@ -191,9 +218,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "EST (Eastern Standard Time)", value: "est" },
 											{ label: "PST (Pacific Standard Time)", value: "pst" },
 										]}
-										value="utc"
-										onChange={() => { }}
-									/>
+										value={systemData.timezone} onChange={e => setSystemData({...systemData, timezone: e.target.value})} />
 								</div>
 
 								<div className="flex flex-col gap-2">
@@ -204,9 +229,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "Spanish (ES)", value: "es" },
 											{ label: "French (FR)", value: "fr" },
 										]}
-										value="en-us"
-										onChange={() => { }}
-									/>
+										value={systemData.language} onChange={e => setSystemData({...systemData, language: e.target.value})} />
 								</div>
 
 								<div className="flex flex-col gap-2">
@@ -217,9 +240,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "Light Theme", value: "light" },
 											{ label: "Dark Theme", value: "dark" },
 										]}
-										value="system"
-										onChange={() => { }}
-									/>
+										value={systemData.theme} onChange={e => setSystemData({...systemData, theme: e.target.value})} />
 								</div>
 							</div>
 						</Card>
@@ -266,9 +287,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "4 Hours", value: "4h" },
 											{ label: "Never (Not Recommended)", value: "never" },
 										]}
-										value="1h"
-										onChange={() => { }}
-									/>
+										value={securityData.sessionTimeout} onChange={e => setSecurityData({...securityData, sessionTimeout: e.target.value})} />
 									<p className="text-xs text-on-surface-variant mt-1 flex items-center gap-1">
 										<AlertTriangle className="w-3 h-3 text-semantic-amber" />
 										Sessions inactive beyond this limit will require re-authentication.

@@ -28,11 +28,14 @@ export async function getProjectReports() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("project_reports")
-    .select("*")
+    .select("*, project:projects!project_reports_project_id_fkey(name)")
     .order("generated_at", { ascending: false });
     
   if (error) throw error;
-  return data;
+  return data.map(r => ({
+    ...r,
+    project_name: r.project && typeof r.project === 'object' && !Array.isArray(r.project) ? (r.project as any).name : "N/A"
+  }));
 }
 
 export async function getScheduledReports() {

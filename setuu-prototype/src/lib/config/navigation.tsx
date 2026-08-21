@@ -38,10 +38,16 @@ export const getNavigationForRole = (
     if (!role) return { sections: [], bottomItems: [] };
 
     // Generate dynamic project list for the PM/Admin nested dropdown
-    const projectItems = dynamicData?.projects?.map((p) => ({
-        label: p.name,
-        href: `/${role === "admin" ? "admin" : "pm"}/projects/${p.id}`,
-    })) || [{ label: "Loading projects...", href: "#" }];
+    const projectItems = [
+        {
+            label: "Tracking Hub",
+            href: `/${role === "admin" ? "admin" : "pm"}/projects`,
+        },
+        ...(dynamicData?.projects?.map((p) => ({
+            label: p.name,
+            href: `/${role === "admin" ? "admin" : "pm"}/projects/${p.id}`,
+        })) || [{ label: "Loading projects...", href: "#" }])
+    ];
 
     // Shared Project Operations
     const projectOpsSection: NavSection = {
@@ -245,10 +251,20 @@ export const getNavigationForRole = (
                                 icon: <FileTextIcon className="w-5 h-5" />,
                             },
                             {
+                                label: "Financials",
+                                href: `/${role}/financials`,
+                                icon: <CreditCard className="w-5 h-5" />,
+                            },
+                            {
                                 label: "Support Tickets",
                                 href: `/${role}/support`,
                                 icon: <CircleHelpIcon className="w-5 h-5" />,
                             },
+                            ...(role === "admin" ? [{
+                                label: "Settings",
+                                href: "/admin/settings",
+                                icon: <SettingsIcon className="w-5 h-5" />,
+                            }] : [])
                         ],
                     },
                 ],

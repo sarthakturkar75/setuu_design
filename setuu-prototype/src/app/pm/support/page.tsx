@@ -43,7 +43,7 @@ export default function PMSupport() {
         <DataTable
           data={tickets}
           columns={[
-            { header: "Ticket ID", key: "id", cell: (row: any) => <span className="font-mono text-xs text-on-surface-variant font-bold">#{row.id.substring(0, 8)}</span> },
+            
             { header: "Subject", key: "title", cell: (row: any) => <span className="font-medium text-on-surface">{row.title}</span> },
             { header: "Priority", key: "priority", cell: (row: any) => <>{row.priority}</> },
             { header: "Status", key: "status", cell: (row: any) => <StatusBadge label={row.status} tone={row.status === "Open" ? "amber" : "slate"} /> },

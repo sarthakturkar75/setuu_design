@@ -77,7 +77,7 @@ export default function AdminDashboardPage() {
           />
           <KPICard 
             title="CapEx Run Rate" 
-            value="₹45M" 
+            value={`₹${(([].totalContractValue || 0) * 0.1 / 1000000).toFixed(1)}M`} 
             trend={{ value: 2.1, label: "vs last month", isPositive: true }} 
             icon={<TrendingUp className="w-5 h-5" />} 
           />
@@ -123,12 +123,12 @@ export default function AdminDashboardPage() {
                 <div className="flex justify-between items-end">
                   <div>
                     <p className="text-sm text-on-surface-variant">Global Usage</p>
-                    <p className="text-2xl font-jetbrains font-bold text-on-surface">8.4 TB <span className="text-sm font-inter text-on-surface-variant font-normal">/ 10 TB</span></p>
+                    <p className="text-2xl font-jetbrains font-bold text-on-surface">{(([].totalStorageGb || 0)/1024).toFixed(1)} TB <span className="text-sm font-inter text-on-surface-variant font-normal">/ 10 TB</span></p>
                   </div>
-                  <span className="text-sm font-bold text-semantic-amber">84%</span>
+                  <span className="text-sm font-bold text-semantic-amber">{Math.round((([].totalStorageGb || 0)/1024/10)*100)}%</span>
                 </div>
                 <div className="[&>div]:bg-semantic-amber">
-                  <ProgressBar progress={84} />
+                  <ProgressBar progress={(([].totalStorageGb || 0)/1024/10)*100} />
                 </div>
               </div>
             </Card>
@@ -155,7 +155,7 @@ export default function AdminDashboardPage() {
                 <div key={cr.id} className="p-4 rounded-lg border border-outline-variant/30 bg-surface-variant/30 flex flex-col gap-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-xs font-bold font-jetbrains text-primary">{cr.id}</span>
+                      
                       <h4 className="text-sm font-semibold text-on-surface mt-1">{cr.project}</h4>
                     </div>
                       <StatusBadge tone={cr.status as any} label={cr.status} />

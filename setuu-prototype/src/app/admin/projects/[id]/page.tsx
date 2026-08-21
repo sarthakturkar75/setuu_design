@@ -7,7 +7,10 @@ import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { CheckCircle, AlertOctagon, Clock, DollarSign } from "lucide-react";
 import { use, useState, useEffect } from "react";
-import { getProjectTeam, getRecentActivity } from "@/app/actions/projectActions";
+import { getProjectTeam, getRecentActivity, getProjectById } from "@/app/actions/projectActions";
+import { getIssues } from "@/app/actions/issueActions";
+import { getChangeRequests } from "@/app/actions/changeRequestActions";
+import { getProjectMilestones } from "@/app/actions/milestoneActions";
 
 export default function ProjectOverviewPage({
   params,
@@ -18,15 +21,37 @@ export default function ProjectOverviewPage({
   
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [kpis, setKpis] = useState<any>({ progress: 0, openIssues: 0, daysToTarget: 0, budgetVariance: 0 });
 
   useEffect(() => {
     async function loadData() {
-      const [team, activities] = await Promise.all([
+      const [team, activities, proj, issues, changes, milestones] = await Promise.all([
         getProjectTeam(id),
-        getRecentActivity(id)
+        getRecentActivity(id),
+        getProjectById(id),
+        getIssues(id),
+        getChangeRequests(id),
+        getProjectMilestones(id)
       ]);
       setTeamMembers(team);
       setRecentActivity(activities);
+
+      const openIssuesCount = (issues || []).filter((i: any) => i.status === 'Open').length;
+      
+      const totalChangesCost = (changes || []).filter((c: any) => c.status === 'Approved').reduce((acc: number, c: any) => acc + Number(c.cost_impact || 0), 0);
+      const budgetVar = proj?.contract_value ? (totalChangesCost / proj.contract_value) * 100 : 0;
+
+      let daysToTarget = 0;
+      if (proj?.target_date) {
+        const diff = new Date(proj.target_date).getTime() - new Date().getTime();
+        daysToTarget = Math.ceil(diff / (1000 * 3600 * 24));
+      }
+
+      const totalMilestones = milestones?.length || 0;
+      const completedMilestones = (milestones || []).filter((m: any) => m.status === 'Completed').length;
+      const progress = totalMilestones > 0 ? Math.round((completedMilestones / totalMilestones) * 100) : 0;
+
+      setKpis({ progress, openIssues: openIssuesCount, daysToTarget, budgetVariance: budgetVar });
     }
     loadData();
   }, [id]);
@@ -36,28 +61,27 @@ export default function ProjectOverviewPage({
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         <KPICard 
           title="Overall Progress" 
-          value="45%" 
+          value={`${kpis.progress}%`} 
           icon={<CheckCircle className="w-5 h-5" />} 
           semanticColor="emerald"
         />
         <KPICard 
           title="Open Issues" 
-          value="12" 
-          trend={{ value: 2, label: "vs last week", isPositive: false }} 
+          value={kpis.openIssues.toString()} 
           icon={<AlertOctagon className="w-5 h-5" />} 
-          semanticColor="amber"
+          semanticColor={kpis.openIssues > 0 ? "amber" : "emerald"}
         />
         <KPICard 
           title="Days to Target" 
-          value="340" 
+          value={kpis.daysToTarget > 0 ? kpis.daysToTarget.toString() : "0"} 
           icon={<Clock className="w-5 h-5" />} 
+          semanticColor={kpis.daysToTarget < 30 ? "crimson" : "slate"}
         />
         <KPICard 
           title="Budget Variance" 
-          value="+4.2%" 
-          trend={{ value: 1.1, label: "vs baseline", isPositive: false }} 
+          value={`+${kpis.budgetVariance.toFixed(1)}%`} 
           icon={<DollarSign className="w-5 h-5 text-semantic-crimson" />} 
-          semanticColor="crimson"
+          semanticColor={kpis.budgetVariance > 5 ? "crimson" : "emerald"}
         />
       </div>
 

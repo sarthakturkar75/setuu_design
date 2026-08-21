@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/contexts/ToastContext";
 import * as React from "react";
 import { useState } from "react";
 import { FormField } from "@/components/ui/FormField";
@@ -13,6 +14,8 @@ import { useParams } from "next/navigation";
 import { createChangeRequest } from "@/app/actions/changeRequestActions";
 
 export default function NewChangeRequestPage() {
+  const toast = useToast();
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -55,7 +58,7 @@ export default function NewChangeRequestPage() {
       setIsSubmitted(true);
     } catch (err: any) {
       console.error("Error creating change request:", err);
-      alert(`Failed to create change request: ${err.message}`);
+      toast.error(`Failed to create change request: ${err.message}`);
     } finally {
       setIsSubmitting(false);
     }

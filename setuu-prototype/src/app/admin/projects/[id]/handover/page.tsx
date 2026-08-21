@@ -1,4 +1,5 @@
 "use client";
+import { useToast } from "@/contexts/ToastContext";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -8,6 +9,8 @@ import { useParams } from "next/navigation";
 import { getProjectMilestones, toggleChecklistItem } from "@/app/actions/milestoneActions";
 
 export default function ProjectHandoverPage() {
+  const toast = useToast();
+
   const [checklist, setChecklist] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -130,9 +133,9 @@ export default function ProjectHandoverPage() {
           const { generateProjectReport } = await import("@/app/actions/reportActions");
           const res = await generateProjectReport(id, ["handover"]);
           if (res.success) {
-            alert(`Dossier ready! Download link: ${res.downloadUrl}`);
+            toast.success(`Dossier ready! Download link: ${res.downloadUrl}`);
           } else {
-            alert("Error: " + res.error);
+            toast.error("Error: " + res.error);
           }
         }}>
           Export Handover Dossier
@@ -146,9 +149,9 @@ export default function ProjectHandoverPage() {
             status: "Scheduled"
           });
           if (res.success) {
-            alert("Meeting Scheduled successfully!");
+            toast.success("Meeting Scheduled successfully!");
           } else {
-            alert("Error: " + res.error);
+            toast.error("Error: " + res.error);
           }
         }}>
           Schedule Client Meeting

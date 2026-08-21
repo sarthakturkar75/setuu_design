@@ -17,6 +17,9 @@ import { getIssues } from "@/app/actions/issueActions";
 // mockIssues replaced by live data
 
 export default function IssuesConsolePage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [severityFilter, setSeverityFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
   const [issues, setIssues] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -143,26 +146,28 @@ export default function IssuesConsolePage() {
           <FilterBar onClear={() => {}} onApply={() => {}}>
             <div className="w-full sm:w-64 relative">
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-              <TextInput placeholder="Search issue ID or keywords..." className="pl-9" />
+              <TextInput placeholder="Search issue ID or keywords..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <Select 
               options={[
                 { label: "All Severities", value: "" },
                 { label: "Critical", value: "critical" },
                 { label: "High", value: "high" },
+                { label: "Medium", value: "medium" },
+                { label: "Low", value: "low" },
               ]}
-              value=""
-              onChange={() => {}}
+              value={severityFilter}
+              onChange={(val) => setSeverityFilter(val)}
             />
             <Select 
               options={[
                 { label: "All Statuses", value: "" },
-                { label: "Open", value: "open" },
-                { label: "In Progress", value: "ip" },
-                { label: "Escalated", value: "escalated" },
+                { label: "Open", value: "Open" },
+                { label: "In Progress", value: "In Progress" },
+                { label: "Resolved", value: "Resolved" },
               ]}
-              value=""
-              onChange={() => {}}
+              value={statusFilter}
+              onChange={(val) => setStatusFilter(val)}
             />
           </FilterBar>
 
@@ -184,7 +189,7 @@ export default function IssuesConsolePage() {
           <div className="w-full xl:w-1/3 border-l border-outline-variant bg-surface flex flex-col shadow-elevation-l3 xl:shadow-none animate-in slide-in-from-right-4 duration-300">
             <div className="p-6 border-b border-outline-variant flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <span className="font-jetbrains text-primary font-bold">{selectedIssue.display_id || (selectedIssue.id ? selectedIssue.id.split('-')[0] : "ISSUE")}</span>
+                <span className="font-jetbrains text-primary font-bold">{selectedIssue.display_id || "ISSUE"}</span>
                 <button 
                   onClick={() => setSelectedIssueId(null)}
                   className="p-2 text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors xl:hidden"

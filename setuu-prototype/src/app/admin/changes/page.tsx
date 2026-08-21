@@ -19,6 +19,10 @@ export default function ChangeRequestsPage() {
   const [changeRequests, setChangeRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
+
+
   const fetchCRs = () => {
     setLoading(true);
     getChangeRequests().then(data => {
@@ -63,7 +67,7 @@ export default function ChangeRequestsPage() {
           <FilterBar onClear={() => { }} onApply={() => { }}>
             <div className="w-full sm:w-64 relative">
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-              <TextInput placeholder="Search CR ID or keywords..." className="pl-9" />
+              <TextInput placeholder="Search CR ID or keywords..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <Select
               options={[
@@ -72,8 +76,8 @@ export default function ChangeRequestsPage() {
                 { label: "High", value: "high" },
                 { label: "Medium", value: "medium" },
               ]}
-              value=""
-              onChange={() => { }}
+              value={priorityFilter}
+              onChange={(val) => setPriorityFilter(val)}
             />
           </FilterBar>
 
@@ -82,7 +86,11 @@ export default function ChangeRequestsPage() {
               <div className="col-span-full py-10 text-center text-on-surface-variant">Loading change requests...</div>
             ) : changeRequests.length === 0 ? (
               <div className="col-span-full py-10 text-center text-on-surface-variant">No change requests found.</div>
-            ) : changeRequests.map((cr) => (
+            ) : changeRequests.filter(cr => {
+                const matchesSearch = searchTerm ? JSON.stringify(cr).toLowerCase().includes(searchTerm.toLowerCase()) : true;
+                const matchesPriority = priorityFilter ? cr.priority?.toLowerCase() === priorityFilter.toLowerCase() : true;
+                return matchesSearch && matchesPriority;
+            }).map((cr) => (
               <div
                 key={cr.id}
                 onClick={() => setSelectedCrId(cr.id)}
@@ -93,7 +101,7 @@ export default function ChangeRequestsPage() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-jetbrains text-primary bg-primary/10 px-2 py-0.5 rounded">{cr.id.substring(0, 8)}</span>
+                    
                     <span className="text-xs text-on-surface-variant line-clamp-1">{cr.project_name || "Unknown Project"}</span>
                   </div>
                   <StatusBadge
@@ -127,7 +135,7 @@ export default function ChangeRequestsPage() {
           <div className="w-full xl:w-1/3 border-l border-outline-variant bg-surface flex flex-col shadow-elevation-l3 xl:shadow-none animate-in slide-in-from-right-4 duration-300">
             <div className="p-6 border-b border-outline-variant flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <span className="font-jetbrains text-primary font-bold">{selectedCr.id}</span>
+                
                 <div className="flex items-center gap-2">
                   <button className="p-2 text-on-surface-variant hover:text-primary transition-colors" title="Export PDF">
                     <FileText className="w-5 h-5" />

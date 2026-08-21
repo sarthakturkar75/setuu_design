@@ -16,6 +16,8 @@ import { getProjects } from "@/app/actions/projectActions";
 import { getCashFlowData } from "@/app/actions/financialActions";
 
 export default function FinancialMasterPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [projects, setProjects] = useState<any[]>([]);
   const [cashFlowData, setCashFlowData] = useState<any[]>([]);
@@ -40,12 +42,7 @@ export default function FinancialMasterPage() {
   }, []);
 
   const columns = [
-    { 
-      key: "id", 
-      header: "Project ID", 
-      sortable: true,
-      cell: (row: any) => <span className="font-jetbrains text-primary font-semibold hover:underline cursor-pointer">{row.id.substring(0, 8)}</span>
-    },
+    
     { 
       key: "name", 
       header: "Project", 
@@ -157,17 +154,18 @@ export default function FinancialMasterPage() {
               <FilterBar onClear={() => {}} onApply={() => {}}>
                 <div className="w-full sm:w-64 relative">
                   <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-                  <TextInput placeholder="Search invoice or vendor..." className="pl-9" />
+                  <TextInput placeholder="Search project or client..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                 </div>
                 <Select 
                   options={[
                     { label: "All Statuses", value: "" },
-                    { label: "Pending", value: "pending" },
-                    { label: "Approved", value: "approved" },
-                    { label: "Rejected", value: "rejected" },
+                    { label: "Not Started", value: "Not Started" },
+                    { label: "In Progress", value: "In Progress" },
+                    { label: "Completed", value: "Completed" },
+                    { label: "At Risk", value: "At Risk" },
                   ]}
-                  value=""
-                  onChange={() => {}}
+                  value={statusFilter}
+                  onChange={(val) => setStatusFilter(val)}
                 />
               </FilterBar>
 

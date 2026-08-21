@@ -16,6 +16,9 @@ import { useEffect } from "react";
 import { getVendors, getVendorCategoryData } from "@/app/actions/vendorActions";
 
 export default function VendorRegistryPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [vendors, setVendors] = useState<any[]>([]);
   const [categories, setCategories] = useState<{name: string, count: number}[]>([]);
@@ -130,27 +133,27 @@ export default function VendorRegistryPage() {
             <FilterBar onClear={() => {}} onApply={() => {}}>
               <div className="w-full sm:w-64 relative">
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-                <TextInput placeholder="Search vendors by name or ID..." className="pl-9" />
+                <TextInput placeholder="Search vendors by name or ID..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </div>
               <Select 
                 options={[
                   { label: "All Categories", value: "" },
-                  { label: "Materials", value: "materials" },
-                  { label: "Subcontractor", value: "subcontractor" },
-                  { label: "Equipment", value: "equipment" },
+                  { label: "Materials", value: "Materials" },
+                  { label: "Subcontractor", value: "Subcontractor" },
+                  { label: "Equipment", value: "Equipment" },
                 ]}
-                value=""
-                onChange={() => {}}
+                value={categoryFilter}
+                onChange={(val) => setCategoryFilter(val)}
               />
               <Select 
                 options={[
                   { label: "All Statuses", value: "" },
-                  { label: "Active", value: "active" },
-                  { label: "Pending Onboarding", value: "pending" },
-                  { label: "Inactive/Blacklisted", value: "inactive" },
+                  { label: "Active", value: "Active" },
+                  { label: "Pending Onboarding", value: "Pending" },
+                  { label: "Inactive/Blacklisted", value: "Inactive" },
                 ]}
-                value=""
-                onChange={() => {}}
+                value={statusFilter}
+                onChange={(val) => setStatusFilter(val)}
               />
             </FilterBar>
 

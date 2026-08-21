@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { getTickets } from "@/app/actions/supportActions";
 
 export default function SupportTriagePage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
   const [tickets, setTickets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,15 +86,15 @@ export default function SupportTriagePage() {
         <FilterBar onClear={() => {}} onApply={() => {}}>
           <div className="w-full sm:w-64 relative">
             <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-            <TextInput placeholder="Search subject or user..." className="pl-9" />
+            <TextInput placeholder="Search subject or user..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
           <Select 
             options={[
               { label: "Priority: All", value: "" },
               { label: "Priority: High", value: "high" },
             ]}
-            value=""
-            onChange={() => {}}
+            value={priorityFilter}
+            onChange={(val) => setPriorityFilter(val)}
           />
         </FilterBar>
 

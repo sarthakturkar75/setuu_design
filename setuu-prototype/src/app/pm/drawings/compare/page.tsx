@@ -14,6 +14,39 @@ export default function DrawingComparePage() {
   const [mode, setMode] = useState<"side-by-side" | "overlay">("side-by-side");
   const [opacity, setOpacity] = useState(50);
   
+  const [drawings, setDrawings] = useState<any[]>([]);
+  const [v1, setV1] = useState("");
+  const [v2, setV2] = useState("");
+  const { success, error, info } = useToast();
+  
+  useEffect(() => {
+      getDrawings().then((res: any) => {
+        if(res && res.length >= 2) {
+          setDrawings(res);
+          setV1(res[0].id);
+          setV2(res[1].id);
+        } else if (res && res.success && res.data) {
+          setDrawings(res.data);
+          if (res.data.length >= 2) {
+            setV1(res.data[0].id);
+            setV2(res.data[1].id);
+          }
+        }
+      });
+    }, []);
+
+  const handleCompare = async () => {
+    if(!v1 || !v2) return error("Selection required", "Select two drawing versions to compare.");
+    info("Analyzing Diff", "Processing structural differences between versions...");
+    const res: any = await compareDrawingVersions(v1, v2);
+    if(res && res.success) {
+       success("Analysis Complete", "Differences highlighted in the blueprint viewer.");
+    } else {
+       error("Comparison Failed", res?.error || "Failed to load versions");
+    }
+  };
+
+  
   return (
     <div className="flex flex-col h-full bg-surface">
       <PageHeader 
@@ -23,14 +56,14 @@ export default function DrawingComparePage() {
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
             <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
             <span>/</span>
-            <Link href="/admin/drawings" className="hover:text-primary transition-colors">Drawings</Link>
+            <Link href="/pm/drawings" className="hover:text-primary transition-colors">Drawings</Link>
             <span>/</span>
             <span className="text-on-surface font-medium">Compare</span>
           </div>
         }
         actions={
           <div className="flex items-center gap-3">
-            <Link href="/admin/drawings" className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors">
+            <Link href="/pm/drawings" className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-variant transition-colors">
               <ArrowLeft className="w-4 h-4" />
               Back to Hub
             </Link>

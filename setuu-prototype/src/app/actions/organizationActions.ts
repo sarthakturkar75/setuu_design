@@ -43,3 +43,11 @@ export async function emergencyLockOrganization(
     revalidatePath("/admin");
     return { success: true };
 }
+export async function updateOrganization(id: string, data: any) {
+  await verifyRole(["admin", "superadmin"]);
+  const supabase = await createClient();
+  const { error } = await supabase.from("organizations").update(data).eq("id", id);
+  if (error) return { success: false, error: error.message };
+  revalidatePath("/admin/settings");
+  return { success: true };
+}

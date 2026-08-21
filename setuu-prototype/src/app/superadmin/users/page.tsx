@@ -17,6 +17,9 @@ import { getUsers, forceLogout } from "@/app/actions/userActions";
 // mockUsers removed, using live data
 
 export default function UserDirectoryPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -137,27 +140,27 @@ export default function UserDirectoryPage() {
             <FilterBar onClear={() => {}} onApply={() => {}}>
               <div className="w-full sm:w-64 relative">
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-                <TextInput placeholder="Search users by name or email..." className="pl-9" />
+                <TextInput placeholder="Search users by name or email..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </div>
               <Select 
                 options={[
                   { label: "All Roles", value: "" },
+                  { label: "Admin", value: "admin" },
                   { label: "Project Manager", value: "pm" },
-                  { label: "Site Engineer", value: "eng" },
+                  { label: "Site Engineer", value: "engineer" },
                   { label: "Client Rep", value: "client" },
                 ]}
-                value=""
-                onChange={() => {}}
+                value={roleFilter}
+                onChange={(val) => setRoleFilter(val)}
               />
               <Select 
                 options={[
                   { label: "All Statuses", value: "" },
-                  { label: "Active", value: "active" },
-                  { label: "Pending", value: "pending" },
-                  { label: "Inactive", value: "inactive" },
+                  { label: "Active", value: "true" },
+                  { label: "Inactive", value: "false" },
                 ]}
-                value=""
-                onChange={() => {}}
+                value={statusFilter}
+                onChange={(val) => setStatusFilter(val)}
               />
             </FilterBar>
 

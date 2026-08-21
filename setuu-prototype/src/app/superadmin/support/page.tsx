@@ -9,6 +9,8 @@ import { MessageSquare, AlertCircle, CheckCircle, ArrowUpRight, MessageCircle, R
 import { getTickets } from "@/app/actions/supportActions";
 
 export default function GlobalSupportHub() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
   const [selectedTicket, setSelectedTicket] = useState<any>(null);
   const [supportTickets, setSupportTickets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ export default function GlobalSupportHub() {
   }, []);
 
   const columns = [
-    { key: "id", header: "Ticket ID", cell: (row: any) => <span className="font-jetbrains-mono text-sm">{row.id}</span> },
+    
     { key: "subject", header: "Subject", cell: (row: any) => <span className="font-medium text-on-surface">{row.subject}</span> },
     { key: "org", header: "Organization", cell: (row: any) => <span className="text-on-surface-variant text-sm">{row.org}</span> },
     { key: "priority", header: "Priority", cell: (row: any) => (
@@ -103,7 +105,7 @@ export default function GlobalSupportHub() {
             <div className="p-6 border-b border-outline-variant/50">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex gap-2 items-center">
-                  <span className="font-jetbrains-mono text-sm text-on-surface-variant">{selectedTicket.id}</span>
+                  
                   <StatusBadge 
                     tone={selectedTicket.status === "Open" ? "sky" : selectedTicket.status === "Escalated" ? "crimson" : selectedTicket.status === "Resolved" ? "emerald" : "slate"} 
                     label={selectedTicket.status} 

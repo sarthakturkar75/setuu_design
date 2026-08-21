@@ -36,11 +36,7 @@ export default function ProjectIssuesPage({
   }, [id]);
 
   const columns = [
-    {
-      key: "id",
-      header: "ID",
-      cell: (row: any) => <span className="font-jetbrains-mono text-xs text-outline">{row.id.substring(0, 8)}...</span>
-    },
+    
     {
       key: "title",
       header: "Issue",

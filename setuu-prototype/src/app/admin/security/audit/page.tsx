@@ -12,6 +12,8 @@ import Link from "next/link";
 import { getAuditLogs } from "@/app/actions/auditActions";
 
 export default function SecurityAuditLogPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [logs, setLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -114,7 +116,7 @@ export default function SecurityAuditLogPage() {
           <FilterBar onClear={() => {}} onApply={() => {}}>
             <div className="w-full sm:w-64 relative">
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-              <TextInput placeholder="Search event, actor, or IP..." className="pl-9" />
+              <TextInput placeholder="Search event, actor, or IP..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <Select 
               options={[
@@ -123,8 +125,8 @@ export default function SecurityAuditLogPage() {
                 { label: "Configuration Changes", value: "config" },
                 { label: "Data Export", value: "export" },
               ]}
-              value=""
-              onChange={() => {}}
+              value={typeFilter}
+              onChange={(val) => setTypeFilter(val)}
             />
             <TextInput type="date" placeholder="Start Date" />
             <TextInput type="date" placeholder="End Date" />

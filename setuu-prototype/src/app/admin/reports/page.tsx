@@ -13,6 +13,8 @@ import Link from "next/link";
 import { getProjectReports } from "@/app/actions/reportActions";
 
 export default function ReportingEnginePage() {
+  const [template, setTemplate] = useState("");
+  const [frequency, setFrequency] = useState("");
   const [isRecurring, setIsRecurring] = useState(false);
   const [outputFormat, setOutputFormat] = useState<"pdf" | "csv">("pdf");
   const [exportsData, setExportsData] = useState<any[]>([]);
@@ -43,7 +45,7 @@ export default function ReportingEnginePage() {
         return (
           <div className="flex flex-col">
             <span className="font-semibold text-on-surface">{name}</span>
-            <span className="text-xs text-on-surface-variant font-jetbrains">{row.id?.substring(0, 8)}</span>
+            
           </div>
         );
       }
@@ -118,8 +120,8 @@ export default function ReportingEnginePage() {
                   { label: "Project Health & Timelines", value: "projects" },
                   { label: "Custom Export", value: "custom" },
                 ]}
-                value="financials"
-                onChange={() => {}}
+                value={template}
+                onChange={(val) => setTemplate(val)}
               />
             </div>
 
@@ -169,8 +171,8 @@ export default function ReportingEnginePage() {
                       { label: "Monthly (1st of Month)", value: "monthly" },
                       { label: "Custom Cron Schedule", value: "custom" },
                     ]}
-                    value="weekly"
-                    onChange={() => {}}
+                    value={frequency}
+                    onChange={(val) => setFrequency(val)}
                   />
                 </div>
                 

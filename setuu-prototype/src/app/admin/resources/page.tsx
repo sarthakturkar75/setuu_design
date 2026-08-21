@@ -13,6 +13,8 @@ import Link from "next/link";
 import { getProjectResources } from "@/app/actions/resourceActions";
 
 export default function ResourceHubPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [projectFilter, setProjectFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [resources, setResources] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +47,7 @@ export default function ResourceHubPage() {
       cell: (row: any) => (
         <div className="flex flex-col">
           <span className="font-semibold text-on-surface">{row.name || "Unknown Resource"}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id?.substring(0, 8)}</span>
+          
         </div>
       )
     },
@@ -212,17 +214,15 @@ export default function ResourceHubPage() {
           <FilterBar onClear={() => {}} onApply={() => {}}>
             <div className="w-full sm:w-64 relative">
               <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-              <TextInput placeholder="Search resource group..." className="pl-9" />
+              <TextInput placeholder="Search resource group..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <Select 
               options={[
-                { label: "All Projects", value: "" },
-                { label: "Alpha Tower", value: "alpha" },
-                { label: "Beta Complex", value: "beta" },
-                { label: "Gamma Hub", value: "gamma" },
-              ]}
-              value=""
-              onChange={() => {}}
+              { label: "All Projects", value: "" },
+              ...Array.from(new Set(resources.map(r => r.project_name).filter(Boolean))).map(p => ({ label: p, value: p }))
+            ]}
+            value={projectFilter}
+            onChange={(val) => setProjectFilter(val)}
             />
           </FilterBar>
 

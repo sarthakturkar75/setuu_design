@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { getProjectFlags } from "@/app/actions/projectActions";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TabBar } from "@/components/ui/TabBar";
@@ -11,19 +12,31 @@ export default function ProjectDetailLayout({
 }) {
   const params = useParams();
   const id = params?.id as string || "unknown";
+  const [flags, setFlags] = React.useState<any>(null);
+  
+  React.useEffect(() => {
+    if (id !== "unknown") {
+      getProjectFlags(id).then(res => setFlags(res));
+    }
+  }, [id]);
   const pathname = usePathname();
   const router = useRouter();
 
-  const tabs = [
-    { id: "dashboard", label: "Dashboard" },
-    { id: "timeline", label: "Timeline" },
-    { id: "milestones", label: "Milestones" },
-    { id: "materials", label: "Materials" },
-    { id: "issues", label: "Issues" },
-    { id: "drawings", label: "Drawings" },
-    { id: "collaboration", label: "Collaboration" },
-    { id: "handover", label: "Handover" },
+  const allTabs = [
+    { id: "dashboard", label: "Overview" },
+    { id: "timeline", label: "Timeline", flag: "timeline" },
+    { id: "milestones", label: "Milestones", flag: "milestones" },
+    { id: "changes", label: "Changes", flag: "change_requests" },
+    { id: "materials", label: "Materials", flag: "project_materials" },
+    { id: "issues", label: "Issues", flag: "project_issues" },
+    { id: "drawings", label: "Drawings", flag: "drawing_versions" },
+    { id: "collaboration", label: "Collaboration", flag: "collaboration" },
+    { id: "team", label: "Team Directory" },
+    { id: "handover", label: "Handover", flag: "handover" },
+    { id: "config", label: "Configuration" },
+    { id: "flags", label: "Module Flags" },
   ];
+  const tabs = allTabs.filter(t => !t.flag || !flags || flags[t.flag] !== false);
 
   const getHref = (key: string) => {
     if (key === "dashboard") return `/pm/projects/${id}`;

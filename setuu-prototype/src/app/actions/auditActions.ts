@@ -67,7 +67,7 @@ export async function getVirusScanResults() {
   if (fileIds.length > 0) {
     const { data: files } = await supabase
       .from("media_attachments")
-      .select("id, file_name, project_id")
+      .select("id, file_name, project:projects!media_attachments_project_id_fkey(name)")
       .in("id", fileIds);
       
     if (files) {
@@ -82,7 +82,7 @@ export async function getVirusScanResults() {
     return {
       ...scan,
       file_name: fileInfo?.file_name || "Unknown File",
-      project_id: fileInfo?.project_id || "Unknown Project"
+      project_name: fileInfo?.project && typeof fileInfo.project === 'object' && !Array.isArray(fileInfo.project) ? (fileInfo.project as any).name : "Unknown Project"
     };
   });
 }

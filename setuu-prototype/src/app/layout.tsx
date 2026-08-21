@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Merriweather, Inter, JetBrains_Mono } from 'next/font/google'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { ToastProvider } from '@/contexts/ToastContext'
 import './globals.css'
 
 const merriweather = Merriweather({
@@ -39,9 +40,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <ToastProvider>
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

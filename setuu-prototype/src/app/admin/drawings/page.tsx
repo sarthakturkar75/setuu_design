@@ -17,6 +17,9 @@ import { getDrawings } from "@/app/actions/drawingActions";
 // mockDrawings removed, using live data
 
 export default function DrawingHubPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [projectFilter, setProjectFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [drawings, setDrawings] = useState<any[]>([]);
@@ -46,7 +49,7 @@ export default function DrawingHubPage() {
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-on-surface line-clamp-1">{row.drawing_name || (row.file_url ? row.file_url.split('/').pop() : 'Drawing')}</span>
-            <span className="text-xs text-on-surface-variant font-jetbrains">{row.drawing_id ? `${row.drawing_id.substring(0, 8)}...` : ""}</span>
+            
           </div>
         </div>
       )
@@ -130,26 +133,25 @@ export default function DrawingHubPage() {
         <FilterBar onClear={() => {}} onApply={() => {}}>
           <div className="w-full sm:w-64 relative">
             <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-            <TextInput placeholder="Search drawing title or ID..." className="pl-9" />
+            <TextInput placeholder="Search drawing title or ID..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
           <Select 
             options={[
               { label: "All Projects", value: "" },
-              { label: "Alpha Tower", value: "alpha" },
-              { label: "Beta Complex", value: "beta" },
+              ...Array.from(new Set(drawings.map(d => d.project_name).filter(Boolean))).map(p => ({ label: p, value: p }))
             ]}
-            value=""
-            onChange={() => {}}
+            value={projectFilter}
+            onChange={(val) => setProjectFilter(val)}
           />
           <Select 
             options={[
               { label: "All Disciplines", value: "" },
-              { label: "Architectural", value: "arch" },
-              { label: "Structural", value: "str" },
-              { label: "MEP", value: "mep" },
+              { label: "Architectural", value: "Architectural" },
+              { label: "Structural", value: "Structural" },
+              { label: "MEP", value: "MEP" },
             ]}
-            value=""
-            onChange={() => {}}
+            value={typeFilter}
+            onChange={(val) => setTypeFilter(val)}
           />
         </FilterBar>
 
@@ -197,7 +199,7 @@ export default function DrawingHubPage() {
                   <span className="font-semibold text-on-surface line-clamp-1 mb-1">{dwg.drawing_name || (dwg.file_url ? dwg.file_url.split('/').pop() : 'Drawing')}</span>
                   <span className="text-sm font-medium text-primary mb-3">{dwg.project_name || "Unknown"}</span>
                   <div className="flex items-center justify-between mt-auto">
-                    <span className="text-xs font-jetbrains text-on-surface-variant">{dwg.drawing_id ? `${dwg.drawing_id.substring(0, 8)}...` : ""}</span>
+                    
                     <span className="text-xs text-on-surface-variant">{dwg.created_at ? new Date(dwg.created_at).toLocaleDateString() : "--"}</span>
                   </div>
                 </div>

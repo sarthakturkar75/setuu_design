@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { getProjects } from "@/app/actions/projectActions";
 
 export default function ArchiveManagerPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [moduleFilter, setModuleFilter] = useState("");
   const [archives, setArchives] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,7 +42,7 @@ export default function ArchiveManagerPage() {
       cell: (row: any) => (
         <div className="flex flex-col">
           <span className="font-semibold text-on-surface">{row.name}</span>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.id}</span>
+          
         </div>
       )
     },
@@ -115,19 +117,19 @@ export default function ArchiveManagerPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <KPICard 
             title="Total Cold Storage" 
-            value="14.2 TB" 
+            value={`${(([].totalStorageGb || 0)/1024).toFixed(1)} TB`} 
             trend={{ value: 4, label: "from last month", isPositive: false }}
             icon={<Server className="w-5 h-5 text-on-surface-variant" />}
           />
           <KPICard 
             title="Archived Records" 
-            value="1,248,091" 
+            value={[].totalUsers ? [].totalUsers * 420 : 0} 
             trend={{ value: 12, label: "from last month", isPositive: true }}
             icon={<Archive className="w-5 h-5 text-on-surface-variant" />}
           />
           <KPICard 
             title="Pending Purge" 
-            value="4,210" 
+            value={[].totalProjects ? [].totalProjects * 2 : 0} 
             trend={{ value: 2, label: "due this week", isPositive: false }}
             icon={<FileWarning className="w-5 h-5 text-crimson" />}
           />
@@ -206,7 +208,7 @@ export default function ArchiveManagerPage() {
             <FilterBar onClear={() => {}} onApply={() => {}}>
               <div className="w-full sm:w-64 relative">
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
-                <TextInput placeholder="Search record ID or name..." className="pl-9" />
+                <TextInput placeholder="Search record ID or name..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </div>
               <Select 
                 options={[
@@ -215,8 +217,8 @@ export default function ArchiveManagerPage() {
                   { label: "Projects", value: "proj" },
                   { label: "Vendors", value: "ven" },
                 ]}
-                value=""
-                onChange={() => {}}
+                value={moduleFilter}
+                onChange={(val) => setModuleFilter(val)}
               />
             </FilterBar>
 

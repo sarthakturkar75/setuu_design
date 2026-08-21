@@ -1,11 +1,23 @@
 "use client";
 
+import { createClient } from "@/lib/supabase/client";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { ArrowLeft, Copy, SplitSquareHorizontal, Merge, Trash2, ShieldCheck, FileText } from "lucide-react";
 import Link from "next/link";
 
+import React from "react";
 export default function DuplicateResolutionPage() {
+  const [duplicates, setDuplicates] = React.useState<any[]>([]);
+  
+  React.useEffect(() => {
+    async function load() {
+      const supabase = createClient();
+      const { data } = await supabase.from('duplicate_files').select('*');
+      setDuplicates(data || []);
+    }
+    load();
+  }, []);
   return (
     <div className="flex flex-col h-full bg-surface">
       <PageHeader 

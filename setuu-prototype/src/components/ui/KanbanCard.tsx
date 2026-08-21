@@ -29,7 +29,7 @@ export function KanbanCard({ title, id, assignee, badge, onDelete, className, ..
         </button>
       )}
       <div className="flex justify-between items-start mb-2 pr-6">
-        <span className="text-[10px] font-bold text-on-surface-variant font-jetbrains-mono tracking-wider">{id.substring(0, 8)}</span>
+        
         {badge && <div>{badge}</div>}
       </div>
       <h4 className="text-sm font-medium text-on-surface leading-snug mb-4 group-hover:text-primary transition-colors">{title}</h4>

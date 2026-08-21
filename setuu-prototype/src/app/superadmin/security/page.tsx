@@ -28,7 +28,7 @@ export default function BreakGlassConsole() {
   }, [isActive]);
 
   const columns = [
-    { key: "id", header: "Session ID", cell: (row: any) => <span className="font-jetbrains-mono">{row.id}</span> },
+    
     { key: "admin", header: "Super Admin", cell: (row: any) => row.admin },
     { key: "target", header: "Target", cell: (row: any) => row.target },
     { key: "reason", header: "Reason", cell: (row: any) => row.reason },

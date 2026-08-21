@@ -1,5 +1,7 @@
 "use client";
 
+import { sendBroadcast } from "@/app/actions/platformActions";
+import { useToast } from "@/contexts/ToastContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Select } from "@/components/ui/Select";
@@ -10,6 +12,8 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function BroadcastCenterPage() {
+  const [targeting, setTargeting] = useState("");
+  const [platform, setPlatform] = useState("");
   const [isEmergency, setIsEmergency] = useState(false);
 
   return (
@@ -60,8 +64,8 @@ export default function BroadcastCenterPage() {
                       { label: "Specific Project Team", value: "project" },
                       { label: "Specific Role Group", value: "role" },
                     ]}
-                    value="all"
-                    onChange={() => {}}
+                    value={targeting}
+                    onChange={(val) => setTargeting(val)}
                   />
                   <Select 
                     options={[
@@ -69,8 +73,8 @@ export default function BroadcastCenterPage() {
                       { label: "Mobile App Only", value: "mobile" },
                       { label: "Web Portal Only", value: "web" },
                     ]}
-                    value="all"
-                    onChange={() => {}}
+                    value={platform}
+                    onChange={(val) => setPlatform(val)}
                   />
                 </div>
               </div>

@@ -1,4 +1,5 @@
 "use client";
+import { useToast } from "@/contexts/ToastContext";
 import * as React from "react";
 import { CameraIcon, MapPinIcon, RefreshCwIcon, CheckCircleIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +11,8 @@ import { createUpdate } from "@/app/actions/updateActions";
 import { createClient } from "@/lib/supabase/client";
 
 export default function CameraUpdatePage() {
+  const toast = useToast();
+
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   
@@ -127,7 +130,7 @@ export default function CameraUpdatePage() {
         setIsSubmitted(true);
       } catch (error) {
         console.error("Failed to post update:", error);
-        alert("Failed to submit update. Check console for details.");
+        toast.error("Failed to submit update. Check console for details.");
       } finally {
         setIsSubmitting(false);
       }
@@ -218,10 +221,10 @@ export default function CameraUpdatePage() {
               if (res.success) {
                 setIsSubmitted(true);
               } else {
-                alert("Error: " + res.error);
+                toast.error("Error: " + res.error);
               }
             } catch (error: any) {
-              alert("Error: " + error.message);
+              toast.error("Error: " + error.message);
             } finally {
               setIsSubmitting(false);
             }

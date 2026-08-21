@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/contexts/ToastContext";
 import { Card } from "@/components/ui/Card";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
@@ -19,6 +20,8 @@ export default function PMProjectConfigPage({
 }: {
     params: Promise<{ id: string }>;
 }) {
+  const toast = useToast();
+
     const { id } = use(params);
 
     const [projects, setProjects] = useState<any[]>([]);
@@ -57,12 +60,12 @@ export default function PMProjectConfigPage({
         try {
             const result = await updateProjectConfig(formData);
             if (result.success) {
-                alert("Project configuration updated!");
+                toast.success("Project configuration updated!");
             } else {
-                alert(`Failed to update: ${result.error}`);
+                toast.error(`Failed to update: ${result.error}`);
             }
         } catch (error) {
-            alert("An unexpected error occurred.");
+            toast.error("An unexpected error occurred.");
         } finally {
             setIsSaving(false);
         }

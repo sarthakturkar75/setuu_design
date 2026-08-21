@@ -236,3 +236,17 @@ export async function getAdminDashboardData() {
     pendingChangeRequests
   };
 }
+
+export async function sendBroadcast(data: any) {
+  await verifyRole(["admin", "superadmin"]);
+  const supabase = await createClient();
+  const { error } = await supabase.from("notifications").insert({
+    title: data.title,
+    body: data.message,
+    type: "system",
+    is_read: false,
+    user_id: "00000000-0000-0000-0000-000000000000" // Global fallback or we'd loop users
+  });
+  if (error) return { success: false, error: error.message };
+  return { success: true };
+}
