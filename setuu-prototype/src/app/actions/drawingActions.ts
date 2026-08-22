@@ -126,3 +126,27 @@ export async function updateDrawing(drawingId: string, updates: any) {
   return { success: true };
 }
 
+
+export async function createDrawing(formData: FormData) {
+  await verifyRole(["admin", "pm"]);
+  const supabase = await createClient();
+  const project_id = formData.get("project_id") as string;
+  const drawing_name = formData.get("drawing_name") as string;
+  const file_url = formData.get("file_url") as string;
+  
+  if (!project_id || !drawing_name || !file_url) return { success: false, error: "Missing fields" };
+  
+  const { error } = await supabase.from("drawing_versions").insert({
+    project_id,
+    drawing_name,
+    file_url,
+    version_number: 1,
+    status: 'Active'
+  });
+  
+  if (error) return { success: false, error: error.message };
+  
+  revalidatePath(`/admin/projects/${project_id}/drawings`);
+  revalidatePath(`/pm/projects/${project_id}/drawings`);
+  return { success: true };
+}

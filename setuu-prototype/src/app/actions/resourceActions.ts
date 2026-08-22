@@ -65,3 +65,60 @@ export async function deleteResource(resourceId: string) {
   return { success: true };
 }
 
+export async function getGlobalResourceAnalytics() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("project_resources").select("*, project:projects!project_resources_project_id_fkey(name)");
+  if (error) throw error;
+  
+  // Group by project
+  const projectAggregates: Record<string, { allocated: number, actual: number }> = {};
+  let totalVariance = 0;
+  
+  data.forEach((r: any) => {
+    const pName = r.project && typeof r.project === 'object' && !Array.isArray(r.project) ? (r.project as any).name : "Unknown Project";
+    if (!projectAggregates[pName]) projectAggregates[pName] = { allocated: 0, actual: 0 };
+    projectAggregates[pName].allocated += r.allocated_hours || 0;
+    projectAggregates[pName].actual += r.actual_hours || 0;
+    
+    totalVariance += (r.actual_hours || 0) - (r.allocated_hours || 0);
+  });
+  
+  const topProjects = Object.entries(projectAggregates).map(([name, stats]) => ({
+    name,
+    allocated: stats.allocated,
+    actual: stats.actual
+  })).sort((a, b) => b.allocated - a.allocated).slice(0, 5);
+
+  const conflicts = data.filter((r: any) => (r.actual_hours || 0) > (r.allocated_hours || 0)).map((r: any) => ({
+    id: r.id,
+    project_name: r.project && typeof r.project === 'object' && !Array.isArray(r.project) ? (r.project as any).name : "Unknown Project",
+    resource_name: r.name,
+    type: r.resource_type,
+    allocated: r.allocated_hours || 0,
+    actual: r.actual_hours || 0,
+    variance: (r.actual_hours || 0) - (r.allocated_hours || 0)
+  }));
+  
+  return {
+    topProjects,
+    totalVariance,
+    conflicts
+  };
+}
+
+export async function reallocateResource(formData: FormData) {
+  await verifyRole(["admin", "pm"]);
+  const supabase = await createClient();
+  const resource_id = formData.get("resource_id") as string;
+  const target_project_id = formData.get("target_project_id") as string;
+  
+  if (!resource_id || !target_project_id) return { success: false, error: "Missing fields" };
+  
+  const { error } = await supabase.from("project_resources").update({ project_id: target_project_id }).eq("id", resource_id);
+  if (error) return { success: false, error: error.message };
+  
+  revalidatePath("/admin/resources");
+  revalidatePath("/pm/resources");
+  return { success: true };
+}
+

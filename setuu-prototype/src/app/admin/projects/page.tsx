@@ -141,10 +141,6 @@ export default function ProjectTrackingHub() {
               value={pmFilter}
               onChange={(val) => setPmFilter(val)}
             />
-            {/* Date range mock */}
-            <div className="px-3 py-2 border border-outline-variant rounded-lg bg-surface text-sm text-on-surface flex items-center min-w-[200px]">
-              Select Date Range...
-            </div>
           </FilterBar>
 
           <Card className="flex-1 min-h-[400px]">

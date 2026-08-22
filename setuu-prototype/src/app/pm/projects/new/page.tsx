@@ -73,7 +73,7 @@ export default function NewProjectWizard() {
     data.append("contract_value", formData.contractValue);
     data.append("target_date", formData.targetDate);
     data.append("initial_resources", JSON.stringify(formData.initial_resources));
-    data.append("portal", "admin");
+    data.append("portal", "pm");
     
     // In a real implementation we would get proper UUIDs from the dropdown. 
     if (formData.pm) data.append("assigned_pm_id", formData.pm);
@@ -89,7 +89,7 @@ export default function NewProjectWizard() {
         subtitle="Initialize a new project and configure its tracking modules"
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
+            <Link href="/pm" className="hover:text-primary transition-colors">Admin</Link>
             <span>/</span>
             <Link href="/admin/projects" className="hover:text-primary transition-colors">Projects</Link>
             <span>/</span>

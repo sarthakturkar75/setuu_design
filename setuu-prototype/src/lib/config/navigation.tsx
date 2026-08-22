@@ -81,6 +81,11 @@ export const getNavigationForRole = (
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/issues`,
                     icon: <AlertTriangleIcon className="w-5 h-5" />,
                 }] : []),
+                ...(flags.project_resources !== false ? [{
+                    label: "Resources",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/resources`,
+                    icon: <UsersIcon className="w-5 h-5" />,
+                }] : []),
                 ...(flags.collaboration !== false ? [{
                     label: "Collaboration",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/collaboration`,
@@ -215,6 +220,11 @@ export const getNavigationForRole = (
                                 label: "Global Materials",
                                 href: `/${role}/materials`,
                                 icon: <PackageIcon className="w-5 h-5" />,
+                            },
+                            {
+                                label: "Global Resources",
+                                href: `/${role}/resources`,
+                                icon: <UsersIcon className="w-5 h-5" />,
                             },
                             {
                                 label: "Change Requests",

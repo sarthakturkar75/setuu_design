@@ -77,7 +77,17 @@ export default function PMProjectsList() {
 
 	return (
 		<div className="p-6 max-w-[1600px] mx-auto space-y-6">
-			<PageHeader title="Active Projects" />
+			<PageHeader 
+				title="Active Projects" 
+				actions={
+					<div className="flex items-center gap-3">
+						<a href="/pm/projects/new" className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+							New Project
+						</a>
+					</div>
+				}
+			/>
 			{q && (
 				<p className="text-sm text-on-surface-variant">
 					Showing results for "{q}" — {filteredData.length} match

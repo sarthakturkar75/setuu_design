@@ -77,6 +77,27 @@ export default function ProjectHandoverPage() {
   const completedCount = checklist.filter(item => item.isComplete).length;
   const progress = checklist.length > 0 ? Math.round((completedCount / checklist.length) * 100) : 0;
 
+  const handleExport = () => {
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + "Category,Task,Status\n"
+      + checklist.map(c => `"${c.category}","${c.task}","${c.isComplete ? 'Complete' : 'Incomplete'}"`).join("\n");
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `handover-dossier-${id}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    toast.success("Dossier exported successfully");
+  };
+
+  const handleSchedule = () => {
+    const mailto = `mailto:?subject=Project Handover Meeting&body=The project is 100% ready for handover. Please let us know your availability.`;
+    window.location.href = mailto;
+    toast.success("Opened email client");
+  };
+
   return (
     <div className="p-6 max-w-[1200px] mx-auto space-y-8 pb-32">
       <div className="flex justify-between items-start bg-surface-container rounded-xl p-8 border border-outline-variant">
@@ -130,10 +151,10 @@ export default function ProjectHandoverPage() {
       </div>
 
       <div className="flex justify-end gap-4 pt-4">
-        <Button variant="outline" onClick={() => toast.info('Export feature coming soon', 'This will generate a PDF dossier of all handover items.')}>
+        <Button variant="outline" onClick={handleExport}>
           Export Handover Dossier
         </Button>
-        <Button variant="primary" disabled={progress < 100 || checklist.length === 0} onClick={() => toast.info('Meeting scheduling coming soon', 'Calendar integration will be available in a future update.')}>
+        <Button variant="primary" disabled={progress < 100 || checklist.length === 0} onClick={handleSchedule}>
           Schedule Client Meeting
         </Button>
       </div>

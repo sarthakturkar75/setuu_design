@@ -9,7 +9,7 @@ import { Database } from "@/types/database";
 type Project = Database["public"]["Tables"]["projects"]["Row"];
 
 export async function createProject(formData: FormData) {
-  await verifyRole(["admin", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
   const name = formData.get("name") as string;
@@ -41,8 +41,29 @@ export async function createProject(formData: FormData) {
     return { success: false, error: error.message };
   }
 
+  const initial_resources = formData.get("initial_resources") as string;
+  if (initial_resources) {
+    try {
+      const parsedResources = JSON.parse(initial_resources);
+      if (Array.isArray(parsedResources) && parsedResources.length > 0) {
+        const resourceInserts = parsedResources.map((res: any) => ({
+          project_id: data.id,
+          name: res.name,
+          resource_type: res.type,
+          allocated_hours: parseInt(res.hours || "0", 10)
+        }));
+        await supabase.from("project_resources").insert(resourceInserts);
+      }
+    } catch (e) {
+      console.error("Failed to parse initial_resources", e);
+    }
+  }
+
   revalidatePath("/admin/projects");
-  redirect(`/admin/projects/${data.id}`);
+  revalidatePath("/pm/projects");
+  
+  const portal = formData.get("portal") as string || "admin";
+  redirect(`/${portal}/projects/${data.id}`);
 }
 
 export async function updateProjectConfig(formData: FormData) {
@@ -431,4 +452,24 @@ export async function getCalendarEvents() {
   events.sort((a, b) => b.date.getTime() - a.date.getTime());
   
   return events;
+}
+
+export async function assignTeamMember(formData: FormData) {
+  await verifyRole(["admin", "pm", "superadmin"]);
+  const supabase = await createClient();
+  const project_id = formData.get("project_id") as string;
+  const vendor_id = formData.get("vendor_id") as string;
+  
+  if (!project_id || !vendor_id) return { success: false, error: "Missing fields" };
+  
+  const { error } = await supabase.from("project_vendors").insert({
+    project_id,
+    vendor_id
+  });
+  
+  if (error) return { success: false, error: error.message };
+  
+  revalidatePath(`/admin/projects/${project_id}/team`);
+  revalidatePath(`/pm/projects/${project_id}/team`);
+  return { success: true };
 }
