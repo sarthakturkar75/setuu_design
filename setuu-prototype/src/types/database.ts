@@ -1356,6 +1356,8 @@ export type Database = {
       }
       milestones: {
         Row: {
+          baseline_end_date: string | null
+          baseline_start_date: string | null
           completion_status: boolean | null
           created_at: string | null
           custom_data: Json | null
@@ -1363,6 +1365,7 @@ export type Database = {
           description: string | null
           display_order: number | null
           id: string
+          is_exterior: boolean | null
           project_id: string
           sov_value: number | null
           target_date: string | null
@@ -1371,6 +1374,8 @@ export type Database = {
           weight_percent: number | null
         }
         Insert: {
+          baseline_end_date?: string | null
+          baseline_start_date?: string | null
           completion_status?: boolean | null
           created_at?: string | null
           custom_data?: Json | null
@@ -1378,6 +1383,7 @@ export type Database = {
           description?: string | null
           display_order?: number | null
           id?: string
+          is_exterior?: boolean | null
           project_id: string
           sov_value?: number | null
           target_date?: string | null
@@ -1386,6 +1392,8 @@ export type Database = {
           weight_percent?: number | null
         }
         Update: {
+          baseline_end_date?: string | null
+          baseline_start_date?: string | null
           completion_status?: boolean | null
           created_at?: string | null
           custom_data?: Json | null
@@ -1393,6 +1401,7 @@ export type Database = {
           description?: string | null
           display_order?: number | null
           id?: string
+          is_exterior?: boolean | null
           project_id?: string
           sov_value?: number | null
           target_date?: string | null
@@ -2472,18 +2481,21 @@ export type Database = {
           created_at: string | null
           id: string
           name: string
+          payload: Json | null
           project_id: string | null
         }
         Insert: {
           created_at?: string | null
           id?: string
           name: string
+          payload?: Json | null
           project_id?: string | null
         }
         Update: {
           created_at?: string | null
           id?: string
           name?: string
+          payload?: Json | null
           project_id?: string | null
         }
         Relationships: [

@@ -9,8 +9,7 @@ import {
   setScheduleBaseline, 
   calculateWeatherDelays, 
   checkResourceAllocation,
-  cloneTimelineToScenario, 
-  importProjectSchedule
+  cloneTimelineToScenario, importProjectSchedule
 } from "@/app/actions/timelineActions";
 import { autoLevelResources } from "@/app/actions/timelineLeveling";
 import { CameraIcon, Target, CloudRain, Users, FlaskConical, Upload, Save } from "lucide-react";
@@ -78,7 +77,7 @@ export default function ProjectTimelinePage() {
   const handleSandbox = () => {
     if(!sandboxMode) {
       handleAction("Creating Sandbox", async () => {
-        await cloneTimelineToScenario(params?.id as string, `Sandbox ${new Date().toISOString()}`);
+        await cloneTimelineToScenario, importProjectSchedule(params?.id as string, `Sandbox ${new Date().toISOString()}`);
         setSandboxMode(true);
       });
     } else {
@@ -93,7 +92,11 @@ export default function ProjectTimelinePage() {
     setActionLoading("Importing");
     try {
       const text = await file.text();
-      await importProjectSchedule(params?.id as string, text);
+      const res = await importProjectSchedule(params?.id as string, text);
+      if (!res.success) {
+         alert(res.error);
+         return;
+      }
       const data = await getTimelineData(params?.id as string);
       setMilestones(data.milestones || []);
       alert("Schedule imported successfully.");
@@ -135,8 +138,8 @@ export default function ProjectTimelinePage() {
            </button>
            <label className="flex items-center gap-2 px-3 py-2 bg-primary text-white hover:bg-primary/90 rounded-md text-sm font-medium transition-colors cursor-pointer shadow-glow">
              <Upload className="w-4 h-4" />
-             {actionLoading === "Importing" ? "Importing..." : "Import .mpp"}
-             <input type="file" className="hidden" accept=".mpp,.xml" onChange={handleImport} />
+             {actionLoading === "Importing" ? "Importing..." : "Import XML"}
+             <input type="file" className="hidden" accept=".xml" onChange={handleImport} />
            </label>
         </div>
       </div>

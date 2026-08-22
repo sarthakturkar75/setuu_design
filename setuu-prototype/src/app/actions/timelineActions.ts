@@ -106,6 +106,12 @@ export async function setScheduleBaseline(projectId: string) {
 export async function importProjectSchedule(projectId: string, xmlString: string) {
   const supabase = await createClient();
   try {
+    // Prevent binary .mpp files from crashing the XML parser
+    const trimmed = xmlString.trim();
+    if (!trimmed.startsWith('<')) {
+      return { success: false, error: "Invalid format. Please export your MS Project schedule as an XML file (.xml). Binary .mpp files are not directly supported in the browser." };
+    }
+
     const parsed = await parseStringPromise(xmlString);
     // Typical MS Project XML structure: Project.Tasks[0].Task
     const tasks = parsed.Project?.Tasks?.[0]?.Task || [];
@@ -131,7 +137,7 @@ export async function importProjectSchedule(projectId: string, xmlString: string
     revalidatePath(`/admin/projects/${projectId}/timeline`);
     return { success: true };
   } catch (error: any) {
-    throw new Error("Failed to parse schedule file: " + error.message);
+    return { success: false, error: "Failed to parse schedule XML: " + error.message };
   }
 }
 
