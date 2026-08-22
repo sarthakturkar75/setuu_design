@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { getProjectFlags } from "@/app/actions/projectActions";
+import { getProjectFlags, getProjectById } from "@/app/actions/projectActions";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TabBar } from "@/components/ui/TabBar";
@@ -13,10 +13,16 @@ export default function ProjectDetailLayout({
   const params = useParams();
   const id = params?.id as string || "unknown";
   const [flags, setFlags] = React.useState<any>(null);
+  const [projectName, setProjectName] = React.useState('Project');
+  const [projectStatus, setProjectStatus] = React.useState('Active');
   
   React.useEffect(() => {
     if (id !== "unknown") {
       getProjectFlags(id).then(res => setFlags(res));
+      getProjectById(id).then(p => {
+        setProjectName(p?.name || 'Project');
+        setProjectStatus(p?.status || 'Active');
+      }).catch(() => {});
     }
   }, [id]);
   const pathname = usePathname();
@@ -54,7 +60,7 @@ export default function ProjectDetailLayout({
   return (
     <div className="flex flex-col space-y-0 w-full min-h-screen">
       <div className="px-6 pt-6 max-w-[1600px] w-full mx-auto pb-4">
-        <PageHeader title={`Project ${id.toUpperCase()}`} subtitle="Active Construction Phase" />
+        <PageHeader title={projectName} subtitle={projectStatus} />
         <TabBar 
           tabs={tabs} 
           activeTab={activeTab} 

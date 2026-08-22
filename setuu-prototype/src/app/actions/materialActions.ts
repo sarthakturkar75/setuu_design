@@ -31,25 +31,26 @@ export async function createMaterial(formData: FormData) {
   const supabase = await createClient();
 
   const project_id = formData.get("project_id") as string;
-  const name = formData.get("name") as string;
+  const item_name = formData.get("item_name") as string;
+  const quantity = formData.get("quantity") as string;
   const po_number = formData.get("po_number") as string;
-  const supplier = formData.get("supplier") as string;
-  const expected_delivery = formData.get("expected_delivery") as string;
-
+    
   const { error } = await supabase
     .from("project_materials")
     .insert({
       project_id,
-      name,
+      item_name,
+      quantity: parseInt(quantity || "0", 10),
       po_number,
-      supplier,
-      expected_delivery: expected_delivery || null,
+      
+      
       status: "Ordered",
     });
 
   if (error) return { success: false, error: error.message };
 
   revalidatePath(`/pm/projects/${project_id}/materials`);
+  revalidatePath(`/admin/projects/${project_id}/materials`);
   revalidatePath(`/pm/materials`);
   return { success: true };
 }
@@ -65,6 +66,7 @@ export async function updateMaterialStatus(id: string, projectId: string, status
   if (error) return { success: false, error: error.message };
 
   revalidatePath(`/pm/projects/${projectId}/materials`);
+  revalidatePath(`/admin/projects/${projectId}/materials`);
   revalidatePath(`/pm/materials`);
   return { success: true };
 }
@@ -84,6 +86,7 @@ export async function receiveMaterial(id: string, projectId: string, proofData: 
   if (error) return { success: false, error: error.message };
 
   revalidatePath(`/pm/projects/${projectId}/materials`);
+  revalidatePath(`/admin/projects/${projectId}/materials`);
   revalidatePath(`/pm/materials`);
   return { success: true };
 }

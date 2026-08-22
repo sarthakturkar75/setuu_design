@@ -1,7 +1,8 @@
 "use client";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { getMilestones } from "@/app/actions/milestoneActions";
+import { getCalendarEvents } from "@/app/actions/projectActions";
+import { AlertCircle, Camera } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, Users, CheckCircle } from "lucide-react";
 import Link from "next/link";
@@ -15,15 +16,7 @@ export default function CalendarPage() {
         async function fetchEvents() {
             setLoading(true);
             try {
-                const milestones = await getMilestones();
-                const allEvents = milestones.map((m: any) => ({
-                    id: `m-${m.id}`,
-                    title: m.title,
-                    date: new Date(m.target_date || m.created_at),
-                    type: 'milestone',
-                    project: m.projects && typeof m.projects === 'object' && !Array.isArray(m.projects) ? (m.projects as any).name : 'Global',
-                    status: m.completion_status
-                }));
+                const allEvents = await getCalendarEvents();
                 setEvents(allEvents);
             } catch (error) {
                 console.error("Failed to load calendar events", error);
@@ -111,9 +104,15 @@ export default function CalendarPage() {
                                     </div>
                                     <div className="flex flex-col gap-1">
                                         {dayEvents.map(event => (
-                                            <div key={event.id} className={`px-2 py-1.5 rounded text-xs font-medium truncate ${event.type === 'milestone' ? 'bg-semantic-emerald/10 text-semantic-emerald-on border border-semantic-emerald/20' : 'bg-semantic-blue/10 text-semantic-blue-on border border-semantic-blue/20'}`}>
+                                            <div key={event.id} className={`px-2 py-1.5 rounded text-xs font-medium truncate ${event.type === 'milestone' ? 'bg-semantic-emerald/10 text-semantic-emerald-on border border-semantic-emerald/20' : 
+                                               event.type === 'issue' ? 'bg-semantic-crimson/10 text-semantic-crimson-on border border-semantic-crimson/20' :
+                                               event.type === 'update' ? 'bg-semantic-purple/10 text-semantic-purple-on border border-semantic-purple/20' :
+                                               'bg-semantic-blue/10 text-semantic-blue-on border border-semantic-blue/20'}`}>
                                                 <div className="flex items-center gap-1 mb-0.5">
-                                                    {event.type === 'milestone' ? <CheckCircle className="w-3 h-3 shrink-0" /> : <Clock className="w-3 h-3 shrink-0" />}
+                                                    {event.type === 'milestone' ? <CheckCircle className="w-3 h-3 shrink-0" /> : 
+                                                     event.type === 'update' ? <Camera className="w-3 h-3 shrink-0" /> : 
+                                                     event.type === 'issue' ? <AlertCircle className="w-3 h-3 shrink-0" /> :
+                                                     <Clock className="w-3 h-3 shrink-0" />}
                                                     <span className="truncate">{event.title}</span>
                                                 </div>
                                                 <div className="text-[10px] opacity-80 truncate">{event.project || 'Global'}</div>

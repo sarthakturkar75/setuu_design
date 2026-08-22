@@ -30,17 +30,18 @@ export async function getIssues(projectId?: string, filters?: { severity?: strin
 }
 
 export async function createIssue(formData: FormData) {
-  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
-  const user = await verifyRole(["admin", "pm", "engineer", "vendor"]);
+  const user = await verifyRole(["admin", "pm", "superadmin", "engineer", "vendor"]);
 
   // 2. Strictly extract only the allowed fields
   const project_id = formData.get("project_id") as string;
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const severity = formData.get("severity") as string;
-  const type = formData.get("type") as string;
+
+  const { count } = await supabase.from('project_issues').select('*', { count: 'exact', head: true }); 
+  const display_id = 'ISS-' + String((count || 0) + 1).padStart(4, '0');
 
   const { error } = await supabase
     .from("project_issues")
@@ -49,9 +50,9 @@ export async function createIssue(formData: FormData) {
       title,
       description,
       severity,
-      type,
       status: "Open",
-      created_by: user.id // Attach the user securely!
+      created_by: user.id, // Attach the user securely!
+      display_id
     });
 
   if (error) {
@@ -62,6 +63,8 @@ export async function createIssue(formData: FormData) {
   // 3. Clear cache for the issue list and project dashboard
   revalidatePath(`/pm/projects/${project_id}/issues`);
   revalidatePath(`/pm/projects/${project_id}`);
+  revalidatePath(`/admin/projects/${project_id}/issues`);
+  revalidatePath(`/admin/projects/${project_id}`);
   return { success: true };
 }
 

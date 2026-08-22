@@ -6,14 +6,14 @@ import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
 import { Select } from "@/components/ui/Select";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { Save, LifeBuoy, Loader2 } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { use, useState, useEffect } from "react";
 import {
   getProjects,
   getProjectById,
   updateProjectConfig,
-  getProjectConfigOptions // <-- NEW IMPORT
+  getProjectConfigOptions
 } from "@/app/actions/projectActions";
 
 export default function ProjectConfigPage({
@@ -28,7 +28,6 @@ export default function ProjectConfigPage({
   const [projects, setProjects] = useState<any[]>([]);
   const [currentProject, setCurrentProject] = useState<any>(null);
 
-  // NEW: State to hold our dropdown options
   const [pmOptions, setPmOptions] = useState<{ label: string, value: string }[]>([]);
   const [clientOptions, setClientOptions] = useState<{ label: string, value: string }[]>([]);
 
@@ -39,17 +38,15 @@ export default function ProjectConfigPage({
     async function loadData() {
       setIsLoading(true);
       try {
-        // Fetch all required data simultaneously
         const [allProjects, projectData, configOptions] = await Promise.all([
           getProjects(),
           getProjectById(id),
-          getProjectConfigOptions() // <-- Fetch our dropdown data
+          getProjectConfigOptions()
         ]);
 
         setProjects(allProjects || []);
         setCurrentProject(projectData);
 
-        // Map database records to the { label, value } format the Select component expects
         setPmOptions(configOptions.pms.map(pm => ({ label: pm.display_name, value: pm.id })));
         setClientOptions(configOptions.clients.map(client => ({ label: client.name, value: client.id })));
 
@@ -108,7 +105,6 @@ export default function ProjectConfigPage({
   return (
     <div className="flex flex-col lg:flex-row h-full max-w-[1600px] mx-auto p-6 gap-6">
 
-      {/* Sidebar Selector */}
       <div className="w-full lg:w-72 shrink-0 flex flex-col gap-4">
         <h3 className="font-merriweather font-bold text-on-surface">Active Projects</h3>
         <div className="space-y-2">
@@ -128,7 +124,7 @@ export default function ProjectConfigPage({
                 <StatusBadge tone={p.status as any} label={p.status} />
               </div>
               <span className="text-xs font-jetbrains text-on-surface-variant">
-                {p.id.substring(0, 8)}...
+                {p.po_reference || p.type || ''}
               </span>
             </Link>
           ))}
@@ -193,7 +189,6 @@ export default function ProjectConfigPage({
           <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Management & Timeline</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            {/* REAL DATA INTEGRATION HERE */}
             <FormField label="Assigned Project Manager">
               <Select
                 name="assigned_pm_id"
@@ -203,7 +198,6 @@ export default function ProjectConfigPage({
               />
             </FormField>
 
-            {/* REAL DATA INTEGRATION HERE */}
             <FormField label="Client Organization">
               <Select
                 name="client_org_id"
@@ -233,14 +227,6 @@ export default function ProjectConfigPage({
         </Card>
 
         <div className="flex items-center justify-end gap-3 mt-4">
-          <button
-            type="button"
-            className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg font-semibold hover:bg-surface-variant transition-colors"
-          >
-            <LifeBuoy className="w-4 h-4" />
-            Raise Ticket
-          </button>
-
           <button
             type="submit"
             disabled={isSaving}

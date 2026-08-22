@@ -17,16 +17,15 @@ export default function ProjectFlagsPage({
 }) {
   const { id } = use(params);
   const [flags, setFlags] = useState<any>(null);
-  const { success, error, info } = useToast();
-  const pid = id;
+  const { success, error } = useToast();
 
   useEffect(() => {
-    getProjectFlags(pid).then(res => setFlags(res));
-  }, [pid]);
+    getProjectFlags(id).then(res => setFlags(res));
+  }, [id]);
 
   const handleToggle = async (moduleName: string, val: boolean) => {
     setFlags((prev: any) => ({ ...prev, [moduleName]: val }));
-    const res = await updateProjectFlag(pid, moduleName, val);
+    const res = await updateProjectFlag(id, moduleName, val);
     if(res.success) {
       success("Flag Updated", `${moduleName} has been ${val ? 'enabled' : 'disabled'}.`);
     } else {
@@ -72,16 +71,8 @@ export default function ProjectFlagsPage({
               <div>
                 <h4 className="font-semibold text-on-surface">Resource & Labor Tracking</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Timesheets, workforce allocation, and productivity matrix.</p>
-                {flags.resources && (
-                  <div className="mt-3 p-3 bg-surface-variant/30 rounded border border-outline-variant/50 text-sm">
-                    <strong>Granular Controls:</strong>
-                    <label className="flex items-center gap-2 mt-2 cursor-pointer">
-                      <input type="checkbox" className="rounded text-primary" defaultChecked /> Require PM approval for timesheets
-                    </label>
-                  </div>
-                )}
               </div>
-              <Toggle checked={flags.resources} onChange={(c: any) => handleToggle('project_resources', c)} />
+              <Toggle checked={flags.project_resources} onChange={(c: any) => handleToggle('project_resources', c)} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -89,7 +80,7 @@ export default function ProjectFlagsPage({
                 <h4 className="font-semibold text-on-surface">Change Order Requests</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Manage scope variations and financial approvals.</p>
               </div>
-              <Toggle checked={flags.changes} onChange={(c: any) => handleToggle('change_requests', c)} />
+              <Toggle checked={flags.change_requests} onChange={(c: any) => handleToggle('change_requests', c)} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -97,7 +88,7 @@ export default function ProjectFlagsPage({
                 <h4 className="font-semibold text-on-surface">Master Material Tracking</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Track POs, deliveries, and field receipts.</p>
               </div>
-              <Toggle checked={flags.materials} onChange={(c: any) => handleToggle('project_materials', c)} />
+              <Toggle checked={flags.project_materials} onChange={(c: any) => handleToggle('project_materials', c)} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -105,7 +96,7 @@ export default function ProjectFlagsPage({
                 <h4 className="font-semibold text-on-surface">Defect & Issue Logger</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Log defects, snags, and site blockers.</p>
               </div>
-              <Toggle checked={flags.issues} onChange={(c: any) => handleToggle('project_issues', c)} />
+              <Toggle checked={flags.project_issues} onChange={(c: any) => handleToggle('project_issues', c)} />
             </div>
 
             <div className="flex items-center justify-between p-4 border border-outline-variant rounded-lg bg-surface">
@@ -113,29 +104,10 @@ export default function ProjectFlagsPage({
                 <h4 className="font-semibold text-on-surface">Architectural Drawing Hub</h4>
                 <p className="text-sm text-on-surface-variant mt-1">Manage architectural and engineering blueprints.</p>
               </div>
-              <Toggle checked={flags.drawings} onChange={(c: any) => handleToggle('drawing_versions', c)} />
+              <Toggle checked={flags.drawing_versions} onChange={(c: any) => handleToggle('drawing_versions', c)} />
             </div>
           </div>
         </Card>}
-
-        <div className="flex flex-wrap items-center justify-end gap-3 mt-2">
-          <button className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg font-semibold hover:bg-surface-variant transition-colors text-sm">
-            <RefreshCw className="w-4 h-4" />
-            Reset to Org Defaults
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg font-semibold hover:bg-surface-variant transition-colors text-sm">
-            <Download className="w-4 h-4" />
-            Export Configuration
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 border border-outline-variant bg-surface text-on-surface rounded-lg font-semibold hover:bg-surface-variant transition-colors text-sm">
-            <Copy className="w-4 h-4" />
-            Apply to Project Group
-          </button>
-          <button className="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-lg font-semibold hover:bg-primary/90 transition-colors text-sm">
-            <Save className="w-4 h-4" />
-            Save Configuration
-          </button>
-        </div>
       </div>
 
       {/* Audit Sidebar */}

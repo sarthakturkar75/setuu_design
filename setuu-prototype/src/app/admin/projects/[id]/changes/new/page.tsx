@@ -71,7 +71,7 @@ export default function NewChangeRequestPage() {
         <h2 className="text-2xl font-bold font-merriweather text-on-surface">Change Request Submitted</h2>
         <p className="text-on-surface-variant max-w-md mx-auto">Your draft has been routed to the client and engineering teams for review.</p>
         <div className="pt-8">
-          <Link href={`/pm/projects/${projectId}`}>
+          <Link href={`/admin/projects/${projectId}`}>
             <Button variant="primary">Return to Dashboard</Button>
           </Link>
         </div>

@@ -5,9 +5,8 @@ import { KanbanColumn } from "@/components/ui/KanbanColumn";
 import { KanbanCard } from "@/components/ui/KanbanCard";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { PlusIcon } from "lucide-react";
-import { getProjectMilestones, updateMilestone, deleteMilestone } from "@/app/actions/milestoneActions";
-
-type MilestoneStatus = "todo" | "in_progress" | "review" | "completed";
+import { getProjectMilestones, updateMilestone, deleteMilestone, createMilestone } from "@/app/actions/milestoneActions";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function MilestoneKanbanPage() {
   const params = useParams();
@@ -16,6 +15,9 @@ export default function MilestoneKanbanPage() {
   const [milestones, setMilestones] = React.useState<any[]>([]);
   const [draggedTask, setDraggedTask] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [showAddForm, setShowAddForm] = React.useState(false);
+  const [newTitle, setNewTitle] = React.useState('');
+  const toast = useToast();
 
   React.useEffect(() => {
     const fetchMilestones = async () => {
@@ -54,33 +56,41 @@ export default function MilestoneKanbanPage() {
   const handleDrop = async (e: React.DragEvent, targetStatus: string) => {
     e.preventDefault();
     if (draggedTask) {
+      const isCompleted = targetStatus === 'Completed';
+      const originalMilestone = milestones.find(t => t.id === draggedTask);
+      
       // Optimistic update
       setMilestones(prev => prev.map(t => 
-        t.id === draggedTask ? { ...t, completion_status: targetStatus } : t
+        t.id === draggedTask ? { ...t, completion_status: isCompleted, status_label: targetStatus } : t
       ));
       
       // Server update
-      await updateMilestone(draggedTask, { completion_status: targetStatus });
+      const res = await updateMilestone(draggedTask, { completion_status: isCompleted });
+      if (!res?.success) {
+         toast.error(res?.error || 'Failed to update milestone');
+         // revert
+         if (originalMilestone) {
+            setMilestones(prev => prev.map(t => t.id === draggedTask ? originalMilestone : t));
+         }
+      }
     }
   };
 
-  // Map arbitrary completion_status strings to columns, defaulting appropriately
-  const getColumnForStatus = (status: string) => {
-    const s = (status || "").toLowerCase();
-    if (s.includes("progress")) return "in_progress";
-    if (s.includes("review")) return "review";
-    if (s.includes("complete")) return "completed";
-    return "todo";
+  const getColumnForStatus = (statusLabel: string) => {
+    if (statusLabel === 'Completed') return 'completed';
+    if (statusLabel === 'Overdue') return 'review';
+    if (statusLabel === 'In Progress') return 'in_progress';
+    return 'todo';
   };
 
   const renderColumn = (columnId: string, title: string) => {
-    const columnMilestones = milestones.filter(t => getColumnForStatus(t.completion_status) === columnId);
+    const columnMilestones = milestones.filter(t => getColumnForStatus(t.status_label) === columnId);
     
     return (
       <div 
         className="h-full flex-shrink-0"
         onDragOver={handleDragOver}
-        onDrop={(e) => handleDrop(e, title)} // using title or mapped status to save to DB
+        onDrop={(e) => handleDrop(e, title)} 
       >
         <KanbanColumn title={title} count={columnMilestones.length}>
           {columnMilestones.map(t => (
@@ -97,24 +107,58 @@ export default function MilestoneKanbanPage() {
                 assignee={{ id: t.id, name: t.department || "Unassigned" }}
                 badge={
                   <StatusBadge 
-                    tone={t.completion_status === "Overdue" ? "crimson" : "slate"} 
+                    tone={t.status_label === "Overdue" ? "crimson" : "slate"} 
                     label={t.target_date || "No date"} 
                   />
                 }
                 onDelete={async (e) => {
                   e.stopPropagation();
-                  if (confirm("Are you sure you want to delete this milestone?")) {
-                    await deleteMilestone(t.id);
+                  if (!window.confirm("Are you sure you want to delete this milestone?")) return;
+                  const res = await deleteMilestone(t.id);
+                  if (res?.success) {
                     setMilestones(m => m.filter(x => x.id !== t.id));
+                    toast.success("Milestone deleted");
+                  } else {
+                    toast.error(res?.error || "Failed to delete milestone");
                   }
                 }}
               />
             </div>
           ))}
           {columnId === "todo" && (
-            <button className="w-full mt-2 py-2 flex items-center justify-center gap-2 text-sm text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-lg transition-colors border border-dashed border-outline-variant hover:border-primary/50">
-              <PlusIcon className="w-4 h-4" /> Add Milestone
-            </button>
+            showAddForm ? (
+              <div className="mt-2 flex gap-2">
+                <input
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  placeholder="Milestone title..."
+                  className="flex-1 px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm text-on-surface"
+                  autoFocus
+                />
+                <button
+                  onClick={async () => {
+                    if (!newTitle.trim()) return;
+                    const res = await createMilestone(projectId, { title: newTitle.trim(), completion_status: false });
+                    if (res.success) {
+                      toast.success('Milestone created!');
+                      setNewTitle('');
+                      setShowAddForm(false);
+                      const data = await getProjectMilestones(projectId);
+                      setMilestones(data || []);
+                    } else {
+                      toast.error(res.error || 'Failed to create milestone');
+                    }
+                  }}
+                  className="px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold"
+                >Add</button>
+                <button onClick={() => { setShowAddForm(false); setNewTitle(''); }} className="px-3 py-2 text-sm text-on-surface-variant">Cancel</button>
+              </div>
+            ) : (
+              <button onClick={() => setShowAddForm(true)} className="w-full mt-2 py-2 flex items-center justify-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all text-sm border border-dashed border-outline-variant hover:border-primary/50">
+                <PlusIcon className="w-4 h-4" /> Add Milestone
+              </button>
+            )
           )}
         </KanbanColumn>
       </div>

@@ -144,7 +144,7 @@ export default function CameraUpdatePage() {
             <p className="text-on-surface-variant max-w-md mx-auto">Your watermarked photo and description have been securely logged to the timeline.</p>
             <div className="pt-8 flex justify-center gap-4">
                 <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); setCaption(""); }}>Log Another Update</Button>
-                <Link href={`/pm/projects/${id}`}>
+                <Link href={`/admin/projects/${id}`}>
                     <Button variant="primary">Return to Dashboard</Button>
                 </Link>
             </div>

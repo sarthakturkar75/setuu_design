@@ -46,12 +46,13 @@ export async function createProject(formData: FormData) {
 }
 
 export async function updateProjectConfig(formData: FormData) {
-  await verifyRole(["admin", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
+  const type = formData.get("type") as string;
   const contract_value = parseFloat(formData.get("contract_value") as string);
   const target_date = formData.get("target_date") as string;
   const po_reference = formData.get("po_reference") as string;
@@ -64,6 +65,7 @@ export async function updateProjectConfig(formData: FormData) {
     .update({
       name,
       description,
+      type: type || undefined,
       contract_value: isNaN(contract_value) ? null : contract_value,
       target_date: target_date || null,
       po_reference: po_reference || null,
@@ -124,10 +126,6 @@ export async function archiveProject(id: string) {
     .eq("id", id);
 
   if (error) {
-       if (error.message.includes('project_config_module_name_check')) {
-          // Soft fail: The database constraint rejects this module name, but we return success so the prototype UI continues functioning in memory.
-          return { success: true, warning: 'DB_CONSTRAINT_BLOCKED' };
-       }
        return { success: false, error: error.message };
      }
   revalidatePath("/admin/projects");
@@ -143,10 +141,6 @@ export async function deleteProject(id: string) {
     .eq("id", id);
 
   if (error) {
-       if (error.message.includes('project_config_module_name_check')) {
-          // Soft fail: The database constraint rejects this module name, but we return success so the prototype UI continues functioning in memory.
-          return { success: true, warning: 'DB_CONSTRAINT_BLOCKED' };
-       }
        return { success: false, error: error.message };
      }
   revalidatePath("/admin/projects");
@@ -358,6 +352,13 @@ export async function getProjectFlags(projectId: string) {
   for (const row of data) {
     flags[row.module_name] = row.is_enabled;
   }
+  
+  flags.resources = flags.project_resources;
+  flags.changes = flags.change_requests;
+  flags.materials = flags.project_materials;
+  flags.issues = flags.project_issues;
+  flags.drawings = flags.drawing_versions;
+
   return flags;
 }
 
@@ -371,22 +372,63 @@ export async function updateProjectFlag(projectId: string, moduleName: string, i
   if (existing) {
      const { error } = await supabase.from('project_config').update({ is_enabled: isEnabled, updated_at: new Date().toISOString() }).eq('id', existing.id);
      if (error) {
-       if (error.message.includes('project_config_module_name_check')) {
-          // Soft fail: The database constraint rejects this module name, but we return success so the prototype UI continues functioning in memory.
-          return { success: true, warning: 'DB_CONSTRAINT_BLOCKED' };
-       }
        return { success: false, error: error.message };
      }
   } else {
      const { error } = await supabase.from('project_config').insert({ project_id: projectId, module_name: moduleName, is_enabled: isEnabled });
      if (error) {
-       if (error.message.includes('project_config_module_name_check')) {
-          // Soft fail: The database constraint rejects this module name, but we return success so the prototype UI continues functioning in memory.
-          return { success: true, warning: 'DB_CONSTRAINT_BLOCKED' };
-       }
        return { success: false, error: error.message };
      }
   }
   
   return { success: true };
+}
+
+export async function getCalendarEvents() {
+  const supabase = await createClient();
+  const events = [];
+
+  // 1. Fetch Milestones
+  const { data: milestones } = await supabase.from('milestones').select('id, title, target_date, created_at, completion_status, projects(name)');
+  if (milestones) {
+    events.push(...milestones.map((m: any) => ({
+      id: `m-${m.id}`,
+      title: m.title || "Milestone",
+      date: new Date(m.target_date || m.created_at),
+      type: 'milestone',
+      project: m.projects && typeof m.projects === 'object' && !Array.isArray(m.projects) ? (m.projects as any).name : 'Global',
+      status: m.completion_status ? 'Completed' : 'Pending'
+    })));
+  }
+
+  // 2. Fetch Updates
+  const { data: updates } = await supabase.from('updates').select('id, caption, created_at, projects(name)');
+  if (updates) {
+    events.push(...updates.map((u: any) => ({
+      id: `u-${u.id}`,
+      title: "Progress Update",
+      date: new Date(u.created_at),
+      type: 'update',
+      project: u.projects && typeof u.projects === 'object' && !Array.isArray(u.projects) ? (u.projects as any).name : 'Global',
+      status: 'Logged'
+    })));
+  }
+
+  // 3. Fetch Issues
+  const { data: issues } = await supabase.from('project_issues').select('id, title, created_at, status, projects(name)');
+  if (issues) {
+    events.push(...issues.map((i: any) => ({
+      id: `i-${i.id}`,
+      title: i.title || "Issue Logged",
+      date: new Date(i.created_at),
+      type: 'issue',
+      project: i.projects && typeof i.projects === 'object' && !Array.isArray(i.projects) ? (i.projects as any).name : 'Global',
+      status: i.status || 'Open'
+    })));
+  }
+  
+  // Sort all events by date
+  events.sort((a, b) => b.date.getTime() - a.date.getTime());
+  
+  return events;
 }

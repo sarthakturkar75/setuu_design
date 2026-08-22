@@ -64,7 +64,7 @@ export async function uploadDrawingVersion(drawingId: string, formData: FormData
   const { error } = await supabase.from("drawing_versions").insert({
     project_id,
     drawing_id: drawingId,
-    drawing_name: "Drawing " + drawingId.substring(0, 8),
+    drawing_name: (formData.get("drawing_name") as string) || "Untitled Drawing",
     file_url: url,
     uploaded_by,
     version_number: nextVersion,
@@ -93,11 +93,11 @@ export async function compareDrawingVersions(v1Id: string, v2Id: string) {
 export async function deleteDrawing(drawingId: string) {
   await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
-  const { data: drawing, error: fetchError } = await supabase.from("drawings").select("project_id").eq("id", drawingId).single();
+  const { data: drawing, error: fetchError } = await supabase.from("drawing_versions").select("project_id").eq("id", drawingId).single();
   
   if (fetchError) return { success: false, error: fetchError.message };
 
-  const { error } = await supabase.from("drawings").delete().eq("id", drawingId);
+  const { error } = await supabase.from("drawing_versions").delete().eq("id", drawingId);
   if (error) return { success: false, error: error.message };
   
   if (drawing?.project_id) {
@@ -111,11 +111,11 @@ export async function deleteDrawing(drawingId: string) {
 export async function updateDrawing(drawingId: string, updates: any) {
   await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
-  const { data: drawing, error: fetchError } = await supabase.from("drawings").select("project_id").eq("id", drawingId).single();
+  const { data: drawing, error: fetchError } = await supabase.from("drawing_versions").select("project_id").eq("id", drawingId).single();
   
   if (fetchError) return { success: false, error: fetchError.message };
 
-  const { error } = await supabase.from("drawings").update(updates).eq("id", drawingId);
+  const { error } = await supabase.from("drawing_versions").update(updates).eq("id", drawingId);
   if (error) return { success: false, error: error.message };
   
   if (drawing?.project_id) {

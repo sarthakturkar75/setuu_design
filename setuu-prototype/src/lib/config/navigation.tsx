@@ -32,6 +32,7 @@ export const getNavigationForRole = (
     projectId: string | null,
     dynamicData?: {
         projects?: any[];
+        flags?: any;
         healthStatus?: "healthy" | "warning" | "critical";
     },
 ): { sections: NavSection[]; bottomItems: NavItem[] } => {
@@ -50,6 +51,7 @@ export const getNavigationForRole = (
     ];
 
     // Shared Project Operations
+    const flags = dynamicData?.flags || { project_resources: true, change_requests: true, project_materials: true, project_issues: true, drawing_versions: true, timeline: true, milestones: true, collaboration: true, handover: true };
     const projectOpsSection: NavSection = {
         title: "Project Operations",
         items: projectId
@@ -59,31 +61,31 @@ export const getNavigationForRole = (
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}`,
                     icon: <LayoutDashboardIcon className="w-5 h-5" />,
                 },
-                {
+                ...(flags.milestones !== false ? [{
                     label: "Milestones",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/milestones`,
                     icon: <CheckSquareIcon className="w-5 h-5" />,
-                },
-                {
+                }] : []),
+                ...(flags.project_materials !== false ? [{
                     label: "Materials",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/materials`,
                     icon: <PackageIcon className="w-5 h-5" />,
-                },
-                {
+                }] : []),
+                ...(flags.drawing_versions !== false ? [{
                     label: "Drawings",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/drawings`,
                     icon: <FileBoxIcon className="w-5 h-5" />,
-                },
-                {
+                }] : []),
+                ...(flags.project_issues !== false ? [{
                     label: "Issues",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/issues`,
                     icon: <AlertTriangleIcon className="w-5 h-5" />,
-                },
-                {
+                }] : []),
+                ...(flags.collaboration !== false ? [{
                     label: "Collaboration",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/collaboration`,
                     icon: <MessageSquareIcon className="w-5 h-5" />,
-                },
+                }] : []),
             ]
             : [],
     };

@@ -132,10 +132,10 @@ export default function IssuesConsolePage() {
           </div>
         }
         actions={
-          <button className="flex items-center gap-2 px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson/90 transition-colors shadow-elevation-l1">
+          <Link href="/admin/issues/new" className="flex items-center gap-2 px-4 py-2 bg-crimson text-white rounded-lg text-sm font-semibold hover:bg-crimson/90 transition-colors shadow-elevation-l1">
             <AlertOctagon className="w-4 h-4" />
             Log Global Blocker
-          </button>
+          </Link>
         }
       />
       

@@ -68,26 +68,14 @@ export default function IssueLoggingPage({
           <TextArea name="description" placeholder="Provide detailed information about the issue..." rows={4} />
         </FormField>
 
-        <div className="grid grid-cols-2 gap-6">
-          <FormField label="Severity *">
-            <Select name="severity" required options={[
-              { label: "Low", value: "Low" },
-              { label: "Medium", value: "Medium" },
-              { label: "High", value: "High" },
-              { label: "Critical", value: "Critical" },
-            ]} />
-          </FormField>
-
-          <FormField label="Issue Type *">
-            <Select name="type" required options={[
-              { label: "Defect", value: "Defect" },
-              { label: "Safety Hazard", value: "Safety" },
-              { label: "Material Shortage", value: "Material" },
-              { label: "Design Query", value: "Design" },
-              { label: "Other", value: "Other" },
-            ]} />
-          </FormField>
-        </div>
+        <FormField label="Severity *">
+          <Select name="severity" required options={[
+            { label: "Low", value: "Low" },
+            { label: "Medium", value: "Medium" },
+            { label: "High", value: "High" },
+            { label: "Critical", value: "Critical" },
+          ]} />
+        </FormField>
 
         <div className="pt-6 flex justify-end gap-3 border-t border-outline-variant">
           <Button variant="ghost" type="button" onClick={() => router.back()} disabled={isSubmitting}>

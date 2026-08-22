@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
-import { MessageSquareIcon, SendIcon, PaperclipIcon } from "lucide-react";
+import { SendIcon } from "lucide-react";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { TextInput } from "@/components/ui/TextInput";
 import { Button } from "@/components/ui/Button";
@@ -19,6 +19,11 @@ export default function ProjectCollaborationPage() {
     const [input, setInput] = useState("");
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
 
     const loadMessages = async () => {
         const { data: { user } } = await supabase.auth.getUser();
@@ -31,13 +36,16 @@ export default function ProjectCollaborationPage() {
 
         const updates = await getUpdates({ projectId });
         
+        const { data: users } = await supabase.from('user_actor').select('id, display_name, role');
+        const userMap = new Map((users || []).map(u => [u.id, u]));
+
         let allComments: any[] = [];
         updates.forEach((u: any) => {
              if (u.comments) {
                  u.comments.forEach((c: any) => {
                      allComments.push({
                          ...c,
-                         author_name: 'User', // In a real app we would join user_actor, but let's keep it simple
+                         author_name: userMap.get(c.author_id)?.display_name || 'Unknown User',
                      });
                  });
              }
@@ -48,7 +56,7 @@ export default function ProjectCollaborationPage() {
         setMessages(allComments.map(c => ({
             id: c.id,
             user: c.author_name,
-            role: 'User',
+            role: userMap.get(c.author_id)?.role || 'User',
             text: c.content,
             time: new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             isMe: c.author_id === user?.id
@@ -133,12 +141,10 @@ export default function ProjectCollaborationPage() {
                             </div>
                         ))
                     )}
+                    <div ref={messagesEndRef} />
                 </div>
 
                 <div className="p-4 bg-surface border-t border-outline-variant flex items-end gap-3">
-                    <button className="p-3 text-on-surface-variant hover:text-primary transition-colors">
-                        <PaperclipIcon className="w-5 h-5" />
-                    </button>
                     <div className="flex-1">
                         <TextInput
                             placeholder="Type a message... Use @ to tag team members."

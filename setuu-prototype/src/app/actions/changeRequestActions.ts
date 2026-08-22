@@ -20,7 +20,8 @@ export async function createChangeRequest(formData: FormData) {
   const cost_impact = parseFloat(formData.get("cost_impact") as string);
   const time_impact_days = parseInt(formData.get("time_impact_days") as string, 10);
   const status = formData.get("status") as string || "Pending";
-  const display_id = `CR-${Math.floor(Math.random() * 9000) + 1000}`;
+  const { count } = await supabase.from('change_requests').select('*', { count: 'exact', head: true });
+  const display_id = 'CR-' + String((count || 0) + 1).padStart(4, '0');
 
   const { error } = await supabase.from("change_requests").insert({
     project_id,
@@ -45,17 +46,18 @@ export async function createChangeRequest(formData: FormData) {
 }
 
 export async function approveChangeRequest(id: string, projectId: string) {
-  await verifyRole(["admin", "pm"]);
+  const user = await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("change_requests")
-    .update({ status: "Approved" })
+    .update({ status: "Approved", approved_by: user.id })
     .eq("id", id);
 
   if (error) return { success: false, error: error.message };
 
   revalidatePath(`/admin/changes`);
   revalidatePath(`/pm/projects/${projectId}/changes`);
+  revalidatePath(`/admin/projects/${projectId}/changes`);
   revalidatePath("/client/approvals");
   return { success: true };
 }
@@ -65,13 +67,14 @@ export async function rejectChangeRequest(id: string, projectId: string, reason:
   const supabase = await createClient();
   const { error } = await supabase
     .from("change_requests")
-    .update({ status: "Rejected", description: reason })
+    .update({ status: "Rejected" })
     .eq("id", id);
 
   if (error) return { success: false, error: error.message };
 
   revalidatePath(`/admin/changes`);
   revalidatePath(`/pm/projects/${projectId}/changes`);
+  revalidatePath(`/admin/projects/${projectId}/changes`);
   revalidatePath("/client/approvals");
   return { success: true };
 }

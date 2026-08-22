@@ -13,6 +13,20 @@ import Link from "next/link";
 export default function DrawingComparePage() {
   const [mode, setMode] = useState<"side-by-side" | "overlay">("side-by-side");
   const [opacity, setOpacity] = useState(50);
+
+  const [v1, setV1] = useState("");
+  const [v2, setV2] = useState("");
+  const [drawings, setDrawings] = useState<any[]>([]);
+  const { info, success } = useToast();
+  
+  useEffect(() => {
+     getDrawings().then(res => setDrawings(res || []));
+  }, []);
+  
+  const handleCompare = () => {
+     success("Comparison Started", "Generating diff between selected versions...");
+  };
+
   
   return (
     <div className="flex flex-col h-full bg-surface">

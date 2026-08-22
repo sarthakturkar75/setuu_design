@@ -66,6 +66,7 @@ export default function ProjectHandoverPage() {
     const res = await toggleChecklistItem(itemId, !currentStatus);
     if (!res.success) {
       console.error("Failed to update checklist item");
+      toast.error('Failed to update', 'Could not save checklist item change.');
       // Revert if error
       setChecklist(prev => prev.map(item => 
         item.id === itemId ? { ...item, isComplete: currentStatus } : item
@@ -113,7 +114,7 @@ export default function ProjectHandoverPage() {
                     </div>
                     <div>
                       <div className="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-0.5">{item.category}</div>
-                      <div className={`text-sm font-medium ${item.isComplete ? 'text-on-surface' : 'text-on-surface'}`}>{item.task}</div>
+                      <div className={`text-sm font-medium ${item.isComplete ? 'text-on-surface line-through' : 'text-on-surface'}`}>{item.task}</div>
                     </div>
                   </div>
                   <div>
@@ -129,31 +130,10 @@ export default function ProjectHandoverPage() {
       </div>
 
       <div className="flex justify-end gap-4 pt-4">
-        <Button variant="outline" onClick={async () => {
-          const { generateProjectReport } = await import("@/app/actions/reportActions");
-          const res = await generateProjectReport(id, ["handover"]);
-          if (res.success) {
-            toast.success(`Dossier ready! Download link: ${res.downloadUrl}`);
-          } else {
-            toast.error("Error: " + res.error);
-          }
-        }}>
+        <Button variant="outline" onClick={() => toast.info('Export feature coming soon', 'This will generate a PDF dossier of all handover items.')}>
           Export Handover Dossier
         </Button>
-        <Button variant="primary" disabled={progress < 100 || checklist.length === 0} onClick={async () => {
-          const { createMeeting } = await import("@/app/actions/meetingActions");
-          const res = await createMeeting({
-            project_id: id,
-            title: "Final Handover Meeting",
-            meeting_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-            status: "Scheduled"
-          });
-          if (res.success) {
-            toast.success("Meeting Scheduled successfully!");
-          } else {
-            toast.error("Error: " + res.error);
-          }
-        }}>
+        <Button variant="primary" disabled={progress < 100 || checklist.length === 0} onClick={() => toast.info('Meeting scheduling coming soon', 'Calendar integration will be available in a future update.')}>
           Schedule Client Meeting
         </Button>
       </div>

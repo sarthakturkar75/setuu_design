@@ -23,7 +23,7 @@ export async function getProjectMilestones(projectId: string) {
     } else {
       status = "In Progress";
     }
-    return { ...m, completion_status: status };
+    return { ...m, status_label: status };
   });
 }
 
@@ -45,7 +45,7 @@ export async function getMilestones() {
     } else {
       status = "In Progress";
     }
-    return { ...m, completion_status: status };
+    return { ...m, status_label: status };
   });
 }
 
@@ -61,6 +61,8 @@ export async function createMilestone(projectId: string, milestoneData: any) {
     
   if (error) return { success: false, error: error.message };
   revalidatePath(`/admin/projects/${projectId}`);
+  revalidatePath(`/admin/projects/${projectId}/milestones`);
+  revalidatePath(`/pm/projects/${projectId}/milestones`);
   return { success: true };
 }
 
@@ -112,12 +114,23 @@ export async function toggleChecklistItem(itemId: string, completed: boolean) {
 export async function addChecklistItem(milestoneId: string, title: string) {
   await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
+  const { data: maxOrderData } = await supabase
+    .from("milestone_checklist_items")
+    .select("display_order")
+    .eq("milestone_id", milestoneId)
+    .order("display_order", { ascending: false })
+    .limit(1)
+    .single();
+    
+  const nextOrder = maxOrderData ? (maxOrderData.display_order || 0) + 1 : 0;
+
   const { error } = await supabase
     .from("milestone_checklist_items")
     .insert({
       milestone_id: milestoneId,
       title,
-      is_completed: false,
+      is_complete: false,
+      display_order: nextOrder,
     });
     
   if (error) return { success: false, error: error.message };

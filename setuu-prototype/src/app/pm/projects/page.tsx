@@ -37,9 +37,9 @@ export default function PMProjectsList() {
 		},
 		{
 			key: "client",
-			header: "Client Organization",
+			header: "Client",
 			sortable: true,
-			cell: (row: any) => <>{row.client_org_id || "N/A"}</>,
+			cell: (row: any) => <>{row.client_name || "N/A"}</>,
 		},
 		{
 			key: "status",

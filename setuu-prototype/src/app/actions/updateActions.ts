@@ -81,15 +81,16 @@ export async function createUpdate(formData: FormData) {
       const { error: insertError } = await supabase.from("media_attachments").insert({
         update_id: data.id,
         file_name: file.name,
-        file_url: publicUrl,
-        file_type: file.type,
-        file_size: file.size
+        url: publicUrl,
+        type: file.type,
+        file_size_bytes: file.size
       });
       if (insertError) console.error("Attachment failed", insertError);
     }
   }
 
   revalidatePath(`/pm/projects/${project_id}/timeline`);
+  revalidatePath(`/admin/projects/${project_id}/timeline`);
   return { success: true, data };
 }
 
@@ -103,7 +104,7 @@ export async function moderateUpdate(id: string, status: string) {
 }
 
 export async function addComment(updateId: string, authorId: string, content: string, mentions: string[] = []) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "vendor"]);
   const supabase = await createClient();
   const { data, error } = await supabase.from("comments").insert({
     update_id: updateId,

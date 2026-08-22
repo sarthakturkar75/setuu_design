@@ -77,7 +77,7 @@ export default function AdminDashboardPage() {
           />
           <KPICard 
             title="CapEx Run Rate" 
-            value={`₹${(([].totalContractValue || 0) * 0.1 / 1000000).toFixed(1)}M`} 
+            value={`₹0.0M`} 
             trend={{ value: 2.1, label: "vs last month", isPositive: true }} 
             icon={<TrendingUp className="w-5 h-5" />} 
           />
@@ -123,12 +123,12 @@ export default function AdminDashboardPage() {
                 <div className="flex justify-between items-end">
                   <div>
                     <p className="text-sm text-on-surface-variant">Global Usage</p>
-                    <p className="text-2xl font-jetbrains font-bold text-on-surface">{(([].totalStorageGb || 0)/1024).toFixed(1)} TB <span className="text-sm font-inter text-on-surface-variant font-normal">/ 10 TB</span></p>
+                    <p className="text-2xl font-jetbrains font-bold text-on-surface">0.0 TB <span className="text-sm font-inter text-on-surface-variant font-normal">/ 10 TB</span></p>
                   </div>
-                  <span className="text-sm font-bold text-semantic-amber">{Math.round((([].totalStorageGb || 0)/1024/10)*100)}%</span>
+                  <span className="text-sm font-bold text-semantic-amber">0%</span>
                 </div>
                 <div className="[&>div]:bg-semantic-amber">
-                  <ProgressBar progress={(([].totalStorageGb || 0)/1024/10)*100} />
+                  <ProgressBar progress={0} />
                 </div>
               </div>
             </Card>

@@ -3,9 +3,10 @@
 import * as React from "react";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { AlertTriangleIcon, Loader2 } from "lucide-react";
+import { AlertTriangleIcon } from "lucide-react";
 import Link from "next/link";
-import { getIssues } from "@/app/actions/issueActions";
+import { getIssues, updateIssueStatus, deleteIssue } from "@/app/actions/issueActions";
+import { useToast } from "@/contexts/ToastContext";
 
 export default function ProjectIssuesPage({
   params,
@@ -13,6 +14,7 @@ export default function ProjectIssuesPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = React.use(params);
+  const toast = useToast();
 
   const [issues, setIssues] = React.useState<any[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -35,8 +37,37 @@ export default function ProjectIssuesPage({
     }
   }, [id]);
 
+  const handleResolve = async (issueId: string, projectId: string) => {
+    try {
+      const res = await updateIssueStatus(issueId, projectId, 'Resolved');
+      if (res.success) {
+        toast.success("Issue resolved");
+        const data = await getIssues(id);
+        setIssues(data || []);
+      } else {
+        toast.error(res.error || "Failed to resolve issue");
+      }
+    } catch (e) {
+      toast.error("Failed to resolve issue");
+    }
+  };
+
+  const handleDelete = async (issueId: string) => {
+    if (!window.confirm("Delete this issue?")) return;
+    try {
+      const res = await deleteIssue(issueId);
+      if (res?.success) {
+        setIssues(i => i.filter(x => x.id !== issueId));
+        toast.success("Issue deleted");
+      } else {
+        toast.error(res?.error || "Failed to delete issue");
+      }
+    } catch (e) {
+      toast.error("Failed to delete issue");
+    }
+  };
+
   const columns = [
-    
     {
       key: "title",
       header: "Issue",
@@ -75,18 +106,22 @@ export default function ProjectIssuesPage({
       key: "actions",
       header: "",
       cell: (row: any) => (
-        <button 
-          onClick={async () => {
-            if (confirm("Delete this issue?")) {
-              const { deleteIssue } = await import('@/app/actions/issueActions');
-              await deleteIssue(row.id);
-              setIssues(i => i.filter(x => x.id !== row.id));
-            }
-          }}
-          className="text-semantic-crimson hover:bg-semantic-crimson/10 p-2 rounded text-sm"
-        >
-          Delete
-        </button>
+        <div className="flex gap-2 justify-end">
+          {row.status === "Open" && (
+            <button 
+              onClick={() => handleResolve(row.id, row.project_id)}
+              className="text-semantic-emerald hover:bg-semantic-emerald/10 px-2 py-1 rounded text-sm font-medium transition-colors"
+            >
+              Resolve
+            </button>
+          )}
+          <button 
+            onClick={() => handleDelete(row.id)}
+            className="text-semantic-crimson hover:bg-semantic-crimson/10 px-2 py-1 rounded text-sm font-medium transition-colors"
+          >
+            Delete
+          </button>
+        </div>
       )
     }
   ];

@@ -7,7 +7,7 @@ import { getPlatformMetrics } from "@/app/actions/platformActions";
 import { Activity } from "lucide-react";
 
 export default function PlatformStatus() {
-  const [metrics, setMetrics] = useState<any[]>([]);
+  const [metrics, setMetrics] = useState<any>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,17 +24,29 @@ export default function PlatformStatus() {
       <PageHeader title="Platform Status" subtitle="Real-time health of underlying Setuu infrastructure." />
       <Card title="Core Services">
         <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {metrics.map((m, idx) => (
-             <div key={idx} className="flex items-center justify-between p-4 rounded-xl bg-surface-variant/30 border border-outline-variant/20 hover:bg-surface-variant/50 transition-colors">
-               <div className="flex items-center gap-3">
-                 <div className="p-2 bg-semantic-emerald/10 text-semantic-emerald rounded-lg">
-                   <Activity className="w-4 h-4" />
-                 </div>
-                 <span className="font-medium text-on-surface text-sm">{m.service}</span>
-               </div>
-               <StatusBadge tone={m.tone} label={m.label} />
-             </div>
-          ))}
+          
+          <div className="flex items-center justify-between p-4 rounded-xl bg-surface-variant/30 border border-outline-variant/20 hover:bg-surface-variant/50 transition-colors">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-semantic-emerald/10 text-semantic-emerald rounded-lg"><Activity className="w-4 h-4" /></div>
+              <span className="font-medium text-on-surface text-sm">Database Sync Queue</span>
+            </div>
+            <StatusBadge tone={metrics.syncQueueDepth > 50 ? "amber" : "emerald"} label={metrics.syncQueueDepth + " Items"} />
+          </div>
+          <div className="flex items-center justify-between p-4 rounded-xl bg-surface-variant/30 border border-outline-variant/20 hover:bg-surface-variant/50 transition-colors">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-semantic-emerald/10 text-semantic-emerald rounded-lg"><Activity className="w-4 h-4" /></div>
+              <span className="font-medium text-on-surface text-sm">Active Sessions</span>
+            </div>
+            <StatusBadge tone="emerald" label={metrics.activeSessions + " Users"} />
+          </div>
+          <div className="flex items-center justify-between p-4 rounded-xl bg-surface-variant/30 border border-outline-variant/20 hover:bg-surface-variant/50 transition-colors">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-semantic-emerald/10 text-semantic-emerald rounded-lg"><Activity className="w-4 h-4" /></div>
+              <span className="font-medium text-on-surface text-sm">API Latency</span>
+            </div>
+            <StatusBadge tone={metrics.apiLatencyMs > 200 ? "amber" : "emerald"} label={metrics.apiLatencyMs + " ms"} />
+          </div>
+
         </div>
       </Card>
     </div>

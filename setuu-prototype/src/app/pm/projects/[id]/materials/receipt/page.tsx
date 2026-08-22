@@ -49,7 +49,8 @@ export default function MaterialReceiptPage() {
             // FIX: Map the UI inputs to the FormData expected by createMaterial
             const submitData = new FormData();
             submitData.append("project_id", id);
-            submitData.append("name", formData.get("item_name") as string);
+            submitData.append("item_name", formData.get("item_name") as string);
+            submitData.append("quantity", formData.get("quantity") as string);
             submitData.append("po_number", formData.get("po_reference") as string);
 
             const res = await createMaterial(submitData);

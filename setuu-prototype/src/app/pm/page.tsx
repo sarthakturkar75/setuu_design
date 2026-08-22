@@ -67,7 +67,7 @@ export default function PMCommandCenter() {
 					icon={<AlertTriangleIcon />}
 					semanticColor="crimson"
 					trend={{ value: 1, label: "new today", isPositive: false }}
-					href="/pm/issues"
+					href="/pm/issues/new"
 				/>
 				<KPICard
 					title="Pending Reviews"

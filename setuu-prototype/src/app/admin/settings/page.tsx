@@ -218,7 +218,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "EST (Eastern Standard Time)", value: "est" },
 											{ label: "PST (Pacific Standard Time)", value: "pst" },
 										]}
-										value={systemData.timezone} onChange={e => setSystemData({...systemData, timezone: e.target.value})} />
+										value={systemData.timezone} onChange={val => setSystemData({...systemData, timezone: val})} />
 								</div>
 
 								<div className="flex flex-col gap-2">
@@ -229,7 +229,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "Spanish (ES)", value: "es" },
 											{ label: "French (FR)", value: "fr" },
 										]}
-										value={systemData.language} onChange={e => setSystemData({...systemData, language: e.target.value})} />
+										value={systemData.language} onChange={val => setSystemData({...systemData, language: val})} />
 								</div>
 
 								<div className="flex flex-col gap-2">
@@ -240,7 +240,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "Light Theme", value: "light" },
 											{ label: "Dark Theme", value: "dark" },
 										]}
-										value={systemData.theme} onChange={e => setSystemData({...systemData, theme: e.target.value})} />
+										value={systemData.theme} onChange={val => setSystemData({...systemData, theme: val})} />
 								</div>
 							</div>
 						</Card>
@@ -287,7 +287,7 @@ export default function OrganizationSettingsPage() {
 											{ label: "4 Hours", value: "4h" },
 											{ label: "Never (Not Recommended)", value: "never" },
 										]}
-										value={securityData.sessionTimeout} onChange={e => setSecurityData({...securityData, sessionTimeout: e.target.value})} />
+										value={securityData.sessionTimeout} onChange={val => setSecurityData({...securityData, sessionTimeout: val})} />
 									<p className="text-xs text-on-surface-variant mt-1 flex items-center gap-1">
 										<AlertTriangle className="w-3 h-3 text-semantic-amber" />
 										Sessions inactive beyond this limit will require re-authentication.

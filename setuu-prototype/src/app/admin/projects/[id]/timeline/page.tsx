@@ -32,9 +32,9 @@ export default function ProjectTimelinePage() {
              type: 'update',
              date: new Date(u.created_at || Date.now()),
              title: 'posted a Site Progress Update',
-             desc: u.content || 'Update posted',
-             actor: u.author?.display_name || 'Site Member',
-             media: u.media_urls
+             desc: u.caption || 'Update posted',
+             actor: u.user_actor?.display_name || 'Site Member',
+             media: u.media_attachments
            })));
         }
         
@@ -45,7 +45,7 @@ export default function ProjectTimelinePage() {
              date: new Date(m.created_at || Date.now()),
              title: 'created a new Milestone',
              desc: m.title || 'Milestone',
-             actor: 'Project Manager',
+             actor: m.department || 'Project Team',
              media: null
            })));
         }
@@ -57,7 +57,7 @@ export default function ProjectTimelinePage() {
              date: new Date(c.created_at || Date.now()),
              title: 'drafted a Change Request',
              desc: c.title || 'Change Request',
-             actor: c.author?.display_name || 'Engineer',
+             actor: c.created_by_name || 'Team Member',
              media: null
            })));
         }
