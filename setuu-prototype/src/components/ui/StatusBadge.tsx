@@ -5,10 +5,10 @@ export type StatusTone = 'slate' | 'sky' | 'amber' | 'emerald' | 'teal' | 'royal
 
 export interface StatusBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   tone: StatusTone
-  label: string
+  label: React.ReactNode; icon?: React.ReactNode
 }
 
-export function StatusBadge({ tone, label, className, ...props }: StatusBadgeProps) {
+export function StatusBadge({ tone, label, icon, className, ...props }: StatusBadgeProps) {
   const toneClasses = {
     slate: "bg-semantic-slate-bg text-semantic-slate-on",
     sky: "bg-semantic-sky-bg text-semantic-sky-on",
@@ -29,7 +29,7 @@ export function StatusBadge({ tone, label, className, ...props }: StatusBadgePro
       )}
       {...props}
     >
-      {label}
+      {icon && <span className="mr-1">{icon}</span>}{label}
     </span>
   )
 }

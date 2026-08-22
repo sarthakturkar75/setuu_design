@@ -66,6 +66,8 @@ export async function createMilestone(projectId: string, milestoneData: any) {
   return { success: true };
 }
 
+import { logStatusTransition, draftInvoiceFromMilestone, triggerHandoffNotifications } from "./milestoneModuleActions";
+
 export async function updateMilestone(id: string, updateData: any) {
   await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
@@ -75,6 +77,17 @@ export async function updateMilestone(id: string, updateData: any) {
     .eq("id", id);
     
   if (error) return { success: false, error: error.message };
+
+  // Advanced Kanban Hooks (Module 3)
+  if (updateData.custom_data?.kanban_status) {
+     await logStatusTransition(id, updateData.custom_data.kanban_status);
+  }
+  
+  if (updateData.completion_status === true || updateData.custom_data?.kanban_status === 'Completed') {
+     await draftInvoiceFromMilestone(id);
+     await triggerHandoffNotifications(id);
+  }
+
   revalidatePath(`/`); // Simplified invalidation for prototype
   return { success: true };
 }

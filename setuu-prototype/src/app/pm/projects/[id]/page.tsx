@@ -89,7 +89,7 @@ export default function ProjectOverviewPage({
         if (calculatedRisk < 0) calculatedRisk = 0;
         setRiskScore(Math.round(calculatedRisk));
 
-        // Let's call the real AI generation server action (if we have it, else fallback directly)
+        // Let's call the real AI generation server action
         import("@/app/actions/aiActions").then(module => {
           module.generateWelcomeBrief(id, {
             name: proj?.name || 'Project',
@@ -98,14 +98,9 @@ export default function ProjectOverviewPage({
             budgetVar,
             actionItemCount: (realActionItems || []).length
           }).then(brief => setAiMessage(brief))
-            .catch(() => setAiMessage("Good morning. AI Services are currently unavailable."));
+            .catch(() => setAiMessage("Error: AI Features require OPENAI_API_KEY to be configured in .env. No mock placeholders allowed."));
         }).catch(() => {
-          // Fallback if aiActions doesn't exist yet
-          const aiSummary = `Good morning. ${proj?.name || 'This project'} is currently at ${progress}% completion. ` +
-            `${criticalIssuesCount > 0 ? `There are ${criticalIssuesCount} critical blockers requiring your attention.` : 'No critical blockers reported.'} ` +
-            `${budgetVar > 0 ? `Budget variance is running at +${budgetVar.toFixed(1)}%.` : 'Budget is on track.'} ` +
-            `You have ${(realActionItems || []).length} priority items in your Action Center today.`;
-          setAiMessage(aiSummary);
+          setAiMessage("Error: AI Services module unavailable or failed to load. No mock allowed.");
         });
 
       } catch (error) {

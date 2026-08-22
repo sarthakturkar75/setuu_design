@@ -9,11 +9,7 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    // If no key is provided, return a high-quality deterministic fallback
-    return `Good morning. ${metrics.name} is currently at ${metrics.progress}% completion. ` +
-      `${metrics.criticalIssues > 0 ? `There are ${metrics.criticalIssues} critical blockers requiring your attention.` : 'No critical blockers reported.'} ` +
-      `${metrics.budgetVar > 0 ? `Budget variance is running at +${metrics.budgetVar.toFixed(1)}%.` : 'Budget is on track.'} ` +
-      `You have ${metrics.actionItemCount} priority items in your Action Center today.`;
+    throw new Error("Missing OPENAI_API_KEY environment variable. AI features require a valid OpenAI key to function without mocks.");
   }
 
   const prompt = `

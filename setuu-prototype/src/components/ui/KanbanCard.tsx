@@ -2,8 +2,8 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { AvatarGroup } from "./AvatarGroup"
 
-export interface KanbanCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
+export interface KanbanCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+  title: React.ReactNode | string;
   id: string;
   assignee?: { id: string; name: string; avatarUrl?: string | null };
   badge?: React.ReactNode;
