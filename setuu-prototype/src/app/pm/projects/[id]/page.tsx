@@ -5,12 +5,23 @@ import { Card } from "@/components/ui/Card";
 import { ActivityFeed } from "@/components/ui/ActivityFeed";
 import { AvatarGroup } from "@/components/ui/AvatarGroup";
 import { ProgressBar } from "@/components/ui/ProgressBar";
-import { CheckCircle, AlertOctagon, Clock, DollarSign } from "lucide-react";
+import { CheckCircle, AlertOctagon, Clock, DollarSign, Download, Share2 } from "lucide-react";
 import { use, useState, useEffect } from "react";
 import { getProjectTeam, getRecentActivity, getProjectById } from "@/app/actions/projectActions";
 import { getIssues } from "@/app/actions/issueActions";
 import { getChangeRequests } from "@/app/actions/changeRequestActions";
 import { getProjectMilestones } from "@/app/actions/milestoneActions";
+import { getActionItems } from "@/app/actions/dashboardActions";
+
+import { getPortfolioAverages } from "@/app/actions/portfolioActions";
+
+
+// New Components
+import { AIWelcomeBanner } from "@/components/ui/AIWelcomeBanner";
+import { SmartInbox, ActionItem } from "@/components/ui/SmartInbox";
+import { RiskScoreGauge } from "@/components/ui/RiskScoreGauge";
+import { PublicShareButton } from "@/components/ui/PublicShareButton";
+import { PrintExportButton } from "@/components/ui/PrintExportButton";
 
 export default function ProjectOverviewPage({
   params,
@@ -24,25 +35,40 @@ export default function ProjectOverviewPage({
   const [milestones, setMilestones] = useState<any[]>([]);
   const [kpis, setKpis] = useState<any>({ progress: 0, openIssues: 0, daysToTarget: 0, budgetVariance: 0 });
   const [loading, setLoading] = useState(true);
+  const [actionItems, setActionItems] = useState<ActionItem[]>([]);
+  const [riskScore, setRiskScore] = useState(0);
+  const [aiMessage, setAiMessage] = useState("");
+  const [portfolioData, setPortfolioData] = useState<any>({ avgProgress: 0, avgRiskScore: 0, avgBudgetVariance: 0 });
+
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [team, activities, proj, issues, changes, milestones_data] = await Promise.all([
+        const [team, activities, proj, issues, changes, milestones_data, portData, realActionItems] = await Promise.all([
           getProjectTeam(id),
           getRecentActivity(id),
           getProjectById(id),
           getIssues(id),
           getChangeRequests(id),
-          getProjectMilestones(id)
+          getProjectMilestones(id),
+          getPortfolioAverages(),
+          getActionItems(id)
         ]);
-        setTeamMembers(team);
-        setRecentActivity(activities);
-        setMilestones(milestones_data);
-
-        const openIssuesCount = (issues || []).filter((i: any) => i.status === 'Open').length;
         
-        const totalChangesCost = (changes || []).filter((c: any) => c.status === 'Approved').reduce((acc: number, c: any) => acc + Number(c.cost_impact || 0), 0);
+        setTeamMembers(team || []);
+        setRecentActivity(activities || []);
+        setMilestones(milestones_data || []);
+        setPortfolioData(portData || { avgProgress: 0, avgRiskScore: 0, avgBudgetVariance: 0 });
+        setActionItems(realActionItems || []);
+
+        const issuesList = issues || [];
+        const changesList = changes || [];
+        const milestonesList = milestones_data || [];
+
+        const openIssuesCount = issuesList.filter((i: any) => i.status === 'Open').length;
+        const criticalIssuesCount = issuesList.filter((i: any) => i.status === 'Open' && (i.severity === 'High' || i.severity === 'Critical')).length;
+        
+        const totalChangesCost = changesList.filter((c: any) => c.status === 'Approved').reduce((acc: number, c: any) => acc + Number(c.cost_impact || 0), 0);
         const budgetVar = proj?.contract_value ? (totalChangesCost / proj.contract_value) * 100 : 0;
 
         let daysToTarget = 0;
@@ -51,11 +77,37 @@ export default function ProjectOverviewPage({
           daysToTarget = Math.ceil(diff / (1000 * 3600 * 24));
         }
 
-        const totalMilestones = milestones_data?.length || 0;
-        const completedMilestones = (milestones_data || []).filter((m: any) => m.completion_status === true || m.status_label === 'Completed').length;
+        const totalMilestones = milestonesList.length;
+        const completedMilestones = milestonesList.filter((m: any) => m.completion_status === true || m.status_label === 'Completed').length;
         const progress = totalMilestones > 0 ? Math.round((completedMilestones / totalMilestones) * 100) : 0;
+        const overdueMilestones = milestonesList.filter((m: any) => m.status_label === 'Overdue').length;
 
         setKpis({ progress, openIssues: openIssuesCount, daysToTarget, budgetVariance: budgetVar });
+
+        let calculatedRisk = 10 + (criticalIssuesCount * 15) + (overdueMilestones * 10) + (budgetVar > 0 ? budgetVar * 5 : 0);
+        if (calculatedRisk > 100) calculatedRisk = 100;
+        if (calculatedRisk < 0) calculatedRisk = 0;
+        setRiskScore(Math.round(calculatedRisk));
+
+        // Let's call the real AI generation server action (if we have it, else fallback directly)
+        import("@/app/actions/aiActions").then(module => {
+          module.generateWelcomeBrief(id, {
+            name: proj?.name || 'Project',
+            progress,
+            criticalIssues: criticalIssuesCount,
+            budgetVar,
+            actionItemCount: (realActionItems || []).length
+          }).then(brief => setAiMessage(brief))
+            .catch(() => setAiMessage("Good morning. AI Services are currently unavailable."));
+        }).catch(() => {
+          // Fallback if aiActions doesn't exist yet
+          const aiSummary = `Good morning. ${proj?.name || 'This project'} is currently at ${progress}% completion. ` +
+            `${criticalIssuesCount > 0 ? `There are ${criticalIssuesCount} critical blockers requiring your attention.` : 'No critical blockers reported.'} ` +
+            `${budgetVar > 0 ? `Budget variance is running at +${budgetVar.toFixed(1)}%.` : 'Budget is on track.'} ` +
+            `You have ${(realActionItems || []).length} priority items in your Action Center today.`;
+          setAiMessage(aiSummary);
+        });
+
       } catch (error) {
         console.error("Failed to load project data", error);
       } finally {
@@ -65,11 +117,27 @@ export default function ProjectOverviewPage({
     loadData();
   }, [id]);
 
-  if (loading) return <div className="p-6 animate-pulse text-on-surface-variant">Loading project dashboard...</div>;
+  if (loading) return <div className="p-6 animate-pulse text-on-surface-variant">Loading enterprise dashboard...</div>;
 
   return (
     <div className="p-6 max-w-[1600px] mx-auto space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      
+      {/* Header Actions & AI Welcome */}
+      <div className="flex flex-col xl:flex-row gap-6 items-start xl:items-stretch">
+        <div className="flex-1 w-full xl:w-auto">
+          <AIWelcomeBanner content={aiMessage} />
+        </div>
+        <div className="flex gap-3 w-full xl:w-auto self-center">
+          <PrintExportButton />
+          <PublicShareButton projectId={id} />
+        </div>
+      </div>
+
+      {/* KPI & Risk Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
+        <div className="xl:col-span-1 h-32 md:h-full">
+          <RiskScoreGauge score={riskScore} />
+        </div>
         <KPICard 
           title="Overall Progress" 
           value={`${kpis.progress}%`} 
@@ -97,7 +165,10 @@ export default function ProjectOverviewPage({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column */}
         <div className="lg:col-span-2 space-y-6">
+          <SmartInbox items={actionItems} />
+
           <Card className="p-6">
             <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Milestone Progress</h3>
             <div className="space-y-6">
@@ -123,36 +194,38 @@ export default function ProjectOverviewPage({
               )}
             </div>
           </Card>
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-6">
+          <Card className="p-6 border-l-4 border-l-semantic-sky">
+            <h3 className="font-merriweather text-lg font-bold text-on-surface mb-4">Portfolio Roll-up</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center border-b border-surface-variant/50 pb-2">
+                <span className="text-sm text-on-surface-variant">Avg Progress</span>
+                <span className="text-sm font-jetbrains">{portfolioData.avgProgress}%</span>
+              </div>
+              <div className="flex justify-between items-center border-b border-surface-variant/50 pb-2">
+                <span className="text-sm text-on-surface-variant">Avg Risk Score</span>
+                <span className={`text-sm font-jetbrains ${portfolioData.avgRiskScore > 40 ? 'text-semantic-amber' : 'text-semantic-emerald'}`}>
+                  {portfolioData.avgRiskScore}
+                </span>
+              </div>
+              <div className="flex justify-between items-center pb-2">
+                <span className="text-sm text-on-surface-variant">Avg Budget Var</span>
+                <span className={`text-sm font-jetbrains ${portfolioData.avgBudgetVariance > 0 ? 'text-semantic-crimson' : 'text-semantic-emerald'}`}>
+                  {portfolioData.avgBudgetVariance > 0 ? '+' : ''}{portfolioData.avgBudgetVariance}%
+                </span>
+              </div>
+              <div className="pt-2">
+                <button className="text-xs font-semibold text-primary hover:underline">View Full Portfolio Analytics →</button>
+              </div>
+            </div>
+          </Card>
 
           <Card className="p-6">
             <h3 className="font-merriweather text-lg font-bold text-on-surface mb-4">Recent Activity</h3>
             <ActivityFeed items={recentActivity.map((a: any) => ({ id: a.id, type: a.type, content: a.title, author_name: a.user, timestamp: a.time }))} />
-          </Card>
-        </div>
-
-        <div className="space-y-6">
-          <Card className="p-6">
-            <h3 className="font-merriweather text-lg font-bold text-on-surface mb-4">Team Directory</h3>
-            <div className="mb-6 flex items-center justify-between">
-              <span className="text-sm text-on-surface-variant">Active Members</span>
-              <AvatarGroup 
-                users={teamMembers.map((m, i) => ({ id: String(i), name: m.name, avatarUrl: null }))} 
-                max={4} 
-              />
-            </div>
-            <div className="space-y-4">
-              {teamMembers.map((member, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                    {member.fallback}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm text-on-surface">{member.name}</p>
-                    <p className="text-xs text-on-surface-variant">{member.role}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </Card>
         </div>
       </div>
