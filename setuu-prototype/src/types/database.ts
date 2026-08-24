@@ -653,6 +653,67 @@ export type Database = {
           },
         ]
       }
+      communication_mentions: {
+        Row: {
+          communication_id: string
+          created_at: string | null
+          id: string
+          is_read: boolean | null
+          mentioned_user_id: string
+        }
+        Insert: {
+          communication_id: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          mentioned_user_id: string
+        }
+        Update: {
+          communication_id?: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          mentioned_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "communication_mentions_communication_id_fkey"
+            columns: ["communication_id"]
+            isOneToOne: false
+            referencedRelation: "project_communications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      communication_reads: {
+        Row: {
+          communication_id: string
+          id: string
+          read_at: string | null
+          user_id: string
+        }
+        Insert: {
+          communication_id: string
+          id?: string
+          read_at?: string | null
+          user_id: string
+        }
+        Update: {
+          communication_id?: string
+          id?: string
+          read_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "communication_reads_communication_id_fkey"
+            columns: ["communication_id"]
+            isOneToOne: false
+            referencedRelation: "project_communications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       custom_fields_schema: {
         Row: {
           entity_type: string
@@ -1632,6 +1693,73 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "project_assets_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_communications: {
+        Row: {
+          audio_url: string | null
+          created_at: string | null
+          custom_data: Json | null
+          drawing_id: string | null
+          id: string
+          is_broadcast: boolean | null
+          is_transmittal: boolean | null
+          issue_id: string | null
+          message: string
+          project_id: string
+          sender_id: string
+          translated_message_es: string | null
+        }
+        Insert: {
+          audio_url?: string | null
+          created_at?: string | null
+          custom_data?: Json | null
+          drawing_id?: string | null
+          id?: string
+          is_broadcast?: boolean | null
+          is_transmittal?: boolean | null
+          issue_id?: string | null
+          message: string
+          project_id: string
+          sender_id: string
+          translated_message_es?: string | null
+        }
+        Update: {
+          audio_url?: string | null
+          created_at?: string | null
+          custom_data?: Json | null
+          drawing_id?: string | null
+          id?: string
+          is_broadcast?: boolean | null
+          is_transmittal?: boolean | null
+          issue_id?: string | null
+          message?: string
+          project_id?: string
+          sender_id?: string
+          translated_message_es?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_communications_drawing_id_fkey"
+            columns: ["drawing_id"]
+            isOneToOne: false
+            referencedRelation: "drawing_versions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_communications_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "project_issues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_communications_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
