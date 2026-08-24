@@ -10,6 +10,7 @@ import { WasteLossAnalytics } from "@/components/ui/WasteLossAnalytics";
 import { MaterialDetailsModal } from "@/components/ui/MaterialDetailsModal";
 import { MaterialQRGenerator } from "@/components/ui/MaterialQRGenerator";
 import { LogWasteModal } from "@/components/ui/LogWasteModal";
+import { MaterialCreateModal } from "@/components/ui/MaterialCreateModal";
 
 export default function MaterialsList({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
@@ -21,6 +22,7 @@ export default function MaterialsList({ params }: { params: Promise<{ id: string
   const [selectedMaterial, setSelectedMaterial] = React.useState<any>(null);
   const [qrMaterial, setQrMaterial] = React.useState<any>(null);
   const [wasteMaterial, setWasteMaterial] = React.useState<any>(null);
+  const [isCreating, setIsCreating] = React.useState(false);
   
   const toast = useToast();
 
@@ -92,12 +94,50 @@ export default function MaterialsList({ params }: { params: Promise<{ id: string
         title="Procurement & Inventory" 
         subtitle="Manage materials, split-deliveries, and laydown yards via Barcode/QR."
         actions={
-          <button className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
+          <button onClick={() => setIsCreating(true)} className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
             <PackageSearch className="w-4 h-4" /> Receive Material
           </button>
         }
       />
       
+      
+      
+      <details className="bg-surface-container-lowest border border-outline-variant/50 rounded-lg p-4 group [&_summary::-webkit-details-marker]:hidden">
+        <summary className="flex items-center justify-between cursor-pointer list-none">
+          <div>
+            <h4 className="text-sm font-bold text-on-surface flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+              Logistics API Integration (Geofencing)
+            </h4>
+            <p className="text-xs text-on-surface-variant mt-1 group-open:hidden">Click to view the webhook credentials for your third-party logistics vendors.</p>
+          </div>
+          <span className="text-primary text-sm font-medium bg-primary/10 px-3 py-1 rounded-full group-open:hidden">View API Keys</span>
+        </summary>
+        
+        <div className="mt-4 pt-4 border-t border-outline-variant/50 flex flex-col md:flex-row items-start justify-between gap-6">
+          <div className="max-w-xl">
+            <p className="text-sm text-on-surface-variant mb-4">
+              Provide this endpoint to your trucking or logistics partner. When their trucks cross the site's geofence radius, their system will hit this Webhook. This automatically updates the material's Delivery Timeline and alerts the PM without any manual data entry.
+            </p>
+            <code className="text-xs font-mono bg-surface p-2 rounded-lg border border-outline-variant/30 text-primary block break-all">
+              POST {typeof window !== 'undefined' ? window.location.origin : 'https://api.praimo.com'}/api/webhooks/logistics-geofence
+            </code>
+          </div>
+          <div className="w-full md:w-auto">
+            <div className="text-[10px] font-bold text-on-surface-variant uppercase mb-2 tracking-wider">Example JSON Payload</div>
+            <pre className="text-xs font-mono text-on-surface-variant bg-surface p-3 border border-outline-variant/50 rounded-lg shadow-sm whitespace-pre-wrap">
+{JSON.stringify({
+  materialId: "uuid-of-the-material",
+  lat: 34.0522,
+  lng: -118.2437,
+  eventType: "ENTERED_GEOFENCE"
+}, null, 2)}
+            </pre>
+          </div>
+        </div>
+      </details>
+
+
       <WasteLossAnalytics analytics={analytics} />
 
       <div className="bg-surface-container rounded-xl border border-outline-variant/50 overflow-hidden min-h-[300px]">
@@ -118,6 +158,15 @@ export default function MaterialsList({ params }: { params: Promise<{ id: string
         <MaterialQRGenerator 
           material={qrMaterial} 
           onClose={() => setQrMaterial(null)}
+        />
+      )}
+
+      
+      {isCreating && (
+        <MaterialCreateModal 
+          projectId={id}
+          onClose={() => setIsCreating(false)}
+          onRefresh={loadData}
         />
       )}
 

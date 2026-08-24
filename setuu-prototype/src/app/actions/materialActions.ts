@@ -109,7 +109,13 @@ export async function logMaterialWaste(materialId: string, quantityWasted: numbe
 
   if (error) return { success: false, error: error.message };
   
-  // Deduct from total material quantity (optional physical sync, but for tracking we leave it and just sum loss)
+  // Actually deduct from current_stock
+  const { data: matData } = await supabase.from("project_materials").select("current_stock").eq("id", materialId).single();
+  if (matData && matData.current_stock !== undefined) {
+      await supabase.from("project_materials").update({ current_stock: Math.max(0, Number(matData.current_stock) - quantityWasted) }).eq("id", materialId);
+      await checkRestockThreshold(materialId);
+  }
+
   revalidatePath(`/`);
   return { success: true };
 }
@@ -148,10 +154,23 @@ export async function createMaterial(formData: FormData) {
   const itemName = formData.get("item_name") as string;
   const quantity = parseInt(formData.get("quantity") as string) || 0;
   const poNumber = formData.get("po_number") as string;
+  const submittalId = formData.get("submittal_id") as string;
+  const reorderThreshold = parseInt(formData.get("reorder_threshold") as string) || 0;
+  const currentStock = parseInt(formData.get("current_stock") as string) || quantity;
+  const unitCost = parseFloat(formData.get("unit_cost") as string) || 0;
+
+  // Generate a random UUID for the QR code
+  const crypto = require("crypto");
+  const qrUuid = crypto.randomUUID();
   
   const { error } = await supabase.from("project_materials").insert({
     project_id: projectId,
     item_name: itemName,
+    qr_uuid: qrUuid,
+    current_stock: currentStock,
+    reorder_threshold: reorderThreshold,
+    unit_cost: unitCost,
+    ...(submittalId ? { submittal_id: submittalId } : {}),
     quantity: quantity,
     po_number: poNumber,
     status: "Ordered"
@@ -160,4 +179,66 @@ export async function createMaterial(formData: FormData) {
   if (error) return { success: false, error: error.message };
   revalidatePath(`/`);
   return { success: true };
+}
+
+
+export async function checkRestockThreshold(materialId: string) {
+  const supabase = await createClient();
+  
+  // Fetch current material
+  const { data: material, error } = await supabase
+    .from("project_materials")
+    .select("id, project_id, item_name, current_stock, reorder_threshold")
+    .eq("id", materialId)
+    .single();
+
+  if (error || !material) return { success: false, error: "Material not found or columns missing" };
+
+  // If we breach the threshold, auto-draft a PO
+  if (material.reorder_threshold > 0 && material.current_stock < material.reorder_threshold) {
+    // Check if a draft PO already exists to avoid duplicates
+    const { data: existingPO } = await supabase
+      .from("purchase_orders")
+      .select("id")
+      .eq("material_id", materialId)
+      .eq("status", "Draft")
+      .single();
+
+    if (!existingPO) {
+      // Auto-draft PO
+      await supabase.from("purchase_orders").insert({
+        project_id: material.project_id,
+        material_id: material.id,
+        po_number: "AUTO-" + Date.now().toString().slice(-6),
+        status: "Draft",
+        total_amount: 0 // Will be updated when cost is defined
+      });
+
+      // Send a notification to the PM
+      const { data: project } = await supabase
+        .from("projects")
+        .select("assigned_pm_id")
+        .eq("id", material.project_id)
+        .single();
+        
+      if (project?.assigned_pm_id) {
+         await supabase.from("notifications").insert({
+           user_id: project.assigned_pm_id,
+           reference_id: material.project_id,
+           title: "Auto-Drafted PO",
+           body: `Stock for ${material.item_name} fell below threshold (${material.current_stock} < ${material.reorder_threshold}). A draft Purchase Order has been generated.`,
+           type: "system",
+           is_read: false
+         });
+      }
+      return { success: true, message: "Draft PO created" };
+    }
+  }
+  return { success: true, message: "Stock level OK" };
+}
+
+export async function getProjectSubmittals(projectId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase.from("project_submittals").select("id, title, spec_section").eq("project_id", projectId);
+  return data || [];
 }
