@@ -5,6 +5,7 @@ import { getProjectResources } from "@/app/actions/resourceActions";
 import { getProjectTeam, assignTeamMember } from "@/app/actions/projectActions";
 import { useParams } from "next/navigation";
 import { useToast } from "@/contexts/ToastContext";
+import { ResourcePoolModal } from "@/components/ui/ResourcePoolModal";
 import { UsersIcon } from "lucide-react";
 
 export default function ProjectTeamPage() {
@@ -97,26 +98,11 @@ export default function ProjectTeamPage() {
       </div>
 
       {showAssignForm && (
-        <form onSubmit={handleAssign} className="bg-surface-variant/30 border border-outline-variant rounded-xl p-6 mb-6 flex flex-col gap-4">
-          <h3 className="font-semibold text-on-surface">Assign Team Member</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-on-surface-variant">User ID (Vendor/Engineer UUID)</label>
-              <input 
-                value={vendorId} 
-                onChange={(e) => setVendorId(e.target.value)}
-                required 
-                placeholder="e.g. 550e8400-e29b-41d4-a716-446655440000"
-                className="w-full p-2.5 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary outline-none font-jetbrains-mono" 
-              />
-            </div>
-          </div>
-          <div className="flex justify-end mt-2">
-            <button disabled={isSubmitting} type="submit" className="px-6 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">
-              {isSubmitting ? "Assigning..." : "Assign"}
-            </button>
-          </div>
-        </form>
+        <ResourcePoolModal 
+          projectId={id}
+          onClose={() => setShowAssignForm(false)}
+          onRefresh={fetchTeam}
+        />
       )}
 
       <div className="bg-surface-container rounded-xl border border-outline-variant/50 overflow-hidden">

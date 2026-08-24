@@ -35,6 +35,7 @@ export default function ProjectOverviewPage({
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
   const [milestones, setMilestones] = useState<any[]>([]);
   const [kpis, setKpis] = useState<any>({ progress: 0, openIssues: 0, daysToTarget: 0, budgetVariance: 0 });
+  const [laborBurn, setLaborBurn] = useState<any>({ totalBurn: 0 });
   const [loading, setLoading] = useState(true);
   const [actionItems, setActionItems] = useState<ActionItem[]>([]);
   const [riskScore, setRiskScore] = useState(0);
@@ -161,7 +162,7 @@ export default function ProjectOverviewPage({
       </div>
 
       <DraggableGrid items={['financial', 'issues', 'timeline']}>
-        <FinancialHealthWidget key="financial" kpis={kpis} riskScore={riskScore} />
+        <FinancialHealthWidget key="financial" kpis={kpis} riskScore={riskScore} laborBurn={laborBurn} />
         <IssueTrackerWidget key="issues" issuesCount={kpis.openIssues} url={`/admin/projects/${id}/issues`} />
         <TimelineWidget key="timeline" progress={kpis.progress} targetDays={kpis.daysToTarget} url={`/admin/projects/${id}/timeline`} />
       </DraggableGrid>

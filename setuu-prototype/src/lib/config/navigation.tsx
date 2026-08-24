@@ -227,6 +227,11 @@ export const getNavigationForRole = (
                                 icon: <UsersIcon className="w-5 h-5" />,
                             },
                             {
+                                label: "Global Personnel",
+                                href: `/${role}/personnel`,
+                                icon: <UsersIcon className="w-5 h-5" />,
+                            },
+                            {
                                 label: "Change Requests",
                                 href: `/${role}/changes`,
                                 icon: <FileTextIcon className="w-5 h-5" />,

@@ -1552,6 +1552,84 @@ export type Database = {
           },
         ]
       }
+      muster_roll_events: {
+        Row: {
+          created_at: string | null
+          id: string
+          initiated_by: string | null
+          project_id: string
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          initiated_by?: string | null
+          project_id: string
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          initiated_by?: string | null
+          project_id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "muster_roll_events_initiated_by_fkey"
+            columns: ["initiated_by"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "muster_roll_events_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      muster_roll_responses: {
+        Row: {
+          event_id: string
+          id: string
+          responded_at: string | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          id?: string
+          responded_at?: string | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          event_id?: string
+          id?: string
+          responded_at?: string | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "muster_roll_responses_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "muster_roll_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "muster_roll_responses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           body: string
@@ -1643,6 +1721,41 @@ export type Database = {
           type?: string
         }
         Relationships: []
+      }
+      personnel_certifications: {
+        Row: {
+          cert_name: string
+          created_at: string | null
+          expiry_date: string
+          id: string
+          is_verified: boolean | null
+          user_id: string
+        }
+        Insert: {
+          cert_name: string
+          created_at?: string | null
+          expiry_date: string
+          id?: string
+          is_verified?: boolean | null
+          user_id: string
+        }
+        Update: {
+          cert_name?: string
+          created_at?: string | null
+          expiry_date?: string
+          id?: string
+          is_verified?: boolean | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "personnel_certifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       platform_settings: {
         Row: {
@@ -1803,6 +1916,45 @@ export type Database = {
           {
             foreignKeyName: "project_config_updated_by_fkey"
             columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_granular_permissions: {
+        Row: {
+          can_view_drawings: boolean | null
+          can_view_financials: boolean | null
+          id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          can_view_drawings?: boolean | null
+          can_view_financials?: boolean | null
+          id?: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          can_view_drawings?: boolean | null
+          can_view_financials?: boolean | null
+          id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_granular_permissions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_granular_permissions_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user_actor"
             referencedColumns: ["id"]
@@ -1985,6 +2137,7 @@ export type Database = {
           actual_delivery: string | null
           created_at: string | null
           created_by: string | null
+          current_stock: number | null
           custom_data: Json | null
           estimated_delivery: string | null
           expected_arrival_date: string | null
@@ -1996,17 +2149,20 @@ export type Database = {
           project_id: string
           qr_uuid: string | null
           quantity: number
+          reorder_threshold: number | null
           spec_id: string | null
           status: string
           submittal_id: string | null
           supplier_name: string | null
           tracking_timeline: Json | null
+          unit_cost: number | null
           vendor_id: string | null
         }
         Insert: {
           actual_delivery?: string | null
           created_at?: string | null
           created_by?: string | null
+          current_stock?: number | null
           custom_data?: Json | null
           estimated_delivery?: string | null
           expected_arrival_date?: string | null
@@ -2018,17 +2174,20 @@ export type Database = {
           project_id: string
           qr_uuid?: string | null
           quantity: number
+          reorder_threshold?: number | null
           spec_id?: string | null
           status?: string
           submittal_id?: string | null
           supplier_name?: string | null
           tracking_timeline?: Json | null
+          unit_cost?: number | null
           vendor_id?: string | null
         }
         Update: {
           actual_delivery?: string | null
           created_at?: string | null
           created_by?: string | null
+          current_stock?: number | null
           custom_data?: Json | null
           estimated_delivery?: string | null
           expected_arrival_date?: string | null
@@ -2040,11 +2199,13 @@ export type Database = {
           project_id?: string
           qr_uuid?: string | null
           quantity?: number
+          reorder_threshold?: number | null
           spec_id?: string | null
           status?: string
           submittal_id?: string | null
           supplier_name?: string | null
           tracking_timeline?: Json | null
+          unit_cost?: number | null
           vendor_id?: string | null
         }
         Relationships: [
@@ -2157,6 +2318,41 @@ export type Database = {
           },
           {
             foreignKeyName: "project_resources_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_submittals: {
+        Row: {
+          created_at: string | null
+          id: string
+          project_id: string
+          spec_section: string | null
+          status: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          project_id: string
+          spec_section?: string | null
+          status?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          project_id?: string
+          spec_section?: string | null
+          status?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_submittals_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -2300,6 +2496,51 @@ export type Database = {
           },
           {
             foreignKeyName: "public_shares_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_orders: {
+        Row: {
+          created_at: string | null
+          id: string
+          material_id: string | null
+          po_number: string | null
+          project_id: string
+          status: string | null
+          total_amount: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          material_id?: string | null
+          po_number?: string | null
+          project_id: string
+          status?: string | null
+          total_amount?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          material_id?: string | null
+          po_number?: string | null
+          project_id?: string
+          status?: string | null
+          total_amount?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_material"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "project_materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_orders_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -2714,6 +2955,48 @@ export type Database = {
           },
         ]
       }
+      turnstile_logs: {
+        Row: {
+          created_at: string | null
+          entry_time: string
+          exit_time: string | null
+          id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          entry_time?: string
+          exit_time?: string | null
+          id?: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          entry_time?: string
+          exit_time?: string | null
+          id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "turnstile_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turnstile_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       union_compliance_rules: {
         Row: {
           id: string
@@ -2811,12 +3094,17 @@ export type Database = {
           bio: string | null
           created_at: string | null
           display_name: string | null
+          employment_type: string | null
           failed_login_attempts: number | null
+          hourly_rate: number | null
           id: string
           is_active: boolean | null
           lockout_until: string | null
           organization_id: string | null
+          phone_number: string | null
+          rfid_badge_id: string | null
           role: string
+          skills: string[] | null
           user_preferences: Json | null
         }
         Insert: {
@@ -2824,12 +3112,17 @@ export type Database = {
           bio?: string | null
           created_at?: string | null
           display_name?: string | null
+          employment_type?: string | null
           failed_login_attempts?: number | null
+          hourly_rate?: number | null
           id: string
           is_active?: boolean | null
           lockout_until?: string | null
           organization_id?: string | null
+          phone_number?: string | null
+          rfid_badge_id?: string | null
           role?: string
+          skills?: string[] | null
           user_preferences?: Json | null
         }
         Update: {
@@ -2837,12 +3130,17 @@ export type Database = {
           bio?: string | null
           created_at?: string | null
           display_name?: string | null
+          employment_type?: string | null
           failed_login_attempts?: number | null
+          hourly_rate?: number | null
           id?: string
           is_active?: boolean | null
           lockout_until?: string | null
           organization_id?: string | null
+          phone_number?: string | null
+          rfid_badge_id?: string | null
           role?: string
+          skills?: string[] | null
           user_preferences?: Json | null
         }
         Relationships: [
