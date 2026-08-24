@@ -2,7 +2,9 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 
 export async function createChangeRequest(formData: FormData) {
   await verifyRole(["admin", "pm", "superadmin"]);
@@ -35,6 +37,27 @@ export async function createChangeRequest(formData: FormData) {
   });
 
   if (error) return { success: false, error: error.message };
+
+  // Notify stakeholders
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+  const { data: stakeholders } = await adminSupabase.from("user_actor").select("id").in("role", ["admin", "client", "pm"]);
+  if (stakeholders) {
+    const userIds = stakeholders.map(s => s.id).filter(id => id !== user.id);
+    if (userIds.length > 0) {
+      const creatorEmail = user.email || "Someone";
+      const costStr = cost_impact > 0 ? ` with a $${cost_impact.toLocaleString()} cost impact` : "";
+      await createSystemNotification(
+        userIds,
+        `New Change Request: ${title}`,
+        `${creatorEmail} requested a change${costStr}. This adds ${time_impact_days} days to the schedule.`,
+        "update",
+        project_id
+      );
+    }
+  }
 
   // SECURE: Clear all relevant caches
   revalidatePath(`/pm/projects/${project_id}/changes`);

@@ -15,6 +15,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 	const pathname = usePathname();
 	const { role, isLoading } = useAuth();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+	const [isDesktopCollapsed, setIsDesktopCollapsed] = React.useState(false);
 
 	const [projects, setProjects] = React.useState<any[]>([]);
 	const [projectFlags, setProjectFlags] = React.useState<any>(null);
@@ -85,8 +86,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 			{/* Dynamic Sidebar */}
 			<div
 				className={`
-                fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0
+                fixed inset-y-0 left-0 z-50 transform transition-all duration-300 ease-in-out md:relative overflow-hidden
                 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+                ${isDesktopCollapsed ? "md:w-0 md:opacity-0" : "md:w-rail lg:w-sidebar md:translate-x-0 md:opacity-100"}
                 `}
 			>
 				<Sidebar sections={sections} activePath={pathname} />
@@ -96,7 +98,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 				{/* Dynamic Topbar */}
 				<Topbar
 					title="Setuu Workspace"
-					onMenuClick={() => setIsMobileMenuOpen(true)}
+					onMenuClick={() => {
+						if (window.innerWidth >= 768) {
+							setIsDesktopCollapsed(!isDesktopCollapsed);
+						} else {
+							setIsMobileMenuOpen(true);
+						}
+					}}
 					projects={projects}
 				/>
 

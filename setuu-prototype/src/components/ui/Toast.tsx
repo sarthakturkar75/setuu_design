@@ -60,7 +60,7 @@ export function Toast({ id, type, title, message, duration = 5000, onClose }: To
 // A simple ToastContainer for context usage (can be moved to a context provider later)
 export function ToastContainer({ toasts, onClose }: { toasts: Omit<ToastProps, 'onClose'>[], onClose: (id: string) => void }) {
   return (
-    <div className="fixed bottom-0 right-0 z-50 p-4 space-y-4 w-full md:w-auto md:max-w-sm pointer-events-none flex flex-col items-end">
+    <div className="fixed bottom-20 md:bottom-8 left-4 right-4 md:left-auto md:right-8 z-[9999] pointer-events-none flex flex-col gap-3 items-center md:items-end md:w-[400px]">
       {toasts.map(t => (
         <Toast key={t.id} {...t} onClose={onClose} />
       ))}

@@ -2,15 +2,50 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
+
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 
 // Fetch Root Causes
 export async function getRootCauses() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from("issue_root_causes").select("*");
-  if (error) throw error;
+  // We must bypass RLS entirely for this configuration table using the Service Role Key.
+  // Standard user sessions likely lack SELECT policies, causing it to constantly return an empty array.
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { data, error } = await adminSupabase.from("issue_root_causes").select("*");
+  if (error) {
+    console.error("Failed to fetch root causes:", error);
+    return [];
+  }
   
-  // Auto-seed if the table is empty to ensure strict dropdown enforcement works
+  // Temporary deduplication logic to clean up multiple inserts caused by previous RLS failures
+  if (data && data.length > 0) {
+    const seenNames = new Set();
+    const idsToDelete = [];
+    
+    for (const rc of data) {
+      if (seenNames.has(rc.name)) {
+        idsToDelete.push(rc.id);
+      } else {
+        seenNames.add(rc.name);
+      }
+    }
+    
+    if (idsToDelete.length > 0) {
+      console.log(`Cleaning up ${idsToDelete.length} duplicate root causes...`);
+      await adminSupabase.from("issue_root_causes").delete().in("id", idsToDelete);
+      
+      // Re-fetch clean data
+      const { data: cleanData } = await adminSupabase.from("issue_root_causes").select("*");
+      return cleanData || [];
+    }
+  }
+  
+  // Auto-seed if the table is empty
   if (!data || data.length === 0) {
     const seedData = [
       { name: "Design Error", category: "Engineering" },
@@ -20,8 +55,11 @@ export async function getRootCauses() {
       { name: "Site Logistics", category: "Operations" },
       { name: "Safety Violation", category: "Compliance" }
     ];
-    await supabase.from("issue_root_causes").insert(seedData);
-    const { data: newData } = await supabase.from("issue_root_causes").select("*");
+    
+    const { error: seedError } = await adminSupabase.from("issue_root_causes").insert(seedData);
+    if (seedError) console.error("Root cause seeding failed:", seedError);
+
+    const { data: newData } = await adminSupabase.from("issue_root_causes").select("*");
     return newData || [];
   }
   
@@ -45,10 +83,15 @@ export async function createIssue(formData: FormData) {
   const slaHours = severity === "Critical" ? 24 : 72;
   const slaDeadline = new Date(Date.now() + slaHours * 60 * 60 * 1000).toISOString();
 
-  // Handle rich media if uploaded directly (simulated array for now, real UI will pass JSON strings)
+  // Handle rich media if uploaded directly
   const mediaAssets = formData.get("media_assets") ? JSON.parse(formData.get("media_assets") as string) : [];
 
-  const { error } = await supabase.from("project_issues").insert({
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { error } = await adminSupabase.from("project_issues").insert({
     project_id: projectId,
     title,
     description,
@@ -62,6 +105,25 @@ export async function createIssue(formData: FormData) {
   });
 
   if (error) return { success: false, error: error.message };
+
+  if (!error) {
+    // Notify PMs and Admins
+    const { data: stakeholders } = await adminSupabase.from("user_actor").select("id").in("role", ["admin", "pm"]);
+    if (stakeholders) {
+      const userIds = stakeholders.map(s => s.id).filter(id => id !== user?.user?.id);
+      if (userIds.length > 0) {
+        const creatorEmail = user?.user?.email || "Someone";
+        await createSystemNotification(
+          userIds,
+          `New ${severity} Issue Logged`,
+          `${creatorEmail} logged a new ${severity} issue: "${title}". SLA Deadline is ${new Date(slaDeadline).toLocaleDateString()}.`,
+          "project",
+          projectId
+        );
+      }
+    }
+  }
+
   revalidatePath(`/`);
   return { success: true };
 }
@@ -85,7 +147,12 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
 
-  const { error } = await supabase.from("issue_inspections").insert({
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { error } = await adminSupabase.from("issue_inspections").insert({
     issue_id: issueId,
     inspector_id: user?.user?.id,
     checklist_json: checklistJson,

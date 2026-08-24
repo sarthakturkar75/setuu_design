@@ -67,10 +67,8 @@ export function Topbar({
 	const [notifications, setNotifications] = React.useState<NotificationItem[]>(
 		[],
 	);
-	const [isNotifOpen, setIsNotifOpen] = React.useState(false);
-	const [isLockPending, setIsLockPending] = React.useState(false);
-	const notifRef = React.useRef<HTMLDivElement>(null);
-
+		const [isLockPending, setIsLockPending] = React.useState(false);
+	
 	// Use parent-supplied projects if given (avoids double-fetch); self-heal otherwise
 	React.useEffect(() => {
 		if (projectsProp) {
@@ -122,30 +120,10 @@ export function Topbar({
 	}, [user?.id]);
 
 	// Close notification dropdown on outside click
-	React.useEffect(() => {
-		const handleClick = (e: MouseEvent) => {
-			if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
-				setIsNotifOpen(false);
-			}
-		};
-		document.addEventListener("mousedown", handleClick);
-		return () => document.removeEventListener("mousedown", handleClick);
-	}, []);
-
+	
 	const unreadCount = notifications.filter((n) => !n.is_read).length;
 
-	const handleMarkAsRead = async (id: string) => {
-		setNotifications((prev) =>
-			prev.map((n) => (n.id === id ? { ...n, is_read: true } : n)),
-		);
-		const result = await markAsRead(id);
-		if (!result.success) {
-			setNotifications((prev) =>
-				prev.map((n) => (n.id === id ? { ...n, is_read: false } : n)),
-			);
-		}
-	};
-
+	
 	const handleSearch = (value: string) => {
 		if (onSearch) {
 			onSearch(value);
@@ -279,7 +257,7 @@ export function Topbar({
 			<div className="flex items-center space-x-4 flex-1">
 				{onMenuClick && (
 					<button
-						className="md:hidden p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors"
+						className="p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors"
 						onClick={onMenuClick}
 					>
 						<Menu className="w-5 h-5" />
@@ -334,10 +312,10 @@ export function Topbar({
 					</Link>
 				)}
 
-				<div className="relative" ref={notifRef}>
-					<button
-						onClick={() => setIsNotifOpen((v) => !v)}
-						className="p-2 text-on-surface-variant hover:text-primary transition-colors relative"
+				<div className="relative">
+					<Link
+						href={role ? `/${role}/notifications` : "#"}
+						className="p-2 text-on-surface-variant hover:text-primary transition-colors relative block"
 					>
 						<Bell className="w-5 h-5" />
 						{unreadCount > 0 && (
@@ -346,49 +324,7 @@ export function Topbar({
 								className="absolute top-0 right-0 -mt-1 -mr-1"
 							/>
 						)}
-					</button>
-					{isNotifOpen && (
-						<div className="absolute right-0 mt-2 w-80 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-elevation-l2 py-1 z-50 max-h-96 overflow-y-auto">
-							<div className="px-4 py-2 border-b border-outline-variant/30 flex items-center justify-between">
-								<span className="text-sm font-semibold text-on-surface">
-									Notifications
-								</span>
-								{unreadCount > 0 && (
-									<span className="text-xs text-on-surface-variant">
-										{unreadCount} unread
-									</span>
-								)}
-							</div>
-							{notifications.length === 0 ? (
-								<div className="px-4 py-6 text-sm text-on-surface-variant text-center">
-									No notifications
-								</div>
-							) : (
-								notifications.map((n) => (
-									<button
-										key={n.id}
-										onClick={() => handleMarkAsRead(n.id)}
-										className={cn(
-											"w-full text-left px-4 py-3 text-sm hover:bg-surface-variant transition-colors border-b border-outline-variant/20 last:border-0",
-											!n.is_read && "bg-primary/5",
-										)}
-									>
-										<div className="flex items-start justify-between gap-2">
-											<span className="font-medium text-on-surface">
-												{n.title}
-											</span>
-											{!n.is_read && (
-												<span className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1" />
-											)}
-										</div>
-										<p className="text-on-surface-variant mt-0.5 line-clamp-2">
-											{n.message}
-										</p>
-									</button>
-								))
-							)}
-						</div>
-					)}
+					</Link>
 				</div>
 
 				<ThemeToggle />

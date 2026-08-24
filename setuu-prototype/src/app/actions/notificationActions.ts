@@ -45,8 +45,8 @@ export async function sendBroadcast(data: any) {
   const inserts = users.map(u => ({
     user_id: u.id,
     title: data.title || "Broadcast",
-    message: data.message,
-    type: "System",
+    body: data.message,
+    type: "system",
     is_read: false
   }));
   
@@ -54,4 +54,23 @@ export async function sendBroadcast(data: any) {
   if (error) return { success: false, error: error.message };
   
   return { success: true, count: inserts.length };
+}
+
+export async function createSystemNotification(userIds: string[], title: string, body: string, type: "system" | "update" | "comment" | "mention" | "project" = "system", referenceId: string | null = null) {
+  const supabase = await createClient();
+  const inserts = userIds.map(uid => ({
+    user_id: uid,
+    title,
+    body,
+    type,
+    is_read: false,
+    reference_id: referenceId
+  }));
+  
+  const { error } = await supabase.from("notifications").insert(inserts);
+  if (error) {
+    console.error("Failed to create system notification:", error);
+    return false;
+  }
+  return true;
 }

@@ -1,152 +1,206 @@
 "use server";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
 
-export async function getDrawings(projectId?: string) {
-  const supabase = await createClient();
-  let query = supabase.from("drawing_versions").select("*, project:projects!drawing_versions_project_id_fkey(name)");
-  
-  if (projectId) {
-    query = query.eq("project_id", projectId);
-  }
-  
-  query = query.order("version_number", { ascending: false });
-    
-  const { data, error } = await query;
-  if (error) throw error;
-  
-  return data.map(drawing => ({
-    ...drawing,
-    project_name: drawing.project && typeof drawing.project === 'object' && !Array.isArray(drawing.project)
-      ? (drawing.project as any).name
-      : null
-  }));
-}
+// 1. Upload Drawing Version (Tasks 1, 6)
+export async function uploadDrawingVersion(formData: FormData) {
+  await verifyRole(["admin", "pm", "engineer", "vendor"]);
+  const { data: user } = await (await createClient()).auth.getUser();
 
-export async function uploadDrawingVersion(drawingId: string, formData: FormData) {
-  await verifyRole(["admin", "pm"]);
-  const supabase = await createClient();
-  const project_id = formData.get("project_id") as string;
-  const file = formData.get("file") as File;
-  const uploaded_by = formData.get("uploaded_by") as string;
-  let url = formData.get("url") as string;
-  
-  if (file && file.size > 0) {
-    const fileExt = file.name.split('.').pop();
-    const uniqueFileName = `${crypto.randomUUID()}.${fileExt}`;
-    const filePath = `${project_id}/${uniqueFileName}`;
-    
-    const { error: uploadError } = await supabase.storage
-      .from('drawings')
-      .upload(filePath, file);
-      
-    if (!uploadError) {
-      const { data: { publicUrl } } = supabase.storage
-        .from('drawings')
-        .getPublicUrl(filePath);
-      url = publicUrl;
-    }
-  }
-  
-  // Get latest version number
-  const { data: latest } = await supabase
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const projectId = formData.get("project_id") as string;
+  const drawingName = formData.get("drawing_name") as string;
+  const fileUrl = formData.get("file_url") as string;
+  const discipline = formData.get("discipline") as string || "Architectural";
+  const scaleFactor = parseFloat(formData.get("scale_factor") as string) || null;
+
+  const { data: existing } = await adminSupabase
     .from("drawing_versions")
     .select("version_number")
-    .eq("drawing_id", drawingId)
+    .eq("project_id", projectId)
+    .eq("drawing_name", drawingName)
     .order("version_number", { ascending: false })
-    .limit(1)
-    .single();
-    
-  const nextVersion = latest ? latest.version_number + 1 : 1;
-  
-  const { error } = await supabase.from("drawing_versions").insert({
-    project_id,
-    drawing_id: drawingId,
-    drawing_name: (formData.get("drawing_name") as string) || "Untitled Drawing",
-    file_url: url,
-    uploaded_by,
+    .limit(1);
+
+  const nextVersion = existing && existing.length > 0 ? (existing[0].version_number || 1) + 1 : 1;
+
+  const { error } = await adminSupabase.from("drawing_versions").insert({
+    project_id: projectId,
+    drawing_name: drawingName,
+    file_url: fileUrl,
     version_number: nextVersion,
-    status: "Active",
+    status: "Approved",
+    uploaded_by: user?.user?.id,
+    custom_data: { discipline, scale_factor: scaleFactor }
   });
-  
+
   if (error) return { success: false, error: error.message };
-  revalidatePath(`/admin/drawings`);
-  return { success: true };
-}
 
-export async function compareDrawingVersions(v1Id: string, v2Id: string) {
-  await verifyRole(["admin", "pm", "superadmin"]);
-  const supabase = await createClient();
-  const { data: v1, error: e1 } = await supabase.from("drawing_versions").select("*").eq("id", v1Id).single();
-  const { data: v2, error: e2 } = await supabase.from("drawing_versions").select("*").eq("id", v2Id).single();
-  
-  if (e1 || e2) return { success: false, error: "Failed to load drawing versions" };
-  
-  return {
-    success: true,
-    data: { v1, v2, diff_ready: true }
-  };
-}
-
-export async function deleteDrawing(drawingId: string) {
-  await verifyRole(["admin", "pm"]);
-  const supabase = await createClient();
-  const { data: drawing, error: fetchError } = await supabase.from("drawing_versions").select("project_id").eq("id", drawingId).single();
-  
-  if (fetchError) return { success: false, error: fetchError.message };
-
-  const { error } = await supabase.from("drawing_versions").delete().eq("id", drawingId);
-  if (error) return { success: false, error: error.message };
-  
-  if (drawing?.project_id) {
-    revalidatePath(`/pm/projects/${drawing.project_id}/drawings`);
-    revalidatePath(`/admin/projects/${drawing.project_id}/drawings`);
+  if (!error) {
+    const { data: stakeholders } = await adminSupabase.from("user_actor").select("id").in("role", ["admin", "pm", "engineer"]);
+    if (stakeholders) {
+      const userIds = stakeholders.map(s => s.id).filter(id => id !== user?.user?.id);
+      if (userIds.length > 0) {
+        const creatorEmail = user?.user?.email || "Someone";
+        await createSystemNotification(
+          userIds,
+          `New Blueprint Revision: ${drawingName}`,
+          `${creatorEmail} uploaded revision v${nextVersion} for ${drawingName} (${discipline || "Architectural"}).`,
+          "update",
+          projectId
+        );
+      }
+    }
   }
-  
+
+  revalidatePath(`/`);
   return { success: true };
 }
 
-export async function updateDrawing(drawingId: string, updates: any) {
-  await verifyRole(["admin", "pm"]);
-  const supabase = await createClient();
-  const { data: drawing, error: fetchError } = await supabase.from("drawing_versions").select("project_id").eq("id", drawingId).single();
-  
-  if (fetchError) return { success: false, error: fetchError.message };
+// Fetch Drawings
+export async function getProjectDrawings(projectId: string) {
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
 
-  const { error } = await supabase.from("drawing_versions").update(updates).eq("id", drawingId);
+  const { data, error } = await adminSupabase
+    .from("drawing_versions")
+    .select("*, drawing_pins(*), drawing_hyperlinks!drawing_hyperlinks_source_drawing_id_fkey(*)")
+    .eq("project_id", projectId)
+    .order("drawing_name", { ascending: true })
+    .order("version_number", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
+// 3. Coordinate Pinning (Task 3)
+export async function pinEntityToDrawing(drawingId: string, x: number, y: number, entityType: string, entityId: string | null) {
+  await verifyRole(["admin", "pm", "engineer"]);
+  
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { error } = await adminSupabase.from("drawing_pins").insert({
+    drawing_id: drawingId,
+    x_coord: x,
+    y_coord: y,
+    linked_entity_type: entityType,
+    linked_entity_id: entityId
+  });
+
   if (error) return { success: false, error: error.message };
-  
-  if (drawing?.project_id) {
-    revalidatePath(`/pm/projects/${drawing.project_id}/drawings`);
-    revalidatePath(`/admin/projects/${drawing.project_id}/drawings`);
-  }
-  
+  revalidatePath(`/`);
   return { success: true };
 }
 
-
-export async function createDrawing(formData: FormData) {
+// 4. Auto-Slip Sheeting (Task 4)
+export async function simulateSlipSheeting(projectId: string, pages: any[]) {
   await verifyRole(["admin", "pm"]);
-  const supabase = await createClient();
-  const project_id = formData.get("project_id") as string;
-  const drawing_name = formData.get("drawing_name") as string;
-  const file_url = formData.get("file_url") as string;
-  
-  if (!project_id || !drawing_name || !file_url) return { success: false, error: "Missing fields" };
-  
-  const { error } = await supabase.from("drawing_versions").insert({
-    project_id,
-    drawing_name,
-    file_url,
+  const { data: user } = await (await createClient()).auth.getUser();
+
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const inserts = pages.map(page => ({
+    project_id: projectId,
+    drawing_name: page.extractedTitleBlockName,
+    file_url: page.base64Payload,
     version_number: 1,
-    status: 'Active'
-  });
-  
+    status: "Approved",
+    uploaded_by: user?.user?.id,
+    custom_data: { discipline: "Architectural", source: "Auto-SlipSheet" }
+  }));
+
+  const { error } = await adminSupabase.from("drawing_versions").insert(inserts);
   if (error) return { success: false, error: error.message };
+  revalidatePath(`/`);
+  return { success: true };
+}
+
+// 5. Update Drawing Scale Factor (Takeoff Calibration)
+export async function updateDrawingScale(drawingId: string, scaleFactor: number) {
+  await verifyRole(["admin", "pm", "engineer"]);
   
-  revalidatePath(`/admin/projects/${project_id}/drawings`);
-  revalidatePath(`/pm/projects/${project_id}/drawings`);
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  // Fetch current custom_data
+  const { data: current } = await adminSupabase.from("drawing_versions").select("custom_data").eq("id", drawingId).single();
+  const currentData = current?.custom_data || {};
+
+  const { error } = await adminSupabase.from("drawing_versions").update({
+    custom_data: { ...currentData, scale_factor: scaleFactor }
+  }).eq("id", drawingId);
+
+  if (error) return { success: false, error: error.message };
+  revalidatePath(`/`);
+  return { success: true };
+}
+
+// --- Task: Drawing Management Utilities ---
+export async function deleteDrawingVersion(drawingId: string) {
+  await verifyRole(["admin", "pm"]);
+  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  
+  const { error } = await adminSupabase.from("drawing_versions").delete().eq("id", drawingId);
+  if (error) return { success: false, error: error.message };
+  revalidatePath(`/`);
+  return { success: true };
+}
+
+export async function renameDrawingGroup(projectId: string, oldName: string, newName: string) {
+  await verifyRole(["admin", "pm"]);
+  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  
+  const { error } = await adminSupabase.from("drawing_versions")
+    .update({ drawing_name: newName })
+    .eq("project_id", projectId)
+    .eq("drawing_name", oldName);
+    
+  if (error) return { success: false, error: error.message };
+  revalidatePath(`/`);
+  return { success: true };
+}
+
+export async function replaceDrawingFile(drawingId: string, newFileUrl: string) {
+  await verifyRole(["admin", "pm"]);
+  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  
+  const { error } = await adminSupabase.from("drawing_versions")
+    .update({ file_url: newFileUrl })
+    .eq("id", drawingId);
+    
+  if (error) return { success: false, error: error.message };
+  revalidatePath(`/`);
+  return { success: true };
+}
+
+export async function updateDrawingTags(drawingId: string, customData: any, newTags: string[]) {
+  await verifyRole(["admin", "pm", "engineer"]);
+  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  
+  const payload = { ...(customData || {}), tags: newTags };
+  
+  const { error } = await adminSupabase.from("drawing_versions")
+    .update({ custom_data: payload })
+    .eq("id", drawingId);
+    
+  if (error) return { success: false, error: error.message };
+  revalidatePath(`/`);
   return { success: true };
 }
