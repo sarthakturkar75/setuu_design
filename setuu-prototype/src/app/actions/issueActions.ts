@@ -21,12 +21,12 @@ export async function getRootCauses() {
     console.error("Failed to fetch root causes:", error);
     return [];
   }
-  
+
   // Temporary deduplication logic to clean up multiple inserts caused by previous RLS failures
   if (data && data.length > 0) {
     const seenNames = new Set();
     const idsToDelete = [];
-    
+
     for (const rc of data) {
       if (seenNames.has(rc.name)) {
         idsToDelete.push(rc.id);
@@ -34,17 +34,17 @@ export async function getRootCauses() {
         seenNames.add(rc.name);
       }
     }
-    
+
     if (idsToDelete.length > 0) {
       console.log(`Cleaning up ${idsToDelete.length} duplicate root causes...`);
       await adminSupabase.from("issue_root_causes").delete().in("id", idsToDelete);
-      
+
       // Re-fetch clean data
       const { data: cleanData } = await adminSupabase.from("issue_root_causes").select("*");
       return cleanData || [];
     }
   }
-  
+
   // Auto-seed if the table is empty
   if (!data || data.length === 0) {
     const seedData = [
@@ -55,14 +55,14 @@ export async function getRootCauses() {
       { name: "Site Logistics", category: "Operations" },
       { name: "Safety Violation", category: "Compliance" }
     ];
-    
+
     const { error: seedError } = await adminSupabase.from("issue_root_causes").insert(seedData);
     if (seedError) console.error("Root cause seeding failed:", seedError);
 
     const { data: newData } = await adminSupabase.from("issue_root_causes").select("*");
     return newData || [];
   }
-  
+
   return data;
 }
 
@@ -152,12 +152,46 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { error } = await adminSupabase.from("issue_inspections").insert({
+  // 1. Insert the inspection record
+  const { error: inspectError } = await adminSupabase.from("issue_inspections").insert({
     issue_id: issueId,
     inspector_id: user?.user?.id,
     checklist_json: checklistJson,
     conducted_at: new Date().toISOString()
   });
+
+  if (inspectError) return { success: false, error: inspectError.message };
+
+  // 2. Automatically resolve the parent issue since it passed QA!
+  const { error: updateError } = await adminSupabase
+    .from("project_issues")
+    .update({
+      status: "Resolved",
+      resolved_at: new Date().toISOString()
+    })
+    .eq("id", issueId);
+
+  if (updateError) return { success: false, error: updateError.message };
+
+  revalidatePath(`/`);
+  return { success: true };
+}
+
+// Add this new function at the bottom so the Global Console "Mark Resolved" button works too!
+export async function markIssueResolved(issueId: string) {
+  await verifyRole(["admin", "pm", "engineer"]);
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const { error } = await adminSupabase
+    .from("project_issues")
+    .update({
+      status: "Resolved",
+      resolved_at: new Date().toISOString()
+    })
+    .eq("id", issueId);
 
   if (error) return { success: false, error: error.message };
   revalidatePath(`/`);
@@ -167,17 +201,17 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
 // Analytics Aggregation (Tasks 2, 7)
 export async function getIssueAnalytics(projectId: string) {
   const supabase = await createClient();
-  
+
   // Aggregate Financial Impact
   const { data: issues } = await supabase.from("project_issues").select("estimated_rework_cost, issue_root_causes(name)").eq("project_id", projectId);
-  
+
   let totalReworkCost = 0;
   const rootCauseDistribution: Record<string, number> = {};
 
   if (issues) {
     issues.forEach(issue => {
       totalReworkCost += (issue.estimated_rework_cost || 0);
-      
+
       const rcName = (issue.issue_root_causes as any)?.name || "Uncategorized";
       rootCauseDistribution[rcName] = (rootCauseDistribution[rcName] || 0) + 1;
     });

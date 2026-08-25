@@ -5,6 +5,17 @@ import { X, ShieldAlert, Check } from "lucide-react";
 import { toggleUserPermission } from "@/app/actions/permissionActions";
 import { useToast } from "@/contexts/ToastContext";
 
+// Define the exact literal types expected by your database/actions
+type PermissionKey =
+  | "can_view_drawings"
+  | "can_view_financials"
+  | "can_edit_timeline"
+  | "can_manage_issues"
+  | "can_approve_changes"
+  | "can_manage_materials"
+  | "can_manage_labor"
+  | "can_view_reports";
+
 export function EditPermissionsModal({
   projectId,
   user,
@@ -20,7 +31,8 @@ export function EditPermissionsModal({
 }) {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const [perms, setPerms] = useState({
+
+  const [perms, setPerms] = useState<Record<PermissionKey, boolean>>({
     can_view_drawings: permissions?.can_view_drawings || false,
     can_view_financials: permissions?.can_view_financials || false,
     can_edit_timeline: permissions?.can_edit_timeline || false,
@@ -31,21 +43,26 @@ export function EditPermissionsModal({
     can_view_reports: permissions?.can_view_reports || false,
   });
 
-  const handleToggle = (key: string) => {
-    setPerms((prev) => ({ ...prev, [key]: !(prev as any)[key] }));
+  const handleToggle = (key: PermissionKey) => {
+    setPerms((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleSave = async () => {
     setLoading(true);
-    // Since we only have toggleUserPermission for single toggles, we would ideally have a bulk update.
-    // For now, we'll fire them off in parallel (or sequential) or just create a new bulk action.
-    // Let's fire them sequentially to avoid race conditions.
-
     let errorOccurred = false;
-    for (const [key, value] of Object.entries(perms)) {
-      if (value !== permissions?.[key]) {
-        // Only update if changed
-        const res = await toggleUserPermission(projectId, user.id, key, value);
+
+    // Explicitly cast Object.entries so TypeScript knows these are specific PermissionKeys, not generic strings
+    const entries = Object.entries(perms) as [PermissionKey, boolean][];
+
+    for (const [key, value] of entries) {
+      if (value !== (permissions?.[key] || false)) {
+        // Cast key as any to bypass the strict literal check if permissionActions is tightly bounded
+        const res = await toggleUserPermission(
+          projectId,
+          user.id,
+          key as any,
+          value,
+        );
         if (!res.success) {
           errorOccurred = true;
           toast.error(`Failed to update ${key}: ` + res.error);
@@ -61,18 +78,18 @@ export function EditPermissionsModal({
     setLoading(false);
   };
 
-  const toggleGroup = (title: string, desc: string, key: string) => (
-    <div className="flex justify-between items-center p-3 bg-surface border border-outline-variant/30 rounded-lg">
+  const toggleGroup = (title: string, desc: string, key: PermissionKey) => (
+    <div className="flex justify-between items-center p-3 bg-surface border border-outline-variant/30 rounded-lg mb-2">
       <div>
         <p className="font-semibold text-sm text-on-surface">{title}</p>
         <p className="text-xs text-on-surface-variant">{desc}</p>
       </div>
       <button
         onClick={() => handleToggle(key)}
-        className={`w-10 h-5 rounded-full relative transition-colors ${(perms as any)[key] ? "bg-primary" : "bg-surface-variant"}`}
+        className={`w-10 h-5 rounded-full relative transition-colors ${perms[key] ? "bg-primary" : "bg-surface-variant"}`}
       >
         <div
-          className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all ${(perms as any)[key] ? "left-5.5" : "left-0.5"}`}
+          className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all ${perms[key] ? "left-5.5" : "left-0.5"}`}
         ></div>
       </button>
     </div>
@@ -96,8 +113,8 @@ export function EditPermissionsModal({
           </button>
         </div>
 
-        <div className="p-6 overflow-y-auto flex-1 max-h-[60vh] space-y-4">
-          <h3 className="font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-2">
+        <div className="p-6 overflow-y-auto flex-1 max-h-[60vh]">
+          <h3 className="font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-3">
             Core Access
           </h3>
           {toggleGroup(
@@ -116,7 +133,7 @@ export function EditPermissionsModal({
             "can_view_reports",
           )}
 
-          <h3 className="font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-2 mt-6">
+          <h3 className="font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-3 mt-6">
             Write Access
           </h3>
           {toggleGroup(
@@ -140,7 +157,7 @@ export function EditPermissionsModal({
             "can_manage_labor",
           )}
 
-          <h3 className="font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-2 mt-6">
+          <h3 className="font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-3 mt-6">
             Administrative Access
           </h3>
           {toggleGroup(

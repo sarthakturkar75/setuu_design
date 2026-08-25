@@ -50,7 +50,7 @@ export async function createProject(formData: FormData) {
           project_id: data.id,
           name: res.name,
           resource_type: res.type,
-          allocated_hours: parseInt(res.hours || "0", 10)
+          allocated_hours: parseInt(res.hours || "0", 10),
         }));
         await supabase.from("project_resources").insert(resourceInserts);
       }
@@ -61,8 +61,8 @@ export async function createProject(formData: FormData) {
 
   revalidatePath("/admin/projects");
   revalidatePath("/pm/projects");
-  
-  const portal = formData.get("portal") as string || "admin";
+
+  const portal = (formData.get("portal") as string) || "admin";
   redirect(`/${portal}/projects/${data.id}`);
 }
 
@@ -103,26 +103,39 @@ export async function updateProjectConfig(formData: FormData) {
   return { success: true };
 }
 
-export async function getProjects(filters?: { status?: string, pm_id?: string, is_archived?: boolean }) {
+export async function getProjects(filters?: {
+  status?: string;
+  pm_id?: string;
+  is_archived?: boolean;
+}) {
   const supabase = await createClient();
-  let query = supabase.from("projects").select("*, assigned_pm:user_actor!projects_assigned_pm_id_fkey(display_name), client:organizations!projects_client_org_id_fkey(name)");
+  let query = supabase
+    .from("projects")
+    .select(
+      "*, assigned_pm:user_actor!projects_assigned_pm_id_fkey(display_name), client:organizations!projects_client_org_id_fkey(name)",
+    );
 
   if (filters?.status) query = query.eq("status", filters.status);
   if (filters?.pm_id) query = query.eq("assigned_pm_id", filters.pm_id);
-  if (filters?.is_archived !== undefined) query = query.eq("is_archived", filters.is_archived);
+  if (filters?.is_archived !== undefined)
+    query = query.eq("is_archived", filters.is_archived);
 
   const { data, error } = await query;
   if (error) throw error;
 
   // Map the joined data to include a flat pm_name field for easy UI rendering
-  return data.map(p => ({
+  return data.map((p) => ({
     ...p,
-    pm_name: p.assigned_pm && typeof p.assigned_pm === 'object' && !Array.isArray(p.assigned_pm)
-      ? (p.assigned_pm as any).display_name
-      : null,
-    client_name: p.client && typeof p.client === 'object' && !Array.isArray(p.client)
-      ? (p.client as any).name
-      : null
+    pm_name:
+      p.assigned_pm &&
+        typeof p.assigned_pm === "object" &&
+        !Array.isArray(p.assigned_pm)
+        ? (p.assigned_pm as any).display_name
+        : null,
+    client_name:
+      p.client && typeof p.client === "object" && !Array.isArray(p.client)
+        ? (p.client as any).name
+        : null,
   }));
 }
 
@@ -147,8 +160,8 @@ export async function archiveProject(id: string) {
     .eq("id", id);
 
   if (error) {
-       return { success: false, error: error.message };
-     }
+    return { success: false, error: error.message };
+  }
   revalidatePath("/admin/projects");
   return { success: true };
 }
@@ -156,14 +169,11 @@ export async function archiveProject(id: string) {
 export async function deleteProject(id: string) {
   await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
-  const { error } = await supabase
-    .from("projects")
-    .delete()
-    .eq("id", id);
+  const { error } = await supabase.from("projects").delete().eq("id", id);
 
   if (error) {
-       return { success: false, error: error.message };
-     }
+    return { success: false, error: error.message };
+  }
   revalidatePath("/admin/projects");
   return { success: true };
 }
@@ -192,7 +202,6 @@ export async function getResourceAllocationData() {
 export async function getCriticalPathMilestones() {
   const supabase = await createClient();
 
-  // FIX: Changed "name" to "title" in the select statement
   const { data, error } = await supabase
     .from("milestones")
     .select("id, title, target_date, projects(name)")
@@ -214,9 +223,9 @@ export async function getCriticalPathMilestones() {
     return {
       id: m.id,
       project: m.projects?.name || "Unknown Project",
-      name: m.title, // Maps the database 'title' to the frontend 'name' prop
+      name: m.title,
       daysLeft,
-      status: daysLeft <= 7 ? "critical" : "warning"
+      status: daysLeft <= 7 ? "critical" : "warning",
     };
   });
 }
@@ -224,10 +233,12 @@ export async function getCriticalPathMilestones() {
 export async function getProjectTeam(projectId: string) {
   const supabase = await createClient();
 
-  // Get PM
+  // Get PM - Added organization_id to the select
   const { data: project } = await supabase
     .from("projects")
-    .select("assigned_pm:user_actor!projects_assigned_pm_id_fkey(id, display_name, role, organization:organizations(name))")
+    .select(
+      "assigned_pm:user_actor!projects_assigned_pm_id_fkey(id, display_name, role, organization_id, organization:organizations(name))",
+    )
     .eq("id", projectId)
     .single();
 
@@ -241,27 +252,41 @@ export async function getProjectTeam(projectId: string) {
 
   if (project?.assigned_pm && typeof project.assigned_pm === "object") {
     const pm = project.assigned_pm as any;
-    const orgName = pm.organization && typeof pm.organization === 'object' && !Array.isArray(pm.organization) ? pm.organization.name : null;
+    const orgName =
+      pm.organization &&
+        typeof pm.organization === "object" &&
+        !Array.isArray(pm.organization)
+        ? pm.organization.name
+        : null;
     team.push({
       id: pm.id,
       name: pm.display_name || "Unknown PM",
       role: pm.role || "PM",
       employment_type: "Internal Employee",
       hourly_rate: 0,
-      organization_name: orgName
+      organization_id: pm.organization_id, // NEW
+      organization_name: orgName,
     });
   }
 
   if (vendorAssocs && vendorAssocs.length > 0) {
-    const vendorIds = vendorAssocs.map(v => v.vendor_id);
+    const vendorIds = vendorAssocs.map((v) => v.vendor_id);
     const { data: vendors } = await supabase
       .from("user_actor")
-      .select("id, display_name, role, employment_type, skills, hourly_rate, organization:organizations(name)")
+      // Added organization_id to the select
+      .select(
+        "id, display_name, role, employment_type, skills, hourly_rate, organization_id, organization:organizations(name)",
+      )
       .in("id", vendorIds);
-      
+
     if (vendors) {
       vendors.forEach((v: any) => {
-        const orgName = v.organization && typeof v.organization === 'object' && !Array.isArray(v.organization) ? v.organization.name : null;
+        const orgName =
+          v.organization &&
+            typeof v.organization === "object" &&
+            !Array.isArray(v.organization)
+            ? v.organization.name
+            : null;
         team.push({
           id: v.id,
           name: v.display_name || "Unknown",
@@ -269,19 +294,25 @@ export async function getProjectTeam(projectId: string) {
           employment_type: v.employment_type,
           skills: v.skills || [],
           hourly_rate: v.hourly_rate || 0,
-          organization_name: orgName
+          organization_id: v.organization_id, // NEW
+          organization_name: orgName,
         });
       });
     }
   }
 
-  const uniqueTeam = Array.from(new Map(team.map(item => [item.id, item])).values());
+  const uniqueTeam = Array.from(
+    new Map(team.map((item) => [item.id, item])).values(),
+  );
 
-  return uniqueTeam.map(member => {
+  return uniqueTeam.map((member) => {
     const names = member.name.split(" ");
-    const fallback = names.length > 1
-      ? `${names[0][0]}${names[1][0]}`.toUpperCase()
-      : (names[0] ? names[0].substring(0, 2).toUpperCase() : "?");
+    const fallback =
+      names.length > 1
+        ? `${names[0][0]}${names[1][0]}`.toUpperCase()
+        : names[0]
+          ? names[0].substring(0, 2).toUpperCase()
+          : "?";
     return { ...member, fallback };
   });
 }
@@ -292,7 +323,9 @@ export async function getRecentActivity(projectId: string) {
   // Fetch updates
   const { data: updates } = await supabase
     .from("updates")
-    .select("id, caption, created_at, author:user_actor!updates_author_id_fkey(display_name)")
+    .select(
+      "id, caption, created_at, author:user_actor!updates_author_id_fkey(display_name)",
+    )
     .eq("project_id", projectId)
     .order("created_at", { ascending: false })
     .limit(5);
@@ -300,7 +333,9 @@ export async function getRecentActivity(projectId: string) {
   // Fetch issues
   const { data: issues } = await supabase
     .from("project_issues")
-    .select("id, title, created_at, creator:user_actor!project_issues_created_by_fkey(display_name)")
+    .select(
+      "id, title, created_at, creator:user_actor!project_issues_created_by_fkey(display_name)",
+    )
     .eq("project_id", projectId)
     .order("created_at", { ascending: false })
     .limit(5);
@@ -308,33 +343,42 @@ export async function getRecentActivity(projectId: string) {
   const activities: any[] = [];
 
   if (updates) {
-    updates.forEach(u => {
+    updates.forEach((u) => {
       activities.push({
         id: u.id,
         type: "update",
         title: u.caption || "Project Update",
-        user: u.author && typeof u.author === "object" && !Array.isArray(u.author) ? (u.author as any).display_name : "System",
+        user:
+          u.author && typeof u.author === "object" && !Array.isArray(u.author)
+            ? (u.author as any).display_name
+            : "System",
         time: u.created_at || new Date().toISOString(),
       });
     });
   }
 
   if (issues) {
-    issues.forEach(i => {
+    issues.forEach((i) => {
       activities.push({
         id: i.id,
         type: "issue",
         title: i.title || "Issue Reported",
-        user: i.creator && typeof i.creator === "object" && !Array.isArray(i.creator) ? (i.creator as any).display_name : "System",
+        user:
+          i.creator &&
+            typeof i.creator === "object" &&
+            !Array.isArray(i.creator)
+            ? (i.creator as any).display_name
+            : "System",
         time: i.created_at || new Date().toISOString(),
       });
     });
   }
 
   // Sort combined by time descending
-  activities.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+  activities.sort(
+    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime(),
+  );
 
-  // Format time (simple helper)
   const formatTime = (dateStr: string) => {
     const diff = new Date().getTime() - new Date(dateStr).getTime();
     const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -343,16 +387,15 @@ export async function getRecentActivity(projectId: string) {
     return `${Math.floor(hours / 24)} days ago`;
   };
 
-  return activities.slice(0, 5).map(a => ({
+  return activities.slice(0, 5).map((a) => ({
     ...a,
-    time: formatTime(a.time)
+    time: formatTime(a.time),
   }));
 }
 
 export async function getProjectConfigOptions() {
   const supabase = await createClient();
 
-  // Fetch users with the 'pm' role
   const { data: pms, error: pmError } = await supabase
     .from("user_actor")
     .select("id, display_name")
@@ -360,7 +403,6 @@ export async function getProjectConfigOptions() {
 
   if (pmError) console.error("Error fetching PMs:", pmError);
 
-  // Fetch organizations of type 'client'
   const { data: clients, error: clientError } = await supabase
     .from("organizations")
     .select("id, name")
@@ -370,21 +412,35 @@ export async function getProjectConfigOptions() {
 
   return {
     pms: pms || [],
-    clients: clients || []
+    clients: clients || [],
   };
 }
+
 export async function getProjectFlags(projectId: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('project_config').select('module_name, is_enabled').eq('project_id', projectId);
-  
-  const defaultFlags = { project_resources: true, change_requests: true, project_materials: true, project_issues: true, drawing_versions: true, timeline: true, milestones: true, collaboration: true, handover: true };
+  const { data, error } = await supabase
+    .from("project_config")
+    .select("module_name, is_enabled")
+    .eq("project_id", projectId);
+
+  const defaultFlags = {
+    project_resources: true,
+    change_requests: true,
+    project_materials: true,
+    project_issues: true,
+    drawing_versions: true,
+    timeline: true,
+    milestones: true,
+    collaboration: true,
+    handover: true,
+  };
   if (!data || error) return defaultFlags;
 
   const flags: any = { ...defaultFlags };
   for (const row of data) {
     flags[row.module_name] = row.is_enabled;
   }
-  
+
   flags.resources = flags.project_resources;
   flags.changes = flags.change_requests;
   flags.materials = flags.project_materials;
@@ -394,25 +450,40 @@ export async function getProjectFlags(projectId: string) {
   return flags;
 }
 
-export async function updateProjectFlag(projectId: string, moduleName: string, isEnabled: boolean) {
+export async function updateProjectFlag(
+  projectId: string,
+  moduleName: string,
+  isEnabled: boolean,
+) {
   await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  
-  const { data: existing } = await supabase.from('project_config')
-    .select('id').eq('project_id', projectId).eq('module_name', moduleName).maybeSingle();
-    
+
+  const { data: existing } = await supabase
+    .from("project_config")
+    .select("id")
+    .eq("project_id", projectId)
+    .eq("module_name", moduleName)
+    .maybeSingle();
+
   if (existing) {
-     const { error } = await supabase.from('project_config').update({ is_enabled: isEnabled, updated_at: new Date().toISOString() }).eq('id', existing.id);
-     if (error) {
-       return { success: false, error: error.message };
-     }
+    const { error } = await supabase
+      .from("project_config")
+      .update({ is_enabled: isEnabled, updated_at: new Date().toISOString() })
+      .eq("id", existing.id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
   } else {
-     const { error } = await supabase.from('project_config').insert({ project_id: projectId, module_name: moduleName, is_enabled: isEnabled });
-     if (error) {
-       return { success: false, error: error.message };
-     }
+    const { error } = await supabase.from("project_config").insert({
+      project_id: projectId,
+      module_name: moduleName,
+      is_enabled: isEnabled,
+    });
+    if (error) {
+      return { success: false, error: error.message };
+    }
   }
-  
+
   return { success: true };
 }
 
@@ -420,48 +491,73 @@ export async function getCalendarEvents() {
   const supabase = await createClient();
   const events = [];
 
-  // 1. Fetch Milestones
-  const { data: milestones } = await supabase.from('milestones').select('id, title, target_date, created_at, completion_status, projects(name)');
+  const { data: milestones } = await supabase
+    .from("milestones")
+    .select(
+      "id, title, target_date, created_at, completion_status, projects(name)",
+    );
   if (milestones) {
-    events.push(...milestones.map((m: any) => ({
-      id: `m-${m.id}`,
-      title: m.title || "Milestone",
-      date: new Date(m.target_date || m.created_at),
-      type: 'milestone',
-      project: m.projects && typeof m.projects === 'object' && !Array.isArray(m.projects) ? (m.projects as any).name : 'Global',
-      status: m.completion_status ? 'Completed' : 'Pending'
-    })));
+    events.push(
+      ...milestones.map((m: any) => ({
+        id: `m-${m.id}`,
+        title: m.title || "Milestone",
+        date: new Date(m.target_date || m.created_at),
+        type: "milestone",
+        project:
+          m.projects &&
+            typeof m.projects === "object" &&
+            !Array.isArray(m.projects)
+            ? (m.projects as any).name
+            : "Global",
+        status: m.completion_status ? "Completed" : "Pending",
+      })),
+    );
   }
 
-  // 2. Fetch Updates
-  const { data: updates } = await supabase.from('updates').select('id, caption, created_at, projects(name)');
+  const { data: updates } = await supabase
+    .from("updates")
+    .select("id, caption, created_at, projects(name)");
   if (updates) {
-    events.push(...updates.map((u: any) => ({
-      id: `u-${u.id}`,
-      title: "Progress Update",
-      date: new Date(u.created_at),
-      type: 'update',
-      project: u.projects && typeof u.projects === 'object' && !Array.isArray(u.projects) ? (u.projects as any).name : 'Global',
-      status: 'Logged'
-    })));
+    events.push(
+      ...updates.map((u: any) => ({
+        id: `u-${u.id}`,
+        title: "Progress Update",
+        date: new Date(u.created_at),
+        type: "update",
+        project:
+          u.projects &&
+            typeof u.projects === "object" &&
+            !Array.isArray(u.projects)
+            ? (u.projects as any).name
+            : "Global",
+        status: "Logged",
+      })),
+    );
   }
 
-  // 3. Fetch Issues
-  const { data: issues } = await supabase.from('project_issues').select('id, title, created_at, status, projects(name)');
+  const { data: issues } = await supabase
+    .from("project_issues")
+    .select("id, title, created_at, status, projects(name)");
   if (issues) {
-    events.push(...issues.map((i: any) => ({
-      id: `i-${i.id}`,
-      title: i.title || "Issue Logged",
-      date: new Date(i.created_at),
-      type: 'issue',
-      project: i.projects && typeof i.projects === 'object' && !Array.isArray(i.projects) ? (i.projects as any).name : 'Global',
-      status: i.status || 'Open'
-    })));
+    events.push(
+      ...issues.map((i: any) => ({
+        id: `i-${i.id}`,
+        title: i.title || "Issue Logged",
+        date: new Date(i.created_at),
+        type: "issue",
+        project:
+          i.projects &&
+            typeof i.projects === "object" &&
+            !Array.isArray(i.projects)
+            ? (i.projects as any).name
+            : "Global",
+        status: i.status || "Open",
+      })),
+    );
   }
-  
-  // Sort all events by date
+
   events.sort((a, b) => b.date.getTime() - a.date.getTime());
-  
+
   return events;
 }
 
@@ -470,21 +566,25 @@ export async function assignTeamMember(formData: FormData) {
   const supabase = await createClient();
   const project_id = formData.get("project_id") as string;
   const vendor_id = formData.get("vendor_id") as string;
-  
-  if (!project_id || !vendor_id) return { success: false, error: "Missing fields" };
-  
+
+  if (!project_id || !vendor_id)
+    return { success: false, error: "Missing fields" };
+
   const { error } = await supabase.from("project_vendors").insert({
     project_id,
-    vendor_id
+    vendor_id,
   });
-  
+
   if (error) {
-    if (error.code === '23505') {
-      return { success: false, error: "This member is already assigned to this project." };
+    if (error.code === "23505") {
+      return {
+        success: false,
+        error: "This member is already assigned to this project.",
+      };
     }
     return { success: false, error: error.message };
   }
-  
+
   revalidatePath(`/admin/projects/${project_id}/team`);
   revalidatePath(`/pm/projects/${project_id}/team`);
   return { success: true };
@@ -492,24 +592,44 @@ export async function assignTeamMember(formData: FormData) {
 
 export async function removeTeamMember(projectId: string, vendorId: string) {
   const supabase = await createClient();
-  const { error } = await supabase.from('project_vendors').delete().eq('project_id', projectId).eq('vendor_id', vendorId);
+  const { error } = await supabase
+    .from("project_vendors")
+    .delete()
+    .eq("project_id", projectId)
+    .eq("vendor_id", vendorId);
   if (error) return { success: false, error: error.message };
   return { success: true };
 }
 
 export async function verifyProjectAccess(projectId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) return false;
 
-  const { data: userActor } = await supabase.from('user_actor').select('role').eq('id', user.id).single();
+  const { data: userActor } = await supabase
+    .from("user_actor")
+    .select("role")
+    .eq("id", user.id)
+    .single();
   if (!userActor) return false;
-  if (userActor.role === 'admin' || userActor.role === 'superadmin') return true;
+  if (userActor.role === "admin" || userActor.role === "superadmin")
+    return true;
 
-  const { data: project } = await supabase.from('projects').select('assigned_pm_id').eq('id', projectId).single();
+  const { data: project } = await supabase
+    .from("projects")
+    .select("assigned_pm_id")
+    .eq("id", projectId)
+    .single();
   if (project?.assigned_pm_id === user.id) return true;
 
-  const { data: vendorAssigned } = await supabase.from('project_vendors').select('id').eq('project_id', projectId).eq('vendor_id', user.id).maybeSingle();
+  const { data: vendorAssigned } = await supabase
+    .from("project_vendors")
+    .select("id")
+    .eq("project_id", projectId)
+    .eq("vendor_id", user.id)
+    .maybeSingle();
   if (vendorAssigned) return true;
 
   return false;

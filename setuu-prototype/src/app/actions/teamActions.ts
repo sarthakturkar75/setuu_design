@@ -13,14 +13,14 @@ export async function calculateRealTimeBurn(projectId: string) {
       .eq('project_id', projectId)
       .eq('user_id', user.id)
       .maybeSingle();
-      
+
     const { data: userActor } = await supabase.from('user_actor').select('role').eq('id', user.id).maybeSingle();
-    
+
     if (userActor?.role !== 'admin' && userActor?.role !== 'superadmin' && userActor?.role !== 'pm') {
-       if (!perms || perms.can_view_financials !== true) {
-         // Silently return 0 for users who don't have financial view access rather than breaking the page
-         return 0;
-       }
+      if (!perms || perms.can_view_financials !== true) {
+        // Silently return 0 for users who don't have financial view access rather than breaking the page
+        return 0;
+      }
     }
   }
 
@@ -70,33 +70,34 @@ export async function calculateRealTimeBurn(projectId: string) {
 
 export async function getCompanyResourcePool(skillFilter?: string) {
   const supabase = await createClient();
-  
-  let query = supabase.from('user_actor').select('id, display_name, role, employment_type, skills, hourly_rate, rfid_badge_id, organization:organizations(name)');
-  
+
+  // Added organization_id to the select query
+  let query = supabase.from('user_actor').select('id, display_name, role, employment_type, skills, hourly_rate, rfid_badge_id, organization_id, organization:organizations(name)');
+
   if (skillFilter) {
     // Search within the skills text array
     query = query.contains('skills', [skillFilter]);
   }
-  
+
   const { data, error } = await query;
   if (error) return { success: false, error: error.message, data: [] };
-  
+
   // Format the organization name
   const formattedData = data.map((u: any) => ({
     ...u,
     organization_name: u.organization && typeof u.organization === 'object' && !Array.isArray(u.organization) ? (u.organization as any).name : null
   }));
-  
+
   return { success: true, data: formattedData };
 }
 
 export async function updatePersonnelProfile(formData: FormData) {
   const supabase = await createClient();
-  
+
   const userId = formData.get('user_id') as string;
   const hourlyRate = parseFloat(formData.get('hourly_rate') as string) || 0;
   const employmentType = formData.get('employment_type') as string;
-  
+
   // Parse skills from comma-separated string
   const skillsRaw = formData.get('skills') as string;
   const skills = skillsRaw ? skillsRaw.split(',').map(s => s.trim()).filter(s => s !== "") : [];
