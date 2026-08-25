@@ -1,38 +1,17 @@
-> tree -I "node_modules|.git|.next"
+# > tree -I "node_modules|.git|.next"
+
 .
-├── add_fkey.cjs
 ├── AGENTS.md
 ├── CLAUDE.md
-├── fix_admin_layout.cjs
-├── fix_getProjectTeam.cjs
-├── fix_pm_imports.cjs
-├── fix_team_page.cjs
-├── generate_team_page.cjs
-├── get_schema.cjs
 ├── next-env.d.ts
 ├── next.config.mjs
 ├── openapi.json
 ├── package-lock.json
 ├── package.json
-├── patch_assign_error.cjs
-├── patch_enforcements.cjs
-├── patch_getProjectTeam.cjs
-├── patch_layout_access.cjs
-├── patch_layout.cjs
-├── patch_modal_button.cjs
-├── patch_modal_props.cjs
-├── patch_pm_team_page_permissions.cjs
-├── patch_pm_team_page.cjs
-├── patch_projectActions_access.cjs
-├── patch_search.cjs
-├── patch_team_page_muster.cjs
-├── patch_team_page_permissions.cjs
-├── patch_teamActions.cjs
 ├── postcss.config.mjs
 ├── public
 │   └── sw.js
 ├── README.md
-├── restore_plan.py
 ├── scratch
 ├── src
 │   ├── app
@@ -440,6 +419,7 @@
 │   │       ├── ConfirmDialog.tsx
 │   │       ├── ContingencyBurnChart.tsx
 │   │       ├── CreateIssueModal.tsx
+│   │       ├── CreateResourceModal.tsx
 │   │       ├── DashboardWidgets.tsx
 │   │       ├── DataTable.tsx
 │   │       ├── DatePicker.tsx
@@ -449,6 +429,7 @@
 │   │       ├── Drawer.tsx
 │   │       ├── DrawingDisciplineToggle.tsx
 │   │       ├── DrawingSettingsModal.tsx
+│   │       ├── EditPermissionsModal.tsx
 │   │       ├── EditPersonnelModal.tsx
 │   │       ├── EmptyState.tsx
 │   │       ├── FileDropzone.tsx
@@ -534,20 +515,9 @@
 │   ├── module2_timeline_upgrade.sql
 │   └── seed.sql
 ├── tailwind.config.ts
-├── test_db.cjs
-├── test_fkey.cjs
-├── test_getProjectTeam.cjs
-├── test_perms.cjs
-├── test_rls.cjs
-├── test_table.cjs
-├── test_team.cjs
-├── test_toggle.cjs
 ├── tsconfig.json
-├── tsconfig.tsbuildinfo
-├── update_task.cjs
-└── write_team_page.py
+└── tsconfig.tsbuildinfo
 
-181 directories, 366 files
+181 directories, 336 files
 
-╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main +19 ?32                                             ok | %  base py  0.1.0 pkg  1.66 cpu  97% disk  3.67G ram  80% battery  12:10:36 PM -╮
-╰->                                                                                                                                                                                                               -╯
+## ╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main                                                     ok | %  base py  0.1.0 pkg  2.58 cpu  97% disk  4.04G ram  80% battery  12:30:00 PM -╮
