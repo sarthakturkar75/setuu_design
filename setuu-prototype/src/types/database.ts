@@ -714,6 +714,21 @@ export type Database = {
           },
         ]
       }
+      company_skills_tags: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       custom_fields_schema: {
         Row: {
           entity_type: string

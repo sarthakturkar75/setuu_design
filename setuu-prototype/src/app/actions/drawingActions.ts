@@ -67,6 +67,28 @@ export async function uploadDrawingVersion(formData: FormData) {
 
 // Fetch Drawings
 export async function getProjectDrawings(projectId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user) {
+    // Check granular permissions for this user on this project
+    const { data: perms } = await supabase
+      .from('project_granular_permissions')
+      .select('can_view_drawings')
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .maybeSingle();
+      
+    const { data: userActor } = await supabase.from('user_actor').select('role').eq('id', user.id).maybeSingle();
+    
+    // If not an admin/superadmin, and explicit permission is missing or false, DENY.
+    if (userActor?.role !== 'admin' && userActor?.role !== 'superadmin' && userActor?.role !== 'pm') {
+       if (!perms || perms.can_view_drawings !== true) {
+         throw new Error("Access Denied: You do not have permission to view drawings for this project.");
+       }
+    }
+  }
+
   const adminSupabase = createAdminClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!

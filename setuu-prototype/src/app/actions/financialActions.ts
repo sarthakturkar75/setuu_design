@@ -4,6 +4,17 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function getCashFlowData() {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (user) {
+    const { data: userActor } = await supabase.from('user_actor').select('role').eq('id', user.id).maybeSingle();
+    if (userActor?.role === 'vendor' || userActor?.role === 'engineer') {
+      // Need granular check, but cashflow is global. Deny global cashflow to vendors unless specifically handled.
+      // Usually project level financials are protected.
+      throw new Error("Access Denied: You do not have permission to view global financials.");
+    }
+  }
+
   const { data: projects, error } = await supabase.from("projects").select("start_date, contract_value");
   
   if (error) {

@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
-import { getProjectFlags, getProjectById } from "@/app/actions/projectActions";
+import { getProjectFlags, getProjectById, verifyProjectAccess } from "@/app/actions/projectActions";
+import { AccessDenied } from "@/components/ui/AccessDenied";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TabBar } from "@/components/ui/TabBar";
@@ -15,14 +16,24 @@ export default function ProjectDetailLayout({
   const [flags, setFlags] = React.useState<any>(null);
   const [projectName, setProjectName] = React.useState('Project');
   const [projectStatus, setProjectStatus] = React.useState('Active');
+  const [accessDenied, setAccessDenied] = React.useState(false);
+  const [verifying, setVerifying] = React.useState(true);
   
   React.useEffect(() => {
     if (id !== "unknown") {
-      getProjectFlags(id).then(res => setFlags(res));
-      getProjectById(id).then(p => {
-        setProjectName(p?.name || 'Project');
-        setProjectStatus(p?.status || 'Active');
-      }).catch(() => {});
+      verifyProjectAccess(id).then(hasAccess => {
+        if (!hasAccess) {
+          setAccessDenied(true);
+          setVerifying(false);
+          return;
+        }
+        getProjectFlags(id).then(res => setFlags(res));
+        getProjectById(id).then(p => {
+          setProjectName(p?.name || 'Project');
+          setProjectStatus(p?.status || 'Active');
+        }).catch(() => {});
+        setVerifying(false);
+      });
     }
   }, [id]);
   const pathname = usePathname();
@@ -56,6 +67,10 @@ export default function ProjectDetailLayout({
       break;
     }
   }
+
+  
+  if (verifying) return <div className="flex items-center justify-center min-h-screen"><div className="animate-pulse w-8 h-8 rounded-full bg-primary/20"></div></div>;
+  if (accessDenied) return <AccessDenied returnPath="/pm" />;
 
   return (
     <div className="flex flex-col space-y-0 w-full min-h-screen">

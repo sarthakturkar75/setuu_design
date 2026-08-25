@@ -29,13 +29,20 @@ export default function CompanyPersonnelPage() {
     fetchResources();
   }, []);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchResources(searchSkill || undefined);
-  };
+  const handleSearch = (e: React.FormEvent) => { e.preventDefault(); };
 
-  const internalEmployees = resources.filter(r => r.employment_type === 'Internal Employee' || !r.employment_type || r.employment_type === '');
-  const externalVendors = resources.filter(r => r.employment_type === 'External Vendor');
+  
+  const filteredResources = resources.filter(r => {
+    if (!searchSkill) return true;
+    const term = searchSkill.toLowerCase();
+    const matchName = r.display_name?.toLowerCase().includes(term);
+    const matchSkill = r.skills?.some((s: string) => s.toLowerCase().includes(term));
+    return matchName || matchSkill;
+  });
+
+  const internalEmployees = filteredResources.filter(r => r.employment_type === 'Internal Employee' || !r.employment_type || r.employment_type === '');
+  const externalVendors = filteredResources.filter(r => r.employment_type === 'External Vendor');
+  
 
   const renderTable = (personnel: any[], title: string, subtitle: string) => (
     <div className="mb-8">
@@ -129,7 +136,7 @@ export default function CompanyPersonnelPage() {
               <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
               <input 
                 type="text" 
-                placeholder="Search global directory by skill (e.g. 'Certified Welder', 'Foreman')"
+                placeholder="Search directory by name or skill (e.g. 'Certified Welder', 'Foreman')"
                 value={searchSkill}
                 onChange={e => setSearchSkill(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-lg text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
@@ -139,7 +146,7 @@ export default function CompanyPersonnelPage() {
               Filter Personnel
             </button>
             {searchSkill && (
-              <button type="button" onClick={() => { setSearchSkill(""); fetchResources(); }} className="px-6 py-3 bg-surface border border-outline-variant text-on-surface rounded-lg text-sm hover:bg-surface-variant transition-colors">
+              <button type="button" onClick={() => { setSearchSkill(""); }} className="px-6 py-3 bg-surface border border-outline-variant text-on-surface rounded-lg text-sm hover:bg-surface-variant transition-colors">
                 Clear
               </button>
             )}

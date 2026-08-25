@@ -3,6 +3,7 @@ import { Merriweather, Inter, JetBrains_Mono } from 'next/font/google'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { ToastProvider } from '@/contexts/ToastContext'
+import { GlobalEmergencyListener } from '@/components/ui/GlobalEmergencyListener'
 import './globals.css'
 
 const merriweather = Merriweather({
@@ -42,6 +43,7 @@ export default function RootLayout({
         >
           <ToastProvider>
             <AuthProvider>
+              <GlobalEmergencyListener />
               {children}
             </AuthProvider>
           </ToastProvider>

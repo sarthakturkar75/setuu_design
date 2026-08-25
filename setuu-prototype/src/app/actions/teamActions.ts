@@ -4,6 +4,25 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function calculateRealTimeBurn(projectId: string) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user) {
+    const { data: perms } = await supabase
+      .from('project_granular_permissions')
+      .select('can_view_financials')
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .maybeSingle();
+      
+    const { data: userActor } = await supabase.from('user_actor').select('role').eq('id', user.id).maybeSingle();
+    
+    if (userActor?.role !== 'admin' && userActor?.role !== 'superadmin' && userActor?.role !== 'pm') {
+       if (!perms || perms.can_view_financials !== true) {
+         // Silently return 0 for users who don't have financial view access rather than breaking the page
+         return 0;
+       }
+    }
+  }
 
   // Fetch all completed shifts (has exit_time) and currently open shifts (no exit_time)
   const { data: logs, error } = await supabase
@@ -52,7 +71,7 @@ export async function calculateRealTimeBurn(projectId: string) {
 export async function getCompanyResourcePool(skillFilter?: string) {
   const supabase = await createClient();
   
-  let query = supabase.from('user_actor').select('id, display_name, role, employment_type, skills, hourly_rate, rfid_badge_id');
+  let query = supabase.from('user_actor').select('id, display_name, role, employment_type, skills, hourly_rate, rfid_badge_id, organization:organizations(name)');
   
   if (skillFilter) {
     // Search within the skills text array
@@ -62,7 +81,13 @@ export async function getCompanyResourcePool(skillFilter?: string) {
   const { data, error } = await query;
   if (error) return { success: false, error: error.message, data: [] };
   
-  return { success: true, data: data || [] };
+  // Format the organization name
+  const formattedData = data.map((u: any) => ({
+    ...u,
+    organization_name: u.organization && typeof u.organization === 'object' && !Array.isArray(u.organization) ? (u.organization as any).name : null
+  }));
+  
+  return { success: true, data: formattedData };
 }
 
 export async function updatePersonnelProfile(formData: FormData) {

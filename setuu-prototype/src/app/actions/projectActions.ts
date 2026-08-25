@@ -227,51 +227,62 @@ export async function getProjectTeam(projectId: string) {
   // Get PM
   const { data: project } = await supabase
     .from("projects")
-    .select("assigned_pm:user_actor!projects_assigned_pm_id_fkey(id, display_name, role)")
+    .select("assigned_pm:user_actor!projects_assigned_pm_id_fkey(id, display_name, role, organization:organizations(name))")
     .eq("id", projectId)
     .single();
 
-  // Get vendors
-  const { data: vendors } = await supabase
+  // Get vendor IDs
+  const { data: vendorAssocs } = await supabase
     .from("project_vendors")
-    .select("vendor:user_actor!project_vendors_vendor_id_fkey(id, display_name, role)")
+    .select("vendor_id")
     .eq("project_id", projectId);
 
   const team = [];
 
   if (project?.assigned_pm && typeof project.assigned_pm === "object") {
+    const pm = project.assigned_pm as any;
+    const orgName = pm.organization && typeof pm.organization === 'object' && !Array.isArray(pm.organization) ? pm.organization.name : null;
     team.push({
-      id: (project.assigned_pm as any).id,
-      name: (project.assigned_pm as any).display_name || "Unknown PM",
-      role: (project.assigned_pm as any).role || "PM",
+      id: pm.id,
+      name: pm.display_name || "Unknown PM",
+      role: pm.role || "PM",
+      employment_type: "Internal Employee",
+      hourly_rate: 0,
+      organization_name: orgName
     });
   }
 
-  if (vendors) {
-    vendors.forEach(v => {
-      if (v.vendor && typeof v.vendor === "object") {
+  if (vendorAssocs && vendorAssocs.length > 0) {
+    const vendorIds = vendorAssocs.map(v => v.vendor_id);
+    const { data: vendors } = await supabase
+      .from("user_actor")
+      .select("id, display_name, role, employment_type, skills, hourly_rate, organization:organizations(name)")
+      .in("id", vendorIds);
+      
+    if (vendors) {
+      vendors.forEach((v: any) => {
+        const orgName = v.organization && typeof v.organization === 'object' && !Array.isArray(v.organization) ? v.organization.name : null;
         team.push({
-          id: (v.vendor as any).id,
-          name: (v.vendor as any).display_name || "Unknown Vendor",
-          role: (v.vendor as any).role || "Vendor",
+          id: v.id,
+          name: v.display_name || "Unknown",
+          role: v.role || "Vendor",
+          employment_type: v.employment_type,
+          skills: v.skills || [],
+          hourly_rate: v.hourly_rate || 0,
+          organization_name: orgName
         });
-      }
-    });
+      });
+    }
   }
 
-  // Remove duplicates and generate fallback
   const uniqueTeam = Array.from(new Map(team.map(item => [item.id, item])).values());
 
   return uniqueTeam.map(member => {
     const names = member.name.split(" ");
     const fallback = names.length > 1
       ? `${names[0][0]}${names[1][0]}`.toUpperCase()
-      : names[0].substring(0, 2).toUpperCase();
-
-    return {
-      ...member,
-      fallback
-    };
+      : (names[0] ? names[0].substring(0, 2).toUpperCase() : "?");
+    return { ...member, fallback };
   });
 }
 
@@ -467,9 +478,39 @@ export async function assignTeamMember(formData: FormData) {
     vendor_id
   });
   
-  if (error) return { success: false, error: error.message };
+  if (error) {
+    if (error.code === '23505') {
+      return { success: false, error: "This member is already assigned to this project." };
+    }
+    return { success: false, error: error.message };
+  }
   
   revalidatePath(`/admin/projects/${project_id}/team`);
   revalidatePath(`/pm/projects/${project_id}/team`);
   return { success: true };
+}
+
+export async function removeTeamMember(projectId: string, vendorId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('project_vendors').delete().eq('project_id', projectId).eq('vendor_id', vendorId);
+  if (error) return { success: false, error: error.message };
+  return { success: true };
+}
+
+export async function verifyProjectAccess(projectId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return false;
+
+  const { data: userActor } = await supabase.from('user_actor').select('role').eq('id', user.id).single();
+  if (!userActor) return false;
+  if (userActor.role === 'admin' || userActor.role === 'superadmin') return true;
+
+  const { data: project } = await supabase.from('projects').select('assigned_pm_id').eq('id', projectId).single();
+  if (project?.assigned_pm_id === user.id) return true;
+
+  const { data: vendorAssigned } = await supabase.from('project_vendors').select('id').eq('project_id', projectId).eq('vendor_id', user.id).maybeSingle();
+  if (vendorAssigned) return true;
+
+  return false;
 }

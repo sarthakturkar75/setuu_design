@@ -7,7 +7,8 @@ import { Settings, CheckSquare } from "lucide-react";
 import Link from "next/link";
 import { use } from "react";
 import * as React from "react";
-import { getProjectFlags } from "@/app/actions/projectActions";
+import { getProjectFlags, verifyProjectAccess } from "@/app/actions/projectActions";
+import { AccessDenied } from "@/components/ui/AccessDenied";
 
 export default function ProjectDetailLayout({
   children,
@@ -19,10 +20,22 @@ export default function ProjectDetailLayout({
   const params = useParams();
   const id = params?.id as string || "unknown";
   const [flags, setFlags] = React.useState<any>(null);
-  
+  const [accessDenied, setAccessDenied] = React.useState(false);
+  const [verifying, setVerifying] = React.useState(true);
+
   React.useEffect(() => {
     if (id !== "unknown") {
-      getProjectFlags(id).then(res => setFlags(res));
+      verifyProjectAccess(id).then(hasAccess => {
+        if (!hasAccess) {
+          setAccessDenied(true);
+          setVerifying(false);
+          return;
+        }
+        getProjectFlags(id).then(res => setFlags(res));
+        setVerifying(false);
+      });
+    } else {
+      setVerifying(false);
     }
   }, [id]);
 
@@ -54,6 +67,10 @@ export default function ProjectDetailLayout({
       break;
     }
   }
+
+  
+  if (verifying) return <div className="flex items-center justify-center min-h-screen"><div className="animate-pulse w-8 h-8 rounded-full bg-primary/20"></div></div>;
+  if (accessDenied) return <AccessDenied returnPath="/admin" />;
 
   return (
     <div className="flex flex-col space-y-0 w-full min-h-screen">
