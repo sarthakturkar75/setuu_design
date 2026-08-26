@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.17"
   }
   graphql_public: {
     Tables: {
@@ -1939,22 +1939,40 @@ export type Database = {
       }
       project_granular_permissions: {
         Row: {
+          can_approve_changes: boolean | null
+          can_edit_timeline: boolean | null
+          can_manage_issues: boolean | null
+          can_manage_labor: boolean | null
+          can_manage_materials: boolean | null
           can_view_drawings: boolean | null
           can_view_financials: boolean | null
+          can_view_reports: boolean | null
           id: string
           project_id: string
           user_id: string
         }
         Insert: {
+          can_approve_changes?: boolean | null
+          can_edit_timeline?: boolean | null
+          can_manage_issues?: boolean | null
+          can_manage_labor?: boolean | null
+          can_manage_materials?: boolean | null
           can_view_drawings?: boolean | null
           can_view_financials?: boolean | null
+          can_view_reports?: boolean | null
           id?: string
           project_id: string
           user_id: string
         }
         Update: {
+          can_approve_changes?: boolean | null
+          can_edit_timeline?: boolean | null
+          can_manage_issues?: boolean | null
+          can_manage_labor?: boolean | null
+          can_manage_materials?: boolean | null
           can_view_drawings?: boolean | null
           can_view_financials?: boolean | null
+          can_view_reports?: boolean | null
           id?: string
           project_id?: string
           user_id?: string

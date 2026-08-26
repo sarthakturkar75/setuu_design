@@ -1,5 +1,7 @@
-# > tree -I "node_modules|.git|.next"
+# 26-08-2026
 
+/Users/sarthakturkar/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype
+> tree -I "node_modules|.git|.next"
 .
 ├── AGENTS.md
 ├── CLAUDE.md
@@ -33,7 +35,7 @@
 │   │   │   ├── drawingActions.ts
 │   │   │   ├── emergencyActions.ts
 │   │   │   ├── financialActions.ts
-│   │   │   ├── handoverActions.ts
+│   │   │   ├── handoverActions.tsx
 │   │   │   ├── invoiceActions.ts
 │   │   │   ├── issueActions.ts
 │   │   │   ├── kanbanAnalyticsActions.ts
@@ -236,8 +238,12 @@
 │   │   │   ├── page.tsx
 │   │   │   └── projects
 │   │   │       └── [id]
-│   │   │           └── collaboration
-│   │   │               ├── MeetingMinutesWrapper.tsx
+│   │   │           ├── collaboration
+│   │   │           │   ├── MeetingMinutesWrapper.tsx
+│   │   │           │   └── page.tsx
+│   │   │           ├── handover
+│   │   │           │   └── page.tsx
+│   │   │           └── team
 │   │   │               └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── fonts
@@ -444,6 +450,7 @@
 │   │       ├── LoadingSkeleton.tsx
 │   │       ├── LogQAInspectionModal.tsx
 │   │       ├── LogWasteModal.tsx
+│   │       ├── ManageAssetsModal.tsx
 │   │       ├── ManageTagsModal.tsx
 │   │       ├── MaterialCreateModal.tsx
 │   │       ├── MaterialDetailsModal.tsx
@@ -518,6 +525,7 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-181 directories, 336 files
+183 directories, 339 files
 
-## ╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main                                                     ok | %  base py  0.1.0 pkg  2.58 cpu  97% disk  4.04G ram  80% battery  12:30:00 PM -╮
+╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main                                                         ok  base py  0.1.0 pkg  7.60 cpu | 97% disk  3.3G ram  49% battery  10:35:16 AM -╮
+╰->                                                                                                                                                                                                               -╯
