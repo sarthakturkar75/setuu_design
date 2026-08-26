@@ -1,5 +1,6 @@
 # 26-08-2026
 
+Last login: Wed Aug 26 10:32:58 on ttys003
 > tree -I "node_modules|.git|.next"
 .
 ├── AGENTS.md
@@ -249,7 +250,11 @@
 │   │   │           │   └── page.tsx
 │   │   │           ├── handover
 │   │   │           │   └── page.tsx
-│   │   │           └── team
+│   │   │           ├── requirements
+│   │   │           │   └── page.tsx
+│   │   │           ├── team
+│   │   │           │   └── page.tsx
+│   │   │           └── timeline
 │   │   │               └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── fonts
@@ -322,6 +327,8 @@
 │   │   │   │   │   ├── muster
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── page.tsx
+│   │   │   │   │   ├── requirements
+│   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── resources
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── team
@@ -533,7 +540,7 @@
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-186 directories, 345 files
+189 directories, 348 files
 
-╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main !5 ?3                                                   ok  base py  0.1.0 pkg  3.41 cpu  97% disk  3.21G ram  80% battery  12:16:31 PM -╮
+╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main                                                         ok  base py  0.1.0 pkg  2.67 cpu  97% disk  2.76G ram  80% battery  12:27:26 PM -╮
 ╰->                                                                                                                                                                                                               -╯
