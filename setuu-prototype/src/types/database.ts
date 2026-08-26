@@ -2294,6 +2294,72 @@ export type Database = {
           },
         ]
       }
+      project_requirements: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          customer_requirement: string | null
+          description: string | null
+          display_id: string | null
+          id: string
+          priority: Database["public"]["Enums"]["severity_level"] | null
+          project_id: string | null
+          remarks: string | null
+          responsible_id: string | null
+          source_document: string | null
+          specification_value: string | null
+          status: string | null
+          title: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          customer_requirement?: string | null
+          description?: string | null
+          display_id?: string | null
+          id?: string
+          priority?: Database["public"]["Enums"]["severity_level"] | null
+          project_id?: string | null
+          remarks?: string | null
+          responsible_id?: string | null
+          source_document?: string | null
+          specification_value?: string | null
+          status?: string | null
+          title?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          customer_requirement?: string | null
+          description?: string | null
+          display_id?: string | null
+          id?: string
+          priority?: Database["public"]["Enums"]["severity_level"] | null
+          project_id?: string | null
+          remarks?: string | null
+          responsible_id?: string | null
+          source_document?: string | null
+          specification_value?: string | null
+          status?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_requirements_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_requirements_responsible_id_fkey"
+            columns: ["responsible_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_resources: {
         Row: {
           actual_hours: number | null
@@ -2791,40 +2857,73 @@ export type Database = {
       }
       tasks: {
         Row: {
+          actual_finish_date: string | null
+          actual_percent_complete: number | null
+          actual_start_date: string | null
           assignee_id: string | null
           created_at: string
           created_by: string
+          delay_days: number | null
+          department: Database["public"]["Enums"]["department_type"] | null
           description: string | null
+          display_id: string | null
           due_date: string | null
+          duration_days: number | null
           id: string
+          planned_finish_date: string | null
+          planned_percent_complete: number | null
+          planned_start_date: string | null
           priority: string
           project_id: string
+          remarks: string | null
           status: string
           title: string
           updated_at: string
         }
         Insert: {
+          actual_finish_date?: string | null
+          actual_percent_complete?: number | null
+          actual_start_date?: string | null
           assignee_id?: string | null
           created_at?: string
           created_by: string
+          delay_days?: number | null
+          department?: Database["public"]["Enums"]["department_type"] | null
           description?: string | null
+          display_id?: string | null
           due_date?: string | null
+          duration_days?: number | null
           id?: string
+          planned_finish_date?: string | null
+          planned_percent_complete?: number | null
+          planned_start_date?: string | null
           priority?: string
           project_id: string
+          remarks?: string | null
           status?: string
           title: string
           updated_at?: string
         }
         Update: {
+          actual_finish_date?: string | null
+          actual_percent_complete?: number | null
+          actual_start_date?: string | null
           assignee_id?: string | null
           created_at?: string
           created_by?: string
+          delay_days?: number | null
+          department?: Database["public"]["Enums"]["department_type"] | null
           description?: string | null
+          display_id?: string | null
           due_date?: string | null
+          duration_days?: number | null
           id?: string
+          planned_finish_date?: string | null
+          planned_percent_complete?: number | null
+          planned_start_date?: string | null
           priority?: string
           project_id?: string
+          remarks?: string | null
           status?: string
           title?: string
           updated_at?: string
