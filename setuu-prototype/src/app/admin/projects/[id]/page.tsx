@@ -107,7 +107,7 @@ export default function ProjectOverviewPage({
             budgetVar,
             actionItemCount: (realActionItems || []).length
           }).then(brief => setAiMessage(brief))
-            .catch(() => setAiMessage("Error: AI Features require OPENAI_API_KEY to be configured in .env. No mock placeholders allowed."));
+            .catch(() => setAiMessage("Error: AI Features require GROQ_API_KEY to be configured in .env. No mock placeholders allowed."));
         }).catch(() => {
           setAiMessage("Error: AI Services module unavailable or failed to load. No mock allowed.");
         });

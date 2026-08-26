@@ -15,10 +15,10 @@ export async function POST(request: Request) {
     if (!drawing) throw new Error("Drawing not found");
 
     const { data: allDrawings } = await adminSupabase.from("drawing_versions").select("id, drawing_name").eq("project_id", projectId);
-    
+
     // Actually invoke GPT-4o for physical Vision OCR
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error("Physical OCR Engine requires OPENAI_API_KEY to scan blueprints.");
+    if (!process.env.GROQ_API_KEY) {
+      throw new Error("Physical OCR Engine requires GROQ_API_KEY to scan blueprints.");
     }
 
     const openai = new OpenAI();
@@ -47,11 +47,11 @@ export async function POST(request: Request) {
       for (const link of foundLinks) {
         const targetDrawing = allDrawings.find(d => d.drawing_name === link.target_name);
         if (targetDrawing) {
-           newLinks.push({
-             source_drawing_id: drawingId,
-             target_drawing_id: targetDrawing.id,
-             bounding_box_json: { x: link.x, y: link.y, width: link.width, height: link.height, text: `See ${link.target_name}` }
-           });
+          newLinks.push({
+            source_drawing_id: drawingId,
+            target_drawing_id: targetDrawing.id,
+            bounding_box_json: { x: link.x, y: link.y, width: link.width, height: link.height, text: `See ${link.target_name}` }
+          });
         }
       }
     }

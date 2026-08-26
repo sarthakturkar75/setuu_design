@@ -7,9 +7,9 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
   const { data: user } = await supabase.auth.getUser();
   if (!user?.user) throw new Error("Unauthorized");
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    throw new Error("Missing OPENAI_API_KEY environment variable. AI features require a valid OpenAI key to function without mocks.");
+    throw new Error("Missing GROQ_API_KEY environment variable. AI features require a valid OpenAI key to function without mocks.");
   }
 
   const prompt = `
@@ -27,7 +27,7 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
   `;
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

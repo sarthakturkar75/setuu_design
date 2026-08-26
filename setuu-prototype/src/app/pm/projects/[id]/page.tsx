@@ -29,7 +29,7 @@ export default function ProjectOverviewPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  
+
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
   const [recentActivity, setRecentActivity] = useState<any[]>([]);
   const [milestones, setMilestones] = useState<any[]>([]);
@@ -54,7 +54,7 @@ export default function ProjectOverviewPage({
           getPortfolioAverages(),
           getActionItems(id)
         ]);
-        
+
         setTeamMembers(team || []);
         setRecentActivity(activities || []);
         setMilestones(milestones_data || []);
@@ -67,7 +67,7 @@ export default function ProjectOverviewPage({
 
         const openIssuesCount = issuesList.filter((i: any) => i.status === 'Open').length;
         const criticalIssuesCount = issuesList.filter((i: any) => i.status === 'Open' && (i.severity === 'High' || i.severity === 'Critical')).length;
-        
+
         const totalChangesCost = changesList.filter((c: any) => c.status === 'Approved').reduce((acc: number, c: any) => acc + Number(c.cost_impact || 0), 0);
         const budgetVar = proj?.contract_value ? (totalChangesCost / proj.contract_value) * 100 : 0;
 
@@ -98,7 +98,7 @@ export default function ProjectOverviewPage({
             budgetVar,
             actionItemCount: (realActionItems || []).length
           }).then(brief => setAiMessage(brief))
-            .catch(() => setAiMessage("Error: AI Features require OPENAI_API_KEY to be configured in .env. No mock placeholders allowed."));
+            .catch(() => setAiMessage("Error: AI Features require GROQ_API_KEY to be configured in .env. No mock placeholders allowed."));
         }).catch(() => {
           setAiMessage("Error: AI Services module unavailable or failed to load. No mock allowed.");
         });
@@ -116,7 +116,7 @@ export default function ProjectOverviewPage({
 
   return (
     <div className="p-6 max-w-[1600px] mx-auto space-y-6">
-      
+
       {/* Header Actions & AI Welcome */}
       <div className="flex flex-col xl:flex-row gap-6 items-start xl:items-stretch">
         <div className="flex-1 w-full xl:w-auto">
@@ -133,28 +133,28 @@ export default function ProjectOverviewPage({
         <div className="xl:col-span-1 h-32 md:h-full">
           <RiskScoreGauge score={riskScore} />
         </div>
-        <KPICard 
-          title="Overall Progress" 
-          value={`${kpis.progress}%`} 
-          icon={<CheckCircle className="w-5 h-5" />} 
+        <KPICard
+          title="Overall Progress"
+          value={`${kpis.progress}%`}
+          icon={<CheckCircle className="w-5 h-5" />}
           semanticColor="emerald"
         />
-        <KPICard 
-          title="Open Issues" 
-          value={kpis.openIssues.toString()} 
-          icon={<AlertOctagon className="w-5 h-5" />} 
+        <KPICard
+          title="Open Issues"
+          value={kpis.openIssues.toString()}
+          icon={<AlertOctagon className="w-5 h-5" />}
           semanticColor={kpis.openIssues > 0 ? "amber" : "emerald"}
         />
-        <KPICard 
-          title="Days to Target" 
-          value={kpis.daysToTarget > 0 ? kpis.daysToTarget.toString() : kpis.daysToTarget < 0 ? `${Math.abs(kpis.daysToTarget)} overdue` : "Today"} 
-          icon={<Clock className="w-5 h-5" />} 
+        <KPICard
+          title="Days to Target"
+          value={kpis.daysToTarget > 0 ? kpis.daysToTarget.toString() : kpis.daysToTarget < 0 ? `${Math.abs(kpis.daysToTarget)} overdue` : "Today"}
+          icon={<Clock className="w-5 h-5" />}
           semanticColor={kpis.daysToTarget < 30 ? "crimson" : "slate"}
         />
-        <KPICard 
-          title="Budget Variance" 
-          value={`${kpis.budgetVariance > 0 ? '+' : ''}${kpis.budgetVariance.toFixed(1)}%`} 
-          icon={<DollarSign className="w-5 h-5 text-semantic-crimson" />} 
+        <KPICard
+          title="Budget Variance"
+          value={`${kpis.budgetVariance > 0 ? '+' : ''}${kpis.budgetVariance.toFixed(1)}%`}
+          icon={<DollarSign className="w-5 h-5 text-semantic-crimson" />}
           semanticColor={kpis.budgetVariance > 5 ? "crimson" : "emerald"}
         />
       </div>

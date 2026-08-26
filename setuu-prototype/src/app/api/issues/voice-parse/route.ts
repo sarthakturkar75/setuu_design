@@ -3,14 +3,14 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const { transcript } = await request.json();
-    
+
     if (!transcript) {
       return NextResponse.json({ success: false, error: "Missing transcript" }, { status: 400 });
     }
 
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) {
-      throw new Error("Missing OPENAI_API_KEY environment variable. Voice-to-Issue NLP requires a valid OpenAI key to function without mocks.");
+      throw new Error("Missing GROQ_API_KEY environment variable. Voice-to-Issue NLP requires a valid OpenAI key to function without mocks.");
     }
 
     const prompt = `
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       Transcript: "${transcript}"
     `;
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
