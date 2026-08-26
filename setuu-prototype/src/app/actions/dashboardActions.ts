@@ -33,17 +33,19 @@ export async function getActionItems(projectId: string): Promise<ActionItem[]> {
     });
   }
 
-  // Fetch real Overdue Milestones
-  const { data: milestones } = await supabase
-    .from("milestones")
-    .select("id, title, target_date")
+  // Fetch real Overdue Tasks (Updated to use tasks and planned_finish_date)
+  const today = new Date().toISOString().split('T')[0];
+  const { data: overdueTasks } = await supabase
+    .from("tasks")
+    .select("id, title, planned_finish_date")
     .eq("project_id", projectId)
-    .in("status_label", ["Overdue"]);
+    .neq("status", "Completed") // Assuming status mapped from Excel
+    .lt("planned_finish_date", today);
 
-  if (milestones && milestones.length > 0) {
+  if (overdueTasks && overdueTasks.length > 0) {
     items.push({
-      id: 'milestones-overdue',
-      title: `${milestones.length} Milestone(s) have passed their target date`,
+      id: 'tasks-overdue',
+      title: `${overdueTasks.length} Task(s) have passed their planned finish date`,
       type: 'overdue',
       priority: 'high',
       moduleUrl: `/admin/projects/${projectId}/timeline`,
@@ -54,13 +56,12 @@ export async function getActionItems(projectId: string): Promise<ActionItem[]> {
   // Fetch real Critical Issues
   const { data: issues } = await supabase
     .from("project_issues")
-    .select("id, title, severity_level, severity")
+    .select("id, title, severity")
     .eq("project_id", projectId)
     .eq("status", "Open");
-    
-  const critical = (issues || []).filter(i => 
-    i.severity === 'Critical' || i.severity === 'High' || 
-    i.severity_level === 'Critical' || i.severity_level === 'High'
+
+  const critical = (issues || []).filter(i =>
+    i.severity === 'Critical' || i.severity === 'High'
   );
 
   if (critical.length > 0) {
@@ -93,4 +94,66 @@ export async function saveDashboardLayout(layoutJson: any) {
   }
 
   return { success: true };
+}
+
+// ----------------------------------------------------------------------------
+// NEW: EVM Analytics Aggregator (Phase 2 Requirement)
+// ----------------------------------------------------------------------------
+export async function getProjectEVMMetrics(projectId: string) {
+  const supabase = await createClient();
+
+  // Fetch all tasks with EVM metadata
+  const { data: tasks, error } = await supabase
+    .from("tasks")
+    .select("id, duration_days, planned_percent_complete, actual_percent_complete, delay_days")
+    .eq("project_id", projectId);
+
+  if (error) throw new Error(error.message);
+
+  const defaultMetrics = {
+    overallCompletion: 0,
+    plannedCompletion: 0,
+    scheduleVariance: 0,
+    delayedTasksCount: 0,
+    totalTasks: 0
+  };
+
+  if (!tasks || tasks.length === 0) return defaultMetrics;
+
+  let totalWeight = 0;
+  let earnedValue = 0; // The actual percent complete weighted by duration
+  let plannedValue = 0; // The planned percent complete weighted by duration
+  let delayedTasksCount = 0;
+
+  for (const task of tasks) {
+    // Weight each task's impact by its duration (1 day = 1 unit of weight)
+    const weight = task.duration_days || 1;
+    totalWeight += weight;
+
+    // EV = % Complete * Task Weight
+    earnedValue += ((task.actual_percent_complete || 0) / 100) * weight;
+
+    // PV = Planned % * Task Weight
+    plannedValue += ((task.planned_percent_complete || 0) / 100) * weight;
+
+    // Utilize the auto-calculated database column
+    if (task.delay_days && task.delay_days > 0) {
+      delayedTasksCount++;
+    }
+  }
+
+  const overallCompletion = totalWeight > 0 ? (earnedValue / totalWeight) * 100 : 0;
+  const plannedCompletion = totalWeight > 0 ? (plannedValue / totalWeight) * 100 : 0;
+
+  // Schedule Variance (SV) = EV - PV
+  // Positive = Ahead of schedule. Negative = Behind schedule.
+  const scheduleVariance = overallCompletion - plannedCompletion;
+
+  return {
+    overallCompletion: Math.round(overallCompletion * 100) / 100,
+    plannedCompletion: Math.round(plannedCompletion * 100) / 100,
+    scheduleVariance: Math.round(scheduleVariance * 100) / 100,
+    delayedTasksCount,
+    totalTasks: tasks.length
+  };
 }

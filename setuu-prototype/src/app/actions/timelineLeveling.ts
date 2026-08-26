@@ -1,71 +1,136 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
+import { verifyRole } from "./authUtils";
 
-export async function checkResourceAllocation(projectId: string) {
-  const supabase = await createClient();
-  
-  const { data: milestones } = await supabase
-    .from("milestones")
-    .select("id, title, target_date, custom_data")
-    .eq("project_id", projectId);
-    
-  const allocationMap: Record<string, { count: number, tasks: any[] }> = {};
-  
-  (milestones || []).forEach(m => {
-     const assigneeId = (m.custom_data as any)?.assignee_id;
-     if (assigneeId) {
-        if (!allocationMap[assigneeId]) {
-           allocationMap[assigneeId] = { count: 0, tasks: [] };
-        }
-        allocationMap[assigneeId].count += 1;
-        allocationMap[assigneeId].tasks.push(m);
-     }
-  });
-
-  return Object.keys(allocationMap).filter(k => allocationMap[k].count > 1).map(k => ({
-     assigneeId: k,
-     ...allocationMap[k]
-  }));
+// Utility to safely add days to a YYYY-MM-DD date string
+function addDaysToDate(dateStr: string, days: number): string {
+  const d = new Date(dateStr);
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
 }
 
-export async function autoLevelResources(projectId: string) {
+// Replaces checkResourceAllocation and autoLevelResources
+export async function levelProjectTimeline(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  const conflicts = await checkResourceAllocation(projectId);
+
+  // 1. Fetch all tasks for the project with the new Phase 1 temporal columns
+  const { data: tasks, error: tasksErr } = await supabase
+    .from("tasks")
+    .select("id, planned_start_date, planned_finish_date, actual_start_date, actual_finish_date, duration_days")
+    .eq("project_id", projectId);
+
+  if (tasksErr) return { success: false, error: tasksErr.message };
+  if (!tasks || tasks.length === 0) return { success: true, shiftedCount: 0, message: "No tasks to level." };
+
+  const taskIds = tasks.map(t => t.id);
+
+  // 2. Fetch all dependencies for these tasks
+  const { data: dependencies, error: depsErr } = await supabase
+    .from("timeline_dependencies")
+    .select("predecessor_id, successor_id, dep_type, lag_days")
+    .in("predecessor_id", taskIds);
+
+  if (depsErr) return { success: false, error: depsErr.message };
+
+  // 3. Build Adjacency List & In-Degree Map for Topological Sort
+  const taskMap = new Map<string, any>(tasks.map(t => [t.id, { ...t }]));
+  const successors = new Map<string, any[]>();
+  const inDegree = new Map<string, number>();
+
+  taskIds.forEach(id => {
+    successors.set(id, []);
+    inDegree.set(id, 0);
+  });
+
+  (dependencies || []).forEach(dep => {
+    if (successors.has(dep.predecessor_id) && inDegree.has(dep.successor_id)) {
+      successors.get(dep.predecessor_id)!.push(dep);
+      inDegree.set(dep.successor_id, inDegree.get(dep.successor_id)! + 1);
+    }
+  });
+
+  // 4. Initialize queue with tasks having no predecessors
+  const queue: string[] = [];
+  inDegree.forEach((degree, id) => {
+    if (degree === 0) queue.push(id);
+  });
+
+  const updatesToCommit: any[] = [];
   let shiftedCount = 0;
 
-  for (const conflict of conflicts) {
-    // Sort tasks by target_date (earliest first)
-    const sortedTasks = conflict.tasks.sort((a, b) => new Date(a.target_date).getTime() - new Date(b.target_date).getTime());
-    
-    // Shift subsequent tasks so they don't overlap. 
-    // Assuming 3 day duration for simplicity if start_date isn't present
-    let currentEnd = new Date(sortedTasks[0].target_date);
+  // 5. Traverse the Graph and Calculate Dates
+  while (queue.length > 0) {
+    const currentId = queue.shift()!;
+    const currentTask = taskMap.get(currentId)!;
+    const duration = currentTask.duration_days || 1;
 
-    for (let i = 1; i < sortedTasks.length; i++) {
-      const task = sortedTasks[i];
-      const startStr = (task.custom_data as any)?.start_date;
-      const start = startStr ? new Date(startStr) : new Date(new Date(task.target_date).getTime() - (3*86400000));
-      
-      // If the next task starts before the previous one ended (overlap)
-      if (start < currentEnd) {
-        // Shift it to start exactly after currentEnd
-        const diff = currentEnd.getTime() - start.getTime();
-        const newStart = new Date(start.getTime() + diff + 86400000); // add 1 day buffer
-        const newEnd = new Date(new Date(task.target_date).getTime() + diff + 86400000);
-        
-        await supabase.from("milestones").update({
-          target_date: newEnd.toISOString().split('T')[0],
-          custom_data: { ...task.custom_data, start_date: newStart.toISOString().split('T')[0] }
-        }).eq("id", task.id);
-        
-        shiftedCount++;
-        currentEnd = newEnd;
-      } else {
-        currentEnd = new Date(task.target_date);
+    // Ensure current task has a planned_finish_date based on its start
+    if (currentTask.planned_start_date) {
+      currentTask.planned_finish_date = addDaysToDate(currentTask.planned_start_date, duration);
+    }
+
+    // Process all dependent tasks
+    for (const dep of successors.get(currentId)!) {
+      const succId = dep.successor_id;
+      const succTask = taskMap.get(succId)!;
+      const lag = dep.lag_days || 0;
+      const succDuration = succTask.duration_days || 1;
+
+      // BASELINE RULE: If predecessor has an actual date, use it. Otherwise, use planned.
+      const predStart = currentTask.actual_start_date || currentTask.planned_start_date;
+      const predFinish = currentTask.actual_finish_date || currentTask.planned_finish_date;
+
+      let newSuccStart = succTask.planned_start_date;
+
+      // Apply Dependency Logic (FS, SS, FF, SF)
+      if (dep.dep_type === 'FS' && predFinish) {
+        newSuccStart = addDaysToDate(predFinish, lag);
+      } else if (dep.dep_type === 'SS' && predStart) {
+        newSuccStart = addDaysToDate(predStart, lag);
+      } else if (dep.dep_type === 'FF' && predFinish) {
+        const newSuccFinish = addDaysToDate(predFinish, lag);
+        newSuccStart = addDaysToDate(newSuccFinish, -succDuration);
+      } else if (dep.dep_type === 'SF' && predStart) {
+        const newSuccFinish = addDaysToDate(predStart, lag);
+        newSuccStart = addDaysToDate(newSuccFinish, -succDuration);
       }
+
+      // If the calculated start date pushes the task later than currently planned, update it.
+      if (newSuccStart && (!succTask.planned_start_date || new Date(newSuccStart) > new Date(succTask.planned_start_date))) {
+        succTask.planned_start_date = newSuccStart;
+        succTask.planned_finish_date = addDaysToDate(newSuccStart, succDuration);
+        shiftedCount++;
+      }
+
+      // Decrement in-degree and push to queue if 0
+      inDegree.set(succId, inDegree.get(succId)! - 1);
+      if (inDegree.get(succId) === 0) {
+        queue.push(succId);
+      }
+    }
+
+    // Stage updates for DB writing
+    updatesToCommit.push({
+      id: currentId,
+      planned_start_date: currentTask.planned_start_date,
+      planned_finish_date: currentTask.planned_finish_date
+    });
+  }
+
+  // 6. Commit Updates back to PostgreSQL
+  for (const update of updatesToCommit) {
+    if (update.planned_start_date || update.planned_finish_date) {
+      await supabase.from("tasks").update({
+        planned_start_date: update.planned_start_date,
+        planned_finish_date: update.planned_finish_date
+      }).eq("id", update.id);
     }
   }
 
-  return { success: true, shiftedCount };
+  revalidatePath(`/pm/projects/${projectId}/timeline`);
+  revalidatePath(`/admin/projects/${projectId}/timeline`);
+  return { success: true, shiftedCount, message: `Successfully leveled ${shiftedCount} tasks.` };
 }
