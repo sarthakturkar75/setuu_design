@@ -12,17 +12,17 @@ export async function POST(request: Request) {
 
     const groqKey = process.env.GROQ_API_KEY;
     const openAiKey = process.env.OPENAI_API_KEY;
-    
+
     if (!groqKey && !openAiKey) {
       return NextResponse.json({ error: "Missing API key (Groq or OpenAI)" }, { status: 500 });
     }
 
     const isGroq = !!groqKey;
     const apiKey = isGroq ? groqKey : openAiKey;
-    const endpoint = isGroq 
-      ? "https://api.groq.com/openai/v1/chat/completions" 
+    const endpoint = isGroq
+      ? "https://api.groq.com/openai/v1/chat/completions"
       : "https://api.openai.com/v1/chat/completions";
-    const modelName = isGroq ? "llama3-70b-8192" : "gpt-4o-mini";
+    const modelName = isGroq ? "openai/gpt-oss-120b" : "gpt-4o-mini";
 
     const prompt = `
 You are a construction project manager. Read the following meeting transcript.
@@ -57,11 +57,11 @@ Transcript:
 
     const data = await response.json();
     const rawContent = data.choices[0]?.message?.content?.trim() || "[]";
-    
+
     // Clean up possible markdown code blocks if the AI ignored the instruction
     const cleanContent = rawContent.replace(/```json/g, "").replace(/```/g, "").trim();
     let actionItems = [];
-    
+
     try {
       actionItems = JSON.parse(cleanContent);
     } catch (e) {
@@ -71,7 +71,7 @@ Transcript:
     const supabase = await createClient();
     const { data: user } = await supabase.auth.getUser();
     const userId = user?.user?.id || null;
-    
+
     // Auto-create these as issues or tasks? We will use project_issues for simplicity in prototype
     for (const item of actionItems) {
       await supabase.from("project_issues").insert({

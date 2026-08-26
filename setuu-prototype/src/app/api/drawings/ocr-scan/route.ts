@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       .select("id, drawing_name")
       .eq("project_id", projectId);
 
-    // Actually invoke llama-3.2-90b-vision-preview for physical Vision OCR
+    // Actually invoke qwen/qwen3.6-27b for physical Vision OCR
     if (!process.env.GROQ_API_KEY) {
       throw new Error(
         "Physical OCR Engine requires GROQ_API_KEY to scan blueprints.",
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
     const openai = new OpenAI();
     const completion = await openai.chat.completions.create({
-      model: "llama-3.2-90b-vision-preview",
+      model: "qwen/qwen3.6-27b",
       response_format: { type: "json_object" },
       messages: [
         {

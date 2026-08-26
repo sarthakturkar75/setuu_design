@@ -13,8 +13,8 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
   }
 
   const prompt = `
-    You are an AI Construction Project Manager assistant for the "Setuu" platform. 
-    Write a concise, professional 2-3 sentence morning briefing for the project manager of "${metrics.name}".
+    You are an AI Project Manager assistant for the "Setuu" platform. 
+    Write a concise, professional 2-3 sentence morning briefing for the project manager of the project named "${metrics.name}".
     
     Current Metrics:
     - Completion: ${metrics.progress}%
@@ -23,7 +23,10 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
     - Pending Action Items: ${metrics.actionItemCount}
     
     Tone: Professional, direct, actionable.
-    Do not use generic greetings like "Dear PM". Start directly with "Good morning," or a similar professional greeting.
+    Instructions: 
+    1. Start directly with "Good morning."
+    2. Do NOT use markdown formatting (no asterisks, no bolding).
+    3. Keep it to exactly two or three clean sentences.
   `;
 
   try {
@@ -34,10 +37,10 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile", // Upgraded to Groq's current flagship text model
+        model: "openai/gpt-oss-120b", // Upgraded to Groq's current flagship text model
         messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-        max_tokens: 150
+        temperature: 0.5,
+        max_tokens: 250
       })
     });
 
