@@ -1,6 +1,6 @@
 "use client";
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 export interface TooltipProps {
   content: string;
@@ -19,7 +19,7 @@ export function Tooltip({ content, children, position = "top" }: TooltipProps) {
   };
 
   return (
-    <div 
+    <div
       className="relative inline-flex"
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
@@ -28,15 +28,15 @@ export function Tooltip({ content, children, position = "top" }: TooltipProps) {
     >
       {children}
       {isVisible && (
-        <div 
+        <div
           className={cn(
             "absolute z-50 px-2.5 py-1.5 text-xs font-medium text-inverse-primary bg-primary rounded shadow-elevation-l1 whitespace-nowrap animate-in fade-in zoom-in-95 duration-100 font-inter",
-            positions[position]
+            positions[position],
           )}
         >
           {content}
         </div>
       )}
     </div>
-  )
+  );
 }

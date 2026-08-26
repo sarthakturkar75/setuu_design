@@ -1,6 +1,5 @@
 # 26-08-2026
 
-/Users/sarthakturkar/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype
 > tree -I "node_modules|.git|.next"
 .
 ├── AGENTS.md
@@ -14,7 +13,6 @@
 ├── public
 │   └── sw.js
 ├── README.md
-├── scratch
 ├── src
 │   ├── app
 │   │   ├── (auth)
@@ -52,6 +50,7 @@
 │   │   │   ├── projectActions.ts
 │   │   │   ├── publicShareActions.ts
 │   │   │   ├── reportActions.ts
+│   │   │   ├── requirementActions.ts
 │   │   │   ├── resourceActions.ts
 │   │   │   ├── supportActions.ts
 │   │   │   ├── teamActions.ts
@@ -133,6 +132,8 @@
 │   │   │   │   │   ├── muster
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── page.tsx
+│   │   │   │   │   ├── requirements
+│   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── resources
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── team
@@ -208,6 +209,11 @@
 │   │   │   │       └── route.ts
 │   │   │   ├── seed
 │   │   │   │   └── route.ts
+│   │   │   ├── sync
+│   │   │   │   ├── excel
+│   │   │   │   │   └── route.ts
+│   │   │   │   └── export
+│   │   │   │       └── route.ts
 │   │   │   └── webhooks
 │   │   │       ├── bim-clash
 │   │   │       │   └── route.ts
@@ -467,6 +473,7 @@
 │   │       ├── ProgressBar.tsx
 │   │       ├── PublicShareButton.tsx
 │   │       ├── Radio.tsx
+│   │       ├── RequirementTraceabilityMatrix.tsx
 │   │       ├── ResourcePoolModal.tsx
 │   │       ├── RiskScoreGauge.tsx
 │   │       ├── RootCauseDistributionChart.tsx
@@ -518,14 +525,15 @@
 │   ├── migrations
 │   │   ├── 20260824103645_communications.sql
 │   │   ├── 20260824120000_collaboration_rls.sql
-│   │   └── 20260824173000_module9_team_infrastructure.sql
+│   │   ├── 20260824173000_module9_team_infrastructure.sql
+│   │   └── 20260826120000_evm_srs_upgrade.sql
 │   ├── module2_timeline_upgrade.sql
 │   └── seed.sql
 ├── tailwind.config.ts
 ├── tsconfig.json
 └── tsconfig.tsbuildinfo
 
-183 directories, 339 files
+186 directories, 345 files
 
-╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main                                                         ok  base py  0.1.0 pkg  7.60 cpu | 97% disk  3.3G ram  49% battery  10:35:16 AM -╮
+╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main !5 ?3                                                   ok  base py  0.1.0 pkg  3.41 cpu  97% disk  3.21G ram  80% battery  12:16:31 PM -╮
 ╰->                                                                                                                                                                                                               -╯

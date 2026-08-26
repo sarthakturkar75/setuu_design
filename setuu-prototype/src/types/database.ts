@@ -2070,6 +2070,7 @@ export type Database = {
       project_issues: {
         Row: {
           assigned_to: string | null
+          closure_remarks: string | null
           cost_impact: string | null
           created_at: string | null
           created_by: string | null
@@ -2078,6 +2079,7 @@ export type Database = {
           display_id: string | null
           estimated_rework_cost: number | null
           id: string
+          item_type: string | null
           linked_milestones: Json | null
           project_id: string
           resolution_plan: Json | null
@@ -2092,6 +2094,7 @@ export type Database = {
         }
         Insert: {
           assigned_to?: string | null
+          closure_remarks?: string | null
           cost_impact?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -2100,6 +2103,7 @@ export type Database = {
           display_id?: string | null
           estimated_rework_cost?: number | null
           id?: string
+          item_type?: string | null
           linked_milestones?: Json | null
           project_id: string
           resolution_plan?: Json | null
@@ -2114,6 +2118,7 @@ export type Database = {
         }
         Update: {
           assigned_to?: string | null
+          closure_remarks?: string | null
           cost_impact?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -2122,6 +2127,7 @@ export type Database = {
           display_id?: string | null
           estimated_rework_cost?: number | null
           id?: string
+          item_type?: string | null
           linked_milestones?: Json | null
           project_id?: string
           resolution_plan?: Json | null
@@ -2426,25 +2432,37 @@ export type Database = {
       }
       project_submittals: {
         Row: {
+          actual_submission_date: string | null
           created_at: string | null
           id: string
+          planned_submission_date: string | null
           project_id: string
+          remarks: string | null
+          revision_number: number | null
           spec_section: string | null
           status: string | null
           title: string
         }
         Insert: {
+          actual_submission_date?: string | null
           created_at?: string | null
           id?: string
+          planned_submission_date?: string | null
           project_id: string
+          remarks?: string | null
+          revision_number?: number | null
           spec_section?: string | null
           status?: string | null
           title: string
         }
         Update: {
+          actual_submission_date?: string | null
           created_at?: string | null
           id?: string
+          planned_submission_date?: string | null
           project_id?: string
+          remarks?: string | null
+          revision_number?: number | null
           spec_section?: string | null
           status?: string | null
           title?: string
@@ -2491,16 +2509,21 @@ export type Database = {
       projects: {
         Row: {
           assigned_pm_id: string | null
+          cached_completion_percent: number | null
           client_org_id: string | null
           client_visibility: string | null
           contingency_amount: number | null
           contract_value: number | null
           created_at: string | null
           description: string | null
+          display_id: string | null
+          executive_remarks: string | null
           id: string
           is_archived: boolean | null
+          lead_engineer_id: string | null
           name: string
           po_reference: string | null
+          product_name: string | null
           start_date: string | null
           status: string
           tags: string[] | null
@@ -2509,16 +2532,21 @@ export type Database = {
         }
         Insert: {
           assigned_pm_id?: string | null
+          cached_completion_percent?: number | null
           client_org_id?: string | null
           client_visibility?: string | null
           contingency_amount?: number | null
           contract_value?: number | null
           created_at?: string | null
           description?: string | null
+          display_id?: string | null
+          executive_remarks?: string | null
           id?: string
           is_archived?: boolean | null
+          lead_engineer_id?: string | null
           name: string
           po_reference?: string | null
+          product_name?: string | null
           start_date?: string | null
           status?: string
           tags?: string[] | null
@@ -2527,16 +2555,21 @@ export type Database = {
         }
         Update: {
           assigned_pm_id?: string | null
+          cached_completion_percent?: number | null
           client_org_id?: string | null
           client_visibility?: string | null
           contingency_amount?: number | null
           contract_value?: number | null
           created_at?: string | null
           description?: string | null
+          display_id?: string | null
+          executive_remarks?: string | null
           id?: string
           is_archived?: boolean | null
+          lead_engineer_id?: string | null
           name?: string
           po_reference?: string | null
+          product_name?: string | null
           start_date?: string | null
           status?: string
           tags?: string[] | null
@@ -2556,6 +2589,13 @@ export type Database = {
             columns: ["client_org_id"]
             isOneToOne: false
             referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "projects_lead_engineer_id_fkey"
+            columns: ["lead_engineer_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
             referencedColumns: ["id"]
           },
         ]

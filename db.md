@@ -70,6 +70,11 @@
 | `po_reference` | `text` | Nullable |
 | `target_date` | `date` | Nullable |
 | `contingency_amount` | `numeric` | Nullable |
+| `display_id` | `varchar` | Nullable Unique |
+| `product_name` | `varchar` | Nullable |
+| `lead_engineer_id` | `uuid` | Nullable |
+| `executive_remarks` | `text` | Nullable |
+| `cached_completion_percent` | `numeric` | Nullable |
 
 ## Table `milestones`
 
@@ -250,6 +255,8 @@
 | `root_cause_id` | `uuid` | Nullable |
 | `estimated_rework_cost` | `numeric` | Nullable |
 | `custom_data` | `jsonb` | Nullable |
+| `item_type` | `varchar` | Nullable |
+| `closure_remarks` | `text` | Nullable |
 
 ## Table `change_requests`
 
@@ -560,6 +567,17 @@
 | `due_date` | `timestamptz` | Nullable |
 | `created_at` | `timestamptz` | |
 | `updated_at` | `timestamptz` | |
+| `display_id` | `varchar` | Nullable Unique |
+| `department` | `department_type` | Nullable |
+| `planned_start_date` | `date` | Nullable |
+| `planned_finish_date` | `date` | Nullable |
+| `actual_start_date` | `date` | Nullable |
+| `actual_finish_date` | `date` | Nullable |
+| `duration_days` | `int4` | Nullable |
+| `planned_percent_complete` | `int4` | Nullable |
+| `actual_percent_complete` | `int4` | Nullable |
+| `remarks` | `text` | Nullable |
+| `delay_days` | `int4` | Nullable |
 
 ## Table `employee_timesheets`
 
@@ -1075,6 +1093,10 @@
 | `spec_section` | `text` | Nullable |
 | `status` | `text` | Nullable |
 | `created_at` | `timestamptz` | Nullable |
+| `planned_submission_date` | `date` | Nullable |
+| `actual_submission_date` | `date` | Nullable |
+| `revision_number` | `int4` | Nullable |
+| `remarks` | `text` | Nullable |
 
 ## Table `purchase_orders`
 
@@ -1167,6 +1189,27 @@
 | `id` | `uuid` | Primary |
 | `name` | `text` |  Unique |
 
+## Table `project_requirements`
+
+### Columns
+
+| Name | Type | Constraints |
+| ------ | ------ | ------------- |
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` | Nullable |
+| `display_id` | `varchar` | Nullable Unique |
+| `title` | `text` | Nullable |
+| `category` | `text` | Nullable |
+| `description` | `text` | Nullable |
+| `specification_value` | `text` | Nullable |
+| `customer_requirement` | `text` | Nullable |
+| `priority` | `severity_level` | Nullable |
+| `source_document` | `text` | Nullable |
+| `responsible_id` | `uuid` | Nullable |
+| `status` | `text` | Nullable |
+| `remarks` | `text` | Nullable |
+| `created_at` | `timestamptz` | Nullable |
+
 ## Custom Types / Enums
 
 ### `project_type`
@@ -1215,16 +1258,6 @@
 |--------|---------|-------|--------|-------|------------|
 | `Admins have full access to batch_upload_jobs` | ALL | public | PERMISSIVE | `is_admin()` | — |
 | `Users can view batch_upload_jobs for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = batch_upload_jobs.project_id)))` | — |
-
-### `projects`
-
-| Policy | Command | Roles | Action | USING | WITH CHECK |
-| -------- | --------- | ------- | -------- | ------- | ------------ |
-| `Admins have full project access` | ALL | public | PERMISSIVE | `is_admin()` | — |
-| `Clients can view org projects` | SELECT | public | PERMISSIVE | `((client_org_id = ( SELECT user_actor.organization_id    FROM user_actor   WHERE (user_actor.id = auth.uid()))) OR is_admin())` | — |
-| `Employees can view all projects` | SELECT | public | PERMISSIVE | `is_employee()` | — |
-| `PMs can view assigned projects` | SELECT | public | PERMISSIVE | `((auth.uid() = assigned_pm_id) OR is_admin())` | — |
-| `Vendors can view assigned projects` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM project_vendors   WHERE ((project_vendors.project_id = projects.id) AND (project_vendors.vendor_id = auth.uid())))) OR (EXISTS ( SELECT 1    FROM org_vendors   WHERE ((org_vendors.organization_id = projects.client_org_id) AND (org_vendors.vendor_id = auth.uid())))))` | — |
 
 ### `media_attachments`
 
@@ -1414,9 +1447,12 @@
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
 | -------- | --------- | ------- | -------- | ------- | ------------ |
+| `PMs and Admins have full access to tasks` | ALL | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text])))))` | — |
 | `PMs can manage tasks` | ALL | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects p   WHERE ((p.id = tasks.project_id) AND ((p.assigned_pm_id = auth.uid()) OR (( SELECT user_actor.role            FROM user_actor           WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['admin'::text, 'super_admin'::text]))))))` | — |
 | `Users can view tasks` | SELECT | public | PERMISSIVE | `((assignee_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM projects p   WHERE ((p.id = tasks.project_id) AND ((p.assigned_pm_id = auth.uid()) OR (( SELECT user_actor.role            FROM user_actor           WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['admin'::text, 'super_admin'::text])))))))` | — |
+| `Vendors can only update their assigned tasks` | UPDATE | public | PERMISSIVE | `(assignee_id = auth.uid())` | `(assignee_id = auth.uid())` |
 | `Vendors can update assigned task status` | UPDATE | public | PERMISSIVE | `(assignee_id = auth.uid())` | — |
+| `Vendors can view project tasks` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM project_vendors pv   WHERE ((pv.project_id = tasks.project_id) AND (pv.vendor_id = auth.uid()))))` | — |
 
 ### `user_billing_rates`
 
@@ -1690,3 +1726,22 @@
 | `Admins can view all profiles` | SELECT | public | PERMISSIVE | `is_admin()` | — |
 | `Super Admins can view all profiles for billing` | SELECT | public | PERMISSIVE | `is_super_admin()` | — |
 | `Users can view own profile` | SELECT | public | PERMISSIVE | `(id = auth.uid())` | — |
+
+### `projects`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `Admins have full project access` | ALL | public | PERMISSIVE | `is_admin()` | — |
+| `Clients can view org projects` | SELECT | public | PERMISSIVE | `((client_org_id = ( SELECT user_actor.organization_id    FROM user_actor   WHERE (user_actor.id = auth.uid()))) OR is_admin())` | — |
+| `Employees can view all projects` | SELECT | public | PERMISSIVE | `is_employee()` | — |
+| `PMs can view assigned projects` | SELECT | public | PERMISSIVE | `((auth.uid() = assigned_pm_id) OR is_admin())` | — |
+| `Vendors can view assigned projects` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM project_vendors   WHERE ((project_vendors.project_id = projects.id) AND (project_vendors.vendor_id = auth.uid())))) OR (EXISTS ( SELECT 1    FROM org_vendors   WHERE ((org_vendors.organization_id = projects.client_org_id) AND (org_vendors.vendor_id = auth.uid())))))` | — |
+
+### `project_requirements`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `Admins and PMs can delete requirements` | DELETE | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text])))))` | — |
+| `PMs and Admins can insert requirements` | INSERT | public | PERMISSIVE | — | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text])))))` |
+| `PMs, Admins, and Responsibles can update requirements` | UPDATE | public | PERMISSIVE | `((auth.uid() = responsible_id) OR (EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text]))))))` | — |
+| `Users can view requirements for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_requirements.project_id)))` | — |
