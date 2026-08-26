@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "llama-3.3-70b-versatile",
         messages: [
           {
             role: "system",
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error("OpenAI Translation Error:", errorData);
+      console.error("Groq Translation Error:", errorData);
       return NextResponse.json({ translatedText: text, error: "Translation API failed" });
     }
 

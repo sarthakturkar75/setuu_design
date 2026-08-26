@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "gpt-4o",
+        model: "llama-3.3-70b-versatile",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
         temperature: 0.1
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errTxt = await response.text();
-      throw new Error(`OpenAI API failed: ${errTxt}`);
+      throw new Error(`Groq API failed: ${errTxt}`);
     }
 
     const data = await response.json();

@@ -34,7 +34,7 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "gpt-4o", // using gpt-4o as the fastest capable model
+        model: "llama-3.3-70b-versatile", // Upgraded to Groq's current flagship text model
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
         max_tokens: 150
@@ -42,7 +42,9 @@ export async function generateWelcomeBrief(projectId: string, metrics: any) {
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI API responded with status ${response.status}`);
+      const errTxt = await response.text();
+      console.error("Groq API Error Details:", errTxt);
+      throw new Error(`Groq API responded with status ${response.status}`);
     }
 
     const data = await response.json();
