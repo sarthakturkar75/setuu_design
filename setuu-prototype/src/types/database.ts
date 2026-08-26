@@ -399,7 +399,9 @@ export type Database = {
           final_authority: Json | null
           id: string
           milestone_name: string | null
+          planned_submission_date: string | null
           project_id: string
+          revision_number: string | null
           status: string
         }
         Insert: {
@@ -416,7 +418,9 @@ export type Database = {
           final_authority?: Json | null
           id?: string
           milestone_name?: string | null
+          planned_submission_date?: string | null
           project_id: string
+          revision_number?: string | null
           status?: string
         }
         Update: {
@@ -433,7 +437,9 @@ export type Database = {
           final_authority?: Json | null
           id?: string
           milestone_name?: string | null
+          planned_submission_date?: string | null
           project_id?: string
+          revision_number?: string | null
           status?: string
         }
         Relationships: [
@@ -2901,6 +2907,7 @@ export type Database = {
           actual_percent_complete: number | null
           actual_start_date: string | null
           assignee_id: string | null
+          blockers: string[] | null
           created_at: string
           created_by: string
           delay_days: number | null
@@ -2925,6 +2932,7 @@ export type Database = {
           actual_percent_complete?: number | null
           actual_start_date?: string | null
           assignee_id?: string | null
+          blockers?: string[] | null
           created_at?: string
           created_by: string
           delay_days?: number | null
@@ -2949,6 +2957,7 @@ export type Database = {
           actual_percent_complete?: number | null
           actual_start_date?: string | null
           assignee_id?: string | null
+          blockers?: string[] | null
           created_at?: string
           created_by?: string
           delay_days?: number | null
