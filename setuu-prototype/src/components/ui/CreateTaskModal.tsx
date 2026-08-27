@@ -25,8 +25,10 @@ export function CreateTaskModal({ isOpen, onClose, projectId, onSuccess }: Props
         const taskData = {
             display_id: formData.get("display_id") as string,
             title: formData.get("title") as string,
+            description: formData.get("description") as string || null,
             department: formData.get("department") as string,
             planned_start_date: formData.get("planned_start_date") as string || null,
+            due_date: formData.get("due_date") as string || null,
             duration_days: parseInt(formData.get("duration_days") as string) || null,
             priority: formData.get("priority") as string,
         };
@@ -82,14 +84,23 @@ export function CreateTaskModal({ isOpen, onClose, projectId, onSuccess }: Props
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label className="block text-sm font-medium text-on-surface mb-1">Description</label>
+                    <textarea name="description" rows={2} className="w-full p-2 border border-outline-variant rounded bg-surface" placeholder="Task details..." />
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-on-surface mb-1">Planned Start Date</label>
+                        <label className="block text-sm font-medium text-on-surface mb-1">Planned Start</label>
                         <input name="planned_start_date" type="date" className="w-full p-2 border border-outline-variant rounded bg-surface" />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-on-surface mb-1">Duration (Days)</label>
                         <input name="duration_days" type="number" min="1" className="w-full p-2 border border-outline-variant rounded bg-surface" placeholder="e.g., 5" />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-on-surface mb-1">Due Date</label>
+                        <input name="due_date" type="date" className="w-full p-2 border border-outline-variant rounded bg-surface" />
                     </div>
                 </div>
 

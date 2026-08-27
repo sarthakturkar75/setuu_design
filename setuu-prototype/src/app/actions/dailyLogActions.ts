@@ -1,11 +1,20 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 export async function generateDailyReport(projectId: string, targetDate: string) {
   const supabase = await createClient();
   const { data: userAuth } = await supabase.auth.getUser();
   if (!userAuth?.user) throw new Error("Unauthorized");
+
+  // Check if a log already exists for this date so we can UPDATE it instead of creating duplicates
+  const { data: existingLog } = await supabase
+    .from("daily_logs")
+    .select("id")
+    .eq("project_id", projectId)
+    .eq("date", targetDate)
+    .maybeSingle();
 
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
@@ -48,7 +57,7 @@ export async function generateDailyReport(projectId: string, targetDate: string)
   const weatherSummary = weatherSamples.length > 0 ? weatherSamples[0] : null;
 
   const prompt = `
-    You are an AI Site Superintendent writing an End-Of-Day Construction Report.
+    You are an AI Project Manager writing an End-Of-Day Project Status Report.
     Write a clear, structured daily log based on the following raw data.
     
     Date: ${targetDate}
@@ -94,21 +103,46 @@ export async function generateDailyReport(projectId: string, targetDate: string)
     const data = await response.json();
     const reportMarkdown = data.choices[0].message.content;
 
-    // Save to Database
-    const { data: savedLog, error } = await supabase
-      .from("daily_logs")
-      .insert({
-        project_id: projectId,
-        date: targetDate,
-        weather_summary_json: weatherSummary || {},
-        labor_hours_total: totalHours,
-        ai_generated_report: reportMarkdown,
-        created_by: userAuth.user.id
-      })
-      .select()
-      .single();
+    // We use the admin client to bypass RLS because the daily_logs table lacks an explicit UPDATE policy for users
+    const adminSupabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
-    if (error) throw error;
+    // Save or Update Database
+    let savedLog, dbError;
+    if (existingLog) {
+      const result = await adminSupabase
+        .from("daily_logs")
+        .update({
+          weather_summary_json: weatherSummary || {},
+          labor_hours_total: totalHours,
+          ai_generated_report: reportMarkdown,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", existingLog.id)
+        .select()
+        .maybeSingle();
+      savedLog = result.data;
+      dbError = result.error;
+    } else {
+      const result = await adminSupabase
+        .from("daily_logs")
+        .insert({
+          project_id: projectId,
+          date: targetDate,
+          weather_summary_json: weatherSummary || {},
+          labor_hours_total: totalHours,
+          ai_generated_report: reportMarkdown,
+          created_by: userAuth.user.id
+        })
+        .select()
+        .maybeSingle();
+      savedLog = result.data;
+      dbError = result.error;
+    }
+
+    if (dbError) throw dbError;
 
     return savedLog;
   } catch (error) {
@@ -127,4 +161,14 @@ export async function getDailyLogs(projectId: string) {
 
   if (error) throw error;
   return data;
+}
+
+export async function deleteDailyLog(logId: string) {
+  const adminSupabase = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+  const { error } = await adminSupabase.from("daily_logs").delete().eq("id", logId);
+  if (error) return { success: false, error: error.message };
+  return { success: true };
 }

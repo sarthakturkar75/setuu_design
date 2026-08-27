@@ -81,8 +81,6 @@ export default function OfflineSyncManager() {
             formData.append('project_id', item.projectId);
             formData.append('author_id', item.authorId);
             formData.append('caption', item.caption);
-            if (item.latitude) formData.append('latitude', item.latitude);
-            if (item.longitude) formData.append('longitude', item.longitude);
             if (item.weatherData) formData.append('weather_data', JSON.stringify(item.weatherData));
             
             // Reconstruct file

@@ -1,20 +1,23 @@
 import { createClient } from "@/lib/supabase/server";
 
-export async function scanForSafetyViolations(projectId: string, authorId: string, imageBuffer: Buffer, updateId: string, imageUrl: string) {
+export async function analyzeUpdatePhoto(projectId: string, authorId: string, imageBuffer: Buffer, updateId: string, imageUrl: string, captionText: string = "") {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    console.warn("GROQ_API_KEY missing. Skipping safety scan.");
-    return false;
+    console.warn("GROQ_API_KEY missing. Skipping AI analysis.");
+    return { hasViolation: false, aiData: null };
   }
 
   const base64Image = imageBuffer.toString('base64');
 
-  const prompt = `Analyze this construction site photo. Output a raw JSON object only.
-{
-  "has_workers": boolean,
-  "missing_ppe": boolean (true if any worker is lacking a hard hat or high-vis vest),
-  "description": string (describe the violation briefly if missing_ppe is true, else empty)
-}`;
+  const prompt = `You are a professional Project Management AI. 
+  Your task is to summarize the provided project update based on the image and the user's caption.
+  User's Caption: "${captionText}"
+  
+  Provide a clean, concise, 1-2 sentence professional summary of what was accomplished or what is shown.
+  Output a raw JSON object only, matching exactly this structure:
+  {
+    "progress_summary": "The concise professional summary."
+  }`;
 
   try {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -24,7 +27,7 @@ export async function scanForSafetyViolations(projectId: string, authorId: strin
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "qwen/qwen3.8-27b",
+        model: "llama-3.2-11b-vision-preview",
         messages: [
           {
             role: "user",
@@ -39,42 +42,22 @@ export async function scanForSafetyViolations(projectId: string, authorId: strin
       })
     });
 
-    if (!response.ok) {
-      console.error("Groq Vision API error:", await response.text());
-      return false;
-    }
+    if (!response.ok) return { hasViolation: false, aiData: null };
 
     const data = await response.json();
     const content = data.choices[0].message.content.trim();
-
-    // Safely parse JSON
     const jsonStr = content.substring(content.indexOf('{'), content.lastIndexOf('}') + 1);
     const result = JSON.parse(jsonStr);
 
-    if (result.has_workers && result.missing_ppe) {
-      const supabase = await createClient();
+    const supabase = await createClient();
+    
+    // Simply update the update record with the summary
+    await supabase.from("updates").update({
+      ai_analysis_flags: result
+    }).eq("id", updateId);
 
-      // Create a safety issue automatically
-      await supabase.from("project_issues").insert({
-        project_id: projectId,
-        title: "⚠️ Automated Safety Violation Detected",
-        description: `AI Scanner detected missing PPE (Hard hat / High-vis). Details: ${result.description}\n\nLinked to Update: ${updateId}`,
-        severity: "High",
-        status: "Open",
-        assigned_to: authorId, // Assigning back to the person who took the photo for now
-        created_by: authorId,
-        sla_deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24h SLA
-      });
-
-      // Update the update record with AI flags
-      await supabase.from("updates").update({
-        ai_analysis_flags: result
-      }).eq("id", updateId);
-      return true;
-    }
-    return false;
+    return { hasViolation: false, aiData: result };
   } catch (err) {
-    console.error("Failed to run safety scanner:", err);
-    return false;
+    return { hasViolation: false, aiData: null };
   }
 }

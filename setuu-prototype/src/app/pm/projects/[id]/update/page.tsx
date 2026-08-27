@@ -45,12 +45,6 @@ export default function CameraUpdatePage() {
 
     startCamera();
 
-    // Get Location
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-      });
-    }
 
     return () => {
       // Cleanup stream
@@ -82,9 +76,9 @@ export default function CameraUpdatePage() {
     ctx.fillStyle = "white";
     ctx.font = "16px 'JetBrains Mono', monospace";
     const timestamp = new Date().toLocaleString();
-    const locString = location ? `Lat: ${location.lat.toFixed(4)}, Lng: ${location.lng.toFixed(4)}` : "Location Unknown";
+    
     ctx.fillText(`Date: ${timestamp}`, 20, canvas.height - 35);
-    ctx.fillText(`GPS: ${locString}`, 20, canvas.height - 15);
+    
 
     setPhotoDataUrl(canvas.toDataURL("image/jpeg"));
   };
@@ -115,9 +109,6 @@ export default function CameraUpdatePage() {
           milestone_id: milestoneId,
           author_id: user?.id,
           caption: caption || "Photo update",
-          latitude: location?.lat || 0,
-          longitude: location?.lng || 0,
-          location_name: "Mobile App Capture",
           is_watermarked: true,
           approval_status: "Pending"
         }).select().single();
@@ -156,7 +147,7 @@ export default function CameraUpdatePage() {
     <div className="p-6 max-w-[800px] mx-auto space-y-6 pb-32">
       <div>
          <h2 className="text-2xl font-bold font-merriweather text-on-surface">Live Progress Update</h2>
-         <p className="text-on-surface-variant mt-1">Capture a watermarked photo to document site conditions.</p>
+         <p className="text-on-surface-variant mt-1">Capture a watermarked photo to document project conditions.</p>
       </div>
 
       <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-sm">
@@ -170,11 +161,7 @@ export default function CameraUpdatePage() {
               className="w-full h-full object-cover"
             />
             
-            {/* Camera Overlay UI */}
-            <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/50 text-white px-3 py-1.5 rounded-full text-xs font-jetbrains-mono backdrop-blur-md">
-               <MapPinIcon className="w-3 h-3" />
-               {location ? `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}` : "Locating..."}
-            </div>
+
 
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
               <button 
@@ -231,7 +218,7 @@ export default function CameraUpdatePage() {
         }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
           <div className="flex items-center gap-2 text-semantic-emerald bg-semantic-emerald-bg/10 p-3 rounded-lg border border-semantic-emerald/20">
              <CheckCircleIcon className="w-5 h-5" />
-             <span className="font-medium text-sm">Image captured with GPS and timestamp watermark.</span>
+             <span className="font-medium text-sm">Image captured with timestamp watermark.</span>
           </div>
 
           <FormField label="Update Description">

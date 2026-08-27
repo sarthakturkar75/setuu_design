@@ -3403,11 +3403,9 @@ export type Database = {
           id: string
           idempotency_key: string | null
           is_watermarked: boolean | null
-          latitude: number | null
-          location_name: string | null
-          longitude: number | null
           milestone_id: string | null
           project_id: string
+          update_type: string | null
           weather_data: Json | null
         }
         Insert: {
@@ -3419,11 +3417,9 @@ export type Database = {
           id?: string
           idempotency_key?: string | null
           is_watermarked?: boolean | null
-          latitude?: number | null
-          location_name?: string | null
-          longitude?: number | null
           milestone_id?: string | null
           project_id: string
+          update_type?: string | null
           weather_data?: Json | null
         }
         Update: {
@@ -3435,11 +3431,9 @@ export type Database = {
           id?: string
           idempotency_key?: string | null
           is_watermarked?: boolean | null
-          latitude?: number | null
-          location_name?: string | null
-          longitude?: number | null
           milestone_id?: string | null
           project_id?: string
+          update_type?: string | null
           weather_data?: Json | null
         }
         Relationships: [
@@ -3974,3 +3968,4 @@ export const Constants = {
     },
   },
 } as const
+export {};

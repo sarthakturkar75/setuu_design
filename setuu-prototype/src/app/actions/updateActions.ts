@@ -4,7 +4,7 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { createClient } from "@/lib/supabase/server";
 import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
-import { scanForSafetyViolations } from "@/lib/safetyScanner";
+import { analyzeUpdatePhoto } from "@/lib/safetyScanner";
 
 export async function getUpdates(filters?: { projectId?: string, milestone_id?: string, status?: string }) {
   const supabase = await createClient();
@@ -39,8 +39,7 @@ export async function createUpdate(formData: FormData) {
   const author_id = formData.get("author_id") as string;
   const caption = formData.get("caption") as string;
   const milestone_id = formData.get("milestone_id") as string;
-  const latitude = formData.get("latitude") ? parseFloat(formData.get("latitude") as string) : null;
-  const longitude = formData.get("longitude") ? parseFloat(formData.get("longitude") as string) : null;
+  const update_type = (formData.get("update_type") as string) || 'General';
   const weather_data = formData.get("weather_data") ? JSON.parse(formData.get("weather_data") as string) : null;
 
   if (project_id === 'default') {
@@ -72,10 +71,7 @@ export async function createUpdate(formData: FormData) {
     caption,
     milestone_id: milestone_id || null,
     idempotency_key,
-    location_name: "Mobile App Capture",
-    latitude,
-    longitude,
-    weather_data,
+        weather_data, update_type,
   }).select().single();
 
   if (error) return { success: false, error: error.message };
@@ -118,9 +114,9 @@ export async function createUpdate(formData: FormData) {
       });
       if (insertError) console.error("Attachment failed", insertError);
 
-      // Run AI Safety Scanner sync so we can show toast
+      // Run Comprehensive AI Vision Scanner sync so we can show toast and enrich data
       const buffer = Buffer.from(await file.arrayBuffer());
-      const hasViolation = await scanForSafetyViolations(project_id, author_id, buffer, data.id, publicUrl);
+      const { hasViolation } = await analyzeUpdatePhoto(project_id, author_id, buffer, data.id, publicUrl, caption || "");
       if (hasViolation) {
         safetyFlagged = true;
       }
@@ -141,40 +137,50 @@ export async function moderateUpdate(id: string, status: string) {
   return { success: true };
 }
 
-export async function addComment(updateId: string, authorId: string, content: string, mentions: string[] = []) {
-  await verifyRole(["admin", "pm", "superadmin", "engineer", "vendor"]);
-  const supabase = await createClient();
-  const { data, error } = await supabase.from("comments").insert({
-    update_id: updateId,
-    author_id: authorId,
-    content,
-  }).select().single();
 
-  if (error) return { success: false, error: error.message };
 
-  // Mentions logic
-  if (mentions.length > 0 && data) {
-    const mentionInserts = mentions.map(userId => ({
-      comment_id: data.id,
-      mentioned_user_id: userId
-    }));
-    await supabase.from("comment_mentions").insert(mentionInserts);
+export async function addComment(updateId: string, content: string) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+
+    
+    const adminSupabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    const { error } = await adminSupabase.from("comments").insert({
+      update_id: updateId,
+      author_id: user.id,
+      content: content
+    });
+
+    if (error) throw error;
+    return { success: true };
+  } catch (err: any) {
+    console.error("Comment Error:", err);
+    return { success: false, error: err.message };
   }
-
-  revalidatePath(`/`); // Simplified
-  return { success: true };
 }
 
-export async function acknowledgeUpdate(updateId: string, clientId: string) {
-  await verifyRole(["admin", "pm", "superadmin"]);
-  const supabase = await createClient();
-  const { error } = await supabase.from("acknowledgements").insert({
-    update_id: updateId,
-    client_id: clientId,
-    status: "Acknowledged"
-  });
+export async function deleteUpdate(updateId: string) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
 
-  if (error) return { success: false, error: error.message };
-  revalidatePath(`/`); // Simplified
-  return { success: true };
+    const adminSupabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { error } = await adminSupabase.from("updates").delete().eq("id", updateId);
+    if (error) throw error;
+    
+    revalidatePath("/admin/projects/[id]/update", "page");
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
 }

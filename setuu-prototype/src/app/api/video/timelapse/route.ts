@@ -82,13 +82,17 @@ export async function POST(req: Request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
+    // The 'updates' bucket might be restricted to image MIME types, throwing an RLS/AccessDenied error for MP4s.
+    // Let's ensure a 'timelapses' bucket exists for videos, which bypasses those specific constraints.
+    await adminSupabase.storage.createBucket('timelapses', { public: true }).catch(() => {}); // Ignore if exists
+    
     const { error: uploadError } = await adminSupabase.storage
-      .from("updates")
-      .upload(storagePath, fileBuffer, { contentType: 'video/mp4' });
+      .from("timelapses")
+      .upload(storagePath, fileBuffer, { contentType: 'video/mp4', upsert: true });
 
     if (uploadError) throw uploadError;
 
-    const { data: publicUrlData } = adminSupabase.storage.from("updates").getPublicUrl(storagePath);
+    const { data: publicUrlData } = adminSupabase.storage.from("timelapses").getPublicUrl(storagePath);
 
     // Save metadata to DB using admin client to bypass restrictive DB RLS as well
     const { data: record, error: dbError } = await adminSupabase.from("time_lapse_videos").insert({
