@@ -25,13 +25,13 @@ export function PortfolioRadarChart({ projectData, portfolioData }: { projectDat
     {
       subject: 'Open Issues',
       A: projectData.openIssues || 0,
-      B: 15, // Mock avg open issues for chart shape
+      B: portfolioData.avgOpenIssues || 0,
       fullMark: 50,
     },
     {
       subject: 'Milestones Done',
       A: projectData.completedMilestones || 0,
-      B: 10,
+      B: portfolioData.avgCompletedMilestones || 0,
       fullMark: 20,
     }
   ];

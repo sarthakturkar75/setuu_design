@@ -39,19 +39,26 @@ export default function ProjectDetailLayout({
   const pathname = usePathname();
   const router = useRouter();
 
+  const cn = flags?.custom_names || {};
   const allTabs = [
     { id: "dashboard", label: "Overview" },
-    { id: "timeline", label: "Timeline", flag: "timeline" },
-    { id: "milestones", label: "Milestones", flag: "milestones" },
-    { id: "changes", label: "Changes", flag: "change_requests" },
-    { id: "materials", label: "Materials", flag: "project_materials" },
-    { id: "issues", label: "Issues", flag: "project_issues" },
-    { id: "drawings", label: "Drawings", flag: "drawing_versions" },
-    { id: "collaboration", label: "Collaboration", flag: "collaboration" },
+    { id: "requirements", label: "Requirements" },
+    { id: "update", label: "Site Feed" },
+    { id: "timeline", label: cn.timeline || "Timeline", flag: "timeline" },
+    { id: "milestones", label: cn.milestones || "Milestones", flag: "milestones" },
+    { id: "changes", label: cn.change_requests || "Changes", flag: "change_requests" },
+    { id: "materials", label: cn.project_materials || "Materials", flag: "project_materials" },
+    { id: "issues", label: cn.project_issues || "Issues", flag: "project_issues" },
+    { id: "drawings", label: cn.drawing_versions || "Drawings", flag: "drawing_versions" },
+    { id: "resources", label: cn.project_resources || "Resources", flag: "project_resources" },
+    { id: "collaboration", label: cn.collaboration || "Collaboration", flag: "collaboration" },
     { id: "team", label: "Team Directory" },
-    { id: "handover", label: "Handover", flag: "handover" },
+    { id: "muster", label: "Emergency Muster" },
+    { id: "handover", label: cn.handover || "Handover", flag: "handover" },
     { id: "config", label: "Configuration" },
     { id: "flags", label: "Module Flags" },
+    { id: "custom-fields", label: "Custom Fields" },
+    { id: "retention", label: "Data Retention" },
   ];
   const tabs = allTabs.filter(t => !t.flag || !flags || flags[t.flag] !== false);
 
@@ -61,16 +68,21 @@ export default function ProjectDetailLayout({
   };
 
   let activeTab = "dashboard";
-  for (const tab of tabs) {
+  for (const tab of allTabs) {
     if (tab.id !== "dashboard" && pathname.startsWith(getHref(tab.id))) {
       activeTab = tab.id;
       break;
     }
   }
 
+  const currentTabDef = allTabs.find(t => t.id === activeTab);
+  const isModuleDisabled = currentTabDef?.flag && flags && flags[currentTabDef.flag] === false;
+
+
   
   if (verifying) return <div className="flex items-center justify-center min-h-screen"><div className="animate-pulse w-8 h-8 rounded-full bg-primary/20"></div></div>;
   if (accessDenied) return <AccessDenied returnPath="/pm" />;
+  if (isModuleDisabled) return <AccessDenied returnPath={`/pm/projects/${id}`} />;
 
   return (
     <div className="flex flex-col space-y-0 w-full min-h-screen">

@@ -5,6 +5,7 @@ import { X, PackageSearch } from 'lucide-react';
 import { useToast } from "@/contexts/ToastContext";
 import { createMaterial, getProjectSubmittals } from "@/app/actions/materialActions";
 import { useEffect } from "react";
+import { DynamicCustomFields } from "./DynamicCustomFields";
 
 export function MaterialCreateModal({ projectId, onClose, onRefresh }: any) {
   const toast = useToast();
@@ -14,6 +15,7 @@ export function MaterialCreateModal({ projectId, onClose, onRefresh }: any) {
   useEffect(() => {
     getProjectSubmittals(projectId).then(setSubmittals);
   }, [projectId]);
+  const [customAttributes, setCustomAttributes] = useState<any>({});
   const [formData, setFormData] = useState({
     itemName: '',
     quantity: '',

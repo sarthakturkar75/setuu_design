@@ -59,9 +59,20 @@ export async function getPortfolioAverages() {
     totalRiskScore += risk;
   }
 
+  let totalOpenIssues = 0;
+  let totalCompletedMilestones = 0;
+  for (const proj of projects) {
+    const projIssues = (issues || []).filter(i => i.project_id === proj.id);
+    const projMilestones = (milestones || []).filter(m => m.project_id === proj.id);
+    totalOpenIssues += projIssues.filter(i => i.status === 'Open').length;
+    totalCompletedMilestones += projMilestones.filter(m => m.completion_status === true || m.status_label === 'Completed').length;
+  }
+
   return {
     avgProgress: validProjectsCount > 0 ? Math.round(totalProgress / validProjectsCount) : 0,
     avgRiskScore: validProjectsCount > 0 ? Math.round(totalRiskScore / validProjectsCount) : 0,
-    avgBudgetVariance: validProjectsCount > 0 ? +(totalBudgetVariance / validProjectsCount).toFixed(1) : 0
+    avgBudgetVariance: validProjectsCount > 0 ? +(totalBudgetVariance / validProjectsCount).toFixed(1) : 0,
+    avgOpenIssues: validProjectsCount > 0 ? Math.round(totalOpenIssues / validProjectsCount) : 0,
+    avgCompletedMilestones: validProjectsCount > 0 ? Math.round(totalCompletedMilestones / validProjectsCount) : 0
   };
 }

@@ -52,7 +52,6 @@ export async function createUpdate(formData: FormData) {
   const idempotency_key = formData.get("idempotency_key") as string;
   if (idempotency_key) {
     // Check if we recently saved this exact payload by caption/time or if we use the caption hack for idempotency checking without schema migration
-    // To be strictly correct with "no fake", we should use a proper table. We'll use location_name to store the UUID since it's an available unused string field for this specific route.
     const { data: existing } = await supabase.from("updates").select("id").eq("idempotency_key", idempotency_key).limit(1).single();
     if (existing) {
       return { success: true, data: existing, safetyViolation: false, message: "Idempotent success" };

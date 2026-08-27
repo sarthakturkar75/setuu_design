@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/Button';
 import { LayersIcon, TargetIcon } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ARViewPage({ params }: { params: { id: string } }) {
+export default function ARViewPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [orientation, setOrientation] = useState({ alpha: 0, beta: 0, gamma: 0 });
   const [isCalibrated, setIsCalibrated] = useState(false);
@@ -86,7 +87,7 @@ export default function ARViewPage({ params }: { params: { id: string } }) {
           </h2>
           <p className="text-xs text-white/70">Align the camera to grid line A-1 and calibrate.</p>
         </div>
-        <Link href={`/admin/projects/${params.id}/update`}>
+        <Link href={`/admin/projects/${id}/update`}>
           <Button variant="ghost" className="text-white hover:bg-white/20">Close</Button>
         </Link>
       </div>

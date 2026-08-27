@@ -7,7 +7,8 @@ import { initiateEmergencyMuster, getActiveMusterEvents, getMusterResponses } fr
 import { createClient } from "@/lib/supabase/client";
 import { useToast } from "@/contexts/ToastContext";
 
-export default function MusterRollPage({ params }: { params: { id: string } }) {
+export default function MusterRollPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const [activeEvent, setActiveEvent] = useState<any>(null);
   const [responses, setResponses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ export default function MusterRollPage({ params }: { params: { id: string } }) {
 
   const fetchActiveEvent = async () => {
     setLoading(true);
-    const events = await getActiveMusterEvents(params.id);
+    const events = await getActiveMusterEvents(id);
     if (events.length > 0) {
       setActiveEvent(events[0]);
       await fetchResponses(events[0].id);
@@ -34,7 +35,7 @@ export default function MusterRollPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetchActiveEvent();
-  }, [params.id]);
+  }, [id]);
 
   // Realtime subscription to responses
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function MusterRollPage({ params }: { params: { id: string } }) {
   const handleInitiate = async () => {
     if (!confirm("Are you sure? This will instantly lock the screens of all personnel currently on site.")) return;
     setIsInitiating(true);
-    const res = await initiateEmergencyMuster(params.id);
+    const res = await initiateEmergencyMuster(id);
     if (res.success) {
       toast.success("Emergency Muster Initiated!");
       await fetchActiveEvent();

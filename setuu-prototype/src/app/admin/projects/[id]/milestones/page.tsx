@@ -26,7 +26,7 @@ export default function MilestoneKanbanPage() {
   const [cycleAnalytics, setCycleAnalytics] = React.useState({ inProgressAvg: 0, reviewAvg: 0 });
   const [draggedTask, setDraggedTask] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(true);
-  const [showAddForm, setShowAddForm] = React.useState(false);
+  const [showAddForm, setShowAddForm] = React.useState<string | null>(null);
   const [newTitle, setNewTitle] = React.useState('');
   const [newWBS, setNewWBS] = React.useState('');
   const [newSOV, setNewSOV] = React.useState('');
@@ -116,7 +116,7 @@ export default function MilestoneKanbanPage() {
     return 'todo';
   };
 
-  const renderColumn = (columnId: string, title: string, swimlaneMilestones: any[]) => {
+  const renderColumn = (columnId: string, title: string, swimlaneMilestones: any[], dept: string) => {
     const columnMilestones = swimlaneMilestones.filter(t => (t.custom_data?.kanban_status || getColumnForStatus(t.status_label)) === columnId);
     
     const isOverWIP = WIP_LIMITS[columnId] && columnMilestones.length >= WIP_LIMITS[columnId];
@@ -186,8 +186,8 @@ export default function MilestoneKanbanPage() {
               </div>
             );
           })}
-          {columnId === "todo" && swimlaneMilestones === milestones && (
-            showAddForm ? (
+          {columnId === "todo" && (
+            showAddForm === dept ? (
               <div className="mt-2 flex flex-col gap-2 p-3 bg-surface rounded-lg border border-outline-variant">
                 <input
                   type="text"
@@ -210,23 +210,25 @@ export default function MilestoneKanbanPage() {
                     value={newSOV}
                     onChange={(e) => setNewSOV(e.target.value)}
                     placeholder="SOV $"
-                    className="w-1/2 px-3 py-2 rounded border border-outline-variant bg-surface text-sm text-on-surface"
+                    className="w-1/2 px-3 py-2 rounded border border-outline-variant bg-surface text-sm text-on-surface font-mono"
                   />
                 </div>
-                <div className="flex gap-2 mt-2">
-                  <button
+                <div className="flex gap-2 mt-1">
+                  <button 
                     onClick={async () => {
-                      if (!newTitle.trim()) return;
+                      if (!newTitle) return;
                       const res = await createMilestone(projectId, { 
-                        title: newTitle.trim(), 
-                        wbs_code: newWBS.trim() || null,
-                        sov_value: newSOV ? parseFloat(newSOV) : null,
-                        completion_status: false 
+                        title: newTitle, 
+                        wbs_code: newWBS, 
+                        sov_value: parseFloat(newSOV) || 0,
+                        status_label: 'Not Started',
+                        completion_status: false,
+                        department: dept === "General" ? null : dept
                       });
                       if (res.success) {
                         toast.success('Milestone created!');
                         setNewTitle(''); setNewWBS(''); setNewSOV('');
-                        setShowAddForm(false);
+                        setShowAddForm(null);
                         const data = await getProjectMilestones(projectId);
                         setMilestones(data || []);
                       } else {
@@ -235,11 +237,11 @@ export default function MilestoneKanbanPage() {
                     }}
                     className="flex-1 py-2 bg-primary text-on-primary rounded text-sm font-semibold"
                   >Add</button>
-                  <button onClick={() => { setShowAddForm(false); setNewTitle(''); setNewWBS(''); setNewSOV(''); }} className="px-3 py-2 text-sm text-on-surface-variant">Cancel</button>
+                  <button onClick={() => { setShowAddForm(null); setNewTitle(''); setNewWBS(''); setNewSOV(''); }} className="px-3 py-2 text-sm text-on-surface-variant">Cancel</button>
                 </div>
               </div>
             ) : (
-              <button onClick={() => setShowAddForm(true)} className="w-full mt-2 py-2 flex items-center justify-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all text-sm border border-dashed border-outline-variant hover:border-primary/50">
+              <button onClick={() => setShowAddForm(dept)} className="w-full mt-2 py-2 flex items-center justify-center gap-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-lg transition-all text-sm border border-dashed border-outline-variant hover:border-primary/50">
                 <PlusIcon className="w-4 h-4" /> Add Task
               </button>
             )
@@ -254,7 +256,7 @@ export default function MilestoneKanbanPage() {
   }
 
   // Calculate Swimlanes
-  const departments = Array.from(new Set(milestones.map(m => m.department || "General"))).sort();
+  const departments = milestones.length > 0 ? Array.from(new Set(milestones.map(m => m.department || "General"))).sort() : ["General"];
 
   return (
     <div className="p-6 h-[calc(100vh-140px)] overflow-hidden flex flex-col">
@@ -285,10 +287,10 @@ export default function MilestoneKanbanPage() {
             <div key={dept} className="flex flex-col">
               <h3 className="text-lg font-bold font-merriweather text-on-surface mb-4 pb-2 border-b border-outline-variant/50">{dept} Trade</h3>
               <div className="flex gap-6 min-w-max">
-                {renderColumn("todo", "Not Started", deptMilestones)}
-                {renderColumn("in_progress", "In Progress", deptMilestones)}
-                {renderColumn("review", "Review", deptMilestones)}
-                {renderColumn("completed", "Completed", deptMilestones)}
+                {renderColumn("todo", "Not Started", deptMilestones, dept)}
+                {renderColumn("in_progress", "In Progress", deptMilestones, dept)}
+                {renderColumn("review", "Review", deptMilestones, dept)}
+                {renderColumn("completed", "Completed", deptMilestones, dept)}
               </div>
             </div>
           );

@@ -15,9 +15,10 @@ import Link from 'next/link';
 // We'll import fabric lazily when markup starts
 import * as fabric from "fabric";
 
-export default function UpdateCameraPage({ params }: { params: { id: string } }) {
+export default function UpdateCameraPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const toast = useToast();
-  const { id } = params;
+  
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);

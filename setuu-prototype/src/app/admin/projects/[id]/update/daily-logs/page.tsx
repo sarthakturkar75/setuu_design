@@ -17,10 +17,11 @@ import { revalidatePath } from "next/cache";
 export default async function DailyLogsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const project = await getProjectById(params.id);
-  const logs = await getDailyLogs(params.id);
+  const { id } = await params;
+  const project = await getProjectById(id);
+  const logs = await getDailyLogs(id);
 
   const today = new Date().toISOString().split("T")[0];
   const hasLogToday = logs.some((l) => l.date === today);
@@ -40,8 +41,8 @@ export default async function DailyLogsPage({
           <form
             action={async () => {
               "use server";
-              await generateDailyReport(params.id, today);
-              revalidatePath(`/admin/projects/${params.id}/update/daily-logs`);
+              await generateDailyReport(id, today);
+              revalidatePath(`/admin/projects/${id}/update/daily-logs`);
             }}
           >
             <Button variant="primary" type="submit" className="gap-2">

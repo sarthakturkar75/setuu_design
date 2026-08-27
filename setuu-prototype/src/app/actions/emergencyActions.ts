@@ -6,7 +6,7 @@ export async function initiateEmergencyMuster(projectId: string) {
   const supabase = await createClient();
   
   const { data: authUser } = await supabase.auth.getUser();
-  const userId = authUser?.user?.id; // Note: In prototype, we might fake this if no real auth. Let's just use a select to get a PM.
+  const userId = authUser?.user?.id;
 
   // 1. Get everyone currently on site for this project
   const { data: onSiteLogs, error: turnstileErr } = await supabase

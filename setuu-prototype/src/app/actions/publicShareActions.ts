@@ -55,7 +55,7 @@ export async function getPublicProjectData(secureToken: string) {
   // 2. Fetch Project Data (Bypass RLS explicitly for this safe read-only access)
   // For safety in this prototype, we'll use regular queries assuming RLS allows anon reads for these specific project IDs
   // OR we can implement an RPC function `get_public_project(token)`.
-  // Since we are mocking/using standard data fetching:
+  // Since we are using standard data fetching:
   const { data: project } = await supabase.from("projects").select("*").eq("id", share.project_id).single();
   const { data: milestones } = await supabase.from("milestones").select("*").eq("project_id", share.project_id);
   

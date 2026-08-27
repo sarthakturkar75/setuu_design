@@ -52,6 +52,7 @@ export const getNavigationForRole = (
 
     // Shared Project Operations
     const flags = dynamicData?.flags || { project_resources: true, change_requests: true, project_materials: true, project_issues: true, drawing_versions: true, timeline: true, milestones: true, collaboration: true, handover: true };
+    const cn = flags.custom_names || {};
     const projectOpsSection: NavSection = {
         title: "Project Operations",
         items: projectId
@@ -62,34 +63,39 @@ export const getNavigationForRole = (
                     icon: <LayoutDashboardIcon className="w-5 h-5" />,
                 },
                 ...(flags.milestones !== false ? [{
-                    label: "Milestones",
+                    label: cn.milestones || "Milestones",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/milestones`,
                     icon: <CheckSquareIcon className="w-5 h-5" />,
                 }] : []),
                 ...(flags.project_materials !== false ? [{
-                    label: "Materials",
+                    label: cn.project_materials || "Materials",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/materials`,
                     icon: <PackageIcon className="w-5 h-5" />,
                 }] : []),
                 ...(flags.drawing_versions !== false ? [{
-                    label: "Drawings",
+                    label: cn.drawing_versions || "Drawings",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/drawings`,
                     icon: <FileBoxIcon className="w-5 h-5" />,
                 }] : []),
                 ...(flags.project_issues !== false ? [{
-                    label: "Issues",
+                    label: cn.project_issues || "Issues",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/issues`,
                     icon: <AlertTriangleIcon className="w-5 h-5" />,
                 }] : []),
                 ...(flags.project_resources !== false ? [{
-                    label: "Resources",
+                    label: cn.project_resources || "Resources",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/resources`,
                     icon: <UsersIcon className="w-5 h-5" />,
                 }] : []),
                 ...(flags.collaboration !== false ? [{
-                    label: "Collaboration",
+                    label: cn.collaboration || "Collaboration",
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/collaboration`,
                     icon: <MessageSquareIcon className="w-5 h-5" />,
+                }] : []),
+                ...(flags.timeline !== false ? [{
+                    label: cn.timeline || "Timeline",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/timeline`,
+                    icon: <CalendarIcon className="w-5 h-5" />,
                 }] : []),
             ]
             : [],

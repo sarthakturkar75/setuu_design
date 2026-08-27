@@ -419,8 +419,8 @@ export async function getProjectConfigOptions() {
 export async function getProjectFlags(projectId: string) {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from("project_config")
-    .select("module_name, is_enabled")
+    .from("project_module_config")
+    .select("module_id, is_enabled, custom_name")
     .eq("project_id", projectId);
 
   const defaultFlags = {
@@ -433,14 +433,20 @@ export async function getProjectFlags(projectId: string) {
     milestones: true,
     collaboration: true,
     handover: true,
+    custom_names: {} as Record<string, string>
   };
+  
   if (!data || error) return defaultFlags;
 
-  const flags: any = { ...defaultFlags };
+  const flags: any = { ...defaultFlags, custom_names: {} };
   for (const row of data) {
-    flags[row.module_name] = row.is_enabled;
+    flags[row.module_id] = row.is_enabled;
+    if (row.custom_name) {
+      flags.custom_names[row.module_id] = row.custom_name;
+    }
   }
 
+  // Aliases for legacy compatibility
   flags.resources = flags.project_resources;
   flags.changes = flags.change_requests;
   flags.materials = flags.project_materials;
@@ -454,34 +460,35 @@ export async function updateProjectFlag(
   projectId: string,
   moduleName: string,
   isEnabled: boolean,
+  customName?: string
 ) {
   await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 
   const { data: existing } = await supabase
-    .from("project_config")
+    .from("project_module_config")
     .select("id")
     .eq("project_id", projectId)
-    .eq("module_name", moduleName)
+    .eq("module_id", moduleName)
     .maybeSingle();
 
   if (existing) {
+    const updateData: any = { is_enabled: isEnabled, updated_at: new Date().toISOString() };
+    if (customName !== undefined) updateData.custom_name = customName;
+    
     const { error } = await supabase
-      .from("project_config")
-      .update({ is_enabled: isEnabled, updated_at: new Date().toISOString() })
+      .from("project_module_config")
+      .update(updateData)
       .eq("id", existing.id);
-    if (error) {
-      return { success: false, error: error.message };
-    }
+    if (error) return { success: false, error: error.message };
   } else {
-    const { error } = await supabase.from("project_config").insert({
+    const { error } = await supabase.from("project_module_config").insert({
       project_id: projectId,
-      module_name: moduleName,
+      module_id: moduleName,
       is_enabled: isEnabled,
+      custom_name: customName || null
     });
-    if (error) {
-      return { success: false, error: error.message };
-    }
+    if (error) return { success: false, error: error.message };
   }
 
   return { success: true };
@@ -633,4 +640,50 @@ export async function verifyProjectAccess(projectId: string) {
   if (vendorAssigned) return true;
 
   return false;
+}
+
+export async function autoUpdateModuleFlags(projectId: string, phaseName: string) {
+  const supabase = await createClient();
+  const phaseLower = phaseName.toLowerCase();
+  
+  let modulesToEnable: string[] = [];
+
+  // Phase-Based Module Automation Rules
+  if (phaseLower.includes('handover') || phaseLower.includes('closeout')) {
+    modulesToEnable.push('handover');
+  }
+  
+  if (phaseLower.includes('execution') || phaseLower.includes('construction')) {
+    modulesToEnable.push('project_issues', 'project_materials', 'change_requests');
+  }
+
+  for (const mod of modulesToEnable) {
+    const { data: existing } = await supabase
+      .from("project_module_config")
+      .select("id")
+      .eq("project_id", projectId)
+      .eq("module_id", mod)
+      .maybeSingle();
+
+    if (existing) {
+      await supabase
+        .from("project_module_config")
+        .update({ is_enabled: true })
+        .eq("id", existing.id);
+    } else {
+      await supabase
+        .from("project_module_config")
+        .insert({
+          project_id: projectId,
+          module_id: mod,
+          is_enabled: true
+        });
+    }
+  }
+
+  if (modulesToEnable.length > 0) {
+    // Invalidate the layout so the sidebar immediately updates
+    revalidatePath(`/admin/projects/${projectId}`, 'layout');
+    revalidatePath(`/pm/projects/${projectId}`, 'layout');
+  }
 }
