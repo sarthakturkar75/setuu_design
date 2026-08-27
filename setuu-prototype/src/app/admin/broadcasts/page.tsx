@@ -1,6 +1,6 @@
 "use client";
 
-import { sendBroadcast } from "@/app/actions/platformActions";
+import { sendPlatformBroadcast } from "@/app/actions/platformActions";
 import { useToast } from "@/contexts/ToastContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";

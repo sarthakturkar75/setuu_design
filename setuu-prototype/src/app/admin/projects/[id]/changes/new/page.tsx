@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { CheckCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { createChangeRequest } from "@/app/actions/changeRequestActions";
+import { createChangeRequestFromForm } from "@/app/actions/changeRequestActions";
 
 export default function NewChangeRequestPage() {
   const toast = useToast();
@@ -49,7 +49,7 @@ export default function NewChangeRequestPage() {
     formData.append("status", status);
 
     try {
-      const result = await createChangeRequest(formData);
+      const result = await createChangeRequestFromForm(formData);
 
       if (!result?.success) {
         throw new Error(result?.error || "Unknown error occurred");

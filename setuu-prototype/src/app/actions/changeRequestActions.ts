@@ -6,7 +6,7 @@ import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 
-export async function createChangeRequest(formData: FormData) {
+export async function createChangeRequestFromForm(formData: FormData) {
   await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
 

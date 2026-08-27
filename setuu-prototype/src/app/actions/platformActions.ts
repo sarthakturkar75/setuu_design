@@ -237,7 +237,7 @@ export async function getAdminDashboardData() {
   };
 }
 
-export async function sendBroadcast(data: any) {
+export async function sendPlatformBroadcast(data: any) {
   await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
   const { error } = await supabase.from("notifications").insert({
