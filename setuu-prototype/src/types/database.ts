@@ -737,24 +737,41 @@ export type Database = {
       }
       custom_fields_schema: {
         Row: {
+          created_at: string | null
           entity_type: string
           field_name: string
           field_type: string
           id: string
+          is_required: boolean | null
+          project_id: string
         }
         Insert: {
+          created_at?: string | null
           entity_type: string
           field_name: string
           field_type: string
           id?: string
+          is_required?: boolean | null
+          project_id: string
         }
         Update: {
+          created_at?: string | null
           entity_type?: string
           field_name?: string
           field_type?: string
           id?: string
+          is_required?: boolean | null
+          project_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "custom_fields_schema_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       daily_logs: {
         Row: {
@@ -2116,6 +2133,7 @@ export type Database = {
           cost_impact: string | null
           created_at: string | null
           created_by: string | null
+          custom_attributes: Json | null
           custom_data: Json | null
           description: string | null
           display_id: string | null
@@ -2140,6 +2158,7 @@ export type Database = {
           cost_impact?: string | null
           created_at?: string | null
           created_by?: string | null
+          custom_attributes?: Json | null
           custom_data?: Json | null
           description?: string | null
           display_id?: string | null
@@ -2164,6 +2183,7 @@ export type Database = {
           cost_impact?: string | null
           created_at?: string | null
           created_by?: string | null
+          custom_attributes?: Json | null
           custom_data?: Json | null
           description?: string | null
           display_id?: string | null
@@ -2219,6 +2239,7 @@ export type Database = {
           created_at: string | null
           created_by: string | null
           current_stock: number | null
+          custom_attributes: Json | null
           custom_data: Json | null
           estimated_delivery: string | null
           expected_arrival_date: string | null
@@ -2244,6 +2265,7 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           current_stock?: number | null
+          custom_attributes?: Json | null
           custom_data?: Json | null
           estimated_delivery?: string | null
           expected_arrival_date?: string | null
@@ -2269,6 +2291,7 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           current_stock?: number | null
+          custom_attributes?: Json | null
           custom_data?: Json | null
           estimated_delivery?: string | null
           expected_arrival_date?: string | null
@@ -2306,6 +2329,41 @@ export type Database = {
           },
           {
             foreignKeyName: "project_materials_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_module_config: {
+        Row: {
+          created_at: string | null
+          custom_name: string | null
+          id: string
+          is_enabled: boolean | null
+          module_id: string
+          project_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          custom_name?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          module_id: string
+          project_id: string
+        }
+        Update: {
+          created_at?: string | null
+          custom_name?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          module_id?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_module_config_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -2465,6 +2523,73 @@ export type Database = {
           },
           {
             foreignKeyName: "project_resources_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_retention_policies: {
+        Row: {
+          action: string
+          created_at: string | null
+          entity_type: string
+          id: string
+          project_id: string
+          retain_days: number
+        }
+        Insert: {
+          action?: string
+          created_at?: string | null
+          entity_type: string
+          id?: string
+          project_id: string
+          retain_days: number
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          entity_type?: string
+          id?: string
+          project_id?: string
+          retain_days?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_retention_policies_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_role_settings: {
+        Row: {
+          created_at: string | null
+          default_landing_page: string
+          id: string
+          project_id: string
+          role: string
+        }
+        Insert: {
+          created_at?: string | null
+          default_landing_page: string
+          id?: string
+          project_id: string
+          role: string
+        }
+        Update: {
+          created_at?: string | null
+          default_landing_page?: string
+          id?: string
+          project_id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_role_settings_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -2946,6 +3071,7 @@ export type Database = {
           blockers: string[] | null
           created_at: string
           created_by: string
+          custom_attributes: Json | null
           delay_days: number | null
           department: Database["public"]["Enums"]["department_type"] | null
           description: string | null
@@ -2971,6 +3097,7 @@ export type Database = {
           blockers?: string[] | null
           created_at?: string
           created_by: string
+          custom_attributes?: Json | null
           delay_days?: number | null
           department?: Database["public"]["Enums"]["department_type"] | null
           description?: string | null
@@ -2996,6 +3123,7 @@ export type Database = {
           blockers?: string[] | null
           created_at?: string
           created_by?: string
+          custom_attributes?: Json | null
           delay_days?: number | null
           department?: Database["public"]["Enums"]["department_type"] | null
           description?: string | null

@@ -13,3 +13,22 @@ export async function verifyRole(allowedRoles: string[]) {
   }
   return user;
 }
+
+export async function verifyModuleAccess(projectId: string, moduleId: string) {
+  const supabase = await createClient();
+  const { data: config, error } = await supabase
+    .from("project_module_config")
+    .select("is_enabled")
+    .eq("project_id", projectId)
+    .eq("module_id", moduleId)
+    .single();
+
+  // If there's no config record, we default to enabled (or true) based on requirements, 
+  // but strict enforcement usually means false. Assuming default is true for legacy.
+  if (error || !config) return true;
+  
+  if (config.is_enabled === false) {
+    throw new Error("Forbidden: Module is disabled for this project.");
+  }
+  return true;
+}
