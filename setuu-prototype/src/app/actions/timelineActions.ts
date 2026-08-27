@@ -1,237 +1,220 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { parseStringPromise } from "xml2js";
 import { revalidatePath } from "next/cache";
+import { verifyRole } from "./authUtils";
+
+// ----------------------------------------------------
+// Core Schedule & Task CRUD
+// ----------------------------------------------------
 
 export async function getTimelineData(projectId: string) {
   const supabase = await createClient();
-  
-  const [milestonesRes, dependenciesRes] = await Promise.all([
-    supabase.from("milestones").select("*").eq("project_id", projectId).order("created_at", { ascending: true }),
-    supabase.from("timeline_dependencies").select("*") // Assuming this gets joined or filtered client side, or we filter by projectId if available
+
+  // FETCH FROM TASKS NOW (Not Milestones)
+  const [tasksRes, dependenciesRes] = await Promise.all([
+    supabase.from("tasks")
+      .select("*")
+      .eq("project_id", projectId)
+      .order("planned_start_date", { ascending: true }),
+    supabase.from("timeline_dependencies")
+      .select("*, predecessor:tasks!timeline_dependencies_predecessor_id_fkey(*)")
   ]);
 
-  // For dependencies, we need to filter by milestones that belong to this project
   let validDependencies = dependenciesRes.data || [];
-  if (milestonesRes.data && validDependencies.length > 0) {
-    const validIds = new Set(milestonesRes.data.map(m => m.id));
+  if (tasksRes.data && validDependencies.length > 0) {
+    const validIds = new Set(tasksRes.data.map(t => t.id));
     validDependencies = validDependencies.filter(d => validIds.has(d.successor_id));
   }
 
   return {
-    milestones: milestonesRes.data || [],
+    tasks: tasksRes.data || [],
     dependencies: validDependencies
   };
 }
 
-export async function updateMilestoneDates(milestoneId: string, startDate: Date, endDate: Date) {
+export async function createTask(projectId: string, taskData: any) {
+  // Enforce security: Only PMs and Admins can create base schedule blocks
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  
-  // 1. Update the milestone itself
-  const { error } = await supabase
-    .from("milestones")
-    .update({ 
-       // If start date doesn't exist on your schema natively, we'll map target_date as end_date
-       // and created_at/baseline_start_date as start for now, OR we need to add start_date.
-       // The prompt says updateMilestoneDates(start, end). Let's use custom_data for start_date if it's missing,
-       // or assume custom_data->>'start_date' and target_date = end.
-       target_date: endDate.toISOString().split('T')[0],
-       custom_data: { start_date: startDate.toISOString().split('T')[0] }
-    })
-    .eq("id", milestoneId);
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (error) throw new Error("Failed to update milestone dates: " + error.message);
-
-  // 2. Recursive downstream shift (Critical Path Method logic)
-  // Fetch dependencies where this milestone is the predecessor
-  const { data: dependents } = await supabase
-    .from("timeline_dependencies")
-    .select("successor_id, dependency_type, lag_days")
-    .eq("predecessor_id", milestoneId);
-
-  if (dependents && dependents.length > 0) {
-    for (const dep of dependents) {
-      // Fetch successor current dates
-      const { data: successor } = await supabase
-        .from("milestones")
-        .select("id, target_date, custom_data")
-        .eq("id", dep.successor_id)
-        .single();
-        
-      if (successor) {
-         // Logic for Finish-to-Start (FS)
-         if (dep.dependency_type === 'FS') {
-            const currentStartStr = (successor.custom_data as any)?.start_date || new Date().toISOString();
-            const currentEndStr = successor.target_date;
-            
-            const currentStart = new Date(currentStartStr);
-            const currentEnd = new Date(currentEndStr);
-            const duration = currentEnd.getTime() - currentStart.getTime();
-
-            // New Start is Predecessor End + Lag
-            const newStart = new Date(endDate);
-            newStart.setDate(newStart.getDate() + (dep.lag_days || 0));
-            
-            const newEnd = new Date(newStart.getTime() + duration);
-            
-            // Recursively update
-            await updateMilestoneDates(successor.id, newStart, newEnd);
-         }
-      }
-    }
+  // Calculate planned_finish_date dynamically if start and duration exist
+  let finishDate = null;
+  if (taskData.planned_start_date && taskData.duration_days) {
+    const start = new Date(taskData.planned_start_date);
+    start.setDate(start.getDate() + taskData.duration_days);
+    finishDate = start.toISOString().split('T')[0];
   }
+
+  const { error } = await supabase.from("tasks").insert({
+    project_id: projectId,
+    created_by: user?.id,
+    display_id: taskData.display_id || null,
+    title: taskData.title,
+    department: taskData.department || 'General',
+    planned_start_date: taskData.planned_start_date || null,
+    planned_finish_date: finishDate,
+    duration_days: taskData.duration_days || null,
+    priority: (taskData.priority || 'medium').toLowerCase(), // Normalized to lowercase
+    status: 'Not Started',
+    planned_percent_complete: 0,
+    actual_percent_complete: 0,
+    blockers: []
+  });
+
+  if (error) return { success: false, error: error.message };
+
+  revalidatePath(`/pm/projects/${projectId}/timeline`);
+  revalidatePath(`/admin/projects/${projectId}/timeline`);
+  return { success: true };
+}
+
+export async function updateTaskDates(taskId: string, startDateStr: string, endDateStr: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
+  const supabase = await createClient();
+
+  // Calculate new duration
+  const start = new Date(startDateStr);
+  const end = new Date(endDateStr);
+  const diffTime = Math.abs(end.getTime() - start.getTime());
+  const durationDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  const { error } = await supabase
+    .from("tasks")
+    .update({
+      planned_start_date: startDateStr,
+      planned_finish_date: endDateStr,
+      duration_days: durationDays
+    })
+    .eq("id", taskId);
+
+  if (error) throw new Error("Failed to update task dates: " + error.message);
+
+  // We leave the recursive downstream shift to the timelineLeveling.ts script 
+  // which the PM can trigger manually via the Auto-Level button.
 
   return { success: true };
 }
 
 export async function setScheduleBaseline(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  const { data: milestones } = await supabase.from("milestones").select("id, target_date, custom_data").eq("project_id", projectId);
-  
-  if (!milestones) return { success: false };
 
-  for (const m of milestones) {
-    const startStr = (m.custom_data as any)?.start_date || new Date().toISOString().split('T')[0];
-    await supabase.from("milestones").update({
-      baseline_start_date: startStr,
-      baseline_end_date: m.target_date
-    }).eq("id", m.id);
+  // Fetch current tasks
+  const { data: tasks } = await supabase.from("tasks").select("id, planned_start_date, planned_finish_date, actual_start_date").eq("project_id", projectId);
+  if (!tasks) return { success: false };
+
+  // Set the "Actual" start date to lock in the baseline
+  for (const t of tasks) {
+    if (!t.actual_start_date && t.planned_start_date) {
+      await supabase.from("tasks").update({
+        actual_start_date: t.planned_start_date // Locks baseline
+      }).eq("id", t.id);
+    }
   }
 
-  revalidatePath(`/admin/projects/${projectId}/timeline`);
+  revalidatePath(`/pm/projects/${projectId}/timeline`);
   return { success: true };
 }
 
-export async function importProjectSchedule(projectId: string, xmlString: string) {
-  const supabase = await createClient();
-  try {
-    // Prevent binary .mpp files from crashing the XML parser
-    const trimmed = xmlString.trim();
-    if (!trimmed.startsWith('<')) {
-      return { success: false, error: "Invalid format. Please export your MS Project schedule as an XML file (.xml). Binary .mpp files are not directly supported in the browser." };
-    }
-
-    const parsed = await parseStringPromise(xmlString);
-    // Typical MS Project XML structure: Project.Tasks[0].Task
-    const tasks = parsed.Project?.Tasks?.[0]?.Task || [];
-    
-    // Clear existing (Optional, or just append)
-    // For MVP append
-    
-    for (const task of tasks) {
-       if (!task.Name || !task.Name[0]) continue;
-       const name = task.Name[0];
-       const start = task.Start ? task.Start[0].split('T')[0] : new Date().toISOString().split('T')[0];
-       const finish = task.Finish ? task.Finish[0].split('T')[0] : start;
-       
-       await supabase.from("milestones").insert({
-         project_id: projectId,
-         title: name,
-         target_date: finish,
-         custom_data: { start_date: start },
-         wbs_code: task.WBS ? task.WBS[0] : null
-       });
-    }
-    
-    revalidatePath(`/admin/projects/${projectId}/timeline`);
-    return { success: true };
-  } catch (error: any) {
-    return { success: false, error: "Failed to parse schedule XML: " + error.message };
-  }
-}
-
 // ----------------------------------------------------
-// Weather Automation & Resource Leveling
+// Telemetry & Weather Integration
 // ----------------------------------------------------
 
 export async function calculateWeatherDelays(projectId: string) {
   const supabase = await createClient();
-  
+
   // 1. Fetch weather logs to check for consecutive heavy rain
   const { data: weatherLogs } = await supabase
     .from("weather_logs")
     .select("*")
     .eq("project_id", projectId)
-    .order("date", { ascending: false })
+    .order("log_date", { ascending: false })
     .limit(3);
-    
+
   if (weatherLogs && weatherLogs.length === 3) {
-    const consecutiveRain = weatherLogs.every(log => log.precipitation_mm > 15);
+    const consecutiveRain = weatherLogs.every(log => (log.precipitation_mm || 0) > 15);
+
     if (consecutiveRain) {
-      // 2. Identify exterior tasks
-      const { data: exteriorMilestones } = await supabase
-        .from("milestones")
-        .select("id, title, target_date, custom_data")
+      // 2. Identify exterior tasks from the new tasks schema
+      // (Assuming tasks that belong to structural/exterior departments)
+      const { data: exteriorTasks } = await supabase
+        .from("tasks")
+        .select("id, title, planned_finish_date")
         .eq("project_id", projectId)
-        .eq("is_exterior", true);
-        
-      if (exteriorMilestones && exteriorMilestones.length > 0) {
-        // We wouldn't shift silently. We return this to the PM for approval.
+        .in("department", ["Mechanical", "General"])
+        .eq("status", "In Progress");
+
+      if (exteriorTasks && exteriorTasks.length > 0) {
         return {
           delayDetected: true,
           recommendedShiftDays: 3,
-          affectedMilestones: exteriorMilestones
+          affectedTasks: exteriorTasks
         };
       }
     }
   }
-  return { delayDetected: false, affectedMilestones: [] };
+  return { delayDetected: false, affectedTasks: [] };
 }
 
 export async function checkResourceAllocation(projectId: string) {
   const supabase = await createClient();
-  
-  // 1. Get all assigned tasks
-  // For the prototype, we check 'milestones' which might not have assignee at milestone level.
-  // We'll simulate fetching tasks with user assignments.
-  const { data: milestones } = await supabase
-    .from("milestones")
-    .select("id, title, target_date, custom_data")
-    .eq("project_id", projectId);
-    
-  // Since we don't have a rigid milestone_assignees table yet, we'll parse custom_data
+
+  const { data: tasks } = await supabase
+    .from("tasks")
+    .select("id, title, assignee_id, status")
+    .eq("project_id", projectId)
+    .in("status", ["Not Started", "In Progress"]);
+
   const allocationMap: Record<string, { count: number, tasks: any[] }> = {};
-  
-  (milestones || []).forEach(m => {
-     const assigneeId = (m.custom_data as any)?.assignee_id;
-     if (assigneeId) {
-        if (!allocationMap[assigneeId]) {
-           allocationMap[assigneeId] = { count: 0, tasks: [] };
-        }
-        allocationMap[assigneeId].count += 1;
-        allocationMap[assigneeId].tasks.push(m);
-     }
+
+  (tasks || []).forEach(t => {
+    if (t.assignee_id) {
+      if (!allocationMap[t.assignee_id]) {
+        allocationMap[t.assignee_id] = { count: 0, tasks: [] };
+      }
+      allocationMap[t.assignee_id].count += 1;
+      allocationMap[t.assignee_id].tasks.push(t);
+    }
   });
 
-  const conflicts = Object.keys(allocationMap).filter(k => allocationMap[k].count > 1).map(k => ({
-     assigneeId: k,
-     ...allocationMap[k]
-  }));
+  // Identify any assignee with more than 3 simultaneous active tasks
+  const conflicts = Object.keys(allocationMap)
+    .filter(k => allocationMap[k].count > 3)
+    .map(k => ({
+      assigneeId: k,
+      ...allocationMap[k]
+    }));
 
   return conflicts;
 }
 
+// ----------------------------------------------------
+// Scenarios (What-if Planning)
+// ----------------------------------------------------
+
 export async function cloneTimelineToScenario(projectId: string, scenarioName: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  
-  const { data: milestones } = await supabase.from("milestones").select("*").eq("project_id", projectId);
-  
+
+  const { data: tasks } = await supabase.from("tasks").select("*").eq("project_id", projectId);
+
   const { data: scenario, error: scenarioError } = await supabase
     .from("timeline_scenarios")
-    .insert({ project_id: projectId, name: scenarioName, payload: milestones })
+    .insert({ project_id: projectId, name: scenarioName, payload: tasks })
     .select("id")
     .single();
-    
+
   if (scenarioError || !scenario) throw new Error("Failed to create scenario");
 
   return { success: true, scenarioId: scenario.id };
 }
 
 export async function applyScenario(scenarioId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  
-  // 1. Fetch scenario payload
+
   const { data: scenario, error } = await supabase
     .from("timeline_scenarios")
     .select("payload, project_id")
@@ -242,13 +225,13 @@ export async function applyScenario(scenarioId: string) {
     throw new Error("Failed to load scenario payload");
   }
 
-  // 2. Overwrite actual milestones
-  const milestones = scenario.payload as any[];
-  for (const m of milestones) {
-    await supabase.from("milestones").update({
-      target_date: m.target_date,
-      custom_data: m.custom_data
-    }).eq("id", m.id);
+  const tasks = scenario.payload as any[];
+  for (const t of tasks) {
+    await supabase.from("tasks").update({
+      planned_start_date: t.planned_start_date,
+      planned_finish_date: t.planned_finish_date,
+      duration_days: t.duration_days
+    }).eq("id", t.id);
   }
 
   return { success: true };

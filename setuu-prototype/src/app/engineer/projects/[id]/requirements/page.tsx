@@ -1,17 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import React, { useEffect, useState, use } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Button } from "@/components/ui/Button";
 import { RequirementTraceabilityMatrix } from "@/components/ui/RequirementTraceabilityMatrix";
 import { useToast } from "@/contexts/ToastContext";
 import { getProjectRequirements } from "@/app/actions/requirementActions";
-import { PlusIcon, FileSpreadsheetIcon } from "lucide-react";
 
-export default function RequirementsConsolePage() {
-    const params = useParams();
-    const projectId = params?.id as string;
+export default function EngineerRequirementsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id: projectId } = use(params);
     const [requirements, setRequirements] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const toast = useToast();
@@ -28,36 +24,28 @@ export default function RequirementsConsolePage() {
     }, [projectId, toast]);
 
     useEffect(() => {
-        if (projectId) fetchRequirements();
-    }, [projectId, fetchRequirements]);
+        fetchRequirements();
+    }, [fetchRequirements]);
 
     return (
-        <div className="p-6 space-y-6 max-w-[1600px] mx-auto h-full flex flex-col">
+        <div className="p-6 space-y-6 max-w-[1600px] mx-auto h-[calc(100vh-100px)] flex flex-col">
             <PageHeader
-                title="Systems Requirement Specification (SRS)"
-                subtitle="Manage the engineering traceability matrix. Map requirements to physical submittals and defect logs."
-                actions={
-                    <div className="flex gap-3">
-                        <Button
-                            variant="outline"
-                            onClick={() => toast.info("Excel Import triggered...")}
-                        >
-                            <FileSpreadsheetIcon className="w-4 h-4 mr-2" /> Import SRS Matrix
-                        </Button>
-                        <Button variant="primary">
-                            <PlusIcon className="w-4 h-4 mr-2" /> New Requirement
-                        </Button>
-                    </div>
-                }
+                title="Requirements Verification"
+                subtitle="Review SRS specifications and toggle status to Verified upon successful test completion."
             />
 
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col overflow-hidden shadow-sm">
                 {loading ? (
-                    <div className="flex items-center justify-center h-64 text-on-surface-variant animate-pulse">
-                        Loading Traceability Matrix...
+                    <div className="flex items-center justify-center h-64 text-on-surface-variant animate-pulse bg-surface rounded-xl border border-outline-variant/30">
+                        Loading Verification Matrix...
                     </div>
                 ) : (
-                    <RequirementTraceabilityMatrix requirements={requirements} />
+                    <RequirementTraceabilityMatrix
+                        requirements={requirements}
+                        projectId={projectId}
+                        userRole="engineer"
+                        onUpdate={fetchRequirements}
+                    />
                 )}
             </div>
         </div>

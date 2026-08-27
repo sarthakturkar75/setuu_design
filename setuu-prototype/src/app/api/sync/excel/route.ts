@@ -2,18 +2,14 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import ExcelJS from "exceljs";
 
-// Helper to reliably parse Excel Serial Dates into UTC Postgres Strings
 const parseExcelDate = (val: any) => {
     if (!val) return null;
-    // If ExcelJS parsed it as a native JS Date object
     if (val instanceof Date) {
-        // Subtract the timezone offset to force strict UTC alignment
-        const utcDate = new Date(val.getTime() - (val.getTimezoneOffset() * 60000));
-        return utcDate.toISOString().split('T')[0];
+        const utcDate = new Date(val.getTime() - val.getTimezoneOffset() * 60000);
+        return utcDate.toISOString().split("T")[0];
     }
-    // Fallback for raw string formats
     try {
-        return new Date(val).toISOString().split('T')[0];
+        return new Date(val).toISOString().split("T")[0];
     } catch (e) {
         return null;
     }
@@ -25,103 +21,123 @@ export async function POST(request: Request) {
         const file = formData.get("file") as File;
         const projectId = formData.get("projectId") as string;
 
-        if (!file || !projectId) {
-            return NextResponse.json({ error: "Missing file or projectId" }, { status: 400 });
-        }
+        if (!file || !projectId)
+            return NextResponse.json({ error: "Missing payload" }, { status: 400 });
 
         const supabase = await createClient();
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+        if (!user)
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-        // 1. Read the uploaded file buffer into ExcelJS
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const workbook = new ExcelJS.Workbook();
-
-        // Use 'as any' to bypass the strict TypeScript interface mismatch. 
-        // At runtime, ExcelJS processes this buffer perfectly.
         await workbook.xlsx.load(buffer as any);
-
-        const worksheet = workbook.getWorksheet("Planning");
-        if (!worksheet) {
-            return NextResponse.json({ error: "Invalid format. 'Planning' worksheet missing." }, { status: 400 });
-        }
 
         let updatedCount = 0;
         let insertedCount = 0;
-        const recordsToProcess: any[] = [];
 
-        // 2. Iterate through rows and extract data
-        worksheet.eachRow((row, rowNumber) => {
-            if (rowNumber === 1) return; // Skip Header Row
+        // ==========================================
+        // IMPORT ROUTER: Check which sheet exists
+        // ==========================================
+        const planningSheet = workbook.getWorksheet("Planning");
+        const srsSheet = workbook.getWorksheet("SRS");
 
-            const title = row.getCell(2).value?.toString();
-            if (!title) return; // Title (Activity) is mandatory. Skip empty rows.
+        if (srsSheet) {
+            // PROCESS SRS MATRIX
+            for (let rowNumber = 2; rowNumber <= srsSheet.rowCount; rowNumber++) {
+                const row = srsSheet.getRow(rowNumber);
+                const title = row.getCell(2).value?.toString();
+                if (!title) continue;
 
-            const display_id = row.getCell(1).value?.toString() || null;
-            const department = row.getCell(3).value?.toString() || 'General';
-            const planned_start_date = parseExcelDate(row.getCell(4).value);
-            const planned_finish_date = parseExcelDate(row.getCell(5).value);
-            const duration_days = parseInt(row.getCell(6).value?.toString() || '0') || null;
-            const priority = row.getCell(7).value?.toString() || 'Medium';
-            const status = row.getCell(8).value?.toString() || 'Not Started';
-            const actual_percent_complete = parseInt(row.getCell(9).value?.toString() || '0') || 0;
-            const remarks = row.getCell(10).value?.toString() || null;
-
-            // Extract the Hidden UUID Anchor
-            const uuid_anchor = row.getCell(11).value?.toString();
-
-            recordsToProcess.push({
-                uuid_anchor, // Temporary tracking property
-                payload: {
+                const payload = {
                     project_id: projectId,
-                    display_id,
+                    display_id: row.getCell(1).value?.toString() || null,
                     title,
-                    department,
-                    planned_start_date,
-                    planned_finish_date,
-                    duration_days,
-                    priority,
-                    status,
-                    actual_percent_complete,
-                    remarks
+                    category: row.getCell(3).value?.toString() || null,
+                    specification_value: row.getCell(4).value?.toString() || null,
+                    customer_requirement: row.getCell(5).value?.toString() || null,
+                    priority: row.getCell(6).value?.toString() || "Medium",
+                    source_document: row.getCell(7).value?.toString() || null,
+                    status: row.getCell(8).value?.toString() || "Draft",
+                    remarks: row.getCell(9).value?.toString() || null,
+                };
+
+                const uuid_anchor = row.getCell(10).value?.toString(); // Column J
+
+                if (uuid_anchor && uuid_anchor !== "undefined") {
+                    const { error } = await supabase
+                        .from("project_requirements")
+                        .update(payload)
+                        .eq("id", uuid_anchor)
+                        .eq("project_id", projectId);
+                    if (!error) updatedCount++;
+                } else {
+                    const { error } = await supabase
+                        .from("project_requirements")
+                        .insert(payload);
+                    if (!error) insertedCount++;
                 }
-            });
-        });
-
-        // 3. The UPSERT Execution Router
-        for (const record of recordsToProcess) {
-            if (record.uuid_anchor && record.uuid_anchor !== 'undefined') {
-                // SCENARIO A: UUID Exists -> Safe UPDATE
-                const { error } = await supabase
-                    .from("tasks")
-                    .update(record.payload)
-                    .eq("id", record.uuid_anchor)
-                    .eq("project_id", projectId); // Security safety net
-
-                if (!error) updatedCount++;
-                else console.error(`Failed to update Task ${record.uuid_anchor}:`, error.message);
-            } else {
-                // SCENARIO B: No UUID -> PM manually added a net-new row in Excel -> INSERT
-                record.payload.created_by = user.id; // Schema requirement
-
-                const { error } = await supabase
-                    .from("tasks")
-                    .insert(record.payload);
-
-                if (!error) insertedCount++;
-                else console.error("Failed to insert new task:", error.message);
             }
+        } else if (planningSheet) {
+            // PROCESS PLANNING MATRIX (TASKS)
+            for (
+                let rowNumber = 2;
+                rowNumber <= planningSheet.rowCount;
+                rowNumber++
+            ) {
+                const row = planningSheet.getRow(rowNumber);
+                const title = row.getCell(2).value?.toString();
+                if (!title) continue;
+
+                const payload = {
+                    project_id: projectId,
+                    display_id: row.getCell(1).value?.toString() || null,
+                    title,
+                    department: row.getCell(3).value?.toString() || "General",
+                    planned_start_date: parseExcelDate(row.getCell(4).value),
+                    planned_finish_date: parseExcelDate(row.getCell(5).value),
+                    duration_days:
+                        parseInt(row.getCell(6).value?.toString() || "0") || null,
+                    priority: row.getCell(7).value?.toString() || "Medium",
+                    status: row.getCell(8).value?.toString() || "Not Started",
+                    actual_percent_complete:
+                        parseInt(row.getCell(9).value?.toString() || "0") || 0,
+                    remarks: row.getCell(10).value?.toString() || null,
+                };
+
+                const uuid_anchor = row.getCell(11).value?.toString(); // Column K
+
+                if (uuid_anchor && uuid_anchor !== "undefined") {
+                    const { error } = await supabase
+                        .from("tasks")
+                        .update(payload)
+                        .eq("id", uuid_anchor)
+                        .eq("project_id", projectId);
+                    if (!error) updatedCount++;
+                } else {
+                    (payload as any).created_by = user.id;
+                    const { error } = await supabase.from("tasks").insert(payload);
+                    if (!error) insertedCount++;
+                }
+            }
+        } else {
+            return NextResponse.json(
+                {
+                    error:
+                        "Invalid Excel format. Must contain a sheet named 'Planning' or 'SRS'",
+                },
+                { status: 400 },
+            );
         }
 
         return NextResponse.json({
             success: true,
-            message: `Sync Complete. ${updatedCount} rows updated. ${insertedCount} new rows inserted.`,
-            metrics: { updatedCount, insertedCount }
+            message: `Sync Complete: ${updatedCount} updated, ${insertedCount} inserted.`,
         });
-
     } catch (error: any) {
-        console.error("Excel Import Error:", error);
-        return NextResponse.json({ error: error.message || "Failed to process Excel file" }, { status: 500 });
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
