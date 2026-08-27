@@ -57,7 +57,7 @@ export async function createTask(projectId: string, taskData: any) {
     planned_finish_date: finishDate,
     duration_days: taskData.duration_days || null,
     priority: (taskData.priority || 'medium').toLowerCase(), // Normalized to lowercase
-    status: 'Not Started',
+    status: 'pending',
     planned_percent_complete: 0,
     actual_percent_complete: 0,
     blockers: []
@@ -144,7 +144,7 @@ export async function calculateWeatherDelays(projectId: string) {
         .select("id, title, planned_finish_date")
         .eq("project_id", projectId)
         .in("department", ["Mechanical", "General"])
-        .eq("status", "In Progress");
+        .eq("status", "in_progress");
 
       if (exteriorTasks && exteriorTasks.length > 0) {
         return {
@@ -165,7 +165,7 @@ export async function checkResourceAllocation(projectId: string) {
     .from("tasks")
     .select("id, title, assignee_id, status")
     .eq("project_id", projectId)
-    .in("status", ["Not Started", "In Progress"]);
+    .in("status", ["pending", "in_progress"]);
 
   const allocationMap: Record<string, { count: number, tasks: any[] }> = {};
 

@@ -212,9 +212,12 @@ export default function TimelineAndVarianceConsole() {
     {
       key: "status",
       header: "Status",
-      cell: (row: any) => (
-        <StatusBadge label={row.status || "Not Started"} tone={row.status === "Completed" ? "emerald" : row.status === "In Progress" ? "sky" : "slate"} />
-      ),
+      cell: (row: any) => {
+        const statusStr = row.status || "pending"; 
+        const label = statusStr === "completed" ? "Completed" : statusStr === "in_progress" ? "In Progress" : "Pending"; 
+        const tone = statusStr === "completed" ? "emerald" : statusStr === "in_progress" ? "sky" : "slate"; 
+        return <StatusBadge label={label} tone={tone} />;
+      },
     },
   ];
 
