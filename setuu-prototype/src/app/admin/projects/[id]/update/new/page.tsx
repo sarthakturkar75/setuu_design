@@ -1,332 +1,403 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { Button } from '@/components/ui/Button';
-import { FormField } from '@/components/ui/FormField';
-import { TextArea } from '@/components/ui/TextArea';
-import { MapPinIcon, CheckCircleIcon, RefreshCwIcon, EditIcon, PenIcon, TypeIcon, SquareIcon } from 'lucide-react';
+import React, { useState, useEffect, use, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { Button } from "@/components/ui/Button";
+import { useToast } from "@/contexts/ToastContext";
 import { createUpdate } from "@/app/actions/updateActions";
-import localforage from "localforage";
-import { useToast } from '@/contexts/ToastContext';
-import Link from 'next/link';
+import { createClient } from "@/lib/supabase/client";
+import {
+  MapPinIcon, SparklesIcon, XIcon, Image as ImageIcon,
+  Link2Icon, Loader2Icon, CompassIcon, CameraIcon,
+  Settings2Icon, MapIcon, ChevronLeftIcon
+} from "lucide-react";
 
-// Using a dynamic import or checking typeof window for fabric can help with SSR issues
-// We'll import fabric lazily when markup starts
-import * as fabric from "fabric";
-
-export default function UpdateCameraPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = React.use(params);
+export default function FieldUpdateLogger({ params }: { params: Promise<{ id: string }> }) {
+  const { id: projectId } = use(params);
+  const router = useRouter();
   const toast = useToast();
-  
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [stream, setStream] = useState<MediaStream | null>(null);
-  const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null);
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [weather, setWeather] = useState<any>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [caption, setCaption] = useState("");
+
+  // We instantiate supabase but do NOT put it in the useEffect dependency array to prevent infinite loops.
   const supabase = createClient();
 
-  // Markup state
-  const [isMarkupMode, setIsMarkupMode] = useState(false);
-  const [fabricCanvas, setFabricCanvas] = useState<any>(null); // Use any for loose fabric v6 typing
+  // Core Data State
+  const [caption, setCaption] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
+  const [milestoneId, setMilestoneId] = useState("");
+  const [locationName, setLocationName] = useState("");
+  const [weatherOverride, setWeatherOverride] = useState("");
 
+  // Telemetry State
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+  const [gpsStatus, setGpsStatus] = useState<"locating" | "locked" | "denied" | "idle">("idle");
+
+  // UI State
+  const [milestones, setMilestones] = useState<any[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+
+  // True In-Browser Camera State
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
+
+  const galleryInputRef = useRef<HTMLInputElement>(null);
+
+  // FIXED: Removed 'supabase' from dependency array to stop infinite toast spam
   useEffect(() => {
-    const startCamera = async () => {
-      try {
-        const mediaStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' }
-        });
-        setStream(mediaStream);
-        if (videoRef.current) {
-          videoRef.current.srcObject = mediaStream;
-        }
-      } catch (err) {
-        console.error("Error accessing camera:", err);
-      }
+    const initContext = async () => {
+      const { data } = await supabase.from("milestones").select("id, title").eq("project_id", projectId);
+      if (data) setMilestones(data);
     };
+    initContext();
+    captureLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId]);
 
-    startCamera();
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
-          .then(res => res.json())
-          .then(data => {
-            if (data.current_weather) {
-              setWeather({
-                temperature: data.current_weather.temperature,
-                windspeed: data.current_weather.windspeed,
-                weathercode: data.current_weather.weathercode
-              });
-            }
-          })
-          .catch(err => console.error("Weather fetch error:", err));
-      });
+  // Robust Native GPS Handling
+  const captureLocation = () => {
+    if (!navigator.geolocation) {
+      setGpsStatus("denied");
+      return;
     }
 
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-      if (fabricCanvas) {
-        fabricCanvas.dispose();
-      }
-    };
-  }, []);
-
-  const capturePhoto = () => {
-    if (!videoRef.current || !canvasRef.current) return;
-
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
-    ctx.fillRect(0, canvas.height - 60, canvas.width, 60);
-
-    ctx.fillStyle = "white";
-    ctx.font = "16px 'JetBrains Mono', monospace";
-    const timestamp = new Date().toLocaleString();
-    const locString = location ? `Lat: ${location.lat.toFixed(4)}, Lng: ${location.lng.toFixed(4)}` : "Location Unknown";
-    const weatherString = weather ? `Temp: ${weather.temperature}°C, Wind: ${weather.windspeed}km/h` : "Weather Unknown";
-    ctx.fillText(`Date: ${timestamp} | ${weatherString}`, 20, canvas.height - 35);
-    ctx.fillText(`GPS: ${locString}`, 20, canvas.height - 15);
-
-    setPhotoDataUrl(canvas.toDataURL("image/jpeg"));
-  };
-
-  const retakePhoto = () => {
-    setPhotoDataUrl(null);
-    setIsMarkupMode(false);
-    if (fabricCanvas) {
-      fabricCanvas.dispose();
-      setFabricCanvas(null);
-    }
-  };
-
-  const startMarkup = () => {
-    if (!canvasRef.current || !photoDataUrl) return;
-    setIsMarkupMode(true);
-
-    const fCanvas = new fabric.Canvas(canvasRef.current, {
-      isDrawingMode: true
-    });
-    fCanvas.freeDrawingBrush = new fabric.PencilBrush(fCanvas);
-    fCanvas.freeDrawingBrush.color = 'red';
-    fCanvas.freeDrawingBrush.width = 5;
-
-    fabric.FabricImage.fromURL(photoDataUrl).then((img: any) => {
-      fCanvas.backgroundImage = img;
-      if (img.width && img.height) {
-        const scale = Math.min((canvasRef.current?.parentElement?.clientWidth || 800) / img.width, 1);
-        fCanvas.setDimensions({ width: img.width * scale, height: img.height * scale });
-        img.scale(scale);
-      }
-      fCanvas.renderAll();
-    }).catch((e: any) => console.log('Fabric load error (handled by standard image):', e));
-
-    setFabricCanvas(fCanvas);
-  };
-
-  const addText = () => {
-    if (!fabricCanvas) return;
-    fabricCanvas.isDrawingMode = false;
-    const text = new fabric.IText('Annotate here', {
-      left: 50,
-      top: 50,
-      fill: 'yellow',
-      fontSize: 30,
-      fontFamily: 'Arial',
-      backgroundColor: 'rgba(0,0,0,0.5)'
-    });
-    fabricCanvas.add(text);
-    fabricCanvas.setActiveObject(text);
-    fabricCanvas.renderAll();
-  };
-
-  const addRect = () => {
-    if (!fabricCanvas) return;
-    fabricCanvas.isDrawingMode = false;
-    const rect = new fabric.Rect({
-      left: 100,
-      top: 100,
-      fill: 'transparent',
-      stroke: 'blue',
-      strokeWidth: 4,
-      width: 100,
-      height: 100
-    });
-    fabricCanvas.add(rect);
-    fabricCanvas.renderAll();
-  };
-
-  const enableDrawing = () => {
-    if (!fabricCanvas) return;
-    fabricCanvas.isDrawingMode = true;
-  };
-
-  if (isSubmitted) {
-    return (
-      <div className="p-6 max-w-[800px] mx-auto space-y-8 pt-24 text-center">
-        <CheckCircleIcon className="w-16 h-16 text-semantic-emerald mx-auto mb-4" />
-        <h2 className="text-2xl font-bold font-merriweather text-on-surface">Update Saved</h2>
-        <p className="text-on-surface-variant max-w-md mx-auto">Your watermarked photo has been securely logged to the timeline.</p>
-        <div className="pt-8 flex justify-center gap-4">
-          <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); setCaption(""); }}>Log Another Update</Button>
-          <Link href={`/admin/projects/${id}/update`}>
-            <Button variant="primary">Return to Feed</Button>
-          </Link>
-        </div>
-      </div>
+    setGpsStatus("locating");
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+        setGpsStatus("locked");
+      },
+      (error) => {
+        console.warn("GPS Access Denied or Failed:", error.message);
+        setGpsStatus("denied");
+        toast.warning("GPS blocked. You can enter the location manually.");
+      },
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
     );
-  }
+  };
+
+  // ==========================================
+  // TRUE IN-BROWSER CAMERA LOGIC
+  // ==========================================
+  const openCamera = async () => {
+    setIsCameraOpen(true);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" } // Prioritizes rear camera on mobile
+      });
+      setMediaStream(stream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      toast.error("Camera access denied or unavailable on this device.");
+      setIsCameraOpen(false);
+    }
+  };
+
+  const takePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], `capture_${Date.now()}.jpg`, { type: "image/jpeg" });
+            setFiles(prev => [...prev, file]);
+          }
+        }, 'image/jpeg', 0.8);
+      }
+      closeCamera();
+    }
+  };
+
+  const closeCamera = useCallback(() => {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(track => track.stop());
+    }
+    setIsCameraOpen(false);
+    setMediaStream(null);
+  }, [mediaStream]);
+
+  // Cleanup camera if user navigates away
+  useEffect(() => {
+    return () => { if (isCameraOpen) closeCamera(); };
+  }, [isCameraOpen, closeCamera]);
+
+  // ==========================================
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFiles(prev => [...prev, ...Array.from(e.target.files!)]);
+    }
+    e.target.value = '';
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async () => {
+    if (!caption.trim() && files.length === 0) {
+      toast.error("An update requires either a photo or a progress note.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append("project_id", projectId);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) formData.append("author_id", user.id);
+
+    formData.append("caption", caption.trim());
+    if (milestoneId) formData.append("milestone_id", milestoneId);
+
+    if (gpsStatus === "locked" && latitude && longitude) {
+      formData.append("latitude", latitude.toString());
+      formData.append("longitude", longitude.toString());
+    }
+
+    if (locationName.trim()) formData.append("location_name", locationName.trim());
+
+    if (weatherOverride.trim()) {
+      try {
+        JSON.parse(weatherOverride);
+        formData.append("weather_data", weatherOverride.trim());
+      } catch {
+        console.warn("Invalid weather JSON skipped.");
+      }
+    }
+
+    files.forEach(file => formData.append("files", file));
+
+    try {
+      toast.info("Syncing update to Setuu Cloud...");
+      const res = await createUpdate(formData);
+
+      if (res.success) {
+        if (res.safetyViolation) {
+          toast.warning("Logged! The AI Vision model flagged a safety issue for review.");
+        } else {
+          toast.success("Progress logged successfully!");
+        }
+        router.push(`/admin/projects/${projectId}/update`);
+      } else {
+        toast.error(res.error || "Failed to log update.");
+        setIsSubmitting(false);
+      }
+    } catch (error: any) {
+      toast.error("A critical error occurred while syncing.");
+    } finally {
+      // THE FIX: This guarantees the overlay closes immediately!
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div className="p-6 max-w-[800px] mx-auto space-y-6 pb-32">
-      <div>
-        <h2 className="text-2xl font-bold font-merriweather text-on-surface flex items-center gap-2">Live Progress Capture</h2>
-        <p className="text-on-surface-variant mt-1">Capture a watermarked photo to document site conditions.</p>
-      </div>
+    <div className="bg-surface-container-lowest min-h-[calc(100vh-64px)] relative pb-24">
 
-      <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-sm">
-        {!photoDataUrl ? (
-          <div className="relative bg-black aspect-[4/3] flex items-center justify-center">
-            <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
+      {/* FULL SCREEN CAMERA OVERLAY */}
+      {isCameraOpen && (
+        <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center animate-in fade-in">
+          <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
+          <canvas ref={canvasRef} className="hidden" />
 
-            <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/50 text-white px-3 py-1.5 rounded-full text-xs font-jetbrains-mono backdrop-blur-md">
-              <MapPinIcon className="w-3 h-3" />
-              {location ? `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}` : "Locating..."}
-            </div>
+          <div className="absolute top-6 left-6">
+            <button onClick={closeCamera} className="bg-white/20 p-3 rounded-full backdrop-blur text-white hover:bg-white/40">
+              <XIcon className="w-6 h-6" />
+            </button>
+          </div>
 
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-              <button onClick={capturePhoto} className="w-16 h-16 bg-white rounded-full border-4 border-outline-variant/50 hover:scale-105 transition-transform flex items-center justify-center">
-                <div className="w-12 h-12 border-2 border-black rounded-full" />
-              </button>
+          <div className="absolute bottom-12 left-0 right-0 flex justify-center">
+            <button onClick={takePhoto} className="w-20 h-20 bg-white/50 backdrop-blur rounded-full p-2 flex items-center justify-center border-4 border-white hover:bg-white transition-colors cursor-pointer shadow-xl">
+              <div className="w-full h-full bg-white rounded-full"></div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* CLEAN NATIVE APP HEADER */}
+      <div className="bg-surface border-b border-outline-variant px-4 py-4 flex items-center justify-between sticky top-0 z-20 shadow-sm">
+        <div className="flex items-center gap-3">
+          <button onClick={() => router.back()} className="p-2 -ml-2 rounded-full hover:bg-surface-variant/50 text-on-surface transition-colors">
+            <ChevronLeftIcon className="w-5 h-5" />
+          </button>
+          <div>
+            <h1 className="text-lg font-bold font-merriweather text-on-surface leading-tight">Field Update</h1>
+            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-semantic-indigo bg-semantic-indigo/10 px-2 py-0.5 rounded w-fit mt-0.5">
+              <SparklesIcon className="w-3 h-3" /> AI Analysis Active
             </div>
           </div>
-        ) : (
-          <div className="relative flex flex-col items-center bg-black min-h-[400px]">
-            {isMarkupMode && (
-              <div className="absolute top-4 left-4 z-30 flex flex-col gap-2 bg-black/60 p-2 rounded-lg backdrop-blur-sm border border-white/20">
-                <button type="button" onClick={enableDrawing} className="p-2 bg-surface text-on-surface rounded hover:bg-surface-variant" title="Draw"><PenIcon className="w-4 h-4 text-semantic-crimson" /></button>
-                <button type="button" onClick={addText} className="p-2 bg-surface text-on-surface rounded hover:bg-surface-variant" title="Add Text"><TypeIcon className="w-4 h-4 text-semantic-amber" /></button>
-                <button type="button" onClick={addRect} className="p-2 bg-surface text-on-surface rounded hover:bg-surface-variant" title="Add Box"><SquareIcon className="w-4 h-4 text-semantic-indigo" /></button>
-              </div>
-            )}
+        </div>
 
-            <div className={`relative ${!isMarkupMode ? "w-full h-full" : ""}`}>
-              {!isMarkupMode && <img src={photoDataUrl} alt="Captured" className="w-full h-full object-contain" />}
-              <canvas ref={canvasRef} className={!isMarkupMode ? "hidden" : "block"} />
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className={`p-2 rounded-full transition-colors ${showSettings ? 'bg-primary/10 text-primary' : 'text-on-surface-variant hover:bg-surface-variant/50'}`}
+        >
+          <Settings2Icon className="w-5 h-5" />
+        </button>
+      </div>
+
+      <div className="max-w-3xl mx-auto p-4 md:p-6 space-y-6">
+
+        {/* PRIMARY JOURNAL CARD */}
+        <div className="bg-surface border border-outline-variant rounded-2xl shadow-elevation-l1 overflow-hidden transition-all focus-within:border-primary/50 focus-within:shadow-elevation-l2">
+          <textarea
+            autoFocus
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            placeholder="What's the status on site today?"
+            className="w-full min-h-[160px] p-5 bg-transparent resize-none text-on-surface focus:outline-none placeholder:text-on-surface-variant/50 text-lg leading-relaxed"
+          />
+
+          {/* DYNAMIC MEDIA TRAY */}
+          {files.length > 0 && (
+            <div className="px-5 pb-4 flex gap-3 overflow-x-auto snap-x scrollbar-hide">
+              {files.map((file, idx) => (
+                <div key={idx} className="relative group shrink-0 w-28 h-28 bg-surface-container rounded-xl border border-outline-variant overflow-hidden snap-start shadow-sm">
+                  {file.type.startsWith('image/') ? (
+                    <img src={URL.createObjectURL(file)} alt="preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full text-xs font-mono text-on-surface-variant p-2 text-center bg-surface-variant/20">
+                      <div className="w-8 h-8 bg-surface rounded-full flex items-center justify-center mb-1 shadow-sm"><ImageIcon className="w-4 h-4" /></div>
+                      <span className="truncate w-full">{file.name}</span>
+                    </div>
+                  )}
+                  <button
+                    onClick={() => removeFile(idx)}
+                    className="absolute top-1.5 right-1.5 bg-black/60 text-white rounded-full p-1.5 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-semantic-crimson backdrop-blur-sm"
+                  >
+                    <XIcon className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* HARDWARE ACTION TOOLBAR */}
+          <div className="p-3 border-t border-outline-variant/30 bg-surface-variant/10 flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              {/* TRUE WEB RTC CAMERA BUTTON */}
+              <Button variant="secondary" onClick={openCamera} className="rounded-full shadow-none bg-surface border border-outline-variant hover:border-primary/50 text-on-surface">
+                <CameraIcon className="w-4 h-4 md:mr-2 text-primary" />
+                <span className="hidden md:inline">Take Photo</span>
+              </Button>
+
+              {/* GALLERY/FILES TRIGGER */}
+              <input type="file" multiple accept="image/*, video/*, application/pdf" className="hidden" ref={galleryInputRef} onChange={handleFileSelect} />
+              <Button variant="secondary" onClick={() => galleryInputRef.current?.click()} className="rounded-full shadow-none bg-surface border border-outline-variant hover:border-primary/50 text-on-surface px-3">
+                <ImageIcon className="w-4 h-4" />
+              </Button>
             </div>
 
-            <div className="absolute top-4 right-4 flex gap-2 z-20">
-              {!isMarkupMode && (
-                <Button variant="primary" size="sm" onClick={startMarkup} className="gap-2 shadow-lg">
-                  <EditIcon className="w-4 h-4" /> Markup
-                </Button>
-              )}
-              <Button variant="secondary" size="sm" onClick={retakePhoto} className="gap-2 bg-black/50 text-white border-0 hover:bg-black/70 shadow-lg">
-                <RefreshCwIcon className="w-4 h-4" /> Retake
-              </Button>
+            {/* GPS TELEMETRY BADGE */}
+            <div
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-semibold transition-colors cursor-pointer
+                                ${gpsStatus === 'locating' ? 'border-primary/30 bg-primary/5 text-primary' :
+                  gpsStatus === 'locked' ? 'border-semantic-emerald/30 bg-semantic-emerald/5 text-semantic-emerald' :
+                    'border-semantic-amber/30 bg-semantic-amber/5 text-semantic-amber'}`}
+              onClick={captureLocation}
+              title="Tap to refresh GPS"
+            >
+              {gpsStatus === 'locating' ? <Loader2Icon className="w-3.5 h-3.5 animate-spin" /> :
+                gpsStatus === 'locked' ? <CompassIcon className="w-3.5 h-3.5" /> :
+                  <MapIcon className="w-3.5 h-3.5" />}
+              {gpsStatus === 'locating' ? 'Locating...' :
+                gpsStatus === 'locked' ? 'GPS Active' : 'No GPS'}
+            </div>
+          </div>
+        </div>
+
+        {/* ADVANCED SETTINGS CARD (Expandable) */}
+        {showSettings && (
+          <div className="bg-surface border border-outline-variant rounded-2xl p-5 shadow-elevation-l1 animate-in slide-in-from-top-4 fade-in duration-200">
+            <h3 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-4 flex items-center gap-2">
+              <Settings2Icon className="w-4 h-4 text-primary" /> Update Metadata
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">Map to Schedule Phase</label>
+                <div className="relative">
+                  <Link2Icon className="w-4 h-4 absolute left-3 top-3 text-on-surface-variant/50" />
+                  <select
+                    value={milestoneId}
+                    onChange={(e) => setMilestoneId(e.target.value)}
+                    className="w-full pl-9 p-2.5 border border-outline-variant rounded-lg bg-surface-container-lowest text-sm text-on-surface appearance-none focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  >
+                    <option value="">General Project Update</option>
+                    {milestones.map(m => (
+                      <option key={m.id} value={m.id}>{m.title}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">Area / Location Label</label>
+                <div className="relative">
+                  <MapPinIcon className="w-4 h-4 absolute left-3 top-3 text-on-surface-variant/50" />
+                  <input
+                    type="text"
+                    value={locationName}
+                    onChange={(e) => setLocationName(e.target.value)}
+                    className="w-full pl-9 p-2.5 border border-outline-variant rounded-lg bg-surface-container-lowest text-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    placeholder="e.g., Boiler Room Level 2"
+                  />
+                </div>
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-xs font-semibold text-on-surface-variant mb-1.5">Weather JSON Override (Advanced)</label>
+                <textarea
+                  value={weatherOverride}
+                  onChange={(e) => setWeatherOverride(e.target.value)}
+                  className="w-full min-h-[80px] p-3 border border-outline-variant rounded-lg bg-surface-container-lowest font-mono text-xs text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-y"
+                  placeholder='{"temperature": 25, "conditions": "Sunny"}'
+                />
+              </div>
             </div>
           </div>
         )}
       </div>
 
-      {photoDataUrl && (
-        <form action={async (formData) => {
-          setIsSubmitting(true);
-          try {
-            const { data: { user }, error: authError } = await supabase.auth.getUser();
-            if (authError || !user) throw new Error("User not authenticated");
+      {/* STICKY FLOATING ACTION BAR FOR MOBILE-FRIENDLY SUBMISSION */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-surface/80 backdrop-blur-xl border-t border-outline-variant shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex justify-end items-center z-30 px-4 md:px-6">
+        <div className="max-w-3xl w-full mx-auto flex justify-between items-center gap-4">
+          <span className="text-xs text-on-surface-variant hidden md:block">
+            Ready to sync? Media will be processed by AI.
+          </span>
+          <Button
+            variant="primary"
+            size="lg"
+            onClick={handleSubmit}
+            disabled={isSubmitting || (!caption && files.length === 0)}
+            className="w-full md:w-auto shadow-elevation-l2 text-base font-bold py-6 px-12 rounded-xl"
+          >
+            {isSubmitting ? <Loader2Icon className="w-5 h-5 mr-2 animate-spin" /> : null}
+            {isSubmitting ? "Syncing..." : "Submit Update"}
+          </Button>
+        </div>
+      </div>
 
-            formData.append('project_id', id);
-            formData.append('author_id', user.id);
-            if (location) {
-              formData.append('latitude', location.lat.toString());
-              formData.append('longitude', location.lng.toString());
-            }
-            if (weather) {
-              formData.append('weather_data', JSON.stringify(weather));
-            }
-
-            const idempotencyKey = `update-${Date.now()}`;
-            formData.append('idempotency_key', idempotencyKey);
-
-            const finalDataUrl = fabricCanvas ? fabricCanvas.toDataURL({ format: 'jpeg', quality: 0.8 }) : photoDataUrl;
-
-            if (!navigator.onLine) {
-              await localforage.setItem(idempotencyKey, {
-                projectId: id,
-                authorId: user.id,
-                caption: formData.get('caption'),
-                latitude: location?.lat,
-                longitude: location?.lng,
-                weatherData: weather,
-                photoDataUrl: finalDataUrl,
-                idempotencyKey
-              });
-
-              if ('serviceWorker' in navigator && 'SyncManager' in window) {
-                const reg = await navigator.serviceWorker.ready;
-                try {
-                  await (reg as any).sync.register('sync-updates');
-                } catch (e) { }
-              }
-
-              toast.success("Saved offline. Will sync when connected.");
-              setIsSubmitted(true);
-              setIsSubmitting(false);
-              return;
-            }
-
-            const response = await fetch(finalDataUrl);
-            const blob = await response.blob();
-            const file = new File([blob], `update-${Date.now()}.jpg`, { type: blob.type });
-
-            formData.append('files', file);
-
-            const res = await createUpdate(formData);
-            if (res.success) {
-              if (res.safetyViolation) {
-                toast.error("⚠️ Safety Violation Detected and Logged");
-              }
-              setIsSubmitted(true);
-            } else {
-              toast.error("Error: " + res.error);
-            }
-          } catch (error: any) {
-            toast.error("Error: " + error.message);
-          } finally {
-            setIsSubmitting(false);
-          }
-        }} className="space-y-6 bg-surface-container border border-outline-variant rounded-xl p-6">
-          <FormField label="Update Description">
-            <TextArea
-              name="caption"
-              placeholder="Describe what was completed or what the photo demonstrates..."
-              rows={4}
-            />
-          </FormField>
-          <div className="flex justify-end gap-3">
-            <Button variant="ghost" type="button" onClick={retakePhoto}>Cancel</Button>
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Uploading..." : "Save Progress Update"}
-            </Button>
+      {/* Submitting Full Screen Overlay */}
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-surface/50 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-surface p-6 rounded-2xl shadow-elevation-l3 flex flex-col items-center gap-4 border border-outline-variant animate-in zoom-in">
+            <Loader2Icon className="w-10 h-10 text-primary animate-spin" />
+            <h3 className="font-bold text-on-surface">Uploading to Setuu</h3>
+            <p className="text-sm text-on-surface-variant text-center max-w-[200px]">Running safety protocols and securely storing media...</p>
           </div>
-        </form>
+        </div>
       )}
     </div>
   );

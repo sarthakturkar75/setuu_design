@@ -1,15 +1,14 @@
-# 26-08-2026
-
-Last login: Wed Aug 26 10:32:58 on ttys003
 > tree -I "node_modules|.git|.next"
 .
 ├── AGENTS.md
 ├── CLAUDE.md
+├── fix_milestone_insert.py
 ├── next-env.d.ts
 ├── next.config.mjs
 ├── openapi.json
 ├── package-lock.json
 ├── package.json
+├── Planning & Tracking Sheet.xlsx
 ├── postcss.config.mjs
 ├── public
 │   └── sw.js
@@ -30,6 +29,8 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   ├── changeRequestActions.ts
 │   │   │   ├── clientActions.ts
 │   │   │   ├── communicationActions.ts
+│   │   │   ├── customFieldsActions.ts
+│   │   │   ├── dailyLogActions.ts
 │   │   │   ├── dashboardActions.ts
 │   │   │   ├── drawingActions.ts
 │   │   │   ├── emergencyActions.ts
@@ -53,6 +54,8 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   ├── reportActions.ts
 │   │   │   ├── requirementActions.ts
 │   │   │   ├── resourceActions.ts
+│   │   │   ├── retentionActions.ts
+│   │   │   ├── roleSettingsActions.ts
 │   │   │   ├── supportActions.ts
 │   │   │   ├── teamActions.ts
 │   │   │   ├── timelineActions.ts
@@ -113,6 +116,8 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── config
 │   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── custom-fields
+│   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── drawings
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── flags
@@ -137,11 +142,19 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── resources
 │   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── retention
+│   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── team
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   ├── timeline
 │   │   │   │   │   │   └── page.tsx
 │   │   │   │   │   └── update
+│   │   │   │   │       ├── ar-view
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── daily-logs
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── new
+│   │   │   │   │       │   └── page.tsx
 │   │   │   │   │       └── page.tsx
 │   │   │   │   ├── new
 │   │   │   │   │   └── page.tsx
@@ -194,6 +207,8 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   │   └── translate
 │   │   │   │       └── route.ts
 │   │   │   ├── cron
+│   │   │   │   ├── retention-runner
+│   │   │   │   │   └── route.ts
 │   │   │   │   └── weather-check
 │   │   │   │       └── route.ts
 │   │   │   ├── debug
@@ -215,6 +230,9 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   │   │   └── route.ts
 │   │   │   │   └── export
 │   │   │   │       └── route.ts
+│   │   │   ├── video
+│   │   │   │   └── timelapse
+│   │   │   │       └── route.ts
 │   │   │   └── webhooks
 │   │   │       ├── bim-clash
 │   │   │       │   └── route.ts
@@ -233,9 +251,10 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │   ├── page.tsx
 │   │   │   └── projects
 │   │   │       └── [id]
-│   │   │           └── collaboration
-│   │   │               ├── MeetingMinutesWrapper.tsx
-│   │   │               └── page.tsx
+│   │   │           ├── collaboration
+│   │   │           │   ├── MeetingMinutesWrapper.tsx
+│   │   │           │   └── page.tsx
+│   │   │           └── page.tsx
 │   │   ├── engineer
 │   │   │   ├── [...slug]
 │   │   │   │   └── page.tsx
@@ -250,6 +269,7 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   │           │   └── page.tsx
 │   │   │           ├── handover
 │   │   │           │   └── page.tsx
+│   │   │           ├── page.tsx
 │   │   │           ├── requirements
 │   │   │           │   └── page.tsx
 │   │   │           ├── team
@@ -395,13 +415,15 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │       ├── page.tsx
 │   │       └── projects
 │   │           └── [id]
-│   │               └── collaboration
-│   │                   ├── MeetingMinutesWrapper.tsx
-│   │                   └── page.tsx
+│   │               ├── collaboration
+│   │               │   ├── MeetingMinutesWrapper.tsx
+│   │               │   └── page.tsx
+│   │               └── page.tsx
 │   ├── components
 │   │   ├── navigation
 │   │   │   ├── DashboardShell.tsx
 │   │   │   ├── LogoutButton.tsx
+│   │   │   ├── OfflineSyncManager.tsx
 │   │   │   ├── roles
 │   │   │   │   ├── AdminSidebar.tsx
 │   │   │   │   ├── ClientSidebar.tsx
@@ -438,7 +460,10 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │       ├── ConfirmDialog.tsx
 │   │       ├── ContingencyBurnChart.tsx
 │   │       ├── CreateIssueModal.tsx
+│   │       ├── CreateMilestoneModal.tsx
+│   │       ├── CreateRequirementModal.tsx
 │   │       ├── CreateResourceModal.tsx
+│   │       ├── CreateTaskModal.tsx
 │   │       ├── DashboardWidgets.tsx
 │   │       ├── DataTable.tsx
 │   │       ├── DatePicker.tsx
@@ -448,6 +473,7 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │       ├── Drawer.tsx
 │   │       ├── DrawingDisciplineToggle.tsx
 │   │       ├── DrawingSettingsModal.tsx
+│   │       ├── DynamicCustomFields.tsx
 │   │       ├── EditPermissionsModal.tsx
 │   │       ├── EditPersonnelModal.tsx
 │   │       ├── EmptyState.tsx
@@ -514,6 +540,7 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   ├── lib
 │   │   ├── config
 │   │   │   └── navigation.tsx
+│   │   ├── safetyScanner.ts
 │   │   ├── supabase
 │   │   │   ├── admin.ts
 │   │   │   ├── client.ts
@@ -533,14 +560,17 @@ Last login: Wed Aug 26 10:32:58 on ttys003
 │   │   ├── 20260824103645_communications.sql
 │   │   ├── 20260824120000_collaboration_rls.sql
 │   │   ├── 20260824173000_module9_team_infrastructure.sql
-│   │   └── 20260826120000_evm_srs_upgrade.sql
+│   │   ├── 20260826120000_evm_srs_upgrade.sql
+│   │   ├── 20260827110000_module12_updates.sql
+│   │   └── 20260827120000_module13_config.sql
 │   ├── module2_timeline_upgrade.sql
 │   └── seed.sql
 ├── tailwind.config.ts
 ├── tsconfig.json
-└── tsconfig.tsbuildinfo
+├── tsconfig.tsbuildinfo
+└── update_milestones_page.py
 
-189 directories, 348 files
+197 directories, 373 files
 
-╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main                                                         ok  base py  0.1.0 pkg  2.67 cpu  97% disk  2.76G ram  80% battery  12:27:26 PM -╮
+╭- 🤖  ~/Documents/Praimo/setuu/stitch/setuu_design/setuu-prototype  main +3 ?3                                                   ok  base py  0.1.0 pkg  2.98 cpu  99% disk  2.92G ram  80% battery  02:41:52 PM -╮
 ╰->                                                                                                                                                                                                               -╯

@@ -80,7 +80,7 @@ export async function generateDailyReport(projectId: string, targetDate: string)
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama-3.1-70b-versatile",
+        model: "qwen/qwen3.8-27b",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.3,
         max_tokens: 1500
@@ -109,7 +109,7 @@ export async function generateDailyReport(projectId: string, targetDate: string)
       .single();
 
     if (error) throw error;
-    
+
     return savedLog;
   } catch (error) {
     console.error("AI Generation failed:", error);
@@ -124,7 +124,7 @@ export async function getDailyLogs(projectId: string) {
     .select("*")
     .eq("project_id", projectId)
     .order("date", { ascending: false });
-    
+
   if (error) throw error;
   return data;
 }

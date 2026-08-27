@@ -118,6 +118,7 @@
 | `approval_status` | `text` | Nullable |
 | `weather_data` | `jsonb` | Nullable |
 | `ai_analysis_flags` | `jsonb` | Nullable |
+| `idempotency_key` | `text` | Nullable Unique |
 
 ## Table `media_attachments`
 
@@ -228,6 +229,7 @@
 | `current_stock` | `numeric` | Nullable |
 | `reorder_threshold` | `numeric` | Nullable |
 | `unit_cost` | `numeric` | Nullable |
+| `custom_attributes` | `jsonb` | Nullable |
 
 ## Table `project_issues`
 
@@ -257,6 +259,7 @@
 | `custom_data` | `jsonb` | Nullable |
 | `item_type` | `varchar` | Nullable |
 | `closure_remarks` | `text` | Nullable |
+| `custom_attributes` | `jsonb` | Nullable |
 
 ## Table `change_requests`
 
@@ -581,6 +584,7 @@
 | `remarks` | `text` | Nullable |
 | `delay_days` | `int4` | Nullable |
 | `blockers` | `_text` | Nullable |
+| `custom_attributes` | `jsonb` | Nullable |
 
 ## Table `employee_timesheets`
 
@@ -1020,17 +1024,6 @@
 | `role_name` | `text` | Primary |
 | `default_module_path` | `text` |  |
 
-## Table `custom_fields_schema`
-
-### Columns
-
-| Name | Type | Constraints |
-|------|------|-------------|
-| `id` | `uuid` | Primary |
-| `entity_type` | `text` |  |
-| `field_name` | `text` |  |
-| `field_type` | `text` |  |
-
 ## Table `data_retention_policies`
 
 ### Columns
@@ -1213,6 +1206,88 @@
 | `remarks` | `text` | Nullable |
 | `created_at` | `timestamptz` | Nullable |
 
+## Table `daily_logs`
+
+### Columns
+
+| Name | Type | Constraints |
+| ------ | ------ | ------------- |
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` | |
+| `date` | `date` | |
+| `weather_summary_json` | `jsonb` | Nullable |
+| `labor_hours_total` | `numeric` | Nullable |
+| `ai_generated_report` | `text` | Nullable |
+| `created_by` | `uuid` | |
+| `created_at` | `timestamptz` | Nullable |
+| `updated_at` | `timestamptz` | Nullable |
+
+## Table `time_lapse_videos`
+
+### Columns
+
+| Name | Type | Constraints |
+| ------ | ------ | ------------- |
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` | |
+| `video_url` | `text` | |
+| `start_date` | `date` | |
+| `end_date` | `date` | |
+| `created_by` | `uuid` | |
+| `created_at` | `timestamptz` | Nullable |
+
+## Table `project_module_config`
+
+### Columns
+
+| Name | Type | Constraints |
+| ------ | ------ | ------------- |
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` | |
+| `module_id` | `text` | |
+| `is_enabled` | `bool` | Nullable |
+| `custom_name` | `text` | Nullable |
+| `created_at` | `timestamptz` | Nullable |
+
+## Table `project_role_settings`
+
+### Columns
+
+| Name | Type | Constraints |
+| ------ | ------ | ------------- |
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` | |
+| `role` | `text` | |
+| `default_landing_page` | `text` | |
+| `created_at` | `timestamptz` | Nullable |
+
+## Table `custom_fields_schema`
+
+### Columns
+
+| Name | Type | Constraints |
+| ------ | ------ | ------------- |
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` | |
+| `entity_type` | `text` | |
+| `field_name` | `text` | |
+| `field_type` | `text` | |
+| `is_required` | `bool` | Nullable |
+| `created_at` | `timestamptz` | Nullable |
+
+## Table `project_retention_policies`
+
+### Columns
+
+| Name | Type | Constraints |
+|------|------|-------------|
+| `id` | `uuid` | Primary |
+| `project_id` | `uuid` |  |
+| `entity_type` | `text` |  |
+| `retain_days` | `int4` |  |
+| `action` | `text` |  |
+| `created_at` | `timestamptz` |  Nullable |
+
 ## Custom Types / Enums
 
 ### `project_type`
@@ -1385,14 +1460,14 @@
 | `PMs and Admins can insert project_resources` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
 | `Users can view project_resources for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_resources.project_id)))` | — |
 
-### `project_issues`
+### `project_materials`
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
 | -------- | --------- | ------- | -------- | ------- | ------------ |
-| `Admins/PMs can update issues` | UPDATE | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['admin'::text, 'pm'::text, 'super_admin'::text])))))` | — |
-| `Creators and Admins can modify project_issues` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
-| `PMs and Admins can insert project_issues` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
-| `Users can view project_issues for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_issues.project_id)))` | — |
+| `Creators and Admins can modify project_materials` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
+| `PMs and Admins can insert project_materials` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
+| `Users can view project_materials for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_materials.project_id)))` | — |
+| `Vendors can manage assigned materials` | ALL | public | PERMISSIVE | `(vendor_id = auth.uid())` | — |
 
 ### `client_approvals`
 
@@ -1411,14 +1486,14 @@
 | `PMs and Admins can insert change_requests` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
 | `Users can view change_requests for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = change_requests.project_id)))` | — |
 
-### `project_materials`
+### `project_issues`
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
 | -------- | --------- | ------- | -------- | ------- | ------------ |
-| `Creators and Admins can modify project_materials` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
-| `PMs and Admins can insert project_materials` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
-| `Users can view project_materials for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_materials.project_id)))` | — |
-| `Vendors can manage assigned materials` | ALL | public | PERMISSIVE | `(vendor_id = auth.uid())` | — |
+| `Admins/PMs can update issues` | UPDATE | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['admin'::text, 'pm'::text, 'super_admin'::text])))))` | — |
+| `Creators and Admins can modify project_issues` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
+| `PMs and Admins can insert project_issues` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
+| `Users can view project_issues for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_issues.project_id)))` | — |
 
 ### `lessons_learned`
 
@@ -1446,17 +1521,6 @@
 | `PMs and Admins can insert client_meetings` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
 | `Users can view client_meetings for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = client_meetings.project_id)))` | — |
 
-### `tasks`
-
-| Policy | Command | Roles | Action | USING | WITH CHECK |
-| -------- | --------- | ------- | -------- | ------- | ------------ |
-| `PMs and Admins have full access to tasks` | ALL | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text])))))` | — |
-| `PMs can manage tasks` | ALL | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects p   WHERE ((p.id = tasks.project_id) AND ((p.assigned_pm_id = auth.uid()) OR (( SELECT user_actor.role            FROM user_actor           WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['admin'::text, 'super_admin'::text]))))))` | — |
-| `Users can view tasks` | SELECT | public | PERMISSIVE | `((assignee_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM projects p   WHERE ((p.id = tasks.project_id) AND ((p.assigned_pm_id = auth.uid()) OR (( SELECT user_actor.role            FROM user_actor           WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['admin'::text, 'super_admin'::text])))))))` | — |
-| `Vendors can only update their assigned tasks` | UPDATE | public | PERMISSIVE | `(assignee_id = auth.uid())` | `(assignee_id = auth.uid())` |
-| `Vendors can update assigned task status` | UPDATE | public | PERMISSIVE | `(assignee_id = auth.uid())` | — |
-| `Vendors can view project tasks` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM project_vendors pv   WHERE ((pv.project_id = tasks.project_id) AND (pv.vendor_id = auth.uid()))))` | — |
-
 ### `user_billing_rates`
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
@@ -1476,6 +1540,17 @@
 |--------|---------|-------|--------|-------|------------|
 | `Admins have full access to muster_events` | ALL | public | PERMISSIVE | `is_admin()` | — |
 | `Users can view muster_events for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = muster_events.project_id)))` | — |
+
+### `tasks`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `PMs and Admins have full access to tasks` | ALL | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text])))))` | — |
+| `PMs can manage tasks` | ALL | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects p   WHERE ((p.id = tasks.project_id) AND ((p.assigned_pm_id = auth.uid()) OR (( SELECT user_actor.role            FROM user_actor           WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['admin'::text, 'super_admin'::text]))))))` | — |
+| `Users can view tasks` | SELECT | public | PERMISSIVE | `((assignee_id = auth.uid()) OR (EXISTS ( SELECT 1    FROM projects p   WHERE ((p.id = tasks.project_id) AND ((p.assigned_pm_id = auth.uid()) OR (( SELECT user_actor.role            FROM user_actor           WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['admin'::text, 'super_admin'::text])))))))` | — |
+| `Vendors can only update their assigned tasks` | UPDATE | public | PERMISSIVE | `(assignee_id = auth.uid())` | `(assignee_id = auth.uid())` |
+| `Vendors can update assigned task status` | UPDATE | public | PERMISSIVE | `(assignee_id = auth.uid())` | — |
+| `Vendors can view project tasks` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM project_vendors pv   WHERE ((pv.project_id = tasks.project_id) AND (pv.vendor_id = auth.uid()))))` | — |
 
 ### `audit_log`
 
@@ -1517,16 +1592,6 @@
 | `Admins can manage project config` | ALL | public | PERMISSIVE | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text)` | — |
 | `Users can view config for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_config.project_id)))` | — |
 
-### `updates`
-
-| Policy | Command | Roles | Action | USING | WITH CHECK |
-| -------- | --------- | ------- | -------- | ------- | ------------ |
-| `Authors and Admins can update` | UPDATE | public | PERMISSIVE | `((auth.uid() = author_id) OR is_admin())` | — |
-| `Employees can create updates` | INSERT | public | PERMISSIVE | — | `((auth.uid() = author_id) AND is_employee())` |
-| `PMs can create updates for assigned projects` | INSERT | public | PERMISSIVE | — | `((auth.uid() = author_id) AND (EXISTS ( SELECT 1    FROM projects   WHERE ((projects.id = updates.project_id) AND (projects.assigned_pm_id = auth.uid())))))` |
-| `Users can view updates for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = updates.project_id)))` | — |
-| `Vendors can manage own updates` | ALL | public | PERMISSIVE | `((author_id = auth.uid()) AND is_vendor())` | — |
-
 ### `drawing_versions`
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
@@ -1563,6 +1628,16 @@
 | `Allow anon and authenticated to read share links` | SELECT | public | PERMISSIVE | `true` | — |
 | `Allow authenticated users to create share links` | INSERT | authenticated | PERMISSIVE | — | `true` |
 | `Users can view public_shares for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = public_shares.project_id)))` | — |
+
+### `updates`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `Authors and Admins can update` | UPDATE | public | PERMISSIVE | `((auth.uid() = author_id) OR is_admin())` | — |
+| `Employees can create updates` | INSERT | public | PERMISSIVE | — | `((auth.uid() = author_id) AND is_employee())` |
+| `PMs can create updates for assigned projects` | INSERT | public | PERMISSIVE | — | `((auth.uid() = author_id) AND (EXISTS ( SELECT 1    FROM projects   WHERE ((projects.id = updates.project_id) AND (projects.assigned_pm_id = auth.uid())))))` |
+| `Users can view updates for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = updates.project_id)))` | — |
+| `Vendors can manage own updates` | ALL | public | PERMISSIVE | `((author_id = auth.uid()) AND is_vendor())` | — |
 
 ### `milestone_checklist_items`
 
@@ -1682,12 +1757,6 @@
 | `Admins have full access to video_exports` | ALL | public | PERMISSIVE | `is_admin()` | — |
 | `Users can view video_exports for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = video_exports.project_id)))` | — |
 
-### `custom_fields_schema`
-
-| Policy | Command | Roles | Action | USING | WITH CHECK |
-|--------|---------|-------|--------|-------|------------|
-| `Admins have full access to custom_fields_schema` | ALL | public | PERMISSIVE | `is_admin()` | — |
-
 ### `drawing_pins`
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
@@ -1699,6 +1768,34 @@
 | Policy | Command | Roles | Action | USING | WITH CHECK |
 |--------|---------|-------|--------|-------|------------|
 | `Admins have full access to data_retention_policies` | ALL | public | PERMISSIVE | `is_admin()` | — |
+
+### `project_module_config`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can manage module config` | ALL | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = ANY (ARRAY['admin'::text, 'pm'::text]))))))` | — |
+| `Anyone assigned can view module config` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM project_granular_permissions pgp   WHERE ((pgp.project_id = project_module_config.project_id) AND (pgp.user_id = auth.uid())))))` | — |
+
+### `project_role_settings`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can manage role settings` | ALL | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = ANY (ARRAY['admin'::text, 'pm'::text]))))))` | — |
+| `Anyone assigned can view role settings` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM project_granular_permissions pgp   WHERE ((pgp.project_id = project_role_settings.project_id) AND (pgp.user_id = auth.uid())))))` | — |
+
+### `custom_fields_schema`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can manage custom fields` | ALL | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = ANY (ARRAY['admin'::text, 'pm'::text]))))))` | — |
+| `Anyone assigned can view custom fields` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM project_granular_permissions pgp   WHERE ((pgp.project_id = custom_fields_schema.project_id) AND (pgp.user_id = auth.uid())))))` | — |
+
+### `project_retention_policies`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+|--------|---------|-------|--------|-------|------------|
+| `Admins can manage retention policies` | ALL | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = ANY (ARRAY['admin'::text, 'pm'::text]))))))` | — |
+| `Anyone assigned can view retention policies` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM project_granular_permissions pgp   WHERE ((pgp.project_id = project_retention_policies.project_id) AND (pgp.user_id = auth.uid())))))` | — |
 
 ### `project_communications`
 
@@ -1748,3 +1845,21 @@
 | `PMs and Admins can insert requirements` | INSERT | public | PERMISSIVE | — | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text])))))` |
 | `PMs, Admins, and Responsibles can update requirements` | UPDATE | public | PERMISSIVE | `((auth.uid() = responsible_id) OR (EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['pm'::text, 'admin'::text, 'superadmin'::text]))))))` | — |
 | `Users can view requirements for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_requirements.project_id)))` | — |
+
+### `daily_logs`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `Internal staff insert daily logs` | INSERT | public | PERMISSIVE | — | `(auth.uid() = created_by)` |
+| `Internal staff view daily logs` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR ((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = ANY (ARRAY['admin'::text, 'pm'::text, 'engineer'::text]))))) AND (EXISTS ( SELECT 1    FROM project_granular_permissions pgp   WHERE ((pgp.project_id = daily_logs.project_id) AND (pgp.user_id = auth.uid()))))))` | — |
+| `Users can insert daily logs` | INSERT | public | PERMISSIVE | — | `(auth.uid() = created_by)` |
+| `Users can view daily logs for their projects` | SELECT | public | PERMISSIVE | `true` | — |
+
+### `time_lapse_videos`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `Assigned personnel view time lapses` | SELECT | public | PERMISSIVE | `((EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = 'superadmin'::text)))) OR (EXISTS ( SELECT 1    FROM project_granular_permissions pgp   WHERE ((pgp.project_id = time_lapse_videos.project_id) AND (pgp.user_id = auth.uid())))))` | — |
+| `Management insert time lapses` | INSERT | public | PERMISSIVE | — | `((auth.uid() = created_by) AND (EXISTS ( SELECT 1    FROM user_actor ua   WHERE ((ua.id = auth.uid()) AND (ua.role = ANY (ARRAY['superadmin'::text, 'admin'::text, 'pm'::text]))))))` |
+| `Users can insert time lapses` | INSERT | public | PERMISSIVE | — | `(auth.uid() = created_by)` |
+| `Users can view time lapses for their projects` | SELECT | public | PERMISSIVE | `true` | — |

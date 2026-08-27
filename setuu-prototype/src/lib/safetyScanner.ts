@@ -8,7 +8,7 @@ export async function scanForSafetyViolations(projectId: string, authorId: strin
   }
 
   const base64Image = imageBuffer.toString('base64');
-  
+
   const prompt = `Analyze this construction site photo. Output a raw JSON object only.
 {
   "has_workers": boolean,
@@ -24,7 +24,7 @@ export async function scanForSafetyViolations(projectId: string, authorId: strin
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama-3.2-11b-vision-preview",
+        model: "qwen/qwen3.8-27b",
         messages: [
           {
             role: "user",
@@ -46,14 +46,14 @@ export async function scanForSafetyViolations(projectId: string, authorId: strin
 
     const data = await response.json();
     const content = data.choices[0].message.content.trim();
-    
+
     // Safely parse JSON
     const jsonStr = content.substring(content.indexOf('{'), content.lastIndexOf('}') + 1);
     const result = JSON.parse(jsonStr);
 
     if (result.has_workers && result.missing_ppe) {
       const supabase = await createClient();
-      
+
       // Create a safety issue automatically
       await supabase.from("project_issues").insert({
         project_id: projectId,
@@ -65,7 +65,7 @@ export async function scanForSafetyViolations(projectId: string, authorId: strin
         created_by: authorId,
         sla_deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24h SLA
       });
-      
+
       // Update the update record with AI flags
       await supabase.from("updates").update({
         ai_analysis_flags: result

@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
     const openai = new OpenAI();
     const completion = await openai.chat.completions.create({
-      model: "qwen/qwen3.6-27b",
+      model: "qwen/qwen3.8-27b",
       response_format: { type: "json_object" },
       messages: [
         {

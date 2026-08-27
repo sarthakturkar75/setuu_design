@@ -53,7 +53,7 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
 
   const handleGenerateTimelapse = async () => {
     setIsGenerating(true);
-    
+
     try {
       const res = await fetch('/api/video/timelapse', {
         method: 'POST',
@@ -62,14 +62,14 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
       });
       const result = await res.json();
       if (result.success) {
-        
+
         toast.success("Time-lapse generated!");
         window.open(result.data.video_url, '_blank');
       } else {
         throw new Error(result.error);
       }
     } catch (error: any) {
-      
+
       toast.error("Generation failed: " + error.message);
     } finally {
       setIsGenerating(false);
@@ -93,7 +93,7 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
               <FileTextIcon className="w-4 h-4 mr-2 text-primary" /> Daily Logs
             </Button>
           </Link>
-                    <Link href={`/admin/projects/${id}/update/ar-view`}>
+          <Link href={`/admin/projects/${id}/update/ar-view`}>
             <Button variant="secondary" className="border-semantic-emerald/30 text-semantic-emerald hover:bg-semantic-emerald/10">
               <LayersIcon className="w-4 h-4 mr-2" /> AR Overlay
             </Button>
@@ -119,7 +119,7 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
           ))
         ) : updates.length === 0 ? (
           <div className="col-span-full flex justify-center py-12">
-            <EmptyState 
+            <EmptyState
               title="No Updates Yet"
               message="The site feed is empty. Be the first to log a photo or field update."
               icon={<VideoIcon className="w-12 h-12 opacity-20" />}
@@ -141,7 +141,7 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
                 ) : (
                   <div className="flex items-center justify-center h-full text-on-surface-variant bg-surface-container-low">No Image Attachment</div>
                 )}
-                
+
                 {/* Status and Safety Overlays */}
                 <div className="absolute top-3 left-3 flex flex-col gap-2">
                   {update.ai_analysis_flags?.missing_ppe && (
@@ -150,9 +150,9 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
                     </div>
                   )}
                   {update.approval_status === "Pending" && (
-                     <div className="bg-semantic-amber/90 backdrop-blur-sm text-black text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm font-bold flex items-center shadow-lg">
-                       <ClockIcon className="w-3 h-3 mr-1" /> Pending Review
-                     </div>
+                    <div className="bg-semantic-amber/90 backdrop-blur-sm text-black text-[10px] uppercase tracking-wider px-2 py-1 rounded-sm font-bold flex items-center shadow-lg">
+                      <ClockIcon className="w-3 h-3 mr-1" /> Pending Review
+                    </div>
                   )}
                 </div>
 
@@ -166,15 +166,15 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
 
               <div className="p-4 flex-1 flex flex-col">
                 <p className="font-medium text-on-surface line-clamp-2 mb-3 flex-1">{update.caption || "No caption provided."}</p>
-                
+
                 <div className="flex items-center justify-between mt-auto pt-3 border-t border-outline-variant/30">
                   <div className="flex items-center gap-2">
                     {update.user_actor?.avatar_url ? (
-                       <img src={update.user_actor.avatar_url} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-outline-variant" />
+                      <img src={update.user_actor.avatar_url} alt="Avatar" className="w-6 h-6 rounded-full object-cover border border-outline-variant" />
                     ) : (
-                       <div className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">
-                         {update.user_actor?.display_name?.charAt(0) || 'U'}
-                       </div>
+                      <div className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">
+                        {update.user_actor?.display_name?.charAt(0) || 'U'}
+                      </div>
                     )}
                     <span className="text-xs font-semibold text-on-surface-variant truncate max-w-[100px]">
                       {update.user_actor?.display_name || "Unknown"}
