@@ -317,6 +317,8 @@
 | `final_authority` | `jsonb` | Nullable |
 | `attached_documents` | `jsonb` | Nullable |
 | `approval_timeline` | `jsonb` | Nullable |
+| `planned_submission_date` | `timestamptz` | Nullable |
+| `revision_number` | `varchar` | Nullable |
 
 ## Table `lessons_learned`
 
@@ -578,6 +580,7 @@
 | `actual_percent_complete` | `int4` | Nullable |
 | `remarks` | `text` | Nullable |
 | `delay_days` | `int4` | Nullable |
+| `blockers` | `_text` | Nullable |
 
 ## Table `employee_timesheets`
 
@@ -1382,15 +1385,6 @@
 | `PMs and Admins can insert project_resources` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
 | `Users can view project_resources for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_resources.project_id)))` | — |
 
-### `client_approvals`
-
-| Policy | Command | Roles | Action | USING | WITH CHECK |
-| -------- | --------- | ------- | -------- | ------- | ------------ |
-| `Clients/Admins can update approvals` | UPDATE | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['client'::text, 'admin'::text, 'pm'::text, 'super_admin'::text])))))` | — |
-| `Creators and Admins can modify client_approvals` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
-| `PMs and Admins can insert client_approvals` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
-| `Users can view client_approvals for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = client_approvals.project_id)))` | — |
-
 ### `project_issues`
 
 | Policy | Command | Roles | Action | USING | WITH CHECK |
@@ -1399,6 +1393,15 @@
 | `Creators and Admins can modify project_issues` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
 | `PMs and Admins can insert project_issues` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
 | `Users can view project_issues for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = project_issues.project_id)))` | — |
+
+### `client_approvals`
+
+| Policy | Command | Roles | Action | USING | WITH CHECK |
+| -------- | --------- | ------- | -------- | ------- | ------------ |
+| `Clients/Admins can update approvals` | UPDATE | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM user_actor u   WHERE ((u.id = auth.uid()) AND (u.role = ANY (ARRAY['client'::text, 'admin'::text, 'pm'::text, 'super_admin'::text])))))` | — |
+| `Creators and Admins can modify client_approvals` | ALL | public | PERMISSIVE | `((auth.uid() = created_by) OR (( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = 'admin'::text))` | — |
+| `PMs and Admins can insert client_approvals` | INSERT | public | PERMISSIVE | — | `(( SELECT user_actor.role    FROM user_actor   WHERE (user_actor.id = auth.uid())) = ANY (ARRAY['pm'::text, 'admin'::text]))` |
+| `Users can view client_approvals for visible projects` | SELECT | public | PERMISSIVE | `(EXISTS ( SELECT 1    FROM projects   WHERE (projects.id = client_approvals.project_id)))` | — |
 
 ### `change_requests`
 
