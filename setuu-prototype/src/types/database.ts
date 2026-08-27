@@ -756,6 +756,42 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_logs: {
+        Row: {
+          ai_generated_report: string | null
+          created_at: string | null
+          created_by: string
+          date: string
+          id: string
+          labor_hours_total: number | null
+          project_id: string
+          updated_at: string | null
+          weather_summary_json: Json | null
+        }
+        Insert: {
+          ai_generated_report?: string | null
+          created_at?: string | null
+          created_by: string
+          date: string
+          id?: string
+          labor_hours_total?: number | null
+          project_id: string
+          updated_at?: string | null
+          weather_summary_json?: Json | null
+        }
+        Update: {
+          ai_generated_report?: string | null
+          created_at?: string | null
+          created_by?: string
+          date?: string
+          id?: string
+          labor_hours_total?: number | null
+          project_id?: string
+          updated_at?: string | null
+          weather_summary_json?: Json | null
+        }
+        Relationships: []
+      }
       data_retention_policies: {
         Row: {
           action: string | null
@@ -2987,6 +3023,36 @@ export type Database = {
           },
         ]
       }
+      time_lapse_videos: {
+        Row: {
+          created_at: string | null
+          created_by: string
+          end_date: string
+          id: string
+          project_id: string
+          start_date: string
+          video_url: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by: string
+          end_date: string
+          id?: string
+          project_id: string
+          start_date: string
+          video_url: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string
+          end_date?: string
+          id?: string
+          project_id?: string
+          start_date?: string
+          video_url?: string
+        }
+        Relationships: []
+      }
       timeline_dependencies: {
         Row: {
           dep_type: Database["public"]["Enums"]["dependency_type"] | null
@@ -3207,6 +3273,7 @@ export type Database = {
           caption: string | null
           created_at: string | null
           id: string
+          idempotency_key: string | null
           is_watermarked: boolean | null
           latitude: number | null
           location_name: string | null
@@ -3222,6 +3289,7 @@ export type Database = {
           caption?: string | null
           created_at?: string | null
           id?: string
+          idempotency_key?: string | null
           is_watermarked?: boolean | null
           latitude?: number | null
           location_name?: string | null
@@ -3237,6 +3305,7 @@ export type Database = {
           caption?: string | null
           created_at?: string | null
           id?: string
+          idempotency_key?: string | null
           is_watermarked?: boolean | null
           latitude?: number | null
           location_name?: string | null

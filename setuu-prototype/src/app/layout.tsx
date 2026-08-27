@@ -4,6 +4,7 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { ToastProvider } from '@/contexts/ToastContext'
 import { GlobalEmergencyListener } from '@/components/ui/GlobalEmergencyListener'
+import OfflineSyncManager from '@/components/navigation/OfflineSyncManager'
 import './globals.css'
 
 const merriweather = Merriweather({
@@ -44,6 +45,7 @@ export default function RootLayout({
           <ToastProvider>
             <AuthProvider>
               <GlobalEmergencyListener />
+              <OfflineSyncManager />
               {children}
             </AuthProvider>
           </ToastProvider>

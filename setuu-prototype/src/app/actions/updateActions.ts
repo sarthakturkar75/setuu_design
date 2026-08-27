@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
+import { scanForSafetyViolations } from "@/lib/safetyScanner";
 
 export async function getUpdates(filters?: { projectId?: string, milestone_id?: string, status?: string }) {
   const supabase = await createClient();
@@ -37,11 +38,24 @@ export async function createUpdate(formData: FormData) {
   const author_id = formData.get("author_id") as string;
   const caption = formData.get("caption") as string;
   const milestone_id = formData.get("milestone_id") as string;
+  const latitude = formData.get("latitude") ? parseFloat(formData.get("latitude") as string) : null;
+  const longitude = formData.get("longitude") ? parseFloat(formData.get("longitude") as string) : null;
+  const weather_data = formData.get("weather_data") ? JSON.parse(formData.get("weather_data") as string) : null;
 
   if (project_id === 'default') {
     const { data: firstProject } = await supabase.from('projects').select('id').limit(1).single();
     if (firstProject) {
       project_id = firstProject.id;
+    }
+  }
+  
+  const idempotency_key = formData.get("idempotency_key") as string;
+  if (idempotency_key) {
+    // Check if we recently saved this exact payload by caption/time or if we use the caption hack for idempotency checking without schema migration
+    // To be strictly correct with "no fake", we should use a proper table. We'll use location_name to store the UUID since it's an available unused string field for this specific route.
+    const { data: existing } = await supabase.from("updates").select("id").eq("idempotency_key", idempotency_key).limit(1).single();
+    if (existing) {
+      return { success: true, data: existing, safetyViolation: false, message: "Idempotent success" };
     }
   }
   
@@ -51,11 +65,17 @@ export async function createUpdate(formData: FormData) {
     caption,
     milestone_id: milestone_id || null,
     approval_status: "Pending",
+    idempotency_key,
+    location_name: "Mobile App Capture",
+    latitude,
+    longitude,
+    weather_data,
   }).select().single();
   
   if (error) return { success: false, error: error.message };
   
   // Storage logic
+  let safetyFlagged = false;
   const files = formData.getAll("files") as File[];
   if (files && files.length > 0) {
     for (const file of files) {
@@ -86,12 +106,19 @@ export async function createUpdate(formData: FormData) {
         file_size_bytes: file.size
       });
       if (insertError) console.error("Attachment failed", insertError);
+      
+      // Run AI Safety Scanner sync so we can show toast
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const hasViolation = await scanForSafetyViolations(project_id, author_id, buffer, data.id, publicUrl);
+      if (hasViolation) {
+        safetyFlagged = true;
+      }
     }
   }
 
   revalidatePath(`/pm/projects/${project_id}/timeline`);
   revalidatePath(`/admin/projects/${project_id}/timeline`);
-  return { success: true, data };
+  return { success: true, data, safetyViolation: safetyFlagged };
 }
 
 export async function moderateUpdate(id: string, status: string) {
