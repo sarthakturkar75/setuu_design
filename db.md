@@ -110,15 +110,13 @@
 | `milestone_id` | `uuid` | Nullable |
 | `author_id` | `uuid` | |
 | `caption` | `text` | Nullable |
-| `location_name` | `text` | Nullable |
 | `created_at` | `timestamptz` | Nullable |
-| `latitude` | `numeric` | Nullable |
-| `longitude` | `numeric` | Nullable |
 | `is_watermarked` | `bool` | Nullable |
 | `approval_status` | `text` | Nullable |
 | `weather_data` | `jsonb` | Nullable |
 | `ai_analysis_flags` | `jsonb` | Nullable |
 | `idempotency_key` | `text` | Nullable Unique |
+| `update_type` | `text` | Nullable |
 
 ## Table `media_attachments`
 
