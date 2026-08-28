@@ -33,6 +33,7 @@ import {
   submitClientSignOff,
 } from "@/app/actions/handoverActions";
 import { getMeetings } from "@/app/actions/meetingActions";
+import { useRouter } from "next/navigation";
 
 export default function PMHandoversHub() {
   const [activeTab, setActiveTab] = useState("packages");
@@ -62,6 +63,8 @@ export default function PMHandoversHub() {
     setHandovers(fetchedHandovers);
     setMeetings(fetchedMeetings);
   }, []);
+
+  const router = useRouter();
 
   React.useEffect(() => {
     fetchData();
@@ -175,13 +178,19 @@ export default function PMHandoversHub() {
           <div className="flex gap-3">
             <Button
               variant="outline"
-              onClick={() => toast.info("Go to a Project to create a Meeting")}
+              onClick={() => {
+                toast.info("Go to a Project to create a Meeting");
+                router.push("/admin/projects");
+              }}
             >
               <PlusIcon className="w-4 h-4 mr-2" /> New Meeting
             </Button>
             <Button
               variant="primary"
-              onClick={() => toast.info("Go to a Project to initiate Closeout")}
+              onClick={() => {
+                toast.info("Go to a Project to initiate Closeout");
+                router.push("/admin/projects");
+              }}
             >
               <FileCheckIcon className="w-4 h-4 mr-2" /> Init Closeout
             </Button>

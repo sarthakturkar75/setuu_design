@@ -161,7 +161,6 @@ export async function createMaterial(formData: FormData) {
   const currentStock = parseInt(formData.get("current_stock") as string) || quantity;
   const unitCost = parseFloat(formData.get("unit_cost") as string) || 0;
 
-  const crypto = require("crypto");
   const qrUuid = crypto.randomUUID();
   
   const { error } = await supabase.from("project_materials").insert({

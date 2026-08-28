@@ -1,5 +1,5 @@
 "use server";
-import { createClient as createAdminClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -11,10 +11,7 @@ export async function uploadDrawingVersion(formData: FormData) {
   await verifyRole(["admin", "pm", "engineer", "vendor"]);
   const { data: user } = await (await createClient()).auth.getUser();
 
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const projectId = formData.get("project_id") as string;
   const drawingName = formData.get("drawing_name") as string;
@@ -89,10 +86,7 @@ export async function getProjectDrawings(projectId: string) {
     }
   }
 
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const { data, error } = await adminSupabase
     .from("drawing_versions")
@@ -108,10 +102,7 @@ export async function getProjectDrawings(projectId: string) {
 export async function pinEntityToDrawing(drawingId: string, x: number, y: number, entityType: string, entityId: string | null) {
   await verifyRole(["admin", "pm", "engineer"]);
   
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const { error } = await adminSupabase.from("drawing_pins").insert({
     drawing_id: drawingId,
@@ -131,10 +122,7 @@ export async function simulateSlipSheeting(projectId: string, pages: any[]) {
   await verifyRole(["admin", "pm"]);
   const { data: user } = await (await createClient()).auth.getUser();
 
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const inserts = pages.map(page => ({
     project_id: projectId,
@@ -156,10 +144,7 @@ export async function simulateSlipSheeting(projectId: string, pages: any[]) {
 export async function updateDrawingScale(drawingId: string, scaleFactor: number) {
   await verifyRole(["admin", "pm", "engineer"]);
   
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   // Fetch current custom_data
   const { data: current } = await adminSupabase.from("drawing_versions").select("custom_data").eq("id", drawingId).single();
@@ -177,7 +162,7 @@ export async function updateDrawingScale(drawingId: string, scaleFactor: number)
 // --- Task: Drawing Management Utilities ---
 export async function deleteDrawingVersion(drawingId: string) {
   await verifyRole(["admin", "pm"]);
-  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  const adminSupabase = createAdminClient();
   
   const { error } = await adminSupabase.from("drawing_versions").delete().eq("id", drawingId);
   if (error) return { success: false, error: error.message };
@@ -187,7 +172,7 @@ export async function deleteDrawingVersion(drawingId: string) {
 
 export async function renameDrawingGroup(projectId: string, oldName: string, newName: string) {
   await verifyRole(["admin", "pm"]);
-  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  const adminSupabase = createAdminClient();
   
   const { error } = await adminSupabase.from("drawing_versions")
     .update({ drawing_name: newName })
@@ -201,7 +186,7 @@ export async function renameDrawingGroup(projectId: string, oldName: string, new
 
 export async function replaceDrawingFile(drawingId: string, newFileUrl: string) {
   await verifyRole(["admin", "pm"]);
-  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  const adminSupabase = createAdminClient();
   
   const { error } = await adminSupabase.from("drawing_versions")
     .update({ file_url: newFileUrl })
@@ -214,7 +199,7 @@ export async function replaceDrawingFile(drawingId: string, newFileUrl: string) 
 
 export async function updateDrawingTags(drawingId: string, customData: any, newTags: string[]) {
   await verifyRole(["admin", "pm", "engineer"]);
-  const adminSupabase = createAdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  const adminSupabase = createAdminClient();
   
   const payload = { ...(customData || {}), tags: newTags };
   

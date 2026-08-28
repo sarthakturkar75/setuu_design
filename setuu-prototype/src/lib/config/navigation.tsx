@@ -23,7 +23,7 @@ import {
     WifiOffIcon,
     BookOpenIcon,
     CalendarIcon,
-CheckCircle2, Clock, TrendingUp } from "lucide-react";
+CheckCircle2, Clock, TrendingUp, Bell } from "lucide-react";
 import React from "react";
 import { NavSection, NavItem } from "@/components/navigation/Sidebar";
 
@@ -301,27 +301,38 @@ export const getNavigationForRole = (
             };
 
 
+        
         case "engineer":
             return {
                 sections: [
                     {
-                        title: "My Workbench",
+                        title: "Primary",
                         items: [
-                            { label: "Dashboard", href: "/engineer", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
-                            { label: "Assigned Tasks", href: "/engineer/tasks", icon: <CheckCircle2 className="w-5 h-5" /> },
-                        ],
-                    },
-                    {
-                        title: "Execution",
-                        items: [
-                            { label: "Engineering Hub (CAD)", href: "/engineer/assets", icon: <Database className="w-5 h-5" /> },
+                            { label: "My Workbench", href: "/engineer", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Assigned Tasks", href: "/engineer/tasks", icon: <CheckSquareIcon className="w-5 h-5" /> },
                             { label: "Peer Reviews", href: "/engineer/reviews", icon: <FileTextIcon className="w-5 h-5" /> },
-                            { label: "Daily Logs", href: "/engineer/logs", icon: <Clock className="w-5 h-5" /> },
+                            { label: "Issue Tracker", href: "/engineer/issues", icon: <AlertTriangleIcon className="w-5 h-5" /> },
+                            { label: "Timesheets", href: "/engineer/timesheet", icon: <CalendarIcon className="w-5 h-5" /> },
+                            { label: "Collaboration", href: "/engineer/collaboration", icon: <MessageSquareIcon className="w-5 h-5" /> },
+                            { label: "Team Docs & Wiki", href: "/engineer/docs", icon: <BookOpenIcon className="w-5 h-5" /> },
                         ],
                     },
+                    ...(projectId ? [{
+                        title: "Project Operations",
+                        items: [
+                            { label: "Project Dashboard", href: `/engineer/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Timeline", href: `/engineer/projects/${projectId}/timeline`, icon: <CalendarIcon className="w-5 h-5" /> },
+                            { label: "Requirements", href: `/engineer/projects/${projectId}/requirements`, icon: <FileTextIcon className="w-5 h-5" /> },
+                            ...(permissions?.can_view_drawings ? [{ label: "Drawings", href: `/engineer/projects/${projectId}/drawings`, icon: <FileBoxIcon className="w-5 h-5" /> }] : []),
+                            { label: "Materials", href: `/engineer/projects/${projectId}/materials`, icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Issues", href: `/engineer/projects/${projectId}/issues`, icon: <AlertTriangleIcon className="w-5 h-5" /> },
+                            { label: "Team", href: `/engineer/projects/${projectId}/team`, icon: <UsersIcon className="w-5 h-5" /> },
+                        ]
+                    }] : [])
                 ],
                 bottomItems: [
-                    { label: "Offline Sync", href: "/engineer/sync", icon: <WifiOffIcon className="w-5 h-5" /> }
+                    { label: "Productivity", href: "/engineer/productivity", icon: <Activity className="w-5 h-5" /> },
+                    { label: "Notifications", href: "/engineer/notifications", icon: <Bell className="w-5 h-5" /> }
                 ]
             };
 
@@ -329,23 +340,21 @@ export const getNavigationForRole = (
             return {
                 sections: [
                     {
-                        title: "Supplier Portal",
+                        title: "Primary",
                         items: [
-                            { label: "Dashboard", href: "/vendor", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
-                            { label: "Active Orders", href: "/vendor/orders", icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Dispatch Dashboard", href: "/vendor", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Material Deliveries", href: "/vendor/deliveries", icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Assigned Tasks", href: "/vendor/tasks", icon: <CheckSquareIcon className="w-5 h-5" /> },
+                            { label: "Defects & Rework", href: "/vendor/defects", icon: <AlertTriangleIcon className="w-5 h-5" /> },
+                            { label: "Invoicing", href: "/vendor/invoices", icon: <CreditCard className="w-5 h-5" /> },
+                            { label: "Timesheets", href: "/vendor/timesheet", icon: <CalendarIcon className="w-5 h-5" /> },
+                            { label: "Collaboration", href: "/vendor/collaboration", icon: <MessageSquareIcon className="w-5 h-5" /> },
                         ],
-                    },
-                    {
-                        title: "Finance & QA",
-                        items: [
-                            { label: "Invoices", href: "/vendor/invoices", icon: <CreditCard className="w-5 h-5" /> },
-                            { label: "Delivery QA", href: "/vendor/qa", icon: <ShieldAlert className="w-5 h-5" /> },
-                            { label: "Scorecard", href: "/vendor/scorecard", icon: <TrendingUp className="w-5 h-5" /> },
-                        ],
-                    },
+                    }
                 ],
                 bottomItems: [
-                    { label: "Support", href: "/vendor/support", icon: <CircleHelpIcon className="w-5 h-5" /> }
+                    { label: "Support", href: "/vendor/support", icon: <CircleHelpIcon className="w-5 h-5" /> },
+                    { label: "Notifications", href: "/vendor/notifications", icon: <Bell className="w-5 h-5" /> }
                 ]
             };
 
@@ -353,27 +362,24 @@ export const getNavigationForRole = (
             return {
                 sections: [
                     {
-                        title: "Client View",
+                        title: "Portfolio",
                         items: [
-                            { label: "Portfolio Dashboard", href: "/client", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
-                            { label: "Approvals & Change Orders", href: "/client/approvals", icon: <CheckCircle2 className="w-5 h-5" /> },
-                            { label: "Raise Issue", href: "/client/issues", icon: <LifeBuoy className="w-5 h-5" /> },
+                            { label: "Executive Summary", href: "/client", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Project Portfolio", href: "/client/projects", icon: <FolderTreeIcon className="w-5 h-5" /> },
                         ],
                     },
                     {
-                        title: "Documentation",
+                        title: "Tracking",
                         items: [
-                            { label: "Drawings (Read-Only)", href: "/client/drawings", icon: <Database className="w-5 h-5" /> },
-                            { label: "Handovers / Sign-off", href: "/client/handovers", icon: <FileTextIcon className="w-5 h-5" /> },
+                            { label: "Progress Feed", href: "/client/progress", icon: <Activity className="w-5 h-5" /> },
+                            { label: "Deliverables", href: "/client/deliverables", icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Financials & CRs", href: "/client/financials", icon: <CreditCard className="w-5 h-5" /> },
                         ],
-                    },
+                    }
                 ],
-                bottomItems: [
-                    { label: "Executive Reports", href: "/client/reports", icon: <Activity className="w-5 h-5" /> }
-                ]
+                bottomItems: []
             };
-
-        default:
+default:
             return { sections: [], bottomItems: [] };
     }
 };

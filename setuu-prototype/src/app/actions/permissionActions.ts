@@ -1,17 +1,9 @@
 "use server";
 
-import { createClient } from "@supabase/supabase-js";
-
-// Helper to create a service role client to bypass RLS for administrative actions
-const getAdminClient = () => {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-};
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function getProjectPermissions(projectId: string) {
-  const supabase = getAdminClient();
+  const supabase = await createAdminClient();
   const { data } = await supabase
     .from('project_granular_permissions')
     .select('*')
@@ -21,7 +13,7 @@ export async function getProjectPermissions(projectId: string) {
 }
 
 export async function toggleUserPermission(projectId: string, userId: string, field: 'can_view_drawings' | 'can_view_financials', value: boolean) {
-  const supabase = getAdminClient();
+  const supabase = await createAdminClient();
   
   try {
     const { data: existing, error: fetchErr } = await supabase

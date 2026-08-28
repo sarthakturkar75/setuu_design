@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Edit2, Users } from 'lucide-react';
+import Link from 'next/link';
 import { getCompanyResourcePool } from "@/app/actions/teamActions";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { EditPersonnelModal } from "@/components/ui/EditPersonnelModal";
@@ -113,7 +114,7 @@ export default function CompanyPersonnelPage() {
         subtitle="Manage the skills, labor rates, and profiles of all company personnel."
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <span>Admin</span>
+            <Link href="/pm" className="hover:text-primary transition-colors">PM Workspace</Link>
             <span>/</span>
             <span>Personnel</span>
           </div>

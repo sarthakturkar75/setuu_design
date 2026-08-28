@@ -27,7 +27,7 @@ export async function getVendors(orgId?: string) {
   if (error) throw error;
   
   const vendors = await Promise.all(data.map(async (vendor: any) => {
-    let slaScore = 95;
+    let slaScore = 100; // Start at 100% SLA if no data
     try {
       // Small optimization: we only need onTimePercent
       const { data: materials } = await supabase.from("project_materials").select("status, estimated_delivery, actual_delivery").eq("vendor_id", vendor.id);
@@ -151,10 +151,11 @@ export async function getVendorSlaData() {
       const perf = await getVendorPerformance(v.id);
       result.push({
         name: v.name,
-        score: perf.onTimePercent > 0 ? perf.onTimePercent : 90 // Default to 90 if no orders
+        score: perf.onTimePercent > 0 ? perf.onTimePercent : 0
       });
     } catch (e) {
-      result.push({ name: v.name, score: 85 });
+      console.error(e);
+      result.push({ name: v.name, score: 0 });
     }
   }
   
@@ -176,7 +177,7 @@ export async function getVendorScorecardData() {
     } catch (e) { console.error(e); }
   }
   
-  const avgOnTime = count > 0 ? Math.round(totalOnTime / count) : 94;
+  const avgOnTime = count > 0 ? Math.round(totalOnTime / count) : 0;
   
   return [
     { metric: "Delivery Timeliness", score: avgOnTime, trend: "+2.1%" },

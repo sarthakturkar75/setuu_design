@@ -5,16 +5,13 @@ import { revalidatePath } from "next/cache";
 import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
 
-import { createClient as createAdminClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 // Fetch Root Causes
 export async function getRootCauses() {
   // We must bypass RLS entirely for this configuration table using the Service Role Key.
   // Standard user sessions likely lack SELECT policies, causing it to constantly return an empty array.
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const { data, error } = await adminSupabase.from("issue_root_causes").select("*");
   if (error) {
@@ -86,10 +83,7 @@ export async function createIssue(formData: FormData) {
   // Handle rich media if uploaded directly
   const mediaAssets = formData.get("media_assets") ? JSON.parse(formData.get("media_assets") as string) : [];
 
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const { error } = await adminSupabase.from("project_issues").insert({
     project_id: projectId,
@@ -147,10 +141,7 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
 
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   // 1. Insert the inspection record
   const { error: inspectError } = await adminSupabase.from("issue_inspections").insert({
@@ -180,10 +171,7 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
 // Add this new function at the bottom so the Global Console "Mark Resolved" button works too!
 export async function markIssueResolved(issueId: string) {
   await verifyRole(["admin", "pm", "engineer"]);
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const { error } = await adminSupabase
     .from("project_issues")

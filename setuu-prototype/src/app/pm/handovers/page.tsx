@@ -11,6 +11,7 @@ import { useToast } from "@/contexts/ToastContext";
 
 import { getHandovers } from "@/app/actions/handoverActions";
 import { getMeetings } from "@/app/actions/meetingActions";
+import { useRouter } from "next/navigation";
 
 export default function PMHandoversHub() {
   const toast = useToast();
@@ -28,16 +29,16 @@ export default function PMHandoversHub() {
     fetchData();
   }, []);
 
+  const router = useRouter();
+
   const addHandover = async () => {
-      // Create a default handover package in an arbitrary project or leave it for later.
-      // We will just optimistically add to list, though a real implementation would need project_id.
-      // But let's just trigger a reload if we had a form. For now, since we need to remove mock data,
-      // let's do a basic alert or call createHandover if possible. The prompt mainly says to eradicate mock data.
       toast.info("Navigate to a project to create a handover.");
+      router.push("/pm/projects");
   };
 
   const addMeeting = () => {
       toast.info("Navigate to a project to create a meeting.");
+      router.push("/pm/projects");
   };
 
   return (

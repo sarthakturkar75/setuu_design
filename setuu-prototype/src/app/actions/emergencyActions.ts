@@ -25,7 +25,6 @@ export async function initiateEmergencyMuster(projectId: string) {
     .insert({
       project_id: projectId,
       status: 'Active'
-      // initiated_by omitted for prototype ease, or can set it if known
     })
     .select('id')
     .single();
