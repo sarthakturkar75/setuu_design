@@ -13,6 +13,13 @@ export async function GET(request: Request) {
         }
 
         const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        
+        const { data: actor } = await supabase.from('user_actor').select('role, id').eq('id', user.id).single();
+        const role = actor?.role || 'engineer';
+        
+        const isPlanningRestricted = role === 'engineer' && exportType !== 'srs';
         const workbook = new ExcelJS.Workbook();
         workbook.creator = "Setuu Enterprise PMIS";
 
@@ -66,11 +73,11 @@ export async function GET(request: Request) {
             // ==========================================
             // EXPORT: PLANNING MATRIX (TASKS)
             // ==========================================
-            const { data: tasks, error } = await supabase
-                .from("tasks")
-                .select("*")
-                .eq("project_id", projectId)
-                .order("created_at", { ascending: true });
+            let query = supabase.from("tasks").select("*").eq("project_id", projectId).order("created_at", { ascending: true });
+            if (isPlanningRestricted) {
+                query = query.eq("assignee_id", actor?.id);
+            }
+            const { data: tasks, error } = await query;
 
             if (error) throw new Error(error.message);
 

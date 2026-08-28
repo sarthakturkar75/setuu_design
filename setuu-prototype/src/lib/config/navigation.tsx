@@ -23,7 +23,7 @@ import {
     WifiOffIcon,
     BookOpenIcon,
     CalendarIcon,
-} from "lucide-react";
+CheckCircle2, Clock, TrendingUp } from "lucide-react";
 import React from "react";
 import { NavSection, NavItem } from "@/components/navigation/Sidebar";
 
@@ -298,6 +298,79 @@ export const getNavigationForRole = (
                         icon: <CalendarIcon className="w-5 h-5" />,
                     },
                 ],
+            };
+
+
+        case "engineer":
+            return {
+                sections: [
+                    {
+                        title: "My Workbench",
+                        items: [
+                            { label: "Dashboard", href: "/engineer", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Assigned Tasks", href: "/engineer/tasks", icon: <CheckCircle2 className="w-5 h-5" /> },
+                        ],
+                    },
+                    {
+                        title: "Execution",
+                        items: [
+                            { label: "Engineering Hub (CAD)", href: "/engineer/assets", icon: <Database className="w-5 h-5" /> },
+                            { label: "Peer Reviews", href: "/engineer/reviews", icon: <FileTextIcon className="w-5 h-5" /> },
+                            { label: "Daily Logs", href: "/engineer/logs", icon: <Clock className="w-5 h-5" /> },
+                        ],
+                    },
+                ],
+                bottomItems: [
+                    { label: "Offline Sync", href: "/engineer/sync", icon: <WifiOffIcon className="w-5 h-5" /> }
+                ]
+            };
+
+        case "vendor":
+            return {
+                sections: [
+                    {
+                        title: "Supplier Portal",
+                        items: [
+                            { label: "Dashboard", href: "/vendor", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Active Orders", href: "/vendor/orders", icon: <PackageIcon className="w-5 h-5" /> },
+                        ],
+                    },
+                    {
+                        title: "Finance & QA",
+                        items: [
+                            { label: "Invoices", href: "/vendor/invoices", icon: <CreditCard className="w-5 h-5" /> },
+                            { label: "Delivery QA", href: "/vendor/qa", icon: <ShieldAlert className="w-5 h-5" /> },
+                            { label: "Scorecard", href: "/vendor/scorecard", icon: <TrendingUp className="w-5 h-5" /> },
+                        ],
+                    },
+                ],
+                bottomItems: [
+                    { label: "Support", href: "/vendor/support", icon: <CircleHelpIcon className="w-5 h-5" /> }
+                ]
+            };
+
+        case "client":
+            return {
+                sections: [
+                    {
+                        title: "Client View",
+                        items: [
+                            { label: "Portfolio Dashboard", href: "/client", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Approvals & Change Orders", href: "/client/approvals", icon: <CheckCircle2 className="w-5 h-5" /> },
+                            { label: "Raise Issue", href: "/client/issues", icon: <LifeBuoy className="w-5 h-5" /> },
+                        ],
+                    },
+                    {
+                        title: "Documentation",
+                        items: [
+                            { label: "Drawings (Read-Only)", href: "/client/drawings", icon: <Database className="w-5 h-5" /> },
+                            { label: "Handovers / Sign-off", href: "/client/handovers", icon: <FileTextIcon className="w-5 h-5" /> },
+                        ],
+                    },
+                ],
+                bottomItems: [
+                    { label: "Executive Reports", href: "/client/reports", icon: <Activity className="w-5 h-5" /> }
+                ]
             };
 
         default:

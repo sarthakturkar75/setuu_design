@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DataTable } from "@/components/ui/DataTable";
 import { Button } from "@/components/ui/Button";
+import { useToast } from "@/contexts/ToastContext";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { PlusIcon } from "lucide-react";
 import { getTickets } from "@/app/actions/supportActions";
 
 export default function PMSupport() {
+  const toast = useToast();
   const [tickets, setTickets] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,7 +33,7 @@ export default function PMSupport() {
         title="Support Tickets"
         subtitle="Need help with the platform? We've got you covered."
         actions={
-          <Button variant="primary">
+          <Button variant="primary" onClick={() => toast.info("Support ticket creation coming soon")}>
             <PlusIcon className="w-4 h-4 mr-2" /> Create New Ticket
           </Button>
         }

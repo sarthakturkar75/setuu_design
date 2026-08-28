@@ -88,9 +88,23 @@ export async function approveChangeRequest(id: string, projectId: string) {
 export async function rejectChangeRequest(id: string, projectId: string, reason: string) {
   await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
+  
+  const { data: existing } = await supabase
+    .from("change_requests")
+    .select("custom_data")
+    .eq("id", id)
+    .single();
+    
+  const customData = existing?.custom_data && typeof existing.custom_data === 'object' 
+    ? { ...(existing.custom_data as any), rejection_reason: reason }
+    : { rejection_reason: reason };
+
   const { error } = await supabase
     .from("change_requests")
-    .update({ status: "Rejected" })
+    .update({ 
+      status: "Rejected",
+      custom_data: customData
+    })
     .eq("id", id);
 
   if (error) return { success: false, error: error.message };

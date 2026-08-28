@@ -91,7 +91,7 @@ export default function NewProjectWizard() {
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
             <Link href="/pm" className="hover:text-primary transition-colors">Admin</Link>
             <span>/</span>
-            <Link href="/admin/projects" className="hover:text-primary transition-colors">Projects</Link>
+            <Link href="/pm/projects" className="hover:text-primary transition-colors">Projects</Link>
             <span>/</span>
             <span className="text-on-surface font-medium">New Project</span>
           </div>

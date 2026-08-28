@@ -175,13 +175,13 @@ export default function PMHandoversHub() {
           <div className="flex gap-3">
             <Button
               variant="outline"
-              onClick={() => alert("Go to a Project to create a Meeting")}
+              onClick={() => toast.info("Go to a Project to create a Meeting")}
             >
               <PlusIcon className="w-4 h-4 mr-2" /> New Meeting
             </Button>
             <Button
               variant="primary"
-              onClick={() => alert("Go to a Project to initiate Closeout")}
+              onClick={() => toast.info("Go to a Project to initiate Closeout")}
             >
               <FileCheckIcon className="w-4 h-4 mr-2" /> Init Closeout
             </Button>

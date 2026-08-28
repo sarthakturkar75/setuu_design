@@ -81,3 +81,13 @@ export async function getClientApprovals() {
   }));
 }
 
+
+export async function reviewClientApproval(id: string, action: "approve" | "request_revision", comment?: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("client_approvals").update({
+    status: action === "approve" ? "approved" : "revision_requested",
+    notes: comment
+  }).eq("id", id);
+  if (error) throw error;
+  return { success: true };
+}

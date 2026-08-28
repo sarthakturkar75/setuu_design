@@ -1,67 +1,42 @@
 "use server";
-
 import { createClient } from "@/lib/supabase/server";
-import { verifyRole } from "./authUtils";
-import { revalidatePath } from "next/cache";
 
-export async function getTimesheets(userId: string, dateRange?: { start: string, end: string }) {
+export async function getTimesheets(startDate: string, endDate: string) {
   const supabase = await createClient();
-  let query = supabase.from("employee_timesheets").select("*").eq("user_id", userId);
-  
-  if (dateRange) {
-    query = query.gte("date", dateRange.start).lte("date", dateRange.end);
-  }
-  
-  const { data, error } = await query;
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data, error } = await supabase
+    .from("employee_timesheets")
+    .select("*, projects(name)")
+    .eq("user_id", user.id)
+    .gte("date", startDate)
+    .lte("date", endDate);
+    
   if (error) throw error;
-  return data;
+  return data || [];
 }
 
 export async function logTimeEntry(data: any) {
-  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
-  const { error } = await supabase
-    .from("employee_timesheets")
-    .insert({
-      ...data,
-      status: "Draft"
-    });
-    
-  if (error) return { success: false, error: error.message };
-  revalidatePath(`/engineer/timesheet`);
+  const { error } = await supabase.from("employee_timesheets").insert(data);
+  if (error) throw error;
   return { success: true };
 }
 
-export async function submitWeek(userId: string, weekStart: string) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+export async function submitWeek(startDate: string, endDate: string) {
   const supabase = await createClient();
-  
-  const startDate = new Date(weekStart);
-  const endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + 7);
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { success: false };
   
   const { error } = await supabase
     .from("employee_timesheets")
-    .update({ status: "Submitted" })
-    .eq("user_id", userId)
-    .eq("status", "Draft")
-    .gte("date", startDate.toISOString().split('T')[0])
-    .lt("date", endDate.toISOString().split('T')[0]);
+    .update({ status: 'submitted' })
+    .eq("user_id", user.id)
+    .gte("date", startDate)
+    .lte("date", endDate)
+    .eq("status", "draft");
     
-  if (error) return { success: false, error: error.message };
-  revalidatePath(`/engineer/timesheet`);
-  return { success: true };
-}
-
-export async function approveTimesheet(id: string) {
-  await verifyRole(["admin", "pm", "superadmin"]);
-  const supabase = await createClient();
-  const { error } = await supabase
-    .from("employee_timesheets")
-    .update({ status: "Approved" })
-    .eq("id", id);
-    
-  if (error) return { success: false, error: error.message };
-  revalidatePath(`/admin/resources`);
+  if (error) throw error;
   return { success: true };
 }

@@ -35,7 +35,7 @@ export default function PMCommandCenter() {
 				</div>
 				<div className="flex gap-2">
 					<Link
-						href="/pm/update/new"
+						href="/pm/projects"
 						className="flex items-center gap-2 px-4 py-2 bg-surface-variant hover:bg-surface-variant/80 border border-outline-variant rounded-lg text-sm font-medium transition-colors"
 					>
 						<CameraIcon className="w-4 h-4" />

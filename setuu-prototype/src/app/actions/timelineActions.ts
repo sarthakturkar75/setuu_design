@@ -236,3 +236,15 @@ export async function applyScenario(scenarioId: string) {
 
   return { success: true };
 }
+export async function getAssignedTasks() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return [];
+  const { data: tasks, error } = await supabase
+    .from("tasks")
+    .select("*, project:projects(name)")
+    .eq("assignee_id", user.id)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return tasks;
+}

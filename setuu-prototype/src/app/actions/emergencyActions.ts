@@ -5,8 +5,6 @@ import { createClient } from "@/lib/supabase/server";
 export async function initiateEmergencyMuster(projectId: string) {
   const supabase = await createClient();
   
-  const { data: authUser } = await supabase.auth.getUser();
-  const userId = authUser?.user?.id;
 
   // 1. Get everyone currently on site for this project
   const { data: onSiteLogs, error: turnstileErr } = await supabase

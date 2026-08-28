@@ -21,7 +21,7 @@ export async function getInvoices(vendorId?: string) {
 }
 
 export async function createInvoice(data: any) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin", "vendor"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("invoices")
@@ -36,7 +36,7 @@ export async function createInvoice(data: any) {
 }
 
 export async function updateInvoiceStatus(id: string, status: string) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin", "vendor"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("invoices")

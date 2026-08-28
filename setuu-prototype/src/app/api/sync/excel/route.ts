@@ -31,6 +31,10 @@ export async function POST(request: Request) {
         if (!user)
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+        const { data: actor } = await supabase.from('user_actor').select('role, id').eq('id', user.id).single();
+        const role = actor?.role || 'engineer';
+
+
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const workbook = new ExcelJS.Workbook();
@@ -46,6 +50,7 @@ export async function POST(request: Request) {
         const srsSheet = workbook.getWorksheet("SRS");
 
         if (srsSheet) {
+            if (role === 'engineer') return NextResponse.json({ error: "Engineers cannot modify SRS matrix" }, { status: 403 });
             // PROCESS SRS MATRIX
             for (let rowNumber = 2; rowNumber <= srsSheet.rowCount; rowNumber++) {
                 const row = srsSheet.getRow(rowNumber);
@@ -111,6 +116,11 @@ export async function POST(request: Request) {
                 const uuid_anchor = row.getCell(11).value?.toString(); // Column K
 
                 if (uuid_anchor && uuid_anchor !== "undefined") {
+                    if (role === 'engineer') {
+                        // Check if they own it
+                        const { data: existing } = await supabase.from('tasks').select('assignee_id').eq('id', uuid_anchor).single();
+                        if (existing?.assignee_id !== actor?.id) continue; // Skip rows they don't own
+                    }
                     const { error } = await supabase
                         .from("tasks")
                         .update(payload)

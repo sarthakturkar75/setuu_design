@@ -1,5 +1,5 @@
 "use server";
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 import { createClient } from "@/lib/supabase/server";
 import { verifyRole } from "./authUtils";
@@ -60,10 +60,7 @@ export async function createUpdate(formData: FormData) {
 
   // Use service role for insertion to bypass potentially restrictive RLS since we already verified roles
 
-  const adminSupabase = createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
 
   const { data, error } = await adminSupabase.from("updates").insert({
     project_id,
@@ -146,10 +143,7 @@ export async function addComment(updateId: string, content: string) {
     if (!user) throw new Error("Unauthorized");
 
     
-    const adminSupabase = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const adminSupabase = createAdminClient();
     const { error } = await adminSupabase.from("comments").insert({
       update_id: updateId,
       author_id: user.id,
@@ -170,10 +164,7 @@ export async function deleteUpdate(updateId: string) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
-    const adminSupabase = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const adminSupabase = createAdminClient();
 
     const { error } = await adminSupabase.from("updates").delete().eq("id", updateId);
     if (error) throw error;

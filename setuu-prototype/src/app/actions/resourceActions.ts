@@ -23,14 +23,22 @@ export async function getProjectResources(filters?: { projectId?: string, type?:
 export async function getResourceConflicts() {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from("project_issues")
+    .from("project_resources")
     .select("*, project:projects(name)");
   
   if (error) throw error;
   
-  return data.map(issue => ({
-    ...issue,
-    project_name: issue.project && typeof issue.project === 'object' && !Array.isArray(issue.project) ? (issue.project as any).name : "Unknown Project"
+  // Find resources with the same name across different projects
+  const nameCounts = data.reduce((acc, res) => {
+    acc[res.name] = (acc[res.name] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const conflicts = data.filter(res => nameCounts[res.name] > 1);
+
+  return conflicts.map(res => ({
+    ...res,
+    project_name: res.project && typeof res.project === 'object' && !Array.isArray(res.project) ? (res.project as any).name : "Unknown Project"
   }));
 }
 

@@ -44,7 +44,7 @@ export async function getVendors(orgId?: string) {
         });
         slaScore = Math.round((onTimeCount / materials.length) * 100);
       }
-    } catch(e) {}
+    } catch (e) { console.error(e); }
 
     return {
       ...vendor,
@@ -173,7 +173,7 @@ export async function getVendorScorecardData() {
         totalOnTime += perf.onTimePercent;
         count++;
       }
-    } catch (e) {}
+    } catch (e) { console.error(e); }
   }
   
   const avgOnTime = count > 0 ? Math.round(totalOnTime / count) : 94;

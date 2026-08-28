@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { verifyRole } from "./authUtils";
 import { autoUpdateModuleFlags } from "./projectActions";
+import { logStatusTransition, draftInvoiceFromMilestone, triggerHandoffNotifications } from "./milestoneModuleActions";
+
 
 export async function getProjectMilestones(projectId: string) {
   const supabase = await createClient();
@@ -66,8 +68,6 @@ export async function createMilestone(projectId: string, milestoneData: any) {
   revalidatePath(`/pm/projects/${projectId}/milestones`);
   return { success: true };
 }
-
-import { logStatusTransition, draftInvoiceFromMilestone, triggerHandoffNotifications } from "./milestoneModuleActions";
 
 export async function updateMilestone(id: string, updateData: any) {
   await verifyRole(["admin", "pm"]);

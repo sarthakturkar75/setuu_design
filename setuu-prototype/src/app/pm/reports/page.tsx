@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { useToast } from "@/contexts/ToastContext";
 import { FileTextIcon, DownloadIcon } from "lucide-react";
 import { getProjectReports } from "@/app/actions/reportActions";
 
 export default function PMReports() {
+  const toast = useToast();
   const [selectedModules, setSelectedModules] = useState<string[]>(["summary", "milestones"]);
   const [reports, setReports] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +79,7 @@ export default function PMReports() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-outline-variant flex justify-end">
-              <Button variant="primary" size="lg">
+              <Button variant="primary" size="lg" onClick={() => toast.info("Report generation initiated...")}>
                 <FileTextIcon className="w-5 h-5 mr-2" /> Generate PDF Report
               </Button>
             </div>

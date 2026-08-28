@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { verifyRole } from "./authUtils";
+import { headers } from "next/headers";
+
 
 // 1. Contingency Drawdown Tracking
 export async function getContingencyMetrics(projectId: string) {
@@ -110,8 +112,6 @@ export async function modifyChangeRequest(changeId: string, updates: any) {
   return { success: true };
 }
 
-import { headers } from "next/headers";
-
 // 5. Multi-Tier Workflow Engine
 export async function advanceChangeWorkflow(changeId: string, signatureRole: string, currentStage: string) {
   const supabase = await createClient();
@@ -166,6 +166,32 @@ export async function sendForEsignature(changeId: string) {
   // A. Fetch physical Change Request data for document rendering
   const { data: change } = await supabase.from("change_requests").select("*").eq("id", changeId).single();
   if (!change) return { success: false, error: "Change Request not found" };
+  
+  // Find Client Contact
+  let clientEmail = "";
+  let clientName = "Client Representative";
+  const { data: project } = await supabase.from("projects").select("client_org_id").eq("id", change.project_id).single();
+  
+  if (project?.client_org_id) {
+    const { data: clientActor } = await supabase.from("user_actor")
+      .select("id, display_name")
+      .eq("organization_id", project.client_org_id)
+      .eq("role", "client")
+      .limit(1)
+      .single();
+      
+    if (clientActor) {
+      const { data: identity } = await supabase.from("user_identity").select("email").eq("actor_id", clientActor.id).single();
+      if (identity?.email) {
+        clientEmail = identity.email;
+        clientName = clientActor.display_name || clientName;
+      }
+    }
+  }
+
+  if (!clientEmail) {
+    return { success: false, error: "Could not find a valid client email for the project's organization." };
+  }
 
   // B. Construct Real DocuSign Envelope Payload
   const envelopePayload = {
@@ -181,8 +207,8 @@ export async function sendForEsignature(changeId: string) {
     recipients: {
       signers: [
         {
-          email: "client@example.com", // In a real app, query client_orgs for the actual email
-          name: "Client Representative",
+          email: clientEmail,
+          name: clientName,
           recipientId: "1",
           routingOrder: "1",
           tabs: { signHereTabs: [{ anchorString: "Signature:", anchorXOffset: "100", anchorYOffset: "0", documentId: "1", pageNumber: "1" }] }

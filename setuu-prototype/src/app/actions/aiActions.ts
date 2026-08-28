@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 
-export async function generateWelcomeBrief(projectId: string, metrics: any) {
+export async function generateWelcomeBrief(metrics: any) {
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   if (!user?.user) throw new Error("Unauthorized");

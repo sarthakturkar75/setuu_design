@@ -47,7 +47,7 @@ export default function ChangeRequestsPage() {
         subtitle="Review, approve, and track scope changes and their financial impacts"
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <Link href="/admin" className="hover:text-primary transition-colors">Admin</Link>
+            <Link href="/pm" className="hover:text-primary transition-colors">Admin</Link>
             <span>/</span>
             <span className="text-on-surface font-medium">Change Requests</span>
           </div>

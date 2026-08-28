@@ -830,6 +830,192 @@ export type Database = {
         }
         Relationships: []
       }
+      delivery_proofs: {
+        Row: {
+          created_at: string | null
+          file_type: string | null
+          file_url: string
+          id: string
+          material_id: string
+          notes: string | null
+          project_id: string
+          status: string | null
+          uploaded_by: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_type?: string | null
+          file_url: string
+          id?: string
+          material_id: string
+          notes?: string | null
+          project_id: string
+          status?: string | null
+          uploaded_by: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          material_id?: string
+          notes?: string | null
+          project_id?: string
+          status?: string | null
+          uploaded_by?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "delivery_proofs_material_id_fkey"
+            columns: ["material_id"]
+            isOneToOne: false
+            referencedRelation: "project_materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "delivery_proofs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "delivery_proofs_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "delivery_proofs_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      design_review_comments: {
+        Row: {
+          action: string
+          author_id: string
+          content: string
+          created_at: string | null
+          id: string
+          review_id: string
+        }
+        Insert: {
+          action?: string
+          author_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          review_id: string
+        }
+        Update: {
+          action?: string
+          author_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          review_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_review_comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_review_comments_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "design_reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      design_reviews: {
+        Row: {
+          author_id: string
+          author_role: string
+          created_at: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          linked_entity_id: string | null
+          linked_entity_type: string | null
+          project_id: string
+          review_type: string
+          reviewer_id: string | null
+          status: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id: string
+          author_role: string
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          linked_entity_id?: string | null
+          linked_entity_type?: string | null
+          project_id: string
+          review_type?: string
+          reviewer_id?: string | null
+          status?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string
+          author_role?: string
+          created_at?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          linked_entity_id?: string | null
+          linked_entity_type?: string | null
+          project_id?: string
+          review_type?: string
+          reviewer_id?: string | null
+          status?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_reviews_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_reviews_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "design_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       drawing_hyperlinks: {
         Row: {
           bounding_box_json: Json
@@ -3151,6 +3337,77 @@ export type Database = {
           },
         ]
       }
+      team_documents: {
+        Row: {
+          author_id: string
+          category: string
+          content: string
+          created_at: string | null
+          id: string
+          is_published: boolean | null
+          organization_id: string
+          parent_id: string | null
+          project_id: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id: string
+          category?: string
+          content: string
+          created_at?: string | null
+          id?: string
+          is_published?: boolean | null
+          organization_id: string
+          parent_id?: string | null
+          project_id?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string
+          category?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          is_published?: boolean | null
+          organization_id?: string
+          parent_id?: string | null
+          project_id?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_documents_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_documents_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_documents_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "team_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_documents_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       time_lapse_videos: {
         Row: {
           created_at: string | null
@@ -3968,4 +4225,3 @@ export const Constants = {
     },
   },
 } as const
-export {};

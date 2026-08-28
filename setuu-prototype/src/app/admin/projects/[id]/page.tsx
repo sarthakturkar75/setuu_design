@@ -101,7 +101,7 @@ export default function ProjectOverviewPage({
 
         // Let's call the real AI generation server action
         try {
-          const brief = await generateWelcomeBrief(id, {
+          const brief = await generateWelcomeBrief({
             name: proj?.name || 'Project',
             progress,
             criticalIssues: criticalIssuesCount,

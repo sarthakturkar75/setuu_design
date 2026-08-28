@@ -88,7 +88,7 @@ export default function ProjectOverviewPage({
         setRiskScore(Math.round(calculatedRisk));
 
         try {
-          const brief = await generateWelcomeBrief(id, {
+          const brief = await generateWelcomeBrief({
             name: proj?.name || 'Project',
             progress,
             criticalIssues: criticalIssuesCount,

@@ -7,11 +7,13 @@ import { TabBar } from "@/components/ui/TabBar";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DataTable } from "@/components/ui/DataTable";
 import { FileCheckIcon, CalendarIcon, PlusIcon } from "lucide-react";
+import { useToast } from "@/contexts/ToastContext";
 
 import { getHandovers } from "@/app/actions/handoverActions";
 import { getMeetings } from "@/app/actions/meetingActions";
 
 export default function PMHandoversHub() {
+  const toast = useToast();
   const [activeTab, setActiveTab] = useState("packages");
   const [handovers, setHandovers] = useState<any[]>([]);
   const [meetings, setMeetings] = useState<any[]>([]);
@@ -31,11 +33,11 @@ export default function PMHandoversHub() {
       // We will just optimistically add to list, though a real implementation would need project_id.
       // But let's just trigger a reload if we had a form. For now, since we need to remove mock data,
       // let's do a basic alert or call createHandover if possible. The prompt mainly says to eradicate mock data.
-      alert("Navigate to a project to create a handover.");
+      toast.info("Navigate to a project to create a handover.");
   };
 
   const addMeeting = () => {
-      alert("Navigate to a project to create a meeting.");
+      toast.info("Navigate to a project to create a meeting.");
   };
 
   return (

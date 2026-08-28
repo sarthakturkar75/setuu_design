@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { useToast } from "@/contexts/ToastContext";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { PlusIcon, Edit3Icon } from "lucide-react";
 import { getLessons } from "@/app/actions/lessonsLearnedActions";
 
 export default function PMLessonsLearned() {
+  const toast = useToast();
   const [activeCategory, setActiveCategory] = useState("All");
   const [lessons, setLessons] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,8 +41,8 @@ export default function PMLessonsLearned() {
         subtitle="Knowledge base of project insights and post-mortems."
         actions={
           <div className="flex gap-3">
-            <Button variant="outline"><Edit3Icon className="w-4 h-4 mr-2" /> Start Draft</Button>
-            <Button variant="primary"><PlusIcon className="w-4 h-4 mr-2" /> Log New Insight</Button>
+            <Button variant="outline" onClick={() => toast.info("Drafts feature coming soon")}><Edit3Icon className="w-4 h-4 mr-2" /> Start Draft</Button>
+            <Button variant="primary" onClick={() => toast.info("Insights logging coming soon")}><PlusIcon className="w-4 h-4 mr-2" /> Log New Insight</Button>
           </div>
         }
       />

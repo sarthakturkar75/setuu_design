@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
 
 export async function generatePublicShareLink(projectId: string, expiryDays: number = 7) {
   const supabase = await createClient();

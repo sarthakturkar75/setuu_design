@@ -1,6 +1,8 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import crypto from "crypto";
+
 import { revalidatePath } from "next/cache";
 import { verifyRole } from "./authUtils";
 
@@ -159,7 +161,6 @@ export async function createMaterial(formData: FormData) {
   const currentStock = parseInt(formData.get("current_stock") as string) || quantity;
   const unitCost = parseFloat(formData.get("unit_cost") as string) || 0;
 
-  // Generate a random UUID for the QR code
   const crypto = require("crypto");
   const qrUuid = crypto.randomUUID();
   
@@ -241,4 +242,23 @@ export async function getProjectSubmittals(projectId: string) {
   const supabase = await createClient();
   const { data } = await supabase.from("project_submittals").select("id, title, spec_section").eq("project_id", projectId);
   return data || [];
+}
+
+export async function uploadDeliveryProof(materialId: string, projectId: string, fileUrl: string, fileType: string, notes?: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+  
+  const { error } = await supabase.from("delivery_proofs").insert({
+    material_id: materialId,
+    project_id: projectId,
+    file_url: fileUrl,
+    file_type: fileType,
+    notes,
+    uploaded_by: user.id
+  });
+  if (error) throw error;
+  
+  await supabase.from("project_materials").update({ status: 'in_transit' }).eq("id", materialId);
+  return { success: true };
 }
