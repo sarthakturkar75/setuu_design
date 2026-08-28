@@ -5,15 +5,15 @@ import { revalidatePath } from "next/cache";
 import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+
 
 // Fetch Root Causes
 export async function getRootCauses() {
   // We must bypass RLS entirely for this configuration table using the Service Role Key.
   // Standard user sessions likely lack SELECT policies, causing it to constantly return an empty array.
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
 
-  const { data, error } = await adminSupabase.from("issue_root_causes").select("*");
+  const { data, error } = await supabase.from("issue_root_causes").select("*");
   if (error) {
     console.error("Failed to fetch root causes:", error);
     return [];
@@ -34,10 +34,10 @@ export async function getRootCauses() {
 
     if (idsToDelete.length > 0) {
       console.log(`Cleaning up ${idsToDelete.length} duplicate root causes...`);
-      await adminSupabase.from("issue_root_causes").delete().in("id", idsToDelete);
+      await supabase.from("issue_root_causes").delete().in("id", idsToDelete);
 
       // Re-fetch clean data
-      const { data: cleanData } = await adminSupabase.from("issue_root_causes").select("*");
+      const { data: cleanData } = await supabase.from("issue_root_causes").select("*");
       return cleanData || [];
     }
   }
@@ -53,10 +53,10 @@ export async function getRootCauses() {
       { name: "Safety Violation", category: "Compliance" }
     ];
 
-    const { error: seedError } = await adminSupabase.from("issue_root_causes").insert(seedData);
+    const { error: seedError } = await supabase.from("issue_root_causes").insert(seedData);
     if (seedError) console.error("Root cause seeding failed:", seedError);
 
-    const { data: newData } = await adminSupabase.from("issue_root_causes").select("*");
+    const { data: newData } = await supabase.from("issue_root_causes").select("*");
     return newData || [];
   }
 
@@ -83,9 +83,9 @@ export async function createIssue(formData: FormData) {
   // Handle rich media if uploaded directly
   const mediaAssets = formData.get("media_assets") ? JSON.parse(formData.get("media_assets") as string) : [];
 
-  const adminSupabase = createAdminClient();
+  
 
-  const { error } = await adminSupabase.from("project_issues").insert({
+  const { error } = await supabase.from("project_issues").insert({
     project_id: projectId,
     title,
     description,
@@ -102,7 +102,7 @@ export async function createIssue(formData: FormData) {
 
   if (!error) {
     // Notify PMs and Admins
-    const { data: stakeholders } = await adminSupabase.from("user_actor").select("id").in("role", ["admin", "pm"]);
+    const { data: stakeholders } = await supabase.from("user_actor").select("id").in("role", ["admin", "pm"]);
     if (stakeholders) {
       const userIds = stakeholders.map(s => s.id).filter(id => id !== user?.user?.id);
       if (userIds.length > 0) {
@@ -141,10 +141,10 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
 
-  const adminSupabase = createAdminClient();
+  
 
   // 1. Insert the inspection record
-  const { error: inspectError } = await adminSupabase.from("issue_inspections").insert({
+  const { error: inspectError } = await supabase.from("issue_inspections").insert({
     issue_id: issueId,
     inspector_id: user?.user?.id,
     checklist_json: checklistJson,
@@ -154,7 +154,7 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
   if (inspectError) return { success: false, error: inspectError.message };
 
   // 2. Automatically resolve the parent issue since it passed QA!
-  const { error: updateError } = await adminSupabase
+  const { error: updateError } = await supabase
     .from("project_issues")
     .update({
       status: "Resolved",
@@ -171,9 +171,9 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
 // Add this new function at the bottom so the Global Console "Mark Resolved" button works too!
 export async function markIssueResolved(issueId: string) {
   await verifyRole(["admin", "pm", "engineer"]);
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
 
-  const { error } = await adminSupabase
+  const { error } = await supabase
     .from("project_issues")
     .update({
       status: "Resolved",

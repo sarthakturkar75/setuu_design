@@ -1,9 +1,12 @@
 "use server";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
+
+
+
 
 export async function getProjectPermissions(projectId: string) {
-  const supabase = await createAdminClient();
+  const supabase = await createClient();
   const { data } = await supabase
     .from('project_granular_permissions')
     .select('*')
@@ -13,7 +16,7 @@ export async function getProjectPermissions(projectId: string) {
 }
 
 export async function toggleUserPermission(projectId: string, userId: string, field: 'can_view_drawings' | 'can_view_financials', value: boolean) {
-  const supabase = await createAdminClient();
+  const supabase = await createClient();
   
   try {
     const { data: existing, error: fetchErr } = await supabase

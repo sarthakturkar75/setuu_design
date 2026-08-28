@@ -1,5 +1,4 @@
 "use server";
-import { createAdminClient } from '@/lib/supabase/admin';
 
 import { createClient } from "@/lib/supabase/server";
 import { verifyRole } from "./authUtils";
@@ -60,9 +59,9 @@ export async function createUpdate(formData: FormData) {
 
   // Use service role for insertion to bypass potentially restrictive RLS since we already verified roles
 
-  const adminSupabase = createAdminClient();
+  
 
-  const { data, error } = await adminSupabase.from("updates").insert({
+  const { data, error } = await supabase.from("updates").insert({
     project_id,
     author_id,
     caption,
@@ -84,7 +83,7 @@ export async function createUpdate(formData: FormData) {
       const uniqueFileName = `${crypto.randomUUID()}.${fileExt}`;
       const filePath = `${project_id}/${uniqueFileName}`;
 
-      const { data: uploadData, error: uploadError } = await adminSupabase.storage
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from('updates')
         .upload(filePath, file);
 
@@ -102,7 +101,7 @@ export async function createUpdate(formData: FormData) {
       if (file.type.startsWith("image/")) dbMediaType = "image";
       else if (file.type.startsWith("video/")) dbMediaType = "video";
 
-      const { error: insertError } = await adminSupabase.from("media_attachments").insert({
+      const { error: insertError } = await supabase.from("media_attachments").insert({
         update_id: data.id,
         file_name: file.name,
         url: publicUrl,
@@ -143,8 +142,8 @@ export async function addComment(updateId: string, content: string) {
     if (!user) throw new Error("Unauthorized");
 
     
-    const adminSupabase = createAdminClient();
-    const { error } = await adminSupabase.from("comments").insert({
+    
+    const { error } = await supabase.from("comments").insert({
       update_id: updateId,
       author_id: user.id,
       content: content
@@ -164,9 +163,9 @@ export async function deleteUpdate(updateId: string) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
-    const adminSupabase = createAdminClient();
+    
 
-    const { error } = await adminSupabase.from("updates").delete().eq("id", updateId);
+    const { error } = await supabase.from("updates").delete().eq("id", updateId);
     if (error) throw error;
     
     revalidatePath("/admin/projects/[id]/update", "page");

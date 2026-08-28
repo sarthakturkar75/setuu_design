@@ -1,64 +1,41 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
-export async function getReviews(projectId?: string) {
+export async function getReviews(userId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer"]);
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { incoming: [], outgoing: [] };
-
-  const { data: actor } = await supabase.from('user_actor').select('id, role').eq('id', user.id).single();
-  if (!actor) return { incoming: [], outgoing: [] };
-
-  // Incoming: where reviewer_id = me
-  let incQuery = supabase.from("design_reviews").select("*, author:user_actor!author_id(display_name)").eq("reviewer_id", actor.id);
-  if (projectId) incQuery = incQuery.eq("project_id", projectId);
-  
-  // Outgoing: where author_id = me
-  let outQuery = supabase.from("design_reviews").select("*, reviewer:user_actor!reviewer_id(display_name)").eq("author_id", actor.id);
-  if (projectId) outQuery = outQuery.eq("project_id", projectId);
-
-  const [incRes, outRes] = await Promise.all([incQuery, outQuery]);
-  
-  return {
-    incoming: incRes.data || [],
-    outgoing: outRes.data || []
-  };
-}
-
-export async function createReview(data: any) {
-  const supabase = await createClient();
-  const { error } = await supabase.from("design_reviews").insert(data);
-  if (error) throw error;
-  return { success: true };
-}
-
-export async function submitReviewAction(reviewId: string, action: "approve" | "request_changes", comment: string) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
-  
-  const status = action === "approve" ? "approved" : "changes_requested";
-  
-  await supabase.from("design_reviews").update({ status }).eq("id", reviewId);
-  await supabase.from("design_review_comments").insert({
-    review_id: reviewId,
-    author_id: user.id,
-    content: comment,
-    action
-  });
-  return { success: true };
+  const { data, error } = await supabase.from("design_reviews").select("*").or(`reviewer_id.eq.${userId},author_id.eq.${userId}`);
+  if (error) return [];
+  return data;
 }
 
 export async function getPendingReviews() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer"]);
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return 0;
-  
-  const { count } = await supabase
-    .from("design_reviews")
-    .select("*", { count: "exact", head: true })
-    .eq("reviewer_id", user.id)
-    .eq("status", "pending");
-    
+  const { count } = await supabase.from("design_reviews").select("*", { count: "exact" }).eq("reviewer_id", user.id).eq("status", "Pending");
   return count || 0;
+}
+
+export async function createReview(payload: any) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer"]);
+  const supabase = await createClient();
+  const { error } = await supabase.from("design_reviews").insert(payload);
+  if (error) return { success: false, error: error.message };
+  return { success: true };
+}
+
+export async function submitReviewAction(reviewId: string, status: string, comment?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer"]);
+  const supabase = await createClient();
+  const { error: updateErr } = await supabase.from("design_reviews").update({ status, reviewed_at: new Date().toISOString() }).eq("id", reviewId);
+  if (updateErr) return { success: false, error: updateErr.message };
+
+  if (comment) {
+    const { error: commentErr } = await supabase.from("design_review_comments").insert({ review_id: reviewId, content: comment });
+    if (commentErr) return { success: false, error: commentErr.message };
+  }
+  return { success: true };
 }

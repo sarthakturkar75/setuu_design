@@ -3,6 +3,7 @@
 import { useToast } from "@/contexts/ToastContext";
 import * as React from "react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FormField } from "@/components/ui/FormField";
 import { TextInput } from "@/components/ui/TextInput";
 import { TextArea } from "@/components/ui/TextArea";
@@ -13,7 +14,8 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { createChangeRequestFromForm } from "@/app/actions/changeRequestActions";
 
-export default function NewChangeRequestPage() {
+export default function NewChangeRequestPage({ params }: any) {
+  const router = useRouter();
   const toast = useToast();
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -24,7 +26,7 @@ export default function NewChangeRequestPage() {
   const [costImpact, setCostImpact] = useState("");
   const [description, setDescription] = useState("");
 
-  const params = useParams();
+  
   const projectId = params?.id as string;
 
   const handleSubmit = async (e: React.FormEvent, status: string = 'Pending') => {
@@ -72,7 +74,7 @@ export default function NewChangeRequestPage() {
         <p className="text-on-surface-variant max-w-md mx-auto">Your draft has been routed to the client and engineering teams for review.</p>
         <div className="pt-8">
           <Link href={`/pm/projects/${projectId}`}>
-            <Button variant="primary">Return to Dashboard</Button>
+            <Button variant="primary" onClick={() => router.push("/pm")}>Return to Dashboard</Button>
           </Link>
         </div>
       </div>

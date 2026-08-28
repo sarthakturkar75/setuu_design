@@ -94,7 +94,7 @@ export async function updateMilestone(id: string, updateData: any) {
     }
   }
 
-  revalidatePath(`/`); // Simplified invalidation for prototype
+  revalidatePath(`/`);
   return { success: true };
 }
 
@@ -126,8 +126,7 @@ export async function toggleChecklistItem(itemId: string, completed: boolean) {
     .eq("id", itemId);
 
   if (error) return { success: false, error: error.message };
-  revalidatePath(`/`); // Simplified
-  return { success: true };
+  revalidatePath(`/`);   return { success: true };
 }
 
 export async function addChecklistItem(milestoneId: string, title: string) {
@@ -153,8 +152,7 @@ export async function addChecklistItem(milestoneId: string, title: string) {
     });
 
   if (error) return { success: false, error: error.message };
-  revalidatePath(`/`); // Simplified
-  return { success: true };
+  revalidatePath(`/`);   return { success: true };
 }
 
 export async function deleteMilestone(milestoneId: string) {

@@ -323,7 +323,7 @@ export const getNavigationForRole = (
                             { label: "Project Dashboard", href: `/engineer/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
                             { label: "Timeline", href: `/engineer/projects/${projectId}/timeline`, icon: <CalendarIcon className="w-5 h-5" /> },
                             { label: "Requirements", href: `/engineer/projects/${projectId}/requirements`, icon: <FileTextIcon className="w-5 h-5" /> },
-                            ...(permissions?.can_view_drawings ? [{ label: "Drawings", href: `/engineer/projects/${projectId}/drawings`, icon: <FileBoxIcon className="w-5 h-5" /> }] : []),
+                            ...(dynamicData?.flags?.drawing_versions !== false ? [{ label: "Drawings", href: `/engineer/projects/${projectId}/drawings`, icon: <FileBoxIcon className="w-5 h-5" /> }] : []),
                             { label: "Materials", href: `/engineer/projects/${projectId}/materials`, icon: <PackageIcon className="w-5 h-5" /> },
                             { label: "Issues", href: `/engineer/projects/${projectId}/issues`, icon: <AlertTriangleIcon className="w-5 h-5" /> },
                             { label: "Team", href: `/engineer/projects/${projectId}/team`, icon: <UsersIcon className="w-5 h-5" /> },

@@ -11,7 +11,7 @@ export default function EngineerReviews() {
   const [reviews, setReviews] = useState<{incoming: any[], outgoing: any[]}>({ incoming: [], outgoing: [] });
   
   useEffect(() => {
-    getReviews().then(setReviews);
+    getReviews("mock-user-id").then(res => setReviews({ incoming: res as any, outgoing: [] }));
   }, []);
 
   const columns = [

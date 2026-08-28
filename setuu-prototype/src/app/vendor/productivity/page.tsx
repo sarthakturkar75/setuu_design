@@ -32,7 +32,7 @@ export default function ProductivityDashboard() {
   return (
     <div className="p-6 max-w-[1600px] mx-auto space-y-6">
       <PageHeader 
-        title="ADMIN Productivity Analytics" 
+        title="VENDOR Productivity Analytics" 
         subtitle="Role-specific composite scoring and execution velocity metrics."
       />
 

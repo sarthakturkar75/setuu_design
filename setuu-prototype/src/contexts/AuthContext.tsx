@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
 import { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 
@@ -22,8 +22,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [organizationId, setOrganizationId] = useState<string | null>(null)
   const [displayName, setDisplayName] = useState<string | null>(null)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+
   const [isLoading, setIsLoading] = useState(true)
+  const [showInactivityWarning, setShowInactivityWarning] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const warningRef = useRef<NodeJS.Timeout | null>(null)
   const supabase = createClient()
+
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -72,6 +77,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [supabase])
 
+  
+  const resetTimer = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    if (warningRef.current) clearTimeout(warningRef.current)
+    
+    setShowInactivityWarning(false)
+
+    if (user) {
+      // Warning at 25 minutes
+      warningRef.current = setTimeout(() => {
+        setShowInactivityWarning(true)
+      }, 25 * 60 * 1000)
+
+      // Logout at 30 minutes
+      timeoutRef.current = setTimeout(() => {
+        signOut()
+      }, 30 * 60 * 1000)
+    }
+  }, [user])
+
+  useEffect(() => {
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart']
+    const handleActivity = () => resetTimer()
+    events.forEach(e => window.addEventListener(e, handleActivity))
+    resetTimer()
+
+    return () => {
+      events.forEach(e => window.removeEventListener(e, handleActivity))
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      if (warningRef.current) clearTimeout(warningRef.current)
+    }
+  }, [resetTimer])
+
   const signOut = async () => {
     await supabase.auth.signOut()
     setUser(null)
@@ -83,8 +121,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ user, role, organizationId, displayName, avatarUrl, isLoading, signOut }}>
+
       {children}
+      {showInactivityWarning && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-surface p-6 rounded-lg shadow-lg border border-border max-w-sm w-full text-center space-y-4">
+            <h2 className="text-xl font-bold text-on-surface">Are you still there?</h2>
+            <p className="text-on-surface-variant">Your session will expire soon due to inactivity.</p>
+            <button onClick={resetTimer} className="w-full py-2 bg-primary text-on-primary rounded-md">
+              Keep me logged in
+            </button>
+          </div>
+        </div>
+      )}
     </AuthContext.Provider>
+
   )
 }
 

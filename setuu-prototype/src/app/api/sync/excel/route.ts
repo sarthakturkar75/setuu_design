@@ -33,6 +33,10 @@ export async function POST(request: Request) {
 
         const { data: actor } = await supabase.from('user_actor').select('role, id').eq('id', user.id).single();
         const role = actor?.role || 'engineer';
+        if (role === 'client' || role === 'vendor') {
+            return NextResponse.json({ error: "Your role does not have permission to import Excel data." }, { status: 403 });
+        }
+
 
 
         const arrayBuffer = await file.arrayBuffer();
@@ -46,6 +50,11 @@ export async function POST(request: Request) {
         // ==========================================
         // IMPORT ROUTER: Check which sheet exists
         // ==========================================
+        
+        if (role === 'engineer' && (workbook.getWorksheet("Financials") || workbook.getWorksheet("PO") || workbook.getWorksheet("Invoices"))) {
+            return NextResponse.json({ error: "Engineers cannot modify Financials" }, { status: 403 });
+        }
+
         const planningSheet = workbook.getWorksheet("Planning");
         const srsSheet = workbook.getWorksheet("SRS");
 

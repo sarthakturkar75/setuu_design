@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+
 
 export async function generateDailyReport(projectId: string, targetDate: string) {
   const supabase = await createClient();
@@ -104,12 +104,12 @@ export async function generateDailyReport(projectId: string, targetDate: string)
     const reportMarkdown = data.choices[0].message.content;
 
     // We use the admin client to bypass RLS because the daily_logs table lacks an explicit UPDATE policy for users
-    const adminSupabase = createAdminClient();
+    
 
     // Save or Update Database
     let savedLog, dbError;
     if (existingLog) {
-      const result = await adminSupabase
+      const result = await supabase
         .from("daily_logs")
         .update({
           weather_summary_json: weatherSummary || {},
@@ -123,7 +123,7 @@ export async function generateDailyReport(projectId: string, targetDate: string)
       savedLog = result.data;
       dbError = result.error;
     } else {
-      const result = await adminSupabase
+      const result = await supabase
         .from("daily_logs")
         .insert({
           project_id: projectId,
@@ -161,8 +161,8 @@ export async function getDailyLogs(projectId: string) {
 }
 
 export async function deleteDailyLog(logId: string) {
-  const adminSupabase = createAdminClient();
-  const { error } = await adminSupabase.from("daily_logs").delete().eq("id", logId);
+  const supabase = await createClient();
+  const { error } = await supabase.from("daily_logs").delete().eq("id", logId);
   if (error) return { success: false, error: error.message };
   return { success: true };
 }

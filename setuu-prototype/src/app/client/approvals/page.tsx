@@ -10,7 +10,7 @@ export default function ClientApprovals() {
   const [approvals, setApprovals] = useState<any[]>([]);
 
   useEffect(() => {
-    getClientApprovals().then((data) => setApprovals(data || []));
+    getClientApprovals().then((data: any) => setApprovals(data || []));
   }, []);
 
   const columns = [

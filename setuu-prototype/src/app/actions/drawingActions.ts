@@ -1,5 +1,5 @@
 "use server";
-import { createAdminClient } from "@/lib/supabase/admin";
+
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -11,7 +11,7 @@ export async function uploadDrawingVersion(formData: FormData) {
   await verifyRole(["admin", "pm", "engineer", "vendor"]);
   const { data: user } = await (await createClient()).auth.getUser();
 
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
 
   const projectId = formData.get("project_id") as string;
   const drawingName = formData.get("drawing_name") as string;
@@ -19,7 +19,7 @@ export async function uploadDrawingVersion(formData: FormData) {
   const discipline = formData.get("discipline") as string || "Architectural";
   const scaleFactor = parseFloat(formData.get("scale_factor") as string) || null;
 
-  const { data: existing } = await adminSupabase
+  const { data: existing } = await supabase
     .from("drawing_versions")
     .select("version_number")
     .eq("project_id", projectId)
@@ -29,7 +29,7 @@ export async function uploadDrawingVersion(formData: FormData) {
 
   const nextVersion = existing && existing.length > 0 ? (existing[0].version_number || 1) + 1 : 1;
 
-  const { error } = await adminSupabase.from("drawing_versions").insert({
+  const { error } = await supabase.from("drawing_versions").insert({
     project_id: projectId,
     drawing_name: drawingName,
     file_url: fileUrl,
@@ -42,7 +42,7 @@ export async function uploadDrawingVersion(formData: FormData) {
   if (error) return { success: false, error: error.message };
 
   if (!error) {
-    const { data: stakeholders } = await adminSupabase.from("user_actor").select("id").in("role", ["admin", "pm", "engineer"]);
+    const { data: stakeholders } = await supabase.from("user_actor").select("id").in("role", ["admin", "pm", "engineer"]);
     if (stakeholders) {
       const userIds = stakeholders.map(s => s.id).filter(id => id !== user?.user?.id);
       if (userIds.length > 0) {
@@ -86,9 +86,9 @@ export async function getProjectDrawings(projectId: string) {
     }
   }
 
-  const adminSupabase = createAdminClient();
+  
 
-  const { data, error } = await adminSupabase
+  const { data, error } = await supabase
     .from("drawing_versions")
     .select("*, drawing_pins(*), drawing_hyperlinks!drawing_hyperlinks_source_drawing_id_fkey(*)")
     .eq("project_id", projectId)
@@ -102,9 +102,9 @@ export async function getProjectDrawings(projectId: string) {
 export async function pinEntityToDrawing(drawingId: string, x: number, y: number, entityType: string, entityId: string | null) {
   await verifyRole(["admin", "pm", "engineer"]);
   
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
 
-  const { error } = await adminSupabase.from("drawing_pins").insert({
+  const { error } = await supabase.from("drawing_pins").insert({
     drawing_id: drawingId,
     x_coord: x,
     y_coord: y,
@@ -122,7 +122,7 @@ export async function simulateSlipSheeting(projectId: string, pages: any[]) {
   await verifyRole(["admin", "pm"]);
   const { data: user } = await (await createClient()).auth.getUser();
 
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
 
   const inserts = pages.map(page => ({
     project_id: projectId,
@@ -134,7 +134,7 @@ export async function simulateSlipSheeting(projectId: string, pages: any[]) {
     custom_data: { discipline: "Architectural", source: "Auto-SlipSheet" }
   }));
 
-  const { error } = await adminSupabase.from("drawing_versions").insert(inserts);
+  const { error } = await supabase.from("drawing_versions").insert(inserts);
   if (error) return { success: false, error: error.message };
   revalidatePath(`/`);
   return { success: true };
@@ -144,13 +144,13 @@ export async function simulateSlipSheeting(projectId: string, pages: any[]) {
 export async function updateDrawingScale(drawingId: string, scaleFactor: number) {
   await verifyRole(["admin", "pm", "engineer"]);
   
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
 
   // Fetch current custom_data
-  const { data: current } = await adminSupabase.from("drawing_versions").select("custom_data").eq("id", drawingId).single();
+  const { data: current } = await supabase.from("drawing_versions").select("custom_data").eq("id", drawingId).single();
   const currentData = current?.custom_data || {};
 
-  const { error } = await adminSupabase.from("drawing_versions").update({
+  const { error } = await supabase.from("drawing_versions").update({
     custom_data: { ...currentData, scale_factor: scaleFactor }
   }).eq("id", drawingId);
 
@@ -162,9 +162,9 @@ export async function updateDrawingScale(drawingId: string, scaleFactor: number)
 // --- Task: Drawing Management Utilities ---
 export async function deleteDrawingVersion(drawingId: string) {
   await verifyRole(["admin", "pm"]);
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
   
-  const { error } = await adminSupabase.from("drawing_versions").delete().eq("id", drawingId);
+  const { error } = await supabase.from("drawing_versions").delete().eq("id", drawingId);
   if (error) return { success: false, error: error.message };
   revalidatePath(`/`);
   return { success: true };
@@ -172,9 +172,9 @@ export async function deleteDrawingVersion(drawingId: string) {
 
 export async function renameDrawingGroup(projectId: string, oldName: string, newName: string) {
   await verifyRole(["admin", "pm"]);
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
   
-  const { error } = await adminSupabase.from("drawing_versions")
+  const { error } = await supabase.from("drawing_versions")
     .update({ drawing_name: newName })
     .eq("project_id", projectId)
     .eq("drawing_name", oldName);
@@ -186,9 +186,9 @@ export async function renameDrawingGroup(projectId: string, oldName: string, new
 
 export async function replaceDrawingFile(drawingId: string, newFileUrl: string) {
   await verifyRole(["admin", "pm"]);
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
   
-  const { error } = await adminSupabase.from("drawing_versions")
+  const { error } = await supabase.from("drawing_versions")
     .update({ file_url: newFileUrl })
     .eq("id", drawingId);
     
@@ -199,11 +199,11 @@ export async function replaceDrawingFile(drawingId: string, newFileUrl: string) 
 
 export async function updateDrawingTags(drawingId: string, customData: any, newTags: string[]) {
   await verifyRole(["admin", "pm", "engineer"]);
-  const adminSupabase = createAdminClient();
+  const supabase = await createClient();
   
   const payload = { ...(customData || {}), tags: newTags };
   
-  const { error } = await adminSupabase.from("drawing_versions")
+  const { error } = await supabase.from("drawing_versions")
     .update({ custom_data: payload })
     .eq("id", drawingId);
     

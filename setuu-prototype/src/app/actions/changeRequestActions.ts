@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
-import { createClient as createAdminClient } from "@supabase/supabase-js";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function createChangeRequestFromForm(formData: FormData) {
   await verifyRole(["admin", "pm", "superadmin"]);
@@ -39,10 +39,7 @@ export async function createChangeRequestFromForm(formData: FormData) {
   if (error) return { success: false, error: error.message };
 
   // Notify stakeholders
-  const adminSupabase = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const adminSupabase = createAdminClient();
   const { data: stakeholders } = await adminSupabase.from("user_actor").select("id").in("role", ["admin", "client", "pm"]);
   if (stakeholders) {
     const userIds = stakeholders.map(s => s.id).filter(id => id !== user.id);
@@ -86,12 +83,12 @@ export async function approveChangeRequest(id: string, projectId: string) {
 }
 
 export async function rejectChangeRequest(id: string, projectId: string, reason: string) {
-  await verifyRole(["admin", "pm"]);
+  const user = await verifyRole(["admin", "pm"]);
   const supabase = await createClient();
   
   const { data: existing } = await supabase
     .from("change_requests")
-    .select("custom_data")
+    .select("custom_data, title, created_by")
     .eq("id", id)
     .single();
     
@@ -108,6 +105,17 @@ export async function rejectChangeRequest(id: string, projectId: string, reason:
     .eq("id", id);
 
   if (error) return { success: false, error: error.message };
+
+  if (existing?.created_by) {
+    const adminSupabase = createAdminClient();
+    await createSystemNotification(
+      [existing.created_by],
+      `Change Request Rejected: ${existing.title}`,
+      `Reason: ${reason}`,
+      "system",
+      projectId
+    );
+  }
 
   revalidatePath(`/admin/changes`);
   revalidatePath(`/pm/projects/${projectId}/changes`);

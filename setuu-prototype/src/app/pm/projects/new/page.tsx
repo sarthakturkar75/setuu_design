@@ -29,8 +29,8 @@ export default function NewProjectWizard() {
           getClientOrgs(),
           getUsers({ role: 'pm' })
         ]);
-        setClientOptions(orgs.map(o => ({ label: o.name, value: o.id })));
-        setPmOptions(pms.map(p => ({ label: p.display_name || p.id, value: p.id })));
+        setClientOptions(orgs.map((o: any) => ({ label: o.name, value: o.id })));
+        setPmOptions(pms.map((p: any) => ({ label: p.display_name || p.id, value: p.id })));
       } catch (err) {
         console.error("Failed to load options", err);
       }

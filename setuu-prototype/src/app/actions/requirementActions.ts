@@ -42,7 +42,7 @@ export async function createRequirement(formData: FormData) {
     return { success: true };
 }
 
-// NEW: Allows inline editing from the Traceability Matrix
+
 export async function updateRequirementStatus(reqId: string, projectId: string, status: string, remarks?: string) {
     // Engineers can update status, so we allow them here
     await verifyRole(["admin", "pm", "superadmin", "engineer"]);

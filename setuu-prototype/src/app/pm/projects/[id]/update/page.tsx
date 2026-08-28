@@ -136,7 +136,7 @@ export default function CameraUpdatePage() {
             <div className="pt-8 flex justify-center gap-4">
                 <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); setCaption(""); }}>Log Another Update</Button>
                 <Link href={`/pm/projects/${id}`}>
-                    <Button variant="primary">Return to Dashboard</Button>
+                    <Button variant="primary" onClick={() => window.location.href = ("/pm")}>Return to Dashboard</Button>
                 </Link>
             </div>
         </div>

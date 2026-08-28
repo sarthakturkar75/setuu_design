@@ -97,7 +97,7 @@ export async function saveDashboardLayout(layoutJson: any) {
 }
 
 // ----------------------------------------------------------------------------
-// NEW: EVM Analytics Aggregator (Phase 2 Requirement)
+
 // ----------------------------------------------------------------------------
 export async function getProjectEVMMetrics(projectId: string) {
   const supabase = await createClient();

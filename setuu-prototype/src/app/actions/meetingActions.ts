@@ -45,8 +45,7 @@ export async function addAgendaItem(meetingId: string, data: any) {
     });
     
   if (error) return { success: false, error: error.message };
-  revalidatePath(`/`); // Simplified
-  return { success: true };
+  revalidatePath(`/`);   return { success: true };
 }
 
 export async function updateMeetingMinutes(meetingId: string, minutes: string) {

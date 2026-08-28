@@ -264,7 +264,7 @@ export async function getProjectTeam(projectId: string) {
       role: pm.role || "PM",
       employment_type: "Internal Employee",
       hourly_rate: 0,
-      organization_id: pm.organization_id, // NEW
+      organization_id: pm.organization_id, 
       organization_name: orgName,
     });
   }
@@ -294,7 +294,7 @@ export async function getProjectTeam(projectId: string) {
           employment_type: v.employment_type,
           skills: v.skills || [],
           hourly_rate: v.hourly_rate || 0,
-          organization_id: v.organization_id, // NEW
+          organization_id: v.organization_id, 
           organization_name: orgName,
         });
       });

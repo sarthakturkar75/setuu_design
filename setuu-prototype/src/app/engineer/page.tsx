@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { getProductivityScore } from "@/app/actions/productivityActions";
+import { getEngineerProductivity } from "@/app/actions/productivityActions";
 import { getPendingReviews } from "@/app/actions/reviewActions";
 import { getAssignedTasks } from "@/app/actions/timelineActions";
 import { ActivityFeed } from "@/components/ui/ActivityFeed";

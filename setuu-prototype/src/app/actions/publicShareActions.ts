@@ -36,7 +36,7 @@ export async function generatePublicShareLink(projectId: string, expiryDays: num
 }
 
 export async function getPublicProjectData(secureToken: string) {
-  const supabase = await createClient(); // Use a service client or bypass RLS if strictly public
+  const supabase = await createClient();
 
   // 1. Validate Token
   const { data: share, error: shareError } = await supabase

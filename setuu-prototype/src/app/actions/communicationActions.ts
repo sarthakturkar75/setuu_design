@@ -1,5 +1,5 @@
 "use server";
-import { createAdminClient } from "@/lib/supabase/admin";
+
 import { createClient } from "@/lib/supabase/server";
 
 export async function sendChatMessage(
@@ -120,7 +120,7 @@ export async function getProjectCommunications(projectId: string) {
   try {
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (serviceRoleKey) {
-      const adminClient = createAdminClient();
+      const adminClient = await createClient();
 
       const { data: aData } = await adminClient.from("user_actor").select("id, display_name, role").in("id", senderIds);
       if (aData) actors = aData;
@@ -173,7 +173,7 @@ export async function getAcknowledgmentMatrix(projectId: string) {
   try {
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (serviceRoleKey) {
-      const adminClient = createAdminClient();
+      const adminClient = await createClient();
       const { data: iData } = await adminClient.from("user_identity").select("actor_id, full_name");
       if (iData) identities = iData;
 
@@ -207,7 +207,7 @@ export async function resolveSenderMetadata(senderId: string) {
   try {
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!serviceRoleKey) return null;
-    const adminClient = createAdminClient();
+    const adminClient = await createClient();
     const { data: ident } = await adminClient.from("user_identity").select("full_name").eq("actor_id", senderId).single();
     const { data: actor } = await adminClient.from("user_actor").select("display_name, role").eq("id", senderId).single();
 

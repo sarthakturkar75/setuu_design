@@ -15,31 +15,38 @@ export async function getCashFlowData() {
     }
   }
 
-  const { data: projects, error } = await supabase.from("projects").select("start_date, contract_value");
+  const { data: invoices, error: invError } = await supabase.from("invoices").select("amount, created_at");
+  const { data: pos, error: poError } = await supabase.from("purchase_orders").select("total_amount, created_at");
   
-  if (error) {
-    console.error(error);
+  if (invError || poError) {
+    console.error(invError || poError);
     return [];
   }
   
   const monthData: Record<string, { Inflow: number, Outflow: number }> = {};
   
-  projects?.forEach(p => {
-    if (p.start_date && p.contract_value) {
-      const date = new Date(p.start_date);
+  invoices?.forEach(inv => {
+    if (inv.created_at && inv.amount) {
+      const date = new Date(inv.created_at);
       const month = date.toLocaleString('default', { month: 'short' });
-      if (!monthData[month]) {
-        monthData[month] = { Inflow: 0, Outflow: 0 };
-      }
-      monthData[month].Inflow += Number(p.contract_value) / 1000000;
-      monthData[month].Outflow += (Number(p.contract_value) * 0.8) / 1000000;
+      if (!monthData[month]) monthData[month] = { Inflow: 0, Outflow: 0 };
+      monthData[month].Inflow += Number(inv.amount) / 1000000;
+    }
+  });
+
+  pos?.forEach(po => {
+    if (po.created_at && po.total_amount) {
+      const date = new Date(po.created_at);
+      const month = date.toLocaleString('default', { month: 'short' });
+      if (!monthData[month]) monthData[month] = { Inflow: 0, Outflow: 0 };
+      monthData[month].Outflow += Number(po.total_amount) / 1000000;
     }
   });
   
   const result = Object.keys(monthData).map(month => ({
     month,
-    Inflow: Math.round(monthData[month].Inflow),
-    Outflow: Math.round(monthData[month].Outflow),
+    Inflow: Math.round(monthData[month].Inflow * 10) / 10,
+    Outflow: Math.round(monthData[month].Outflow * 10) / 10,
   }));
 
   return result;

@@ -25,8 +25,7 @@ export async function markAsRead(id: string) {
     .eq("id", id);
     
   if (error) return { success: false, error: error.message };
-  revalidatePath(`/`); // Simplified
-  return { success: true };
+  revalidatePath(`/`);   return { success: true };
 }
 
 export async function sendBroadcast(data: any) {
