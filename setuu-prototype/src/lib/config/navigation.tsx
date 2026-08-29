@@ -293,6 +293,11 @@ export const getNavigationForRole = (
                 ],
                 bottomItems: [
                     {
+                        label: "Productivity",
+                        href: `/${role}/productivity`,
+                        icon: <Activity className="w-5 h-5" />,
+                    },
+                    {
                         label: "View Calendar",
                         href: `/${role}/calendar`,
                         icon: <CalendarIcon className="w-5 h-5" />,
@@ -374,7 +379,7 @@ export const getNavigationForRole = (
                     }] : [])
                 ],
                 bottomItems: [
-                    { label: "Vendor Scorecard", href: "/vendor/scorecard", icon: <Activity className="w-5 h-5" /> },
+                    { label: "Vendor Scorecard", href: "/vendor/productivity", icon: <Activity className="w-5 h-5" /> },
                     { label: "Support", href: "/vendor/support", icon: <CircleHelpIcon className="w-5 h-5" /> },
                     { label: "Notifications", href: "/vendor/notifications", icon: <Bell className="w-5 h-5" /> }
                 ]

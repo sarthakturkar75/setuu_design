@@ -19,7 +19,7 @@ export async function generateProjectReport(projectId: string, modules: string[]
   // We can return a structured data payload that a PDF renderer could use
   return { 
     success: true, 
-    downloadUrl: `/api/reports/project-${projectId}.pdf`,
+    downloadUrl: `/api/reports/download/${projectId}`,
     reportPayload: { project, requestedModules: modules, generatedAt: new Date().toISOString() } 
   };
 }

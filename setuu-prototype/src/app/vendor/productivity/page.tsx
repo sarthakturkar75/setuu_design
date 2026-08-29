@@ -3,32 +3,31 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { 
-  getEngineerProductivity, 
-  getPMProductivity, 
-  getAdminProductivity,
-  getProductivityTrends
-} from "@/app/actions/productivityActions";
-import { Activity, TrendingUp } from "lucide-react";
+import { getVendorProductivity } from "@/app/actions/productivityActions";
+import { TrendingUp } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function ProductivityDashboard() {
   const { user, organizationId } = useAuth();
   const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
       if (!user && !organizationId) return;
-
-      // In a real implementation, we would use the session user ID or org ID
-      let res;
-      if (false) {
-        res = await getEngineerProductivity(user?.id || "");
-      } else if (false) {
-        res = await getPMProductivity(user?.id || "");
-      } else {
-        res = await getAdminProductivity(organizationId || "");
+      try {
+        const supabase = createClient();
+        const { data: orgVendor } = await supabase.from('org_vendors').select('id').eq('organization_id', organizationId).single();
+        if (!orgVendor) {
+          setError("No vendor record found for this organization.");
+          return;
+        }
+        const res = await getVendorProductivity(orgVendor.id);
+        setData(res);
+      } catch (err: any) {
+        console.error(err);
+        setError("Failed to load metrics");
       }
-      setData(res);
     }
     load();
   }, [user, organizationId]);
@@ -36,11 +35,13 @@ export default function ProductivityDashboard() {
   return (
     <div className="p-6 max-w-[1600px] mx-auto space-y-6">
       <PageHeader 
-        title="VENDOR Productivity Analytics" 
-        subtitle="Role-specific composite scoring and execution velocity metrics."
+        title="Vendor Scorecard & Productivity" 
+        subtitle="Performance metrics, SLA compliance, and execution velocity."
       />
 
-      {!data ? (
+      {error ? (
+        <div className="text-error">{error}</div>
+      ) : !data ? (
         <div className="animate-pulse flex space-x-4 p-4">Loading metrics...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -48,7 +49,7 @@ export default function ProductivityDashboard() {
             <h3 className="text-lg font-semibold text-on-surface-variant mb-2">Composite Score</h3>
             <div className="text-6xl font-bold text-primary">{data.score}</div>
             <p className="text-sm text-on-surface-variant mt-2 flex items-center gap-1">
-              <TrendingUp className="w-4 h-4 text-semantic-emerald" /> Top 10% this month
+              <TrendingUp className="w-4 h-4 text-semantic-emerald" /> Evaluated automatically
             </p>
           </Card>
           

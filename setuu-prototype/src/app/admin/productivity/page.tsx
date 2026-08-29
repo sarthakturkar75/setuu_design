@@ -21,13 +21,7 @@ export default function ProductivityDashboard() {
 
       // In a real implementation, we would use the session user ID or org ID
       let res;
-      if (false) {
-        res = await getEngineerProductivity(user?.id || "");
-      } else if (false) {
-        res = await getPMProductivity(user?.id || "");
-      } else {
-        res = await getAdminProductivity(organizationId || "");
-      }
+      res = await getAdminProductivity(organizationId || "");
       setData(res);
     }
     load();
