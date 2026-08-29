@@ -302,7 +302,7 @@ export const getNavigationForRole = (
 
 
         
-        case "engineer":
+                case "engineer":
             return {
                 sections: [
                     {
@@ -315,6 +315,9 @@ export const getNavigationForRole = (
                             { label: "Timesheets", href: "/engineer/timesheet", icon: <CalendarIcon className="w-5 h-5" /> },
                             { label: "Collaboration", href: "/engineer/collaboration", icon: <MessageSquareIcon className="w-5 h-5" /> },
                             { label: "Team Docs & Wiki", href: "/engineer/docs", icon: <BookOpenIcon className="w-5 h-5" /> },
+                            { label: "Assets & Inventory", href: "/engineer/assets", icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "System Logs", href: "/engineer/logs", icon: <FileTextIcon className="w-5 h-5" /> },
+                            { label: "Offline Sync", href: "/engineer/sync", icon: <WifiOffIcon className="w-5 h-5" /> },
                         ],
                     },
                     ...(projectId ? [{
@@ -332,20 +335,29 @@ export const getNavigationForRole = (
                 ],
                 bottomItems: [
                     { label: "Productivity", href: "/engineer/productivity", icon: <Activity className="w-5 h-5" /> },
+                    { label: "Settings", href: "/engineer/settings", icon: <SettingsIcon className="w-5 h-5" /> },
                     { label: "Notifications", href: "/engineer/notifications", icon: <Bell className="w-5 h-5" /> }
                 ]
             };
 
-        case "vendor":
+                case "vendor":
             return {
                 sections: [
                     {
-                        title: "Primary",
+                        title: "Dispatch & Ops",
                         items: [
                             { label: "Dispatch Dashboard", href: "/vendor", icon: <LayoutDashboardIcon className="w-5 h-5" /> },
                             { label: "Material Deliveries", href: "/vendor/deliveries", icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Purchase Orders", href: "/vendor/orders", icon: <FileTextIcon className="w-5 h-5" /> },
                             { label: "Assigned Tasks", href: "/vendor/tasks", icon: <CheckSquareIcon className="w-5 h-5" /> },
+                            { label: "Active Projects", href: "/vendor/projects", icon: <FolderTreeIcon className="w-5 h-5" /> },
+                        ],
+                    },
+                    {
+                        title: "Quality & Billing",
+                        items: [
                             { label: "Defects & Rework", href: "/vendor/defects", icon: <AlertTriangleIcon className="w-5 h-5" /> },
+                            { label: "QA Checklists", href: "/vendor/qa", icon: <ShieldCheckIcon className="w-5 h-5" /> },
                             { label: "Invoicing", href: "/vendor/invoices", icon: <CreditCard className="w-5 h-5" /> },
                             { label: "Timesheets", href: "/vendor/timesheet", icon: <CalendarIcon className="w-5 h-5" /> },
                             { label: "Collaboration", href: "/vendor/collaboration", icon: <MessageSquareIcon className="w-5 h-5" /> },
@@ -353,12 +365,13 @@ export const getNavigationForRole = (
                     }
                 ],
                 bottomItems: [
+                    { label: "Vendor Scorecard", href: "/vendor/scorecard", icon: <Activity className="w-5 h-5" /> },
                     { label: "Support", href: "/vendor/support", icon: <CircleHelpIcon className="w-5 h-5" /> },
                     { label: "Notifications", href: "/vendor/notifications", icon: <Bell className="w-5 h-5" /> }
                 ]
             };
 
-        case "client":
+                case "client":
             return {
                 sections: [
                     {
@@ -369,15 +382,29 @@ export const getNavigationForRole = (
                         ],
                     },
                     {
-                        title: "Tracking",
+                        title: "Tracking & Control",
                         items: [
                             { label: "Progress Feed", href: "/client/progress", icon: <Activity className="w-5 h-5" /> },
                             { label: "Deliverables", href: "/client/deliverables", icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Drawings", href: "/client/drawings", icon: <FileBoxIcon className="w-5 h-5" /> },
                             { label: "Financials & CRs", href: "/client/financials", icon: <CreditCard className="w-5 h-5" /> },
+                            { label: "Approvals", href: "/client/approvals", icon: <CheckSquareIcon className="w-5 h-5" /> },
+                            { label: "Issues", href: "/client/issues", icon: <AlertTriangleIcon className="w-5 h-5" /> },
                         ],
+                    },
+                    {
+                        title: "Engagement",
+                        items: [
+                            { label: "Meetings", href: "/client/meetings", icon: <CalendarIcon className="w-5 h-5" /> },
+                            { label: "Handovers", href: "/client/handovers", icon: <ShieldCheckIcon className="w-5 h-5" /> },
+                            { label: "Reports", href: "/client/reports", icon: <FileTextIcon className="w-5 h-5" /> },
+                        ]
                     }
                 ],
-                bottomItems: []
+                bottomItems: [
+                    { label: "Support", href: "/client/support", icon: <CircleHelpIcon className="w-5 h-5" /> },
+                    { label: "Notifications", href: "/client/notifications", icon: <Bell className="w-5 h-5" /> }
+                ]
             };
 default:
             return { sections: [], bottomItems: [] };
