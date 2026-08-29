@@ -11,6 +11,89 @@ import { useToast } from "@/contexts/ToastContext";
 
 import { getHandovers } from "@/app/actions/handoverActions";
 import { getMeetings } from "@/app/actions/meetingActions";
+
+import { createMeeting } from "@/app/actions/meetingActions";
+import { getProjects } from "@/app/actions/projectActions";
+import { X } from "lucide-react";
+
+function ScheduleMeetingModal({ isOpen, onClose, onRefresh }: { isOpen: boolean, onClose: () => void, onRefresh: () => void }) {
+  const [loading, setLoading] = useState(false);
+  const [projects, setProjects] = useState<any[]>([]);
+  const toast = useToast();
+
+  React.useEffect(() => {
+    if (isOpen) {
+      getProjects().then(d => setProjects(d || []));
+    }
+  }, [isOpen]);
+  
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const fd = new FormData(e.currentTarget);
+    try {
+      const res = await createMeeting({
+        project_id: fd.get("project_id"),
+        title: fd.get("title"),
+        description: fd.get("description"),
+        meeting_date: fd.get("meeting_date"),
+        attendees: fd.get("attendees"),
+      });
+      if (res.success) {
+        toast.success("Meeting scheduled successfully");
+        onRefresh();
+        onClose();
+      } else {
+        toast.error(res.error || "Failed to schedule meeting");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+      <div className="bg-surface rounded-xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div className="flex justify-between items-center p-6 border-b border-outline/10">
+          <h2 className="text-xl font-semibold text-on-surface">Schedule Meeting</h2>
+          <button onClick={onClose} className="text-on-surface-variant hover:text-on-surface"><X className="w-5 h-5" /></button>
+        </div>
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-1">Project</label>
+            <select name="project_id" required className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface">
+              <option value="">Select Project...</option>
+              {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-1">Title / Topic</label>
+            <input name="title" required className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-1">Date & Time</label>
+            <input type="datetime-local" name="meeting_date" required className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-1">Attendees (Emails or Roles)</label>
+            <input name="attendees" placeholder="Client, Subcontractor, Architect..." required className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-1">Agenda / Description</label>
+            <textarea name="description" rows={3} className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface" />
+          </div>
+          <div className="pt-4 flex justify-end gap-3">
+            <Button variant="outline" type="button" onClick={onClose}>Cancel</Button>
+            <Button variant="primary" type="submit" disabled={loading}>{loading ? "Saving..." : "Schedule"}</Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 import { useRouter } from "next/navigation";
 
 export default function PMHandoversHub() {
@@ -18,6 +101,7 @@ export default function PMHandoversHub() {
   const [activeTab, setActiveTab] = useState("packages");
   const [handovers, setHandovers] = useState<any[]>([]);
   const [meetings, setMeetings] = useState<any[]>([]);
+  const [isMeetingModalOpen, setIsMeetingModalOpen] = useState(false);
 
   React.useEffect(() => {
     async function fetchData() {
@@ -37,8 +121,7 @@ export default function PMHandoversHub() {
   };
 
   const addMeeting = () => {
-      toast.info("Navigate to a project to create a meeting.");
-      router.push("/pm/projects");
+      setIsMeetingModalOpen(true);
   };
 
   return (

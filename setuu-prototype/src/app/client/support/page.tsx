@@ -61,10 +61,10 @@ export default function ClientSupport() {
               <h3 className="font-bold text-on-surface">FAQ & Guides</h3>
             </div>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="text-primary hover:underline">How to approve a change request</a></li>
-              <li><a href="#" className="text-primary hover:underline">Understanding the progress timeline</a></li>
-              <li><a href="#" className="text-primary hover:underline">Downloading meeting minutes</a></li>
-              <li><a href="#" className="text-primary hover:underline">Notification settings</a></li>
+              <li><a href="/client/approvals" className="text-primary hover:underline">How to approve a change request</a></li>
+              <li><a href="/client/progress" className="text-primary hover:underline">Understanding the progress timeline</a></li>
+              <li><a href="/client/meetings" className="text-primary hover:underline">Downloading meeting minutes</a></li>
+              <li><a href="/client/notifications" className="text-primary hover:underline">Notification settings</a></li>
             </ul>
           </Card>
         </div>
