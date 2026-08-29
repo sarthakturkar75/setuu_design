@@ -1314,6 +1314,76 @@ export type Database = {
           },
         ]
       }
+      invitations: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invite_type: string
+          inviter_id: string
+          metadata: Json | null
+          resource_id: string | null
+          role_offered: string
+          status: string
+          target_org_id: string | null
+          target_user_id: string | null
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          invite_type: string
+          inviter_id: string
+          metadata?: Json | null
+          resource_id?: string | null
+          role_offered: string
+          status?: string
+          target_org_id?: string | null
+          target_user_id?: string | null
+          token: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invite_type?: string
+          inviter_id?: string
+          metadata?: Json | null
+          resource_id?: string | null
+          role_offered?: string
+          status?: string
+          target_org_id?: string | null
+          target_user_id?: string | null
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invitations_inviter_id_fkey"
+            columns: ["inviter_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invitations_target_org_id_fkey"
+            columns: ["target_org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invitations_target_user_id_fkey"
+            columns: ["target_user_id"]
+            isOneToOne: false
+            referencedRelation: "user_actor"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invoices: {
         Row: {
           amount: number
