@@ -110,15 +110,17 @@ const config: Config = {
         }
       },
       fontFamily: {
-        merriweather: ["var(--font-merriweather)"],
-        inter: ["var(--font-inter)"],
-        "jetbrains-mono": ["var(--font-jetbrains-mono)"],
+        poppins: ["var(--font-poppins)"],
+        sans: ["var(--font-poppins)"],
+        serif: ["var(--font-poppins)"],
+        mono: ["var(--font-poppins)"],
       },
       boxShadow: {
         'elevation-l0': 'var(--elevation-l0)',
         'elevation-l1': 'var(--elevation-l1)',
         'elevation-l2': 'var(--elevation-l2)',
         'elevation-l3': 'var(--elevation-l3)',
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
       },
       transitionDuration: {
         'fast': 'var(--duration-fast)',
@@ -165,10 +167,11 @@ const config: Config = {
     function ({ addUtilities }: any) {
       addUtilities({
         '.glass': {
-          'backdrop-filter': 'blur(var(--glassmorphism-blur))',
-          '-webkit-backdrop-filter': 'blur(var(--glassmorphism-blur))',
+          'backdrop-filter': 'blur(var(--glassmorphism-blur)) saturate(180%)',
+          '-webkit-backdrop-filter': 'blur(var(--glassmorphism-blur)) saturate(180%)',
           'background-color': 'var(--glassmorphism-bg)',
           'border': '1px solid var(--glassmorphism-border)',
+          'box-shadow': 'var(--glassmorphism-shadow)',
         },
       })
     }

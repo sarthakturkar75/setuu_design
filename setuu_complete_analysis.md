@@ -27,8 +27,10 @@ graph TB
 
     SA -->|"Manages platform,<br/>subscriptions, billing"| AD
     AD -->|"Creates projects,<br/>invites users"| PM
+    AD -->|"Can assign any lower role to project"| EN
+    AD -->|"Invites new users to platform & assigns to project"| VN
     AD -->|"Onboards client orgs,<br/>assigns to projects"| CL
-    AD -->|"Assigns vendors to<br/>projects/orgs"| VN
+    PM -->|"Can assign any lower role to project"| EN
     PM -->|"Creates updates,<br/>manages milestones"| EN
     PM -->|"Assigns materials,<br/>tasks to vendors"| VN
     PM -->|"Reports progress to"| CL
@@ -36,6 +38,11 @@ graph TB
     VN -->|"Delivers materials,<br/>submits proofs"| PM
     CL -->|"Acknowledges updates,<br/>approves documents"| PM
 ```
+
+### Critical Permission Rules
+
+- **Admin**: Can invite brand new users to the application and subsequently assign them to any project. Admins can assign any user of any role below them (PM, Employee, Vendor, Client) to any project.
+- **Project Manager (PM)**: Can assign any user of any role below them (Employee, Vendor, Client) to any project they manage.
 
 ### Role Access Matrix
 
@@ -75,57 +82,48 @@ graph TB
 
 ## 4. Design System — Complete Specification
 
-### 4.1 Dual-Theme Philosophy
+### 4.1 Maximum Glassmorphism Philosophy
 
-| Aspect | Light Mode ("Canvas & Sheet") | Dark Mode ("CAD Blueprint") |
+We are implementing a highly dynamic, color-rich dual-theme setup completely built around **Maximum Glassmorphism**.
+
+| Aspect | Light Mode ("Frost Canvas") | Dark Mode ("Deep Space Spacecraft") |
 | --- | --- | --- |
-| **Metaphor** | Architectural drawing on paper | Terminal / IDE readout |
-| **Canvas** | Warm off-white `#FAF9F4` | Deep charcoal `#121411` |
-| **Cards** | Pure white `#FFFFFF`, `#E0E0E0` borders | Dark `#1F201D`, `#334155` borders |
-| **Primary** | Deep Praimo Blue `#00213C` | Neon Precision Cyan `#41BEFD` |
-| **Semantic fills** | Full saturation backgrounds | 15% opacity glow fills |
-| **Target users** | Field workers in sunlight | PMs in low-light / architectural environments |
+| **Metaphor** | Light bouncing off translucent glass | Holographic displays in a control room |
+| **Canvas** | Soft translucent white/off-white | Deep, saturated space blacks (`#0a0a0f`) |
+| **Cards/Panels** | Heavy blur (`32px`), slight white tint, white borders | High saturation blur, rich neon shadows, thin glass borders |
+| **Colors** | Vibrant and rich | Neon and deep, highly saturated |
+| **Vibe** | Lightning fast, crisp, highly dynamic | Futuristic, fluid, vibrant |
 
-### 4.2 Color Token System (Material 3)
+### 4.2 Color System & Semantic Tones
 
-| Token | Light | Dark | Purpose |
-| --- | --- | --- | --- |
-| `surface` | `#FAF9F4` | `#121411` | Canvas base |
-| `on-surface` | `#1B1C19` | `#E3E3DE` | Primary text |
-| `primary` | `#000815` | `#AEC9EB` | Primary actions |
-| `primary-container` | `#00213C` | `#00213C` | Sidebar (shared) |
-| `secondary` | `#00658D` | `#88CFFC` | Secondary actions |
-| `error` | `#BA1A1A` | `#FFB4AB` | Error states |
-| `outline` | `#73777E` | `#8D9198` | Borders |
+Instead of flat Material 3 colors, we use rich, semi-transparent backgrounds with vibrant borders to achieve maximum glassmorphism.
 
-### 4.3 Semantic Workflow Colors (8-Tone)
-
-| Status | Color | Hex | DB Mapping |
-| --- | --- | --- | --- |
-| Neutral/Queue | Slate | `#64748B` | `Not Started`, Draft |
-| Active | Sky Blue | `#0284C7` | `In Progress`, Syncing |
-| Warning | Amber | `#D97706` | `On Hold`, Offline |
-| Success | Emerald | `#16A34A` | `Completed`, Clean scan |
-| Finalization | Teal | `#0D9488` | `Delivered`, Warranty |
-| Verification | Royal Blue | `#2563EB` | `Acknowledged`, Approved |
-| Attention | Purple | `#9333EA` | `Needs Discussion` |
-| Emergency | Crimson | `#DC2626` | Critical issue, Break-Glass |
-
-### 4.4 Typography — Tri-Font System
-
-| Layer | Font | Purpose |
+| Status | Color | Purpose |
 | --- | --- | --- |
-| Executive | **Merriweather** (Serif) | Dashboard titles, PDF reports, formal headers |
-| Operational | **Inter** (Sans-Serif) | Tables, forms, body text, comments |
-| Technical | **JetBrains Mono** (Monospace) | Timestamps, GPS coords, file hashes, audit logs |
+| Neutral/Queue | Slate | `Not Started`, Draft |
+| Active | Sky Blue | `In Progress`, Syncing |
+| Warning | Amber | `On Hold`, Offline |
+| Success | Emerald | `Completed`, Clean scan |
+| Finalization | Teal | `Delivered`, Warranty |
+| Verification | Royal Blue | `Acknowledged`, Approved |
+| Attention | Purple | `Needs Discussion` |
+| Emergency | Crimson | Critical issue, Break-Glass |
 
-### 4.5 Layout System
+### 4.3 Typography — Poppins Exclusively
 
-| Breakpoint | Columns | Margins | Navigation |
-| --- | :-: | :-: | --- |
-| Mobile (<640px) | 4 | 16px | Glassmorphic bottom nav (4-5 tabs) |
-| Tablet (640-1024px) | 8 | 24px | Collapsible 72px rail |
-| Desktop (>1024px) | 12 | 32px | Persistent 280px sidebar |
+We use **Poppins everywhere** for maximum modern appeal, varying weights to establish hierarchy.
+
+- **Headers/Display**: Poppins SemiBold / Bold (600/700)
+- **Body/Standard**: Poppins Regular / Medium (400/500)
+- **Technical/Numbers**: Poppins Light (300) with tabular numbers enabled.
+
+### 4.4 Layout System (Highly Dynamic)
+
+Layouts for every device must be perfectly dynamic, snapping beautifully across screen sizes without hardcoded pixel breaks, utilizing CSS Grid and modern Flexbox behavior.
+
+- **Mobile**: Bottom glassmorphic navigation, stack cards vertically.
+- **Tablet**: Floating glass rail or adaptive sidebar, masonry grid.
+- **Desktop**: Expansive, resizable floating sidebars, multi-column dashboard, maximizing horizontal space.
 
 ### 4.6 Elevation System
 
@@ -272,18 +270,14 @@ erDiagram
 ### 6.2 Key Schema Gaps Identified
 
 > [!WARNING]
-> **Critical inconsistencies in the current schema:**
+> **CRITICAL UPDATE: `db.md` is obsolete.**
+> The active database schema is completely defined in `src/types/database.ts`, which contains 4,200+ lines of exact type definitions directly generated from the live Supabase instance.
 
-1. **Timesheet Duplication**: `employee_timesheets` (in db.md with `start_time`/`end_time`) vs `timesheets` (in migration with `hours_worked`). Need consolidation.
-2. **Vendor Entity Conflict**: Vendors are `user_actor` records in db.md but some invoice migrations reference `organizations(id)` as `vendor_id`. Need standardization.
-3. **Missing `drawings` master table**: `drawing_versions.drawing_id` references a non-existent parent table.
-4. **Missing `wiki_docs` table** in db.md (exists in migration only).
-5. **Missing `invoices` table** in db.md (exists in migration only).
-6. **Open RLS policies**: Current prototype migration uses `USING (true)` — needs the strict policies from db.md.
+**Actionable Insights:**
 
----
-
-## 7. Current Prototype Analysis — Gap Assessment
+1. **Single Source of Truth**: Ignore `db.md`. Use `database.ts` exclusively for any backend/frontend schema development.
+2. **Missing Tables Resolved**: Tables like `batch_upload_jobs`, `bim_clashes`, `change_requests_history`, and `daily_logs` exist in `database.ts` and represent the actual production-ready architecture.
+3. **RLS Verification**: Since the structure is already built, our backend focus shifts strictly to ensuring RLS policies, permissions, and server actions correctly interface with the structures defined in `database.ts`.
 
 ### 7.1 What Exists
 
