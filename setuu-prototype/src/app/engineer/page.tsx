@@ -17,7 +17,7 @@ export default function EngineerDashboard() {
     async function load() {
       if (!user && !organizationId) return;
 
-      // We pass 'mock-id' or handle undefined in the action
+      // Fetch data for authenticated user
       const [reviews, tasks] = await Promise.all([
         getPendingReviews(),
         getAssignedTasks()

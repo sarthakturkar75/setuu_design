@@ -174,3 +174,29 @@ export async function deleteUpdate(updateId: string) {
     return { success: false, error: err.message };
   }
 }
+
+export async function acknowledgeUpdate(updateId: string) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+    
+    // Using user_actor ID as client_id for this function
+    const { data: userActor } = await supabase.from("user_actor").select("id").eq("id", user.id).single();
+    if (!userActor) throw new Error("Unauthorized");
+
+    const { error } = await supabase.from("acknowledgements").insert({
+      update_id: updateId,
+      client_id: userActor.id,
+      status: "acknowledged",
+      notes: "Acknowledged by client"
+    });
+    
+    if (error) throw error;
+    
+    return { success: true };
+  } catch (err: any) {
+    console.error("Acknowledge Error:", err);
+    return { success: false, error: err.message };
+  }
+}

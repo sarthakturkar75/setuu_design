@@ -149,8 +149,11 @@ export async function getPMProductivity(targetUserId: string) {
     let totalSpend = projects.reduce((acc, p) => acc + (Number(p.actual_spend) || 0), 0) || 1; // avoid zero div
     const costVarianceInverse = totalSpend <= totalContractValue ? 100 : Math.max(0, 100 - ((totalSpend - totalContractValue) / totalContractValue) * 100);
 
-    // 6. Stakeholder Responsiveness (Mocked from messages table, simplified)
-    const stakeholderResponsiveness = 95; // Need a messages/communications table to compute accurately, assuming 95 for simplicity if not easily querable
+    // 6. Stakeholder Responsiveness (Calculated from project_updates)
+    const { data: updates } = await supabase.from("project_updates").select("id").in("project_id", projectIds).eq("user_id", targetUserId);
+    const updatesCount = updates?.length || 0;
+    // Simple heuristic: 1 update per active project per week is "100" responsiveness. 
+    const stakeholderResponsiveness = validProjectsCount > 0 ? Math.min(100, (updatesCount / (validProjectsCount * 4)) * 100) : 100;
 
     const compositeScore = (
       (scheduleVarianceInverse * 0.25) +

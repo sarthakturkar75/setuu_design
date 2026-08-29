@@ -20,6 +20,19 @@ export async function getProjectMaterials(projectId: string) {
   return data;
 }
 
+export async function getVendorMaterials(vendorOrgId: string) {
+  await verifyRole(["vendor", "admin", "superadmin", "pm"]);
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("project_materials")
+    .select("*, projects(id, name)")
+    .eq("vendor_id", vendorOrgId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
 export async function getSiteLocations(projectId: string) {
   await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();

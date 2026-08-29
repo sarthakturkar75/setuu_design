@@ -33,15 +33,16 @@ export async function getClientApprovals(projectId?: string) {
   await verifyRole(["admin", "pm", "superadmin", "client"]);
   const supabase = await createClient();
   
-  // NOTE: In a full implementation, the user's current client_org_id might be used to filter.
-  // Here we assume the user has right access or is filtering by projectId
-  let query = supabase.from("change_requests").select(`
+  let query = supabase.from("client_approvals").select(`
     *,
-    projects!inner(id, name, client_org_id)
-  `).eq("status", "pending_client_approval");
+    projects(id, name, client_org_id)
+  `);
 
   if (projectId) {
     query = query.eq("project_id", projectId);
+  } else {
+    // Only fetch pending approvals for the dashboard/list by default
+    query = query.eq("status", "pending");
   }
 
   const { data, error } = await query;
@@ -139,4 +140,23 @@ export async function getClientMeetings(orgId: string) {
   }
   
   return data || [];
+}
+
+export async function reviewClientApproval(approvalId: string, action: "approved" | "revision_requested", comments: string) {
+  await verifyRole(["client"]);
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { success: false, error: "Unauthorized" };
+
+  const { error } = await supabase.from("client_approvals").update({
+    status: action,
+    comments: comments,
+    actioned_at: new Date().toISOString()
+  }).eq("id", approvalId);
+
+  if (error) {
+    console.error("Error updating client approval:", error);
+    return { success: false, error: error.message };
+  }
+  return { success: true };
 }

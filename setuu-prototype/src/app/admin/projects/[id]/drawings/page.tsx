@@ -49,7 +49,7 @@ export default function DrawingsList({ params }: { params: Promise<{ id: string 
     loadData();
   }, [id]);
 
-  // Run OCR Scan Mock Webhook (Task 2)
+  // Run NLP OCR Scan Pipeline
   const triggerOCRScan = async (drawingId: string) => {
      toast.info("Running NLP Optical Scan...");
      const res = await fetch('/api/drawings/ocr-scan', {
