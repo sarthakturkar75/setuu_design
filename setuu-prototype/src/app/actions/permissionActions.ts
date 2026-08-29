@@ -1,7 +1,7 @@
 "use server";
 import { verifyRole } from "./authUtils";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 
 
 
@@ -17,9 +17,9 @@ export async function getProjectPermissions(projectId: string) {
   return data || [];
 }
 
-export async function toggleUserPermission(projectId: string, userId: string, field: 'can_view_drawings' | 'can_view_financials', value: boolean) {
-  await verifyRole(["admin", "superadmin"]);
-  const supabase = await createClient();
+export async function toggleUserPermission(projectId: string, userId: string, field: string, value: boolean) {
+  await verifyRole(["admin", "superadmin", "pm"]);
+  const supabase = await createServiceRoleClient();
   
   try {
     const { data: existing, error: fetchErr } = await supabase

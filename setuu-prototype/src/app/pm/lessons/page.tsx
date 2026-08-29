@@ -8,10 +8,20 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { PlusIcon, X } from "lucide-react";
 import { getLessons, createLesson } from "@/app/actions/lessonsLearnedActions";
 
+
+import { getProjects } from "@/app/actions/projectActions";
+
 function LogInsightModal({ isOpen, onClose, onRefresh }: { isOpen: boolean, onClose: () => void, onRefresh: () => void }) {
   const [loading, setLoading] = useState(false);
+  const [projects, setProjects] = useState<any[]>([]);
   const toast = useToast();
   
+  useEffect(() => {
+    if (isOpen) {
+      getProjects().then(d => setProjects(d || []));
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,11 +30,11 @@ function LogInsightModal({ isOpen, onClose, onRefresh }: { isOpen: boolean, onCl
     const fd = new FormData(e.currentTarget);
     try {
       const res = await createLesson({
+        project_id: fd.get("project_id"),
         title: fd.get("title"),
         category: fd.get("category"),
         description: fd.get("description"),
-        impact: fd.get("impact"),
-        status: 'published'
+        impact: fd.get("impact")
       });
       if (res.success) {
         toast.success("Insight logged successfully");
@@ -48,6 +58,13 @@ function LogInsightModal({ isOpen, onClose, onRefresh }: { isOpen: boolean, onCl
           </button>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-1">Project</label>
+            <select name="project_id" required className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface">
+              <option value="">Select Project...</option>
+              {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+            </select>
+          </div>
           <div>
             <label className="block text-sm font-medium text-on-surface mb-1">Title</label>
             <input name="title" required className="w-full bg-surface-container border border-outline rounded-lg px-4 py-2 text-on-surface" />
@@ -82,6 +99,7 @@ function LogInsightModal({ isOpen, onClose, onRefresh }: { isOpen: boolean, onCl
     </div>
   );
 }
+
 
 export default function PMLessonsLearned() {
   const [activeCategory, setActiveCategory] = useState("All");
