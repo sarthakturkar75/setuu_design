@@ -24,7 +24,7 @@ export async function sendChatMessage(
       const openAiKey = process.env.OPENAI_API_KEY;
       const apiKey = groqKey || openAiKey;
       const endpoint = groqKey ? "https://api.groq.com/openai/v1/chat/completions" : "https://api.openai.com/v1/chat/completions";
-      const model = groqKey ? "openai/gpt-oss-120b" : "gpt-4o-mini";
+      const model = groqKey ? "qwen/qwen3.6-27b" : "gpt-4o-mini";
 
       if (apiKey) {
         const response = await fetch(endpoint, {

@@ -27,7 +27,7 @@ export async function analyzeUpdatePhoto(projectId: string, authorId: string, im
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama-3.2-11b-vision-preview",
+        model: "qwen/qwen3.6-27b",
         messages: [
           {
             role: "user",
@@ -50,7 +50,7 @@ export async function analyzeUpdatePhoto(projectId: string, authorId: string, im
     const result = JSON.parse(jsonStr);
 
     const supabase = await createClient();
-    
+
     // Simply update the update record with the summary
     await supabase.from("updates").update({
       ai_analysis_flags: result

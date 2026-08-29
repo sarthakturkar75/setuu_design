@@ -39,7 +39,7 @@ export async function generateWelcomeBrief(metrics: any) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama3-70b-8192", // Upgraded to Groq's current flagship text model
+        model: "qwen/qwen3.6-27b", // Upgraded to Groq's current flagship text model
         messages: [{ role: "user", content: prompt }],
         temperature: 0.5,
         max_tokens: 250
