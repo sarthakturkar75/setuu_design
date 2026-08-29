@@ -1,5 +1,5 @@
-import { useState } from "react";
 "use client";
+import { useState } from "react";
 import * as React from "react";
 import { DataTable } from "@/components/ui/DataTable";
 import { getProjectResources, createResource, deleteResource } from "@/app/actions/resourceActions";
@@ -12,7 +12,7 @@ export default function ProjectResourcesPage() {
   const [loading, setLoading] = React.useState(true);
   const [showAddForm, setShowAddForm] = React.useState(false);
   const [newRes, setNewRes] = React.useState({ name: "", type: "Labor", hours: "" });
-  
+
   const params = useParams();
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const id = params?.id as string;
@@ -46,13 +46,13 @@ export default function ProjectResourcesPage() {
 
   const handleCreate = async () => {
     if (!newRes.name.trim()) return toast.error("Name is required");
-    
+
     const formData = new FormData();
     formData.append("project_id", id);
     formData.append("name", newRes.name.trim());
     formData.append("resource_type", newRes.type);
     formData.append("allocated_hours", newRes.hours || "0");
-    
+
     const res = await createResource(formData);
     if (res.success) {
       toast.success("Resource allocated");
@@ -71,9 +71,9 @@ export default function ProjectResourcesPage() {
     { key: "allocated_hours", header: "Allocated Hours", cell: (row: any) => <span className="text-sm font-jetbrains-mono">{row.allocated_hours ?? 0} hrs</span> },
     { key: "actual_hours", header: "Actual Hours", cell: (row: any) => <span className="text-sm font-jetbrains-mono">{row.actual_hours ?? 0} hrs</span> },
     { key: "current_assignment", header: "Assignment", cell: (row: any) => <span className="text-sm">{row.current_assignment || "Unassigned"}</span> },
-    { 
-      key: "actions", 
-      header: "", 
+    {
+      key: "actions",
+      header: "",
       cell: (row: any) => (
         <div className="flex justify-end">
           <button onClick={() => handleDelete(row.id)} className="p-2 text-on-surface-variant hover:text-semantic-crimson hover:bg-semantic-crimson/10 rounded-lg transition-colors">
@@ -94,7 +94,7 @@ export default function ProjectResourcesPage() {
           <p className="text-sm text-on-surface-variant mt-1">Manage workforce and equipment allocated to this project.</p>
         </div>
         {!showAddForm && (
-          <button 
+          <button
             onClick={() => setShowAddForm(true)}
             className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold shadow-sm hover:bg-primary/90 transition-colors"
           >
@@ -107,18 +107,18 @@ export default function ProjectResourcesPage() {
         <div className="bg-surface-container border border-outline-variant rounded-xl p-4 flex gap-3 items-end">
           <div className="flex-1">
             <label className="text-sm font-semibold text-on-surface mb-1 block">Resource Name *</label>
-            <input type="text" value={newRes.name} onChange={e => setNewRes({...newRes, name: e.target.value})} placeholder="e.g. Lead Engineer or Excavator" className="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" autoFocus />
+            <input type="text" value={newRes.name} onChange={e => setNewRes({ ...newRes, name: e.target.value })} placeholder="e.g. Lead Engineer or Excavator" className="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" autoFocus />
           </div>
           <div className="w-40">
             <label className="text-sm font-semibold text-on-surface mb-1 block">Type</label>
-            <select value={newRes.type} onChange={e => setNewRes({...newRes, type: e.target.value})} className="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary outline-none">
+            <select value={newRes.type} onChange={e => setNewRes({ ...newRes, type: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary outline-none">
               <option value="Labor">Labor</option>
               <option value="Equipment">Equipment</option>
             </select>
           </div>
           <div className="w-32">
             <label className="text-sm font-semibold text-on-surface mb-1 block">Allocated Hrs</label>
-            <input type="number" value={newRes.hours} onChange={e => setNewRes({...newRes, hours: e.target.value})} placeholder="e.g. 160" className="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary outline-none" />
+            <input type="number" value={newRes.hours} onChange={e => setNewRes({ ...newRes, hours: e.target.value })} placeholder="e.g. 160" className="w-full px-3 py-2 rounded-lg border border-outline-variant bg-surface text-sm focus:border-primary outline-none" />
           </div>
           <button onClick={handleCreate} className="px-5 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold whitespace-nowrap shadow-sm hover:bg-primary/90 transition-colors">
             Save
