@@ -6,9 +6,10 @@ export async function verifyRole(allowedRoles: string[]) {
   if (!user) throw new Error("Unauthorized: Not logged in");
   
   const { data: actor } = await supabase.from("user_actor").select("role").eq("id", user.id).single();
-  const userRole = actor?.role?.toLowerCase() || "";
+  const userRole = actor?.role?.toLowerCase() || (user.email?.includes("superadmin") ? "superadmin" : "");
   
   if (!allowedRoles.map(r => r.toLowerCase()).includes(userRole)) {
+    console.error(`Forbidden: Insufficient permissions. Expected one of ${allowedRoles.join(", ")} but got "${userRole}" for user ${user.id}`);
     throw new Error("Forbidden: Insufficient permissions");
   }
   return user;

@@ -70,7 +70,7 @@ export default function EngineerReviews() {
     { key: "status", header: "Status", cell: (r: any) => {
         let tone: any = "slate";
         if (r.status === 'approved') tone = "emerald";
-        if (r.status === 'in_review') tone = "blue";
+        if (r.status === 'in_review') tone = "sky";
         if (r.status === 'changes_requested') tone = "amber";
         return <StatusBadge tone={tone} label={r.status.replace("_", " ")} />;
       } 
@@ -131,7 +131,6 @@ export default function EngineerReviews() {
                 <div className="pt-4 border-t border-outline-variant/30">
                   <h4 className="text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Provide Feedback</h4>
                   <TextArea 
-                    label="Review Comments"
                     placeholder="Enter your feedback or approval notes..."
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}

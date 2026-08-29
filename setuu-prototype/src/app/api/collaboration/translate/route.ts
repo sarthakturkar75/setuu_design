@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "llama3-70b-8192",
+        model: "qwen/qwen3.6-27b",
         messages: [
           {
             role: "system",

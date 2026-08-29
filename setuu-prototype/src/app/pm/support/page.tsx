@@ -12,6 +12,7 @@ export default function PMSupport() {
   const toast = useToast();
   const [tickets, setTickets] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     async function loadTickets() {
@@ -33,7 +34,7 @@ export default function PMSupport() {
         title="Support Tickets"
         subtitle="Need help with the platform? We've got you covered."
         actions={
-          <Button variant="primary" onClick={() => toast.info("Support ticket creation coming soon")}>
+          <Button variant="primary" onClick={async () => { const title = window.prompt("Enter ticket subject:"); if (title) { try { const { createTicket } = await import("@/app/actions/supportActions"); await createTicket({ title, description: "Opened from PM portal", priority: "medium" }); toast.success("Ticket created!"); window.location.reload(); } catch(e) { toast.error("Failed to create ticket"); } } }}>
             <PlusIcon className="w-4 h-4 mr-2" /> Create New Ticket
           </Button>
         }

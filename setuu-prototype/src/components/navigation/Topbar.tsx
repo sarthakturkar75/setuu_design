@@ -1,5 +1,5 @@
 "use client";
-
+import { CurrencySelector } from "@/components/ui/CurrencySelector";
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -67,8 +67,8 @@ export function Topbar({
 	const [notifications, setNotifications] = React.useState<NotificationItem[]>(
 		[],
 	);
-		const [isLockPending, setIsLockPending] = React.useState(false);
-	
+	const [isLockPending, setIsLockPending] = React.useState(false);
+
 	// Use parent-supplied projects if given (avoids double-fetch); self-heal otherwise
 	React.useEffect(() => {
 		if (projectsProp) {
@@ -120,10 +120,10 @@ export function Topbar({
 	}, [user?.id]);
 
 	// Close notification dropdown on outside click
-	
+
 	const unreadCount = notifications.filter((n) => !n.is_read).length;
 
-	
+
 	const handleSearch = (value: string) => {
 		if (onSearch) {
 			onSearch(value);
@@ -327,7 +327,7 @@ export function Topbar({
 					</Link>
 				</div>
 
-				<ThemeToggle />
+				<CurrencySelector /><ThemeToggle />
 
 				<div className="relative group">
 					<button className="flex items-center gap-2 p-1 rounded-full hover:bg-surface-variant transition-colors">

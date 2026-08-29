@@ -67,3 +67,13 @@ export function ToastContainer({ toasts, onClose }: { toasts: Omit<ToastProps, '
     </div>
   );
 }
+
+
+export const toast = {
+  success: (msg: string) => console.log("Success:", msg),
+  error: (msg: string) => console.log("Error:", msg),
+  info: (msg: string) => console.log("Info:", msg)
+};
+// (Toast as any).success = (msg: string) => console.log("Success:", msg);
+// (Toast as any).error = (msg: string) => console.log("Error:", msg);
+// (Toast as any).info = (msg: string) => console.log("Info:", msg);

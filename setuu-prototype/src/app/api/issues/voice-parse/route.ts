@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     }
 
     const prompt = `
-      You are a structural engineering NLP processor. Extract the intent from this dictated text into a JSON object matching this strict schema:
+      You are an engineering NLP processor. Extract the intent from this dictated text into a JSON object matching this strict schema:
       {
         "title": "Short concise title (max 5 words)",
         "description": "Full detailed description based on transcript",
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "llama3-70b-8192",
+        model: "qwen/qwen3.6-27b",
         messages: [{ role: "user", content: prompt }],
         response_format: { type: "json_object" },
         temperature: 0.1

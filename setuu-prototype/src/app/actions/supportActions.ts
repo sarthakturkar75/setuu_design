@@ -17,7 +17,7 @@ export async function getTickets(filters?: { priority?: string, status?: string 
 }
 
 export async function createTicket(data: any) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("support_tickets")
@@ -32,7 +32,7 @@ export async function createTicket(data: any) {
 }
 
 export async function updateTicket(id: string, data: any) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("support_tickets")
@@ -45,7 +45,7 @@ export async function updateTicket(id: string, data: any) {
 }
 
 export async function escalateTicket(id: string) {
-  await verifyRole(["admin", "pm", "superadmin"]);
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from("support_tickets")

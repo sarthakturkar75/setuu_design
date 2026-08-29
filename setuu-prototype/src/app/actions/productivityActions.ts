@@ -6,8 +6,21 @@ import { verifyRole } from "./authUtils";
 
 export async function getEngineerProductivity(targetUserId: string, projectId?: string) {
   try {
-    await verifyRole(["admin", "pm", "superadmin", "engineer"]);
+        const user = await verifyRole(["admin", "pm", "superadmin", "engineer"]);
     const supabase = await createClient();
+
+    const { data: actor } = await supabase.from('user_actor').select('role').eq('id', user.id).single();
+    if (actor?.role === 'engineer' && user.id !== targetUserId) {
+      throw new Error("Access Denied: Engineers can only view their own productivity.");
+    }
+    if (actor?.role === 'pm' && user.id !== targetUserId) {
+      const { data: pmProjects } = await supabase.from('projects').select('id').eq('project_manager_id', user.id);
+      const pmProjectIds = pmProjects?.map(p => p.id) || [];
+      const { data: targetResources } = await supabase.from('project_resources').select('id').eq('user_id', targetUserId).in('project_id', pmProjectIds);
+      if (!targetResources || targetResources.length === 0) {
+        throw new Error("Access Denied: PMs can only view productivity of engineers in their projects.");
+      }
+    }
 
     // 1. Task Completion & On-Time Rate
     let taskQuery = supabase.from("tasks").select("id, status, planned_finish_date, actual_finish_date").eq("assignee_id", targetUserId);
@@ -98,8 +111,13 @@ export async function getEngineerProductivity(targetUserId: string, projectId?: 
 
 export async function getPMProductivity(targetUserId: string) {
   try {
-    await verifyRole(["admin", "superadmin", "pm"]);
+        const user = await verifyRole(["admin", "superadmin", "pm"]);
     const supabase = await createClient();
+
+    const { data: actor } = await supabase.from('user_actor').select('role').eq('id', user.id).single();
+    if (actor?.role === 'pm' && user.id !== targetUserId) {
+      throw new Error("Access Denied: PMs can only view their own productivity.");
+    }
     
     const { data: projects } = await supabase.from("projects").select("id, status, planned_start_date, planned_end_date, actual_start_date, actual_end_date, contract_value, actual_spend").eq("project_manager_id", targetUserId);
     
@@ -153,7 +171,7 @@ export async function getPMProductivity(targetUserId: string) {
     const { data: updates } = await supabase.from("project_updates").select("id").in("project_id", projectIds).eq("user_id", targetUserId);
     const updatesCount = updates?.length || 0;
     // Simple heuristic: 1 update per active project per week is "100" responsiveness. 
-    const stakeholderResponsiveness = validProjectsCount > 0 ? Math.min(100, (updatesCount / (validProjectsCount * 4)) * 100) : 100;
+    const stakeholderResponsiveness = projectIds.length > 0 ? Math.min(100, (updatesCount / (projectIds.length * 4)) * 100) : 100;
 
     const compositeScore = (
       (scheduleVarianceInverse * 0.25) +
@@ -251,8 +269,24 @@ export async function getAdminProductivity(orgId: string) {
 
 export async function getVendorProductivity(targetVendorId: string) {
   try {
-    await verifyRole(["admin", "pm", "superadmin", "vendor"]);
+        const user = await verifyRole(["admin", "pm", "superadmin", "vendor"]);
     const supabase = await createClient();
+
+    const { data: actor } = await supabase.from('user_actor').select('role, organization_id').eq('id', user.id).single();
+    if (actor?.role === 'vendor') {
+      const { data: orgVendor } = await supabase.from('org_vendors').select('id').eq('organization_id', actor.organization_id).single();
+      if (orgVendor?.id !== targetVendorId) {
+        throw new Error("Access Denied: Vendors can only view their own productivity.");
+      }
+    }
+    if (actor?.role === 'pm') {
+      const { data: pmProjects } = await supabase.from('projects').select('id').eq('project_manager_id', user.id);
+      const pmProjectIds = pmProjects?.map(p => p.id) || [];
+      const { data: projectVendors } = await supabase.from('project_vendors').select('id').eq('vendor_id', targetVendorId).in('project_id', pmProjectIds);
+      if (!projectVendors || projectVendors.length === 0) {
+        throw new Error("Access Denied: PMs can only view productivity of vendors in their projects.");
+      }
+    }
 
     // 1. On Time Delivery
     const { data: materials } = await supabase.from("project_materials").select("status, estimated_delivery, actual_delivery, estimated_cost, actual_cost, damaged_qty, total_qty").eq("vendor_id", targetVendorId);

@@ -1,3 +1,4 @@
+import { InviteModal } from "@/components/modals/InviteModal";
 "use client";
 
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -17,6 +18,7 @@ import { getUsers } from "@/app/actions/userActions";
 // mockUsers removed, using live data
 
 export default function UserDirectoryPage() {
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -195,6 +197,7 @@ export default function UserDirectoryPage() {
           
         </div>
       </div>
+      <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="platform" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import React, { useState, useEffect } from "react";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
@@ -7,6 +8,7 @@ import { getInvoices } from "@/app/actions/invoiceActions";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
 export default function VendorInvoices() {
+  const { formatCurrency } = useCurrency();
   const [invoices, setInvoices] = useState<any[]>([]);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ export default function VendorInvoices() {
 
   const columns = [
     { key: "display_id", header: "Invoice #", cell: (r: any) => r.display_id || "—" },
-    { key: "amount", header: "Amount", cell: (r: any) => `$${r.total_amount?.toLocaleString() || 0}` },
+    { key: "amount", header: "Amount", cell: (r: any) => formatCurrency(r.total_amount?.toLocaleString() || 0) },
     { key: "status", header: "Status", cell: (r: any) => <StatusBadge tone={r.status === 'paid' ? 'emerald' : 'slate'} label={r.status} /> },
   ];
 

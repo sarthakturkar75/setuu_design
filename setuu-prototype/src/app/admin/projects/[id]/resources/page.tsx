@@ -1,3 +1,4 @@
+import { useState } from "react";
 "use client";
 import * as React from "react";
 import { DataTable } from "@/components/ui/DataTable";
@@ -13,6 +14,7 @@ export default function ProjectResourcesPage() {
   const [newRes, setNewRes] = React.useState({ name: "", type: "Labor", hours: "" });
   
   const params = useParams();
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
   const id = params?.id as string;
   const toast = useToast();
 

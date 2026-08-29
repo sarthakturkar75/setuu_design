@@ -103,12 +103,19 @@ export async function updateProjectConfig(formData: FormData) {
   return { success: true };
 }
 
+
 export async function getProjects(filters?: {
   status?: string;
   pm_id?: string;
   is_archived?: boolean;
 }) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+  
+  const { data: actor } = await supabase.from("user_actor").select("role").eq("id", user.id).single();
+  const userRole = actor?.role?.toLowerCase() || "";
+
   let query = supabase
     .from("projects")
     .select(
@@ -116,9 +123,34 @@ export async function getProjects(filters?: {
     );
 
   if (filters?.status) query = query.eq("status", filters.status);
-  if (filters?.pm_id) query = query.eq("assigned_pm_id", filters.pm_id);
-  if (filters?.is_archived !== undefined)
-    query = query.eq("is_archived", filters.is_archived);
+  if (filters?.is_archived !== undefined) query = query.eq("is_archived", filters.is_archived);
+
+  // Role-based visibility isolation
+  if (userRole === "pm") {
+    query = query.eq("assigned_pm_id", user.id);
+  } else if (userRole === "superadmin") {
+    // Superadmin doesn't see projects
+    return [];
+  } else if (userRole === "admin") {
+    // Admin sees all in org (we would filter by org_id if multi-tenant)
+  } else if (userRole === "client" || userRole === "vendor" || userRole === "engineer") {
+    // Use project_team relation to find assigned projects
+    const { data: teamMembers } = await supabase.from("project_team").select("project_id").eq("user_id", user.id);
+    const assignedProjectIds = (teamMembers || []).map(t => t.project_id);
+    
+    // Also if client, maybe check client_org_id? 
+    if (userRole === "client") {
+       const { data: orgData } = await supabase.from("user_actor").select("organization_id").eq("id", user.id).single();
+       if (orgData?.organization_id) {
+         query = query.or(`id.in.(${assignedProjectIds.join(',') || '00000000-0000-0000-0000-000000000000'}),client_org_id.eq.${orgData.organization_id}`);
+       } else {
+         query = query.in("id", assignedProjectIds.length > 0 ? assignedProjectIds : ['00000000-0000-0000-0000-000000000000']);
+       }
+    } else {
+       query = query.in("id", assignedProjectIds.length > 0 ? assignedProjectIds : ['00000000-0000-0000-0000-000000000000']);
+    }
+  }
+
 
   const { data, error } = await query;
   if (error) throw error;

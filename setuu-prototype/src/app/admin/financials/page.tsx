@@ -1,3 +1,4 @@
+import { useCurrency } from "@/contexts/CurrencyContext";
 "use client";
 
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -16,6 +17,7 @@ import { getProjects } from "@/app/actions/projectActions";
 import { getCashFlowData } from "@/app/actions/financialActions";
 
 export default function FinancialMasterPage() {
+  const { formatCurrency } = useCurrency();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
@@ -59,7 +61,7 @@ export default function FinancialMasterPage() {
       key: "contract_value", 
       header: "Contract Value", 
       sortable: true,
-      cell: (row: any) => <span className="font-jetbrains font-bold text-on-surface">{row.contract_value ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(row.contract_value) : "N/A"}</span>
+      cell: (row: any) => <span className="font-jetbrains font-bold text-on-surface">{row.contract_value ? formatCurrency(row.contract_value) : "N/A"}</span>
     },
     { 
       key: "start_date", 

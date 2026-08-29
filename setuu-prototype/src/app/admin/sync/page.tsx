@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { WifiOffIcon, RefreshCwIcon, TrashIcon, CheckCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-import { getUpdates, updateUpdateStatus } from "@/app/actions/updateActions";
+import { getUpdates, moderateUpdate } from "@/app/actions/updateActions";
 
 export default function OfflineSyncQueue() {
   const [queue, setQueue] = useState<any[]>([]);
@@ -30,7 +30,7 @@ export default function OfflineSyncQueue() {
     setQueue(prev => prev.map(item => ({ ...item, approval_status: "syncing" })));
     try {
       for (const item of queue) {
-        await updateUpdateStatus(item.id, "Approved");
+        await moderateUpdate(item.id, "Approved");
       }
       setQueue([]);
     } catch (e) { console.error(e); }

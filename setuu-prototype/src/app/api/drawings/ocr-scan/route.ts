@@ -36,12 +36,12 @@ export async function POST(request: Request) {
     // Actually invoke qwen/qwen3.6-27b for physical Vision OCR
     const isGroq = !!process.env.GROQ_API_KEY;
     const openai = new OpenAI(isGroq ? {
-        baseURL: "https://api.groq.com/openai/v1",
-        apiKey: process.env.GROQ_API_KEY
+      baseURL: "https://api.groq.com/openai/v1",
+      apiKey: process.env.GROQ_API_KEY
     } : undefined);
-    
+
     const completion = await openai.chat.completions.create({
-      model: isGroq ? "llama-3.2-11b-vision-preview" : "gpt-4o-mini",
+      model: isGroq ? "qwen/qwen3.6-27b" : "gpt-4o-mini",
       response_format: { type: "json_object" },
       messages: [
         {

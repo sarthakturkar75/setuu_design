@@ -12,8 +12,8 @@ export async function getTimesheets(startDate: string, endDate: string) {
     .from("employee_timesheets")
     .select("*, projects(name)")
     .eq("user_id", user.id)
-    .gte("date", startDate)
-    .lte("date", endDate);
+    .gte("work_date", startDate)
+    .lte("work_date", endDate);
     
   if (error) throw error;
   return data || [];
@@ -37,8 +37,8 @@ export async function submitWeek(startDate: string, endDate: string) {
     .from("employee_timesheets")
     .update({ status: 'submitted' })
     .eq("user_id", user.id)
-    .gte("date", startDate)
-    .lte("date", endDate)
+    .gte("work_date", startDate)
+    .lte("work_date", endDate)
     .eq("status", "draft");
     
   if (error) throw error;

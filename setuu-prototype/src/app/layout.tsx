@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Merriweather, Inter, JetBrains_Mono } from 'next/font/google'
 import { AuthProvider } from '@/contexts/AuthContext'
-import { ThemeProvider } from '@/components/ThemeProvider'
+import { ThemeProvider } from "@/components/ThemeProvider"
+import { CurrencyProvider } from "@/contexts/CurrencyContext"
 import { ToastProvider } from '@/contexts/ToastContext'
 import { GlobalEmergencyListener } from '@/components/ui/GlobalEmergencyListener'
 import OfflineSyncManager from '@/components/navigation/OfflineSyncManager'
@@ -43,11 +44,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ToastProvider>
-            <AuthProvider>
+            <CurrencyProvider><AuthProvider>
               <GlobalEmergencyListener />
               <OfflineSyncManager />
               {children}
-            </AuthProvider>
+            </AuthProvider></CurrencyProvider>
           </ToastProvider>
         </ThemeProvider>
       </body>

@@ -8,10 +8,12 @@ export async function getPlatformMetrics() {
   await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
+  const start = Date.now();
   const { count: activeSessions } = await supabase
     .from("user_actor")
     .select("*", { count: "exact", head: true })
     .eq("is_active", true);
+  const dbLatency = Date.now() - start;
     
   const { count: totalProjects } = await supabase
     .from("projects")
@@ -32,10 +34,8 @@ export async function getPlatformMetrics() {
     ? (errorEvents || 0) / recentEvents 
     : 0;
     
-  const loadLatency = 20 + Math.min(100, (recentEvents || 0) / 10);
-    
   return {
-    apiLatencyMs: Math.round(loadLatency),
+    apiLatencyMs: dbLatency,
     activeSessions: activeSessions || 0,
     totalProjects: totalProjects || 0,
     errorRate5xx: calculatedErrorRate,

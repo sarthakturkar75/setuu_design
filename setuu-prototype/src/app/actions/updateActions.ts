@@ -1,12 +1,12 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 import { analyzeUpdatePhoto } from "@/lib/safetyScanner";
 
 export async function getUpdates(filters?: { projectId?: string, milestone_id?: string, status?: string }) {
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
   let query = supabase.from("updates").select("*, user_actor(display_name, avatar_url), media_attachments(*), comments(*), project:projects!updates_project_id_fkey(name)");
 
   if (filters?.projectId) {
@@ -33,7 +33,7 @@ export async function getUpdates(filters?: { projectId?: string, milestone_id?: 
 
 export async function createUpdate(formData: FormData) {
   await verifyRole(["admin", "pm", "superadmin"]);
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
   let project_id = formData.get("project_id") as string;
   const author_id = formData.get("author_id") as string;
   const caption = formData.get("caption") as string;
@@ -126,7 +126,7 @@ export async function createUpdate(formData: FormData) {
 
 export async function moderateUpdate(id: string, status: string) {
   await verifyRole(["admin", "pm", "superadmin"]);
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
   const { error } = await supabase.from("updates").update({ approval_status: status }).eq("id", id);
   if (error) return { success: false, error: error.message };
   revalidatePath(`/admin/moderation`);
@@ -137,7 +137,7 @@ export async function moderateUpdate(id: string, status: string) {
 
 export async function addComment(updateId: string, content: string) {
   try {
-    const supabase = await createClient();
+    const supabase = await createServiceRoleClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
@@ -159,7 +159,7 @@ export async function addComment(updateId: string, content: string) {
 
 export async function deleteUpdate(updateId: string) {
   try {
-    const supabase = await createClient();
+    const supabase = await createServiceRoleClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
@@ -177,7 +177,7 @@ export async function deleteUpdate(updateId: string) {
 
 export async function acknowledgeUpdate(updateId: string) {
   try {
-    const supabase = await createClient();
+    const supabase = await createServiceRoleClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
     

@@ -75,29 +75,11 @@ export default function ClientHandoverVault() {
       
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="flex-1">
-          <SearchInput placeholder="Search documents, systems, or tags..." />
+          <SearchInput placeholder="Search..." onSearch={() => {}} />
         </div>
         <div className="flex-none">
-          <FilterBar 
-            filters={[
-              { 
-                key: "project", 
-                label: "Project", 
-                options: projects.map(p => ({ label: p.name, value: p.id })) 
-              },
-              {
-                key: "category",
-                label: "Category",
-                options: [
-                  { label: "O&M Manuals", value: "om" },
-                  { label: "Warranties", value: "warranties" },
-                  { label: "As-Builts", value: "asbuilts" }
-                ]
-              }
-            ]}
-            onFilterChange={() => {}}
-          />
-        </div>
+        <div className="flex-none"><FilterBar onApply={() => {}}><select className="p-2 border rounded text-xs"><option>All</option></select></FilterBar></div>
+      </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

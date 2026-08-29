@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Button } from "@/components/ui/Button";
 import { Drawer } from "@/components/ui/Drawer";
 import { DefectMediaUploader } from "@/components/ui/DefectMediaUploader";
-import { getIssues, resolveIssue } from "@/app/actions/issueActions";
+import { getIssues, markIssueResolved } from "@/app/actions/issueActions";
 import { toast } from "@/components/ui/Toast";
 import { AlertCircle } from "lucide-react";
 
@@ -42,7 +42,7 @@ export default function VendorDefects() {
     if (!selectedDefect) return;
     try {
       // Pass the uploaded repair photo URL into the resolution
-      await resolveIssue(selectedDefect.id, `Resolved with repair proof: ${fileUrl}`);
+      await markIssueResolved(selectedDefect.id);
       toast.success("Defect marked as resolved");
       setSelectedDefect(null);
       // Reload
@@ -63,7 +63,7 @@ export default function VendorDefects() {
     { key: "status", header: "Status", cell: (r: any) => {
         let tone: any = "slate";
         if (r.status === 'Resolved' || r.status === 'Closed') tone = "emerald";
-        if (r.status === 'In Progress') tone = "blue";
+        if (r.status === 'In Progress') tone = "sky";
         if (r.status === 'Open') tone = "amber";
         return <StatusBadge tone={tone} label={r.status} />;
       }
@@ -124,8 +124,7 @@ export default function VendorDefects() {
                   
                   {/* Assuming DefectMediaUploader takes an onUploadComplete callback that provides the file URL */}
                   <DefectMediaUploader 
-                    issueId={selectedDefect.id} 
-                    onUploadComplete={(url) => handleResolve(url)} 
+                    onChange={(assets) => { if(assets.length > 0) handleResolve(assets[0].url) }} 
                   />
                 </div>
               )}

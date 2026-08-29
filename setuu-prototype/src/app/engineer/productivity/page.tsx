@@ -55,7 +55,7 @@ export default function EngineerProductivity() {
         <PageHeader title="My Productivity Matrix" subtitle="Personal analytics and performance score" />
         <Select 
           value={period} 
-          onChange={(e) => setPeriod(e.target.value as any)}
+          onChange={(val) => setPeriod(val as any)}
           options={[
             { label: "Last 4 Weeks", value: "week" },
             { label: "Last 4 Months", value: "month" },
@@ -76,8 +76,8 @@ export default function EngineerProductivity() {
               title="Composite Score" 
               value={data?.score || 0} 
               icon={<TrendingUp className="w-5 h-5 text-primary" />} 
-              trend={"+5% from last period"}
-              trendUp={true}
+              trend={{ value: 5, label: "from last period", isPositive: true }}
+              
             />
             <KPICard 
               title="Task Completion Rate" 
@@ -101,7 +101,7 @@ export default function EngineerProductivity() {
               <h3 className="text-lg font-bold mb-4 text-on-surface">Trend over time</h3>
               {trends && (trends as any).datasets ? (
                 <div className="h-72">
-                  <BarChart data={trends as any} />
+                  <BarChart data={trends as any} keys={["score"]} colors={["#3b82f6"]} />
                 </div>
               ) : (
                 <div className="h-72 flex items-center justify-center text-on-surface-variant">No data available</div>

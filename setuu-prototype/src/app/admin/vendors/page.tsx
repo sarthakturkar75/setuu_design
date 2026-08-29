@@ -1,3 +1,4 @@
+import { InviteModal } from "@/components/modals/InviteModal";
 "use client";
 
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -16,6 +17,7 @@ import { useEffect } from "react";
 import { getVendors, getVendorCategoryData } from "@/app/actions/vendorActions";
 
 export default function VendorRegistryPage() {
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -193,6 +195,7 @@ export default function VendorRegistryPage() {
           
         </div>
       </div>
+      <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="organization" />
     </div>
   );
 }

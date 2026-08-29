@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { createSystemNotification } from "./notificationActions";
 import { verifyRole } from "./authUtils";
@@ -12,7 +12,7 @@ export async function getRootCauses() {
   await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   // We must bypass RLS entirely for this configuration table using the Service Role Key.
   // Standard user sessions likely lack SELECT policies, causing it to constantly return an empty array.
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
 
   const { data, error } = await supabase.from("issue_root_causes").select("*");
   if (error) {
@@ -67,7 +67,7 @@ export async function getRootCauses() {
 // 1. Create Issue with SLA Timer and Rework Cost (Tasks 1, 2, 7)
 export async function createIssue(formData: FormData) {
   await verifyRole(["admin", "pm", "vendor", "engineer"]);
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
   const { data: user } = await supabase.auth.getUser();
 
   const projectId = formData.get("project_id") as string;
@@ -126,7 +126,7 @@ export async function createIssue(formData: FormData) {
 // Fetch Issues for Project
 export async function getProjectIssues(projectId: string) {
   await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
   const { data, error } = await supabase
     .from("project_issues")
     .select("*, issue_root_causes(name, category)")
@@ -139,8 +139,8 @@ export async function getProjectIssues(projectId: string) {
 
 // 3. QA/QC Inspection Templates (Task 3)
 export async function logQAInspection(issueId: string, checklistJson: any) {
-  await verifyRole(["admin", "pm", "engineer"]);
-  const supabase = await createClient();
+  await verifyRole(["admin", "pm", "engineer", "vendor"]);
+  const supabase = await createServiceRoleClient();
   const { data: user } = await supabase.auth.getUser();
 
   
@@ -172,8 +172,8 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
 
 // Add this new function at the bottom so the Global Console "Mark Resolved" button works too!
 export async function markIssueResolved(issueId: string) {
-  await verifyRole(["admin", "pm", "engineer"]);
-  const supabase = await createClient();
+  await verifyRole(["admin", "pm", "engineer", "vendor"]);
+  const supabase = await createServiceRoleClient();
 
   const { error } = await supabase
     .from("project_issues")
@@ -191,7 +191,7 @@ export async function markIssueResolved(issueId: string) {
 // Analytics Aggregation (Tasks 2, 7)
 export async function getIssueAnalytics(projectId: string) {
   await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
 
   // Aggregate Financial Impact
   const { data: issues } = await supabase.from("project_issues").select("estimated_rework_cost, issue_root_causes(name)").eq("project_id", projectId);
@@ -216,7 +216,7 @@ export async function getIssueAnalytics(projectId: string) {
 // Legacy compatibility for global dashboards
 export async function getIssues(projectId?: string) {
   await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
-  const supabase = await createClient();
+  const supabase = await createServiceRoleClient();
   let query = supabase.from("project_issues").select("*, projects(name)").order("created_at", { ascending: false });
   if (projectId) {
     query = query.eq("project_id", projectId);

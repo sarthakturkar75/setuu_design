@@ -78,6 +78,10 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-surface-container-low dark:bg-surface-container-low-dark border border-outline-variant dark:border-outline-variant-dark rounded-md px-3 py-2 text-on-surface dark:text-on-surface-dark font-inter focus:ring-1 focus:ring-primary focus:border-primary outline-none" 
             />
+
+          <div className="flex justify-end mt-1">
+            <a href="/forgot-password" className="text-primary text-sm hover:underline font-inter">Forgot Password?</a>
+          </div>
           </div>
           <button 
             type="submit" 

@@ -117,7 +117,6 @@ export default function ClientApprovals() {
               <div className="pt-4 border-t border-outline-variant/30">
                 <h4 className="text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-3">Your Feedback</h4>
                 <TextArea 
-                  label="Comments / Contingencies"
                   placeholder="Enter any notes before approving or requesting a revision..."
                   value={comments}
                   onChange={(e) => setComments(e.target.value)}
