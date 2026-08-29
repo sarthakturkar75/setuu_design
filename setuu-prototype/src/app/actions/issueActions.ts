@@ -139,7 +139,7 @@ export async function getProjectIssues(projectId: string) {
 
 // 3. QA/QC Inspection Templates (Task 3)
 export async function logQAInspection(issueId: string, checklistJson: any) {
-  await verifyRole(["admin", "pm", "engineer"]);
+  await verifyRole(["admin", "pm", "engineer", "vendor"]);
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
 
@@ -172,7 +172,7 @@ export async function logQAInspection(issueId: string, checklistJson: any) {
 
 // Add this new function at the bottom so the Global Console "Mark Resolved" button works too!
 export async function markIssueResolved(issueId: string) {
-  await verifyRole(["admin", "pm", "engineer"]);
+  await verifyRole(["admin", "pm", "engineer", "vendor"]);
   const supabase = await createClient();
 
   const { error } = await supabase
