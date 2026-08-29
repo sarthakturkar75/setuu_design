@@ -324,6 +324,7 @@ export const getNavigationForRole = (
                         title: "Project Operations",
                         items: [
                             { label: "Project Dashboard", href: `/engineer/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Status Update", href: `/engineer/projects/${projectId}/update`, icon: <Activity className="w-5 h-5" /> },
                             { label: "Timeline", href: `/engineer/projects/${projectId}/timeline`, icon: <CalendarIcon className="w-5 h-5" /> },
                             { label: "Requirements", href: `/engineer/projects/${projectId}/requirements`, icon: <FileTextIcon className="w-5 h-5" /> },
                             ...(dynamicData?.flags?.drawing_versions !== false ? [{ label: "Drawings", href: `/engineer/projects/${projectId}/drawings`, icon: <FileBoxIcon className="w-5 h-5" /> }] : []),
@@ -363,6 +364,14 @@ export const getNavigationForRole = (
                             { label: "Collaboration", href: "/vendor/collaboration", icon: <MessageSquareIcon className="w-5 h-5" /> },
                         ],
                     }
+
+                    ...(projectId ? [{
+                        title: "Project Delivery",
+                        items: [
+                            { label: "Project Details", href: `/vendor/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Materials", href: `/vendor/projects/${projectId}/materials`, icon: <PackageIcon className="w-5 h-5" /> },
+                        ]
+                    }] : [])
                 ],
                 bottomItems: [
                     { label: "Vendor Scorecard", href: "/vendor/scorecard", icon: <Activity className="w-5 h-5" /> },
@@ -400,6 +409,15 @@ export const getNavigationForRole = (
                             { label: "Reports", href: "/client/reports", icon: <FileTextIcon className="w-5 h-5" /> },
                         ]
                     }
+
+                    ...(projectId ? [{
+                        title: "Project Monitoring",
+                        items: [
+                            { label: "Project Dashboard", href: `/client/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
+                            { label: "Timeline", href: `/client/projects/${projectId}/timeline`, icon: <CalendarIcon className="w-5 h-5" /> },
+                            { label: "Reports", href: `/client/projects/${projectId}/reports`, icon: <FileTextIcon className="w-5 h-5" /> },
+                        ]
+                    }] : [])
                 ],
                 bottomItems: [
                     { label: "Support", href: "/client/support", icon: <CircleHelpIcon className="w-5 h-5" /> },
