@@ -21,6 +21,7 @@ export default function TimelineAndVarianceConsole() {
   const params = useParams();
   const projectId = params?.id as string;
   const [tasks, setTasks] = useState<any[]>([]);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState<"gantt" | "variance">("variance");
   const [actionLoading, setActionLoading] = useState("");

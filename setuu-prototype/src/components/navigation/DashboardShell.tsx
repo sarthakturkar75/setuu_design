@@ -93,7 +93,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 ${isDesktopCollapsed ? "md:w-0 md:opacity-0" : "md:w-rail lg:w-sidebar md:translate-x-0 md:opacity-100"}
                 `}
 			>
-				<Sidebar sections={sections} activePath={pathname} />
+				<Sidebar sections={sections} bottomItems={bottomItems} activePath={pathname} />
 			</div>
 
 			<div className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden pb-16 md:pb-0">
