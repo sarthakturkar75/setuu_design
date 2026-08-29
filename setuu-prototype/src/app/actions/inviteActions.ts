@@ -119,12 +119,25 @@ export async function acceptInvite(token: string, userId: string) {
   // Check if user_actor exists
   const { data: actor } = await serviceClient.from('user_actor').select('id').eq('id', userId).single();
   
+  // Handle dynamic Organization Creation (Superadmin inviting an Admin)
+  let finalOrgId = invite.target_org_id;
+  if (!finalOrgId && invite.invite_type === 'organization' && invite.metadata?.orgName) {
+    const { data: newOrg, error: orgError } = await serviceClient.from('organizations').insert({
+      name: invite.metadata.orgName,
+      type: 'client', // Defaulting to client, can be updated later
+      status: 'Active'
+    }).select('id').single();
+    
+    if (orgError) throw new Error("Failed to provision new organization");
+    finalOrgId = newOrg.id;
+  }
+
   if (!actor) {
     // Create actor
     await serviceClient.from('user_actor').insert({
       id: userId,
       role: invite.role_offered,
-      organization_id: invite.target_org_id,
+      organization_id: finalOrgId,
       display_name: userAuth.user.user_metadata?.full_name || invite.email.split('@')[0],
       is_active: true
     });
@@ -137,10 +150,10 @@ export async function acceptInvite(token: string, userId: string) {
 
   // Handle Project assignment
   if (invite.invite_type === 'project' && invite.resource_id) {
-    await serviceClient.from('project_team').insert({
+    // We use project_vendors as the team mapping table
+    await serviceClient.from('project_vendors').insert({
       project_id: invite.resource_id,
-      user_id: userId,
-      role: invite.role_offered
+      vendor_id: userId
     });
   }
 
