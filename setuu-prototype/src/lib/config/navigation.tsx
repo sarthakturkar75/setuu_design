@@ -368,8 +368,7 @@ export const getNavigationForRole = (
                             { label: "Timesheets", href: "/vendor/timesheet", icon: <CalendarIcon className="w-5 h-5" /> },
                             { label: "Collaboration", href: "/vendor/collaboration", icon: <MessageSquareIcon className="w-5 h-5" /> },
                         ],
-                    }
-
+                    },
                     ...(projectId ? [{
                         title: "Project Delivery",
                         items: [
@@ -413,8 +412,7 @@ export const getNavigationForRole = (
                             { label: "Handovers", href: "/client/handovers", icon: <ShieldCheckIcon className="w-5 h-5" /> },
                             { label: "Reports", href: "/client/reports", icon: <FileTextIcon className="w-5 h-5" /> },
                         ]
-                    }
-
+                    },
                     ...(projectId ? [{
                         title: "Project Monitoring",
                         items: [
