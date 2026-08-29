@@ -1,5 +1,5 @@
-import { InviteModal } from "@/components/modals/InviteModal";
 "use client";
+import { InviteModal } from "@/components/modals/InviteModal";
 
 import { PageHeader } from "@/components/ui/PageHeader";
 import { FilterBar } from "@/components/ui/FilterBar";
@@ -39,9 +39,9 @@ export default function UserDirectoryPage() {
   }, []);
 
   const columns = [
-    { 
-      key: "display_name", 
-      header: "User", 
+    {
+      key: "display_name",
+      header: "User",
       sortable: true,
       cell: (row: any) => (
         <div className="flex items-center gap-3">
@@ -59,31 +59,31 @@ export default function UserDirectoryPage() {
         </div>
       )
     },
-    { 
-      key: "role", 
-      header: "System Role", 
+    {
+      key: "role",
+      header: "System Role",
       sortable: true,
       cell: (row: any) => <span className="font-medium text-on-surface-variant">{row.role}</span>
     },
-    { 
-      key: "is_active", 
+    {
+      key: "is_active",
       header: "Status",
       cell: (row: any) => (
-        <StatusBadge 
-          tone={row.is_active ? "emerald" : "slate"} 
-          label={row.is_active ? "Active" : "Inactive"} 
+        <StatusBadge
+          tone={row.is_active ? "emerald" : "slate"}
+          label={row.is_active ? "Active" : "Inactive"}
         />
       )
     },
-    { 
-      key: "created_at", 
-      header: "Joined At", 
+    {
+      key: "created_at",
+      header: "Joined At",
       sortable: true,
       cell: (row: any) => <span className="text-sm font-jetbrains text-on-surface-variant">{row.created_at ? new Date(row.created_at).toLocaleDateString() : "--"}</span>
     },
-    { 
-      key: "actions", 
-      header: "", 
+    {
+      key: "actions",
+      header: "",
       cell: () => (
         <button className="p-1 hover:bg-surface-variant rounded-full text-on-surface-variant transition-colors">
           <MoreVertical className="w-5 h-5" />
@@ -94,8 +94,8 @@ export default function UserDirectoryPage() {
 
   return (
     <div className="flex flex-col h-full bg-surface">
-      <PageHeader 
-        title="User Directory" 
+      <PageHeader
+        title="User Directory"
         subtitle="Manage platform access, roles, and organizational accounts"
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
@@ -117,18 +117,18 @@ export default function UserDirectoryPage() {
           </div>
         }
       />
-      
+
       <div className="flex-1 overflow-y-auto p-6 max-w-[1600px] mx-auto w-full">
         <div className="flex flex-col xl:flex-row gap-6">
-          
+
           {/* Main Content Area */}
           <div className="flex-1 flex flex-col gap-6">
-            <FilterBar onClear={() => {}} onApply={() => {}}>
+            <FilterBar onClear={() => { }} onApply={() => { }}>
               <div className="w-full sm:w-64 relative">
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
                 <TextInput placeholder="Search users by name or email..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </div>
-              <Select 
+              <Select
                 options={[
                   { label: "All Roles", value: "" },
                   { label: "Admin", value: "admin" },
@@ -139,7 +139,7 @@ export default function UserDirectoryPage() {
                 value={roleFilter}
                 onChange={(val) => setRoleFilter(val)}
               />
-              <Select 
+              <Select
                 options={[
                   { label: "All Statuses", value: "" },
                   { label: "Active", value: "true" },
@@ -154,7 +154,7 @@ export default function UserDirectoryPage() {
               {loading ? (
                 <div className="flex items-center justify-center h-full py-20 text-on-surface-variant">Loading users...</div>
               ) : (
-                <DataTable 
+                <DataTable
                   data={users}
                   columns={columns}
                   getRowId={(row: any) => row.id}
@@ -194,7 +194,7 @@ export default function UserDirectoryPage() {
               </Link>
             </Card>
           </div>
-          
+
         </div>
       </div>
       <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="platform" />

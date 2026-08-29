@@ -1,5 +1,5 @@
-import { InviteModal } from "@/components/modals/InviteModal";
 "use client";
+import { InviteModal } from "@/components/modals/InviteModal";
 
 import { PageHeader } from "@/components/ui/PageHeader";
 import { FilterBar } from "@/components/ui/FilterBar";
@@ -23,7 +23,7 @@ export default function VendorRegistryPage() {
   const [statusFilter, setStatusFilter] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [vendors, setVendors] = useState<any[]>([]);
-  const [categories, setCategories] = useState<{name: string, count: number}[]>([]);
+  const [categories, setCategories] = useState<{ name: string, count: number }[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,56 +43,55 @@ export default function VendorRegistryPage() {
   }, []);
 
   const columns = [
-    { 
-      key: "name_id", 
-      header: "Vendor", 
+    {
+      key: "name_id",
+      header: "Vendor",
       sortable: true,
       cell: (row: any) => (
         <div className="flex flex-col">
           <Link href={`/admin/vendors/${row.vendor_id}`} className="font-semibold text-on-surface hover:text-primary transition-colors">{row.name}</Link>
-          <span className="text-xs text-on-surface-variant font-jetbrains">{row.vendor_id?.slice(0,8)}...</span>
+          <span className="text-xs text-on-surface-variant font-jetbrains">{row.vendor_id?.slice(0, 8)}...</span>
         </div>
       )
     },
-    { 
-      key: "category", 
-      header: "Category", 
+    {
+      key: "category",
+      header: "Category",
       sortable: true,
       cell: (row: any) => <span className="text-sm font-medium text-on-surface-variant">{row.category}</span>
     },
-    { 
-      key: "status", 
+    {
+      key: "status",
       header: "Status",
       cell: (row: any) => (
-        <StatusBadge 
-          tone={row.status === "Active" ? "emerald" : row.status === "Pending" ? "amber" : "slate"} 
-          label={row.status} 
+        <StatusBadge
+          tone={row.status === "Active" ? "emerald" : row.status === "Pending" ? "amber" : "slate"}
+          label={row.status}
         />
       )
     },
-    { 
-      key: "sla", 
-      header: "SLA Adherence", 
+    {
+      key: "sla",
+      header: "SLA Adherence",
       sortable: true,
       cell: (row: any) => (
-        <span className={`font-jetbrains font-bold text-sm ${
-          !row.sla || row.sla === "-" ? "text-on-surface-variant" : 
-          parseInt(row.sla) > 95 ? "text-semantic-emerald" : 
-          parseInt(row.sla) > 90 ? "text-semantic-amber" : "text-semantic-crimson"
-        }`}>
+        <span className={`font-jetbrains font-bold text-sm ${!row.sla || row.sla === "-" ? "text-on-surface-variant" :
+          parseInt(row.sla) > 95 ? "text-semantic-emerald" :
+            parseInt(row.sla) > 90 ? "text-semantic-amber" : "text-semantic-crimson"
+          }`}>
           {row.sla}%
         </span>
       )
     },
-    { 
-      key: "organization_name", 
-      header: "Organization", 
+    {
+      key: "organization_name",
+      header: "Organization",
       sortable: true,
       cell: (row: any) => <span className="text-sm text-on-surface-variant">{row.organization_name || "Platform"}</span>
     },
-    { 
-      key: "actions", 
-      header: "", 
+    {
+      key: "actions",
+      header: "",
       cell: () => (
         <button className="p-1 hover:bg-surface-variant rounded-full text-on-surface-variant transition-colors">
           <MoreVertical className="w-5 h-5" />
@@ -103,8 +102,8 @@ export default function VendorRegistryPage() {
 
   return (
     <div className="flex flex-col h-full bg-surface">
-      <PageHeader 
-        title="Vendor Registry" 
+      <PageHeader
+        title="Vendor Registry"
         subtitle="Manage suppliers, subcontractors, and external partners"
         breadcrumb={
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
@@ -126,18 +125,18 @@ export default function VendorRegistryPage() {
           </div>
         }
       />
-      
+
       <div className="flex-1 overflow-y-auto p-6 max-w-[1600px] mx-auto w-full">
         <div className="flex flex-col xl:flex-row gap-6">
-          
+
           {/* Main Content Area */}
           <div className="flex-1 flex flex-col gap-6">
-            <FilterBar onClear={() => {}} onApply={() => {}}>
+            <FilterBar onClear={() => { }} onApply={() => { }}>
               <div className="w-full sm:w-64 relative">
                 <Search className="w-4 h-4 text-on-surface-variant absolute left-3 top-1/2 -translate-y-1/2" />
                 <TextInput placeholder="Search vendors by name or ID..." className="pl-9" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </div>
-              <Select 
+              <Select
                 options={[
                   { label: "All Categories", value: "" },
                   { label: "Materials", value: "Materials" },
@@ -147,7 +146,7 @@ export default function VendorRegistryPage() {
                 value={categoryFilter}
                 onChange={(val) => setCategoryFilter(val)}
               />
-              <Select 
+              <Select
                 options={[
                   { label: "All Statuses", value: "" },
                   { label: "Active", value: "Active" },
@@ -163,7 +162,7 @@ export default function VendorRegistryPage() {
               {loading ? (
                 <div className="flex items-center justify-center h-full text-on-surface-variant">Loading vendors...</div>
               ) : (
-                <DataTable 
+                <DataTable
                   data={vendors}
                   columns={columns}
                   getRowId={(row: any) => row.id}
@@ -192,7 +191,7 @@ export default function VendorRegistryPage() {
               </Link>
             </Card>
           </div>
-          
+
         </div>
       </div>
       <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="organization" />
