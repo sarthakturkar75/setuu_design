@@ -68,6 +68,7 @@ export function Topbar({
 		[],
 	);
 	const [isLockPending, setIsLockPending] = React.useState(false);
+	const [isInviteOpen, setIsInviteOpen] = React.useState(false);
 
 	// Use parent-supplied projects if given (avoids double-fetch); self-heal otherwise
 	React.useEffect(() => {
@@ -174,6 +175,8 @@ export function Topbar({
 		switch (role) {
 			case "superadmin":
 				return (
+					<>
+					<button onClick={() => setIsInviteOpen(true)} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg text-sm font-semibold hover:bg-secondary/90 transition-colors"><Plus className="w-4 h-4" /> Invite Admin</button>
 					<Link
 						href="/superadmin/security/logs"
 						className="px-4 py-2 bg-error text-white rounded-lg text-sm font-medium hover:bg-error/90 flex items-center gap-2"
@@ -181,10 +184,18 @@ export function Topbar({
 						<ShieldAlert className="w-4 h-4" />
 						<span className="hidden lg:inline">Emergency Override Log</span>
 					</Link>
+					</>
 				);
 			case "admin":
 				return (
 					<>
+						<button
+							onClick={() => setIsInviteOpen(true)}
+							className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg text-sm font-semibold hover:bg-secondary/90 transition-colors"
+						>
+							<Plus className="w-4 h-4" />
+							Invite User
+						</button>
 						<Link
 							href="/admin/projects/new"
 							className="hidden sm:flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors"
@@ -207,6 +218,7 @@ export function Topbar({
 			case "pm":
 				return (
 					<div className="flex items-center gap-3">
+						<button onClick={() => setIsInviteOpen(true)} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg text-sm font-semibold hover:bg-secondary/90 transition-colors"><Plus className="w-4 h-4" /> Invite User</button>
 						<div className="relative group">
 							<button className="flex items-center gap-2 px-3 py-1.5 bg-surface-variant hover:bg-surface-variant/80 text-on-surface rounded-lg text-sm font-medium transition-colors border border-outline-variant">
 								<span>Switch Project</span>
@@ -370,6 +382,7 @@ export function Topbar({
 					{renderActions()}
 				</div>
 			</div>
+		  <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="platform" />
 		</header>
 	);
 }

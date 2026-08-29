@@ -60,7 +60,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 		}
 	}, [currentProjectId]);
 
-	const { sections } = React.useMemo(() => {
+	const { sections, bottomItems } = React.useMemo(() => {
 		return getNavigationForRole(role, currentProjectId, {
 			projects,
 			healthStatus,

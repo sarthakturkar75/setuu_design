@@ -1,3 +1,5 @@
+import { InviteModal } from "@/components/modals/InviteModal";
+import { useState } from "react";
 "use client";
 import * as React from "react";
 import { getProjectResources, deleteResource } from "@/app/actions/resourceActions";
@@ -344,6 +346,7 @@ export default function ProjectTeamPage() {
           </div>
         )}
       </div>
+      <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="project" resourceId={params.id as string} />
     </div>
   );
 }
