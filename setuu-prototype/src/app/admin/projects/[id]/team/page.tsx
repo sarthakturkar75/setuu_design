@@ -1,6 +1,7 @@
+"use client";
 import { InviteModal } from "@/components/modals/InviteModal";
 import { useState } from "react";
-"use client";
+
 import * as React from "react";
 import { getProjectResources, deleteResource } from "@/app/actions/resourceActions";
 import { getProjectTeam, removeTeamMember } from "@/app/actions/projectActions";
@@ -14,6 +15,7 @@ import { UsersIcon, Trash2, ShieldAlert, ChevronDown, ChevronRight, Settings2, P
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function ProjectTeamPage() {
+	const [isInviteOpen, setIsInviteOpen] = useState(false);
   // Pulled organizationId from useAuth
   const { user: currentUser, role: currentRole, organizationId } = useAuth();
 

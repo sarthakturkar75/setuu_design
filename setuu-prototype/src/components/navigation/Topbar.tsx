@@ -1,4 +1,6 @@
 "use client";
+import { InviteModal } from "@/components/modals/InviteModal";
+
 import { CurrencySelector } from "@/components/ui/CurrencySelector";
 import * as React from "react";
 import Link from "next/link";
@@ -176,14 +178,14 @@ export function Topbar({
 			case "superadmin":
 				return (
 					<>
-					<button onClick={() => setIsInviteOpen(true)} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg text-sm font-semibold hover:bg-secondary/90 transition-colors"><Plus className="w-4 h-4" /> Invite Admin</button>
-					<Link
-						href="/superadmin/security/logs"
-						className="px-4 py-2 bg-error text-white rounded-lg text-sm font-medium hover:bg-error/90 flex items-center gap-2"
-					>
-						<ShieldAlert className="w-4 h-4" />
-						<span className="hidden lg:inline">Emergency Override Log</span>
-					</Link>
+						<button onClick={() => setIsInviteOpen(true)} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg text-sm font-semibold hover:bg-secondary/90 transition-colors"><Plus className="w-4 h-4" /> Invite Admin</button>
+						<Link
+							href="/superadmin/security/logs"
+							className="px-4 py-2 bg-error text-white rounded-lg text-sm font-medium hover:bg-error/90 flex items-center gap-2"
+						>
+							<ShieldAlert className="w-4 h-4" />
+							<span className="hidden lg:inline">Emergency Override Log</span>
+						</Link>
 					</>
 				);
 			case "admin":
@@ -382,7 +384,7 @@ export function Topbar({
 					{renderActions()}
 				</div>
 			</div>
-		  <InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="platform" />
+			<InviteModal isOpen={isInviteOpen} onClose={() => setIsInviteOpen(false)} defaultType="platform" />
 		</header>
 	);
 }
