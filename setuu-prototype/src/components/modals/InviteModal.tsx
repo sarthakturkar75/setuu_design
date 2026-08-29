@@ -29,7 +29,7 @@ export function InviteModal({ isOpen, onClose, defaultType = 'platform', resourc
 
   useEffect(() => {
     if (isOpen && tab === 'existing') {
-      getCompanyResourcePool().then(data => setExistingUsers(data || []));
+      getCompanyResourcePool().then(res => setExistingUsers(res.data || []));
     }
   }, [isOpen, tab]);
 

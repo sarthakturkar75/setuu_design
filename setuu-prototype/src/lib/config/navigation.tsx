@@ -1,4 +1,5 @@
 import {
+    Briefcase,
     LayoutDashboardIcon,
     FolderTreeIcon,
     FileBoxIcon,
@@ -23,7 +24,8 @@ import {
     WifiOffIcon,
     BookOpenIcon,
     CalendarIcon,
-CheckCircle2, Clock, TrendingUp, Bell } from "lucide-react";
+    CheckCircle2, Clock, TrendingUp, Bell
+} from "lucide-react";
 import React from "react";
 import { NavSection, NavItem } from "@/components/navigation/Sidebar";
 
@@ -97,6 +99,36 @@ export const getNavigationForRole = (
                     href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/timeline`,
                     icon: <CalendarIcon className="w-5 h-5" />,
                 }] : []),
+                ...(flags.change_requests !== false ? [{
+                    label: cn.change_requests || "Change Requests",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/changes`,
+                    icon: <FileTextIcon className="w-5 h-5" />,
+                }] : []),
+                {
+                    label: "Team & Personnel",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/team`,
+                    icon: <UsersIcon className="w-5 h-5" />,
+                },
+                {
+                    label: "Requirements",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/requirements`,
+                    icon: <FileTextIcon className="w-5 h-5" />,
+                },
+                {
+                    label: "Status Updates",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/update`,
+                    icon: <Activity className="w-5 h-5" />,
+                },
+                ...(flags.handover !== false ? [{
+                    label: cn.handover || "Handover",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/handover`,
+                    icon: <ShieldCheckIcon className="w-5 h-5" />,
+                }] : []),
+                {
+                    label: "Project Config",
+                    href: `/${role === "admin" ? "admin" : "pm"}/projects/${projectId}/config`,
+                    icon: <SettingsIcon className="w-5 h-5" />,
+                },
             ]
             : [],
     };
@@ -283,11 +315,33 @@ export const getNavigationForRole = (
                                 href: `/${role}/support`,
                                 icon: <CircleHelpIcon className="w-5 h-5" />,
                             },
-                            ...(role === "admin" ? [{
-                                label: "Settings",
-                                href: "/admin/settings",
-                                icon: <SettingsIcon className="w-5 h-5" />,
-                            }] : [])
+                            ...(role === "admin" ? [
+                                {
+                                    label: "Users & Roles",
+                                    href: "/admin/users",
+                                    icon: <UsersIcon className="w-5 h-5" />,
+                                },
+                                {
+                                    label: "Vendor Management",
+                                    href: "/admin/vendors",
+                                    icon: <Briefcase className="w-5 h-5" />,
+                                },
+                                {
+                                    label: "Client Directory",
+                                    href: "/admin/clients",
+                                    icon: <Building2 className="w-5 h-5" />,
+                                },
+                                {
+                                    label: "Security & Audit",
+                                    href: "/admin/security",
+                                    icon: <ShieldAlert className="w-5 h-5" />,
+                                },
+                                {
+                                    label: "Settings",
+                                    href: "/admin/settings",
+                                    icon: <SettingsIcon className="w-5 h-5" />,
+                                }
+                            ] : [])
                         ],
                     },
                 ],
@@ -306,8 +360,8 @@ export const getNavigationForRole = (
             };
 
 
-        
-                case "engineer":
+
+        case "engineer":
             return {
                 sections: [
                     {
@@ -346,7 +400,7 @@ export const getNavigationForRole = (
                 ]
             };
 
-                case "vendor":
+        case "vendor":
             return {
                 sections: [
                     {
@@ -374,6 +428,8 @@ export const getNavigationForRole = (
                         items: [
                             { label: "Project Details", href: `/vendor/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
                             { label: "Materials", href: `/vendor/projects/${projectId}/materials`, icon: <PackageIcon className="w-5 h-5" /> },
+                            { label: "Issues", href: `/vendor/projects/${projectId}/issues`, icon: <AlertTriangleIcon className="w-5 h-5" /> },
+                            { label: "Collaboration", href: `/vendor/projects/${projectId}/collaboration`, icon: <MessageSquareIcon className="w-5 h-5" /> },
                         ]
                     }] : [])
                 ],
@@ -384,7 +440,7 @@ export const getNavigationForRole = (
                 ]
             };
 
-                case "client":
+        case "client":
             return {
                 sections: [
                     {
@@ -417,8 +473,8 @@ export const getNavigationForRole = (
                         title: "Project Monitoring",
                         items: [
                             { label: "Project Dashboard", href: `/client/projects/${projectId}`, icon: <LayoutDashboardIcon className="w-5 h-5" /> },
-                            { label: "Timeline", href: `/client/projects/${projectId}/timeline`, icon: <CalendarIcon className="w-5 h-5" /> },
-                            { label: "Reports", href: `/client/projects/${projectId}/reports`, icon: <FileTextIcon className="w-5 h-5" /> },
+                            { label: "Collaboration", href: `/client/projects/${projectId}/collaboration`, icon: <MessageSquareIcon className="w-5 h-5" /> },
+                            { label: "Issues", href: `/client/projects/${projectId}/issues`, icon: <AlertTriangleIcon className="w-5 h-5" /> },
                         ]
                     }] : [])
                 ],
@@ -427,7 +483,7 @@ export const getNavigationForRole = (
                     { label: "Notifications", href: "/client/notifications", icon: <Bell className="w-5 h-5" /> }
                 ]
             };
-default:
+        default:
             return { sections: [], bottomItems: [] };
     }
 };
