@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
 import { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
@@ -17,6 +18,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null)
   const [role, setRole] = useState<string | null>(null)
   const [organizationId, setOrganizationId] = useState<string | null>(null)
@@ -117,6 +119,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setOrganizationId(null)
     setDisplayName(null)
     setAvatarUrl(null)
+    router.push('/auth');
+    window.location.href = '/login'
   }
 
   return (

@@ -5,6 +5,7 @@ import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getMeetings(projectId?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   let query = supabase.from("client_meetings").select("*, client_meeting_agendas(*), project:projects!client_meetings_project_id_fkey(name)").order("meeting_date", { ascending: false });
   if (projectId) {

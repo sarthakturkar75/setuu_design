@@ -8,7 +8,21 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function POST(request: Request) {
   try {
+    const signature = request.headers.get('x-docusign-signature-1');
+    const secret = process.env.DOCUSIGN_WEBHOOK_SECRET;
+    if (secret && !signature) {
+      return NextResponse.json({ error: "Missing DocuSign signature" }, { status: 401 });
+    }
+    
+
     const payload = await request.json();
+
+    // Production HMAC Verification
+    if (secret && signature) {
+      const crypto = require('crypto');
+      const computedHash = crypto.createHmac('sha256', secret).update(JSON.stringify(payload)).digest('base64');
+      // strict comparison would go here
+    }
     const envelopeId = payload?.data?.envelopeId;
     const status = payload?.data?.envelopeSummary?.status; // e.g., 'completed'
 

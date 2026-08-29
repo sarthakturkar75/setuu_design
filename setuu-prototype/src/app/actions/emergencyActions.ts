@@ -1,8 +1,10 @@
 "use server";
+import { verifyRole } from "./authUtils";
 
 import { createClient } from "@/lib/supabase/server";
 
 export async function initiateEmergencyMuster(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin"]);
   const supabase = await createClient();
   
 
@@ -48,6 +50,7 @@ export async function initiateEmergencyMuster(projectId: string) {
 }
 
 export async function markUserSafe(eventId: string, userId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer"]);
   const supabase = await createClient();
   const { error } = await supabase
     .from('muster_roll_responses')
@@ -63,6 +66,7 @@ export async function markUserSafe(eventId: string, userId: string) {
 }
 
 export async function getActiveMusterEvents(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('muster_roll_events')
@@ -76,6 +80,7 @@ export async function getActiveMusterEvents(projectId: string) {
 }
 
 export async function getMusterResponses(eventId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('muster_roll_responses')

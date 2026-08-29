@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { verifyRole } from "./authUtils";
 
 export async function getProjectRequirements(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("project_requirements")

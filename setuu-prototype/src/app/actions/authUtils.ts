@@ -15,6 +15,7 @@ export async function verifyRole(allowedRoles: string[]) {
 }
 
 export async function verifyModuleAccess(projectId: string, moduleId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: config, error } = await supabase
     .from("project_module_config")

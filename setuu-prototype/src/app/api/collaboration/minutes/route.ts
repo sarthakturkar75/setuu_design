@@ -4,6 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
     const { transcript, projectId } = await request.json();
 
     if (!transcript || !projectId) {
@@ -22,7 +26,7 @@ export async function POST(request: Request) {
     const endpoint = isGroq
       ? "https://api.groq.com/openai/v1/chat/completions"
       : "https://api.openai.com/v1/chat/completions";
-    const modelName = isGroq ? "openai/gpt-oss-120b" : "gpt-4o-mini";
+    const modelName = isGroq ? "llama3-8b-8192" : "gpt-4o-mini";
 
     const prompt = `
 You are a construction project manager. Read the following meeting transcript.
@@ -68,9 +72,7 @@ Transcript:
       console.error("Failed to parse GPT response as JSON", cleanContent);
     }
 
-    const supabase = await createClient();
-    const { data: user } = await supabase.auth.getUser();
-    const userId = user?.user?.id || null;
+    const userId = user.id;
 
     // Auto-create these as issues or tasks? We will use project_issues for simplicity in prototype
     for (const item of actionItems) {

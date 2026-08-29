@@ -5,6 +5,7 @@ import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getPlatformMetrics() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   const { count: activeSessions } = await supabase
@@ -43,6 +44,7 @@ export async function getPlatformMetrics() {
 }
 
 export async function getStorageMetrics() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: orgs, error } = await supabase
     .from("organizations")
@@ -113,6 +115,7 @@ export async function terminateBreakGlass(sessionId: string) {
 }
 
 export async function getBreakGlassLogs() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: logs, error } = await supabase
     .from("break_glass_logs")
@@ -132,6 +135,7 @@ export async function getBreakGlassLogs() {
 }
 
 export async function getOrganizations() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("organizations")
@@ -158,6 +162,7 @@ export async function provisionOrg(data: any) {
 }
 
 export async function getSubscriptionTiers() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("subscription_tiers")
@@ -168,6 +173,7 @@ export async function getSubscriptionTiers() {
 }
 
 export async function getTelemetryData() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { count: users } = await supabase.from("user_actor").select("*", { count: "exact", head: true });
   const { count: orgs } = await supabase.from("organizations").select("*", { count: "exact", head: true });
@@ -188,6 +194,7 @@ export async function getTelemetryData() {
 
 
 export async function getInfrastructureData() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: logs } = await supabase.from("audit_log").select("*").order("created_at", { ascending: false }).limit(5);
   
@@ -198,6 +205,7 @@ export async function getInfrastructureData() {
 }
 
 export async function getAdminDashboardData() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // 1. Portfolio Health

@@ -1,8 +1,10 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function getPortfolioAverages() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   if (!user?.user) throw new Error("Unauthorized");

@@ -1,7 +1,9 @@
 "use server";
+import { verifyRole } from "./authUtils";
 import { createClient } from "@/lib/supabase/server";
 
 export async function getRoleLandingPage(projectId: string, role: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data } = await supabase
     .from("project_role_settings")
@@ -20,6 +22,7 @@ export async function getRoleLandingPage(projectId: string, role: string) {
 }
 
 export async function getProjectRoleSettings(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data } = await supabase
     .from("project_role_settings")
@@ -30,6 +33,7 @@ export async function getProjectRoleSettings(projectId: string) {
 }
 
 export async function updateRoleSetting(projectId: string, role: string, landingPage: string) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
   
   const { data: existing } = await supabase

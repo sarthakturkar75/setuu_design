@@ -5,6 +5,7 @@ import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getNotifications(userId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("notifications")
@@ -56,6 +57,7 @@ export async function sendBroadcast(data: any) {
 }
 
 export async function createSystemNotification(userIds: string[], title: string, body: string, type: "system" | "update" | "comment" | "mention" | "project" = "system", referenceId: string | null = null) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const inserts = userIds.map(uid => ({
     user_id: uid,

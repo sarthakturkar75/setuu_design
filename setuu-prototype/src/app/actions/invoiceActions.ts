@@ -5,6 +5,7 @@ import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getInvoices(vendorId?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   let query = supabase.from("invoices").select("*, vendor:organizations!invoices_vendor_id_fkey(name), project:projects!invoices_project_id_fkey(name)");
   

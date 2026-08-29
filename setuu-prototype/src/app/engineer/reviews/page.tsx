@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
@@ -8,11 +9,12 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { Button } from "@/components/ui/Button";
 
 export default function EngineerReviews() {
+  const { user, organizationId } = useAuth();
   const [reviews, setReviews] = useState<{incoming: any[], outgoing: any[]}>({ incoming: [], outgoing: [] });
   
   useEffect(() => {
-    getReviews("mock-user-id").then(res => setReviews({ incoming: res as any, outgoing: [] }));
-  }, []);
+    getReviews(user?.id || "").then(res => setReviews({ incoming: res as any, outgoing: [] }));
+  }, [user, organizationId]);
 
   const columns = [
     { key: "title", header: "Title", cell: (r: any) => r.title },

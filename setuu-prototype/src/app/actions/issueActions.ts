@@ -9,6 +9,7 @@ import { verifyRole } from "./authUtils";
 
 // Fetch Root Causes
 export async function getRootCauses() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   // We must bypass RLS entirely for this configuration table using the Service Role Key.
   // Standard user sessions likely lack SELECT policies, causing it to constantly return an empty array.
   const supabase = await createClient();
@@ -124,6 +125,7 @@ export async function createIssue(formData: FormData) {
 
 // Fetch Issues for Project
 export async function getProjectIssues(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("project_issues")
@@ -188,6 +190,7 @@ export async function markIssueResolved(issueId: string) {
 
 // Analytics Aggregation (Tasks 2, 7)
 export async function getIssueAnalytics(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // Aggregate Financial Impact
@@ -212,6 +215,7 @@ export async function getIssueAnalytics(projectId: string) {
 
 // Legacy compatibility for global dashboards
 export async function getIssues(projectId?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   let query = supabase.from("project_issues").select("*, projects(name)").order("created_at", { ascending: false });
   if (projectId) {

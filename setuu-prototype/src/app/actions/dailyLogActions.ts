@@ -1,9 +1,11 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 
 export async function generateDailyReport(projectId: string, targetDate: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: userAuth } = await supabase.auth.getUser();
   if (!userAuth?.user) throw new Error("Unauthorized");
@@ -89,7 +91,7 @@ export async function generateDailyReport(projectId: string, targetDate: string)
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "qwen/qwen3.8-27b",
+        model: "llama3-8b-8192",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.3,
         max_tokens: 1500
@@ -149,6 +151,7 @@ export async function generateDailyReport(projectId: string, targetDate: string)
 }
 
 export async function getDailyLogs(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("daily_logs")
@@ -161,6 +164,7 @@ export async function getDailyLogs(projectId: string) {
 }
 
 export async function deleteDailyLog(logId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { error } = await supabase.from("daily_logs").delete().eq("id", logId);
   if (error) return { success: false, error: error.message };

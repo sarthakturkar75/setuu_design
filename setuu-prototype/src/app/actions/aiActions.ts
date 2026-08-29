@@ -1,8 +1,10 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function generateWelcomeBrief(metrics: any) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   if (!user?.user) throw new Error("Unauthorized");
@@ -37,7 +39,7 @@ export async function generateWelcomeBrief(metrics: any) {
         "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: "openai/gpt-oss-120b", // Upgraded to Groq's current flagship text model
+        model: "llama3-70b-8192", // Upgraded to Groq's current flagship text model
         messages: [{ role: "user", content: prompt }],
         temperature: 0.5,
         max_tokens: 250

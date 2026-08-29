@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     const cronSecret = process.env.CRON_SECRET;
     
     // During local dev or if no secret is set, we bypass. In production, this MUST match.
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

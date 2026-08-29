@@ -11,6 +11,8 @@ export async function GET(request: Request) {
   }
 
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return new Response("Unauthorized", { status: 401 });
   
   // 1. Fetch Project
   const { data: project } = await supabase.from("projects").select("*").eq("id", projectId).single();
@@ -25,6 +27,14 @@ export async function GET(request: Request) {
   if (!project || !milestones) {
     return new Response("No data found", { status: 404 });
   }
+
+  const { data: changeOrders } = await supabase
+    .from("change_requests")
+    .select("cost_impact")
+    .eq("project_id", projectId)
+    .eq("status", "Approved");
+  
+  const netChangeByCO = changeOrders?.reduce((acc, co) => acc + (co.cost_impact || 0), 0) || 0;
 
   // Calculate AIA G702 metrics
   const originalContractSum = project.contract_value || 0;
@@ -61,11 +71,11 @@ export async function GET(request: Request) {
   
   y += 10;
   doc.text("2. Net change by Change Orders", leftCol, y);
-  doc.text(`$0.00`, rightCol, y); // Placeholder for actual changes
+  doc.text(`${netChangeByCO.toLocaleString()}`, rightCol, y);
   
   y += 10;
   doc.text("3. CONTRACT SUM TO DATE (Line 1 + 2)", leftCol, y);
-  doc.text(`$${originalContractSum.toLocaleString()}`, rightCol, y);
+  doc.text(`${(originalContractSum + netChangeByCO).toLocaleString()}`, rightCol, y);
   
   y += 10;
   doc.text("4. TOTAL COMPLETED & STORED TO DATE", leftCol, y);

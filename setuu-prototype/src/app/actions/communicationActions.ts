@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function sendChatMessage(
   projectId: string,
@@ -10,6 +11,7 @@ export async function sendChatMessage(
   isBroadcast: boolean = false,
   isTransmittal: boolean = false
 ) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
 
@@ -75,6 +77,7 @@ export async function sendChatMessage(
 }
 
 export async function markMessageRead(communicationId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   if (!user?.user) return { success: false };
@@ -93,6 +96,7 @@ export async function markMessageRead(communicationId: string) {
 }
 
 export async function getProjectCommunications(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("project_communications")
@@ -157,6 +161,7 @@ export async function getProjectCommunications(projectId: string) {
 }
 
 export async function getAcknowledgmentMatrix(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: messages } = await supabase
     .from("project_communications")
@@ -204,6 +209,7 @@ export async function getAcknowledgmentMatrix(projectId: string) {
 }
 
 export async function resolveSenderMetadata(senderId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   try {
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!serviceRoleKey) return null;

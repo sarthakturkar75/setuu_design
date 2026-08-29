@@ -8,6 +8,7 @@ import { headers } from "next/headers";
 
 // 1. Contingency Drawdown Tracking
 export async function getContingencyMetrics(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   // Get original contingency
@@ -41,6 +42,7 @@ export async function getContingencyMetrics(projectId: string) {
 
 // 2. Fetch changes with history and signatures
 export async function getChangeRequests(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("change_requests")
@@ -114,6 +116,7 @@ export async function modifyChangeRequest(changeId: string, updates: any) {
 
 // 5. Multi-Tier Workflow Engine
 export async function advanceChangeWorkflow(changeId: string, signatureRole: string, currentStage: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   

@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 
 export default function PMProductivity() {
+  const { user, organizationId } = useAuth();
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
       <PageHeader title="Project Team Productivity" subtitle="Analytics for your engineers and vendors" />

@@ -64,6 +64,7 @@ export async function uploadDrawingVersion(formData: FormData) {
 
 // Fetch Drawings
 export async function getProjectDrawings(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 

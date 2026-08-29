@@ -8,6 +8,7 @@ import { verifyRole } from "./authUtils";
 
 // 1. Fetch Materials and Locations
 export async function getProjectMaterials(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("project_materials")
@@ -20,6 +21,7 @@ export async function getProjectMaterials(projectId: string) {
 }
 
 export async function getSiteLocations(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("site_locations")
@@ -46,6 +48,7 @@ export async function assignMaterialLocation(materialId: string, locationId: str
 
 // 2. Barcode/QR Scanning
 export async function scanMaterial(qrUuid: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   // Find material
@@ -124,6 +127,7 @@ export async function logMaterialWaste(materialId: string, quantityWasted: numbe
 
 // 6b. Waste Analytics
 export async function getWasteAnalytics(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   // Subquery simulation: get all materials for project, then their waste logs
@@ -143,6 +147,7 @@ export async function getWasteAnalytics(projectId: string) {
 
 // Legacy functions for global list pages
 export async function getMaterials() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase.from("project_materials").select("*, projects(name)").order("created_at", { ascending: false });
   if (error) throw error;
@@ -183,6 +188,7 @@ export async function createMaterial(formData: FormData) {
 
 
 export async function checkRestockThreshold(materialId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   // Fetch current material
@@ -238,12 +244,14 @@ export async function checkRestockThreshold(materialId: string) {
 }
 
 export async function getProjectSubmittals(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data } = await supabase.from("project_submittals").select("id, title, spec_section").eq("project_id", projectId);
   return data || [];
 }
 
 export async function uploadDeliveryProof(materialId: string, projectId: string, fileUrl: string, fileType: string, notes?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Unauthorized");

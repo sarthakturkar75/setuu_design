@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { getEngineerProductivity } from "@/app/actions/productivityActions";
@@ -9,10 +10,13 @@ import { ActivityFeed } from "@/components/ui/ActivityFeed";
 import { KPICard } from "@/components/ui/KPICard";
 
 export default function EngineerDashboard() {
+  const { user, organizationId } = useAuth();
   const [data, setData] = useState<any>({ productivity: null, pendingReviews: 0, tasks: [] });
   
   useEffect(() => {
     async function load() {
+      if (!user && !organizationId) return;
+
       // We pass 'mock-id' or handle undefined in the action
       const [reviews, tasks] = await Promise.all([
         getPendingReviews(),
@@ -21,7 +25,7 @@ export default function EngineerDashboard() {
       setData({ pendingReviews: reviews, tasks });
     }
     load();
-  }, []);
+  }, [user, organizationId]);
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">

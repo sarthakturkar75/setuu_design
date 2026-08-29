@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { KPICard } from "@/components/ui/KPICard";
@@ -7,19 +8,22 @@ import { getClientPortfolio, getClientFinancialSummary } from "@/app/actions/cli
 import { FolderTreeIcon, CreditCard, Activity } from "lucide-react";
 
 export default function ClientDashboard() {
+  const { user, organizationId } = useAuth();
   const [data, setData] = useState<any>({ portfolio: [], financials: null });
   
   useEffect(() => {
     async function load() {
-      const orgId = "mock-org-id";
+      if (!user && !organizationId) return;
+
+      
       const [portfolio, financials] = await Promise.all([
-        getClientPortfolio(orgId),
-        getClientFinancialSummary(orgId)
+        getClientPortfolio(organizationId || ""),
+        getClientFinancialSummary(organizationId || "")
       ]);
       setData({ portfolio, financials });
     }
     load();
-  }, []);
+  }, [user, organizationId]);
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">

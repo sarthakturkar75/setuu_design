@@ -9,6 +9,7 @@ import { verifyRole } from "./authUtils";
 // ----------------------------------------------------
 
 export async function getTimelineData(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // FETCH FROM TASKS NOW (Not Milestones)
@@ -123,6 +124,7 @@ export async function setScheduleBaseline(projectId: string) {
 // ----------------------------------------------------
 
 export async function calculateWeatherDelays(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // 1. Fetch weather logs to check for consecutive heavy rain
@@ -159,6 +161,7 @@ export async function calculateWeatherDelays(projectId: string) {
 }
 
 export async function checkResourceAllocation(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   const { data: tasks } = await supabase
@@ -237,6 +240,7 @@ export async function applyScenario(scenarioId: string) {
   return { success: true };
 }
 export async function getAssignedTasks() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];

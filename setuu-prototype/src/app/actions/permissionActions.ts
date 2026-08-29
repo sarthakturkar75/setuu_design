@@ -1,4 +1,5 @@
 "use server";
+import { verifyRole } from "./authUtils";
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -6,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 
 
 export async function getProjectPermissions(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data } = await supabase
     .from('project_granular_permissions')
@@ -16,6 +18,7 @@ export async function getProjectPermissions(projectId: string) {
 }
 
 export async function toggleUserPermission(projectId: string, userId: string, field: 'can_view_drawings' | 'can_view_financials', value: boolean) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
   
   try {

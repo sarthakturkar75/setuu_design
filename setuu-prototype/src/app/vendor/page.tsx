@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { KPICard } from "@/components/ui/KPICard";
@@ -7,15 +8,18 @@ import { getVendorProductivity } from "@/app/actions/productivityActions";
 import { PackageIcon, AlertTriangleIcon, TrendingUp } from "lucide-react";
 
 export default function VendorDashboard() {
+  const { user, organizationId } = useAuth();
   const [data, setData] = useState<any>(null);
   
   useEffect(() => {
     async function load() {
-      const res = await getVendorProductivity("mock-id");
+      if (!user && !organizationId) return;
+
+      const res = await getVendorProductivity(user?.id || "");
       setData(res);
     }
     load();
-  }, []);
+  }, [user, organizationId]);
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">

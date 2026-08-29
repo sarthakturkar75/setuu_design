@@ -1,7 +1,9 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function getTimesheets(startDate: string, endDate: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
@@ -18,6 +20,7 @@ export async function getTimesheets(startDate: string, endDate: string) {
 }
 
 export async function logTimeEntry(data: any) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { error } = await supabase.from("employee_timesheets").insert(data);
   if (error) throw error;
@@ -25,6 +28,7 @@ export async function logTimeEntry(data: any) {
 }
 
 export async function submitWeek(startDate: string, endDate: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { success: false };

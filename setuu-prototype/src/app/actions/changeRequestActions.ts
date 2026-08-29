@@ -125,6 +125,7 @@ export async function rejectChangeRequest(id: string, projectId: string, reason:
 }
 
 export async function getChangeRequests(projectId?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   let query = supabase.from("change_requests").select("*, project:projects!change_requests_project_id_fkey(name)").order('created_at', { ascending: false });
   if (projectId) query = query.eq("project_id", projectId);

@@ -29,6 +29,114 @@ export async function getClientFinancialSummary(orgId: string) {
   return { totalContractValue, totalChanges };
 }
 
-export async function getClientApprovals(projectId?: string) { return [] as any[]; }
-export async function createClientOrg(data: any): Promise<{success: boolean, error?: string}> { return { success: true }; }
-export async function getClientOrgs() { return [] as any[]; }
+export async function getClientApprovals(projectId?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "client"]);
+  const supabase = await createClient();
+  
+  // NOTE: In a full implementation, the user's current client_org_id might be used to filter.
+  // Here we assume the user has right access or is filtering by projectId
+  let query = supabase.from("change_requests").select(`
+    *,
+    projects!inner(id, name, client_org_id)
+  `).eq("status", "pending_client_approval");
+
+  if (projectId) {
+    query = query.eq("project_id", projectId);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error("Error fetching client approvals:", error);
+    return [];
+  }
+  return data || [];
+}
+
+export async function createClientOrg(data: any): Promise<{success: boolean, error?: string}> {
+  await verifyRole(["admin", "superadmin"]);
+  const supabase = await createClient();
+  
+  const { data: orgData, error: orgError } = await supabase.from("organizations").insert({
+    name: data.name,
+    type: "client",
+    ...data
+  }).select().single();
+
+  if (orgError) {
+    console.error("Error creating client org:", orgError);
+    return { success: false, error: orgError.message };
+  }
+
+  return { success: true };
+}
+
+export async function getClientOrgs() {
+  await verifyRole(["admin", "pm", "superadmin", "client"]);
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase.from("organizations").select("*").eq("type", "client");
+  if (error) {
+    console.error("Error fetching client orgs:", error);
+    return [];
+  }
+  
+  return data || [];
+}
+
+export async function getClientProjectUpdates(orgId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "client"]);
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase.from("project_updates").select(`
+    *,
+    projects!inner(id, name, client_org_id)
+  `).eq("projects.client_org_id", orgId);
+  
+  if (error) {
+    console.error("Error fetching project updates:", error);
+    return [];
+  }
+  
+  return data || [];
+}
+
+export async function getClientIssuesSummary(orgId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "client"]);
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase.from("project_issues").select(`
+    severity,
+    projects!inner(id, client_org_id)
+  `).eq("projects.client_org_id", orgId);
+  
+  if (error) {
+    console.error("Error fetching client issues:", error);
+    return { high: 0, medium: 0, low: 0 };
+  }
+  
+  const summary = { high: 0, medium: 0, low: 0 };
+  data?.forEach((issue: any) => {
+    if (issue.severity === "high") summary.high++;
+    else if (issue.severity === "medium") summary.medium++;
+    else if (issue.severity === "low") summary.low++;
+  });
+  
+  return summary;
+}
+
+export async function getClientMeetings(orgId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "client"]);
+  const supabase = await createClient();
+  
+  const { data, error } = await supabase.from("project_meetings").select(`
+    *,
+    projects!inner(id, name, client_org_id)
+  `).eq("projects.client_org_id", orgId);
+  
+  if (error) {
+    console.error("Error fetching client meetings:", error);
+    return [];
+  }
+  
+  return data || [];
+}

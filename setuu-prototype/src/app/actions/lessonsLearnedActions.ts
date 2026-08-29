@@ -5,6 +5,7 @@ import { verifyRole } from "./authUtils";
 import { revalidatePath } from "next/cache";
 
 export async function getLessons(projectId?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   let query = supabase.from("lessons_learned").select("*");
   
@@ -28,6 +29,7 @@ export async function createLesson(data: any) {
 }
 
 export async function getCategories() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase.from("lessons_learned").select("category");
   if (error) throw error;

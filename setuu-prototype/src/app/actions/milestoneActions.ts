@@ -8,6 +8,7 @@ import { logStatusTransition, draftInvoiceFromMilestone, triggerHandoffNotificat
 
 
 export async function getProjectMilestones(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("milestones")
@@ -31,6 +32,7 @@ export async function getProjectMilestones(projectId: string) {
 }
 
 export async function getMilestones() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("milestones")

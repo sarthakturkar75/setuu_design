@@ -8,6 +8,12 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function POST(request: Request) {
   try {
+    const secret = process.env.TURNSTILE_API_SECRET;
+    const authHeader = request.headers.get('Authorization');
+    if (!secret || authHeader !== `Bearer ${secret}`) {
+      return NextResponse.json({ access: "DENIED", reason: "Invalid API Secret" }, { status: 401 });
+    }
+
     const body = await request.json();
     const { rfid_badge_id, project_id, direction } = body;
 
@@ -27,6 +33,19 @@ export async function POST(request: Request) {
     }
 
     if (direction === 'IN') {
+
+    // Check if user is assigned to this project
+    const { data: assignment, error: assignErr } = await supabase
+      .from('project_team')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('project_id', project_id)
+      .single();
+      
+    if (assignErr || !assignment) {
+      return NextResponse.json({ access: "DENIED", reason: "Not assigned to this project." }, { status: 403 });
+    }
+
       // 2. Strict Compliance Check: Deny entry if ANY certification is expired
       const { data: expiredCerts, error: certErr } = await supabase
         .from('personnel_certifications')

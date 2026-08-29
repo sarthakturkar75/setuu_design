@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { verifyRole } from "./authUtils";
 
 export async function getRetentionPolicies(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("project_retention_policies")

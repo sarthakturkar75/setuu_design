@@ -1,8 +1,10 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export async function logStatusTransition(milestoneId: string, statusName: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   // Close previous status
@@ -23,6 +25,7 @@ export async function logStatusTransition(milestoneId: string, statusName: strin
 }
 
 export async function draftInvoiceFromMilestone(milestoneId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   
   // 1. Get milestone info
@@ -46,6 +49,7 @@ export async function draftInvoiceFromMilestone(milestoneId: string) {
 }
 
 export async function triggerHandoffNotifications(milestoneId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // Find successors

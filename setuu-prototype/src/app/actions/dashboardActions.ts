@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { verifyRole } from "./authUtils";
 
 export interface ActionItem {
   id: string;
@@ -12,6 +13,7 @@ export interface ActionItem {
 }
 
 export async function getActionItems(projectId: string): Promise<ActionItem[]> {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const items: ActionItem[] = [];
 
@@ -79,6 +81,7 @@ export async function getActionItems(projectId: string): Promise<ActionItem[]> {
 }
 
 export async function saveDashboardLayout(layoutJson: any) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: user } = await supabase.auth.getUser();
   if (!user?.user) throw new Error("Unauthorized");
@@ -100,6 +103,7 @@ export async function saveDashboardLayout(layoutJson: any) {
 
 // ----------------------------------------------------------------------------
 export async function getProjectEVMMetrics(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // Fetch all tasks with EVM metadata

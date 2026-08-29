@@ -13,7 +13,7 @@ import { Menu } from "lucide-react"; // Fallback for mobile menu
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
 	const pathname = usePathname();
-	const { role, isLoading } = useAuth();
+	const { role, organizationId, isLoading } = useAuth();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 	const [isDesktopCollapsed, setIsDesktopCollapsed] = React.useState(false);
 
@@ -29,10 +29,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
 	React.useEffect(() => {
 		if (!role) return;
-		if (role === "admin" || role === "pm") {
-			getProjects()
-				.then((data) => setProjects(data || []))
-				.catch(console.error);
+		if (role && role !== "superadmin") {
+			if (role === 'client') {
+      import('@/app/actions/clientActions').then(m => m.getClientPortfolio(organizationId || '')).then(data => setProjects(data || [])).catch(console.error);
+    } else {
+      getProjects().then((data) => setProjects(data || [])).catch(console.error);
+    }
 		}
 		if (role === "superadmin") {
 			getPlatformMetrics()
@@ -47,12 +49,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 	}, [role]);
 
 	const uuidRegex = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
-	const match = pathname.match(uuidRegex);
-	const currentProjectId = match ? match[0] : null;
+	const match = pathname.match(/\/projects\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/);
+	const currentProjectId = match ? match[1] : null;
 
 	React.useEffect(() => {
 		if (currentProjectId) {
-			getProjectFlags(currentProjectId).then(flags => setProjectFlags(flags));
+			getProjectFlags(currentProjectId).then(flags => setProjectFlags(flags)).catch(console.error);
 		} else {
 			setProjectFlags(null);
 		}
@@ -72,7 +74,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 		.filter((i) => !i.items)
 		.slice(0, 4);
 
-	if (isLoading) return null;
+	if (isLoading) return <div className="flex h-screen items-center justify-center bg-surface text-on-surface-variant"><div className="animate-pulse">Loading Workspace...</div></div>;
 
 	return (
 		<div className="flex h-screen overflow-hidden bg-surface relative">

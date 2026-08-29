@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { 
@@ -11,23 +12,26 @@ import {
 import { Activity, TrendingUp } from "lucide-react";
 
 export default function ProductivityDashboard() {
+  const { user, organizationId } = useAuth();
   const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     async function load() {
+      if (!user && !organizationId) return;
+
       // In a real implementation, we would use the session user ID or org ID
       let res;
       if (false) {
-        res = await getEngineerProductivity("mock-user-id");
+        res = await getEngineerProductivity(user?.id || "");
       } else if ("pm" === "pm") {
-        res = await getPMProductivity("mock-pm-id");
+        res = await getPMProductivity(user?.id || "");
       } else {
-        res = await getAdminProductivity("mock-org-id");
+        res = await getAdminProductivity(organizationId || "");
       }
       setData(res);
     }
     load();
-  }, []);
+  }, [user, organizationId]);
 
   return (
     <div className="p-6 max-w-[1600px] mx-auto space-y-6">

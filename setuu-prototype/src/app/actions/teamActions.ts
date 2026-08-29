@@ -1,8 +1,10 @@
 "use server";
+import { verifyRole } from "./authUtils";
 
 import { createClient } from "@/lib/supabase/server";
 
 export async function calculateRealTimeBurn(projectId: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -69,6 +71,7 @@ export async function calculateRealTimeBurn(projectId: string) {
 }
 
 export async function getCompanyResourcePool(skillFilter?: string) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
 
   // Added organization_id to the select query
@@ -92,6 +95,7 @@ export async function getCompanyResourcePool(skillFilter?: string) {
 }
 
 export async function updatePersonnelProfile(formData: FormData) {
+  await verifyRole(["admin", "superadmin"]);
   const supabase = await createClient();
 
   const userId = formData.get('user_id') as string;
@@ -116,6 +120,7 @@ export async function updatePersonnelProfile(formData: FormData) {
 }
 
 export async function getCompanyTags() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   // Using rpc or direct select. We'll select from the new table.
   const { data } = await supabase.from('company_skills_tags').select('name').order('name');
@@ -123,6 +128,7 @@ export async function getCompanyTags() {
 }
 
 export async function createCompanyTag(formData: FormData) {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const name = formData.get('name') as string;
   if (!name) return { success: false, error: "Tag name required" };

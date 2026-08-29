@@ -25,6 +25,7 @@ export async function generateProjectReport(projectId: string, modules: string[]
 }
 
 export async function getProjectReports() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("project_reports")
@@ -39,6 +40,7 @@ export async function getProjectReports() {
 }
 
 export async function getScheduledReports() {
+  await verifyRole(["admin", "pm", "superadmin", "engineer", "client", "vendor"]); // Auto-injected baseline auth
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("scheduled_reports")

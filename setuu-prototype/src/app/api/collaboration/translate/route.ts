@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "openai/gpt-oss-120b",
+        model: "llama3-70b-8192",
         messages: [
           {
             role: "system",
