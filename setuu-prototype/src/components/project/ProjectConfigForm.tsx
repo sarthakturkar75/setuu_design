@@ -97,7 +97,7 @@ export function ProjectConfigForm({ project }: { project: any }) {
                 name="po_reference"
                 type="text"
                 defaultValue={project.po_reference || ""}
-                className="w-full font-jetbrains-mono rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full font-mono rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -109,7 +109,7 @@ export function ProjectConfigForm({ project }: { project: any }) {
                 type="number"
                 step="0.01"
                 defaultValue={project.contract_value || ""}
-                className="w-full font-jetbrains-mono rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full font-mono rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             
@@ -120,7 +120,7 @@ export function ProjectConfigForm({ project }: { project: any }) {
                 name="target_date"
                 type="date"
                 defaultValue={project.target_date ? new Date(project.target_date).toISOString().split('T')[0] : ""}
-                className="w-full font-jetbrains-mono rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full font-mono rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>

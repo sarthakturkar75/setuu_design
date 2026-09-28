@@ -28,7 +28,7 @@ export function OnlineOfflineBanner() {
   return (
     <div className="w-full bg-semantic-amber-bg text-semantic-amber-on px-4 py-2 flex items-center justify-center gap-3 animate-fade-in-up z-50 fixed bottom-0 left-0 right-0 md:relative">
       <WifiOff className="w-4 h-4" />
-      <span className="text-sm font-medium font-inter">
+      <span className="text-sm font-medium font-sans">
         You are offline — changes will sync when connection is restored
       </span>
     </div>

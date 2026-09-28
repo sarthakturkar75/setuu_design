@@ -52,7 +52,7 @@ export function MaterialDetailsModal({ material, locations, onClose, onRefresh, 
 
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest">
           <div>
-            <h2 className="text-xl font-bold text-on-surface font-merriweather">{material.item_name}</h2>
+            <h2 className="text-xl font-bold text-on-surface font-sans">{material.item_name}</h2>
             <p className="text-xs text-on-surface-variant font-mono mt-1">PO: {material.po_number || 'N/A'} &bull; Supplier: {material.supplier_name || 'N/A'}</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-surface-variant rounded-full"><X className="w-5 h-5" /></button>

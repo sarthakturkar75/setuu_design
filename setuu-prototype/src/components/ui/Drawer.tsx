@@ -36,7 +36,7 @@ export function Drawer({ isOpen, onClose, title, children, width = "w-[400px]" }
         )}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
-          <h2 className="font-merriweather text-xl font-bold text-on-surface">{title}</h2>
+          <h2 className="font-sans text-xl font-bold text-on-surface">{title}</h2>
           <button 
             onClick={onClose}
             className="p-2 -mr-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface rounded-full transition-colors"

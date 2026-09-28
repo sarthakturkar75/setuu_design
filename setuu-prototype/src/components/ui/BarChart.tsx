@@ -31,20 +31,20 @@ export function BarChart({
             dataKey={xAxisKey} 
             axisLine={false}
             tickLine={false}
-            tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'var(--font-inter)' }}
+            tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'var(--font-sans)' }}
             dy={10}
           />
           <YAxis 
             axisLine={false}
             tickLine={false}
-            tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'var(--font-jetbrains-mono)' }}
+            tick={{ fill: 'var(--on-surface-variant)', fontSize: 12, fontFamily: 'var(--font-mono)' }}
             dx={-10}
           />
           <Tooltip 
             cursor={{ fill: 'var(--surface-variant)', opacity: 0.4 }}
             contentStyle={{ borderRadius: '8px', border: '1px solid var(--outline-variant)', boxShadow: 'var(--elevation-l2)', backgroundColor: 'var(--surface-container-lowest)' }}
           />
-          <Legend wrapperStyle={{ paddingTop: '20px', fontFamily: 'var(--font-inter)', fontSize: '12px' }} />
+          <Legend wrapperStyle={{ paddingTop: '20px', fontFamily: 'var(--font-sans)', fontSize: '12px' }} />
           {keys.map((key, idx) => (
             <Bar 
               key={key} 

@@ -100,7 +100,7 @@ export default function AdminDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Section 2: Portfolio Health */}
           <Card className="p-6 flex flex-col">
-            <h3 className="text-lg font-merriweather font-bold text-on-surface mb-6">Portfolio Health</h3>
+            <h3 className="text-lg font-sans font-bold text-on-surface mb-6">Portfolio Health</h3>
             <div className="flex-1 flex items-center justify-center min-h-[250px]">
               <DonutChart data={portfolioHealthData} title="Portfolio Health" totalLabel="Projects" />
             </div>
@@ -118,12 +118,12 @@ export default function AdminDashboardPage() {
           {/* Section 3 & 4: Storage & Regional */}
           <div className="flex flex-col gap-6">
             <Card className="p-6">
-              <h3 className="text-lg font-merriweather font-bold text-on-surface mb-4">Storage Quota Analytics</h3>
+              <h3 className="text-lg font-sans font-bold text-on-surface mb-4">Storage Quota Analytics</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-end">
                   <div>
                     <p className="text-sm text-on-surface-variant">Global Usage</p>
-                    <p className="text-2xl font-jetbrains font-bold text-on-surface">0.0 TB <span className="text-sm font-inter text-on-surface-variant font-normal">/ 10 TB</span></p>
+                    <p className="text-2xl font-jetbrains font-bold text-on-surface">0.0 TB <span className="text-sm font-sans text-on-surface-variant font-normal">/ 10 TB</span></p>
                   </div>
                   <span className="text-sm font-bold text-semantic-amber">0%</span>
                 </div>
@@ -134,7 +134,7 @@ export default function AdminDashboardPage() {
             </Card>
 
             <Card className="p-6 flex-1">
-              <h3 className="text-lg font-merriweather font-bold text-on-surface mb-6">Regional Distribution</h3>
+              <h3 className="text-lg font-sans font-bold text-on-surface mb-6">Regional Distribution</h3>
               <div className="h-48">
                 <BarChart 
                     data={regionalData} 

@@ -75,7 +75,7 @@ export function DataTable<T>({
         <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-surface-container-lowest to-transparent pointer-events-none md:hidden opacity-100 transition-opacity" />
         <div className={cn("w-full overflow-x-auto rounded-lg border border-outline-variant shadow-elevation-l1 bg-surface-container-lowest custom-scrollbar", className)} {...props}>
           <table className="w-full text-sm text-left min-w-[600px]">
-            <thead className="bg-surface-container text-on-surface-variant font-jetbrains-mono text-xs uppercase tracking-wider">
+            <thead className="bg-surface-container text-on-surface-variant font-mono text-xs uppercase tracking-wider">
               <tr>
                 {selectable && (
                   <th className="px-4 py-3 w-12 border-b border-outline-variant">
@@ -138,7 +138,7 @@ export function DataTable<T>({
                     <tr 
                       key={id} 
                       className={cn(
-                         "transition-colors font-inter group/row",
+                         "transition-colors font-sans group/row",
                         isSelected ? "bg-primary/5" : "hover:bg-surface-container-low/50"
                       )}
                     >

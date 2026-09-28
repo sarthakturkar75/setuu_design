@@ -89,7 +89,7 @@ export default function GlobalSupportHub() {
 
           <div className="flex-1 overflow-auto">
             {loading ? (
-              <div className="p-12 text-center text-on-surface-variant font-jetbrains-mono">Loading support tickets...</div>
+              <div className="p-12 text-center text-on-surface-variant font-mono">Loading support tickets...</div>
             ) : (
               <DataTable 
                 columns={columns}

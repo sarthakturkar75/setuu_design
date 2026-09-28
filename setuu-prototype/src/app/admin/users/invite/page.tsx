@@ -64,7 +64,7 @@ export default function InviteUserWizard() {
             <div className="w-20 h-20 bg-semantic-emerald/10 rounded-full flex items-center justify-center mb-6">
               <CheckCircle2 className="w-10 h-10 text-semantic-emerald" />
             </div>
-            <h2 className="text-2xl font-bold font-merriweather text-on-surface mb-2">Invitation Sent!</h2>
+            <h2 className="text-2xl font-bold font-sans text-on-surface mb-2">Invitation Sent!</h2>
             <p className="text-on-surface-variant max-w-md">
               An invitation email has been dispatched to <span className="font-semibold text-on-surface">{formData.email}</span> with instructions to access the platform.
             </p>
@@ -114,7 +114,7 @@ export default function InviteUserWizard() {
                 <UserPlus className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-merriweather font-bold text-lg text-on-surface">Identity Details</h3>
+                <h3 className="font-sans font-bold text-lg text-on-surface">Identity Details</h3>
                 <p className="text-sm text-on-surface-variant">Basic information for the new user profile.</p>
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function InviteUserWizard() {
                   <Shield className="w-5 h-5 text-semantic-amber" />
                 </div>
                 <div>
-                  <h3 className="font-merriweather font-bold text-lg text-on-surface">System Role</h3>
+                  <h3 className="font-sans font-bold text-lg text-on-surface">System Role</h3>
                   <p className="text-sm text-on-surface-variant">Determine access permissions.</p>
                 </div>
               </div>
@@ -226,7 +226,7 @@ export default function InviteUserWizard() {
                   <Building2 className="w-5 h-5 text-semantic-blue" />
                 </div>
                 <div>
-                  <h3 className="font-merriweather font-bold text-lg text-on-surface">Organization Mapping</h3>
+                  <h3 className="font-sans font-bold text-lg text-on-surface">Organization Mapping</h3>
                   <p className="text-sm text-on-surface-variant">Assign to a client or vendor entity.</p>
                 </div>
               </div>

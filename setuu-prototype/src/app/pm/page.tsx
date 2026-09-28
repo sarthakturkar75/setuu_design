@@ -26,10 +26,10 @@ export default function PMCommandCenter() {
 		<div className="p-6 max-w-[1600px] mx-auto space-y-8 animate-fade-in-up">
 			<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 				<div>
-					<h1 className="text-2xl font-merriweather font-bold text-on-surface">
+					<h1 className="text-2xl font-sans font-bold text-on-surface">
 						Command Center
 					</h1>
-					<p className="text-on-surface-variant font-inter">
+					<p className="text-on-surface-variant font-sans">
 						Good morning. Here is your portfolio overview.
 					</p>
 				</div>
@@ -81,7 +81,7 @@ export default function PMCommandCenter() {
 			{/* Active Projects */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
-					<h2 className="text-xl font-merriweather font-semibold text-on-surface">
+					<h2 className="text-xl font-sans font-semibold text-on-surface">
 						Active Projects
 					</h2>
 					<Link
@@ -168,7 +168,7 @@ export default function PMCommandCenter() {
 
 			{/* Collaboration Feed */}
 			<div className="space-y-4">
-				<h2 className="text-xl font-merriweather font-semibold text-on-surface">
+				<h2 className="text-xl font-sans font-semibold text-on-surface">
 					Recent Activity
 				</h2>
 				<Card>

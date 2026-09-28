@@ -32,7 +32,7 @@ export default function GlobalMaterialsPage() {
             key: "id",
             header: "ID",
             cell: (row: any) => (
-                <span className="font-jetbrains-mono text-xs text-outline">
+                <span className="font-mono text-xs text-outline">
                     {row.id.substring(0, 8)}
                 </span>
             ),
@@ -57,7 +57,7 @@ export default function GlobalMaterialsPage() {
             key: "po_number",
             header: "PO Reference",
             cell: (row: any) => (
-                <span className="text-sm font-jetbrains-mono text-on-surface-variant">
+                <span className="text-sm font-mono text-on-surface-variant">
                     {row.po_number || "N/A"}
                 </span>
             ),

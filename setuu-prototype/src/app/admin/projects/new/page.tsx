@@ -115,7 +115,7 @@ export default function NewProjectWizard() {
         <Card className="p-8">
           {currentStep === 1 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-normal">
-              <h3 className="font-merriweather text-xl font-bold text-on-surface mb-2">Project Master Data</h3>
+              <h3 className="font-sans text-xl font-bold text-on-surface mb-2">Project Master Data</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField label="Project Name *">
                   <TextInput value={formData.name} onChange={(e: any) => setFormData({...formData, name: e.target.value})} placeholder="e.g. Alpha Tower" />
@@ -160,7 +160,7 @@ export default function NewProjectWizard() {
 
           {currentStep === 2 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-normal">
-              <h3 className="font-merriweather text-xl font-bold text-on-surface mb-2">Stakeholder Assignments</h3>
+              <h3 className="font-sans text-xl font-bold text-on-surface mb-2">Stakeholder Assignments</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField label="Client Organization *">
                   <Select 
@@ -201,7 +201,7 @@ export default function NewProjectWizard() {
           {currentStep === 3 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-normal">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="font-merriweather text-xl font-bold text-on-surface">Resource Allotment</h3>
+                <h3 className="font-sans text-xl font-bold text-on-surface">Resource Allotment</h3>
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, initial_resources: [...formData.initial_resources, { name: "", type: "Labor", hours: "0" }] })}
@@ -275,7 +275,7 @@ export default function NewProjectWizard() {
 
           {currentStep === 4 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-normal">
-              <h3 className="font-merriweather text-xl font-bold text-on-surface mb-2">Module Configuration</h3>
+              <h3 className="font-sans text-xl font-bold text-on-surface mb-2">Module Configuration</h3>
               <p className="text-sm text-on-surface-variant mb-6">Enable or disable specific tracking modules for this project. This can be changed later in Project Settings.</p>
               
               <div className="space-y-4">
@@ -324,7 +324,7 @@ export default function NewProjectWizard() {
 
           {currentStep === 5 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-normal">
-              <h3 className="font-merriweather text-xl font-bold text-on-surface mb-2">Review & Finalize</h3>
+              <h3 className="font-sans text-xl font-bold text-on-surface mb-2">Review & Finalize</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-surface-variant/30 p-6 rounded-lg border border-outline-variant/30">
                 <div>

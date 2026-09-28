@@ -24,7 +24,7 @@ export function SmartInbox({ items }: { items: ActionItem[] }) {
   return (
     <Card className="flex flex-col h-full border-l-4 border-l-semantic-amber">
       <div className="p-4 border-b border-surface-variant/50">
-        <h3 className="font-merriweather text-lg font-bold text-on-surface">Action Center</h3>
+        <h3 className="font-sans text-lg font-bold text-on-surface">Action Center</h3>
         <p className="text-sm text-on-surface-variant">Items requiring your immediate attention.</p>
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-3 max-h-[300px]">

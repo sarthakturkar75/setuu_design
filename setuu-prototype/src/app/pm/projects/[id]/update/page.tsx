@@ -131,7 +131,7 @@ export default function CameraUpdatePage() {
       return (
         <div className="p-6 max-w-[800px] mx-auto space-y-8 pt-24 text-center">
             <CheckCircleIcon className="w-16 h-16 text-semantic-emerald mx-auto mb-4" />
-            <h2 className="text-2xl font-bold font-merriweather text-on-surface">Update Saved</h2>
+            <h2 className="text-2xl font-bold font-sans text-on-surface">Update Saved</h2>
             <p className="text-on-surface-variant max-w-md mx-auto">Your watermarked photo and description have been securely logged to the timeline.</p>
             <div className="pt-8 flex justify-center gap-4">
                 <Button variant="outline" onClick={() => { setIsSubmitted(false); setPhotoDataUrl(null); setCaption(""); }}>Log Another Update</Button>
@@ -146,7 +146,7 @@ export default function CameraUpdatePage() {
   return (
     <div className="p-6 max-w-[800px] mx-auto space-y-6 pb-32">
       <div>
-         <h2 className="text-2xl font-bold font-merriweather text-on-surface">Live Progress Update</h2>
+         <h2 className="text-2xl font-bold font-sans text-on-surface">Live Progress Update</h2>
          <p className="text-on-surface-variant mt-1">Capture a watermarked photo to document project conditions.</p>
       </div>
 

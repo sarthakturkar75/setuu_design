@@ -86,7 +86,7 @@ export function GlobalEmergencyListener() {
             <div className="w-24 h-24 bg-semantic-emerald/20 text-semantic-emerald rounded-full flex items-center justify-center mb-6 animate-pulse">
               <ShieldCheck className="w-12 h-12" />
             </div>
-            <h1 className="text-3xl font-bold font-merriweather text-semantic-emerald mb-2">Status Logged</h1>
+            <h1 className="text-3xl font-bold font-sans text-semantic-emerald mb-2">Status Logged</h1>
             <p className="text-on-surface-variant font-medium">Your PM has been notified that you are safe.</p>
             <p className="text-sm text-on-surface-variant/70 mt-4">Returning to app...</p>
           </>
@@ -95,7 +95,7 @@ export function GlobalEmergencyListener() {
             <div className="w-24 h-24 bg-semantic-crimson/20 text-semantic-crimson rounded-full flex items-center justify-center mb-6 animate-pulse">
               <AlertTriangle className="w-12 h-12" />
             </div>
-            <h1 className="text-4xl font-bold font-merriweather text-semantic-crimson mb-4 uppercase tracking-wider">
+            <h1 className="text-4xl font-bold font-sans text-semantic-crimson mb-4 uppercase tracking-wider">
               Emergency
             </h1>
             <p className="text-lg text-on-surface font-semibold mb-2">

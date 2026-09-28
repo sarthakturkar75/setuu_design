@@ -14,9 +14,9 @@ export function ProgressBar({ progress, label, showPercentage, colorClass = "bg-
   return (
     <div className="w-full">
       {(label || showPercentage) && (
-        <div className="flex justify-between items-center mb-1 text-sm font-inter">
+        <div className="flex justify-between items-center mb-1 text-sm font-sans">
           {label && <span className="font-medium text-on-surface">{label}</span>}
-          {showPercentage && <span className="text-on-surface-variant font-jetbrains-mono">{Math.round(clamped)}%</span>}
+          {showPercentage && <span className="text-on-surface-variant font-mono">{Math.round(clamped)}%</span>}
         </div>
       )}
       <div className={cn("w-full bg-surface-variant rounded-full overflow-hidden", heightClass)}>

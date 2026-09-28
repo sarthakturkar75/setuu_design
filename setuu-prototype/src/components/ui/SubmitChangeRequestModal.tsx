@@ -44,7 +44,7 @@ export function SubmitChangeRequestModal({ projectId, onClose, onRefresh }: any)
       <div className="bg-surface w-full max-w-lg rounded-xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/30">
         
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest">
-          <h2 className="text-xl font-bold text-on-surface font-merriweather">Log Variation Order</h2>
+          <h2 className="text-xl font-bold text-on-surface font-sans">Log Variation Order</h2>
           <button onClick={onClose} className="p-2 hover:bg-surface-variant rounded-full"><X className="w-5 h-5" /></button>
         </div>
 

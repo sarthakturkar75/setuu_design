@@ -59,7 +59,7 @@ export function ChangeOrderModal({ change, contractValue, onClose, onRefresh }: 
         {/* Header */}
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest">
           <div>
-            <h2 className="text-xl font-bold text-on-surface font-merriweather">{change.title}</h2>
+            <h2 className="text-xl font-bold text-on-surface font-sans">{change.title}</h2>
             <div className="flex gap-2 items-center mt-1 text-sm text-on-surface-variant">
               <span>{change.display_id || change.id.substring(0,8)}</span>
               <span>&bull;</span>

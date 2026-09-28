@@ -126,7 +126,7 @@ export default function InviteOrgAdmin() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-on-surface flex justify-between">
                   <span>Storage Quota (GB)</span>
-                  <span className="font-jetbrains-mono text-on-surface-variant">{formData.storage} GB</span>
+                  <span className="font-mono text-on-surface-variant">{formData.storage} GB</span>
                 </label>
                 <input 
                   type="range" 
@@ -146,7 +146,7 @@ export default function InviteOrgAdmin() {
               <div className="space-y-2">
                 <label className="text-sm font-medium text-on-surface flex justify-between">
                   <span>Max Active Projects</span>
-                  <span className="font-jetbrains-mono text-on-surface-variant">{formData.projects}</span>
+                  <span className="font-mono text-on-surface-variant">{formData.projects}</span>
                 </label>
                 <input 
                   type="range" 

@@ -30,10 +30,10 @@ export function TimelineEntry({ actorName, actorAvatar, timestamp, action, descr
       <div className="flex flex-col">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm font-inter text-on-surface">
+            <p className="text-sm font-sans text-on-surface">
               <span className="font-semibold">{actorName}</span> {action}
             </p>
-            <p className="text-xs text-on-surface-variant font-jetbrains-mono mt-0.5">
+            <p className="text-xs text-on-surface-variant font-mono mt-0.5">
               {timestamp}
             </p>
           </div>

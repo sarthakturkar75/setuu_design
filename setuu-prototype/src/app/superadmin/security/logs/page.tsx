@@ -41,11 +41,11 @@ export default function BreakGlassLogs() {
   };
 
   const columns = [
-    { key: "timestamp", header: "Timestamp (UTC)", cell: (row: any) => <span className="font-jetbrains-mono text-on-surface-variant">{row.timestamp}</span> },
+    { key: "timestamp", header: "Timestamp (UTC)", cell: (row: any) => <span className="font-mono text-on-surface-variant">{row.timestamp}</span> },
     { key: "admin", header: "Super Admin", cell: (row: any) => row.admin },
-    { key: "target", header: "Target Org/Scope", cell: (row: any) => <span className="font-jetbrains-mono">{row.target}</span> },
+    { key: "target", header: "Target Org/Scope", cell: (row: any) => <span className="font-mono">{row.target}</span> },
     { key: "reason", header: "Reason", cell: (row: any) => <span className="text-on-surface-variant">{row.reason}</span> },
-    { key: "duration", header: "Duration", cell: (row: any) => <span className="font-jetbrains-mono">{row.duration}</span> },
+    { key: "duration", header: "Duration", cell: (row: any) => <span className="font-mono">{row.duration}</span> },
     { key: "status", header: "Status", cell: (row: any) => (
         <StatusBadge 
           tone={row.status === "Active" ? "crimson" : row.status === "Expired" ? "slate" : "amber"} 
@@ -80,13 +80,13 @@ export default function BreakGlassLogs() {
       <Card className="overflow-hidden bg-black/90 text-white border-outline-variant/30">
         <div className="p-3 border-b border-white/10 flex items-center gap-3">
           <Terminal className="w-4 h-4 text-white/50" />
-          <span className="font-jetbrains-mono text-xs text-white/50">/var/log/secure/break_glass.log</span>
+          <span className="font-mono text-xs text-white/50">/var/log/secure/break_glass.log</span>
         </div>
         <div className="p-0 custom-scrollbar overflow-x-auto">
           {loading ? (
-            <div className="p-8 text-center text-white/50 font-jetbrains-mono">Reading logs...</div>
+            <div className="p-8 text-center text-white/50 font-mono">Reading logs...</div>
           ) : (
-            <table className="w-full text-sm text-left min-w-[800px] font-jetbrains-mono">
+            <table className="w-full text-sm text-left min-w-[800px] font-mono">
               <thead className="text-white/40 text-xs border-b border-white/10">
                 <tr>
                   {columns.map(c => <th key={c.key} className="px-6 py-3 font-normal">{c.header}</th>)}

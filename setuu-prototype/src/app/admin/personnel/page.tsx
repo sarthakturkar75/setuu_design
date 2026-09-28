@@ -49,7 +49,7 @@ export default function CompanyPersonnelPage() {
   const renderTable = (personnel: any[], title: string, subtitle: string) => (
     <div className="mb-8">
       <div className="mb-3">
-         <h4 className="font-bold text-on-surface font-merriweather">{title}</h4>
+         <h4 className="font-bold text-on-surface font-sans">{title}</h4>
          <p className="text-sm text-on-surface-variant">{subtitle} ({personnel.length} personnel)</p>
       </div>
       {personnel.length === 0 ? (

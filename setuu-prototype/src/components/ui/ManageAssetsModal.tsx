@@ -72,7 +72,7 @@ export function ManageAssetsModal({
             <div className="bg-surface-container-lowest w-full max-w-4xl rounded-xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/30 max-h-[85vh]">
                 <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface">
                     <div>
-                        <h2 className="text-xl font-bold text-on-surface font-merriweather flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-on-surface font-sans flex items-center gap-2">
                             <BoxIcon className="w-5 h-5 text-primary" /> Manage Physical
                             Assets
                         </h2>

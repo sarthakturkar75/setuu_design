@@ -17,9 +17,9 @@ export function KanbanColumn({ title, count, children, className, ...props }: Ka
       {...props}
     >
       <div className="flex items-center justify-between p-4 border-b border-outline-variant/30 bg-surface-container">
-        <h3 className="font-merriweather font-semibold text-sm text-on-surface uppercase tracking-wider">{title}</h3>
+        <h3 className="font-sans font-semibold text-sm text-on-surface uppercase tracking-wider">{title}</h3>
         {count !== undefined && (
-          <span className="bg-surface-variant text-on-surface-variant text-xs font-bold px-2 py-0.5 rounded-full font-jetbrains-mono">
+          <span className="bg-surface-variant text-on-surface-variant text-xs font-bold px-2 py-0.5 rounded-full font-mono">
             {count}
           </span>
         )}

@@ -69,7 +69,7 @@ export default function RetentionRulesPage({ params }: { params: Promise<{ id: s
         <div className="flex gap-4">
           <AlertTriangle className="w-6 h-6 text-semantic-amber shrink-0" />
           <div>
-            <h3 className="font-merriweather text-lg font-bold text-on-surface mb-2">Data Retention & Archiving</h3>
+            <h3 className="font-sans text-lg font-bold text-on-surface mb-2">Data Retention & Archiving</h3>
             <p className="text-sm text-on-surface-variant">
               Configure lifecycle rules for this project to manage database growth and optimize storage costs.
               A background cron job runs nightly (or via API trigger) to automatically purge or archive records older than the specified retention window.

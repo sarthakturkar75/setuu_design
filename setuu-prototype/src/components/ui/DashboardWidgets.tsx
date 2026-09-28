@@ -7,7 +7,7 @@ export function FinancialHealthWidget({ kpis, riskScore, laborBurn }: any) {
   return (
     <div className="bg-surface border border-outline-variant/30 rounded-2xl p-6 h-full cursor-grab active:cursor-grabbing relative overflow-hidden">
       <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-full -z-10"></div>
-      <h3 className="font-bold font-merriweather text-on-surface mb-4">Financial Health</h3>
+      <h3 className="font-bold font-sans text-on-surface mb-4">Financial Health</h3>
       <div className="space-y-4">
         <div className="flex justify-between border-b border-outline-variant/50 pb-2">
           <span className="text-sm text-on-surface-variant font-medium">Budget Variance</span>
@@ -43,7 +43,7 @@ export function FinancialHealthWidget({ kpis, riskScore, laborBurn }: any) {
 export function IssueTrackerWidget({ issuesCount, url }: any) {
   return (
     <div className="bg-surface border border-outline-variant/30 rounded-2xl p-6 h-full cursor-grab active:cursor-grabbing">
-      <h3 className="font-bold font-merriweather text-on-surface mb-4">Issue Tracker</h3>
+      <h3 className="font-bold font-sans text-on-surface mb-4">Issue Tracker</h3>
       <div className="flex flex-col items-center justify-center py-4">
         <span className="text-4xl font-bold text-semantic-amber">{issuesCount}</span>
         <span className="text-sm text-on-surface-variant">Open Issues</span>
@@ -56,7 +56,7 @@ export function IssueTrackerWidget({ issuesCount, url }: any) {
 export function TimelineWidget({ progress, targetDays, url }: any) {
   return (
     <div className="bg-surface border border-outline-variant/30 rounded-2xl p-6 h-full cursor-grab active:cursor-grabbing">
-      <h3 className="font-bold font-merriweather text-on-surface mb-4">Timeline Sync</h3>
+      <h3 className="font-bold font-sans text-on-surface mb-4">Timeline Sync</h3>
       <div className="space-y-4">
         <div className="flex justify-between border-b pb-2">
           <span className="text-sm">Progress</span>

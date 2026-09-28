@@ -149,7 +149,7 @@ export default function FinancialMasterPage() {
 
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="font-merriweather font-bold text-lg text-on-surface">Invoice Approval Queue</h3>
+                <h3 className="font-sans font-bold text-lg text-on-surface">Invoice Approval Queue</h3>
               </div>
 
               <FilterBar onClear={() => { }} onApply={() => { }}>
@@ -191,7 +191,7 @@ export default function FinancialMasterPage() {
           {/* Context Sidebar */}
           <div className="w-full xl:w-96 flex-shrink-0 flex flex-col gap-6">
             <Card className="p-6">
-              <h3 className="font-merriweather font-bold text-lg text-on-surface mb-6">Cash Flow (In Millions)</h3>
+              <h3 className="font-sans font-bold text-lg text-on-surface mb-6">Cash Flow (In Millions)</h3>
               <div className="h-64">
                 <BarChart
                   data={cashFlowData}
@@ -203,7 +203,7 @@ export default function FinancialMasterPage() {
             </Card>
 
             <Card className="p-6 bg-surface-variant/30 border-outline-variant">
-              <h3 className="font-merriweather font-bold text-on-surface mb-4">Budget Alerts</h3>
+              <h3 className="font-sans font-bold text-on-surface mb-4">Budget Alerts</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3 p-3 bg-surface rounded-lg border border-semantic-amber/30">
                   <div className="p-2 rounded-full bg-semantic-amber/10 text-semantic-amber shrink-0 mt-0.5">

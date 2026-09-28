@@ -107,7 +107,7 @@ export default function ProjectTeamPage() {
           onClick={() => toggleSection(sectionKey)}
         >
           <div>
-            <h3 className="text-lg font-bold font-merriweather text-on-surface flex items-center gap-2">
+            <h3 className="text-lg font-bold font-sans text-on-surface flex items-center gap-2">
               {isExpanded ? <ChevronDown className="w-5 h-5 text-primary" /> : <ChevronRight className="w-5 h-5 text-primary" />}
               {title}
             </h3>
@@ -230,7 +230,7 @@ export default function ProjectTeamPage() {
     <div className="p-6 max-w-[1200px] mx-auto space-y-2">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold font-merriweather text-on-surface">Team Roster & Security</h2>
+          <h2 className="text-2xl font-bold font-sans text-on-surface">Team Roster & Security</h2>
           <p className="text-sm text-on-surface-variant mt-1 flex items-center gap-1">
             <ShieldAlert className="w-4 h-4 text-semantic-warning" />
             Only these assigned members have explicit access to this project workspace.
@@ -291,7 +291,7 @@ export default function ProjectTeamPage() {
           onClick={() => toggleSection("resources")}
         >
           <div>
-            <h3 className="text-lg font-bold font-merriweather text-on-surface flex items-center gap-2">
+            <h3 className="text-lg font-bold font-sans text-on-surface flex items-center gap-2">
               {expandedSections["resources"] ? <ChevronDown className="w-5 h-5 text-primary" /> : <ChevronRight className="w-5 h-5 text-primary" />}
               General Resources (Labor & Equipment)
             </h3>
@@ -327,8 +327,8 @@ export default function ProjectTeamPage() {
                     <tr key={row.id} className="hover:bg-surface-variant/10 transition-colors">
                       <td className="px-4 py-3 font-semibold text-on-surface">{row.name}</td>
                       <td className="px-4 py-3 text-on-surface-variant capitalize">{row.resource_type}</td>
-                      <td className="px-4 py-3 font-jetbrains-mono">{row.allocated_hours}h</td>
-                      <td className="px-4 py-3 font-jetbrains-mono">{row.actual_hours || 0}h</td>
+                      <td className="px-4 py-3 font-mono">{row.allocated_hours}h</td>
+                      <td className="px-4 py-3 font-mono">{row.actual_hours || 0}h</td>
                       {isManager && (
                         <td className="px-4 py-3 text-right">
                           <button

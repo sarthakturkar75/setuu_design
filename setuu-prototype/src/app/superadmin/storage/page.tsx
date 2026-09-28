@@ -48,11 +48,11 @@ export default function GlobalStorageMonitoring() {
                   <div className="flex justify-between items-center">
                     <div>
                       <h4 className="font-semibold text-on-surface">{org.name}</h4>
-                      <p className="text-xs text-on-surface-variant font-jetbrains-mono">{org.orgId.substring(0,8)} • {org.trend}</p>
+                      <p className="text-xs text-on-surface-variant font-mono">{org.orgId.substring(0,8)} • {org.trend}</p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <span className="font-jetbrains-mono font-medium text-sm text-on-surface">{org.usedGb} GB</span>
+                        <span className="font-mono font-medium text-sm text-on-surface">{org.usedGb} GB</span>
                         <span className="text-xs text-on-surface-variant mx-1">/</span>
                         <span className="text-xs text-on-surface-variant">{org.maxGb} GB</span>
                       </div>
@@ -88,7 +88,7 @@ export default function GlobalStorageMonitoring() {
                 <Database className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-3xl font-jetbrains-mono font-bold text-on-surface">1,847<span className="text-lg text-on-surface-variant ml-1">GB</span></h3>
+                <h3 className="text-3xl font-mono font-bold text-on-surface">1,847<span className="text-lg text-on-surface-variant ml-1">GB</span></h3>
                 <p className="text-sm text-on-surface-variant mt-1">Total Allocated Storage</p>
               </div>
               <div className="w-full h-px bg-outline-variant/30 my-4" />

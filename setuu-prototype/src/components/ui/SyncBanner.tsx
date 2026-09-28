@@ -50,7 +50,7 @@ export function SyncBanner({ state, lastSynced, onRetry, className, ...props }: 
   if (state === "connected") return null;
 
   return (
-    <div className={cn("flex items-center justify-center px-4 py-2 text-sm font-inter transition-colors", bgClasses[state], className)} {...props}>
+    <div className={cn("flex items-center justify-center px-4 py-2 text-sm font-sans transition-colors", bgClasses[state], className)} {...props}>
       <span className="mr-2 flex items-center justify-center min-w-[16px]">{iconMap[state]}</span>
       <span className="font-medium flex-1 text-center md:text-left">{labelMap[state]}</span>
       

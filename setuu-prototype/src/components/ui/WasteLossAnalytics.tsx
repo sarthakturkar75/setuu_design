@@ -22,7 +22,7 @@ export function WasteLossAnalytics({ analytics }: { analytics: { totalLoss: numb
       </div>
       <div className="text-right">
         <div className="text-xs font-semibold text-semantic-crimson/80 uppercase tracking-wider mb-1">Financial Impact</div>
-        <div className="text-2xl font-bold font-jetbrains-mono text-semantic-crimson">
+        <div className="text-2xl font-bold font-mono text-semantic-crimson">
           ${analytics.totalLoss.toLocaleString()}
         </div>
       </div>

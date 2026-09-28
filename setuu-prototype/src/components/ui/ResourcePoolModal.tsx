@@ -96,7 +96,7 @@ export function ResourcePoolModal({ projectId, onClose, onRefresh, currentTeamId
           onClick={() => toggleSection(sectionKey)}
         >
           <div>
-            <h4 className="font-bold text-on-surface font-merriweather flex items-center gap-2">
+            <h4 className="font-bold text-on-surface font-sans flex items-center gap-2">
               {isExpanded ? <ChevronDown className="w-4 h-4 text-primary" /> : <ChevronRight className="w-4 h-4 text-primary" />}
               {title}
             </h4>
@@ -181,7 +181,7 @@ export function ResourcePoolModal({ projectId, onClose, onRefresh, currentTeamId
 
           <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface">
             <div>
-              <h2 className="text-xl font-bold text-on-surface flex items-center gap-2 font-merriweather">
+              <h2 className="text-xl font-bold text-on-surface flex items-center gap-2 font-sans">
                 <Filter className="w-5 h-5 text-primary" /> Company Resource Pool
               </h2>
               <p className="text-xs text-on-surface-variant mt-1">Filter and recruit company-wide talent for this project.</p>

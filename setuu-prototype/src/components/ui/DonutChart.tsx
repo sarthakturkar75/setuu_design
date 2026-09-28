@@ -13,7 +13,7 @@ export function DonutChart({ data, title, totalLabel }: { data: DonutData[], tit
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full min-h-[200px] relative">
-      {title && <h3 className="font-merriweather font-semibold mb-2">{title}</h3>}
+      {title && <h3 className="font-sans font-semibold mb-2">{title}</h3>}
       <div className="relative w-full h-[200px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -33,21 +33,21 @@ export function DonutChart({ data, title, totalLabel }: { data: DonutData[], tit
             </Pie>
             <Tooltip 
               contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: 'var(--elevation-l2)' }}
-              itemStyle={{ fontFamily: 'var(--font-inter)', fontSize: '14px' }}
+              itemStyle={{ fontFamily: 'var(--font-sans)', fontSize: '14px' }}
             />
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-2xl font-bold font-jetbrains-mono">{total}</span>
-          {totalLabel && <span className="text-xs text-on-surface-variant font-inter uppercase tracking-wider">{totalLabel}</span>}
+          <span className="text-2xl font-bold font-mono">{total}</span>
+          {totalLabel && <span className="text-xs text-on-surface-variant font-sans uppercase tracking-wider">{totalLabel}</span>}
         </div>
       </div>
       <div className="flex flex-wrap justify-center gap-3 mt-4">
         {data.map(item => (
-          <div key={item.name} className="flex items-center text-sm font-inter">
+          <div key={item.name} className="flex items-center text-sm font-sans">
             <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: item.color }} />
             <span className="text-on-surface-variant mr-1">{item.name}</span>
-            <span className="font-semibold font-jetbrains-mono">{item.value}</span>
+            <span className="font-semibold font-mono">{item.value}</span>
           </div>
         ))}
       </div>

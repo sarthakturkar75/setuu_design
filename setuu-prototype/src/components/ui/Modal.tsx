@@ -42,9 +42,9 @@ export function Modal({ isOpen, onClose, title, description, size = "md", footer
       >
         <div className="flex items-center justify-between p-6 border-b border-outline-variant flex-shrink-0">
           <div>
-            <h2 className="font-merriweather text-xl font-bold text-on-surface">{title}</h2>
+            <h2 className="font-sans text-xl font-bold text-on-surface">{title}</h2>
             {description && (
-              <p className="font-inter text-sm text-on-surface-variant mt-1">
+              <p className="font-sans text-sm text-on-surface-variant mt-1">
                 {description}
               </p>
             )}
@@ -57,7 +57,7 @@ export function Modal({ isOpen, onClose, title, description, size = "md", footer
           </button>
         </div>
         
-        <div className="p-6 overflow-y-auto font-inter flex-1 custom-scrollbar">
+        <div className="p-6 overflow-y-auto font-sans flex-1 custom-scrollbar">
           {children}
         </div>
 

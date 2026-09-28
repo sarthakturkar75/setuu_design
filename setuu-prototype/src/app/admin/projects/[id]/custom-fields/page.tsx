@@ -65,7 +65,7 @@ export default function CustomFieldsPage({ params }: { params: Promise<{ id: str
   return (
     <div className="flex flex-col lg:flex-row h-full max-w-[1600px] mx-auto p-6 gap-6">
       <div className="w-full lg:w-72 shrink-0 flex flex-col gap-4">
-        <h3 className="font-merriweather font-bold text-on-surface">Entity Types</h3>
+        <h3 className="font-sans font-bold text-on-surface">Entity Types</h3>
         <div className="space-y-2">
           {[
             { id: "project_issues", label: "Issues & Defects" },
@@ -89,7 +89,7 @@ export default function CustomFieldsPage({ params }: { params: Promise<{ id: str
 
       <div className="flex-1 flex flex-col gap-6">
         <Card className="p-6">
-          <h3 className="font-merriweather text-lg font-bold text-on-surface mb-2">Custom Fields for {entityType}</h3>
+          <h3 className="font-sans text-lg font-bold text-on-surface mb-2">Custom Fields for {entityType}</h3>
           <p className="text-sm text-on-surface-variant mb-6">
             Dynamically inject custom inputs into the creation and edit forms for this module.
           </p>

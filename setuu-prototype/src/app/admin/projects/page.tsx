@@ -159,7 +159,7 @@ export default function ProjectTrackingHub() {
         {/* Sidebar Panel */}
         <div className="w-full lg:w-80 flex flex-col gap-6 flex-shrink-0">
           <Card className="p-5">
-            <h3 className="font-merriweather font-bold text-on-surface mb-4">Critical Path Milestones</h3>
+            <h3 className="font-sans font-bold text-on-surface mb-4">Critical Path Milestones</h3>
             <div className="space-y-4">
               {criticalMilestones.map(m => (
                 <div key={m.id} className="p-3 border border-outline-variant rounded-lg bg-surface-variant/30 flex flex-col gap-2">
@@ -179,7 +179,7 @@ export default function ProjectTrackingHub() {
           </Card>
 
           <Card className="p-5">
-            <h3 className="font-merriweather font-bold text-on-surface mb-4">Resource Allocation (Hrs)</h3>
+            <h3 className="font-sans font-bold text-on-surface mb-4">Resource Allocation (Hrs)</h3>
             <div className="h-48">
               <BarChart data={resourceData} keys={["value"]} colors={["var(--primary)"]} />
             </div>

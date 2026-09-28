@@ -50,23 +50,23 @@ export default function RoleManagementPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="p-5 border-l-4 border-l-primary flex flex-col gap-2">
             <Shield className="w-6 h-6 text-primary" />
-            <h3 className="font-merriweather font-bold text-lg text-on-surface">System Roles</h3>
+            <h3 className="font-sans font-bold text-lg text-on-surface">System Roles</h3>
             <p className="text-sm text-on-surface-variant">Core administrative roles that cannot be modified or deleted.</p>
           </Card>
           <Card className="p-5 border-l-4 border-l-semantic-emerald flex flex-col gap-2">
             <Users className="w-6 h-6 text-semantic-emerald" />
-            <h3 className="font-merriweather font-bold text-lg text-on-surface">Default Roles</h3>
+            <h3 className="font-sans font-bold text-lg text-on-surface">Default Roles</h3>
             <p className="text-sm text-on-surface-variant">Standard roles provided by SETUU out-of-the-box.</p>
           </Card>
           <Card className="p-5 border-l-4 border-l-semantic-amber flex flex-col gap-2">
             <Settings2 className="w-6 h-6 text-semantic-amber" />
-            <h3 className="font-merriweather font-bold text-lg text-on-surface">Custom Roles</h3>
+            <h3 className="font-sans font-bold text-lg text-on-surface">Custom Roles</h3>
             <p className="text-sm text-on-surface-variant">Tailored access profiles created specifically for your organization.</p>
           </Card>
         </div>
 
         <div className="space-y-4">
-          <h2 className="font-merriweather font-bold text-xl text-on-surface mb-4">Role Definitions</h2>
+          <h2 className="font-sans font-bold text-xl text-on-surface mb-4">Role Definitions</h2>
           
           {roles.map(role => (
             <Card key={role.id} className="p-0 overflow-hidden">

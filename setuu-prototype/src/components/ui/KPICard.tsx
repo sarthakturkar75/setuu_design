@@ -24,7 +24,7 @@ export function KPICard({ title, value, trend, icon, className, semanticColor, h
   const content = (
     <Card className={cn("overflow-hidden transition-all duration-normal", semanticClass, href && "hover:shadow-elevation-l2 hover:border-primary/50", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-on-surface-variant font-inter">
+        <CardTitle className="text-sm font-medium text-on-surface-variant font-sans">
           {title}
         </CardTitle>
         {icon && <div className={cn("text-on-surface-variant", semanticColor && `text-semantic-${semanticColor}`)}>{icon}</div>}
@@ -32,11 +32,11 @@ export function KPICard({ title, value, trend, icon, className, semanticColor, h
       <CardContent>
         <div className="flex items-end justify-between">
           <div>
-            <div className="text-2xl font-bold font-jetbrains-mono tracking-tight text-on-surface">
+            <div className="text-2xl font-bold font-mono tracking-tight text-on-surface">
               {value}
             </div>
             {trend && (
-              <p className="text-xs mt-1 font-inter flex items-center">
+              <p className="text-xs mt-1 font-sans flex items-center">
                 <span
                   className={cn(
                     "font-semibold mr-1",

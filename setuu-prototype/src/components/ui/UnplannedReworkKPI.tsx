@@ -16,7 +16,7 @@ export function UnplannedReworkKPI({ totalCost }: { totalCost: number }) {
       </div>
       
       <div>
-        <div className={`text-2xl font-bold font-jetbrains-mono ${isHigh ? 'text-semantic-crimson' : 'text-on-surface'}`}>
+        <div className={`text-2xl font-bold font-mono ${isHigh ? 'text-semantic-crimson' : 'text-on-surface'}`}>
           ${totalCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </div>
         <div className="flex items-center gap-1 text-[10px] text-on-surface-variant mt-1">

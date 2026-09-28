@@ -27,7 +27,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           </div>
         </div>
         {label && (
-          <span className="text-sm font-medium text-on-surface select-none font-inter leading-none">
+          <span className="text-sm font-medium text-on-surface select-none font-sans leading-none">
             {label}
           </span>
         )}

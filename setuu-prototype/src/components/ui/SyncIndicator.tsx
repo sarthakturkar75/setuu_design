@@ -12,7 +12,7 @@ interface SyncIndicatorProps {
 
 export function SyncIndicator({ status, lastSyncedAt, className }: SyncIndicatorProps) {
   return (
-    <div className={cn("flex items-center space-x-2 text-xs font-inter", className)}>
+    <div className={cn("flex items-center space-x-2 text-xs font-sans", className)}>
       {status === 'syncing' && (
         <RefreshCw className="w-3.5 h-3.5 text-primary animate-sync-spin" />
       )}

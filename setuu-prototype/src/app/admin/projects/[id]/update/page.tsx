@@ -110,7 +110,7 @@ export default function UpdatesFeedPage({ params }: { params: Promise<{ id: stri
     <div className="p-6 max-w-6xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold font-merriweather text-on-surface">Project Updates Feed</h2>
+          <h2 className="text-2xl font-bold font-sans text-on-surface">Project Updates Feed</h2>
           <p className="text-on-surface-variant">Real-time updates, logs, and telemetry.</p>
         </div>
         <div className="flex gap-3">

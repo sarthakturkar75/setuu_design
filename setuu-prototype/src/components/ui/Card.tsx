@@ -43,7 +43,7 @@ export function CardTitle({
   return (
     <h3
       className={cn(
-        "font-merriweather text-lg font-bold leading-none tracking-tight",
+        "font-sans text-lg font-bold leading-none tracking-tight",
         className
       )}
       {...props}
@@ -57,7 +57,7 @@ export function CardDescription({
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
     <p
-      className={cn("font-inter text-sm text-on-surface-variant", className)}
+      className={cn("font-sans text-sm text-on-surface-variant", className)}
       {...props}
     />
   )
@@ -68,7 +68,7 @@ export function CardContent({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("p-6 pt-0 font-inter", className)} {...props} />
+    <div className={cn("p-6 pt-0 font-sans", className)} {...props} />
   )
 }
 

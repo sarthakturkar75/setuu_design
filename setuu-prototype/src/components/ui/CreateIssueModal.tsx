@@ -111,7 +111,7 @@ export function CreateIssueModal({ projectId, rootCauses, onClose, onRefresh }: 
       <div className="bg-surface w-full max-w-2xl rounded-xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden border border-outline-variant/30">
 
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest">
-          <h2 className="text-xl font-bold text-on-surface font-merriweather">Log New Defect / Issue</h2>
+          <h2 className="text-xl font-bold text-on-surface font-sans">Log New Defect / Issue</h2>
           <div className="flex gap-2">
             <button aria-label="Start voice dictation" type="button" onClick={handleVoiceDictation} className={`p-2 rounded-full flex items-center justify-center ${recording ? 'bg-semantic-crimson text-white animate-pulse' : 'bg-primary/10 text-primary hover:bg-primary/20'}`}>
               <Mic className="w-5 h-5" />

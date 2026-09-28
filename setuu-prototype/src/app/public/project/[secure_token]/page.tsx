@@ -34,7 +34,7 @@ export default async function PublicProjectPage({
   return (
     <div className="space-y-6">
       <div className="flex flex-col mb-8">
-        <h1 className="text-3xl font-merriweather font-bold text-on-surface">{project.name}</h1>
+        <h1 className="text-3xl font-sans font-bold text-on-surface">{project.name}</h1>
         <p className="text-on-surface-variant mt-2">{project.description}</p>
       </div>
 
@@ -60,7 +60,7 @@ export default async function PublicProjectPage({
       </div>
 
       <Card className="p-6">
-        <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Milestone Tracker</h3>
+        <h3 className="font-sans text-lg font-bold text-on-surface mb-6">Milestone Tracker</h3>
         <div className="space-y-6">
           {(milestones || []).length === 0 ? (
             <p className="text-sm text-on-surface-variant">No milestones have been defined yet.</p>

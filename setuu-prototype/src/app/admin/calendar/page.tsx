@@ -69,7 +69,7 @@ export default function CalendarPage() {
             <Card className="p-6 overflow-hidden">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
-                        <h2 className="text-2xl font-bold font-merriweather text-on-surface">
+                        <h2 className="text-2xl font-bold font-sans text-on-surface">
                             {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
                         </h2>
                     </div>

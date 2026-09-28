@@ -85,7 +85,7 @@ export function EditPersonnelModal({ user, onClose, onRefresh }: any) {
         
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface shrink-0">
           <div>
-            <h2 className="text-xl font-bold text-on-surface font-merriweather flex items-center gap-2">
+            <h2 className="text-xl font-bold text-on-surface font-sans flex items-center gap-2">
               Edit Personnel Profile
             </h2>
             <p className="text-xs text-on-surface-variant font-mono mt-1">{user.display_name} ({user.role})</p>

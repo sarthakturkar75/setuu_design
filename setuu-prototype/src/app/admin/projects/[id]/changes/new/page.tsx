@@ -68,7 +68,7 @@ export default function NewChangeRequestPage() {
     return (
       <div className="p-6 max-w-200 mx-auto space-y-8 pt-24 text-center">
         <CheckCircleIcon className="w-16 h-16 text-semantic-emerald mx-auto mb-4" />
-        <h2 className="text-2xl font-bold font-merriweather text-on-surface">Change Request Submitted</h2>
+        <h2 className="text-2xl font-bold font-sans text-on-surface">Change Request Submitted</h2>
         <p className="text-on-surface-variant max-w-md mx-auto">Your draft has been routed to the client and engineering teams for review.</p>
         <div className="pt-8">
           <Link href={`/admin/projects/${projectId}`}>
@@ -82,7 +82,7 @@ export default function NewChangeRequestPage() {
   return (
     <div className="p-6 max-w-200 mx-auto space-y-8 pb-32">
       <div>
-        <h2 className="text-2xl font-bold font-merriweather text-on-surface">Draft Change Request</h2>
+        <h2 className="text-2xl font-bold font-sans text-on-surface">Draft Change Request</h2>
         <p className="text-on-surface-variant mt-1">Submit a formal request for scope, timeline, or cost changes.</p>
       </div>
 

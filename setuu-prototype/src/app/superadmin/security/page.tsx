@@ -32,7 +32,7 @@ export default function BreakGlassConsole() {
     { key: "admin", header: "Super Admin", cell: (row: any) => row.admin },
     { key: "target", header: "Target", cell: (row: any) => row.target },
     { key: "reason", header: "Reason", cell: (row: any) => row.reason },
-    { key: "expires", header: "Created At", cell: (row: any) => <span className="font-jetbrains-mono text-semantic-crimson">{row.expires}</span> },
+    { key: "expires", header: "Created At", cell: (row: any) => <span className="font-mono text-semantic-crimson">{row.expires}</span> },
     { key: "status", header: "Status", cell: (row: any) => <StatusBadge tone="slate" label={row.status} /> }
   ];
 

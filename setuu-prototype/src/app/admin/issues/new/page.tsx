@@ -59,7 +59,7 @@ export default function GlobalIssueLoggingPage() {
           <AlertTriangleIcon className="w-5 h-5 text-semantic-crimson" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold font-merriweather text-on-surface">Log Global Issue</h2>
+          <h2 className="text-2xl font-bold font-sans text-on-surface">Log Global Issue</h2>
           <p className="text-on-surface-variant mt-1">Select a project and report a defect, snag, or blocker.</p>
         </div>
       </div>

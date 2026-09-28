@@ -85,7 +85,7 @@ export default function InfrastructureCommand() {
                 <span className="text-on-surface-variant flex items-center gap-2">
                   <Database className="w-4 h-4" /> Allocated
                 </span>
-                <span className="font-jetbrains-mono font-medium text-on-surface">1,024 TB</span>
+                <span className="font-mono font-medium text-on-surface">1,024 TB</span>
               </div>
               <div>
                 <div className="flex justify-between text-xs mb-1">
@@ -117,7 +117,7 @@ export default function InfrastructureCommand() {
                   <div key={idx} className="flex justify-between items-center py-2 border-b border-outline-variant/20 last:border-0">
                     <div>
                       <p className="text-sm font-medium text-on-surface">{threat.event_type}</p>
-                      <p className="text-xs font-jetbrains-mono text-on-surface-variant">{threat.created_at}</p>
+                      <p className="text-xs font-mono text-on-surface-variant">{threat.created_at}</p>
                     </div>
                     <StatusBadge tone="slate" label="Blocked" />
                   </div>

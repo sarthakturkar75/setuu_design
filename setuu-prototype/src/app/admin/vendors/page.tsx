@@ -177,14 +177,14 @@ export default function VendorRegistryPage() {
           {/* Context Sidebar */}
           <div className="w-full xl:w-80 flex-shrink-0 flex flex-col gap-6">
             <Card className="p-5">
-              <h3 className="font-merriweather font-bold text-on-surface mb-4">Vendors by Category</h3>
+              <h3 className="font-sans font-bold text-on-surface mb-4">Vendors by Category</h3>
               <div className="h-48 mb-2">
                 <BarChart data={categories} keys={["count"]} colors={["var(--primary)"]} />
               </div>
             </Card>
 
             <Card className="p-5 bg-surface-variant/30 border-outline-variant">
-              <h3 className="font-merriweather font-bold text-on-surface mb-2">Vendor Performance</h3>
+              <h3 className="font-sans font-bold text-on-surface mb-2">Vendor Performance</h3>
               <p className="text-sm text-on-surface-variant mb-4">Analyze SLA adherence, delivery timeliness, and quality scorecards across your vendor network.</p>
               <Link href="/admin/vendors/performance" className="block text-center w-full py-2 bg-surface text-primary border border-primary/30 rounded-lg text-sm font-semibold hover:bg-primary/5 transition-colors">
                 View Performance Matrix

@@ -12,7 +12,7 @@ export function PageHeader({ title, subtitle, actions, breadcrumb }: PageHeaderP
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
       <div className="flex flex-col space-y-2">
         {breadcrumb && <div>{breadcrumb}</div>}
-        <h1 className="text-3xl font-merriweather font-bold text-on-surface">{title}</h1>
+        <h1 className="text-3xl font-sans font-bold text-on-surface">{title}</h1>
         {subtitle && <p className="text-on-surface-variant text-sm">{subtitle}</p>}
       </div>
       {actions && (

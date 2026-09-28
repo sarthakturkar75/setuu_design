@@ -183,7 +183,7 @@ export default function UserDirectoryPage() {
           {/* Context Sidebar */}
           <div className="w-full xl:w-80 flex-shrink-0 flex flex-col gap-6">
             <Card className="p-5">
-              <h3 className="font-merriweather font-bold text-on-surface mb-4">Quick Stats</h3>
+              <h3 className="font-sans font-bold text-on-surface mb-4">Quick Stats</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-3 border-b border-outline-variant">
                   <span className="text-sm text-on-surface-variant">Total Users</span>
@@ -201,7 +201,7 @@ export default function UserDirectoryPage() {
             </Card>
 
             <Card className="p-5 bg-surface-variant/30 border-primary/20">
-              <h3 className="font-merriweather font-bold text-on-surface mb-2">Role Management</h3>
+              <h3 className="font-sans font-bold text-on-surface mb-2">Role Management</h3>
               <p className="text-sm text-on-surface-variant mb-4">Need to configure specific permissions or create custom access levels?</p>
               <Link href="/admin/users/roles" className="block text-center w-full py-2 bg-surface text-primary border border-primary/30 rounded-lg text-sm font-semibold hover:bg-primary/5 transition-colors">
                 Manage Roles & Permissions

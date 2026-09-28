@@ -162,7 +162,7 @@ export default function ProjectOverviewPage({
           <SmartInbox items={actionItems} />
 
           <Card className="p-6">
-            <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Milestone Progress</h3>
+            <h3 className="font-sans text-lg font-bold text-on-surface mb-6">Milestone Progress</h3>
             <div className="space-y-6">
               {(milestones || []).length === 0 ? (
                 <p className="text-sm text-on-surface-variant">No milestones created yet.</p>
@@ -203,7 +203,7 @@ export default function ProjectOverviewPage({
         {/* Right Column */}
         <div className="space-y-6">
           <Card className="p-6 border-l-4 border-l-semantic-sky">
-            <h3 className="font-merriweather text-lg font-bold text-on-surface mb-4">Portfolio Roll-up</h3>
+            <h3 className="font-sans text-lg font-bold text-on-surface mb-4">Portfolio Roll-up</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center border-b border-surface-variant/50 pb-2">
                 <span className="text-sm text-on-surface-variant">Avg Progress</span>
@@ -228,7 +228,7 @@ export default function ProjectOverviewPage({
           </Card>
 
           <Card className="p-6">
-            <h3 className="font-merriweather text-lg font-bold text-on-surface mb-4">Recent Activity</h3>
+            <h3 className="font-sans text-lg font-bold text-on-surface mb-4">Recent Activity</h3>
             <ActivityFeed items={recentActivity.map((a: any) => ({ id: a.id, type: a.type, content: a.title, author_name: a.user, timestamp: a.time }))} />
           </Card>
         </div>

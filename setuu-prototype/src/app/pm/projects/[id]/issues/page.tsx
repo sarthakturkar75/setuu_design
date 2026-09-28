@@ -62,7 +62,7 @@ export default function IssuesList({ params }: { params: Promise<{ id: string }>
        <SLACountdownTimer deadlineIso={row.sla_deadline} />
     )},
     { key: "root_cause", header: "Root Cause", cell: (row: any) => <span className="text-sm">{row.issue_root_causes?.name || 'Unassigned'}</span> },
-    { key: "rework", header: "Est. Rework", cell: (row: any) => <span className="text-sm font-jetbrains-mono">${(row.estimated_rework_cost || 0).toLocaleString()}</span> },
+    { key: "rework", header: "Est. Rework", cell: (row: any) => <span className="text-sm font-mono">${(row.estimated_rework_cost || 0).toLocaleString()}</span> },
     { key: "status", header: "Status", cell: (row: any) => <span className="text-xs font-semibold">{row.status}</span> },
     { key: "qa", header: "", cell: (row: any) => (
       <button onClick={() => setQaIssue(row)} className="p-1.5 hover:bg-semantic-emerald/10 text-semantic-emerald rounded border border-transparent hover:border-semantic-emerald/30 transition-colors flex items-center gap-1 text-[10px] font-bold uppercase" title="Log QA Inspection">

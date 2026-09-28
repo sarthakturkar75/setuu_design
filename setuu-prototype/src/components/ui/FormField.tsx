@@ -15,7 +15,7 @@ export function FormField({ label, htmlFor, tooltip, error, children, className 
   return (
     <div className={cn("flex flex-col space-y-1.5", className)}>
       <div className="flex items-center space-x-2">
-        <label htmlFor={htmlFor} className="text-sm font-semibold text-on-surface font-inter">
+        <label htmlFor={htmlFor} className="text-sm font-semibold text-on-surface font-sans">
           {label}
         </label>
         {tooltip && (
@@ -29,7 +29,7 @@ export function FormField({ label, htmlFor, tooltip, error, children, className 
       </div>
       {children}
       {error && (
-        <p className="text-xs text-error font-medium font-inter mt-1">{error}</p>
+        <p className="text-xs text-error font-medium font-sans mt-1">{error}</p>
       )}
     </div>
   );

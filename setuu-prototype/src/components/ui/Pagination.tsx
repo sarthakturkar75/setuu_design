@@ -9,7 +9,7 @@ interface PaginationProps {
 
 export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
   return (
-    <div className="flex items-center space-x-2 font-jetbrains-mono text-sm">
+    <div className="flex items-center space-x-2 font-mono text-sm">
       <button 
         disabled={currentPage <= 1}
         onClick={() => onPageChange(1)}

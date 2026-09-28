@@ -21,7 +21,7 @@ export default function MaterialReceiptPage() {
   return (
     <div className="p-6 max-w-150 mx-auto space-y-8 pb-32">
       <div>
-        <h2 className="text-2xl font-bold font-merriweather text-on-surface">Material Receipt</h2>
+        <h2 className="text-2xl font-bold font-sans text-on-surface">Material Receipt</h2>
         <p className="text-on-surface-variant mt-1">Scan a packing slip or enter details manually to log incoming materials.</p>
       </div>
 

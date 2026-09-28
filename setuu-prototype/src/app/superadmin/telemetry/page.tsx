@@ -29,7 +29,7 @@ export default function PlatformTelemetry() {
   }, []);
 
   const columns = [
-    { key: "time", header: "Time", cell: (row: any) => <span className="font-jetbrains-mono text-xs">{row.created_at}</span> },
+    { key: "time", header: "Time", cell: (row: any) => <span className="font-mono text-xs">{row.created_at}</span> },
     { key: "type", header: "Event Type", cell: (row: any) => row.event_type },
     { key: "region", header: "Table", cell: (row: any) => row.table_name },
     { key: "severity", header: "Severity", cell: (row: any) => (

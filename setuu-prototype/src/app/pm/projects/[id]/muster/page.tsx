@@ -103,7 +103,7 @@ export default function MusterRollPage({ params }: { params: Promise<{ id: strin
             <div className="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
               <ShieldCheck className="w-10 h-10" />
             </div>
-            <h2 className="text-2xl font-bold font-merriweather text-on-surface mb-2">Site is Secure</h2>
+            <h2 className="text-2xl font-bold font-sans text-on-surface mb-2">Site is Secure</h2>
             <p className="text-on-surface-variant max-w-md mx-auto mb-8">
               There are no active emergencies. If an incident occurs, you can initiate a muster roll to instantly lock down all active devices on site until personnel confirm their safety.
             </p>

@@ -37,18 +37,18 @@ export default function AuditLogExplorer() {
   }, []);
 
   const columns = [
-    { key: "timestamp", header: "Timestamp (UTC)", cell: (row: any) => <span className="font-jetbrains-mono text-sm text-on-surface-variant">{row.timestamp}</span> },
+    { key: "timestamp", header: "Timestamp (UTC)", cell: (row: any) => <span className="font-mono text-sm text-on-surface-variant">{row.timestamp}</span> },
     { key: "type", header: "Event Type", cell: (row: any) => (
       <div className="flex items-center gap-2">
         <StatusBadge 
           tone={row.severity === "critical" ? "crimson" : row.severity === "high" ? "amber" : row.severity === "warning" ? "amber" : "slate"} 
           label={row.severity} 
         />
-        <span className="font-jetbrains-mono text-xs">{row.type}</span>
+        <span className="font-mono text-xs">{row.type}</span>
       </div>
     )},
     { key: "actor", header: "Actor", cell: (row: any) => <span className="text-sm">{row.actor}</span> },
-    { key: "org", header: "Organization", cell: (row: any) => <span className="font-jetbrains-mono text-xs">{row.org}</span> },
+    { key: "org", header: "Organization", cell: (row: any) => <span className="font-mono text-xs">{row.org}</span> },
     { key: "actions", header: "", cell: (row: any) => (
       <div className="flex gap-2">
         <button 
@@ -116,7 +116,7 @@ export default function AuditLogExplorer() {
             <div className="flex justify-between items-start mb-6 border-b border-outline-variant/50 pb-4">
               <div>
                 <h3 className="font-semibold text-lg text-on-surface">Event Details</h3>
-                <p className="text-xs font-jetbrains-mono text-on-surface-variant mt-1">{selectedLog.id}</p>
+                <p className="text-xs font-mono text-on-surface-variant mt-1">{selectedLog.id}</p>
               </div>
               <button onClick={() => setSelectedLog(null)} className="text-on-surface-variant hover:text-on-surface p-1">
                 ✕
@@ -127,16 +127,16 @@ export default function AuditLogExplorer() {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-on-surface-variant text-xs mb-1">Timestamp</p>
-                  <p className="font-jetbrains-mono">{selectedLog.timestamp}</p>
+                  <p className="font-mono">{selectedLog.timestamp}</p>
                 </div>
                 <div>
                   <p className="text-on-surface-variant text-xs mb-1">Organization</p>
-                  <p className="font-jetbrains-mono">{selectedLog.org}</p>
+                  <p className="font-mono">{selectedLog.org}</p>
                 </div>
                 <div className="col-span-2">
                   <p className="text-on-surface-variant text-xs mb-1">Event Type</p>
                   <div className="flex items-center gap-2">
-                    <p className="font-jetbrains-mono bg-surface-variant px-2 py-1 rounded inline-block">{selectedLog.type}</p>
+                    <p className="font-mono bg-surface-variant px-2 py-1 rounded inline-block">{selectedLog.type}</p>
                   </div>
                 </div>
                 <div className="col-span-2">
@@ -155,7 +155,7 @@ export default function AuditLogExplorer() {
                   </button>
                 </div>
                 <div className="bg-surface-variant border border-outline-variant/30 rounded p-4 overflow-auto">
-                  <pre className="text-xs font-jetbrains-mono text-on-surface whitespace-pre-wrap">
+                  <pre className="text-xs font-mono text-on-surface whitespace-pre-wrap">
                     {JSON.stringify(selectedLog.payload, null, 2)}
                   </pre>
                 </div>

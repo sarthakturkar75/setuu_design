@@ -39,8 +39,8 @@ export function Toast({ id, type, title, message, duration = 5000, onClose }: To
       <div className="flex items-start p-4 w-full">
         <div className="flex-shrink-0">{icons[type]}</div>
         <div className="ml-3 w-0 flex-1 pt-0.5">
-          <p className="text-sm font-medium text-on-surface font-inter">{title}</p>
-          {message && <p className="mt-1 text-sm text-on-surface-variant font-inter">{message}</p>}
+          <p className="text-sm font-medium text-on-surface font-sans">{title}</p>
+          {message && <p className="mt-1 text-sm text-on-surface-variant font-sans">{message}</p>}
         </div>
         <div className="ml-4 flex flex-shrink-0">
           <button

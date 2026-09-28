@@ -63,7 +63,7 @@ export default function ProjectFlagsPage({
       {/* Main Form */}
       <div className="flex-1 flex flex-col gap-6">
         {!flags ? <div className="text-sm text-on-surface-variant animate-pulse p-6">Loading module flags...</div> : <Card className="p-6">
-          <h3 className="font-merriweather text-lg font-bold text-on-surface mb-2">Module Flags</h3>
+          <h3 className="font-sans text-lg font-bold text-on-surface mb-2">Module Flags</h3>
           <p className="text-sm text-on-surface-variant mb-6">Enable or disable specific tracking modules for this project. Disabling a module hides it from all project participants but preserves underlying data.</p>
           
           <div className="space-y-4">
@@ -113,7 +113,7 @@ export default function ProjectFlagsPage({
       {/* Audit Sidebar */}
       <div className="w-full lg:w-80 flex-shrink-0">
         <Card className="p-6 h-full">
-          <h3 className="font-merriweather font-bold text-on-surface mb-4">Configuration Audit Log</h3>
+          <h3 className="font-sans font-bold text-on-surface mb-4">Configuration Audit Log</h3>
           <ActivityFeed items={auditLogs as any} />
         </Card>
       </div>

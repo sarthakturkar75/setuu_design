@@ -38,14 +38,14 @@ export default function SubscriptionsPage() {
       key: "max_projects",
       header: "Max Projects",
       cell: (row: any) => (
-        <span className="font-jetbrains-mono">{row.max_projects}</span>
+        <span className="font-mono">{row.max_projects}</span>
       )
     },
     {
       key: "max_storage_gb",
       header: "Storage Allocation (GB)",
       cell: (row: any) => (
-        <span className="font-jetbrains-mono">{row.max_storage_gb} GB</span>
+        <span className="font-mono">{row.max_storage_gb} GB</span>
       )
     },
     {

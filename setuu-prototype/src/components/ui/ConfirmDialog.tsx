@@ -26,7 +26,7 @@ export function ConfirmDialog({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       <div className="p-6">
-        <p className="text-on-surface-variant font-inter mb-6">{description}</p>
+        <p className="text-on-surface-variant font-sans mb-6">{description}</p>
         <div className="flex justify-end space-x-3">
           <button 
             onClick={onClose}

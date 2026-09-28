@@ -23,7 +23,7 @@ export function StatusBadge({ tone, label, icon, className, ...props }: StatusBa
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold font-jetbrains-mono tracking-wide uppercase transition-colors",
+        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold font-mono tracking-wide uppercase transition-colors",
         toneClasses[tone],
         className
       )}

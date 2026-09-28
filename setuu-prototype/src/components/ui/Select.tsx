@@ -46,7 +46,7 @@ export function Select({ options, value, defaultValue, onChange, placeholder = "
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center justify-between w-full px-3 py-2 text-sm bg-surface border rounded-lg transition-colors duration-fast font-inter",
+          "flex items-center justify-between w-full px-3 py-2 text-sm bg-surface border rounded-lg transition-colors duration-fast font-sans",
           isOpen ? "border-primary ring-1 ring-primary" : "border-outline-variant hover:border-outline",
           disabled ? "opacity-50 cursor-not-allowed bg-surface-variant" : "cursor-pointer"
         )}
@@ -66,7 +66,7 @@ export function Select({ options, value, defaultValue, onChange, placeholder = "
                 key={option.value}
                 type="button"
                 className={cn(
-                  "flex items-center justify-between w-full px-3 py-2 text-sm text-left font-inter transition-colors hover:bg-surface-container-low",
+                  "flex items-center justify-between w-full px-3 py-2 text-sm text-left font-sans transition-colors hover:bg-surface-container-low",
                   isSelected ? "bg-primary/5 text-primary font-medium" : "text-on-surface"
                 )}
                 onClick={() => {

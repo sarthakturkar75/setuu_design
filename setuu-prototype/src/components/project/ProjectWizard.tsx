@@ -56,7 +56,7 @@ export function ProjectWizard({ clients, pms }: ProjectWizardProps) {
           return (
             <div key={label} className="relative z-10 flex flex-col items-center">
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm font-jetbrains-mono border-2 transition-colors ${
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm font-mono border-2 transition-colors ${
                   isActive
                     ? "bg-primary border-primary text-on-primary shadow-sm"
                     : isPast
@@ -67,7 +67,7 @@ export function ProjectWizard({ clients, pms }: ProjectWizardProps) {
                 {isPast ? <CheckIcon className="w-5 h-5" /> : stepNumber}
               </div>
               <span
-                className={`mt-2 text-xs font-medium font-inter ${
+                className={`mt-2 text-xs font-medium font-sans ${
                   isActive ? "text-primary" : "text-on-surface-variant"
                 }`}
               >
@@ -163,7 +163,7 @@ export function ProjectWizard({ clients, pms }: ProjectWizardProps) {
                   name="po_reference"
                   type="text"
                   placeholder="e.g. PO-2026-908"
-                  className="w-full font-jetbrains-mono uppercase rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full font-mono uppercase rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
               <div className="space-y-1">
@@ -174,7 +174,7 @@ export function ProjectWizard({ clients, pms }: ProjectWizardProps) {
                   type="number"
                   step="0.01"
                   placeholder="0.00"
-                  className="w-full rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm font-jetbrains-mono focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
               <div className="space-y-1">
@@ -183,7 +183,7 @@ export function ProjectWizard({ clients, pms }: ProjectWizardProps) {
                   id="target_date"
                   name="target_date"
                   type="date"
-                  className="w-full rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm font-jetbrains-mono focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full rounded-md border border-outline-variant bg-surface px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
             </div>

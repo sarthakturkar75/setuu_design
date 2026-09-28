@@ -70,7 +70,7 @@ export default function OfflineSyncQueue() {
           </div>
       ) : (
         <div className="space-y-4">
-            <h3 className="font-bold text-lg text-on-surface font-merriweather">Pending Uploads ({queue.length})</h3>
+            <h3 className="font-bold text-lg text-on-surface font-sans">Pending Uploads ({queue.length})</h3>
             
             <div className="space-y-3">
             {queue.map(item => (
@@ -86,7 +86,7 @@ export default function OfflineSyncQueue() {
                     </div>
                     </div>
                     
-                    <div className="mt-2 md:mt-0 flex gap-4 items-center ml-11 md:ml-auto md:mr-8 text-xs text-on-surface-variant font-jetbrains-mono">
+                    <div className="mt-2 md:mt-0 flex gap-4 items-center ml-11 md:ml-auto md:mr-8 text-xs text-on-surface-variant font-mono">
                     <span>{new Date(item.created_at).toLocaleString()}</span>
                     <span>0 KB</span>
                     </div>

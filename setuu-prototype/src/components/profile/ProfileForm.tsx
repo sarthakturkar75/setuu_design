@@ -110,7 +110,7 @@ export function ProfileForm() {
                                 value={bio}
                                 onChange={(e) => setBio(e.target.value)}
                                 rows={4}
-                                className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors font-inter"
+                                className="flex w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3 py-2 text-sm text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors font-sans"
                             />
                         </FormField>
 

@@ -10,7 +10,7 @@ export default function PublicProjectLayout({
           <div className="w-8 h-8 rounded bg-primary text-on-primary flex items-center justify-center font-bold">
             S
           </div>
-          <span className="font-merriweather font-bold text-lg text-on-surface">Setuu <span className="text-sm font-normal text-on-surface-variant font-inter">Public Viewer</span></span>
+          <span className="font-sans font-bold text-lg text-on-surface">Setuu <span className="text-sm font-normal text-on-surface-variant font-sans">Public Viewer</span></span>
         </div>
         <div className="text-sm text-on-surface-variant font-medium">
           Read-Only Mode

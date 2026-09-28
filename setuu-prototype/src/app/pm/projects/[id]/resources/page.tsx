@@ -66,8 +66,8 @@ export default function ProjectResourcesPage() {
   const columns = [
     { key: "name", header: "Resource Name", cell: (row: any) => <span className="font-medium text-on-surface">{row.name}</span> },
     { key: "resource_type", header: "Type", cell: (row: any) => <span className="text-sm">{row.resource_type}</span> },
-    { key: "allocated_hours", header: "Allocated Hours", cell: (row: any) => <span className="text-sm font-jetbrains-mono">{row.allocated_hours ?? 0} hrs</span> },
-    { key: "actual_hours", header: "Actual Hours", cell: (row: any) => <span className="text-sm font-jetbrains-mono">{row.actual_hours ?? 0} hrs</span> },
+    { key: "allocated_hours", header: "Allocated Hours", cell: (row: any) => <span className="text-sm font-mono">{row.allocated_hours ?? 0} hrs</span> },
+    { key: "actual_hours", header: "Actual Hours", cell: (row: any) => <span className="text-sm font-mono">{row.actual_hours ?? 0} hrs</span> },
     { key: "current_assignment", header: "Assignment", cell: (row: any) => <span className="text-sm">{row.current_assignment || "Unassigned"}</span> },
     { 
       key: "actions", 
@@ -88,7 +88,7 @@ export default function ProjectResourcesPage() {
     <div className="p-6 max-w-[1200px] mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-normal">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-xl font-bold font-merriweather text-on-surface">Resource Allocations</h2>
+          <h2 className="text-xl font-bold font-sans text-on-surface">Resource Allocations</h2>
           <p className="text-sm text-on-surface-variant mt-1">Manage workforce and equipment allocated to this project.</p>
         </div>
         {!showAddForm && (

@@ -389,7 +389,7 @@ export default function PMHandoversHub() {
           <div className="bg-surface-container-lowest w-full max-w-3xl rounded-xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/30">
             <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface">
               <div>
-                <h2 className="text-xl font-bold text-on-surface font-merriweather">
+                <h2 className="text-xl font-bold text-on-surface font-sans">
                   Closeout: {selectedHandover.package_name}
                 </h2>
                 <p className="text-xs text-on-surface-variant mt-0.5">

@@ -50,7 +50,7 @@ export default function PMMilestones() {
 				<div className="space-y-8">
 					{projects.map((project) => (
 						<div key={project.id} className="space-y-4">
-							<h2 className="text-xl font-merriweather font-semibold text-on-surface border-b border-outline-variant/30 pb-2">
+							<h2 className="text-xl font-sans font-semibold text-on-surface border-b border-outline-variant/30 pb-2">
 								<Link
 									href={`/pm/projects/${project.id}`}
 									className="hover:text-primary transition-colors"

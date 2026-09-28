@@ -278,7 +278,7 @@ export function Topbar({
 					</button>
 				)}
 				{breadcrumbs ? (
-					<nav className="flex items-center space-x-2 text-sm font-inter">
+					<nav className="flex items-center space-x-2 text-sm font-sans">
 						{breadcrumbs.map((crumb, idx) => (
 							<React.Fragment key={idx}>
 								{idx > 0 && <span className="text-outline">/</span>}
@@ -298,7 +298,7 @@ export function Topbar({
 						))}
 					</nav>
 				) : (
-					<h2 className="font-merriweather text-xl font-bold text-on-surface hidden sm:block">
+					<h2 className="font-sans text-xl font-bold text-on-surface hidden sm:block">
 						{title}
 					</h2>
 				)}

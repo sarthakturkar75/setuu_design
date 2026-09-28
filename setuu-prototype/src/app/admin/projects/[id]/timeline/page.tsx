@@ -226,7 +226,7 @@ export default function TimelineAndVarianceConsole() {
     <div className="p-6 space-y-6 max-w-[1600px] mx-auto h-[calc(100vh-100px)] flex flex-col">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shrink-0">
         <div>
-          <h2 className="text-2xl font-bold font-merriweather text-on-surface flex items-center gap-2">
+          <h2 className="text-2xl font-bold font-sans text-on-surface flex items-center gap-2">
             Schedule & Variance Tracking
           </h2>
           <p className="text-on-surface-variant text-sm mt-1">

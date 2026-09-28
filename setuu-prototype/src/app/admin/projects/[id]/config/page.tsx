@@ -106,7 +106,7 @@ export default function ProjectConfigPage({
     <div className="flex flex-col lg:flex-row h-full max-w-[1600px] mx-auto p-6 gap-6">
 
       <div className="w-full lg:w-72 shrink-0 flex flex-col gap-4">
-        <h3 className="font-merriweather font-bold text-on-surface">Active Projects</h3>
+        <h3 className="font-sans font-bold text-on-surface">Active Projects</h3>
         <div className="space-y-2">
           {projects.map(p => (
             <Link
@@ -133,7 +133,7 @@ export default function ProjectConfigPage({
 
       <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-6">
         <Card className="p-6">
-          <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Project Details</h3>
+          <h3 className="font-sans text-lg font-bold text-on-surface mb-6">Project Details</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField label="Project Name *">
               <TextInput
@@ -186,7 +186,7 @@ export default function ProjectConfigPage({
         </Card>
 
         <Card className="p-6">
-          <h3 className="font-merriweather text-lg font-bold text-on-surface mb-6">Management & Timeline</h3>
+          <h3 className="font-sans text-lg font-bold text-on-surface mb-6">Management & Timeline</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <FormField label="Assigned Project Manager">

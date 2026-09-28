@@ -9,7 +9,7 @@ export interface BreadcrumbItem {
 
 export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   return (
-    <nav className="flex items-center space-x-2 text-sm text-on-surface-variant font-inter">
+    <nav className="flex items-center space-x-2 text-sm text-on-surface-variant font-sans">
       {items.map((item, index) => (
         <div key={index} className="flex items-center space-x-2">
           {item.href ? (

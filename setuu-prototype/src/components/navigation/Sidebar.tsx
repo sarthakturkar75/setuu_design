@@ -55,11 +55,11 @@ export function Sidebar({
 		>
 			{/* Branding Header */}
 			<div className="p-6 pb-6 flex items-center gap-3">
-				<div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center font-merriweather font-bold text-white shadow-sm border border-white/5 shrink-0">
+				<div className="w-10 h-10 rounded bg-white/10 flex items-center justify-center font-sans font-bold text-white shadow-sm border border-white/5 shrink-0">
 					{logoText.substring(0, 2).toUpperCase()}
 				</div>
 				<div className="overflow-hidden md:hidden lg:block">
-					<h1 className="font-merriweather font-bold text-white text-lg leading-tight tracking-wide truncate">
+					<h1 className="font-sans font-bold text-white text-lg leading-tight tracking-wide truncate">
 						{logoText}
 					</h1>
 					<p className="text-[10px] uppercase tracking-wider text-[#8ba1b5] mt-0.5 font-medium truncate">
@@ -73,7 +73,7 @@ export function Sidebar({
 				{sections.map((section, idx) => (
 					<div key={idx} className="mb-2">
 						{section.title && (
-							<h3 className="px-4 mb-2 font-merriweather text-[11px] uppercase tracking-wider text-[#6f89a9]">
+							<h3 className="px-4 mb-2 font-sans text-[11px] uppercase tracking-wider text-[#6f89a9]">
 								{section.title}
 							</h3>
 						)}

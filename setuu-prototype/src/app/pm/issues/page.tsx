@@ -18,7 +18,7 @@ export default function PMCrossProjectIssues() {
 			key: "id",
 			header: "ID",
 			cell: (row: any) => (
-				<span className="font-jetbrains-mono text-xs text-outline">
+				<span className="font-mono text-xs text-outline">
 					{row.id}
 				</span>
 			),

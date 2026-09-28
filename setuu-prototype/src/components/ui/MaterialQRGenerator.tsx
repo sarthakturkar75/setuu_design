@@ -18,7 +18,7 @@ export function MaterialQRGenerator({ material, onClose }: any) {
       <div className="bg-surface w-full max-w-sm rounded-xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/30 print:shadow-none print:border-none print:w-full print:max-w-none">
 
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface-container-lowest print:hidden">
-          <h2 className="text-xl font-bold text-on-surface font-merriweather flex items-center gap-2">
+          <h2 className="text-xl font-bold text-on-surface font-sans flex items-center gap-2">
             <QrCode className="w-5 h-5 text-primary" /> Print Label
           </h2>
           <button onClick={onClose} className="p-2 hover:bg-surface-variant rounded-full"><X className="w-5 h-5" /></button>

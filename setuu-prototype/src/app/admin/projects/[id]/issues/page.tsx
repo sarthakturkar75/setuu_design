@@ -114,7 +114,7 @@ export default function IssuesList({
       key: "rework",
       header: "Est. Rework",
       cell: (row: any) => (
-        <span className="text-sm font-jetbrains-mono">
+        <span className="text-sm font-mono">
           ${(row.estimated_rework_cost || 0).toLocaleString()}
         </span>
       ),

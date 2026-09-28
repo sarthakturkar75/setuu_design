@@ -100,7 +100,7 @@ export function EditPermissionsModal({
       <div className="bg-surface-container-lowest w-full max-w-xl rounded-xl shadow-2xl flex flex-col overflow-hidden border border-outline-variant/30">
         <div className="px-6 py-4 border-b border-outline-variant/50 flex justify-between items-center bg-surface">
           <div>
-            <h2 className="text-xl font-bold text-on-surface flex items-center gap-2 font-merriweather">
+            <h2 className="text-xl font-bold text-on-surface flex items-center gap-2 font-sans">
               <ShieldAlert className="w-5 h-5 text-primary" /> Edit Access:{" "}
               {user.name}
             </h2>

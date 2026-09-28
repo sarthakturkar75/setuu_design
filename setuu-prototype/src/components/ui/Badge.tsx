@@ -25,7 +25,7 @@ export function Badge({ count, max = 99, variant = "error", className, ...props 
   return (
     <span 
       className={cn(
-        "inline-flex items-center justify-center px-1.5 min-w-[1.25rem] h-5 text-[10px] font-bold rounded-full font-jetbrains-mono",
+        "inline-flex items-center justify-center px-1.5 min-w-[1.25rem] h-5 text-[10px] font-bold rounded-full font-mono",
         variant === "error" ? "bg-semantic-crimson text-white" : "bg-primary text-on-primary",
         className
       )}

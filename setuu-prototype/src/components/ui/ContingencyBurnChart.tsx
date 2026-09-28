@@ -56,7 +56,7 @@ export function ContingencyBurnChart({ metrics }: Props) {
             Contingency Drawdown 
             {metrics.isOverdrawn && <AlertCircle className="w-4 h-4 text-semantic-crimson" />}
           </h3>
-          <div className="text-2xl font-bold font-jetbrains-mono mt-1 text-on-surface">
+          <div className="text-2xl font-bold font-mono mt-1 text-on-surface">
             ${metrics.remainingContingency.toLocaleString()} 
             <span className="text-sm text-on-surface-variant font-normal ml-2">remaining</span>
           </div>

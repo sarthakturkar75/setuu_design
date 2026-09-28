@@ -260,7 +260,7 @@ export default function MilestoneKanbanPage() {
     <div className="p-6 h-[calc(100vh-140px)] overflow-hidden flex flex-col">
       <div className="flex justify-between items-center mb-6 shrink-0 max-w-[1600px] w-full mx-auto">
          <div>
-           <h2 className="text-2xl font-bold font-merriweather text-on-surface">Milestone Board</h2>
+           <h2 className="text-2xl font-bold font-sans text-on-surface">Milestone Board</h2>
            <p className="text-on-surface-variant text-sm mt-1">Cost-loaded tasks, WIP limits, and sub-contractor handoffs.</p>
          </div>
          <div className="flex items-center gap-3">
@@ -283,7 +283,7 @@ export default function MilestoneKanbanPage() {
           const deptMilestones = milestones.filter(m => (m.department || "General") === dept);
           return (
             <div key={dept} className="flex flex-col">
-              <h3 className="text-lg font-bold font-merriweather text-on-surface mb-4 pb-2 border-b border-outline-variant/50">{dept} Trade</h3>
+              <h3 className="text-lg font-bold font-sans text-on-surface mb-4 pb-2 border-b border-outline-variant/50">{dept} Trade</h3>
               <div className="flex gap-6 min-w-max">
                 {renderColumn("todo", "Not Started", deptMilestones)}
                 {renderColumn("in_progress", "In Progress", deptMilestones)}

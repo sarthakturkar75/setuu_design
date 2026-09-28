@@ -41,8 +41,8 @@ export default function ChangesList({ params }: { params: Promise<{ id: string }
   const columns = [
     { key: "display_id", header: "ID", cell: (row: any) => <span className="font-mono text-xs text-on-surface-variant">{row.display_id || row.id.substring(0,6)}</span> },
     { key: "title", header: "Title", cell: (row: any) => <button onClick={() => setSelectedChange(row)} className="font-medium text-primary hover:underline text-left">{row.title}</button> },
-    { key: "cost_impact", header: "Cost Impact", cell: (row: any) => <span className="text-sm font-jetbrains-mono">${Number(row.cost_impact).toLocaleString()}</span> },
-    { key: "time_impact_days", header: "Time Impact", cell: (row: any) => <span className="text-sm font-jetbrains-mono">{row.time_impact_days || 0} days</span> },
+    { key: "cost_impact", header: "Cost Impact", cell: (row: any) => <span className="text-sm font-mono">${Number(row.cost_impact).toLocaleString()}</span> },
+    { key: "time_impact_days", header: "Time Impact", cell: (row: any) => <span className="text-sm font-mono">{row.time_impact_days || 0} days</span> },
     { key: "stage", header: "Stage", cell: (row: any) => <span className="text-xs font-semibold text-on-surface-variant">{row.custom_data?.approval_stage || 'Draft'}</span> },
     { key: "status", header: "Status", cell: (row: any) => <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider ${row.status === 'Approved' ? 'bg-semantic-emerald-bg/10 text-semantic-emerald' : row.status === 'Rejected' ? 'bg-semantic-crimson-bg/10 text-semantic-crimson' : 'bg-semantic-amber-bg/10 text-semantic-amber'}`}>{row.status}</span> },
     { key: "created_at", header: "Date", cell: (row: any) => <span className="text-sm text-on-surface-variant">{new Date(row.created_at).toLocaleDateString()}</span> },

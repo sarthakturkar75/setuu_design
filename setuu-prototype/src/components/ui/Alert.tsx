@@ -53,11 +53,11 @@ export function Alert({ type = 'info', title, message, action, className }: Aler
           {style.icon}
         </div>
         <div className="ml-3 flex-1">
-          <h3 className={cn("text-sm font-medium font-inter", style.title)}>
+          <h3 className={cn("text-sm font-medium font-sans", style.title)}>
             {title}
           </h3>
           {message && (
-            <div className={cn("mt-2 text-sm font-inter opacity-90", style.text)}>
+            <div className={cn("mt-2 text-sm font-sans opacity-90", style.text)}>
               <p>{message}</p>
             </div>
           )}

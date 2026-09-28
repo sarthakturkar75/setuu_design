@@ -131,7 +131,7 @@ export default function PlatformConfig() {
               {auditTrail.map((log, idx) => (
                 <div key={idx} className="relative pl-4 border-l-2 border-outline-variant/50 pb-4 last:pb-0 last:border-transparent">
                   <div className="absolute w-2 h-2 rounded-full bg-outline-variant -left-[5px] top-1" />
-                  <p className="text-xs font-jetbrains-mono text-on-surface-variant">{log.time} • {log.user}</p>
+                  <p className="text-xs font-mono text-on-surface-variant">{log.time} • {log.user}</p>
                   <p className="text-sm text-on-surface mt-1">{log.action}</p>
                 </div>
               ))}

@@ -22,7 +22,7 @@ export default async function DailyLogsPage({
     <div className="p-6 max-w-6xl mx-auto space-y-8 animate-in fade-in duration-300">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-surface p-6 rounded-2xl border border-outline-variant shadow-sm">
         <div>
-          <h2 className="text-2xl font-bold font-merriweather text-on-surface">
+          <h2 className="text-2xl font-bold font-sans text-on-surface">
             Daily Project Logs
           </h2>
           <p className="text-on-surface-variant text-sm mt-1">
@@ -78,7 +78,7 @@ export default async function DailyLogsPage({
               </div>
               
               {/* Log Content - Markdown */}
-              <div className="p-8 prose prose-slate prose-headings:font-merriweather prose-headings:text-on-surface prose-p:text-on-surface-variant prose-li:text-on-surface-variant prose-strong:text-on-surface max-w-none dark:prose-invert">
+              <div className="p-8 prose prose-slate prose-headings:font-sans prose-headings:text-on-surface prose-p:text-on-surface-variant prose-li:text-on-surface-variant prose-strong:text-on-surface max-w-none dark:prose-invert">
                 <ReactMarkdown>{log.ai_generated_report || "*No content generated.*"}</ReactMarkdown>
               </div>
             </div>

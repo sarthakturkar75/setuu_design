@@ -49,7 +49,7 @@ export default function OrganizationsHub() {
           </div>
           <div>
             <div className="font-semibold">{row.name}</div>
-            <div className="text-xs text-on-surface-variant font-jetbrains-mono">{row.id}</div>
+            <div className="text-xs text-on-surface-variant font-mono">{row.id}</div>
           </div>
         </div>
       )
@@ -62,7 +62,7 @@ export default function OrganizationsHub() {
     {
       key: "members",
       header: "Members",
-      cell: (row: any) => <span className="font-jetbrains-mono">{row.member_count || 0}</span>
+      cell: (row: any) => <span className="font-mono">{row.member_count || 0}</span>
     },
     {
       key: "storage",

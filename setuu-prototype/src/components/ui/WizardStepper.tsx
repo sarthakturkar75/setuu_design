@@ -34,7 +34,7 @@ export function WizardStepper({ steps, currentStep, className, ...props }: Wizar
                 {isPast ? <Check className="w-4 h-4" strokeWidth={3} /> : idx + 1}
               </div>
               <span className={cn(
-                "absolute top-10 whitespace-nowrap text-xs font-inter font-medium transition-colors",
+                "absolute top-10 whitespace-nowrap text-xs font-sans font-medium transition-colors",
                 isActive || isPast ? "text-on-surface" : "text-on-surface-variant"
               )}>
                 {step.label}

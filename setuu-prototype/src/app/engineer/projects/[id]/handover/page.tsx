@@ -154,7 +154,7 @@ export default function ProjectHandoverConsole() {
       {!handover ? (
         <Card className="p-12 flex flex-col items-center justify-center text-center border-dashed border-2 border-outline-variant bg-surface-variant/10">
           <ShieldAlertIcon className="w-12 h-12 text-primary mb-4 opacity-80" />
-          <h2 className="text-xl font-bold text-on-surface mb-2 font-merriweather">No Closeout Package Exists</h2>
+          <h2 className="text-xl font-bold text-on-surface mb-2 font-sans">No Closeout Package Exists</h2>
           <p className="text-on-surface-variant max-w-md mb-6">
             This project has not yet entered the handover phase. Initiate the closeout sequence to begin generating O&M manuals and unlocking smart gateways.
           </p>

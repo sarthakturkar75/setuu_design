@@ -125,7 +125,7 @@ export default function OfflineSyncManager() {
         )}
         
         {pendingCount > 0 && (
-          <div className="text-xs font-jetbrains-mono bg-semantic-indigo text-white px-2 py-0.5 rounded-full">
+          <div className="text-xs font-mono bg-semantic-indigo text-white px-2 py-0.5 rounded-full">
             {pendingCount} pending
           </div>
         )}

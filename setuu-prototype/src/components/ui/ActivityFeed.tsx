@@ -44,7 +44,7 @@ export function ActivityFeed({ items, onAcknowledge, onDiscuss }: { items: Activ
                 )}
                 <span className="font-semibold text-sm text-on-surface">{item.author_name || "System"}</span>
               </div>
-              <div className="flex items-center gap-1 text-xs text-on-surface-variant font-jetbrains-mono tracking-tight">
+              <div className="flex items-center gap-1 text-xs text-on-surface-variant font-mono tracking-tight">
                 <ClockIcon className="w-3 h-3" />
                 {new Date(item.timestamp).toLocaleString(undefined, { 
                    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 

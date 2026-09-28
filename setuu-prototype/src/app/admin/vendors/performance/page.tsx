@@ -76,7 +76,7 @@ export default function VendorPerformancePage() {
           
           {/* Main Chart */}
           <Card className="p-6 xl:col-span-2 flex flex-col min-h-[400px]">
-            <h3 className="font-merriweather font-bold text-lg text-on-surface mb-6">Top Vendors by SLA Adherence</h3>
+            <h3 className="font-sans font-bold text-lg text-on-surface mb-6">Top Vendors by SLA Adherence</h3>
             <div className="flex-1 min-h-[300px]">
               <BarChart data={slaData} keys={["score"]} colors={["var(--semantic-emerald)"]} />
             </div>
@@ -84,7 +84,7 @@ export default function VendorPerformancePage() {
 
           {/* Quality Scorecards */}
           <Card className="p-6 flex flex-col">
-            <h3 className="font-merriweather font-bold text-lg text-on-surface mb-6">Network Quality Scorecard</h3>
+            <h3 className="font-sans font-bold text-lg text-on-surface mb-6">Network Quality Scorecard</h3>
             <div className="space-y-6 flex-1">
               {scorecardData.map((item, i) => (
                 <div key={i} className="flex items-center justify-between p-4 border border-outline-variant/50 rounded-xl bg-surface-variant/20">
