@@ -5,7 +5,8 @@ import { Card } from "@/components/ui/Card";
 import { getProjectDrawings } from "@/app/actions/drawingActions";
 import { Button } from "@/components/ui/Button";
 
-export default function EngineerDrawings({ params }: { params: { id: string } }) {
+export default function EngineerDrawings({ params }: { params: Promise<{ id: string }> }) { 
+  const { id } = React.use(params);
   const [drawings, setDrawings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedDrawing, setSelectedDrawing] = useState<any>(null);
@@ -13,7 +14,7 @@ export default function EngineerDrawings({ params }: { params: { id: string } })
   useEffect(() => {
     async function load() {
       try {
-        const data = await getProjectDrawings(params.id);
+        const data = await getProjectDrawings(id);
         setDrawings(data || []);
       } catch (e) {
         console.error(e);
@@ -22,7 +23,7 @@ export default function EngineerDrawings({ params }: { params: { id: string } })
       }
     }
     load();
-  }, [params.id]);
+  }, [id]);
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6 h-full flex flex-col">

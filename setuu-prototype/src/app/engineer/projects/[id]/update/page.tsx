@@ -9,7 +9,8 @@ import { createUpdate } from "@/app/actions/updateActions";
 import { Toast, toast } from "@/components/ui/Toast";
 import { useRouter } from "next/navigation";
 
-export default function EngineerCreateUpdate({ params }: { params: { id: string } }) {
+export default function EngineerCreateUpdate({ params }: { params: Promise<{ id: string }> }) { 
+  const { id } = React.use(params);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function EngineerCreateUpdate({ params }: { params: { id: string 
       const res = await createUpdate(new FormData());
       if (res.success) {
         toast.success("Update posted successfully.");
-        router.push(`/engineer/projects/${params.id}`);
+        router.push(`/engineer/projects/${id}`);
       } else {
         toast.error(res.error || "Failed to post update");
       }

@@ -7,14 +7,15 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getProjectMaterials } from "@/app/actions/materialActions";
 import { Button } from "@/components/ui/Button";
 
-export default function EngineerMaterials({ params }: { params: { id: string } }) {
+export default function EngineerMaterials({ params }: { params: Promise<{ id: string }> }) { 
+  const { id } = React.use(params);
   const [materials, setMaterials] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const data = await getProjectMaterials(params.id);
+        const data = await getProjectMaterials(id);
         setMaterials(data || []);
       } catch (e) {
         console.error(e);
@@ -23,7 +24,7 @@ export default function EngineerMaterials({ params }: { params: { id: string } }
       }
     }
     load();
-  }, [params.id]);
+  }, [id]);
 
   const columns = [
     { key: "name", header: "Material", cell: (r: any) => <span className="font-medium">{r.name}</span> },

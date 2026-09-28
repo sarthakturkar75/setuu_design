@@ -26,10 +26,10 @@ export default function TimelineAndVarianceConsole() {
   const [view, setView] = useState<"gantt" | "variance">("variance");
   const [actionLoading, setActionLoading] = useState("");
   const toast = useToast();
-  const supabase = createClient();
 
   const fetchTasks = React.useCallback(async () => {
     setLoading(true);
+    const supabase = createClient();
     // Fetch the real quantitative execution tasks from Phase 1
     const { data, error } = await supabase
       .from("tasks")
@@ -40,7 +40,7 @@ export default function TimelineAndVarianceConsole() {
     if (error) toast.error(error.message);
     else setTasks(data || []);
     setLoading(false);
-  }, [projectId, toast, supabase]);
+  }, [projectId, toast]);
 
   useEffect(() => {
     if (projectId) fetchTasks();

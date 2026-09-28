@@ -33,8 +33,9 @@ export async function updateSession(request: NextRequest) {
 
   // Strict route protection
   const isAuthRoute = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/signup')
+  const isPublicResource = request.nextUrl.pathname.startsWith('/sw.js') || request.nextUrl.pathname.startsWith('/manifest.json') || request.nextUrl.pathname.startsWith('/favicon.ico');
   
-  if (!user && !isAuthRoute) {
+  if (!user && !isAuthRoute && !isPublicResource) {
     // Redirect unauthenticated users to login
     const url = request.nextUrl.clone()
     url.pathname = '/login'

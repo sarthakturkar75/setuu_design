@@ -7,14 +7,15 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getProjectMaterials } from "@/app/actions/materialActions";
 import { Button } from "@/components/ui/Button";
 
-export default function VendorProjectMaterials({ params }: { params: { id: string } }) {
+export default function VendorProjectMaterials({ params }: { params: Promise<{ id: string }> }) { 
+  const { id } = React.use(params);
   const [materials, setMaterials] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const data = await getProjectMaterials(params.id);
+        const data = await getProjectMaterials(id);
         // Assuming RLS or action filtering takes care of vendor scoping,
         // or we filter client-side if needed. For prototype, just use the data.
         setMaterials(data || []);
@@ -25,7 +26,7 @@ export default function VendorProjectMaterials({ params }: { params: { id: strin
       }
     }
     load();
-  }, [params.id]);
+  }, [id]);
 
   const columns = [
     { key: "name", header: "Material", cell: (r: any) => <span className="font-medium">{r.name}</span> },

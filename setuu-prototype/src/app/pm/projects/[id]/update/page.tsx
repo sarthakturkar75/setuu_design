@@ -22,6 +22,7 @@ export default function CameraUpdatePage() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [caption, setCaption] = React.useState("");
+  const [cameraError, setCameraError] = React.useState<string | null>(null);
 
   const params = useParams();
   const id = params?.id as string;
@@ -38,8 +39,8 @@ export default function CameraUpdatePage() {
         if (videoRef.current) {
           videoRef.current.srcObject = mediaStream;
         }
-      } catch (err) {
-        console.error("Error accessing camera:", err);
+      } catch (err: any) {
+        setCameraError(err.message || "Camera permission denied");
       }
     }
 
@@ -153,13 +154,21 @@ export default function CameraUpdatePage() {
       <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-sm">
         {!photoDataUrl ? (
           <div className="relative bg-black aspect-[4/3] flex items-center justify-center">
-            <video 
-              ref={videoRef} 
-              autoPlay 
-              playsInline 
-              muted 
-              className="w-full h-full object-cover"
-            />
+            {cameraError ? (
+              <div className="text-white text-center p-4">
+                <CameraIcon className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                <p>Camera access denied</p>
+                <p className="text-sm opacity-70">Please allow camera access in your browser settings to take photos.</p>
+              </div>
+            ) : (
+              <video 
+                ref={videoRef} 
+                autoPlay 
+                playsInline 
+                muted 
+                className="w-full h-full object-cover"
+              />
+            )}
             
 
 

@@ -6,14 +6,15 @@ import { getTimelineData } from "@/app/actions/timelineActions";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
-export default function ClientProjectTimeline({ params }: { params: { id: string } }) {
+export default function ClientProjectTimeline({ params }: { params: Promise<{ id: string }> }) { 
+  const { id } = React.use(params);
   const [tasks, setTasks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const data = await getTimelineData(params.id);
+        const data = await getTimelineData(id);
         setTasks(data.tasks || []);
       } catch (e) {
         console.error(e);
@@ -22,7 +23,7 @@ export default function ClientProjectTimeline({ params }: { params: { id: string
       }
     }
     load();
-  }, [params.id]);
+  }, [id]);
 
   const columns = [
     { key: "title", header: "Task", cell: (r: any) => <span className="font-medium text-on-surface">{r.title}</span> },

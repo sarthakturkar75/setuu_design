@@ -7,7 +7,8 @@ import { DataTable } from "@/components/ui/DataTable";
 import { Button } from "@/components/ui/Button";
 import { DownloadIcon, FileTextIcon } from "lucide-react";
 
-export default function ClientProjectReports({ params }: { params: { id: string } }) {
+export default function ClientProjectReports({ params }: { params: Promise<{ id: string }> }) { 
+  const { id } = React.use(params);
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +17,7 @@ export default function ClientProjectReports({ params }: { params: { id: string 
       try {
         const data = await getProjectReports();
         // Client-side filter for now
-        const projReports = data.filter(r => r.project_id === params.id);
+        const projReports = data.filter(r => r.project_id === id);
         setReports(projReports);
       } catch (e) {
         console.error(e);
@@ -25,7 +26,7 @@ export default function ClientProjectReports({ params }: { params: { id: string 
       }
     }
     load();
-  }, [params.id]);
+  }, [id]);
 
   const columns = [
     { key: "title", header: "Report Name", cell: (r: any) => (
